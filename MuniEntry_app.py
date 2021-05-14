@@ -9,7 +9,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from main_window_ui import Ui_MainWindow
-from DialogModels import OmnibusMotionDialog
+from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog
 
 
 class Window(QMainWindow, Ui_MainWindow):

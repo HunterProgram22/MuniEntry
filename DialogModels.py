@@ -2,6 +2,7 @@ import sys
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
+from PyQt5.uic import loadUi
 
 from PyQt5.QtWidgets import (
     QApplication, QDialog, QMainWindow, QMessageBox
@@ -22,3 +23,9 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
                     }
         doc.render(context)
         doc.save("Demo_actual_document.docx")
+
+
+class JuryInstructionsDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi("ui/JuryInstructionsDialog.ui")
