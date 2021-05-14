@@ -25,6 +25,10 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = OmnibusMotionDialog(self)
         dialog.exec()
 
+    def JuryInstructionsForm(self):
+        dialog = JuryInstructionsDialog(self)
+        dialog.exec()
+
 
 
 
