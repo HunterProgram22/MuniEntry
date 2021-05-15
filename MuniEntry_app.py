@@ -20,6 +20,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connectSignalsSlots(self):
         self.actionOmnibus_Motion_Form.triggered.connect(self.OmnibusMotionForm)
+        self.actionJury_Instructions.triggered.connect(self.JuryInstructionsForm)
 
     def OmnibusMotionForm(self):
         dialog = OmnibusMotionDialog(self)

@@ -34,7 +34,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -60,6 +60,7 @@
      <string>General</string>
     </property>
     <addaction name="actionOmnibus_Motion_Form"/>
+    <addaction name="actionJury_Instructions"/>
    </widget>
    <widget class="QMenu" name="menuCivil">
     <property name="title">
@@ -123,6 +124,11 @@
   <action name="actionOmnibus_Motion_Form">
    <property name="text">
     <string>Omnibus Motion Form</string>
+   </property>
+  </action>
+  <action name="actionJury_Instructions">
+   <property name="text">
+    <string>Jury Instructions</string>
    </property>
   </action>
  </widget>
