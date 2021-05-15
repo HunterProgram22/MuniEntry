@@ -10,8 +10,17 @@ from PyQt5.QtWidgets import (
 
 from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
+from HelperFunctions import getText
 
 #PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
+
+def getText(filename):
+    doc = Document(filename)
+    fullText = []
+    for para in doc.paragraphs:
+        fullText.append(para.text)
+    return '\n'.join(fullText)
+
 
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
@@ -41,10 +50,12 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
         caseNo = self.CaseNo_lineEdit.text()
         firstCharge = self.firstCharge_comboBox.currentText()
         secondCharge = self.secondCharge_comboBox.currentText()
+        countOneInstructions = getText("OVI_Instructions_Template.docx")
         context = { 'defendant_name' : defendantName,
                     'case_no' : caseNo,
                     'first_charge' : firstCharge,
                     'second_charge' : secondCharge,
+                    'count_one_instructions' : countOneInstructions,
                     }
         doc.render(context)
         doc.save("Jury_Instructions_Test.docx")
