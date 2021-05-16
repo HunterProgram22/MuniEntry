@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>483</width>
-    <height>359</height>
+    <width>745</width>
+    <height>507</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,7 +48,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>370</x>
+     <x>630</x>
      <y>10</y>
      <width>95</width>
      <height>147</height>
@@ -96,8 +96,8 @@
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>321</width>
-     <height>171</height>
+     <width>501</width>
+     <height>291</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_2">
