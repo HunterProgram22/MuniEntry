@@ -12,17 +12,6 @@ from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from HelperFunctions import getText
 
-#PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
-
-def getText(filename):
-    "There are formatting issues that need to be fixed."
-    "https://stackoverflow.com/questions/25228106/how-to-extract-text-from-an-existing-docx-file-using-python-docx/35871416"
-    doc = Document(filename)
-    fullText = []
-    for para in doc.paragraphs:
-        fullText.append(para.text)
-    return '\n'.join(fullText)
-
 
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
@@ -48,6 +37,12 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
 
     def createEntry(self):
         doc = DocxTemplate("JuryInstructionsMaster.docx")
+        context = self.getDialogFields()
+        doc.render(context)
+        doc.save("Jury_Instructions_Test.docx")
+        os.startfile("Jury_Instructions_Test.docx")
+
+    def getDialogFields(self):
         defendantName = self.DefendantName_lineEdit.text()
         caseNo = self.CaseNo_lineEdit.text()
         firstCharge = self.firstCharge_comboBox.currentText()
@@ -59,6 +54,4 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
                     'second_charge' : secondCharge,
                     'count_one_instructions' : countOneInstructions,
                     }
-        doc.render(context)
-        doc.save("Jury_Instructions_Test.docx")
-        os.startfile("Jury_Instructions_Test.docx")
+        return context
