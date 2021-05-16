@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_JuryInstructionsDialog(object):
     def setupUi(self, JuryInstructionsDialog):
         JuryInstructionsDialog.setObjectName("JuryInstructionsDialog")
-        JuryInstructionsDialog.resize(483, 359)
+        JuryInstructionsDialog.resize(941, 635)
         self.layoutWidget = QtWidgets.QWidget(JuryInstructionsDialog)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 281, 52))
         self.layoutWidget.setObjectName("layoutWidget")
@@ -34,7 +34,7 @@ class Ui_JuryInstructionsDialog(object):
         self.DefendantName_lineEdit.setObjectName("DefendantName_lineEdit")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.DefendantName_lineEdit)
         self.layoutWidget1 = QtWidgets.QWidget(JuryInstructionsDialog)
-        self.layoutWidget1.setGeometry(QtCore.QRect(370, 10, 95, 147))
+        self.layoutWidget1.setGeometry(QtCore.QRect(820, 20, 95, 147))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget1)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
@@ -51,7 +51,7 @@ class Ui_JuryInstructionsDialog(object):
         self.pushButton_3.setObjectName("pushButton_3")
         self.verticalLayout.addWidget(self.pushButton_3)
         self.layoutWidget2 = QtWidgets.QWidget(JuryInstructionsDialog)
-        self.layoutWidget2.setGeometry(QtCore.QRect(10, 80, 321, 171))
+        self.layoutWidget2.setGeometry(QtCore.QRect(10, 80, 710, 291))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.formLayout_2 = QtWidgets.QFormLayout(self.layoutWidget2)
         self.formLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -59,31 +59,28 @@ class Ui_JuryInstructionsDialog(object):
         self.label_3 = QtWidgets.QLabel(self.layoutWidget2)
         self.label_3.setObjectName("label_3")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_3)
-        self.dateEdit = QtWidgets.QDateEdit(self.layoutWidget2)
-        self.dateEdit.setObjectName("dateEdit")
-        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.dateEdit)
         self.label_4 = QtWidgets.QLabel(self.layoutWidget2)
         self.label_4.setObjectName("label_4")
         self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_4)
-        self.firstCharge_comboBox = QtWidgets.QComboBox(self.layoutWidget2)
-        self.firstCharge_comboBox.setObjectName("firstCharge_comboBox")
-        self.firstCharge_comboBox.addItem("")
-        self.firstCharge_comboBox.addItem("")
-        self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.firstCharge_comboBox)
+        self.FirstCharge_comboBox = QtWidgets.QComboBox(self.layoutWidget2)
+        self.FirstCharge_comboBox.setObjectName("FirstCharge_comboBox")
+        self.FirstCharge_comboBox.addItem("")
+        self.FirstCharge_comboBox.addItem("")
+        self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.FirstCharge_comboBox)
         self.label_5 = QtWidgets.QLabel(self.layoutWidget2)
         self.label_5.setObjectName("label_5")
         self.formLayout_2.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_5)
-        self.secondCharge_comboBox = QtWidgets.QComboBox(self.layoutWidget2)
-        self.secondCharge_comboBox.setObjectName("secondCharge_comboBox")
-        self.secondCharge_comboBox.addItem("")
-        self.secondCharge_comboBox.addItem("")
-        self.formLayout_2.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.secondCharge_comboBox)
+        self.SecondCharge_comboBox = QtWidgets.QComboBox(self.layoutWidget2)
+        self.SecondCharge_comboBox.setObjectName("SecondCharge_comboBox")
+        self.SecondCharge_comboBox.addItem("")
+        self.SecondCharge_comboBox.addItem("")
+        self.formLayout_2.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.SecondCharge_comboBox)
         self.label_6 = QtWidgets.QLabel(self.layoutWidget2)
         self.label_6.setObjectName("label_6")
         self.formLayout_2.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.label_6)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.layoutWidget2)
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.formLayout_2.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.lineEdit_3)
+        self.VictimName_lineEdit = QtWidgets.QLineEdit(self.layoutWidget2)
+        self.VictimName_lineEdit.setObjectName("VictimName_lineEdit")
+        self.formLayout_2.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.VictimName_lineEdit)
         self.radioButton = QtWidgets.QRadioButton(self.layoutWidget2)
         self.radioButton.setObjectName("radioButton")
         self.buttonGroup = QtWidgets.QButtonGroup(JuryInstructionsDialog)
@@ -94,6 +91,9 @@ class Ui_JuryInstructionsDialog(object):
         self.radioButton_2.setObjectName("radioButton_2")
         self.buttonGroup.addButton(self.radioButton_2)
         self.formLayout_2.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.radioButton_2)
+        self.ComplaintDate_lineEdit = QtWidgets.QLineEdit(self.layoutWidget2)
+        self.ComplaintDate_lineEdit.setObjectName("ComplaintDate_lineEdit")
+        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.ComplaintDate_lineEdit)
 
         self.retranslateUi(JuryInstructionsDialog)
         self.pushButton_3.clicked.connect(JuryInstructionsDialog.reject)
@@ -101,6 +101,16 @@ class Ui_JuryInstructionsDialog(object):
         self.pushButton_2.clicked.connect(self.DefendantName_lineEdit.clear)
         self.pushButton.clicked.connect(JuryInstructionsDialog.createEntry)
         QtCore.QMetaObject.connectSlotsByName(JuryInstructionsDialog)
+        JuryInstructionsDialog.setTabOrder(self.CaseNo_lineEdit, self.DefendantName_lineEdit)
+        JuryInstructionsDialog.setTabOrder(self.DefendantName_lineEdit, self.ComplaintDate_lineEdit)
+        JuryInstructionsDialog.setTabOrder(self.ComplaintDate_lineEdit, self.FirstCharge_comboBox)
+        JuryInstructionsDialog.setTabOrder(self.FirstCharge_comboBox, self.SecondCharge_comboBox)
+        JuryInstructionsDialog.setTabOrder(self.SecondCharge_comboBox, self.radioButton)
+        JuryInstructionsDialog.setTabOrder(self.radioButton, self.radioButton_2)
+        JuryInstructionsDialog.setTabOrder(self.radioButton_2, self.VictimName_lineEdit)
+        JuryInstructionsDialog.setTabOrder(self.VictimName_lineEdit, self.pushButton)
+        JuryInstructionsDialog.setTabOrder(self.pushButton, self.pushButton_2)
+        JuryInstructionsDialog.setTabOrder(self.pushButton_2, self.pushButton_3)
 
     def retranslateUi(self, JuryInstructionsDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -112,17 +122,17 @@ class Ui_JuryInstructionsDialog(object):
         self.pushButton_3.setText(_translate("JuryInstructionsDialog", "Cancel"))
         self.label_3.setText(_translate("JuryInstructionsDialog", "Complaint Date"))
         self.label_4.setText(_translate("JuryInstructionsDialog", "1st Charge"))
-        self.firstCharge_comboBox.setItemText(0, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle While Under the Influence of Alcohol \n"
+        self.FirstCharge_comboBox.setItemText(0, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle While Under the Influence of Alcohol \n"
 "R.C. § 4511.19(A)(1)(A)\n"
 ""))
-        self.firstCharge_comboBox.setItemText(1, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle with a Prohibited Concentration of Alcohol \n"
+        self.FirstCharge_comboBox.setItemText(1, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle with a Prohibited Concentration of Alcohol \n"
 "R.C. § 4511.19(A)(1)(D)\n"
 ""))
         self.label_5.setText(_translate("JuryInstructionsDialog", "2nd Charge"))
-        self.secondCharge_comboBox.setItemText(0, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle While Under the Influence of Alcohol \n"
+        self.SecondCharge_comboBox.setItemText(0, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle While Under the Influence of Alcohol \n"
 "R.C. § 4511.19(A)(1)(A)\n"
 ""))
-        self.secondCharge_comboBox.setItemText(1, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle with a Prohibited Concentration of Alcohol \n"
+        self.SecondCharge_comboBox.setItemText(1, _translate("JuryInstructionsDialog", "Operating a Motor Vehicle with a Prohibited Concentration of Alcohol \n"
 "R.C. § 4511.19(A)(1)(D)\n"
 ""))
         self.label_6.setText(_translate("JuryInstructionsDialog", "Victim Name"))

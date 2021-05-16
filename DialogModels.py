@@ -21,10 +21,10 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
     def createEntry(self):
         doc = DocxTemplate("Templates/demo_template.docx")
-        defendantName = self.DefendantName_lineEdit.text()
-        caseNo = self.CaseNo_lineEdit.text()
-        context = { 'defendant_name' : defendantName,
-                    'case_no' : caseNo
+        defendant_name = self.DefendantName_lineEdit.text()
+        case_no = self.CaseNo_lineEdit.text()
+        context = { 'defendant_name' : defendant_name,
+                    'case_no' : case_no,
                     }
         doc.render(context)
         doc.save("Saved/Demo_actual_document.docx")
@@ -48,23 +48,26 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
         os.startfile(PATH + "Saved/Jury_Instructions_Test.docx")
 
     def getDialogFields(self):
-        defendantName = self.DefendantName_lineEdit.text()
-        caseNo = self.CaseNo_lineEdit.text()
-        firstCharge = self.firstCharge_comboBox.currentText()
-        secondCharge = self.secondCharge_comboBox.currentText()
+        defendant_name = self.DefendantName_lineEdit.text()
+        case_no = self.CaseNo_lineEdit.text()
+        complaint_date = self.ComplaintDate_lineEdit.text()
+        print(complaint_date)
+        first_charge = self.FirstCharge_comboBox.currentText()
+        second_charge = self.SecondCharge_comboBox.currentText()
         self.populateInstructions("Templates/OVI_Instructions_Template.docx")
-        countOneInstructions = getText("Saved/Populated_Jury_Instructions.docx")
-        context = { 'defendant_name' : defendantName,
-                    'case_no' : caseNo,
-                    'first_charge' : firstCharge,
-                    'second_charge' : secondCharge,
-                    'count_one_instructions' : countOneInstructions,
+        count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
+        context = { 'defendant_name' : defendant_name,
+                    'case_no' : case_no,
+                    'first_charge' : first_charge,
+                    'second_charge' : second_charge,
+                    'complaint_date' : complaint_date,
+                    'count_one_instructions' : count_one_instructions,
                     }
         return context
 
     def populateInstructions(self, instructions):
-        defendantName = self.DefendantName_lineEdit.text()
-        context = { 'defendant_name' : defendantName,
+        defendant_name = self.DefendantName_lineEdit.text()
+        context = { 'defendant_name' : defendant_name,
                     }
         doc = DocxTemplate(instructions)
         doc.render(context)

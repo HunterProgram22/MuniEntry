@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>745</width>
-    <height>507</height>
+    <width>941</width>
+    <height>635</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,8 +48,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>630</x>
-     <y>10</y>
+     <x>820</x>
+     <y>20</y>
      <width>95</width>
      <height>147</height>
     </rect>
@@ -96,7 +96,7 @@
     <rect>
      <x>10</x>
      <y>80</y>
-     <width>501</width>
+     <width>710</width>
      <height>291</height>
     </rect>
    </property>
@@ -108,9 +108,6 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
-     <widget class="QDateEdit" name="dateEdit"/>
-    </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
@@ -119,7 +116,7 @@
      </widget>
     </item>
     <item row="2" column="1">
-     <widget class="QComboBox" name="firstCharge_comboBox">
+     <widget class="QComboBox" name="FirstCharge_comboBox">
       <item>
        <property name="text">
         <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
@@ -144,7 +141,7 @@ R.C. § 4511.19(A)(1)(D)
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QComboBox" name="secondCharge_comboBox">
+     <widget class="QComboBox" name="SecondCharge_comboBox">
       <item>
        <property name="text">
         <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
@@ -169,7 +166,7 @@ R.C. § 4511.19(A)(1)(D)
      </widget>
     </item>
     <item row="6" column="1">
-     <widget class="QLineEdit" name="lineEdit_3"/>
+     <widget class="QLineEdit" name="VictimName_lineEdit"/>
     </item>
     <item row="4" column="0">
      <widget class="QRadioButton" name="radioButton">
@@ -191,9 +188,25 @@ R.C. § 4511.19(A)(1)(D)
       </attribute>
      </widget>
     </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="ComplaintDate_lineEdit"/>
+    </item>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>CaseNo_lineEdit</tabstop>
+  <tabstop>DefendantName_lineEdit</tabstop>
+  <tabstop>ComplaintDate_lineEdit</tabstop>
+  <tabstop>FirstCharge_comboBox</tabstop>
+  <tabstop>SecondCharge_comboBox</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>VictimName_lineEdit</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
