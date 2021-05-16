@@ -14,6 +14,29 @@ from HelperFunctions import getText
 
 PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
 
+TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+
+JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "Templates/JuryInstructionsMaster.docx"
+JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
+
+class BaseDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
+
+    def createEntry(self):
+        #This needs to be refactored to be a true base class method
+        context = self.getDialogFields()
+        doc = DocxTemplate("Templates/JuryInstructionsMaster.docx")
+        doc.render(context)
+        for para in doc.paragraphs:
+            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        doc.save("Saved/Jury_Instructions_Test.docx")
+        #Need to us os to get system Path
+        os.startfile(PATH + "Saved/Jury_Instructions_Test.docx")
+
+
+
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -32,20 +55,13 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
         os.startfile(PATH + "Saved/Demo_actual_document.docx")
 
 
-class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
+class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
+    #template = JURY_INSTRUCTIONS_TEMPLATE
+    #saved_doc = JURY_INSTRUCTIONS_SAVED_DOC
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-
-    def createEntry(self):
-        context = self.getDialogFields()
-        doc = DocxTemplate("Templates/JuryInstructionsMaster.docx")
-        doc.render(context)
-        for para in doc.paragraphs:
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        doc.save("Saved/Jury_Instructions_Test.docx")
-        #Need to us os to get system Path
-        os.startfile(PATH + "Saved/Jury_Instructions_Test.docx")
 
     def getDialogFields(self):
         defendant_name = self.DefendantName_lineEdit.text()
@@ -54,7 +70,7 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
         print(complaint_date)
         first_charge = self.FirstCharge_comboBox.currentText()
         second_charge = self.SecondCharge_comboBox.currentText()
-        self.populateInstructions("Templates/OVI_Instructions_Template.docx")
+        self.populateInstructions("Templates/JuryInstructionsMaster.docx")
         count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
         context = { 'defendant_name' : defendant_name,
                     'case_no' : case_no,
@@ -71,4 +87,4 @@ class JuryInstructionsDialog(QDialog, Ui_JuryInstructionsDialog):
                     }
         doc = DocxTemplate(instructions)
         doc.render(context)
-        doc.save("Saved/Populated_Jury_Instructions.docx")
+        doc.save("Saved/Jury_Instructions_Test.docx")
