@@ -12,11 +12,17 @@ from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from HelperFunctions import getText
 
-PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+#Home Paths
+#PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+#TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
 
-TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+#Work Paths
+PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
+TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
 
-JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "Templates/JuryInstructionsMaster.docx"
+
+
+JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "JuryInstructionsMaster.docx"
 JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
 
 class BaseDialog(QDialog):
@@ -56,7 +62,7 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
 
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
-    #template = JURY_INSTRUCTIONS_TEMPLATE
+    template = JURY_INSTRUCTIONS_TEMPLATE
     #saved_doc = JURY_INSTRUCTIONS_SAVED_DOC
 
     def __init__(self, parent=None):
@@ -67,10 +73,9 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
         defendant_name = self.DefendantName_lineEdit.text()
         case_no = self.CaseNo_lineEdit.text()
         complaint_date = self.ComplaintDate_lineEdit.text()
-        print(complaint_date)
         first_charge = self.FirstCharge_comboBox.currentText()
         second_charge = self.SecondCharge_comboBox.currentText()
-        self.populateInstructions("Templates/JuryInstructionsMaster.docx")
+        self.populateInstructions(JuryInstructionsDialog.template)
         count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
         context = { 'defendant_name' : defendant_name,
                     'case_no' : case_no,

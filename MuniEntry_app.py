@@ -11,6 +11,8 @@ from PyQt5.QtCore import pyqtSlot
 from main_window_ui import Ui_MainWindow
 from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog
 
+#Code to update UI
+#pyuic5 -o main_window_ui.py ui/main_window.ui
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -30,6 +32,9 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = JuryInstructionsDialog(self)
         dialog.exec()
 
+    def pushButtonJury(self):
+        dialog = JuryInstructionsDialog(self)
+        dialog.exec()
 
 
 
