@@ -93,3 +93,10 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
         doc = DocxTemplate(instructions)
         doc.render(context)
         doc.save("Saved/Jury_Instructions_Test.docx")
+
+
+class JuryInstructionTemplate(object):
+"""A class for the specific jury instructions for each different type of charge."""
+
+    def __init__(self, template=None):
+        self.template = template

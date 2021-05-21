@@ -95,9 +95,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>80</y>
+     <y>70</y>
      <width>710</width>
-     <height>291</height>
+     <height>341</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_2">
@@ -108,78 +108,34 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="ComplaintDate_lineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Gender</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QRadioButton" name="radioButton_4">
+      <property name="text">
+       <string>Female</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="4" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>1st Charge</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="text">
-       <string>2nd Charge</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QRadioButton" name="radioButton">
-      <property name="text">
-       <string>Defendant Testified</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QRadioButton" name="radioButton_2">
-      <property name="text">
-       <string>Defendant Did Not Testify</string>
-      </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="ComplaintDate_lineEdit"/>
-    </item>
-    <item row="6" column="0">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string>Victim Name</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QLineEdit" name="VictimName_lineEdit"/>
-    </item>
     <item row="4" column="1">
-     <widget class="QComboBox" name="SecondCharge_comboBox">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>50</height>
-       </size>
-      </property>
-      <item>
-       <property name="text">
-        <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
-R.C. § 4511.19(A)(1)(A)
-</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Operating a Motor Vehicle with a Prohibited Concentration of Alcohol 
-R.C. § 4511.19(A)(1)(D)
-</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="1">
      <widget class="QComboBox" name="FirstCharge_comboBox">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -209,6 +165,94 @@ R.C. § 4511.19(A)(1)(D)
       </item>
      </widget>
     </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>2nd Charge</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QComboBox" name="SecondCharge_comboBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
+R.C. § 4511.19(A)(1)(A)
+</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle with a Prohibited Concentration of Alcohol 
+R.C. § 4511.19(A)(1)(D)
+</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="text">
+       <string>Defendant Did Not Testify</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Victim Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="VictimName_lineEdit"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QRadioButton" name="radioButton_3">
+      <property name="text">
+       <string>Male</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QRadioButton" name="radioButton">
+      <property name="text">
+       <string>Defendant Testified</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Defendant Testimony  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Number of Charges</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QSpinBox" name="spinBox"/>
+    </item>
    </layout>
   </widget>
  </widget>
@@ -217,7 +261,6 @@ R.C. § 4511.19(A)(1)(D)
   <tabstop>DefendantName_lineEdit</tabstop>
   <tabstop>ComplaintDate_lineEdit</tabstop>
   <tabstop>FirstCharge_comboBox</tabstop>
-  <tabstop>radioButton</tabstop>
   <tabstop>radioButton_2</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>pushButton_2</tabstop>
@@ -232,8 +275,8 @@ R.C. § 4511.19(A)(1)(D)
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>413</x>
-     <y>146</y>
+     <x>821</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
@@ -248,8 +291,8 @@ R.C. § 4511.19(A)(1)(D)
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>52</y>
+     <x>821</x>
+     <y>72</y>
     </hint>
     <hint type="destinationlabel">
      <x>272</x>
@@ -264,8 +307,8 @@ R.C. § 4511.19(A)(1)(D)
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>376</x>
-     <y>52</y>
+     <x>821</x>
+     <y>72</y>
     </hint>
     <hint type="destinationlabel">
      <x>278</x>
@@ -280,8 +323,8 @@ R.C. § 4511.19(A)(1)(D)
    <slot>createEntry()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>403</x>
-     <y>22</y>
+     <x>821</x>
+     <y>23</y>
     </hint>
     <hint type="destinationlabel">
      <x>389</x>
@@ -295,5 +338,6 @@ R.C. § 4511.19(A)(1)(D)
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
