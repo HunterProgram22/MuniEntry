@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (
 
 from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
+from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from HelperFunctions import getText
 
 #Home Paths
@@ -59,6 +60,15 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
         doc.save("Saved/Demo_actual_document.docx")
         #Need to us os to get system Path
         os.startfile(PATH + "Saved/Demo_actual_document.docx")
+
+
+class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
+    #template =
+    #saved_doc =
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
 
 
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
