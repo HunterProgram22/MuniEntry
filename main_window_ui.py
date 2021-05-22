@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'ui/MainWIndow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -17,9 +17,30 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(20, 50, 171, 31))
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(20, 20, 181, 261))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName("gridLayout")
+        self.TransferEntryDialog = QtWidgets.QPushButton(self.layoutWidget)
+        self.TransferEntryDialog.setObjectName("TransferEntryDialog")
+        self.gridLayout.addWidget(self.TransferEntryDialog, 0, 0, 1, 1)
+        self.pushButton = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton.setObjectName("pushButton")
+        self.gridLayout.addWidget(self.pushButton, 6, 0, 1, 1)
+        self.VerdictForm_pushButton = QtWidgets.QPushButton(self.layoutWidget)
+        self.VerdictForm_pushButton.setObjectName("VerdictForm_pushButton")
+        self.gridLayout.addWidget(self.VerdictForm_pushButton, 4, 0, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 5, 0, 1, 1)
+        self.JuryInstructions_pushButton = QtWidgets.QPushButton(self.layoutWidget)
+        self.JuryInstructions_pushButton.setObjectName("JuryInstructions_pushButton")
+        self.gridLayout.addWidget(self.JuryInstructions_pushButton, 2, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 3, 0, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem2, 1, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
@@ -77,13 +98,19 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuAdmin.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.pushButton.clicked.connect(MainWindow.pushButtonJury)
+        self.VerdictForm_pushButton.clicked.connect(MainWindow.pushButtonVerdictForm)
+        self.JuryInstructions_pushButton.clicked.connect(MainWindow.pushButtonJuryInstructions)
+        self.pushButton.clicked.connect(MainWindow.pushButtonOmnibusMotion)
+        self.TransferEntryDialog.clicked.connect(MainWindow.pushButtonTransferEntry)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry"))
-        self.pushButton.setText(_translate("MainWindow", "Jury Instructions"))
+        self.TransferEntryDialog.setText(_translate("MainWindow", "Transfer Entry"))
+        self.pushButton.setText(_translate("MainWindow", "Omnibus Motion"))
+        self.VerdictForm_pushButton.setText(_translate("MainWindow", "Verdict Form"))
+        self.JuryInstructions_pushButton.setText(_translate("MainWindow", "Jury Instructions"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuCriminal.setTitle(_translate("MainWindow", "Criminal"))
         self.menuGeneral.setTitle(_translate("MainWindow", "General"))

@@ -9,10 +9,13 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from main_window_ui import Ui_MainWindow
-from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog
+from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEntryDialog
 
 #Code to update UI
-#pyuic5 -o main_window_ui.py ui/main_window.ui
+#pyuic5 -o main_window_ui.py ui/MainWndow.ui
+
+
+
 
 class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
@@ -32,8 +35,32 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = JuryInstructionsDialog(self)
         dialog.exec()
 
-    def pushButtonJury(self):
+    #Getting closer on this - issue seems to be with inheritance
+    #and accessing the correct object and its properties
+    #def pushButtonDialog(self, objectName):
+        #dialog = self.Ui_MainWindow.objectName()
+        #print(objectName)
+        #print(dialog)
+        #dialog.exec()
+
+    def pushButtonJuryInstructions(self):
         dialog = JuryInstructionsDialog(self)
+        dialog.exec()
+
+    def pushButtonTransferEntry(self):
+        #BUTTON_DICT = {"TransferEntryDialog":TransferEntryDialog}
+        #Getting close I can get the name now just need to set up a proper dictionary (class, global, local?)
+        sending_button = self.sender()
+        print(sending_button.objectName())
+        #dialog = BUTTON_DICT[sending_button]
+        dialog.exec()
+
+    def pushButtonVerdictForm(self):
+        dialog = VerdictFormDialog(self)
+        dialog.exec()
+
+    def pushButtonOmnibusMotion(self):
+        dialog = OmnibusMotionDialog(self)
         dialog.exec()
 
 

@@ -10,15 +10,16 @@ from PyQt5.QtWidgets import (
 
 from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
+from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from HelperFunctions import getText
 
 #Home Paths
-#PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
-#TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
 
 #Work Paths
-PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
-TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
+#PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
+#TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
 
 
 
@@ -61,6 +62,15 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
         os.startfile(PATH + "Saved/Demo_actual_document.docx")
 
 
+class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
+    #template =
+    #saved_doc =
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
+
+
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
     template = JURY_INSTRUCTIONS_TEMPLATE
     #saved_doc = JURY_INSTRUCTIONS_SAVED_DOC
@@ -96,7 +106,7 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
 
 
 class JuryInstructionTemplate(object):
-"""A class for the specific jury instructions for each different type of charge."""
+    """A class for the specific jury instructions for each different type of charge."""
 
     def __init__(self, template=None):
         self.template = template
