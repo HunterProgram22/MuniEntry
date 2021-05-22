@@ -14,7 +14,7 @@
    <string>MuniEntry</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -25,7 +25,7 @@
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QPushButton" name="TransferEntry_pushButton">
+      <widget class="QPushButton" name="TransferEntryDialog">
        <property name="text">
         <string>Transfer Entry</string>
        </property>
@@ -201,22 +201,6 @@
  <resources/>
  <connections>
   <connection>
-   <sender>TransferEntry_pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>pushButtonTransferEntry()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>137</x>
-     <y>59</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>159</x>
-     <y>87</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>VerdictForm_pushButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -264,11 +248,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>TransferEntryDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>88</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>133</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>pushButtonJuryInstructions()</slot>
   <slot>pushButtonTransferEntry()</slot>
   <slot>pushButtonVerdictForm()</slot>
   <slot>pushButtonOmnibusMotion()</slot>
+  <slot>pushButtonDialog()</slot>
  </slots>
 </ui>

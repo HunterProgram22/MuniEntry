@@ -32,13 +32,20 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = JuryInstructionsDialog(self)
         dialog.exec()
 
+    #Getting closer on this - issue seems to be with inheritance
+    #and accessing the correct object and its properties
+    def pushButtonDialog(self):
+        dialog = TransferEntryDialog(self)
+        print(dialog)
+        dialog.exec()
+
     def pushButtonJuryInstructions(self):
         dialog = JuryInstructionsDialog(self)
         dialog.exec()
 
-    def pushButtonTransferEntry(self):
-        dialog = TransferEntryDialog(self)
-        dialog.exec()
+    #def pushButtonTransferEntry(self):
+        #dialog = TransferEntryDialog(self)
+        #dialog.exec()
 
     def pushButtonVerdictForm(self):
         dialog = VerdictFormDialog(self)
