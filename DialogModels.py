@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import (
 from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from transfer_entry_dialog_ui import Ui_TransferEntryDialog
+from verdict_form_dialog_ui import Ui_VerdictFormDialog
 from HelperFunctions import getText
 
 #Home Paths
@@ -63,6 +64,15 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
+    #template =
+    #saved_doc =
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setupUi(self)
+
+
+class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
     #template =
     #saved_doc =
 

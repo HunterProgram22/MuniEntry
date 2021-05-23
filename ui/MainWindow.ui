@@ -32,14 +32,14 @@
       </widget>
      </item>
      <item row="6" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="OmnibusMotionDialog">
        <property name="text">
         <string>Omnibus Motion</string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
-      <widget class="QPushButton" name="VerdictForm_pushButton">
+      <widget class="QPushButton" name="VerdictFormDialog">
        <property name="text">
         <string>Verdict Form</string>
        </property>
@@ -59,7 +59,7 @@
       </spacer>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="JuryInstructions_pushButton">
+      <widget class="QPushButton" name="JuryInstructionsDialog">
        <property name="text">
         <string>Jury Instructions</string>
        </property>
@@ -100,7 +100,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -201,10 +201,10 @@
  <resources/>
  <connections>
   <connection>
-   <sender>VerdictForm_pushButton</sender>
+   <sender>VerdictFormDialog</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>pushButtonVerdictForm()</slot>
+   <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>118</x>
@@ -217,26 +217,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>JuryInstructions_pushButton</sender>
+   <sender>OmnibusMotionDialog</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>pushButtonJuryInstructions()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>65</x>
-     <y>130</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>97</x>
-     <y>138</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>pushButtonOmnibusMotion()</slot>
+   <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>99</x>
@@ -252,15 +236,31 @@
    <sender>TransferEntryDialog</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>pushButtonTransferEntry()</slot>
+   <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>88</x>
-     <y>60</y>
+     <x>91</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
-     <x>133</x>
-     <y>31</y>
+     <x>121</x>
+     <y>26</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>JuryInstructionsDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>92</x>
+     <y>127</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>141</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>
@@ -270,6 +270,6 @@
   <slot>pushButtonTransferEntry()</slot>
   <slot>pushButtonVerdictForm()</slot>
   <slot>pushButtonOmnibusMotion()</slot>
-  <slot>pushButtonDialog(objectName)</slot>
+  <slot>pushButtonDialog()</slot>
  </slots>
 </ui>

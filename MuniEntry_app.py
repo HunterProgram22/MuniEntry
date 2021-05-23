@@ -9,7 +9,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from main_window_ui import Ui_MainWindow
-from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEntryDialog
+from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEntryDialog, VerdictFormDialog
 
 #Code to update UI
 #pyuic5 -o main_window_ui.py ui/MainWndow.ui
@@ -18,7 +18,12 @@ from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEn
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    DIALOG_DICT = {"TransferEntryDialog":TransferEntryDialog}
+    DIALOG_DICT = {
+        "TransferEntryDialog":TransferEntryDialog,
+        "JuryInstructionsDialog":JuryInstructionsDialog,
+        "OmnibusMotionDialog":OmnibusMotionDialog,
+        "VerdictFormDialog":VerdictFormDialog
+        }
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -37,34 +42,11 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog = JuryInstructionsDialog(self)
         dialog.exec()
 
-    #Getting closer on this - issue seems to be with inheritance
-    #and accessing the correct object and its properties
-    #def pushButtonDialog(self, objectName):
-        #dialog = self.Ui_MainWindow.objectName()
-        #print(objectName)
-        #print(dialog)
-        #dialog.exec()
-
-    def pushButtonJuryInstructions(self):
-        dialog = JuryInstructionsDialog(self)
-        dialog.exec()
-
-    def pushButtonTransferEntry(self):
-        #IT FINALLY WORKS!!
+    def pushButtonDialog(self):
         sending_button = self.sender()
-        print(sending_button.objectName())
-        print(type(sending_button))
         dialog = Window.DIALOG_DICT[sending_button.objectName()]()
-        print(dialog)
         dialog.exec()
 
-    def pushButtonVerdictForm(self):
-        dialog = VerdictFormDialog(self)
-        dialog.exec()
-
-    def pushButtonOmnibusMotion(self):
-        dialog = OmnibusMotionDialog(self)
-        dialog.exec()
 
 
 
