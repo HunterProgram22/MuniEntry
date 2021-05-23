@@ -18,6 +18,8 @@ from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEn
 
 
 class Window(QMainWindow, Ui_MainWindow):
+    DIALOG_DICT = {"TransferEntryDialog":TransferEntryDialog}
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
@@ -48,11 +50,12 @@ class Window(QMainWindow, Ui_MainWindow):
         dialog.exec()
 
     def pushButtonTransferEntry(self):
-        #BUTTON_DICT = {"TransferEntryDialog":TransferEntryDialog}
-        #Getting close I can get the name now just need to set up a proper dictionary (class, global, local?)
+        #IT FINALLY WORKS!!
         sending_button = self.sender()
         print(sending_button.objectName())
-        #dialog = BUTTON_DICT[sending_button]
+        print(type(sending_button))
+        dialog = Window.DIALOG_DICT[sending_button.objectName()]()
+        print(dialog)
         dialog.exec()
 
     def pushButtonVerdictForm(self):
