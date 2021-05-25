@@ -31,16 +31,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connectSignalsSlots()
 
     def connectSignalsSlots(self):
-        self.actionOmnibus_Motion_Form.triggered.connect(self.OmnibusMotionForm)
-        self.actionJury_Instructions.triggered.connect(self.JuryInstructionsForm)
-
-    def OmnibusMotionForm(self):
-        dialog = OmnibusMotionDialog(self)
-        dialog.exec()
-
-    def JuryInstructionsForm(self):
-        dialog = JuryInstructionsDialog(self)
-        dialog.exec()
+        pass 
 
     def pushButtonDialog(self):
         sending_button = self.sender()

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_OmnibusMotionDialog(object):
     def setupUi(self, OmnibusMotionDialog):
         OmnibusMotionDialog.setObjectName("OmnibusMotionDialog")
-        OmnibusMotionDialog.resize(481, 617)
+        OmnibusMotionDialog.resize(700, 1000)
         self.layoutWidget = QtWidgets.QWidget(OmnibusMotionDialog)
         self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 321, 48))
         self.layoutWidget.setObjectName("layoutWidget")
