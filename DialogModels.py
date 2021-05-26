@@ -15,12 +15,12 @@ from verdict_form_dialog_ui import Ui_VerdictFormDialog
 from HelperFunctions import getText
 
 #Home Paths
-PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
-TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+#PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+#TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
 
 #Work Paths
-#PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
-#TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
+PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
+TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
 
 
 
@@ -70,6 +70,27 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+
+    def createEntry(self):
+        #This needs to be refactored and inherit from base class
+        context = self.getDialogFields()
+        doc = DocxTemplate("Templates/Transfer_Judgment_Entry.docx")
+        doc.render(context)
+        for para in doc.paragraphs:
+            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+        doc.save("Saved/Transfer_Judgment_Entry_Test.docx")
+        #Need to us os to get system Path
+        os.startfile(PATH + "Saved/Transfer_Judgment_Entry_Test.docx")
+
+    def getDialogFields(self):
+        defendant_name = self.defendant_name.text()
+        case_no = self.case_no.text()
+        context = { 'defendant_name' : defendant_name,
+                    'case_no' : case_no,
+                    }
+        return context
+
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
