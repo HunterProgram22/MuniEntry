@@ -32,18 +32,24 @@ class BaseDialog(QDialog):
         super().__init__(parent)
         self.setupUi(self)
 
-    def createEntry(self):
+    def createEntry(self, template=None, saved_doc=None):
         #This needs to be refactored to be a true base class method
         context = self.getDialogFields()
-        doc = DocxTemplate("Templates/JuryInstructionsMaster.docx")
+        doc = DocxTemplate(template)
         doc.render(context)
         for para in doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        doc.save("Saved/Jury_Instructions_Test.docx")
+        doc.save(saved_doc)
         #Need to us os to get system Path
-        os.startfile(PATH + "Saved/Jury_Instructions_Test.docx")
+        os.startfile(PATH + saved_doc)
 
-
+    def getDialogFields(self):
+        defendant_name = self.defendant_name.text()
+        case_no = self.case_no.text()
+        context = { 'defendant_name' : defendant_name,
+                    'case_no' : case_no,
+                    }
+        return context
 
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
@@ -52,8 +58,8 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
     def createEntry(self):
         doc = DocxTemplate("Templates/demo_template.docx")
-        defendant_name = self.DefendantName_lineEdit.text()
-        case_no = self.CaseNo_lineEdit.text()
+        defendant_name = self.defendant_name.text()
+        case_no = self.case_no.text()
         context = { 'defendant_name' : defendant_name,
                     'case_no' : case_no,
                     }
@@ -64,38 +70,16 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
-    #template =
-    #saved_doc =
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-
-
-    def createEntry(self):
-        #This needs to be refactored and inherit from base class
-        context = self.getDialogFields()
-        doc = DocxTemplate("Templates/Transfer_Judgment_Entry.docx")
-        doc.render(context)
-        for para in doc.paragraphs:
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        doc.save("Saved/Transfer_Judgment_Entry_Test.docx")
-        #Need to us os to get system Path
-        os.startfile(PATH + "Saved/Transfer_Judgment_Entry_Test.docx")
-
-    def getDialogFields(self):
-        defendant_name = self.defendant_name.text()
-        case_no = self.case_no.text()
-        context = { 'defendant_name' : defendant_name,
-                    'case_no' : case_no,
-                    }
-        return context
-
+#This extended method isn't working
+    def createEntry(self, template="Templates/Transfer_Judgment_Entry.docx", saved_doc="Saved/Transfer_Judgment_Entry_Test.docx"):
+        super().__init__(self)
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
-    #template =
-    #saved_doc =
 
     def __init__(self, parent=None):
         super().__init__(parent)
