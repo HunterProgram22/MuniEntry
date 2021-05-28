@@ -32,16 +32,23 @@ class BaseDialog(QDialog):
         super().__init__(parent)
         self.setupUi(self)
 
-    def createEntry(self, template=None, saved_doc=None):
+    @classmethod
+    def get_template(cls):
+        return cls.template
+
+    @classmethod
+    def createEntry(cls):
         #This needs to be refactored to be a true base class method
         context = self.getDialogFields()
-        doc = DocxTemplate(template)
+        print(context)
+        doc = DocxTemplate(cls.get_template())
         doc.render(context)
         for para in doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
         doc.save(saved_doc)
         #Need to us os to get system Path
         os.startfile(PATH + saved_doc)
+
 
     def getDialogFields(self):
         defendant_name = self.defendant_name.text()
@@ -50,6 +57,16 @@ class BaseDialog(QDialog):
                     'case_no' : case_no,
                     }
         return context
+
+
+class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
+    template="Templates/Transfer_Judgment_Entry.docx"
+    saved_doc="Saved/Transfer_Judgment_Entry_Test.docx"
+
+    #def __init__(self, parent=None):
+        #super().__init__(parent)
+        #self.setupUi(self)
+
 
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
@@ -69,14 +86,7 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
         os.startfile(PATH + "Saved/Demo_actual_document.docx")
 
 
-class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setupUi(self)
-#This extended method isn't working
-    def createEntry(self, template="Templates/Transfer_Judgment_Entry.docx", saved_doc="Saved/Transfer_Judgment_Entry_Test.docx"):
-        super().__init__(self)
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
