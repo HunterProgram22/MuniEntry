@@ -28,6 +28,7 @@ JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "JuryInstructionsMaster.docx"
 JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
 
 class BaseDialog(QDialog):
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.template = self.__class__.template
@@ -47,7 +48,6 @@ class BaseDialog(QDialog):
         #Need to us os to get system Path
         os.startfile(PATH + self.saved_doc)
 
-
     def getDialogFields(self):
         defendant_name = self.defendant_name.text()
         case_no = self.case_no.text()
@@ -60,6 +60,14 @@ class BaseDialog(QDialog):
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
     template="Templates/Transfer_Judgment_Entry.docx"
     saved_doc="Saved/Transfer_Judgment_Entry_Test.docx"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+
+class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
+    template="Templates/Verdict_Form.docx"
+    saved_doc="Saved/Verdict_Form_Test.docx"
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -87,11 +95,7 @@ class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
 
 
 
-class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
 
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setupUi(self)
 
 
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
