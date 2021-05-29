@@ -30,6 +30,8 @@ JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
 class BaseDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.template = self.__class__.template
+        self.saved_doc = self.__class__.saved_doc
         self.setupUi(self)
 
     def get_template(self):
@@ -61,9 +63,7 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.template = self.__class__.template
-        self.saved_doc = self.__class__.saved_doc
-        self.setupUi(self)
+
 
 
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
