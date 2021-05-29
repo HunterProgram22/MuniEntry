@@ -87,6 +87,9 @@ class Ui_TransferEntryDialog(object):
 
         self.retranslateUi(TransferEntryDialog)
         self.pushButton.clicked.connect(TransferEntryDialog.createEntry)
+        self.pushButton_2.clicked.connect(self.defendant_name.clear)
+        self.pushButton_2.clicked.connect(self.case_no.clear)
+        self.pushButton_3.clicked.connect(TransferEntryDialog.reject)
         QtCore.QMetaObject.connectSlotsByName(TransferEntryDialog)
 
     def retranslateUi(self, TransferEntryDialog):

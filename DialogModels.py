@@ -17,57 +17,60 @@ from HelperFunctions import getText
 #Home Paths
 PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
 TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
+SAVE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Saved\\"
 
 #Work Paths
 #PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
 #TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
 
-
-
 JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "JuryInstructionsMaster.docx"
 JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
 
 class BaseDialog(QDialog):
+    """Base class that creates all the methods commonly used by all
+    dialogs for forms. The template for each form is a class variable
+    for that specific class used for each dialog."""
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.template = self.__class__.template
-        self.saved_doc = self.__class__.saved_doc
+        self.template_name = self.__class__.template_name
         self.setupUi(self)
 
-    def get_template(self):
+    def getTemplate(self):
         return self.template
 
     def createEntry(self):
-        context = self.getDialogFields()
-        doc = DocxTemplate(self.get_template())
-        doc.render(context)
+        self.context = self.getDialogFields()
+        doc = DocxTemplate(self.getTemplate())
+        doc.render(self.context)
         for para in doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        doc.save(self.saved_doc)
+        self.docname = self.context['case_no'] + '_' + self.template_name + '.docx'
+        doc.save(SAVE_PATH + self.docname)
         #Need to us os to get system Path
-        os.startfile(PATH + self.saved_doc)
+        os.startfile(SAVE_PATH + self.docname)
 
     def getDialogFields(self):
         defendant_name = self.defendant_name.text()
         case_no = self.case_no.text()
-        context = { 'defendant_name' : defendant_name,
+        self.context = { 'defendant_name' : defendant_name,
                     'case_no' : case_no,
                     }
-        return context
+        return self.context
 
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
-    template="Templates/Transfer_Judgment_Entry.docx"
-    saved_doc="Saved/Transfer_Judgment_Entry_Test.docx"
+    template = "Templates/Transfer_Judgment_Entry.docx"
+    template_name = "Transfer_Entry"
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
-    template="Templates/Verdict_Form.docx"
-    saved_doc="Saved/Verdict_Form_Test.docx"
+    template = "Templates/Verdict_Form.docx"
+    template_name = "Verdict_Form"
 
     def __init__(self, parent=None):
         super().__init__(parent)

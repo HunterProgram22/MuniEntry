@@ -53,6 +53,9 @@ class Ui_VerdictFormDialog(object):
 
         self.retranslateUi(VerdictFormDialog)
         self.pushButton.clicked.connect(VerdictFormDialog.createEntry)
+        self.pushButton_2.clicked.connect(self.defendant_name.clear)
+        self.pushButton_2.clicked.connect(self.case_no.clear)
+        self.pushButton_3.clicked.connect(VerdictFormDialog.reject)
         QtCore.QMetaObject.connectSlotsByName(VerdictFormDialog)
 
     def retranslateUi(self, VerdictFormDialog):
