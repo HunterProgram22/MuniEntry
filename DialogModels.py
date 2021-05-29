@@ -73,29 +73,10 @@ class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
         super().__init__(parent)
 
 
-
 class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-
-    def createEntry(self):
-        doc = DocxTemplate("Templates/demo_template.docx")
-        defendant_name = self.defendant_name.text()
-        case_no = self.case_no.text()
-        context = { 'defendant_name' : defendant_name,
-                    'case_no' : case_no,
-                    }
-        doc.render(context)
-        doc.save("Saved/Demo_actual_document.docx")
-        #Need to us os to get system Path
-        os.startfile(PATH + "Saved/Demo_actual_document.docx")
-
-
-
-
-
-
 
 
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
