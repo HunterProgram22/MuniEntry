@@ -53,16 +53,16 @@ class BaseDialog(QDialog):
         os.startfile(SAVE_PATH + self.docname)
 
     def getDialogFields(self):
+        defendant_name = self.defendant_name.text()
+        case_no = self.case_no.text()
         try:
-            defendant_name = self.defendant_name.text()
-            case_no = self.case_no.text()
             defendant_address = self.defendant_address.text()
             defendant_city = self.defendant_city.text()
             defendant_state = self.defendant_state.currentText()
             defendant_zipcode = self.defendant_zipcode.text()
         except AttributeError:
-            defendant_name = self.defendant_name.text()
-            case_no = self.case_no.text()
+            """This may need to be modified to address if user leaves fields
+            blank but the data is required."""
             defendant_address = None
             defendant_city = None
             defendant_state = None
@@ -118,7 +118,6 @@ class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
         return self.fields_dict
 
 
-
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
     template = JURY_INSTRUCTIONS_TEMPLATE
     #saved_doc = JURY_INSTRUCTIONS_SAVED_DOC
@@ -151,10 +150,3 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
         doc = DocxTemplate(instructions)
         doc.render(fields_dict)
         doc.save("Saved/Jury_Instructions_Test.docx")
-
-
-class JuryInstructionTemplate(object):
-    """A class for the specific jury instructions for each different type of charge."""
-
-    def __init__(self, template=None):
-        self.template = template
