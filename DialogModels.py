@@ -4,6 +4,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
 
+from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtWidgets import (
     QApplication, QDialog, QMainWindow, QMessageBox
 )
@@ -41,12 +42,12 @@ class BaseDialog(QDialog):
         return self.template
 
     def createEntry(self):
-        self.context = self.getDialogFields()
+        self.fields_dict = self.getDialogFields()
         doc = DocxTemplate(self.getTemplate())
-        doc.render(self.context)
+        doc.render(self.fields_dict)
         for para in doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        self.docname = self.context['case_no'] + '_' + self.template_name + '.docx'
+        self.docname = self.fields_dict['case_no'] + '_' + self.template_name + '.docx'
         doc.save(SAVE_PATH + self.docname)
         #Need to us os to get system Path
         os.startfile(SAVE_PATH + self.docname)
@@ -54,10 +55,19 @@ class BaseDialog(QDialog):
     def getDialogFields(self):
         defendant_name = self.defendant_name.text()
         case_no = self.case_no.text()
-        self.context = { 'defendant_name' : defendant_name,
-                    'case_no' : case_no,
-                    }
-        return self.context
+        defendant_address = self.defendant_address.text()
+        defendant_city = self.defendant_city.text()
+        defendant_state = self.defendant_state.currentText()
+        defendant_zipcode = self.defendant_zipcode.text()
+        self.fields_dict = {
+            'defendant_name' : defendant_name,
+            'case_no' : case_no,
+            'defendant_address' : defendant_address,
+            'defendant_city' : defendant_city,
+            'defendant_state' : defendant_state,
+            'defendant_zipcode' : defendant_zipcode,
+            }
+        return self.fields_dict
 
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
@@ -66,6 +76,16 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
+
+    def getDialogFields(self):
+        super(TransferEntryDialog, self).getDialogFields()
+        assigned_date = self.assigned_date.date().toString('MMMM d, yyyy')
+        assigned_judge = self.assigned_judge.currentText()
+        transferred_judge = self.transferred_judge.currentText()
+        self.fields_dict['assigned_date'] = assigned_date
+        self.fields_dict['assigned_judge'] = assigned_judge
+        self.fields_dict['transferred_judge'] = transferred_judge
+        return self.fields_dict
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
@@ -98,21 +118,21 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
         second_charge = self.SecondCharge_comboBox.currentText()
         self.populateInstructions(JuryInstructionsDialog.template)
         count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
-        context = { 'defendant_name' : defendant_name,
+        fields_dict = { 'defendant_name' : defendant_name,
                     'case_no' : case_no,
                     'first_charge' : first_charge,
                     'second_charge' : second_charge,
                     'complaint_date' : complaint_date,
                     'count_one_instructions' : count_one_instructions,
                     }
-        return context
+        return fields_dict
 
     def populateInstructions(self, instructions):
         defendant_name = self.DefendantName_lineEdit.text()
-        context = { 'defendant_name' : defendant_name,
+        fields_dict = { 'defendant_name' : defendant_name,
                     }
         doc = DocxTemplate(instructions)
-        doc.render(context)
+        doc.render(fields_dict)
         doc.save("Saved/Jury_Instructions_Test.docx")
 
 
