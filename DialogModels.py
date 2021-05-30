@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (
     QApplication, QDialog, QMainWindow, QMessageBox
 )
 
-from omnibus_motion_dialog_ui import Ui_OmnibusMotionDialog
+from motion_entry_dialog_ui import Ui_MotionEntryDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from verdict_form_dialog_ui import Ui_VerdictFormDialog
@@ -53,12 +53,20 @@ class BaseDialog(QDialog):
         os.startfile(SAVE_PATH + self.docname)
 
     def getDialogFields(self):
-        defendant_name = self.defendant_name.text()
-        case_no = self.case_no.text()
-        defendant_address = self.defendant_address.text()
-        defendant_city = self.defendant_city.text()
-        defendant_state = self.defendant_state.currentText()
-        defendant_zipcode = self.defendant_zipcode.text()
+        try:
+            defendant_name = self.defendant_name.text()
+            case_no = self.case_no.text()
+            defendant_address = self.defendant_address.text()
+            defendant_city = self.defendant_city.text()
+            defendant_state = self.defendant_state.currentText()
+            defendant_zipcode = self.defendant_zipcode.text()
+        except AttributeError:
+            defendant_name = self.defendant_name.text()
+            case_no = self.case_no.text()
+            defendant_address = None
+            defendant_city = None
+            defendant_state = None
+            defendant_zipcode = None
         self.fields_dict = {
             'defendant_name' : defendant_name,
             'case_no' : case_no,
@@ -79,12 +87,9 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
     def getDialogFields(self):
         super(TransferEntryDialog, self).getDialogFields()
-        assigned_date = self.assigned_date.date().toString('MMMM d, yyyy')
-        assigned_judge = self.assigned_judge.currentText()
-        transferred_judge = self.transferred_judge.currentText()
-        self.fields_dict['assigned_date'] = assigned_date
-        self.fields_dict['assigned_judge'] = assigned_judge
-        self.fields_dict['transferred_judge'] = transferred_judge
+        self.fields_dict['assigned_date'] = self.assigned_date.date().toString('MMMM d, yyyy')
+        self.fields_dict['assigned_judge'] = self.assigned_judge.currentText()
+        self.fields_dict['transferred_judge'] = self.transferred_judge.currentText()
         return self.fields_dict
 
 
@@ -96,10 +101,22 @@ class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
         super().__init__(parent)
 
 
-class OmnibusMotionDialog(QDialog, Ui_OmnibusMotionDialog):
+class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
+    template = "Templates/Motion_Judgment_Entry.docx"
+    template_name = "Motion_Form"
+
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setupUi(self)
+
+    def getDialogFields(self):
+        super(MotionEntryDialog, self).getDialogFields()
+        self.fields_dict['motion_filed_date'] = self.motion_filed_date.date().toString('MMMM d, yyyy')
+        self.fields_dict['motion_filed_by'] = self.motion_filed_by.currentText()
+        self.fields_dict['motion_description'] = self.motion_description.toPlainText()
+        self.fields_dict['motion_decision'] = self.motion_decision.currentText()
+        self.fields_dict['assigned_judge'] = self.assigned_judge.currentText()
+        return self.fields_dict
+
 
 
 class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):

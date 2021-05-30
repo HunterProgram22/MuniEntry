@@ -9,7 +9,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from main_window_ui import Ui_MainWindow
-from DialogModels import OmnibusMotionDialog, JuryInstructionsDialog, TransferEntryDialog, VerdictFormDialog
+from DialogModels import MotionEntryDialog, JuryInstructionsDialog, TransferEntryDialog, VerdictFormDialog
 
 #Code to update UI
 #pyuic5 -o main_window_ui.py ui/MainWndow.ui
@@ -21,7 +21,7 @@ class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
         "TransferEntryDialog":TransferEntryDialog,
         "JuryInstructionsDialog":JuryInstructionsDialog,
-        "OmnibusMotionDialog":OmnibusMotionDialog,
+        "MotionEntryDialog":MotionEntryDialog,
         "VerdictFormDialog":VerdictFormDialog
         }
 
@@ -31,7 +31,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connectSignalsSlots()
 
     def connectSignalsSlots(self):
-        pass 
+        pass
 
     def pushButtonDialog(self):
         sending_button = self.sender()
