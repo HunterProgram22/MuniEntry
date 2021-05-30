@@ -13,6 +13,7 @@ from motion_entry_dialog_ui import Ui_MotionEntryDialog
 from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from verdict_form_dialog_ui import Ui_VerdictFormDialog
+from yellow_form_dialog_ui import Ui_YellowFormDialog
 from HelperFunctions import getText
 
 #Home Paths
@@ -94,6 +95,13 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
+    template = "Templates/Verdict_Form.docx"
+    template_name = "Verdict_Form"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
     template = "Templates/Verdict_Form.docx"
     template_name = "Verdict_Form"
 

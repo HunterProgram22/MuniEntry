@@ -9,7 +9,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from main_window_ui import Ui_MainWindow
-from DialogModels import MotionEntryDialog, JuryInstructionsDialog, TransferEntryDialog, VerdictFormDialog
+from DialogModels import MotionEntryDialog, JuryInstructionsDialog, TransferEntryDialog, VerdictFormDialog, YellowFormDialog
 
 #Code to update UI
 #pyuic5 -o main_window_ui.py ui/MainWndow.ui
@@ -22,7 +22,8 @@ class Window(QMainWindow, Ui_MainWindow):
         "TransferEntryDialog":TransferEntryDialog,
         "JuryInstructionsDialog":JuryInstructionsDialog,
         "MotionEntryDialog":MotionEntryDialog,
-        "VerdictFormDialog":VerdictFormDialog
+        "VerdictFormDialog":VerdictFormDialog,
+        "YellowFormDialog":YellowFormDialog,
         }
 
     def __init__(self, parent=None):
