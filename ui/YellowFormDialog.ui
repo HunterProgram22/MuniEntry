@@ -9,8 +9,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
+<<<<<<< HEAD
     <width>1126</width>
     <height>681</height>
+=======
+    <width>749</width>
+    <height>612</height>
+>>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
    </rect>
   </property>
   <property name="windowTitle">
@@ -161,7 +166,11 @@
     <string>Case Dismissed:</string>
    </property>
   </widget>
+<<<<<<< HEAD
   <widget class="QComboBox" name="dismissed_choices">
+=======
+  <widget class="QComboBox" name="comboBox">
+>>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -327,6 +336,19 @@
     </item>
    </layout>
   </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>230</y>
+     <width>70</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CheckBox</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -442,9 +464,29 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>YellowFormDialog</receiver>
+   <slot>setEnabled()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
+<<<<<<< HEAD
   <slot>setDialog()</slot>
+=======
+  <slot>setEnabled()</slot>
+>>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
  </slots>
 </ui>
