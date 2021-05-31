@@ -197,6 +197,39 @@
     </property>
    </item>
   </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>180</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Extradition:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_2">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>180</y>
+     <width>211</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>Defendant is detained until _______ 8:00 a.m., as a fugitive from another state, and is committed subjec to bond.</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Defendant waived issues of covernor's wrrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond.</string>
+    </property>
+   </item>
+  </widget>
  </widget>
  <resources/>
  <connections>
