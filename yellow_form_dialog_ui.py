@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui\YellowFormDialog.ui'
+# Form implementation generated from reading ui file 'ui/YellowFormDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,12 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_YellowFormDialog(object):
     def setupUi(self, YellowFormDialog):
         YellowFormDialog.setObjectName("YellowFormDialog")
-<<<<<<< HEAD
         YellowFormDialog.setEnabled(True)
         YellowFormDialog.resize(1126, 681)
-=======
-        YellowFormDialog.resize(749, 612)
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
         self.layoutWidget_2 = QtWidgets.QWidget(YellowFormDialog)
         self.layoutWidget_2.setGeometry(QtCore.QRect(990, 10, 95, 151))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
@@ -91,64 +87,56 @@ class Ui_YellowFormDialog(object):
         self.label_6.setAcceptDrops(False)
         self.label_6.setWordWrap(True)
         self.label_6.setObjectName("label_6")
+        self.set_hearing_checkbox = QtWidgets.QCheckBox(YellowFormDialog)
+        self.set_hearing_checkbox.setGeometry(QtCore.QRect(25, 110, 101, 20))
+        self.set_hearing_checkbox.setObjectName("set_hearing_checkbox")
         self.widget = QtWidgets.QWidget(YellowFormDialog)
-        self.widget.setGeometry(QtCore.QRect(20, 103, 538, 74))
+        self.widget.setGeometry(QtCore.QRect(150, 100, 538, 80))
         self.widget.setObjectName("widget")
-        self.formLayout_3 = QtWidgets.QFormLayout(self.widget)
-        self.formLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.formLayout_3.setObjectName("formLayout_3")
-        self.case_set_date = QtWidgets.QDateTimeEdit(self.widget)
-        self.case_set_date.setDate(QtCore.QDate(2021, 5, 1))
-        self.case_set_date.setTime(QtCore.QTime(8, 0, 0))
-        self.case_set_date.setMaximumDate(QtCore.QDate(2100, 12, 1))
-        self.case_set_date.setMinimumDate(QtCore.QDate(2021, 4, 1))
-        self.case_set_date.setMinimumTime(QtCore.QTime(8, 0, 0))
-        self.case_set_date.setObjectName("case_set_date")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.case_set_date)
+        self.hearing_layout = QtWidgets.QFormLayout(self.widget)
+        self.hearing_layout.setContentsMargins(0, 0, 0, 0)
+        self.hearing_layout.setObjectName("hearing_layout")
         self.label_4 = QtWidgets.QLabel(self.widget)
         self.label_4.setObjectName("label_4")
-<<<<<<< HEAD
-        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_4)
+        self.hearing_layout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_4)
         self.case_set_for_choices = QtWidgets.QComboBox(self.widget)
+        self.case_set_for_choices.setEnabled(False)
         self.case_set_for_choices.setObjectName("case_set_for_choices")
         self.case_set_for_choices.addItem("")
         self.case_set_for_choices.addItem("")
-        self.formLayout_3.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.case_set_for_choices)
+        self.hearing_layout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.case_set_for_choices)
         self.label_3 = QtWidgets.QLabel(self.widget)
         self.label_3.setObjectName("label_3")
-        self.formLayout_3.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_3)
-=======
-        self.comboBox = QtWidgets.QComboBox(YellowFormDialog)
-        self.comboBox.setEnabled(False)
-        self.comboBox.setGeometry(QtCore.QRect(192, 150, 211, 22))
-        self.comboBox.setObjectName("comboBox")
-        self.comboBox.addItem("")
-        self.comboBox.addItem("")
-        self.label_5 = QtWidgets.QLabel(YellowFormDialog)
-        self.label_5.setGeometry(QtCore.QRect(20, 180, 131, 16))
-        self.label_5.setObjectName("label_5")
-        self.comboBox_2 = QtWidgets.QComboBox(YellowFormDialog)
-        self.comboBox_2.setGeometry(QtCore.QRect(190, 180, 211, 22))
-        self.comboBox_2.setObjectName("comboBox_2")
-        self.comboBox_2.addItem("")
-        self.comboBox_2.addItem("")
-        self.checkBox = QtWidgets.QCheckBox(YellowFormDialog)
-        self.checkBox.setGeometry(QtCore.QRect(30, 230, 70, 18))
-        self.checkBox.setObjectName("checkBox")
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
+        self.hearing_layout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_3)
+        self.case_set_time = QtWidgets.QTimeEdit(self.widget)
+        self.case_set_time.setEnabled(False)
+        self.case_set_time.setMinimumTime(QtCore.QTime(8, 0, 0))
+        self.case_set_time.setCalendarPopup(True)
+        self.case_set_time.setTime(QtCore.QTime(8, 0, 0))
+        self.case_set_time.setObjectName("case_set_time")
+        self.hearing_layout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.case_set_time)
+        self.case_set_date = QtWidgets.QDateEdit(self.widget)
+        self.case_set_date.setEnabled(False)
+        self.case_set_date.setMinimumDateTime(QtCore.QDateTime(QtCore.QDate(2021, 5, 31), QtCore.QTime(0, 0, 0)))
+        self.case_set_date.setMaximumDate(QtCore.QDate(2100, 12, 31))
+        self.case_set_date.setMinimumDate(QtCore.QDate(2021, 5, 31))
+        self.case_set_date.setCalendarPopup(True)
+        self.case_set_date.setDate(QtCore.QDate(2021, 5, 31))
+        self.case_set_date.setObjectName("case_set_date")
+        self.hearing_layout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.case_set_date)
+        self.label_7 = QtWidgets.QLabel(self.widget)
+        self.label_7.setObjectName("label_7")
+        self.hearing_layout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_7)
 
         self.retranslateUi(YellowFormDialog)
         self.pushButton.clicked.connect(YellowFormDialog.createEntry)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
         self.pushButton_2.clicked.connect(self.case_no.clear)
         self.pushButton_3.clicked.connect(YellowFormDialog.reject)
-<<<<<<< HEAD
         self.case_dismissed_checkbox.toggled['bool'].connect(YellowFormDialog.setDialog)
         self.extradition_checkbox.toggled['bool'].connect(YellowFormDialog.setDialog)
         self.plea_pending_checkbox.toggled['bool'].connect(YellowFormDialog.setDialog)
-=======
-        self.checkBox.toggled['bool'].connect(YellowFormDialog.setEnabled)
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
+        self.set_hearing_checkbox.toggled['bool'].connect(YellowFormDialog.setDialog)
         QtCore.QMetaObject.connectSlotsByName(YellowFormDialog)
 
     def retranslateUi(self, YellowFormDialog):
@@ -168,17 +156,9 @@ class Ui_YellowFormDialog(object):
         self.plea_pending_checkbox.setText(_translate("YellowFormDialog", "Plea Pending:"))
         self.label_5.setText(_translate("YellowFormDialog", "Defendant\'s counsel, "))
         self.label_6.setText(_translate("YellowFormDialog", ", advised written plea will be or has been filed. If filed by hearing date, plea date is vacated and trial assignment will issue by regular mail, email or fax to counsel."))
-        self.case_set_date.setDisplayFormat(_translate("YellowFormDialog", "M/d/yyyy h:mm "))
+        self.set_hearing_checkbox.setText(_translate("YellowFormDialog", "Set Hearing:"))
         self.label_4.setText(_translate("YellowFormDialog", "Case is set for:"))
-<<<<<<< HEAD
-        self.case_set_for_choices.setItemText(0, _translate("YellowFormDialog", "Enter Plea"))
-        self.case_set_for_choices.setItemText(1, _translate("YellowFormDialog", "Delayed on defendant\'s motion, time tolled per R.C. 2945.72."))
+        self.case_set_for_choices.setItemText(0, _translate("YellowFormDialog", "to enter a plea"))
+        self.case_set_for_choices.setItemText(1, _translate("YellowFormDialog", "for a trial on not guilty plea"))
         self.label_3.setText(_translate("YellowFormDialog", "Case is set for hearing on:"))
-=======
-        self.comboBox.setItemText(0, _translate("YellowFormDialog", "Enter Plea"))
-        self.comboBox.setItemText(1, _translate("YellowFormDialog", "Delayed on defendant\'s motion, time tolled per R.C. 2945.72."))
-        self.label_5.setText(_translate("YellowFormDialog", "Extradition:"))
-        self.comboBox_2.setItemText(0, _translate("YellowFormDialog", "Defendant is detained until _______ 8:00 a.m., as a fugitive from another state, and is committed subjec to bond."))
-        self.comboBox_2.setItemText(1, _translate("YellowFormDialog", "Defendant waived issues of covernor\'s wrrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond."))
-        self.checkBox.setText(_translate("YellowFormDialog", "CheckBox"))
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
+        self.label_7.setText(_translate("YellowFormDialog", "Case is set at:"))

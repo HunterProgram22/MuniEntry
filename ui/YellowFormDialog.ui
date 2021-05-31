@@ -9,13 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-<<<<<<< HEAD
     <width>1126</width>
     <height>681</height>
-=======
-    <width>749</width>
-    <height>612</height>
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
    </rect>
   </property>
   <property name="windowTitle">
@@ -166,11 +161,7 @@
     <string>Case Dismissed:</string>
    </property>
   </widget>
-<<<<<<< HEAD
   <widget class="QComboBox" name="dismissed_choices">
-=======
-  <widget class="QComboBox" name="comboBox">
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -254,75 +245,49 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QCheckBox" name="set_hearing_checkbox">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>110</y>
+     <width>101</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Set Hearing:</string>
+   </property>
+  </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>103</y>
+     <x>150</x>
+     <y>100</y>
      <width>538</width>
-     <height>74</height>
+     <height>80</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout_3">
-    <item row="0" column="1">
-     <widget class="QDateTimeEdit" name="case_set_date">
-      <property name="date">
-       <date>
-        <year>2021</year>
-        <month>5</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="time">
-       <time>
-        <hour>8</hour>
-        <minute>0</minute>
-        <second>0</second>
-       </time>
-      </property>
-      <property name="maximumDate">
-       <date>
-        <year>2100</year>
-        <month>12</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="minimumDate">
-       <date>
-        <year>2021</year>
-        <month>4</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="minimumTime">
-       <time>
-        <hour>8</hour>
-        <minute>0</minute>
-        <second>0</second>
-       </time>
-      </property>
-      <property name="displayFormat">
-       <string>M/d/yyyy h:mm </string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
+   <layout class="QFormLayout" name="hearing_layout">
+    <item row="2" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>Case is set for:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="2" column="1">
      <widget class="QComboBox" name="case_set_for_choices">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <item>
        <property name="text">
-        <string>Enter Plea</string>
+        <string>to enter a plea</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Delayed on defendant's motion, time tolled per R.C. 2945.72.</string>
+        <string>for a trial on not guilty plea</string>
        </property>
       </item>
      </widget>
@@ -334,20 +299,79 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="1">
+     <widget class="QTimeEdit" name="case_set_time">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumTime">
+       <time>
+        <hour>8</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="time">
+       <time>
+        <hour>8</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QDateEdit" name="case_set_date">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumDateTime">
+       <datetime>
+        <hour>0</hour>
+        <minute>0</minute>
+        <second>0</second>
+        <year>2021</year>
+        <month>5</month>
+        <day>31</day>
+       </datetime>
+      </property>
+      <property name="maximumDate">
+       <date>
+        <year>2100</year>
+        <month>12</month>
+        <day>31</day>
+       </date>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>2021</year>
+        <month>5</month>
+        <day>31</day>
+       </date>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2021</year>
+        <month>5</month>
+        <day>31</day>
+       </date>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Case is set at:</string>
+      </property>
+     </widget>
+    </item>
    </layout>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>230</y>
-     <width>70</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>CheckBox</string>
-   </property>
   </widget>
  </widget>
  <resources/>
@@ -379,8 +403,8 @@
      <y>72</y>
     </hint>
     <hint type="destinationlabel">
-     <x>321</x>
-     <y>23</y>
+     <x>336</x>
+     <y>28</y>
     </hint>
    </hints>
   </connection>
@@ -423,8 +447,8 @@
    <slot>setDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>67</x>
-     <y>237</y>
+     <x>68</x>
+     <y>222</y>
     </hint>
     <hint type="destinationlabel">
      <x>120</x>
@@ -455,8 +479,8 @@
    <slot>setDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>96</x>
-     <y>278</y>
+     <x>97</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel">
      <x>113</x>
@@ -465,28 +489,24 @@
    </hints>
   </connection>
   <connection>
-   <sender>checkBox</sender>
+   <sender>set_hearing_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>setEnabled()</slot>
+   <slot>setDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>75</x>
-     <y>239</y>
+     <x>68</x>
+     <y>121</y>
     </hint>
     <hint type="destinationlabel">
-     <x>125</x>
-     <y>235</y>
+     <x>88</x>
+     <y>96</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
-<<<<<<< HEAD
   <slot>setDialog()</slot>
-=======
-  <slot>setEnabled()</slot>
->>>>>>> 151be1c52e4f7d8f951c0da37dc9dc81b2731f0c
  </slots>
 </ui>

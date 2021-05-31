@@ -4,7 +4,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
 
-from PyQt5.QtCore import QDate, Qt
+from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import (
     QApplication, QDialog, QMainWindow, QMessageBox
 )
@@ -101,14 +101,24 @@ class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+
 class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
-    template = "Templates/Verdict_Form.docx"
-    template_name = "Verdict_Form"
+    template = "Templates/Yellow_Form.docx"
+    template_name = "Yellow_Form"
 
     def __init__(self, parent=None):
         super().__init__(parent)
 
     def setDialog(self, bool):
+        if self.sender().objectName() == "set_hearing_checkbox":
+            if bool == True:
+                self.case_set_date.setEnabled(True)
+                self.case_set_time.setEnabled(True)
+                self.case_set_for_choices.setEnabled(True)
+            else:
+                self.case_set_date.setEnabled(False)
+                self.case_set_time.setEnabled(True)
+                self.case_set_for_choices.setEnabled(False)
         if self.sender().objectName() == "extradition_checkbox":
             if bool == True:
                 self.extradition_choices.setEnabled(True)
@@ -125,6 +135,12 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
             else:
                 self.defense_counsel_name.setEnabled(False)
 
+    def getDialogFields(self):
+        super(YellowFormDialog, self).getDialogFields()
+        self.fields_dict['case_set_date'] = self.case_set_date.date().toString('MMMM d, yyyy')
+        self.fields_dict['case_set_time'] = self.case_set_time.time().toString('h:mm AP')
+        self.fields_dict['case_set_for_choices'] = self.case_set_for_choices.currentText()
+        return self.fields_dict
 
 class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
     template = "Templates/Motion_Judgment_Entry.docx"
