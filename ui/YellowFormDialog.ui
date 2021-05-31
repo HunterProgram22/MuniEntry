@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1126</width>
-    <height>681</height>
+    <width>1116</width>
+    <height>757</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>YellowFormDialog</string>
@@ -21,7 +27,7 @@
     <rect>
      <x>990</x>
      <y>10</y>
-     <width>95</width>
+     <width>111</width>
      <height>151</height>
     </rect>
    </property>
@@ -39,19 +45,6 @@
        <string>Clear Fields</string>
       </property>
      </widget>
-    </item>
-    <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>58</height>
-       </size>
-      </property>
-     </spacer>
     </item>
     <item>
      <widget class="QPushButton" name="pushButton_3">
@@ -106,176 +99,24 @@
     </item>
    </layout>
   </widget>
-  <widget class="QComboBox" name="extradition_choices">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>148</x>
-     <y>181</y>
-     <width>878</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="editable">
-    <bool>false</bool>
-   </property>
-   <property name="sizeAdjustPolicy">
-    <enum>QComboBox::AdjustToContents</enum>
-   </property>
-   <item>
-    <property name="text">
-     <string>Defendant is detained until _______ 8:00 a.m., as a fugitive from another state, and is committed subjec to bond.</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>Defendant waived issues of covernor's warrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond.</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QCheckBox" name="extradition_checkbox">
-   <property name="geometry">
-    <rect>
-     <x>21</x>
-     <y>181</y>
-     <width>92</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Extradition:</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="case_dismissed_checkbox">
-   <property name="geometry">
-    <rect>
-     <x>21</x>
-     <y>215</y>
-     <width>121</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Case Dismissed:</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="dismissed_choices">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>148</x>
-     <y>215</y>
-     <width>748</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="sizeAdjustPolicy">
-    <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
-   </property>
-   <item>
-    <property name="text">
-     <string>on oral motion of prosecutor only if costs paid by continued date whereupon no apperance is required. Speedy trial is waived.</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>without prejudice.</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QCheckBox" name="plea_pending_checkbox">
-   <property name="geometry">
-    <rect>
-     <x>21</x>
-     <y>255</y>
-     <width>105</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Plea Pending:</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="defense_counsel_name">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>270</x>
-     <y>250</y>
-     <width>137</width>
-     <height>22</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_5">
-   <property name="geometry">
-    <rect>
-     <x>148</x>
-     <y>255</y>
-     <width>122</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Defendant's counsel, </string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>410</x>
-     <y>258</y>
-     <width>691</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="acceptDrops">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>, advised written plea will be or has been filed. If filed by hearing date, plea date is vacated and trial assignment will issue by regular mail, email or fax to counsel.</string>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="set_hearing_checkbox">
-   <property name="geometry">
-    <rect>
-     <x>25</x>
-     <y>110</y>
-     <width>101</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Set Hearing:</string>
-   </property>
-  </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>100</y>
-     <width>538</width>
-     <height>80</height>
+     <x>20</x>
+     <y>180</y>
+     <width>1258</width>
+     <height>281</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="hearing_layout">
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_4">
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="set_hearing_checkbox">
       <property name="text">
-       <string>Case is set for:</string>
+       <string>Set Hearing:</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="0" column="1">
      <widget class="QComboBox" name="case_set_for_choices">
       <property name="enabled">
        <bool>false</bool>
@@ -292,38 +133,83 @@
       </item>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_3">
+    <item row="7" column="0">
+     <widget class="QCheckBox" name="extradition_checkbox">
       <property name="text">
-       <string>Case is set for hearing on:</string>
+       <string>Extradition:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QTimeEdit" name="case_set_time">
+    <item row="9" column="0">
+     <widget class="QCheckBox" name="case_dismissed_checkbox">
+      <property name="text">
+       <string>Case Dismissed:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QCheckBox" name="plea_pending_checkbox">
+      <property name="text">
+       <string>Plea Pending:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QComboBox" name="plea_pending_choices">
       <property name="enabled">
        <bool>false</bool>
       </property>
-      <property name="minimumTime">
-       <time>
-        <hour>8</hour>
-        <minute>0</minute>
-        <second>0</second>
-       </time>
-      </property>
-      <property name="calendarPopup">
-       <bool>true</bool>
-      </property>
-      <property name="time">
-       <time>
-        <hour>8</hour>
-        <minute>0</minute>
-        <second>0</second>
-       </time>
-      </property>
+      <item>
+       <property name="text">
+        <string>Defendant's counsel advised a written plea will be or has been filed. If filed by the hearing date, the plea date is vacated and trial assignment will issue by regular mail, email, or fax to counsel.</string>
+       </property>
+      </item>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="9" column="1">
+     <widget class="QComboBox" name="dismissed_choices">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContentsOnFirstShow</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>on oral motion of prosecutor, only if costs paid by continued date whereupon no apperance is required. Speedy trial is waived.</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>without prejudice.</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QComboBox" name="extradition_choices">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QComboBox::AdjustToContents</enum>
+      </property>
+      <item>
+       <property name="text">
+        <string>Defendant is detained until _______ 8:00 a.m., as a fugitive from another state, and is committed subject to bond.</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Defendant waived issues of governor's warrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond.</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="1">
      <widget class="QDateEdit" name="case_set_date">
       <property name="enabled">
        <bool>false</bool>
@@ -365,9 +251,46 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="hearing_date_label">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
-       <string>Case is set at:</string>
+       <string>Hearing Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="hearing_time_label">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="text">
+       <string>Hearing Time:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QTimeEdit" name="case_set_time">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="minimumTime">
+       <time>
+        <hour>8</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="time">
+       <time>
+        <hour>8</hour>
+        <minute>0</minute>
+        <second>0</second>
+       </time>
       </property>
      </widget>
     </item>
@@ -383,8 +306,8 @@
    <slot>createEntry()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1007</x>
-     <y>23</y>
+     <x>1008</x>
+     <y>37</y>
     </hint>
     <hint type="destinationlabel">
      <x>497</x>
@@ -431,60 +354,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1015</x>
-     <y>159</y>
+     <x>1016</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1047</x>
      <y>119</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>case_dismissed_checkbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>68</x>
-     <y>222</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>120</x>
-     <y>213</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>extradition_checkbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>59</x>
-     <y>198</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>181</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>plea_pending_checkbox</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>263</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>113</x>
-     <y>262</y>
     </hint>
    </hints>
   </connection>
@@ -495,12 +370,60 @@
    <slot>setDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>68</x>
-     <y>121</y>
+     <x>59</x>
+     <y>182</y>
     </hint>
     <hint type="destinationlabel">
      <x>88</x>
      <y>96</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>extradition_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>YellowFormDialog</receiver>
+   <slot>setDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>50</x>
+     <y>362</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>case_dismissed_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>YellowFormDialog</receiver>
+   <slot>setDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>410</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>120</x>
+     <y>213</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plea_pending_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>YellowFormDialog</receiver>
+   <slot>setDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>88</x>
+     <y>457</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>113</x>
+     <y>262</y>
     </hint>
    </hints>
   </connection>

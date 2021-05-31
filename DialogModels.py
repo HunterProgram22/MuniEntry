@@ -115,10 +115,14 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
                 self.case_set_date.setEnabled(True)
                 self.case_set_time.setEnabled(True)
                 self.case_set_for_choices.setEnabled(True)
+                self.hearing_date_label.setEnabled(True)
+                self.hearing_time_label.setEnabled(True)
             else:
                 self.case_set_date.setEnabled(False)
-                self.case_set_time.setEnabled(True)
+                self.case_set_time.setEnabled(False)
                 self.case_set_for_choices.setEnabled(False)
+                self.hearing_date_label.setEnabled(False)
+                self.hearing_time_label.setEnabled(False)
         if self.sender().objectName() == "extradition_checkbox":
             if bool == True:
                 self.extradition_choices.setEnabled(True)
@@ -131,9 +135,9 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
                 self.dismissed_choices.setEnabled(False)
         if self.sender().objectName() == "plea_pending_checkbox":
             if bool == True:
-                self.defense_counsel_name.setEnabled(True)
+                self.plea_pending_choices.setEnabled(True)
             else:
-                self.defense_counsel_name.setEnabled(False)
+                self.plea_pending_choices.setEnabled(False)
 
     def getDialogFields(self):
         super(YellowFormDialog, self).getDialogFields()
