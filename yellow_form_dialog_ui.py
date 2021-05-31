@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/YellowFormDialog.ui'
+# Form implementation generated from reading ui file 'ui\YellowFormDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_YellowFormDialog(object):
     def setupUi(self, YellowFormDialog):
         YellowFormDialog.setObjectName("YellowFormDialog")
-        YellowFormDialog.resize(579, 438)
+        YellowFormDialog.resize(749, 612)
         self.layoutWidget_2 = QtWidgets.QWidget(YellowFormDialog)
         self.layoutWidget_2.setGeometry(QtCore.QRect(460, 20, 95, 151))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
@@ -65,16 +65,29 @@ class Ui_YellowFormDialog(object):
         self.label_4.setGeometry(QtCore.QRect(20, 150, 151, 16))
         self.label_4.setObjectName("label_4")
         self.comboBox = QtWidgets.QComboBox(YellowFormDialog)
+        self.comboBox.setEnabled(False)
         self.comboBox.setGeometry(QtCore.QRect(192, 150, 211, 22))
         self.comboBox.setObjectName("comboBox")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.label_5 = QtWidgets.QLabel(YellowFormDialog)
+        self.label_5.setGeometry(QtCore.QRect(20, 180, 131, 16))
+        self.label_5.setObjectName("label_5")
+        self.comboBox_2 = QtWidgets.QComboBox(YellowFormDialog)
+        self.comboBox_2.setGeometry(QtCore.QRect(190, 180, 211, 22))
+        self.comboBox_2.setObjectName("comboBox_2")
+        self.comboBox_2.addItem("")
+        self.comboBox_2.addItem("")
+        self.checkBox = QtWidgets.QCheckBox(YellowFormDialog)
+        self.checkBox.setGeometry(QtCore.QRect(30, 230, 70, 18))
+        self.checkBox.setObjectName("checkBox")
 
         self.retranslateUi(YellowFormDialog)
         self.pushButton.clicked.connect(YellowFormDialog.createEntry)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
         self.pushButton_2.clicked.connect(self.case_no.clear)
         self.pushButton_3.clicked.connect(YellowFormDialog.reject)
+        self.checkBox.toggled['bool'].connect(YellowFormDialog.setEnabled)
         QtCore.QMetaObject.connectSlotsByName(YellowFormDialog)
 
     def retranslateUi(self, YellowFormDialog):
@@ -90,3 +103,7 @@ class Ui_YellowFormDialog(object):
         self.label_4.setText(_translate("YellowFormDialog", "Case is set for:"))
         self.comboBox.setItemText(0, _translate("YellowFormDialog", "Enter Plea"))
         self.comboBox.setItemText(1, _translate("YellowFormDialog", "Delayed on defendant\'s motion, time tolled per R.C. 2945.72."))
+        self.label_5.setText(_translate("YellowFormDialog", "Extradition:"))
+        self.comboBox_2.setItemText(0, _translate("YellowFormDialog", "Defendant is detained until _______ 8:00 a.m., as a fugitive from another state, and is committed subjec to bond."))
+        self.comboBox_2.setItemText(1, _translate("YellowFormDialog", "Defendant waived issues of covernor\'s wrrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond."))
+        self.checkBox.setText(_translate("YellowFormDialog", "CheckBox"))

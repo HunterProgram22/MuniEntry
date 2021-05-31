@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>438</height>
+    <width>749</width>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -178,6 +178,9 @@
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>192</x>
@@ -229,6 +232,19 @@
      <string>Defendant waived issues of covernor's wrrant and habeas corpus. R.C. 2963.11-13. Defendant shall report to court as directed if released on bond.</string>
     </property>
    </item>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>230</y>
+     <width>70</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CheckBox</string>
+   </property>
   </widget>
  </widget>
  <resources/>
@@ -297,8 +313,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>YellowFormDialog</receiver>
+   <slot>setEnabled()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>75</x>
+     <y>239</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>125</x>
+     <y>235</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
+  <slot>setEnabled()</slot>
  </slots>
 </ui>

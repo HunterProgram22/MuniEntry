@@ -108,6 +108,12 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    def setEnabled(self, bool):
+        if bool == True:
+            self.comboBox.setEnabled(True)
+        else:
+            self.comboBox.setEnabled(False)
+
 
 class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
     template = "Templates/Motion_Judgment_Entry.docx"
