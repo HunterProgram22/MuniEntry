@@ -108,6 +108,23 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    def setDialog(self, bool):
+        if self.sender().objectName() == "extradition_checkbox":
+            if bool == True:
+                self.extradition_choices.setEnabled(True)
+            else:
+                self.extradition_choices.setEnabled(False)
+        if self.sender().objectName() == "case_dismissed_checkbox":
+            if bool == True:
+                self.dismissed_choices.setEnabled(True)
+            else:
+                self.dismissed_choices.setEnabled(False)
+        if self.sender().objectName() == "plea_pending_checkbox":
+            if bool == True:
+                self.defense_counsel_name.setEnabled(True)
+            else:
+                self.defense_counsel_name.setEnabled(False)
+
 
 class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
     template = "Templates/Motion_Judgment_Entry.docx"
