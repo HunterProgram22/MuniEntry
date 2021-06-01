@@ -24,9 +24,9 @@ class Ui_MainWindow(object):
         self.tab.setObjectName("tab")
         self.gridLayout = QtWidgets.QGridLayout(self.tab)
         self.gridLayout.setObjectName("gridLayout")
-        self.pushButton_2 = QtWidgets.QPushButton(self.tab)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout.addWidget(self.pushButton_2, 0, 4, 1, 1)
+        self.ExtraditionEntryDialog = QtWidgets.QPushButton(self.tab)
+        self.ExtraditionEntryDialog.setObjectName("ExtraditionEntryDialog")
+        self.gridLayout.addWidget(self.ExtraditionEntryDialog, 0, 4, 1, 1)
         spacerItem = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.gridLayout.addItem(spacerItem, 1, 2, 1, 1)
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
@@ -97,12 +97,13 @@ class Ui_MainWindow(object):
         self.MotionEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
         self.TransferEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
         self.YellowFormDialog.clicked.connect(MainWindow.pushButtonDialog)
+        self.ExtraditionEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry"))
-        self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
+        self.ExtraditionEntryDialog.setText(_translate("MainWindow", "Extradition Entry"))
         self.MotionEntryDialog.setText(_translate("MainWindow", "Motion Entry"))
         self.TransferEntryDialog.setText(_translate("MainWindow", "Transfer Entry"))
         self.YellowFormDialog.setText(_translate("MainWindow", "Pending CrTr Entry (Yellow Form)"))

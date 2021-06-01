@@ -14,6 +14,7 @@ from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
 from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from verdict_form_dialog_ui import Ui_VerdictFormDialog
 from yellow_form_dialog_ui import Ui_YellowFormDialog
+from extradition_entry_dialog_ui import Ui_ExtraditionEntryDialog
 from HelperFunctions import getText
 
 #Home Paths
@@ -102,6 +103,21 @@ class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
         super().__init__(parent)
 
 
+class ExtraditionEntryDialog(BaseDialog, Ui_ExtraditionEntryDialog):
+    template = "Templates/Extradition_Entry.docx"
+    template_name = "Extradition_Entry"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    def getDialogFields(self):
+        super(ExtraditionEntryDialog, self).getDialogFields()
+        self.fields_dict['defendant_hold_date'] = self.defendant_hold_date.date().toString('MMMM d, yyyy')
+        self.fields_dict['defendant_hold_time'] = self.defendant_hold_time.time().toString('h:mm AP')
+        self.fields_dict['state_county_requestor'] = self.state_county_requestor.text()
+        return self.fields_dict
+        
+
 class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
     template = "Templates/Yellow_Form.docx"
     template_name = "Yellow_Form"
@@ -145,6 +161,7 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
         self.fields_dict['case_set_time'] = self.case_set_time.time().toString('h:mm AP')
         self.fields_dict['case_set_for_choices'] = self.case_set_for_choices.currentText()
         return self.fields_dict
+
 
 class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
     template = "Templates/Motion_Judgment_Entry.docx"

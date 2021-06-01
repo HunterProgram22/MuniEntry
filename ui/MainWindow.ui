@@ -32,9 +32,9 @@
      </attribute>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="4">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="ExtraditionEntryDialog">
         <property name="text">
-         <string>PushButton</string>
+         <string>Extradition Entry</string>
         </property>
        </widget>
       </item>
@@ -274,6 +274,22 @@
     <hint type="destinationlabel">
      <x>447</x>
      <y>265</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ExtraditionEntryDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>575</x>
+     <y>77</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>659</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
