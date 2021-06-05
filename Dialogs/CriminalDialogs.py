@@ -13,6 +13,7 @@ from Dialogs.BaseDialogs import BaseDialog, PATH, TEMPLATE_PATH, SAVE_PATH
 
 from pyuifiles.ovi_entry_dialog_ui import Ui_OviEntryDialog
 from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
+from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 
 
@@ -23,6 +24,10 @@ class BaseCriminalDialog(BaseDialog):
 
     def proceed_to_sentencing(self):
         dialog = SentencingDialog()
+        dialog.exec()
+
+    def proceed_to_ability_to_pay(self):
+        dialog = AbilityToPayDialog()
         dialog.exec()
 
 
@@ -45,6 +50,14 @@ class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
                 self.ovi_in_20_years.setEnabled(True)
             else:
                 self.ovi_in_20_years.setEnabled(False)
+
+
+class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
+    template = None
+    template_name = None
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):

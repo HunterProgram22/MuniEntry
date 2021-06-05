@@ -39,7 +39,7 @@
     <string>Proceed to Ability to Pay</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -173,7 +173,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -227,5 +227,25 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>proceed_to_ability_to_pay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>297</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>479</x>
+     <y>283</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>proceed_to_ability_to_pay()</slot>
+ </slots>
 </ui>
