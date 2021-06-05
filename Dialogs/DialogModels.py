@@ -7,29 +7,15 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import (
     QApplication, QDialog, QMainWindow, QMessageBox
-)
+    )
 
-from motion_entry_dialog_ui import Ui_MotionEntryDialog
-from jury_instructions_dialog_ui import Ui_JuryInstructionsDialog
-from transfer_entry_dialog_ui import Ui_TransferEntryDialog
-from verdict_form_dialog_ui import Ui_VerdictFormDialog
-from yellow_form_dialog_ui import Ui_YellowFormDialog
-from extradition_entry_dialog_ui import Ui_ExtraditionEntryDialog
-from ovi_entry_dialog_ui import Ui_OviEntryDialog
-from sentencing_entry_dialog_ui import Ui_SentencingDialog
+from pyuifiles.motion_entry_dialog_ui import Ui_MotionEntryDialog
+from pyuifiles.transfer_entry_dialog_ui import Ui_TransferEntryDialog
+from pyuifiles.verdict_form_dialog_ui import Ui_VerdictFormDialog
+from pyuifiles.yellow_form_dialog_ui import Ui_YellowFormDialog
+
 from HelperFunctions import getText
 
-#Home Paths
-PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
-TEMPLATE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\"
-SAVE_PATH = "C:\\Users\\Justin Kudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Saved\\"
-
-#Work Paths
-#PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\"
-#TEMPLATE_PATH = "C:\\Users\\jkudela\\appdata\\local\\programs\\python\\python39\\MuniEntry\\Templates\\"
-
-JURY_INSTRUCTIONS_TEMPLATE = TEMPLATE_PATH + "JuryInstructionsMaster.docx"
-JURY_INSTRUCTIONS_SAVED_DOC = PATH + "Saved/Jury_Instructions_Test.docx"
 
 class BaseDialog(QDialog):
     """Base class that creates all the methods commonly used by all
@@ -81,6 +67,10 @@ class BaseDialog(QDialog):
             }
         return self.fields_dict
 
+    def proceedToSentencing(self):
+        dialog = SentencingDialog()
+        dialog.exec()
+
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
     template = "Templates/Transfer_Judgment_Entry.docx"
@@ -100,53 +90,6 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
     template = "Templates/Verdict_Form.docx"
     template_name = "Verdict_Form"
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-
-class ExtraditionEntryDialog(BaseDialog, Ui_ExtraditionEntryDialog):
-    template = "Templates/Extradition_Entry.docx"
-    template_name = "Extradition_Entry"
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-    def getDialogFields(self):
-        super(ExtraditionEntryDialog, self).getDialogFields()
-        self.fields_dict['defendant_hold_date'] = self.defendant_hold_date.date().toString('MMMM d, yyyy')
-        self.fields_dict['defendant_hold_time'] = self.defendant_hold_time.time().toString('h:mm AP')
-        self.fields_dict['state_county_requestor'] = self.state_county_requestor.text()
-        return self.fields_dict
-
-
-class OviEntryDialog(BaseDialog, Ui_OviEntryDialog):
-    template = "Templates/Ovi_Entry.docx"
-    template_name = "Ovi_Entry"
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-    def setDialog(self, bool):
-        if self.sender().objectName() == "waived_counsel_checkbox":
-            if bool == True:
-                self.counsel_name.setEnabled(False)
-                self.ovi_in_20_years.setEnabled(True)
-            else:
-                self.counsel_name.setEnabled(True)
-        if self.sender().objectName() == "refused_checkbox":
-            if bool == True:
-                self.ovi_in_20_years.setEnabled(True)
-            else:
-                self.ovi_in_20_years.setEnabled(False)
-
-    def proceedToSentencing(self):
-        dialog = SentencingDialog()
-        dialog.exec()
-
-class SentencingDialog (BaseDialog, Ui_SentencingDialog):
-    template = "Templates/Sentencing_Entry.docx"
-    template_name = "Sentencing_Entry"
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -212,37 +155,3 @@ class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
         self.fields_dict['motion_decision'] = self.motion_decision.currentText()
         self.fields_dict['assigned_judge'] = self.assigned_judge.currentText()
         return self.fields_dict
-
-
-class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
-    template = JURY_INSTRUCTIONS_TEMPLATE
-    #saved_doc = JURY_INSTRUCTIONS_SAVED_DOC
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setupUi(self)
-
-    def getDialogFields(self):
-        defendant_name = self.DefendantName_lineEdit.text()
-        case_no = self.CaseNo_lineEdit.text()
-        complaint_date = self.ComplaintDate_lineEdit.text()
-        first_charge = self.FirstCharge_comboBox.currentText()
-        second_charge = self.SecondCharge_comboBox.currentText()
-        self.populateInstructions(JuryInstructionsDialog.template)
-        count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
-        fields_dict = { 'defendant_name' : defendant_name,
-                    'case_no' : case_no,
-                    'first_charge' : first_charge,
-                    'second_charge' : second_charge,
-                    'complaint_date' : complaint_date,
-                    'count_one_instructions' : count_one_instructions,
-                    }
-        return fields_dict
-
-    def populateInstructions(self, instructions):
-        defendant_name = self.DefendantName_lineEdit.text()
-        fields_dict = { 'defendant_name' : defendant_name,
-                    }
-        doc = DocxTemplate(instructions)
-        doc.render(fields_dict)
-        doc.save("Saved/Jury_Instructions_Test.docx")

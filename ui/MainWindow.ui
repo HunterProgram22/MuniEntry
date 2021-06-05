@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>741</width>
-      <height>171</height>
+      <width>761</width>
+      <height>211</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -31,60 +31,7 @@
       <string>Criminal</string>
      </attribute>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="4">
-       <widget class="QPushButton" name="ExtraditionEntryDialog">
-        <property name="text">
-         <string>Extradition Entry</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="4">
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="2" column="0">
-       <widget class="QPushButton" name="MotionEntryDialog">
-        <property name="text">
-         <string>Motion Entry</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="0" column="3" rowspan="3">
+      <item row="0" column="3">
        <spacer name="verticalSpacer_2">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -97,7 +44,88 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="1" rowspan="3">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="OviEntryDialog">
+        <property name="text">
+         <string>OVI Entry</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QPushButton" name="YellowFormDialog">
+        <property name="text">
+         <string>Pending CrTr Entry (Yellow Form)</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="pushButton_7">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="2">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="4">
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="FailureToAppearDialog">
+        <property name="text">
+         <string>Failure to Appear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QPushButton" name="pushButton_6">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -110,26 +138,31 @@
         </property>
        </spacer>
       </item>
-      <item row="0" column="0">
-       <widget class="QPushButton" name="TransferEntryDialog">
-        <property name="text">
-         <string>Transfer Entry</string>
+      <item row="0" column="1">
+       <spacer name="verticalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
-      <item row="0" column="2">
-       <widget class="QPushButton" name="YellowFormDialog">
-        <property name="text">
-         <string>Pending CrTr Entry (Yellow Form)</string>
+      <item row="3" column="3">
+       <spacer name="verticalSpacer_8">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QPushButton" name="OviEntryDialog">
-        <property name="text">
-         <string>OVI Entry</string>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
         </property>
-       </widget>
+       </spacer>
       </item>
      </layout>
     </widget>
@@ -168,6 +201,146 @@
        <string>Verdict Form</string>
       </property>
      </widget>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>General</string>
+     </attribute>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="1">
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="3">
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="2">
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="0" column="2">
+       <widget class="QPushButton" name="MotionEntryDialog">
+        <property name="text">
+         <string>Motion Entry</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QPushButton" name="TransferEntryDialog">
+        <property name="text">
+         <string>Transfer Entry</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1">
+       <spacer name="verticalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="3">
+       <spacer name="verticalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>
@@ -237,66 +410,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>MotionEntryDialog</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>pushButtonDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>81</x>
-     <y>178</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>143</x>
-     <y>262</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>TransferEntryDialog</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>pushButtonDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>73</x>
-     <y>86</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>121</x>
-     <y>26</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>YellowFormDialog</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>402</x>
-     <y>88</y>
+     <x>501</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>447</x>
      <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>ExtraditionEntryDialog</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>pushButtonDialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>575</x>
-     <y>77</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>659</x>
-     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -307,12 +432,28 @@
    <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>353</x>
-     <y>175</y>
+     <x>244</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>323</x>
      <y>260</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>FailureToAppearDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>70</x>
+     <y>213</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>113</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>

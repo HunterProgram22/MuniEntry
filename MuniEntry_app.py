@@ -8,26 +8,26 @@ from PyQt5.QtWidgets import (
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
-from main_window_ui import Ui_MainWindow
-from DialogModels import (
-    MotionEntryDialog, JuryInstructionsDialog, TransferEntryDialog,
-    VerdictFormDialog, YellowFormDialog, ExtraditionEntryDialog, OviEntryDialog,
+from pyuifiles.main_window_ui import Ui_MainWindow
+from Dialogs.CriminalDialogs import (
+    OviEntryDialog, SentencingDialog, FailureToAppearDialog,
+    )
+from Dialogs.DialogModels import (
+    MotionEntryDialog, TransferEntryDialog,
+    VerdictFormDialog, YellowFormDialog,
     )
 
-#Code to update UI
+#Code to update UI files to py files
 #pyuic5 -o main_window_ui.py ui/MainWndow.ui
-
-
 
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
         "TransferEntryDialog":TransferEntryDialog,
-        "JuryInstructionsDialog":JuryInstructionsDialog,
+        "FailureToAppearDialog":FailureToAppearDialog,
         "MotionEntryDialog":MotionEntryDialog,
         "VerdictFormDialog":VerdictFormDialog,
         "YellowFormDialog":YellowFormDialog,
-        "ExtraditionEntryDialog":ExtraditionEntryDialog,
         "OviEntryDialog":OviEntryDialog,
         }
 
