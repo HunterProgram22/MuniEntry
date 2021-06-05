@@ -12,10 +12,11 @@ from pyuifiles.main_window_ui import Ui_MainWindow
 from Dialogs.CriminalDialogs import (
     OviEntryDialog, SentencingDialog, FailureToAppearDialog,
     )
-from Dialogs.DialogModels import (
+from Dialogs.BaseDialogs import (
     MotionEntryDialog, TransferEntryDialog,
     VerdictFormDialog, YellowFormDialog,
     )
+
 
 #Code to update UI files to py files
 #pyuic5 -o main_window_ui.py ui/MainWndow.ui

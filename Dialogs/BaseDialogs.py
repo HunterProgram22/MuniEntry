@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, pathlib
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
@@ -16,6 +16,10 @@ from pyuifiles.yellow_form_dialog_ui import Ui_YellowFormDialog
 
 from HelperFunctions import getText
 
+PATH = str(pathlib.Path().absolute())
+TEMPLATE_PATH = PATH + "\\Templates\\"
+SAVE_PATH = PATH + "\\Saved\\"
+
 
 class BaseDialog(QDialog):
     """Base class that creates all the methods commonly used by all
@@ -28,17 +32,14 @@ class BaseDialog(QDialog):
         self.template_name = self.__class__.template_name
         self.setupUi(self)
 
-    def getTemplate(self):
-        return self.template
-
     def createEntry(self):
         self.fields_dict = self.getDialogFields()
-        doc = DocxTemplate(self.getTemplate())
-        doc.render(self.fields_dict)
-        for para in doc.paragraphs:
+        self.doc = DocxTemplate(self.getTemplate())
+        self.doc.render(self.fields_dict)
+        for para in self.doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
         self.docname = self.fields_dict['case_no'] + '_' + self.template_name + '.docx'
-        doc.save(SAVE_PATH + self.docname)
+        self.doc.save(SAVE_PATH + self.docname)
         #Need to us os to get system Path
         os.startfile(SAVE_PATH + self.docname)
 
@@ -67,13 +68,11 @@ class BaseDialog(QDialog):
             }
         return self.fields_dict
 
-    def proceedToSentencing(self):
-        dialog = SentencingDialog()
-        dialog.exec()
-
+    def getTemplate(self):
+        return self.template
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
-    template = "Templates/Transfer_Judgment_Entry.docx"
+    template = TEMPLATE_PATH + "Transfer_Judgment_Entry.docx"
     template_name = "Transfer_Entry"
 
     def __init__(self, parent=None):
@@ -88,7 +87,7 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
 
 class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
-    template = "Templates/Verdict_Form.docx"
+    template = TEMPLATE_PATH + "Verdict_Form.docx"
     template_name = "Verdict_Form"
 
     def __init__(self, parent=None):
@@ -96,7 +95,7 @@ class VerdictFormDialog(BaseDialog, Ui_VerdictFormDialog):
 
 
 class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
-    template = "Templates/Yellow_Form.docx"
+    template = TEMPLATE_PATH + "Yellow_Form.docx"
     template_name = "Yellow_Form"
 
     def __init__(self, parent=None):
@@ -133,6 +132,8 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
                 self.plea_pending_choices.setEnabled(False)
 
     def getDialogFields(self):
+        """This gets the data and populates fields even if the box for the item
+        is not checked. Need to fix to ignore date if box not checked."""
         super(YellowFormDialog, self).getDialogFields()
         self.fields_dict['case_set_date'] = self.case_set_date.date().toString('MMMM d, yyyy')
         self.fields_dict['case_set_time'] = self.case_set_time.time().toString('h:mm AP')
@@ -141,7 +142,7 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
 
 
 class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
-    template = "Templates/Motion_Judgment_Entry.docx"
+    template = TEMPLATE_PATH + "Motion_Judgment_Entry.docx"
     template_name = "Motion_Form"
 
     def __init__(self, parent=None):
