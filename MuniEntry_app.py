@@ -11,7 +11,7 @@ from PyQt5.QtCore import pyqtSlot
 from main_window_ui import Ui_MainWindow
 from DialogModels import (
     MotionEntryDialog, JuryInstructionsDialog, TransferEntryDialog,
-    VerdictFormDialog, YellowFormDialog, ExtraditionEntryDialog
+    VerdictFormDialog, YellowFormDialog, ExtraditionEntryDialog, OviEntryDialog,
     )
 
 #Code to update UI
@@ -28,6 +28,7 @@ class Window(QMainWindow, Ui_MainWindow):
         "VerdictFormDialog":VerdictFormDialog,
         "YellowFormDialog":YellowFormDialog,
         "ExtraditionEntryDialog":ExtraditionEntryDialog,
+        "OviEntryDialog":OviEntryDialog,
         }
 
     def __init__(self, parent=None):

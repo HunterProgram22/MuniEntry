@@ -15,6 +15,8 @@ from transfer_entry_dialog_ui import Ui_TransferEntryDialog
 from verdict_form_dialog_ui import Ui_VerdictFormDialog
 from yellow_form_dialog_ui import Ui_YellowFormDialog
 from extradition_entry_dialog_ui import Ui_ExtraditionEntryDialog
+from ovi_entry_dialog_ui import Ui_OviEntryDialog
+from sentencing_entry_dialog_ui import Ui_SentencingDialog
 from HelperFunctions import getText
 
 #Home Paths
@@ -116,7 +118,39 @@ class ExtraditionEntryDialog(BaseDialog, Ui_ExtraditionEntryDialog):
         self.fields_dict['defendant_hold_time'] = self.defendant_hold_time.time().toString('h:mm AP')
         self.fields_dict['state_county_requestor'] = self.state_county_requestor.text()
         return self.fields_dict
-        
+
+
+class OviEntryDialog(BaseDialog, Ui_OviEntryDialog):
+    template = "Templates/Ovi_Entry.docx"
+    template_name = "Ovi_Entry"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+    def setDialog(self, bool):
+        if self.sender().objectName() == "waived_counsel_checkbox":
+            if bool == True:
+                self.counsel_name.setEnabled(False)
+                self.ovi_in_20_years.setEnabled(True)
+            else:
+                self.counsel_name.setEnabled(True)
+        if self.sender().objectName() == "refused_checkbox":
+            if bool == True:
+                self.ovi_in_20_years.setEnabled(True)
+            else:
+                self.ovi_in_20_years.setEnabled(False)
+
+    def proceedToSentencing(self):
+        dialog = SentencingDialog()
+        dialog.exec()
+
+class SentencingDialog (BaseDialog, Ui_SentencingDialog):
+    template = "Templates/Sentencing_Entry.docx"
+    template_name = "Sentencing_Entry"
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
 
 class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
     template = "Templates/Yellow_Form.docx"

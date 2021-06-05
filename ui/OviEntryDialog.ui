@@ -1,0 +1,554 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OviEntryDialog</class>
+ <widget class="QDialog" name="OviEntryDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>776</width>
+    <height>467</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>OVI Entry</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>660</x>
+     <y>20</y>
+     <width>95</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Create Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Clear Fields</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>58</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>20</y>
+     <width>391</width>
+     <height>116</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Defendant Name:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="defendant_name"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Case No.:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="case_no"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>OLN:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLineEdit" name="lineEdit"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Date of Birth:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QDateEdit" name="dateEdit">
+      <property name="maximumDate">
+       <date>
+        <year>2100</year>
+        <month>12</month>
+        <day>31</day>
+       </date>
+      </property>
+      <property name="minimumDate">
+       <date>
+        <year>1895</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>1980</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton_4">
+   <property name="geometry">
+    <rect>
+     <x>420</x>
+     <y>360</y>
+     <width>201</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Proceed to Sentencing</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>150</y>
+     <width>591</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="counsel_name"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Plea/Trial Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Counsel Name:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="waived_counsel_checkbox">
+      <property name="text">
+       <string>Defendant waived right to counsel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QDateEdit" name="case_set_date">
+      <property name="minimumDate">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>Proceeding Type:  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="proceeding_type">
+      <item>
+       <property name="text">
+        <string>Plea</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Plea in Abstentia</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Trial</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>260</y>
+     <width>581</width>
+     <height>78</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="refused_checkbox">
+      <property name="text">
+       <string>Refused Breathylizer. Offenses in Past 20 Years:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>OVI Offenses in Past 10 Years: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <spacer name="horizontalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>1st</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2nd</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>3rd</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>4th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>5th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>6th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>7th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>8th</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>OVI Details</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
+     <widget class="QCheckBox" name="checkBox">
+      <property name="text">
+       <string>High BAC Test</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QComboBox" name="ovi_in_20_years">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string>1st</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>2nd</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>3rd</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>4th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>5th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>6th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>7th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>8th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>9th</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>10th</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <spacer name="horizontalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>createEntry()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>676</x>
+     <y>32</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>497</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>defendant_name</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>698</x>
+     <y>68</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>346</x>
+     <y>28</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>case_no</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>723</x>
+     <y>71</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>354</x>
+     <y>63</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>154</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>521</x>
+     <y>134</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waived_counsel_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>setDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>387</x>
+     <y>189</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>496</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>refused_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>setDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>47</x>
+     <y>322</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>70</x>
+     <y>379</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>proceedToSentencing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>513</x>
+     <y>381</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>598</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>createEntry()</slot>
+  <slot>setDialog()</slot>
+  <slot>proceedToSentencing()</slot>
+ </slots>
+</ui>

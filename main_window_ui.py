@@ -46,6 +46,9 @@ class Ui_MainWindow(object):
         self.YellowFormDialog = QtWidgets.QPushButton(self.tab)
         self.YellowFormDialog.setObjectName("YellowFormDialog")
         self.gridLayout.addWidget(self.YellowFormDialog, 0, 2, 1, 1)
+        self.OviEntryDialog = QtWidgets.QPushButton(self.tab)
+        self.OviEntryDialog.setObjectName("OviEntryDialog")
+        self.gridLayout.addWidget(self.OviEntryDialog, 2, 2, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
@@ -98,6 +101,7 @@ class Ui_MainWindow(object):
         self.TransferEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
         self.YellowFormDialog.clicked.connect(MainWindow.pushButtonDialog)
         self.ExtraditionEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
+        self.OviEntryDialog.clicked.connect(MainWindow.pushButtonDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -107,6 +111,7 @@ class Ui_MainWindow(object):
         self.MotionEntryDialog.setText(_translate("MainWindow", "Motion Entry"))
         self.TransferEntryDialog.setText(_translate("MainWindow", "Transfer Entry"))
         self.YellowFormDialog.setText(_translate("MainWindow", "Pending CrTr Entry (Yellow Form)"))
+        self.OviEntryDialog.setText(_translate("MainWindow", "OVI Entry"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Criminal"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Civil"))
         self.JuryInstructionsDialog.setText(_translate("MainWindow", "Jury Instructions"))

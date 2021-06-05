@@ -124,6 +124,13 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="2">
+       <widget class="QPushButton" name="OviEntryDialog">
+        <property name="text">
+         <string>OVI Entry</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -290,6 +297,22 @@
     <hint type="destinationlabel">
      <x>659</x>
      <y>258</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OviEntryDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>353</x>
+     <y>175</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>323</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
