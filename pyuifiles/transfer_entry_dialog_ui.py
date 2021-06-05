@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/TransferEntryDialog.ui'
+# Form implementation generated from reading ui file 'ui\TransferEntryDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -59,7 +59,7 @@ class Ui_TransferEntryDialog(object):
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_5)
         self.assigned_date = QtWidgets.QDateEdit(self.layoutWidget)
         self.assigned_date.setCalendarPopup(True)
-        self.assigned_date.setDate(QtCore.QDate.currentDate())
+        self.assigned_date.setDate(QtCore.QDate(2000, 1, 1))
         self.assigned_date.setObjectName("assigned_date")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.assigned_date)
         self.label_3 = QtWidgets.QLabel(self.layoutWidget)
@@ -112,7 +112,7 @@ class Ui_TransferEntryDialog(object):
         self.formLayout.setWidget(9, QtWidgets.QFormLayout.FieldRole, self.defendant_state)
 
         self.retranslateUi(TransferEntryDialog)
-        self.pushButton.clicked.connect(TransferEntryDialog.createEntry)
+        self.pushButton.clicked.connect(TransferEntryDialog.create_entry)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
         self.pushButton_2.clicked.connect(self.case_no.clear)
         self.pushButton_3.clicked.connect(TransferEntryDialog.reject)

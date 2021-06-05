@@ -59,7 +59,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -81,7 +81,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -230,7 +230,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>MotionEntryDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>476</x>
@@ -317,13 +317,13 @@
      <y>72</y>
     </hint>
     <hint type="destinationlabel">
-     <x>373</x>
-     <y>378</y>
+     <x>439</x>
+     <y>391</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
+  <slot>create_entry()</slot>
  </slots>
 </ui>

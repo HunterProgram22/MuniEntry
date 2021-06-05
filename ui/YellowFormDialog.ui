@@ -99,7 +99,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -303,7 +303,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1008</x>
@@ -367,7 +367,7 @@
    <sender>set_hearing_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>59</x>
@@ -383,7 +383,7 @@
    <sender>extradition_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>50</x>
@@ -399,7 +399,7 @@
    <sender>case_dismissed_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>59</x>
@@ -415,7 +415,7 @@
    <sender>plea_pending_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>YellowFormDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>88</x>
@@ -429,7 +429,7 @@
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
-  <slot>setDialog()</slot>
+  <slot>create_entry()</slot>
+  <slot>set_dialog()</slot>
  </slots>
 </ui>

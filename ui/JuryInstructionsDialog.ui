@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>941</width>
-    <height>635</height>
+    <width>985</width>
+    <height>689</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -320,7 +320,7 @@ R.C. § 4511.19(A)(1)(D)
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>JuryInstructionsDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>821</x>
@@ -328,13 +328,13 @@ R.C. § 4511.19(A)(1)(D)
     </hint>
     <hint type="destinationlabel">
      <x>389</x>
-     <y>-15</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
+  <slot>create_entry()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>

@@ -103,7 +103,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>21</x>
@@ -159,7 +159,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>FailureToAppearDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>476</x>
@@ -221,6 +221,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
+  <slot>create_entry()</slot>
  </slots>
 </ui>

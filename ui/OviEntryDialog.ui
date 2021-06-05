@@ -161,7 +161,7 @@
     <string>Proceed to Sentencing</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -257,7 +257,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -437,7 +437,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>OviEntryDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>676</x>
@@ -501,7 +501,7 @@
    <sender>waived_counsel_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>OviEntryDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>387</x>
@@ -517,7 +517,7 @@
    <sender>refused_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>OviEntryDialog</receiver>
-   <slot>setDialog()</slot>
+   <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>47</x>
@@ -533,7 +533,7 @@
    <sender>pushButton_4</sender>
    <signal>clicked()</signal>
    <receiver>OviEntryDialog</receiver>
-   <slot>proceedToSentencing()</slot>
+   <slot>proceed_to_sentencing()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>513</x>
@@ -547,8 +547,8 @@
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
-  <slot>setDialog()</slot>
-  <slot>proceedToSentencing()</slot>
+  <slot>create_entry()</slot>
+  <slot>set_dialog()</slot>
+  <slot>proceed_to_sentencing()</slot>
  </slots>
 </ui>

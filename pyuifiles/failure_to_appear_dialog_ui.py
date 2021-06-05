@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/FailureToAppearDialog.ui'
+# Form implementation generated from reading ui file 'ui\FailureToAppearDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -50,22 +50,22 @@ class Ui_FailureToAppearDialog(object):
         self.case_no = QtWidgets.QLineEdit(self.layoutWidget)
         self.case_no.setObjectName("case_no")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.case_no)
-        self.widget = QtWidgets.QWidget(FailureToAppearDialog)
-        self.widget.setGeometry(QtCore.QRect(21, 120, 391, 61))
-        self.widget.setObjectName("widget")
-        self.gridLayout = QtWidgets.QGridLayout(self.widget)
+        self.layoutWidget1 = QtWidgets.QWidget(FailureToAppearDialog)
+        self.layoutWidget1.setGeometry(QtCore.QRect(21, 120, 391, 61))
+        self.layoutWidget1.setObjectName("layoutWidget1")
+        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget1)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.label_3 = QtWidgets.QLabel(self.widget)
+        self.label_3 = QtWidgets.QLabel(self.layoutWidget1)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 0, 0, 1, 2)
-        self.dateEdit = QtWidgets.QDateEdit(self.widget)
+        self.dateEdit = QtWidgets.QDateEdit(self.layoutWidget1)
         self.dateEdit.setObjectName("dateEdit")
         self.gridLayout.addWidget(self.dateEdit, 0, 2, 1, 1)
-        self.label_4 = QtWidgets.QLabel(self.widget)
+        self.label_4 = QtWidgets.QLabel(self.layoutWidget1)
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 1, 0, 1, 1)
-        self.primary_charge = QtWidgets.QComboBox(self.widget)
+        self.primary_charge = QtWidgets.QComboBox(self.layoutWidget1)
         self.primary_charge.setEnabled(True)
         self.primary_charge.setEditable(True)
         self.primary_charge.setObjectName("primary_charge")
@@ -74,7 +74,7 @@ class Ui_FailureToAppearDialog(object):
         self.gridLayout.addWidget(self.primary_charge, 1, 2, 1, 1)
 
         self.retranslateUi(FailureToAppearDialog)
-        self.pushButton.clicked.connect(FailureToAppearDialog.createEntry)
+        self.pushButton.clicked.connect(FailureToAppearDialog.create_entry)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
         self.pushButton_2.clicked.connect(self.case_no.clear)
         self.pushButton_3.clicked.connect(FailureToAppearDialog.reject)

@@ -21,7 +21,7 @@ class BaseCriminalDialog(BaseDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-    def proceedToSentencing(self):
+    def proceed_to_sentencing(self):
         dialog = SentencingDialog()
         dialog.exec()
 
@@ -33,7 +33,7 @@ class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-    def setDialog(self, bool):
+    def set_dialog(self, bool):
         if self.sender().objectName() == "waived_counsel_checkbox":
             if bool == True:
                 self.counsel_name.setEnabled(False)

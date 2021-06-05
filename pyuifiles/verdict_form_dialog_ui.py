@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/VerdictFormDialog.ui'
+# Form implementation generated from reading ui file 'ui\VerdictFormDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -52,7 +52,7 @@ class Ui_VerdictFormDialog(object):
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.case_no)
 
         self.retranslateUi(VerdictFormDialog)
-        self.pushButton.clicked.connect(VerdictFormDialog.createEntry)
+        self.pushButton.clicked.connect(VerdictFormDialog.create_entry)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
         self.pushButton_2.clicked.connect(self.case_no.clear)
         self.pushButton_3.clicked.connect(VerdictFormDialog.reject)

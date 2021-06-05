@@ -110,7 +110,7 @@
    <sender>pushButton</sender>
    <signal>clicked()</signal>
    <receiver>VerdictFormDialog</receiver>
-   <slot>createEntry()</slot>
+   <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>476</x>
@@ -172,6 +172,6 @@
   </connection>
  </connections>
  <slots>
-  <slot>createEntry()</slot>
+  <slot>create_entry()</slot>
  </slots>
 </ui>
