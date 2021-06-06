@@ -32,43 +32,32 @@ class BaseDialog(QDialog):
         self.template_name = self.__class__.template_name
         self.setupUi(self)
 
+    def align_entry_left(self):
+        for para in self.doc.paragraphs:
+            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
     def create_entry(self):
         self.fields_dict = self.get_dialog_fields()
         self.doc = DocxTemplate(self.get_template())
         self.doc.render(self.fields_dict)
-        for para in self.doc.paragraphs:
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-        self.docname = self.fields_dict['case_no'] + '_' + self.template_name + '.docx'
+        self.align_entry_left()
+        self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
         os.startfile(SAVE_PATH + self.docname)
 
+    def set_document_name(self):
+        self.docname = self.fields_dict['case_no'] + '_' + self.template_name + '.docx'
+
     def get_dialog_fields(self):
-        defendant_name = self.defendant_name.text()
-        case_no = self.case_no.text()
-        try:
-            defendant_address = self.defendant_address.text()
-            defendant_city = self.defendant_city.text()
-            defendant_state = self.defendant_state.currentText()
-            defendant_zipcode = self.defendant_zipcode.text()
-        except AttributeError:
-            """This may need to be modified to address if user leaves fields
-            blank but the data is required."""
-            defendant_address = None
-            defendant_city = None
-            defendant_state = None
-            defendant_zipcode = None
         self.fields_dict = {
-            'defendant_name' : defendant_name,
-            'case_no' : case_no,
-            'defendant_address' : defendant_address,
-            'defendant_city' : defendant_city,
-            'defendant_state' : defendant_state,
-            'defendant_zipcode' : defendant_zipcode,
+            'defendant_name' : self.defendant_name.text(),
+            'case_no' : self.case_no.text(),
             }
         return self.fields_dict
 
     def get_template(self):
         return self.template
+
 
 class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
     template = TEMPLATE_PATH + "Transfer_Judgment_Entry.docx"
