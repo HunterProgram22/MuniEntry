@@ -28,6 +28,9 @@ class BaseCriminalDialog(BaseDialog):
         dialog = AbilityToPayDialog()
         dialog.exec()
 
+    def close_window(self):
+        self.close()
+
 
 class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
     template = TEMPLATE_PATH + "Ovi_Entry.docx"

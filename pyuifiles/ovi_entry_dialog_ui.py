@@ -164,6 +164,7 @@ class Ui_OviEntryDialog(object):
         self.waived_counsel_checkbox.toggled['bool'].connect(OviEntryDialog.set_dialog)
         self.refused_checkbox.toggled['bool'].connect(OviEntryDialog.set_dialog)
         self.pushButton_4.clicked.connect(OviEntryDialog.proceed_to_sentencing)
+        self.pushButton_4.released.connect(OviEntryDialog.close_window)
         QtCore.QMetaObject.connectSlotsByName(OviEntryDialog)
 
     def retranslateUi(self, OviEntryDialog):

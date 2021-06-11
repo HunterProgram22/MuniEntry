@@ -545,6 +545,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>released()</signal>
+   <receiver>OviEntryDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>567</x>
+     <y>366</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>644</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -552,5 +568,6 @@
   <slot>proceed_to_sentencing()</slot>
   <slot>get_dialog_fields()</slot>
   <slot>slot2()</slot>
+  <slot>close_window()</slot>
  </slots>
 </ui>
