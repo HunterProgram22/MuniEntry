@@ -5,9 +5,7 @@ from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
-from PyQt5.QtWidgets import (
-    QApplication, QDialog, QMainWindow, QMessageBox
-    )
+from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 
 from Dialogs.BaseDialogs import BaseDialog, PATH, TEMPLATE_PATH, SAVE_PATH
 
@@ -18,12 +16,12 @@ from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 
 
 class BaseCriminalDialog(BaseDialog):
-
     def __init__(self, parent=None):
         super().__init__(parent)
 
     def proceed_to_sentencing(self):
-        dialog = SentencingDialog()
+        self.fields_dict = self.get_dialog_fields()
+        dialog = SentencingDialog(self.fields_dict)
         dialog.exec()
 
     def proceed_to_ability_to_pay(self):
@@ -64,8 +62,15 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
     template = TEMPLATE_PATH + "Sentencing_Entry.docx"
     template_name = "Sentencing_Entry"
 
-    def __init__(self, parent=None):
+    def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
+        self.fields_dict = fields_dict
+        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
+        self.case_no_label.setText(self.fields_dict.get("case_no"))
+        self.counsel_name_label.setText(
+            "Attorney: " + self.fields_dict.get("counsel_name")
+        )
+        self.entry_name_label.setText(SentencingDialog.template_name)
 
 
 class FailureToAppearDialog(BaseCriminalDialog, Ui_FailureToAppearDialog):

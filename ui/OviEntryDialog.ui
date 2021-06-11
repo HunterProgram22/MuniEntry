@@ -550,5 +550,7 @@
   <slot>create_entry()</slot>
   <slot>set_dialog()</slot>
   <slot>proceed_to_sentencing()</slot>
+  <slot>get_dialog_fields()</slot>
+  <slot>slot2()</slot>
  </slots>
 </ui>

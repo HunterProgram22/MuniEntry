@@ -5,9 +5,7 @@ from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
-from PyQt5.QtWidgets import (
-    QApplication, QDialog, QMainWindow, QMessageBox
-    )
+from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 
 from pyuifiles.motion_entry_dialog_ui import Ui_MotionEntryDialog
 from pyuifiles.transfer_entry_dialog_ui import Ui_TransferEntryDialog
@@ -46,13 +44,14 @@ class BaseDialog(QDialog):
         os.startfile(SAVE_PATH + self.docname)
 
     def set_document_name(self):
-        self.docname = self.fields_dict['case_no'] + '_' + self.template_name + '.docx'
+        self.docname = self.fields_dict["case_no"] + "_" + self.template_name + ".docx"
 
     def get_dialog_fields(self):
         self.fields_dict = {
-            'defendant_name' : self.defendant_name.text(),
-            'case_no' : self.case_no.text(),
-            }
+            "defendant_name": self.defendant_name.text(),
+            "case_no": self.case_no.text(),
+            "counsel_name": self.counsel_name.text(),
+        }
         return self.fields_dict
 
     def get_template(self):
@@ -68,9 +67,11 @@ class TransferEntryDialog(BaseDialog, Ui_TransferEntryDialog):
 
     def get_dialog_fields(self):
         super(TransferEntryDialog, self).get_dialog_fields()
-        self.fields_dict['assigned_date'] = self.assigned_date.date().toString('MMMM d, yyyy')
-        self.fields_dict['assigned_judge'] = self.assigned_judge.currentText()
-        self.fields_dict['transferred_judge'] = self.transferred_judge.currentText()
+        self.fields_dict["assigned_date"] = self.assigned_date.date().toString(
+            "MMMM d, yyyy"
+        )
+        self.fields_dict["assigned_judge"] = self.assigned_judge.currentText()
+        self.fields_dict["transferred_judge"] = self.transferred_judge.currentText()
         return self.fields_dict
 
 
@@ -123,9 +124,15 @@ class YellowFormDialog(BaseDialog, Ui_YellowFormDialog):
         """This gets the data and populates fields even if the box for the item
         is not checked. Need to fix to ignore date if box not checked."""
         super(YellowFormDialog, self).get_dialog_fields()
-        self.fields_dict['case_set_date'] = self.case_set_date.date().toString('MMMM d, yyyy')
-        self.fields_dict['case_set_time'] = self.case_set_time.time().toString('h:mm AP')
-        self.fields_dict['case_set_for_choices'] = self.case_set_for_choices.currentText()
+        self.fields_dict["case_set_date"] = self.case_set_date.date().toString(
+            "MMMM d, yyyy"
+        )
+        self.fields_dict["case_set_time"] = self.case_set_time.time().toString(
+            "h:mm AP"
+        )
+        self.fields_dict[
+            "case_set_for_choices"
+        ] = self.case_set_for_choices.currentText()
         return self.fields_dict
 
 
@@ -138,9 +145,11 @@ class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
 
     def get_dialog_fields(self):
         super(MotionEntryDialog, self).get_dialog_fields()
-        self.fields_dict['motion_filed_date'] = self.motion_filed_date.date().toString('MMMM d, yyyy')
-        self.fields_dict['motion_filed_by'] = self.motion_filed_by.currentText()
-        self.fields_dict['motion_description'] = self.motion_description.toPlainText()
-        self.fields_dict['motion_decision'] = self.motion_decision.currentText()
-        self.fields_dict['assigned_judge'] = self.assigned_judge.currentText()
+        self.fields_dict["motion_filed_date"] = self.motion_filed_date.date().toString(
+            "MMMM d, yyyy"
+        )
+        self.fields_dict["motion_filed_by"] = self.motion_filed_by.currentText()
+        self.fields_dict["motion_description"] = self.motion_description.toPlainText()
+        self.fields_dict["motion_decision"] = self.motion_decision.currentText()
+        self.fields_dict["assigned_judge"] = self.assigned_judge.currentText()
         return self.fields_dict
