@@ -25,7 +25,7 @@ class BaseCriminalDialog(BaseDialog):
         dialog.exec()
 
     def proceed_to_ability_to_pay(self):
-        dialog = AbilityToPayDialog()
+        dialog = AbilityToPayDialog(self.fields_dict)
         dialog.exec()
 
     def close_window(self):
@@ -57,8 +57,15 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
     template = None
     template_name = None
 
-    def __init__(self, parent=None):
+    def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
+        self.fields_dict = fields_dict
+        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
+        self.case_no_label.setText(self.fields_dict.get("case_no"))
+        self.counsel_name_label.setText(
+            "Attorney: " + self.fields_dict.get("counsel_name")
+        )
+        self.entry_name_label.setText(SentencingDialog.template_name)
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):

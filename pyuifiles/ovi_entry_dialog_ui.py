@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_OviEntryDialog(object):
     def setupUi(self, OviEntryDialog):
         OviEntryDialog.setObjectName("OviEntryDialog")
-        OviEntryDialog.resize(776, 467)
+        OviEntryDialog.resize(776, 545)
         self.layoutWidget_2 = QtWidgets.QWidget(OviEntryDialog)
         self.layoutWidget_2.setGeometry(QtCore.QRect(660, 20, 95, 151))
         self.layoutWidget_2.setObjectName("layoutWidget_2")

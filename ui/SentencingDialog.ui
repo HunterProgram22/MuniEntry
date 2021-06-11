@@ -225,13 +225,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="frame">
+  <widget class="QFrame" name="case_information_frame">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>20</y>
      <width>651</width>
-     <height>141</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -312,6 +312,22 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>130</y>
+     <width>651</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections>
@@ -322,17 +338,34 @@
    <slot>proceed_to_ability_to_pay()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>297</y>
+     <x>351</x>
+     <y>467</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>283</y>
+     <x>499</x>
+     <y>444</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>released()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>380</x>
+     <y>475</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>476</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>proceed_to_ability_to_pay()</slot>
+  <slot>close_window()</slot>
  </slots>
 </ui>
