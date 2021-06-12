@@ -13,7 +13,6 @@ from pyuifiles.ovi_entry_dialog_ui import Ui_OviEntryDialog
 from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
-from pyuifiles.entry_preview_dialog_ui import Ui_EntryPreviewDialog
 
 
 class BaseCriminalDialog(BaseDialog):
@@ -24,8 +23,6 @@ class BaseCriminalDialog(BaseDialog):
         self.fields_dict = self.get_dialog_fields()
         dialog = SentencingDialog(self.fields_dict)
         dialog.exec()
-        # preview_dialog = EntryPreviewDialog(self.fields_dict)
-        # preview_dialog.exec()
 
     def proceed_to_ability_to_pay(self):
         dialog = AbilityToPayDialog(self.fields_dict)
@@ -33,21 +30,6 @@ class BaseCriminalDialog(BaseDialog):
 
     def close_window(self):
         self.close()
-
-
-class EntryPreviewDialog(BaseCriminalDialog, Ui_EntryPreviewDialog):
-    template = None
-    template_name = None
-
-    def __init__(self, fields_dict, parent=None):
-        super().__init__(parent)
-        self.fields_dict = fields_dict
-        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
-        self.case_no_label.setText(self.fields_dict.get("case_no"))
-        self.counsel_name_label.setText(
-            "Attorney: " + self.fields_dict.get("counsel_name")
-        )
-        self.entry_name_label.setText(SentencingDialog.template_name)
 
 
 class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
@@ -98,6 +80,11 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.counsel_name_label.setText(
             "Attorney: " + self.fields_dict.get("counsel_name")
         )
+
+    def add_offense(self):
+        self.offense_label_1.setText(self.offense_choice_box.currentText())
+        self.plea_label_1.setText(self.plea_choice_box.currentText())
+        self.finding_label_1.setText(self.finding_choice_box.currentText())
 
 
 class FailureToAppearDialog(BaseCriminalDialog, Ui_FailureToAppearDialog):
