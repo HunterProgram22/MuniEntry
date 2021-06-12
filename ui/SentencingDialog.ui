@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>696</width>
+    <width>709</width>
     <height>556</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Sentencing</string>
@@ -16,9 +22,9 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>460</y>
-     <width>151</width>
+     <x>9</x>
+     <y>519</y>
+     <width>128</width>
      <height>28</height>
     </rect>
    </property>
@@ -29,9 +35,9 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>460</y>
-     <width>191</width>
+     <x>358</x>
+     <y>519</y>
+     <width>147</width>
      <height>28</height>
     </rect>
    </property>
@@ -42,8 +48,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>220</y>
+     <x>9</x>
+     <y>347</y>
      <width>280</width>
      <height>108</height>
     </rect>
@@ -176,10 +182,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>350</y>
+     <x>9</x>
+     <y>461</y>
      <width>492</width>
-     <height>67</height>
+     <height>52</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -228,11 +234,17 @@
   <widget class="QFrame" name="case_information_frame">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>20</y>
-     <width>651</width>
-     <height>91</height>
+     <x>9</x>
+     <y>9</y>
+     <width>691</width>
+     <height>171</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
@@ -246,41 +258,16 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>631</width>
-      <height>71</height>
+      <x>13</x>
+      <y>12</y>
+      <width>671</width>
+      <height>116</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="QLabel" name="entry_name_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="case_no_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
+    <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
+     <property name="leftMargin">
+      <number>5</number>
+     </property>
      <item row="1" column="0">
       <widget class="QLabel" name="defendant_name_label">
        <property name="font">
@@ -309,17 +296,34 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="case_no_label">
+       <property name="font">
+        <font>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
-  <widget class="QFrame" name="frame_2">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>130</y>
-     <width>651</width>
-     <height>80</height>
+     <x>10</x>
+     <y>180</y>
+     <width>691</width>
+     <height>141</height>
     </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
@@ -327,6 +331,168 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>11</y>
+      <width>671</width>
+      <height>121</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="offense_label">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="offense_label_2">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label_2">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label_2">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="offense_label_3">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label_3">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label_3">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QLabel" name="offense_label_4">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label_4">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label_4">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QLabel" name="offense_label_5">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label_5">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label_5">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QLabel" name="offense_label_6">
+         <property name="text">
+          <string>Offense</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="plea_label_6">
+         <property name="text">
+          <string>Plea</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="finding_label_6">
+         <property name="text">
+          <string>Finding</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <resources/>

@@ -25,6 +25,7 @@ class BaseDialog(QDialog):
     for that specific class used for each dialog."""
 
     def __init__(self, parent=None):
+        """TODO: Need to set default to None for templates and template names."""
         super().__init__(parent)
         self.template = self.__class__.template
         self.template_name = self.__class__.template_name
