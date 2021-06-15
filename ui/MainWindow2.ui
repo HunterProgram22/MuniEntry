@@ -20,7 +20,7 @@
    <string>MuniEntry</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="F">
+   <widget class="QPushButton" name="FinalJudgmentEntryButton">
     <property name="geometry">
      <rect>
       <x>30</x>

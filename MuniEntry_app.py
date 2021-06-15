@@ -12,12 +12,6 @@ from Dialogs.CriminalDialogs import (
     SentencingDialog,
     FailureToAppearDialog,
 )
-from Dialogs.BaseDialogs import (
-    MotionEntryDialog,
-    TransferEntryDialog,
-    VerdictFormDialog,
-    YellowFormDialog,
-)
 
 
 # Code to update UI files to py files
@@ -26,7 +20,7 @@ from Dialogs.BaseDialogs import (
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
-        "FinalJudgmentEntry": FinalJudgmentEntry
+        "FinalJudgmentEntry": FinalJudgmentEntry,
         # "TransferEntryDialog":TransferEntryDialog,
         # "FailureToAppearDialog":FailureToAppearDialog,
         # "MotionEntryDialog":MotionEntryDialog,
