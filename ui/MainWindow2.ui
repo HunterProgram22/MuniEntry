@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <family>Palatino Linotype</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>MuniEntry</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="F">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>30</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Final Judgment Entry</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionOptions"/>
+    <addaction name="actionExit"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit_2"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionOptions">
+   <property name="text">
+    <string>Options</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Templates</string>
+   </property>
+  </action>
+  <action name="actionExit_2">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionGeneral_Motion_Entry">
+   <property name="text">
+    <string>General Motion Entry</string>
+   </property>
+  </action>
+  <action name="actionFail_to_Appear_Minor_Traffic_Offense">
+   <property name="text">
+    <string>Fail to Appear - Minor Traffic Offense</string>
+   </property>
+  </action>
+  <action name="actionOmnibus_Motion_Form">
+   <property name="text">
+    <string>Omnibus Motion Form</string>
+   </property>
+  </action>
+  <action name="actionJury_Instructions">
+   <property name="text">
+    <string>Jury Instructions</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>pushButtonJuryInstructions()</slot>
+  <slot>pushButtonTransferEntry()</slot>
+  <slot>pushButtonVerdictForm()</slot>
+  <slot>pushButtonOmnibusMotion()</slot>
+  <slot>pushButtonDialog()</slot>
+ </slots>
+</ui>

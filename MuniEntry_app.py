@@ -2,35 +2,38 @@ import sys
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 
-from PyQt5.QtWidgets import (
-    QApplication, QDialog, QMainWindow, QMessageBox
-)
+from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from pyuifiles.main_window_ui import Ui_MainWindow
 from Dialogs.CriminalDialogs import (
-    OviEntryDialog, SentencingDialog, FailureToAppearDialog,
-    )
+    OviEntryDialog,
+    SentencingDialog,
+    FailureToAppearDialog,
+)
 from Dialogs.BaseDialogs import (
-    MotionEntryDialog, TransferEntryDialog,
-    VerdictFormDialog, YellowFormDialog,
-    )
+    MotionEntryDialog,
+    TransferEntryDialog,
+    VerdictFormDialog,
+    YellowFormDialog,
+)
 
 
-#Code to update UI files to py files
-#pyuic5 -o main_window_ui.py ui/MainWndow.ui
+# Code to update UI files to py files
+# pyuic5 -o main_window_ui.py ui/MainWndow.ui
 
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
-        "TransferEntryDialog":TransferEntryDialog,
-        "FailureToAppearDialog":FailureToAppearDialog,
-        "MotionEntryDialog":MotionEntryDialog,
-        "VerdictFormDialog":VerdictFormDialog,
-        "YellowFormDialog":YellowFormDialog,
-        "OviEntryDialog":OviEntryDialog,
-        }
+        "FinalJudgmentEntry": FinalJudgmentEntry
+        # "TransferEntryDialog":TransferEntryDialog,
+        # "FailureToAppearDialog":FailureToAppearDialog,
+        # "MotionEntryDialog":MotionEntryDialog,
+        # "VerdictFormDialog":VerdictFormDialog,
+        # "YellowFormDialog":YellowFormDialog,
+        # "OviEntryDialog":OviEntryDialog,
+    }
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -44,8 +47,6 @@ class Window(QMainWindow, Ui_MainWindow):
         sending_button = self.sender()
         dialog = Window.DIALOG_DICT[sending_button.objectName()]()
         dialog.exec()
-
-
 
 
 if __name__ == "__main__":
