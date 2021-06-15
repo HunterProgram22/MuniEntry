@@ -22,12 +22,6 @@ from Dialogs.CriminalDialogs import (
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
         "FinalJudgmentEntryButton": CaseInformationDialog,
-        # "TransferEntryDialog":TransferEntryDialog,
-        # "FailureToAppearDialog":FailureToAppearDialog,
-        # "MotionEntryDialog":MotionEntryDialog,
-        # "VerdictFormDialog":VerdictFormDialog,
-        # "YellowFormDialog":YellowFormDialog,
-        # "OviEntryDialog":OviEntryDialog,
     }
 
     def __init__(self, parent=None):

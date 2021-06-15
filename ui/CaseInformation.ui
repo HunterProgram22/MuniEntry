@@ -22,8 +22,8 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>21</x>
-     <y>421</y>
+     <x>470</x>
+     <y>430</y>
      <width>158</width>
      <height>30</height>
     </rect>
@@ -50,7 +50,7 @@
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QLineEdit" name="case_number_box"/>
+     <widget class="QLineEdit" name="case_number"/>
     </item>
     <item row="1" column="0" colspan="2">
      <widget class="QLabel" name="label_2">
@@ -60,7 +60,7 @@
      </widget>
     </item>
     <item row="1" column="2">
-     <widget class="QLineEdit" name="defendant_name_box"/>
+     <widget class="QLineEdit" name="defendant_name"/>
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_3">
@@ -70,7 +70,7 @@
      </widget>
     </item>
     <item row="2" column="2">
-     <widget class="QDateEdit" name="plea_trial_date_box">
+     <widget class="QDateEdit" name="plea_trial_date">
       <property name="minimumDate">
        <date>
         <year>2021</year>
@@ -131,7 +131,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="ovi_checkbox">
       <property name="text">
        <string>Case Involves OVI Offense</string>
       </property>
@@ -196,8 +196,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>413</x>
-     <y>146</y>
+     <x>641</x>
+     <y>76</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
@@ -208,12 +208,12 @@
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>case_number_box</receiver>
+   <receiver>case_number</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>52</y>
+     <x>641</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>272</x>
@@ -224,12 +224,12 @@
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>defendant_name_box</receiver>
+   <receiver>defendant_name</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>376</x>
-     <y>52</y>
+     <x>641</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>278</x>
@@ -237,8 +237,58 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>counsel_name</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>711</x>
+     <y>25</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>595</x>
+     <y>155</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>continue_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>544</x>
+     <y>435</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>650</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>released()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>505</x>
+     <y>442</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>449</x>
+     <y>412</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
+  <slot>continue_dialog()</slot>
+  <slot>close_window()</slot>
  </slots>
 </ui>

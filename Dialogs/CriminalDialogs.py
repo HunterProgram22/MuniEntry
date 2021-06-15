@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 
 from Dialogs.BaseDialogs import BaseDialog, PATH, TEMPLATE_PATH, SAVE_PATH
 
-from pyuifiles.ovi_entry_dialog_ui import Ui_OviEntryDialog
+from pyuifiles.ovi_entry_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
@@ -40,13 +40,25 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+    def continue_dialog(self):
+        self.fields_dict = self.get_dialog_fields()
+        if self.ovi_checkbox.isChecked():
+            dialog = OviEntryDialog(self.fields_dict)
+            dialog.exec()
 
-class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
+
+class OviEntryDialog(BaseCriminalDialog, Ui_OviDialog):
     template = TEMPLATE_PATH + "Ovi_Entry.docx"
     template_name = "Ovi_Entry"
 
-    def __init__(self, parent=None):
+    def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
+        self.fields_dict = fields_dict
+        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
+        self.case_number_label.setText(self.fields_dict.get("case_number"))
+        self.counsel_name_label.setText(
+            "Attorney: " + self.fields_dict.get("counsel_name")
+        )
 
     def set_dialog(self, bool):
         if self.sender().objectName() == "waived_counsel_checkbox":
@@ -70,7 +82,7 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         super().__init__(parent)
         self.fields_dict = fields_dict
         self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
-        self.case_no_label.setText(self.fields_dict.get("case_no"))
+        self.case_number_label.setText(self.fields_dict.get("case_number"))
         self.counsel_name_label.setText(
             "Attorney: " + self.fields_dict.get("counsel_name")
         )
@@ -85,7 +97,7 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         super().__init__(parent)
         self.fields_dict = fields_dict
         self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
-        self.case_no_label.setText(self.fields_dict.get("case_no"))
+        self.case_number_label.setText(self.fields_dict.get("case_number"))
         self.counsel_name_label.setText(
             "Attorney: " + self.fields_dict.get("counsel_name")
         )

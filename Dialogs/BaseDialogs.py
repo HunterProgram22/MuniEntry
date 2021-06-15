@@ -50,7 +50,7 @@ class BaseDialog(QDialog):
     def get_dialog_fields(self):
         self.fields_dict = {
             "defendant_name": self.defendant_name.text(),
-            "case_no": self.case_no.text(),
+            "case_number": self.case_number.text(),
             "counsel_name": self.counsel_name.text(),
         }
         return self.fields_dict
