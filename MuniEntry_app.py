@@ -11,6 +11,7 @@ from Dialogs.CriminalDialogs import (
     OviEntryDialog,
     SentencingDialog,
     FailureToAppearDialog,
+    CaseInformationDialog,
 )
 
 
@@ -20,7 +21,7 @@ from Dialogs.CriminalDialogs import (
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
-        "FinalJudgmentEntry": FinalJudgmentEntry,
+        "FinalJudgmentEntryButton": CaseInformationDialog,
         # "TransferEntryDialog":TransferEntryDialog,
         # "FailureToAppearDialog":FailureToAppearDialog,
         # "MotionEntryDialog":MotionEntryDialog,

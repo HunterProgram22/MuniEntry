@@ -13,6 +13,7 @@ from pyuifiles.ovi_entry_dialog_ui import Ui_OviEntryDialog
 from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
+from pyuifiles.case_information_ui import Ui_CaseInformationDialog
 
 
 class BaseCriminalDialog(BaseDialog):
@@ -30,6 +31,14 @@ class BaseCriminalDialog(BaseDialog):
 
     def close_window(self):
         self.close()
+
+
+class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
+    template = None
+    template_name = None
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
 
 class OviEntryDialog(BaseCriminalDialog, Ui_OviEntryDialog):
