@@ -90,11 +90,49 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.counsel_name_label.setText(
             "Attorney: " + self.fields_dict.get("counsel_name")
         )
+        self.offense_count = 1
+        self.sentencing_dict = {
+            "offense_1": self.offense_1,
+            "plea_1": self.plea_1,
+            "finding_1": self.finding_1,
+            "fines_1": self.fines_1,
+            "fines_suspended_1": self.fines_suspended_1,
+            "jail_days_1": self.jail_days_1,
+            "jail_days_suspended_1": self.jail_days_suspended_1,
+            "offense_2": self.offense_2,
+            "plea_2": self.plea_2,
+            "finding_2": self.finding_2,
+            "fines_2": self.fines_2,
+            "fines_suspended_2": self.fines_suspended_2,
+            "jail_days_2": self.jail_days_2,
+            "jail_days_suspended_2": self.jail_days_suspended_2,
+            "offense_3": self.offense_3,
+            "plea_3": self.plea_3,
+            "finding_3": self.finding_3,
+            "fines_3": self.fines_3,
+            "fines_suspended_3": self.fines_suspended_3,
+            "jail_days_3": self.jail_days_3,
+            "jail_days_suspended_3": self.jail_days_suspended_3,
+        }
 
     def add_offense(self):
-        self.offense_label_1.setText(self.offense_choice_box.currentText())
-        self.plea_label_1.setText(self.plea_choice_box.currentText())
-        self.finding_label_1.setText(self.finding_choice_box.currentText())
+        offense = "offense_" + str(self.offense_count)
+        plea = "plea_" + str(self.offense_count)
+        finding = "finding_" + str(self.offense_count)
+        fines = "fines_" + str(self.offense_count)
+        fines_suspended = "fines_suspended_" + str(self.offense_count)
+        jail_days = "jail_days_" + str(self.offense_count)
+        jail_days_suspended = "jail_days_suspended_" + str(self.offense_count)
+        self.sentencing_dict[offense].setText(self.offense_choice_box.currentText())
+        self.sentencing_dict[plea].setText(self.plea_choice_box.currentText())
+        self.sentencing_dict[finding].setText(self.finding_choice_box.currentText())
+        self.sentencing_dict[fines].setText(self.fine_amount.text())
+        self.sentencing_dict[fines_suspended].setText(self.fines_suspended.text())
+        self.sentencing_dict[jail_days].setText(self.jail_days.currentText())
+        self.sentencing_dict[jail_days_suspended].setText(
+            self.jail_days_suspended.cleanText()
+        )
+        self.offense_count += 1
 
 
 class FailureToAppearDialog(BaseCriminalDialog, Ui_FailureToAppearDialog):

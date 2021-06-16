@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>622</width>
-    <height>381</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -25,7 +31,7 @@
      <x>510</x>
      <y>10</y>
      <width>97</width>
-     <height>61</height>
+     <height>68</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -150,7 +156,7 @@
     <string>OVI Details</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -294,8 +300,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>535</x>
-     <y>79</y>
+     <x>536</x>
+     <y>76</y>
     </hint>
     <hint type="destinationlabel">
      <x>623</x>
@@ -310,8 +316,8 @@
    <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>47</x>
-     <y>322</y>
+     <x>48</x>
+     <y>263</y>
     </hint>
     <hint type="destinationlabel">
      <x>118</x>
