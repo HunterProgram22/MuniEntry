@@ -596,9 +596,6 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="3">
-       <widget class="QSpinBox" name="jail_days_suspended"/>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_7">
         <property name="text">
@@ -627,46 +624,10 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="jail_days">
-        <property name="editable">
-         <bool>true</bool>
-        </property>
-        <item>
-         <property name="text">
-          <string/>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>30</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>60</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>90</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>120</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>150</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>180</string>
-         </property>
-        </item>
-       </widget>
+       <widget class="QLineEdit" name="jail_days"/>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLineEdit" name="jail_days_suspended"/>
       </item>
      </layout>
     </item>
@@ -680,8 +641,6 @@
   <tabstop>finding_choice_box</tabstop>
   <tabstop>fine_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
-  <tabstop>jail_days</tabstop>
-  <tabstop>jail_days_suspended</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>pushButton_2</tabstop>
  </tabstops>

@@ -116,6 +116,8 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         }
 
     def add_offense(self):
+        """Need to add an error message or address what happens when more than
+        4 offenses are added in a case."""
         offense = "offense_" + str(self.offense_count)
         plea = "plea_" + str(self.offense_count)
         finding = "finding_" + str(self.offense_count)
@@ -128,9 +130,9 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.sentencing_dict[finding].setText(self.finding_choice_box.currentText())
         self.sentencing_dict[fines].setText(self.fine_amount.text())
         self.sentencing_dict[fines_suspended].setText(self.fines_suspended.text())
-        self.sentencing_dict[jail_days].setText(self.jail_days.currentText())
+        self.sentencing_dict[jail_days].setText(self.jail_days.text())
         self.sentencing_dict[jail_days_suspended].setText(
-            self.jail_days_suspended.cleanText()
+            self.jail_days_suspended.text()
         )
         self.offense_count += 1
 
