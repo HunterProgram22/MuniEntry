@@ -8,7 +8,7 @@ from PyQt5.QtCore import pyqtSlot
 
 from pyuifiles.main_window_ui import Ui_MainWindow
 from Dialogs.CriminalDialogs import (
-    OviEntryDialog,
+    OviDialog,
     SentencingDialog,
     FailureToAppearDialog,
     CaseInformationDialog,

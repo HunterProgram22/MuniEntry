@@ -24,6 +24,9 @@ class BaseDialog(QDialog):
     dialogs for forms. The template for each form is a class variable
     for that specific class used for each dialog."""
 
+    template = None
+    template_name = None
+
     def __init__(self, parent=None):
         """TODO: Need to set default to None for templates and template names."""
         super().__init__(parent)

@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 
 from Dialogs.BaseDialogs import BaseDialog, PATH, TEMPLATE_PATH, SAVE_PATH
 
-from pyuifiles.ovi_entry_dialog_ui import Ui_OviDialog
+from pyuifiles.ovi_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
@@ -21,7 +21,6 @@ class BaseCriminalDialog(BaseDialog):
         super().__init__(parent)
 
     def proceed_to_sentencing(self):
-        self.fields_dict = self.get_dialog_fields()
         dialog = SentencingDialog(self.fields_dict)
         dialog.exec()
 
@@ -34,23 +33,19 @@ class BaseCriminalDialog(BaseDialog):
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
-    template = None
-    template_name = None
-
     def __init__(self, parent=None):
         super().__init__(parent)
 
     def continue_dialog(self):
         self.fields_dict = self.get_dialog_fields()
         if self.ovi_checkbox.isChecked():
-            dialog = OviEntryDialog(self.fields_dict)
+            dialog = OviDialog(self.fields_dict)
             dialog.exec()
+        else:
+            self.proceed_to_sentencing()
 
 
-class OviEntryDialog(BaseCriminalDialog, Ui_OviDialog):
-    template = TEMPLATE_PATH + "Ovi_Entry.docx"
-    template_name = "Ovi_Entry"
-
+class OviDialog(BaseCriminalDialog, Ui_OviDialog):
     def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
         self.fields_dict = fields_dict
@@ -75,9 +70,6 @@ class OviEntryDialog(BaseCriminalDialog, Ui_OviDialog):
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
-    template = None
-    template_name = None
-
     def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
         self.fields_dict = fields_dict
@@ -90,9 +82,6 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
-    template = TEMPLATE_PATH + "Sentencing_Entry.docx"
-    template_name = "Sentencing_Entry"
-
     def __init__(self, fields_dict, parent=None):
         super().__init__(parent)
         self.fields_dict = fields_dict
