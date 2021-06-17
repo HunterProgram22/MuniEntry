@@ -25,7 +25,7 @@ class BaseCriminalDialog(BaseDialog):
         dialog.exec()
 
     def proceed_to_ability_to_pay(self):
-        dialog = AbilityToPayDialog(self.fields_dict)
+        dialog = AbilityToPayDialog(self.fields_dict, self.sentencing_dict)
         dialog.exec()
 
     def close_window(self):
@@ -35,6 +35,13 @@ class BaseCriminalDialog(BaseDialog):
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
+
+    def set_dialog(self, bool):
+        if self.sender().objectName() == "waived_counsel_checkbox":
+            if bool == True:
+                self.counsel_name.setEnabled(False)
+            else:
+                self.counsel_name.setEnabled(True)
 
     def continue_dialog(self):
         self.fields_dict = self.get_dialog_fields()
@@ -56,12 +63,6 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
         )
 
     def set_dialog(self, bool):
-        if self.sender().objectName() == "waived_counsel_checkbox":
-            if bool == True:
-                self.counsel_name.setEnabled(False)
-                self.ovi_in_20_years.setEnabled(True)
-            else:
-                self.counsel_name.setEnabled(True)
         if self.sender().objectName() == "refused_checkbox":
             if bool == True:
                 self.ovi_in_20_years.setEnabled(True)
@@ -70,15 +71,17 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
-    def __init__(self, fields_dict, parent=None):
+    def __init__(self, fields_dict, sentencing_dict, parent=None):
         super().__init__(parent)
         self.fields_dict = fields_dict
+        self.sentencing_dict = sentencing_dict
         self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
         self.case_number_label.setText(self.fields_dict.get("case_number"))
         self.counsel_name_label.setText(
             "Attorney: " + self.fields_dict.get("counsel_name")
         )
         self.entry_name_label.setText(SentencingDialog.template_name)
+        self.offense_1.setText(self.sentencing_dict["offense_1"])
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
