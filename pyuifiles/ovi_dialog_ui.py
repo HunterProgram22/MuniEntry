@@ -125,6 +125,12 @@ class Ui_OviDialog(object):
         self.pushButton_4.clicked.connect(OviDialog.proceed_to_sentencing)
         self.pushButton_4.released.connect(OviDialog.close_window)
         QtCore.QMetaObject.connectSlotsByName(OviDialog)
+        OviDialog.setTabOrder(self.comboBox, self.checkBox)
+        OviDialog.setTabOrder(self.checkBox, self.refused_checkbox)
+        OviDialog.setTabOrder(self.refused_checkbox, self.ovi_in_20_years)
+        OviDialog.setTabOrder(self.ovi_in_20_years, self.pushButton_4)
+        OviDialog.setTabOrder(self.pushButton_4, self.pushButton_2)
+        OviDialog.setTabOrder(self.pushButton_2, self.pushButton_3)
 
     def retranslateUi(self, OviDialog):
         _translate = QtCore.QCoreApplication.translate

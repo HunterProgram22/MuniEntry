@@ -291,6 +291,15 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>comboBox</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>refused_checkbox</tabstop>
+  <tabstop>ovi_in_20_years</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

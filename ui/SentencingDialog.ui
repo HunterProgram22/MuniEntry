@@ -131,7 +131,7 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -440,7 +440,7 @@
     <string>Proceed to Ability to Pay</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>17</x>
@@ -641,6 +641,8 @@
   <tabstop>finding_choice_box</tabstop>
   <tabstop>fine_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
+  <tabstop>jail_days</tabstop>
+  <tabstop>jail_days_suspended</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>pushButton_2</tabstop>
  </tabstops>

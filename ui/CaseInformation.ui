@@ -190,6 +190,20 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>case_number</tabstop>
+  <tabstop>defendant_name</tabstop>
+  <tabstop>plea_trial_date</tabstop>
+  <tabstop>waived_counsel_checkbox</tabstop>
+  <tabstop>counsel_name</tabstop>
+  <tabstop>ovi_checkbox</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

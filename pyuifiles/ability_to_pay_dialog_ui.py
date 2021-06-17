@@ -267,6 +267,11 @@ class Ui_AbilityToPayDialog(object):
 
         self.retranslateUi(AbilityToPayDialog)
         QtCore.QMetaObject.connectSlotsByName(AbilityToPayDialog)
+        AbilityToPayDialog.setTabOrder(self.checkBox, self.comboBox)
+        AbilityToPayDialog.setTabOrder(self.comboBox, self.checkBox_2)
+        AbilityToPayDialog.setTabOrder(self.checkBox_2, self.checkBox_3)
+        AbilityToPayDialog.setTabOrder(self.checkBox_3, self.checkBox_4)
+        AbilityToPayDialog.setTabOrder(self.checkBox_4, self.pushButton_2)
 
     def retranslateUi(self, AbilityToPayDialog):
         _translate = QtCore.QCoreApplication.translate

@@ -507,6 +507,14 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>checkBox</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>pushButton_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

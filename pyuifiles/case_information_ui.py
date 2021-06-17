@@ -108,6 +108,21 @@ class Ui_CaseInformationDialog(object):
             CaseInformationDialog.set_dialog
         )
         QtCore.QMetaObject.connectSlotsByName(CaseInformationDialog)
+        CaseInformationDialog.setTabOrder(self.case_number, self.defendant_name)
+        CaseInformationDialog.setTabOrder(self.defendant_name, self.plea_trial_date)
+        CaseInformationDialog.setTabOrder(
+            self.plea_trial_date, self.waived_counsel_checkbox
+        )
+        CaseInformationDialog.setTabOrder(
+            self.waived_counsel_checkbox, self.counsel_name
+        )
+        CaseInformationDialog.setTabOrder(self.counsel_name, self.ovi_checkbox)
+        CaseInformationDialog.setTabOrder(self.ovi_checkbox, self.checkBox_2)
+        CaseInformationDialog.setTabOrder(self.checkBox_2, self.checkBox_3)
+        CaseInformationDialog.setTabOrder(self.checkBox_3, self.checkBox_4)
+        CaseInformationDialog.setTabOrder(self.checkBox_4, self.pushButton)
+        CaseInformationDialog.setTabOrder(self.pushButton, self.pushButton_2)
+        CaseInformationDialog.setTabOrder(self.pushButton_2, self.pushButton_3)
 
     def retranslateUi(self, CaseInformationDialog):
         _translate = QtCore.QCoreApplication.translate
