@@ -56,12 +56,12 @@
       <x>10</x>
       <y>10</y>
       <width>641</width>
-      <height>80</height>
+      <height>95</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="QLabel" name="entry_name_label">
+     <item row="2" column="0">
+      <widget class="QLabel" name="defendant_attorney_name_label">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -102,20 +102,6 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="counsel_name_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
   </widget>
@@ -143,7 +129,7 @@
       <x>10</x>
       <y>10</y>
       <width>761</width>
-      <height>196</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -420,13 +406,13 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>21</x>
      <y>350</y>
-     <width>771</width>
-     <height>126</height>
+     <width>989</width>
+     <height>146</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">

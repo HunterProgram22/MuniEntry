@@ -126,3 +126,46 @@ class MotionEntryDialog(BaseDialog, Ui_MotionEntryDialog):
         self.fields_dict["motion_decision"] = self.motion_decision.currentText()
         self.fields_dict["assigned_judge"] = self.assigned_judge.currentText()
         return self.fields_dict
+
+
+class BaseDialog(QDialog):
+    """Base class that creates all the methods commonly used by all
+    dialogs for forms. The template for each form is a class variable
+    for that specific class used for each dialog."""
+
+    template = None
+    template_name = None
+
+    def __init__(self, parent=None):
+        """TODO: Need to set default to None for templates and template names."""
+        super().__init__(parent)
+        self.template = self.__class__.template
+        self.template_name = self.__class__.template_name
+        self.setupUi(self)
+
+    def align_entry_left(self):
+        for para in self.doc.paragraphs:
+            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    def create_entry(self):
+        self.fields_dict = self.get_dialog_fields()
+        self.doc = DocxTemplate(self.get_template())
+        self.doc.render(self.fields_dict)
+        self.align_entry_left()
+        self.set_document_name()
+        self.doc.save(SAVE_PATH + self.docname)
+        os.startfile(SAVE_PATH + self.docname)
+
+    def set_document_name(self):
+        self.docname = self.fields_dict["case_no"] + "_" + self.template_name + ".docx"
+
+    def get_dialog_fields(self):
+        self.fields_dict = {
+            "defendant_name": self.defendant_name.text(),
+            "case_number": self.case_number.text(),
+            "defendant_attorney_name": self.defendant_attorney_name.text(),
+        }
+        return self.fields_dict
+
+    def get_template(self):
+        return self.template

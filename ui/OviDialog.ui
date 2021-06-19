@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>830</width>
+    <height>564</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -313,7 +313,7 @@
      <y>76</y>
     </hint>
     <hint type="destinationlabel">
-     <x>623</x>
+     <x>600</x>
      <y>115</y>
     </hint>
    </hints>
@@ -345,7 +345,7 @@
      <y>381</y>
     </hint>
     <hint type="destinationlabel">
-     <x>623</x>
+     <x>600</x>
      <y>302</y>
     </hint>
    </hints>
@@ -361,7 +361,7 @@
      <y>366</y>
     </hint>
     <hint type="destinationlabel">
-     <x>623</x>
+     <x>600</x>
      <y>341</y>
     </hint>
    </hints>

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_OviDialog(object):
     def setupUi(self, OviDialog):
         OviDialog.setObjectName("OviDialog")
-        OviDialog.resize(600, 400)
+        OviDialog.resize(830, 564)
         OviDialog.setMinimumSize(QtCore.QSize(600, 400))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")

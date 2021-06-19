@@ -8,7 +8,7 @@ from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 
 from pyuifiles.ovi_dialog_ui import Ui_OviDialog
-from pyuifiles.sentencing_entry_dialog_ui import Ui_SentencingDialog
+from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
 from Dialogs.CaseInformation import CaseInformation
@@ -21,35 +21,11 @@ SAVE_PATH = PATH + "\\Saved\\"
 
 
 class BaseDialog(QDialog):
-    """Base class that creates all the methods commonly used by all
-    dialogs for forms. The template for each form is a class variable
-    for that specific class used for each dialog."""
-
-    template = None
-    template_name = None
+    """TODO: Class docstring."""
 
     def __init__(self, parent=None):
-        """TODO: Need to set default to None for templates and template names."""
         super().__init__(parent)
-        self.template = self.__class__.template
-        self.template_name = self.__class__.template_name
         self.setupUi(self)
-
-    def align_entry_left(self):
-        for para in self.doc.paragraphs:
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
-
-    def create_entry(self):
-        self.fields_dict = self.get_dialog_fields()
-        self.doc = DocxTemplate(self.get_template())
-        self.doc.render(self.fields_dict)
-        self.align_entry_left()
-        self.set_document_name()
-        self.doc.save(SAVE_PATH + self.docname)
-        os.startfile(SAVE_PATH + self.docname)
-
-    def set_document_name(self):
-        self.docname = self.fields_dict["case_no"] + "_" + self.template_name + ".docx"
 
     def get_dialog_fields(self):
         self.fields_dict = {
@@ -58,9 +34,6 @@ class BaseDialog(QDialog):
             "defendant_attorney_name": self.defendant_attorney_name.text(),
         }
         return self.fields_dict
-
-    def get_template(self):
-        return self.template
 
 
 class BaseCriminalDialog(BaseDialog):
@@ -71,11 +44,11 @@ class BaseCriminalDialog(BaseDialog):
         self.close()
 
     def proceed_to_sentencing(self):
-        dialog = SentencingDialog(self.fields_dict)
+        dialog = SentencingDialog(self.case_information)
         dialog.exec()
 
     def proceed_to_ability_to_pay(self):
-        dialog = AbilityToPayDialog(self.fields_dict, self.sentencing_dict)
+        dialog = AbilityToPayDialog(self.case_information, self.sentencing_dict)
         dialog.exec()
 
     def set_case_information_banner(self):
@@ -130,28 +103,22 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
-    def __init__(self, fields_dict, sentencing_dict, parent=None):
+    def __init__(self, case_information, sentencing_dict, parent=None):
         super().__init__(parent)
-        self.fields_dict = fields_dict
+        self.case_information = case_information
         self.sentencing_dict = sentencing_dict
-        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
-        self.case_number_label.setText(self.fields_dict.get("case_number"))
-        self.counsel_name_label.setText(
-            "Attorney: " + self.fields_dict.get("counsel_name")
-        )
-        self.entry_name_label.setText(SentencingDialog.template_name)
-        self.offense_1.setText(self.sentencing_dict["offense_1"])
+        self.set_case_information_banner()
+        # self.offense_1.setText(self.sentencing_dict["offense_1"])
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
-    def __init__(self, fields_dict, parent=None):
+    """CHECK: make sure I'm not creating a new case information object each time
+    need to have only one case information object that is accessed and updated."""
+
+    def __init__(self, case_information, parent=None):
         super().__init__(parent)
-        self.fields_dict = fields_dict
-        self.defendant_name_label.setText(self.fields_dict.get("defendant_name"))
-        self.case_number_label.setText(self.fields_dict.get("case_number"))
-        self.counsel_name_label.setText(
-            "Attorney: " + self.fields_dict.get("counsel_name")
-        )
+        self.case_information = case_information
+        self.set_case_information_banner()
         self.offense_count = 1
         self.sentencing_dict = {
             "offense_1": self.offense_1,
