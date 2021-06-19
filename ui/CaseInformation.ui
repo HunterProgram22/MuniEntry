@@ -38,7 +38,7 @@
      <x>20</x>
      <y>10</y>
      <width>601</width>
-     <height>164</height>
+     <height>189</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -100,12 +100,12 @@
     <item row="4" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
-       <string>Counsel Name:</string>
+       <string>Defendant Attorney:</string>
       </property>
      </widget>
     </item>
     <item row="4" column="1" colspan="2">
-     <widget class="QLineEdit" name="counsel_name"/>
+     <widget class="QLineEdit" name="defendant_attorney_name"/>
     </item>
    </layout>
   </widget>
@@ -115,7 +115,7 @@
      <x>20</x>
      <y>230</y>
      <width>601</width>
-     <height>161</height>
+     <height>177</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
@@ -168,8 +168,8 @@
     <rect>
      <x>640</x>
      <y>10</y>
-     <width>89</width>
-     <height>68</height>
+     <width>118</width>
+     <height>80</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_3">
@@ -195,7 +195,7 @@
   <tabstop>defendant_name</tabstop>
   <tabstop>plea_trial_date</tabstop>
   <tabstop>waived_counsel_checkbox</tabstop>
-  <tabstop>counsel_name</tabstop>
+  <tabstop>defendant_attorney_name</tabstop>
   <tabstop>ovi_checkbox</tabstop>
   <tabstop>checkBox_2</tabstop>
   <tabstop>checkBox_3</tabstop>
@@ -249,15 +249,15 @@
      <y>40</y>
     </hint>
     <hint type="destinationlabel">
-     <x>278</x>
-     <y>45</y>
+     <x>452</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>counsel_name</receiver>
+   <receiver>defendant_attorney_name</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -265,8 +265,8 @@
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
-     <x>595</x>
-     <y>155</y>
+     <x>619</x>
+     <y>197</y>
     </hint>
    </hints>
   </connection>
@@ -318,11 +318,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>pressed()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>582</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>695</x>
+     <y>381</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
   <slot>continue_dialog()</slot>
   <slot>close_window()</slot>
   <slot>set_dialog()</slot>
+  <slot>update_case_information()</slot>
  </slots>
 </ui>

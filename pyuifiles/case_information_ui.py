@@ -23,7 +23,7 @@ class Ui_CaseInformationDialog(object):
         self.pushButton.setGeometry(QtCore.QRect(470, 430, 158, 30))
         self.pushButton.setObjectName("pushButton")
         self.layoutWidget = QtWidgets.QWidget(CaseInformationDialog)
-        self.layoutWidget.setGeometry(QtCore.QRect(20, 10, 601, 164))
+        self.layoutWidget.setGeometry(QtCore.QRect(20, 10, 601, 189))
         self.layoutWidget.setObjectName("layoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -46,7 +46,7 @@ class Ui_CaseInformationDialog(object):
         self.plea_trial_date = QtWidgets.QDateEdit(self.layoutWidget)
         self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setCalendarPopup(True)
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setObjectName("plea_trial_date")
         self.gridLayout.addWidget(self.plea_trial_date, 2, 2, 1, 1)
         self.waived_counsel_checkbox = QtWidgets.QCheckBox(self.layoutWidget)
@@ -55,11 +55,11 @@ class Ui_CaseInformationDialog(object):
         self.label_4 = QtWidgets.QLabel(self.layoutWidget)
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 4, 0, 1, 1)
-        self.counsel_name = QtWidgets.QLineEdit(self.layoutWidget)
-        self.counsel_name.setObjectName("counsel_name")
-        self.gridLayout.addWidget(self.counsel_name, 4, 1, 1, 2)
+        self.defendant_attorney_name = QtWidgets.QLineEdit(self.layoutWidget)
+        self.defendant_attorney_name.setObjectName("defendant_attorney_name")
+        self.gridLayout.addWidget(self.defendant_attorney_name, 4, 1, 1, 2)
         self.layoutWidget1 = QtWidgets.QWidget(CaseInformationDialog)
-        self.layoutWidget1.setGeometry(QtCore.QRect(20, 230, 601, 161))
+        self.layoutWidget1.setGeometry(QtCore.QRect(20, 230, 601, 177))
         self.layoutWidget1.setObjectName("layoutWidget1")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.layoutWidget1)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -85,7 +85,7 @@ class Ui_CaseInformationDialog(object):
         self.checkBox_4.setObjectName("checkBox_4")
         self.gridLayout_2.addWidget(self.checkBox_4, 4, 0, 1, 1)
         self.layoutWidget2 = QtWidgets.QWidget(CaseInformationDialog)
-        self.layoutWidget2.setGeometry(QtCore.QRect(640, 10, 89, 68))
+        self.layoutWidget2.setGeometry(QtCore.QRect(640, 10, 118, 80))
         self.layoutWidget2.setObjectName("layoutWidget2")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.layoutWidget2)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -101,22 +101,17 @@ class Ui_CaseInformationDialog(object):
         self.pushButton_3.clicked.connect(CaseInformationDialog.reject)
         self.pushButton_2.clicked.connect(self.case_number.clear)
         self.pushButton_2.clicked.connect(self.defendant_name.clear)
-        self.pushButton_2.clicked.connect(self.counsel_name.clear)
+        self.pushButton_2.clicked.connect(self.defendant_attorney_name.clear)
         self.pushButton.clicked.connect(CaseInformationDialog.continue_dialog)
         self.pushButton.released.connect(CaseInformationDialog.close_window)
-        self.waived_counsel_checkbox.toggled["bool"].connect(
-            CaseInformationDialog.set_dialog
-        )
+        self.waived_counsel_checkbox.toggled['bool'].connect(CaseInformationDialog.set_dialog)
+        self.pushButton.pressed.connect(CaseInformationDialog.update_case_information)
         QtCore.QMetaObject.connectSlotsByName(CaseInformationDialog)
         CaseInformationDialog.setTabOrder(self.case_number, self.defendant_name)
         CaseInformationDialog.setTabOrder(self.defendant_name, self.plea_trial_date)
-        CaseInformationDialog.setTabOrder(
-            self.plea_trial_date, self.waived_counsel_checkbox
-        )
-        CaseInformationDialog.setTabOrder(
-            self.waived_counsel_checkbox, self.counsel_name
-        )
-        CaseInformationDialog.setTabOrder(self.counsel_name, self.ovi_checkbox)
+        CaseInformationDialog.setTabOrder(self.plea_trial_date, self.waived_counsel_checkbox)
+        CaseInformationDialog.setTabOrder(self.waived_counsel_checkbox, self.defendant_attorney_name)
+        CaseInformationDialog.setTabOrder(self.defendant_attorney_name, self.ovi_checkbox)
         CaseInformationDialog.setTabOrder(self.ovi_checkbox, self.checkBox_2)
         CaseInformationDialog.setTabOrder(self.checkBox_2, self.checkBox_3)
         CaseInformationDialog.setTabOrder(self.checkBox_3, self.checkBox_4)
@@ -126,33 +121,17 @@ class Ui_CaseInformationDialog(object):
 
     def retranslateUi(self, CaseInformationDialog):
         _translate = QtCore.QCoreApplication.translate
-        CaseInformationDialog.setWindowTitle(
-            _translate("CaseInformationDialog", "Case Information")
-        )
+        CaseInformationDialog.setWindowTitle(_translate("CaseInformationDialog", "Case Information"))
         self.pushButton.setText(_translate("CaseInformationDialog", "Continue"))
         self.label.setText(_translate("CaseInformationDialog", "Case Number:"))
         self.label_2.setText(_translate("CaseInformationDialog", "Defendant Name: "))
         self.label_3.setText(_translate("CaseInformationDialog", "Plea or Trial Date:"))
-        self.waived_counsel_checkbox.setText(
-            _translate("CaseInformationDialog", "Defendant waived right to counsel")
-        )
-        self.label_4.setText(_translate("CaseInformationDialog", "Counsel Name:"))
-        self.label_5.setText(
-            _translate("CaseInformationDialog", "Check All Boxes That Apply")
-        )
-        self.ovi_checkbox.setText(
-            _translate("CaseInformationDialog", "Case Involves OVI Offense")
-        )
-        self.checkBox_2.setText(
-            _translate("CaseInformationDialog", "Amendment to Charges by Prosecutor")
-        )
-        self.checkBox_3.setText(
-            _translate("CaseInformationDialog", "Defendant is to be Committed to Jail")
-        )
-        self.checkBox_4.setText(
-            _translate(
-                "CaseInformationDialog", "License Suspension (Driving, Hunting, CCW)"
-            )
-        )
+        self.waived_counsel_checkbox.setText(_translate("CaseInformationDialog", "Defendant waived right to counsel"))
+        self.label_4.setText(_translate("CaseInformationDialog", "Defendant Attorney:"))
+        self.label_5.setText(_translate("CaseInformationDialog", "Check All Boxes That Apply"))
+        self.ovi_checkbox.setText(_translate("CaseInformationDialog", "Case Involves OVI Offense"))
+        self.checkBox_2.setText(_translate("CaseInformationDialog", "Amendment to Charges by Prosecutor"))
+        self.checkBox_3.setText(_translate("CaseInformationDialog", "Defendant is to be Committed to Jail"))
+        self.checkBox_4.setText(_translate("CaseInformationDialog", "License Suspension (Driving, Hunting, CCW)"))
         self.pushButton_2.setText(_translate("CaseInformationDialog", "Clear Fields"))
         self.pushButton_3.setText(_translate("CaseInformationDialog", "Cancel"))
