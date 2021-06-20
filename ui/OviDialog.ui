@@ -51,7 +51,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -296,7 +296,7 @@
   <tabstop>checkBox</tabstop>
   <tabstop>refused_checkbox</tabstop>
   <tabstop>ovi_in_20_years</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>continueButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
  </tabstops>
@@ -335,7 +335,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
+   <sender>continueButton</sender>
    <signal>clicked()</signal>
    <receiver>OviDialog</receiver>
    <slot>proceed_to_sentencing()</slot>
@@ -351,7 +351,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
+   <sender>continueButton</sender>
    <signal>released()</signal>
    <receiver>OviDialog</receiver>
    <slot>close_window()</slot>

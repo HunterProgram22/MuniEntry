@@ -427,7 +427,7 @@
     <string>Add Another Offense</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
      <x>610</x>
@@ -644,12 +644,12 @@
   <tabstop>jail_days</tabstop>
   <tabstop>jail_days_suspended</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>continueButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>continueButton</sender>
    <signal>clicked()</signal>
    <receiver>SentencingDialog</receiver>
    <slot>proceed_to_ability_to_pay()</slot>
@@ -665,7 +665,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>continueButton</sender>
    <signal>released()</signal>
    <receiver>SentencingDialog</receiver>
    <slot>close_window()</slot>

@@ -233,9 +233,9 @@ class Ui_SentencingDialog(object):
         self.pushButton = QtWidgets.QPushButton(SentencingDialog)
         self.pushButton.setGeometry(QtCore.QRect(620, 170, 162, 30))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(SentencingDialog)
-        self.pushButton_2.setGeometry(QtCore.QRect(610, 690, 175, 30))
-        self.pushButton_2.setObjectName("pushButton_2")
+        self.continueButton = QtWidgets.QPushButton(SentencingDialog)
+        self.continueButton.setGeometry(QtCore.QRect(610, 690, 175, 30))
+        self.continueButton.setObjectName("continueButton")
         self.layoutWidget2 = QtWidgets.QWidget(SentencingDialog)
         self.layoutWidget2.setGeometry(QtCore.QRect(17, 168, 590, 232))
         self.layoutWidget2.setObjectName("layoutWidget2")
@@ -315,8 +315,8 @@ class Ui_SentencingDialog(object):
         self.gridLayout_5.addLayout(self.gridLayout, 4, 0, 1, 3)
 
         self.retranslateUi(SentencingDialog)
-        self.pushButton_2.clicked.connect(SentencingDialog.proceed_to_ability_to_pay)
-        self.pushButton_2.released.connect(SentencingDialog.close_window)
+        self.continueButton.clicked.connect(SentencingDialog.proceed_to_ability_to_pay)
+        self.continueButton.released.connect(SentencingDialog.close_window)
         self.pushButton.clicked.connect(SentencingDialog.add_offense)
         QtCore.QMetaObject.connectSlotsByName(SentencingDialog)
         SentencingDialog.setTabOrder(self.offense_choice_box, self.comboBox_2)
@@ -327,7 +327,7 @@ class Ui_SentencingDialog(object):
         SentencingDialog.setTabOrder(self.fines_suspended, self.jail_days)
         SentencingDialog.setTabOrder(self.jail_days, self.jail_days_suspended)
         SentencingDialog.setTabOrder(self.jail_days_suspended, self.pushButton)
-        SentencingDialog.setTabOrder(self.pushButton, self.pushButton_2)
+        SentencingDialog.setTabOrder(self.pushButton, self.continueButton)
 
     def retranslateUi(self, SentencingDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -343,7 +343,7 @@ class Ui_SentencingDialog(object):
         self.label_11.setText(_translate("SentencingDialog", "Jail Days:"))
         self.label_12.setText(_translate("SentencingDialog", "Jail Days Suspended:"))
         self.pushButton.setText(_translate("SentencingDialog", "Add Another Offense"))
-        self.pushButton_2.setText(_translate("SentencingDialog", "Proceed to Ability to Pay"))
+        self.continueButton.setText(_translate("SentencingDialog", "Proceed to Ability to Pay"))
         self.label.setText(_translate("SentencingDialog", "Offense:"))
         self.offense_choice_box.setItemText(1, _translate("SentencingDialog", "OVI - R.C. 4511.19(A)(1)(a)"))
         self.offense_choice_box.setItemText(2, _translate("SentencingDialog", "OVI - R.C. 4511.19(A)(1)(b)"))

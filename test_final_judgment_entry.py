@@ -4,7 +4,7 @@ from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
 import MuniEntry_app
-from Dialogs.CriminalDialogs import CaseInformationDialog, SentencingDialog
+from Dialogs.CriminalDialogs import CaseInformationDialog, SentencingDialog, OviDialog
 
 """Functions for Testing"""
 
@@ -15,10 +15,23 @@ def add_case_information(screen):
     QtBot.keyClicks(screen.defendant_attorney_name, "Robert Shapiro")
 
 
+def check_banner(screen):
+    assert screen.case_number_label.text() == "21TRC1234"
+    assert screen.defendant_name_label.text() == "John Smith"
+    assert screen.defendant_attorney_name_label.text() == "Attorney: Robert Shapiro"
+
+
 def press_continue_button(screen, nextDialog):
-    QtBot.mouseClick(screen.pushButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(screen.continueButton, QtCore.Qt.LeftButton)
     next_screen = nextDialog(screen.case_information)
     return next_screen
+
+
+def start_dialog(qtbot):
+    screen = CaseInformationDialog()
+    qtbot.addWidget(screen)
+    add_case_information(screen)
+    return screen
 
 
 """TESTING"""
@@ -40,19 +53,28 @@ def test_final_judgment_buton(app):
 
 
 def test_case_information_dialog(qtbot):
-    screen = CaseInformationDialog()
-    qtbot.addWidget(screen)
-    add_case_information(screen)
+    screen = start_dialog(qtbot)
     assert screen.case_number.text() == "21TRC1234"
     assert screen.defendant_name.text() == "John Smith"
     assert screen.defendant_attorney_name.text() == "Robert Shapiro"
-    screen.close()
     next_screen = press_continue_button(screen, SentencingDialog)
-    assert next_screen.case_number_label.text() == "21TRC1234"
-    assert next_screen.defendant_name_label.text() == "John Smith"
-    assert (
-        next_screen.defendant_attorney_name_label.text() == "Attorney: Robert Shapiro"
-    )
+    check_banner(next_screen)
+
+
+def test_ovi_dialog(qtbot):
+    screen = start_dialog(qtbot)
+    QtBot.mouseClick(screen.ovi_checkbox, QtCore.Qt.LeftButton)
+    next_screen = press_continue_button(screen, OviDialog)
+    assert next_screen.windowTitle() == "Operating a Vehicle Impaired"
+    check_banner(next_screen)
+    third_screen = press_continue_button(next_screen, SentencingDialog)
+    assert third_screen.windowTitle() == "Sentencing"
+    check_banner(third_screen)
+
+
+def test_sentencing_dialog_add_offense(qtbot):
+    screen = start_dialog(qtbot)
+    next_screen = press_continue_button(screen, SentencingDialog)
 
 
 # def test_main_window(qtbot):

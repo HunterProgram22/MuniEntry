@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>Case Information</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
      <x>470</x>
@@ -112,7 +112,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>22</x>
@@ -200,7 +200,7 @@
   <tabstop>checkBox_2</tabstop>
   <tabstop>checkBox_3</tabstop>
   <tabstop>checkBox_4</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>continueButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
  </tabstops>
@@ -223,7 +223,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>continueButton</sender>
    <signal>clicked()</signal>
    <receiver>CaseInformationDialog</receiver>
    <slot>continue_dialog()</slot>
@@ -239,7 +239,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>continueButton</sender>
    <signal>released()</signal>
    <receiver>CaseInformationDialog</receiver>
    <slot>close_window()</slot>
@@ -255,7 +255,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>continueButton</sender>
    <signal>pressed()</signal>
    <receiver>CaseInformationDialog</receiver>
    <slot>update_case_information()</slot>
