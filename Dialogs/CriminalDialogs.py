@@ -20,12 +20,17 @@ TEMPLATE_PATH = PATH + "\\Templates\\"
 SAVE_PATH = PATH + "\\Saved\\"
 
 
-class BaseDialog(QDialog):
-    """TODO: Class docstring."""
+class BaseCriminalDialog(QDialog):
+    """This class is a base class to provide methods that are used by some or all
+    class dialogs that are used in the application. This class is never instantiated
+    as its own dialog, but the init contains the setup for all inherited class dialogs."""
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+
+    def close_window(self):
+        self.close()
 
     def get_dialog_fields(self):
         self.fields_dict = {
@@ -34,14 +39,6 @@ class BaseDialog(QDialog):
             "defendant_attorney_name": self.defendant_attorney_name.text(),
         }
         return self.fields_dict
-
-
-class BaseCriminalDialog(BaseDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
-    def close_window(self):
-        self.close()
 
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
@@ -80,7 +77,6 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
         )
 
     def continue_dialog(self):
-        # self.fields_dict = self.get_dialog_fields()
         if self.ovi_checkbox.isChecked():
             dialog = OviDialog(self.case_information)
             dialog.exec()
@@ -112,14 +108,12 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
-    """CHECK: make sure I'm not creating a new case information object each time
-    need to have only one case information object that is accessed and updated."""
-
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
         self.offense_count = 1
+        """
         self.sentencing_dict = {
             "offense_1": self.offense_1,
             "plea_1": self.plea_1,
@@ -142,7 +136,7 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
             "fines_suspended_3": self.fines_suspended_3,
             "jail_days_3": self.jail_days_3,
             "jail_days_suspended_3": self.jail_days_suspended_3,
-        }
+        }"""
 
     def add_offense(self):
         """Need to add an error message or address what happens when more than
