@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>837</width>
-    <height>568</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>800</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -22,8 +28,8 @@
   <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>430</y>
+     <x>820</x>
+     <y>750</y>
      <width>158</width>
      <height>30</height>
     </rect>
@@ -89,7 +95,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>640</x>
+     <x>870</x>
      <y>10</y>
      <width>118</width>
      <height>80</height>
@@ -213,8 +219,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>641</x>
-     <y>76</y>
+     <x>643</x>
+     <y>89</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
@@ -277,8 +283,8 @@
    <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>121</x>
-     <y>130</y>
+     <x>122</x>
+     <y>126</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -293,8 +299,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>641</x>
-     <y>40</y>
+     <x>643</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
      <x>452</x>
@@ -313,8 +319,8 @@
      <y>25</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>197</y>
+     <x>621</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -325,12 +331,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>641</x>
-     <y>40</y>
+     <x>643</x>
+     <y>42</y>
     </hint>
     <hint type="destinationlabel">
-     <x>272</x>
-     <y>15</y>
+     <x>464</x>
+     <y>18</y>
     </hint>
    </hints>
   </connection>

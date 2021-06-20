@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1171</width>
-    <height>700</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>800</height>
    </size>
   </property>
   <property name="font">
@@ -34,8 +34,8 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>570</x>
-     <y>650</y>
+     <x>800</x>
+     <y>760</y>
      <width>191</width>
      <height>28</height>
     </rect>
@@ -49,8 +49,8 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>671</width>
-     <height>111</height>
+     <width>871</width>
+     <height>121</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -62,59 +62,65 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="layoutWidget_2">
+   <widget class="QLabel" name="defendant_attorney_name_label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>641</width>
-      <height>95</height>
+      <x>11</x>
+      <y>77</y>
+      <width>841</width>
+      <height>27</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="0">
-      <widget class="QLabel" name="defendant_attorney_name_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="case_number_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="defendant_name_label">
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="case_number_label">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>11</y>
+      <width>841</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="defendant_name_label">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>44</y>
+      <width>841</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
    </widget>
   </widget>
   <widget class="QFrame" name="frame">
@@ -122,7 +128,7 @@
     <rect>
      <x>10</x>
      <y>170</y>
-     <width>791</width>
+     <width>981</width>
      <height>261</height>
     </rect>
    </property>
@@ -134,6 +140,9 @@
    </property>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
    </property>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -418,78 +427,102 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QCheckBox" name="checkBox_2">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>450</y>
-     <width>989</width>
-     <height>183</height>
+     <x>11</x>
+     <y>490</y>
+     <width>971</width>
+     <height>31</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QComboBox" name="comboBox">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="editable">
-       <bool>true</bool>
-      </property>
-      <item>
-       <property name="text">
-        <string/>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>30 Days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>60 Days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>90 Days</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="checkBox_3">
-      <property name="text">
-       <string>Community service approved for fines and costs.</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QCheckBox" name="checkBox_4">
-      <property name="text">
-       <string>Fines will be suspended contingent upon Defendant showing valid Operators License or Driving Privileges</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QCheckBox" name="checkBox">
-      <property name="text">
-       <string>Defendant claimed ability to pay in:</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="text">
+    <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_4">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>564</y>
+     <width>972</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Fines will be suspended contingent upon Defendant showing valid operators license or driving privileges</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>460</y>
+     <width>100</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="editable">
+    <bool>true</bool>
+   </property>
+   <item>
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>30 Days</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>60 Days</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>90 Days</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>452</y>
+     <width>349</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Defendant claimed ability to pay in:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>527</y>
+     <width>465</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Community service approved for fines and costs.</string>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
   </widget>
  </widget>
  <tabstops>

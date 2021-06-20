@@ -72,9 +72,10 @@ def test_ovi_dialog(qtbot):
     check_banner(third_screen)
 
 
-def test_sentencing_dialog_add_offense(qtbot):
-    screen = start_dialog(qtbot)
-    next_screen = press_continue_button(screen, SentencingDialog)
+# def test_sentencing_dialog_add_offense(qtbot):
+# screen = start_dialog(qtbot)
+# next_screen = press_continue_button(screen, SentencingDialog)
+# QtBot.keyClicks()
 
 
 # def test_main_window(qtbot):
