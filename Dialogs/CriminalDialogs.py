@@ -11,7 +11,7 @@ from pyuifiles.ovi_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
-from Dialogs.CaseInformation import CaseInformation
+from Dialogs.CaseInformation import CaseInformation, CriminalCharge
 
 from HelperFunctions import getText
 
@@ -112,49 +112,17 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
-        self.offense_count = 1
-        """
-        self.sentencing_dict = {
-            "offense_1": self.offense_1,
-            "plea_1": self.plea_1,
-            "finding_1": self.finding_1,
-            "fines_1": self.fines_1,
-            "fines_suspended_1": self.fines_suspended_1,
-            "jail_days_1": self.jail_days_1,
-            "jail_days_suspended_1": self.jail_days_suspended_1,
-            "offense_2": self.offense_2,
-            "plea_2": self.plea_2,
-            "finding_2": self.finding_2,
-            "fines_2": self.fines_2,
-            "fines_suspended_2": self.fines_suspended_2,
-            "jail_days_2": self.jail_days_2,
-            "jail_days_suspended_2": self.jail_days_suspended_2,
-            "offense_3": self.offense_3,
-            "plea_3": self.plea_3,
-            "finding_3": self.finding_3,
-            "fines_3": self.fines_3,
-            "fines_suspended_3": self.fines_suspended_3,
-            "jail_days_3": self.jail_days_3,
-            "jail_days_suspended_3": self.jail_days_suspended_3,
-        }"""
+        self.offense_count = 0
 
     def add_offense(self):
-        """Need to add an error message or address what happens when more than
-        4 offenses are added in a case."""
-        offense = "offense_" + str(self.offense_count)
-        plea = "plea_" + str(self.offense_count)
-        finding = "finding_" + str(self.offense_count)
-        fines = "fines_" + str(self.offense_count)
-        fines_suspended = "fines_suspended_" + str(self.offense_count)
-        jail_days = "jail_days_" + str(self.offense_count)
-        jail_days_suspended = "jail_days_suspended_" + str(self.offense_count)
-        self.sentencing_dict[offense].setText(self.offense_choice_box.currentText())
-        self.sentencing_dict[plea].setText(self.plea_choice_box.currentText())
-        self.sentencing_dict[finding].setText(self.finding_choice_box.currentText())
-        self.sentencing_dict[fines].setText(self.fine_amount.text())
-        self.sentencing_dict[fines_suspended].setText(self.fines_suspended.text())
-        self.sentencing_dict[jail_days].setText(self.jail_days.text())
-        self.sentencing_dict[jail_days_suspended].setText(
-            self.jail_days_suspended.text()
-        )
+        """TODO: make fines and fine the same throughout app and labels regardless of
+        whether it should be plural or singular."""
+        """TODO: have charge information populate onto UI"""
+        self.case_information.add_charge(self.offense_choice_box.currentText())
+        self.case_information.charges_list[self.offense_count].plea = self.plea_choice_box.currentText()
+        self.case_information.charges_list[self.offense_count].finding = self.finding_choice_box.currentText()
+        self.case_information.charges_list[self.offense_count].fines = self.fine_amount.text()
+        self.case_information.charges_list[self.offense_count].fines_suspended = self.fines_suspended.text()
+        self.case_information.charges_list[self.offense_count].jail_days = self.jail_days.text()
+        self.case_information.charges_list[self.offense_count].jail_days_suspended = self.jail_days_suspended.text()
         self.offense_count += 1

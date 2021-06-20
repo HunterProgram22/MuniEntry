@@ -11,24 +11,19 @@ class CaseInformation(object):
         self.plaintiff_attorney_name = None
         self.defendant_name = None
         self.defendant_attorney_name = None
-        self.offense_1 = None
-        self.plea_1 = None
-        self.finding_1 = None
-        self.fines_1 = None
-        self.fines_suspended_1 = None
-        self.jail_days_1 = None
-        self.jail_days_suspended_1 = None
-        self.offense_2 = None
-        self.plea_2 = None
-        self.finding_2 = None
-        self.fines_2 = None
-        self.fines_suspended_2 = None
-        self.jail_days_2 = None
-        self.jail_days_suspended_2 = None
-        self.offense_3 = None
-        self.plea_3 = None
-        self.finding_3 = None
-        self.fines_3 = None
-        self.fines_suspended_3 = None
-        self.jail_days_3 = None
-        self.jail_days_suspended_3 = None
+        self.charges_list = []
+
+    def add_charge(self, charge):
+        charge_to_add = CriminalCharge(charge)
+        self.charges_list.append(charge_to_add)
+
+
+class CriminalCharge(object):
+    def __init__(self, charge):
+        self.charge = charge
+        self.plea = None
+        self.finding = None
+        self.fines = None
+        self.fines_suspended = None
+        self.jail_days = None
+        self.jail_days_suspended = None
