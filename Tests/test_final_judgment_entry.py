@@ -11,7 +11,12 @@ from time import sleep
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
-from Dialogs.CriminalDialogs import CaseInformationDialog, SentencingDialog, OviDialog
+from Dialogs.CriminalDialogs import (
+    CaseInformationDialog,
+    SentencingDialog,
+    OviDialog,
+    AbilityToPayDialog,
+)
 
 """Functions for Testing"""
 
@@ -64,8 +69,6 @@ def test_case_information_dialog(qtbot):
     assert screen.case_number.text() == "21TRC1234"
     assert screen.defendant_name.text() == "John Smith"
     assert screen.defendant_attorney_name.text() == "Robert Shapiro"
-    next_screen = press_continue_button(screen, SentencingDialog)
-    check_banner(next_screen)
 
 
 def test_ovi_dialog(qtbot):
@@ -76,6 +79,20 @@ def test_ovi_dialog(qtbot):
     check_banner(next_screen)
     third_screen = press_continue_button(next_screen, SentencingDialog)
     assert third_screen.windowTitle() == "Sentencing"
+    check_banner(third_screen)
+
+
+def test_sentencing_dialog(qtbot):
+    screen = start_dialog(qtbot)
+    next_screen = press_continue_button(screen, SentencingDialog)
+    check_banner(next_screen)
+
+
+def test_ability_to_pay_dialog(qtbot):
+    screen = start_dialog(qtbot)
+    next_screen = press_continue_button(screen, SentencingDialog)
+    third_screen = press_continue_button(next_screen, AbilityToPayDialog)
+    assert third_screen.windowTitle() == "Ability To Pay"
     check_banner(third_screen)
 
 

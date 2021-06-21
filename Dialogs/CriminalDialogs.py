@@ -45,7 +45,7 @@ class BaseCriminalDialog(QDialog):
         dialog.exec()
 
     def proceed_to_ability_to_pay(self):
-        dialog = AbilityToPayDialog(self.case_information, self.sentencing_dict)
+        dialog = AbilityToPayDialog(self.case_information)
         dialog.exec()
 
     def set_case_information_banner(self):
@@ -99,10 +99,9 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
-    def __init__(self, case_information, sentencing_dict, parent=None):
+    def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information
-        self.sentencing_dict = sentencing_dict
         self.set_case_information_banner()
         # self.offense_1.setText(self.sentencing_dict["offense_1"])
 
@@ -119,10 +118,22 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         whether it should be plural or singular."""
         """TODO: have charge information populate onto UI"""
         self.case_information.add_charge(self.offense_choice_box.currentText())
-        self.case_information.charges_list[self.offense_count].plea = self.plea_choice_box.currentText()
-        self.case_information.charges_list[self.offense_count].finding = self.finding_choice_box.currentText()
-        self.case_information.charges_list[self.offense_count].fines = self.fine_amount.text()
-        self.case_information.charges_list[self.offense_count].fines_suspended = self.fines_suspended.text()
-        self.case_information.charges_list[self.offense_count].jail_days = self.jail_days.text()
-        self.case_information.charges_list[self.offense_count].jail_days_suspended = self.jail_days_suspended.text()
+        self.case_information.charges_list[
+            self.offense_count
+        ].plea = self.plea_choice_box.currentText()
+        self.case_information.charges_list[
+            self.offense_count
+        ].finding = self.finding_choice_box.currentText()
+        self.case_information.charges_list[
+            self.offense_count
+        ].fines = self.fine_amount.text()
+        self.case_information.charges_list[
+            self.offense_count
+        ].fines_suspended = self.fines_suspended.text()
+        self.case_information.charges_list[
+            self.offense_count
+        ].jail_days = self.jail_days.text()
+        self.case_information.charges_list[
+            self.offense_count
+        ].jail_days_suspended = self.jail_days_suspended.text()
         self.offense_count += 1
