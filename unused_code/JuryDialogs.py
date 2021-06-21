@@ -17,14 +17,13 @@ class JuryInstructionsDialog(BaseDialog, Ui_JuryInstructionsDialog):
         second_charge = self.SecondCharge_comboBox.currentText()
         self.populateInstructions(JuryInstructionsDialog.template)
         count_one_instructions = getText("Saved/Populated_Jury_Instructions.docx")
-        fields_dict = { 'defendant_name' : defendant_name,
+        return { 'defendant_name' : defendant_name,
                     'case_no' : case_no,
                     'first_charge' : first_charge,
                     'second_charge' : second_charge,
                     'complaint_date' : complaint_date,
                     'count_one_instructions' : count_one_instructions,
                     }
-        return fields_dict
 
     def populateInstructions(self, instructions):
         defendant_name = self.DefendantName_lineEdit.text()

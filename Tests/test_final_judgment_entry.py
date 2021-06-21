@@ -35,8 +35,7 @@ def check_banner(screen):
 
 def press_continue_button(screen, nextDialog):
     QtBot.mouseClick(screen.continueButton, QtCore.Qt.LeftButton)
-    next_screen = nextDialog(screen.case_information)
-    return next_screen
+    return nextDialog(screen.case_information)
 
 
 def start_dialog(qtbot):
