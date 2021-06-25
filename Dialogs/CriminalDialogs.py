@@ -28,9 +28,34 @@ class BaseCriminalDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.template = TEMPLATE_PATH + "Judgment_Entry_Green_Sheet.docx"
+        self.template_name = "Judgment Entry"
 
     def close_window(self):
         self.close()
+
+    def create_entry(self):
+        #self.fields_dict = self.get_dialog_fields()
+        self.doc = DocxTemplate(self.template)
+        self.doc.render(self.get_context())
+        self.align_entry_left()
+        self.set_document_name()
+        self.doc.save(SAVE_PATH + self.docname)
+        os.startfile(SAVE_PATH + self.docname)
+
+    def get_context(self):
+        return {
+            'defendant_name': self.case_information.defendant_name,
+            'case_number': self.case_information.case_number,
+
+        }
+
+    def align_entry_left(self):
+        for para in self.doc.paragraphs:
+            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
+
+    def set_document_name(self):
+        self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
 
     def get_dialog_fields(self):
         self.fields_dict = {

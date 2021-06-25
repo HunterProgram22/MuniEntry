@@ -524,6 +524,19 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>700</y>
+     <width>191</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Create Entry</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>checkBox</tabstop>
@@ -534,5 +547,25 @@
   <tabstop>pushButton_2</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>AbilityToPayDialog</receiver>
+   <slot>create_entry()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>843</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>876</x>
+     <y>659</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>create_entry()</slot>
+ </slots>
 </ui>

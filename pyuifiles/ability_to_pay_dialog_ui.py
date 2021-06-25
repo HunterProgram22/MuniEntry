@@ -251,8 +251,12 @@ class Ui_AbilityToPayDialog(object):
         self.checkBox_3.setGeometry(QtCore.QRect(11, 527, 465, 31))
         self.checkBox_3.setChecked(True)
         self.checkBox_3.setObjectName("checkBox_3")
+        self.pushButton = QtWidgets.QPushButton(AbilityToPayDialog)
+        self.pushButton.setGeometry(QtCore.QRect(800, 700, 191, 28))
+        self.pushButton.setObjectName("pushButton")
 
         self.retranslateUi(AbilityToPayDialog)
+        self.pushButton.clicked.connect(AbilityToPayDialog.create_entry)
         QtCore.QMetaObject.connectSlotsByName(AbilityToPayDialog)
         AbilityToPayDialog.setTabOrder(self.checkBox, self.comboBox)
         AbilityToPayDialog.setTabOrder(self.comboBox, self.checkBox_2)
@@ -281,3 +285,4 @@ class Ui_AbilityToPayDialog(object):
         self.comboBox.setItemText(3, _translate("AbilityToPayDialog", "90 Days"))
         self.checkBox.setText(_translate("AbilityToPayDialog", "Defendant claimed ability to pay in:"))
         self.checkBox_3.setText(_translate("AbilityToPayDialog", "Community service approved for fines and costs."))
+        self.pushButton.setText(_translate("AbilityToPayDialog", "Create Entry"))
