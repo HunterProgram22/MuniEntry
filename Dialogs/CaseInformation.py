@@ -22,6 +22,10 @@ class CaseInformation(object):
         return {
             "defendant_name": self.defendant_name,
             "case_number": self.case_number,
+            "plea_trial_date": self.plea_trial_date,
+            # "days_to_pay": self.days_to_pay,
+            "offense_1": self.charges_list[0].offense,
+            "plea_1": self.charges_list[0].plea,
         }
 
 
@@ -34,3 +38,4 @@ class CriminalCharge(object):
         self.fines_suspended = None
         self.jail_days = None
         self.jail_days_suspended = None
+        self.days_to_pay = None

@@ -51,14 +51,6 @@ class BaseCriminalDialog(QDialog):
             self.case_information.case_number + "_" + self.template_name + ".docx"
         )
 
-    def get_dialog_fields(self):
-        self.fields_dict = {
-            "defendant_name": self.defendant_name.text(),
-            "case_number": self.case_number.text(),
-            "defendant_attorney_name": self.defendant_attorney_name.text(),
-        }
-        return self.fields_dict
-
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
         dialog.exec()
@@ -88,14 +80,17 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
                 self.defendant_attorney_name.setEnabled(True)
 
     def update_case_information(self):
-        self.fields_dict = self.get_dialog_fields()
-        self.case_information.case_number = self.fields_dict.get("case_number")
-        self.case_information.defendant_name = self.fields_dict.get("defendant_name")
-        self.case_information.defendant_attorney_name = self.fields_dict.get(
-            "defendant_attorney_name"
+        """This slot is tied to the signal 'pressed()', but when I switch
+        this to clicked with continue_dialog() not all data passes tests. Need to figure
+        out why both slots can't work properly with the same signal."""
+        self.case_information.case_number = self.case_number.text()
+        self.case_information.defendant_name = self.defendant_name.text()
+        self.case_information.defendant_attorney_name = (
+            self.defendant_attorney_name.text()
         )
 
     def continue_dialog(self):
+        """This slot is tied to the signal 'clicked()'"""
         if self.ovi_checkbox.isChecked():
             dialog = OviDialog(self.case_information)
             dialog.exec()
