@@ -35,27 +35,21 @@ class BaseCriminalDialog(QDialog):
         self.close()
 
     def create_entry(self):
-        #self.fields_dict = self.get_dialog_fields()
         self.doc = DocxTemplate(self.template)
-        self.doc.render(self.get_context())
+        self.doc.render(self.case_information.get_case_information())
         self.align_entry_left()
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
         os.startfile(SAVE_PATH + self.docname)
-
-    def get_context(self):
-        return {
-            'defendant_name': self.case_information.defendant_name,
-            'case_number': self.case_information.case_number,
-
-        }
 
     def align_entry_left(self):
         for para in self.doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     def set_document_name(self):
-        self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
+        self.docname = (
+            self.case_information.case_number + "_" + self.template_name + ".docx"
+        )
 
     def get_dialog_fields(self):
         self.fields_dict = {
@@ -142,23 +136,14 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         """TODO: make fines and fine the same throughout app and labels regardless of
         whether it should be plural or singular."""
         """TODO: have charge information populate onto UI"""
-        self.case_information.add_charge(self.offense_choice_box.currentText())
-        self.case_information.charges_list[
-            self.offense_count
-        ].plea = self.plea_choice_box.currentText()
-        self.case_information.charges_list[
-            self.offense_count
-        ].finding = self.finding_choice_box.currentText()
-        self.case_information.charges_list[
-            self.offense_count
-        ].fines = self.fine_amount.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].fines_suspended = self.fines_suspended.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].jail_days = self.jail_days.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].jail_days_suspended = self.jail_days_suspended.text()
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.plea = self.plea_choice_box.currentText()
+        self.criminal_charge.finding = self.finding_choice_box.currentText()
+        self.criminal_charge.fines = self.fines_amount.text()
+        self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        self.criminal_charge.jail_days = self.jail_days.text()
+        self.criminal_charge.jail_days_suspended = self.jail_days_suspended.text()
+        self.case_information.add_charge(self.criminal_charge)
+        print(self.case_information.charges_list[self.offense_count].offense)
         self.offense_count += 1

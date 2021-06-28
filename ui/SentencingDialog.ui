@@ -611,7 +611,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="fine_amount"/>
+      <widget class="QLineEdit" name="fines_amount"/>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
@@ -693,10 +693,14 @@
   <tabstop>comboBox_2</tabstop>
   <tabstop>plea_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
-  <tabstop>fine_amount</tabstop>
+  <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
   <tabstop>jail_days</tabstop>
   <tabstop>jail_days_suspended</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_3</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>
  <resources/>
@@ -740,8 +744,8 @@
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>871</x>
-     <y>476</y>
+     <x>969</x>
+     <y>473</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
