@@ -47,7 +47,7 @@ class BaseCriminalDialog(QDialog):
         return {
             'defendant_name': self.case_information.defendant_name,
             'case_number': self.case_information.case_number,
-
+            'plea_trial_date': self.case_information.plea_trial_date,
         }
 
     def align_entry_left(self):
@@ -56,14 +56,6 @@ class BaseCriminalDialog(QDialog):
 
     def set_document_name(self):
         self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
-
-    def get_dialog_fields(self):
-        self.fields_dict = {
-            "defendant_name": self.defendant_name.text(),
-            "case_number": self.case_number.text(),
-            "defendant_attorney_name": self.defendant_attorney_name.text(),
-        }
-        return self.fields_dict
 
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
@@ -94,12 +86,12 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
                 self.defendant_attorney_name.setEnabled(True)
 
     def update_case_information(self):
-        self.fields_dict = self.get_dialog_fields()
-        self.case_information.case_number = self.fields_dict.get("case_number")
-        self.case_information.defendant_name = self.fields_dict.get("defendant_name")
-        self.case_information.defendant_attorney_name = self.fields_dict.get(
-            "defendant_attorney_name"
-        )
+        print(self.case_number.text())
+        self.case_information.case_number = self.case_number.text()
+        self.case_information.defendant_name = self.defendant_name.text()
+        self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date()
+        print(self.case_information.defendant_name)
 
     def continue_dialog(self):
         if self.ovi_checkbox.isChecked():

@@ -11,6 +11,7 @@ class CaseInformation(object):
         self.plaintiff_attorney_name = None
         self.defendant_name = None
         self.defendant_attorney_name = None
+        self.plea_trial_date = None
         self.charges_list = []
 
     def add_charge(self, charge):
