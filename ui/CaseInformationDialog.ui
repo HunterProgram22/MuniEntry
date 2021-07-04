@@ -219,8 +219,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>643</x>
-     <y>89</y>
+     <x>871</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
      <x>387</x>
@@ -235,12 +235,12 @@
    <slot>continue_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>544</x>
-     <y>435</y>
+     <x>820</x>
+     <y>750</y>
     </hint>
     <hint type="destinationlabel">
-     <x>650</x>
-     <y>424</y>
+     <x>883</x>
+     <y>608</y>
     </hint>
    </hints>
   </connection>
@@ -251,12 +251,12 @@
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>505</x>
-     <y>442</y>
+     <x>820</x>
+     <y>750</y>
     </hint>
     <hint type="destinationlabel">
-     <x>449</x>
-     <y>412</y>
+     <x>750</x>
+     <y>585</y>
     </hint>
    </hints>
   </connection>
@@ -267,12 +267,12 @@
    <slot>update_case_information()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>582</x>
-     <y>451</y>
+     <x>820</x>
+     <y>750</y>
     </hint>
     <hint type="destinationlabel">
-     <x>695</x>
-     <y>381</y>
+     <x>874</x>
+     <y>671</y>
     </hint>
    </hints>
   </connection>
@@ -283,8 +283,8 @@
    <slot>set_dialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>122</x>
-     <y>126</y>
+     <x>123</x>
+     <y>123</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -299,8 +299,8 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>643</x>
-     <y>42</y>
+     <x>871</x>
+     <y>44</y>
     </hint>
     <hint type="destinationlabel">
      <x>452</x>
@@ -315,12 +315,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>711</x>
-     <y>25</y>
+     <x>871</x>
+     <y>30</y>
     </hint>
     <hint type="destinationlabel">
      <x>621</x>
-     <y>165</y>
+     <y>161</y>
     </hint>
    </hints>
   </connection>
@@ -331,12 +331,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>643</x>
-     <y>42</y>
+     <x>871</x>
+     <y>44</y>
     </hint>
     <hint type="destinationlabel">
-     <x>464</x>
-     <y>18</y>
+     <x>609</x>
+     <y>23</y>
     </hint>
    </hints>
   </connection>

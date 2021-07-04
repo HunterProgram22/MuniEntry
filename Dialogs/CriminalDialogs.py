@@ -35,14 +35,14 @@ class BaseCriminalDialog(QDialog):
         self.close()
 
     def create_entry(self):
-        #self.fields_dict = self.get_dialog_fields()
         self.doc = DocxTemplate(self.template)
-        self.doc.render(self.get_context())
+        self.doc.render(self.case_information.get_case_information())
         self.align_entry_left()
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
         os.startfile(SAVE_PATH + self.docname)
 
+<<<<<<< HEAD
     def get_context(self):
         return {
             'defendant_name': self.case_information.defendant_name,
@@ -50,12 +50,20 @@ class BaseCriminalDialog(QDialog):
             'plea_trial_date': self.case_information.plea_trial_date,
         }
 
+=======
+>>>>>>> b97fb5af728fa276c174c3e94ebe8e67f36aff46
     def align_entry_left(self):
         for para in self.doc.paragraphs:
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     def set_document_name(self):
+<<<<<<< HEAD
         self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
+=======
+        self.docname = (
+            self.case_information.case_number + "_" + self.template_name + ".docx"
+        )
+>>>>>>> b97fb5af728fa276c174c3e94ebe8e67f36aff46
 
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
@@ -86,14 +94,26 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
                 self.defendant_attorney_name.setEnabled(True)
 
     def update_case_information(self):
+<<<<<<< HEAD
         print(self.case_number.text())
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date()
         print(self.case_information.defendant_name)
+=======
+        """This slot is tied to the signal 'pressed()', but when I switch
+        this to clicked with continue_dialog() not all data passes tests. Need to figure
+        out why both slots can't work properly with the same signal."""
+        self.case_information.case_number = self.case_number.text()
+        self.case_information.defendant_name = self.defendant_name.text()
+        self.case_information.defendant_attorney_name = (
+            self.defendant_attorney_name.text()
+        )
+>>>>>>> b97fb5af728fa276c174c3e94ebe8e67f36aff46
 
     def continue_dialog(self):
+        """This slot is tied to the signal 'clicked()'"""
         if self.ovi_checkbox.isChecked():
             dialog = OviDialog(self.case_information)
             dialog.exec()
@@ -134,23 +154,14 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         """TODO: make fines and fine the same throughout app and labels regardless of
         whether it should be plural or singular."""
         """TODO: have charge information populate onto UI"""
-        self.case_information.add_charge(self.offense_choice_box.currentText())
-        self.case_information.charges_list[
-            self.offense_count
-        ].plea = self.plea_choice_box.currentText()
-        self.case_information.charges_list[
-            self.offense_count
-        ].finding = self.finding_choice_box.currentText()
-        self.case_information.charges_list[
-            self.offense_count
-        ].fines = self.fine_amount.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].fines_suspended = self.fines_suspended.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].jail_days = self.jail_days.text()
-        self.case_information.charges_list[
-            self.offense_count
-        ].jail_days_suspended = self.jail_days_suspended.text()
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.plea = self.plea_choice_box.currentText()
+        self.criminal_charge.finding = self.finding_choice_box.currentText()
+        self.criminal_charge.fines = self.fines_amount.text()
+        self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        self.criminal_charge.jail_days = self.jail_days.text()
+        self.criminal_charge.jail_days_suspended = self.jail_days_suspended.text()
+        self.case_information.add_charge(self.criminal_charge)
+        print(self.case_information.charges_list[self.offense_count].offense)
         self.offense_count += 1
