@@ -144,10 +144,7 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.offense_count = 0
 
     def add_offense(self):
-        """TODO: make fines and fine the same throughout app and labels regardless of
-        whether it should be plural or singular."""
         """TODO: have charge information populate onto UI"""
-        """TODO: have fields clear when add offense selected."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()

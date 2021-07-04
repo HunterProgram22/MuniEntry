@@ -493,6 +493,14 @@
      </item>
      <item row="1" column="1">
       <widget class="QComboBox" name="degree_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>M1</string>
@@ -527,6 +535,14 @@
      </item>
      <item row="3" column="1">
       <widget class="QComboBox" name="finding_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>Guilty</string>
@@ -622,6 +638,14 @@
      </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="plea_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
        <item>
         <property name="text">
          <string>Not Guilty</string>
@@ -746,6 +770,134 @@
     <hint type="destinationlabel">
      <x>901</x>
      <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>offense_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>901</x>
+     <y>458</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>597</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>degree_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>447</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>plea_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>827</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>finding_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>465</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>365</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_amount</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>944</x>
+     <y>461</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>404</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>959</x>
+     <y>457</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>729</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>jail_days</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>848</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>458</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>jail_days_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>853</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>449</y>
     </hint>
    </hints>
   </connection>
