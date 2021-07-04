@@ -155,5 +155,5 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.criminal_charge.jail_days = self.jail_days.text()
         self.criminal_charge.jail_days_suspended = self.jail_days_suspended.text()
         self.case_information.add_charge(self.criminal_charge)
-        print(self.case_information.charges_list[self.offense_count].offense)
+        #print(self.case_information.charges_list[self.offense_count].offense)
         self.offense_count += 1

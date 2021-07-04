@@ -683,7 +683,7 @@
       </widget>
      </item>
      <item row="5" column="4">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="addOffenseButton">
        <property name="text">
         <string>Add Another Offense</string>
        </property>
@@ -758,7 +758,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>SentencingDialog</receiver>
    <slot>add_offense()</slot>
@@ -774,7 +774,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>offense_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -790,7 +790,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>degree_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -806,7 +806,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>plea_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -822,7 +822,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>finding_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -838,7 +838,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>fines_amount</receiver>
    <slot>clear()</slot>
@@ -854,7 +854,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>fines_suspended</receiver>
    <slot>clear()</slot>
@@ -870,7 +870,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>jail_days</receiver>
    <slot>clear()</slot>
@@ -886,7 +886,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
+   <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
    <receiver>jail_days_suspended</receiver>
    <slot>clear()</slot>

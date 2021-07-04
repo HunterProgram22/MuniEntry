@@ -524,7 +524,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="createEntryButton">
    <property name="geometry">
     <rect>
      <x>800</x>
@@ -549,7 +549,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton</sender>
+   <sender>createEntryButton</sender>
    <signal>clicked()</signal>
    <receiver>AbilityToPayDialog</receiver>
    <slot>create_entry()</slot>
