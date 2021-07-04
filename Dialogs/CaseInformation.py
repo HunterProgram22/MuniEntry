@@ -33,6 +33,7 @@ class CaseInformation(object):
                 "fines_suspended_1": self.charges_list[0].fines_suspended,
                 "jail_days_1": self.charges_list[0].jail_days,
                 "jail_days_suspended_1": self.charges_list[0].jail_days_suspended,
+                "charges_list": self.charges_list,
                 }
         except IndexError:
             """There should be a better way to address no charges being entered, although
@@ -49,6 +50,7 @@ class CaseInformation(object):
                 "fines_suspended_1": "",
                 "jail_days_1": "",
                 "jail_days_suspended_1": "",
+                "charges_list": self.charges_list,
                 }
         return self.formatted_case_information
 
