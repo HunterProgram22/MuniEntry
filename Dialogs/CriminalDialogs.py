@@ -93,7 +93,7 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd YYYY")
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd yyyy")
         print(self.case_information.defendant_name)
 
         """This slot is tied to the signal 'pressed()', but when I switch
