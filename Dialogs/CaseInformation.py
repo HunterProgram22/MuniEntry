@@ -26,16 +26,22 @@ class CaseInformation(object):
             "plea_trial_date": self.plea_trial_date,
             # "days_to_pay": self.days_to_pay,
             "offense_1": self.charges_list[0].offense,
+            "degree_1": self.charges_list[0].degree,
             "plea_1": self.charges_list[0].plea,
+            "fines_amount_1": self.charges_list[0].fines_amount,
+            "fines_suspended_1": self.charges_list[0].fines_suspended,
+            "jail_days_1": self.charges_list[0].jail_days,
+            "jail_days_suspended_1": self.charges_list[0].jail_days_suspended,
         }
 
 
 class CriminalCharge(object):
     def __init__(self):
         self.offense = None
+        self.degree = None
         self.plea = None
         self.finding = None
-        self.fines = None
+        self.fines_amount = None
         self.fines_suspended = None
         self.jail_days = None
         self.jail_days_suspended = None
