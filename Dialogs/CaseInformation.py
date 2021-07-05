@@ -26,13 +26,6 @@ class CaseInformation(object):
                 "case_number": self.case_number,
                 "plea_trial_date": self.plea_trial_date,
                 # "days_to_pay": self.days_to_pay,
-                "offense_1": self.charges_list[0].offense,
-                "degree_1": self.charges_list[0].degree,
-                "plea_1": self.charges_list[0].plea,
-                "fines_amount_1": self.charges_list[0].fines_amount,
-                "fines_suspended_1": self.charges_list[0].fines_suspended,
-                "jail_days_1": self.charges_list[0].jail_days,
-                "jail_days_suspended_1": self.charges_list[0].jail_days_suspended,
                 "charges_list": self.charges_list,
                 }
         except IndexError:
@@ -43,14 +36,7 @@ class CaseInformation(object):
                 "case_number": self.case_number,
                 "plea_trial_date": self.plea_trial_date,
                 # "days_to_pay": self.days_to_pay,
-                "offense_1": "",
-                "degree_1": "",
-                "plea_1": "",
-                "fines_amount_1": "",
-                "fines_suspended_1": "",
-                "jail_days_1": "",
-                "jail_days_suspended_1": "",
-                "charges_list": self.charges_list,
+                "charges_list": "",
                 }
         return self.formatted_case_information
 

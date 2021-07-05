@@ -144,7 +144,9 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.offense_count = 0
 
     def add_offense(self):
-        """TODO: have charge information populate onto UI"""
+        """TODO: have charge information populate onto UI.
+        Perhaps switch to loadUi for dialogs to load XML then
+        I can use Jinja tags in the UI display."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
