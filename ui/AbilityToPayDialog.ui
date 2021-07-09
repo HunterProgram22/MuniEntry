@@ -564,8 +564,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>AbilityToPayDialog</receiver>
+   <slot>proceed_to_community_control()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>845</x>
+     <y>782</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>721</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
+  <slot>proceed_to_community_control()</slot>
  </slots>
 </ui>

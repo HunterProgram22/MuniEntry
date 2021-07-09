@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 from pyuifiles.ovi_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
+from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
 from Dialogs.CaseInformation import CaseInformation, CriminalCharge
 
@@ -66,6 +67,10 @@ class BaseCriminalDialog(QDialog):
 
     def proceed_to_ability_to_pay(self):
         dialog = AbilityToPayDialog(self.case_information)
+        dialog.exec()
+
+    def proceed_to_community_control(self):
+        dialog = CommunityControlDialog(self.case_information)
         dialog.exec()
 
     def set_case_information_banner(self):
@@ -133,7 +138,14 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
-        # self.offense_1.setText(self.sentencing_dict["offense_1"])
+
+
+class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
+    def __init__(self, case_information, parent=None):
+        super().__init__(parent)
+        self.case_information = case_information
+        self.set_case_information_banner()
+
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):

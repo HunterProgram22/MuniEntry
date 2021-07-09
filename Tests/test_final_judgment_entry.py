@@ -16,6 +16,7 @@ from Dialogs.CriminalDialogs import (
     SentencingDialog,
     OviDialog,
     AbilityToPayDialog,
+    CommunityControlDialog,
 )
 
 """Functions for Testing"""
@@ -105,7 +106,18 @@ def test_ability_to_pay_dialog(qtbot):
     check_banner(third_screen)
 
 
+def test_community_control_dialog(qtbot):
+    screen = start_dialog(qtbot)
+    next_screen = press_continue_button(screen, SentencingDialog)
+    third_screen = press_continue_button(next_screen, AbilityToPayDialog)
+    fourth_screen = press_continue_button(next_screen, CommunityControlDialog)
+    assert fourth_screen.windowTitle() == "Community Control"
+    check_banner(fourth_screen)
+
+
 def test_add_offense(qtbot):
+    """This test passes but is throwing a windows fatal exception code
+    0xe0000002. Need to see what is causing this code."""
     screen = start_dialog(qtbot)
     next_screen = press_continue_button(screen, SentencingDialog)
     add_offense(next_screen)
@@ -113,16 +125,3 @@ def test_add_offense(qtbot):
     assert next_screen.offense_choice_box.currentText() == ""
     third_screen = press_continue_button(next_screen, AbilityToPayDialog)
     QtBot.mouseClick(third_screen.createEntryButton, QtCore.Qt.LeftButton)
-
-# def test_sentencing_dialog_add_offense(qtbot):
-# screen = start_dialog(qtbot)
-# next_screen = press_continue_button(screen, SentencingDialog)
-# QtBot.keyClicks()
-
-
-# def test_main_window(qtbot):
-#   widget = MainWindow()
-#   qtbot.addWidget(widget)
-#   qtbot.mouseClick(widget.about_button, QtCore.Qt.LeftButton)
-#   qtbot.waitUntil(widget.about_box.isVisible)
-#   assert widget.about_box.text() == 'This is a GUI App'
