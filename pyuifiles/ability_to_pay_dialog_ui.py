@@ -258,6 +258,7 @@ class Ui_AbilityToPayDialog(object):
         self.retranslateUi(AbilityToPayDialog)
         self.createEntryButton.clicked.connect(AbilityToPayDialog.create_entry)
         self.pushButton_2.clicked.connect(AbilityToPayDialog.proceed_to_community_control)
+        self.pushButton_2.released.connect(AbilityToPayDialog.close_window)
         QtCore.QMetaObject.connectSlotsByName(AbilityToPayDialog)
         AbilityToPayDialog.setTabOrder(self.checkBox, self.comboBox)
         AbilityToPayDialog.setTabOrder(self.comboBox, self.checkBox_2)

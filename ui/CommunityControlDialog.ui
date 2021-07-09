@@ -180,7 +180,7 @@
      </widget>
     </item>
     <item row="1" column="1" colspan="2">
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="term_of_community_control_box">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -306,7 +306,7 @@
  </widget>
  <tabstops>
   <tabstop>checkBox</tabstop>
-  <tabstop>comboBox</tabstop>
+  <tabstop>term_of_community_control_box</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>pushButton_2</tabstop>
  </tabstops>
@@ -323,14 +323,47 @@
      <y>720</y>
     </hint>
     <hint type="destinationlabel">
-     <x>876</x>
-     <y>659</y>
+     <x>795</x>
+     <y>650</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>createEntryButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CommunityControlDialog</receiver>
+   <slot>add_community_control()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>926</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>902</x>
+     <y>645</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>CommunityControlDialog</receiver>
+   <slot>add_community_control()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>818</x>
+     <y>773</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>752</x>
+     <y>743</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
+  <slot>add_community_control()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>

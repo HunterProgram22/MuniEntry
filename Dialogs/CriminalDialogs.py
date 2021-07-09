@@ -12,7 +12,7 @@ from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
-from Dialogs.CaseInformation import CaseInformation, CriminalCharge
+from Dialogs.CaseInformation import CaseInformation, CriminalCharge, CommunityControlTerms
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"
@@ -143,6 +143,12 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
+
+    def add_community_control(self):
+        self.community_control_terms = CommunityControlTerms()
+        self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
+        self.case_information.add_community_control(self.community_control_terms)
+        print(self.case_information.community_control_terms)
 
 
 

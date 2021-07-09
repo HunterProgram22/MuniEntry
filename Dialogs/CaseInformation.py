@@ -13,9 +13,13 @@ class CaseInformation(object):
         self.defendant_attorney_name = None
         self.plea_trial_date = None
         self.charges_list = []
+        self.community_control_terms = None
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
+
+    def add_community_control(self, community_control_terms):
+        self.community_control_terms = community_control_terms
 
     def get_case_information(self):
         """Returns a dictionary with all of case information required
@@ -41,3 +45,9 @@ class CriminalCharge(object):
         self.jail_days = None
         self.jail_days_suspended = None
         self.days_to_pay = None
+
+
+class CommunityControlTerms(object):
+    def __init__(self):
+        self.term_of_community_control = 0
+        self.type_of_community_control = "basic"

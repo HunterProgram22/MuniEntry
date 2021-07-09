@@ -580,9 +580,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>released()</signal>
+   <receiver>AbilityToPayDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>820</x>
+     <y>770</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>729</x>
+     <y>744</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
   <slot>proceed_to_community_control()</slot>
+  <slot>close_window()</slot>
  </slots>
 </ui>
