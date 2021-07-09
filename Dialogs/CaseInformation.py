@@ -20,24 +20,13 @@ class CaseInformation(object):
     def get_case_information(self):
         """Returns a dictionary with all of case information required
         to populate an entry."""
-        try:
-            self.formatted_case_information = {
-                "defendant_name": self.defendant_name,
-                "case_number": self.case_number,
-                "plea_trial_date": self.plea_trial_date,
-                # "days_to_pay": self.days_to_pay,
-                "charges_list": self.charges_list,
-                }
-        except IndexError:
-            """There should be a better way to address no charges being entered, although
-            at a minimum one charge should exist to create an entry."""
-            self.formatted_case_information = {
-                "defendant_name": self.defendant_name,
-                "case_number": self.case_number,
-                "plea_trial_date": self.plea_trial_date,
-                # "days_to_pay": self.days_to_pay,
-                "charges_list": "",
-                }
+        self.formatted_case_information = {
+            "defendant_name": self.defendant_name,
+            "case_number": self.case_number,
+            "plea_trial_date": self.plea_trial_date,
+            # "days_to_pay": self.days_to_pay,
+            "charges_list": self.charges_list,
+            }
         return self.formatted_case_information
 
 
