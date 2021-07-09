@@ -14,8 +14,6 @@ from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
 from Dialogs.CaseInformation import CaseInformation, CriminalCharge
 
-from HelperFunctions import getText
-
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"
 SAVE_PATH = PATH + "\\Saved\\"
