@@ -27,7 +27,6 @@ def add_case_information(screen):
     QtBot.keyClicks(screen.defendant_name, "John Smith")
     QtBot.keyClicks(screen.defendant_attorney_name, "Robert Shapiro")
 
-
 def add_offense(screen):
     QtBot.keyClicks(screen.offense_choice_box, "Failure to Control - R.C. 4511.202")
     QtBot.keyClicks(screen.degree_choice_box, "MM")
@@ -39,18 +38,21 @@ def add_offense(screen):
     QtBot.keyClicks(screen.jail_days_suspended, "175")
     QtBot.mouseClick(screen.addOffenseButton, QtCore.Qt.LeftButton)
 
+def add_ovi_details(screen):
+    QtBot.keyClicks(screen.ovi_offenses_within_ten_years_box, "2")
+    QtBot.mouseClick(screen.high_bac_test_checkbox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(screen.refused_breathylizer_checkbox, QtCore.Qt.LeftButton)
+    QtBot.keyClicks(screen.ovi_offenses_within_twenty_years_box, "5")
 
 def check_banner(screen):
     assert screen.case_number_label.text() == "21TRC1234"
     assert screen.defendant_name_label.text() == "John Smith"
     assert screen.defendant_attorney_name_label.text() == "Attorney: Robert Shapiro"
 
-
 def press_continue_button(screen, nextDialog):
     QtBot.mouseClick(screen.continueButton, QtCore.Qt.LeftButton)
     next_screen = nextDialog(screen.case_information)
     return next_screen
-
 
 def start_dialog(qtbot):
     screen = CaseInformationDialog()
@@ -58,12 +60,12 @@ def start_dialog(qtbot):
     add_case_information(screen)
     return screen
 
-
 @pytest.fixture
 def app(qtbot):
     test_MuniEntry_app = MuniEntry_app.Window()
     qtbot.addWidget(test_MuniEntry_app)
     return test_MuniEntry_app
+
 
 """TESTING"""
 def test_title(app):
@@ -92,6 +94,19 @@ def test_ovi_dialog(qtbot):
     check_banner(third_screen)
 
 
+def test_ovi_details(qtbot):
+    """This test also passes but is again throwing a windows fatal exception code
+    0xe0000002. Need to see what is causing this code. Same code as for test_add_offense."""
+    screen = start_dialog(qtbot)
+    QtBot.mouseClick(screen.ovi_checkbox, QtCore.Qt.LeftButton)
+    next_screen = press_continue_button(screen, OviDialog)
+    add_ovi_details(next_screen)
+    third_screen = press_continue_button(next_screen, SentencingDialog)
+    fourth_screen = press_continue_button(third_screen, AbilityToPayDialog)
+    fifth_screen = press_continue_button(fourth_screen, CommunityControlDialog)
+    QtBot.mouseClick(fifth_screen.createEntryButton, QtCore.Qt.LeftButton)
+
+
 def test_sentencing_dialog(qtbot):
     screen = start_dialog(qtbot)
     next_screen = press_continue_button(screen, SentencingDialog)
@@ -110,7 +125,7 @@ def test_community_control_dialog(qtbot):
     screen = start_dialog(qtbot)
     next_screen = press_continue_button(screen, SentencingDialog)
     third_screen = press_continue_button(next_screen, AbilityToPayDialog)
-    fourth_screen = press_continue_button(next_screen, CommunityControlDialog)
+    fourth_screen = press_continue_button(third_screen, CommunityControlDialog)
     assert fourth_screen.windowTitle() == "Community Control"
     check_banner(fourth_screen)
 

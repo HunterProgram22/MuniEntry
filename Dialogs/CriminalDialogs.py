@@ -59,8 +59,6 @@ class BaseCriminalDialog(QDialog):
             self.case_information.case_number + "_" + self.template_name + ".docx"
         )
 
-
-
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
         dialog.exec()
@@ -158,8 +156,6 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         self.community_control_terms = CommunityControlTerms()
         self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
         self.case_information.add_community_control(self.community_control_terms)
-        print(self.case_information.community_control_terms)
-
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):

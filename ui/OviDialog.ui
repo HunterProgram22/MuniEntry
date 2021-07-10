@@ -342,52 +342,57 @@ p, li { white-space: pre-wrap; }
        </property>
        <item>
         <property name="text">
-         <string>1st</string>
+         <string>0</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>2nd</string>
+         <string>1</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>3rd</string>
+         <string>2</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>4th</string>
+         <string>3</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>5th</string>
+         <string>4</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>6th</string>
+         <string>5</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>7th</string>
+         <string>6</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>8th</string>
+         <string>7</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>9th</string>
+         <string>8</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>10th</string>
+         <string>9</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>10</string>
         </property>
        </item>
       </widget>
@@ -396,42 +401,42 @@ p, li { white-space: pre-wrap; }
       <widget class="QComboBox" name="ovi_offenses_within_ten_years_box">
        <item>
         <property name="text">
-         <string>1st</string>
+         <string>0</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>2nd</string>
+         <string>1</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>3rd</string>
+         <string>2</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>4th</string>
+         <string>3</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>5th</string>
+         <string>4</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>6th</string>
+         <string>5</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>7th</string>
+         <string>6</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>8th</string>
+         <string>7</string>
         </property>
        </item>
       </widget>

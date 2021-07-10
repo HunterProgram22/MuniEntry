@@ -53,6 +53,7 @@ class CommunityControlTerms(object):
         self.term_of_community_control = 0
         self.type_of_community_control = "basic"
 
+
 class OviDetails(object):
     def __init__(self):
         self.ovi_offenses_within_ten_years = 0

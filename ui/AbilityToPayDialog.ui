@@ -31,7 +31,7 @@
   <property name="windowTitle">
    <string>Ability To Pay</string>
   </property>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
      <x>800</x>
@@ -544,7 +544,7 @@
   <tabstop>checkBox_2</tabstop>
   <tabstop>checkBox_3</tabstop>
   <tabstop>checkBox_4</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>continueButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -565,7 +565,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>continueButton</sender>
    <signal>clicked()</signal>
    <receiver>AbilityToPayDialog</receiver>
    <slot>proceed_to_community_control()</slot>
@@ -581,7 +581,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>continueButton</sender>
    <signal>released()</signal>
    <receiver>AbilityToPayDialog</receiver>
    <slot>close_window()</slot>
