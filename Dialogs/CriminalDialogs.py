@@ -148,11 +148,11 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         self.ability_to_pay_details = AbilityToPayDetails()
         if self.ability_to_pay_checkbox.isChecked():
             self.ability_to_pay_details.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        if self.pretrial_jail_days_credit_box.isChecked():
+        if self.pretrial_jail_days_credit_checkbox.isChecked():
             self.ability_to_pay_details.pretrial_jail_days_credit = True
         else:
             self.ability_to_pay_details.pretrial_jail_days_credit = False
-        if self.community_service_for_fines_box.isChecked():
+        if self.community_service_for_fines_checkbox.isChecked():
             self.ability_to_pay_details.community_service_for_fines = True
         else:
             self.ability_to_pay_details.community_service_for_fines = False
@@ -171,8 +171,16 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
 
     def add_community_control(self):
         self.community_control_terms = CommunityControlTerms()
-        self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
-        self.case_information.add_community_control(self.community_control_terms)
+        if self.community_control_required_checkbox.isChecked():
+            self.community_control_terms.community_control_required = True
+            self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
+            self.community_control_terms.type_of_community_control = self.communityControlButtonGroup.checkedButton()
+        else:
+            self.community_control_terms.community_control_required = False
+        print(self.community_control_terms.community_control_required)
+        self.case_information.community_control_terms = self.community_control_terms
+
+
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):

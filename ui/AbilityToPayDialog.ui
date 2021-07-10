@@ -498,7 +498,7 @@
      </widget>
     </item>
     <item row="1" column="0" colspan="3">
-     <widget class="QCheckBox" name="pretrial_jail_days_credit_box">
+     <widget class="QCheckBox" name="pretrial_jail_days_credit_checkbox">
       <property name="text">
        <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
       </property>
@@ -508,7 +508,7 @@
      </widget>
     </item>
     <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="community_service_for_fines_box">
+     <widget class="QCheckBox" name="community_service_for_fines_checkbox">
       <property name="text">
        <string>Community service approved for fines and costs.</string>
       </property>
@@ -530,8 +530,8 @@
  <tabstops>
   <tabstop>ability_to_pay_checkbox</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
-  <tabstop>pretrial_jail_days_credit_box</tabstop>
-  <tabstop>community_service_for_fines_box</tabstop>
+  <tabstop>pretrial_jail_days_credit_checkbox</tabstop>
+  <tabstop>community_service_for_fines_checkbox</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>

@@ -20,9 +20,6 @@ class CaseInformation(object):
     def add_charge(self, charge):
         self.charges_list.append(charge)
 
-    def add_community_control(self, community_control_terms):
-        self.community_control_terms = community_control_terms
-
     def get_case_information(self):
         """Returns a dictionary with all of case information required
         to populate an entry."""
@@ -32,7 +29,8 @@ class CaseInformation(object):
             "plea_trial_date": self.plea_trial_date,
             "ovi_details": self.ovi_details,
             "charges_list": self.charges_list,
-            "ability_to_pay_details": self.ability_to_pay_details
+            "ability_to_pay_details": self.ability_to_pay_details,
+            "community_control_terms": self.community_control_terms
             }
         return self.formatted_case_information
 
@@ -52,6 +50,7 @@ class CriminalCharge(object):
 
 class CommunityControlTerms(object):
     def __init__(self):
+        self.community_control_required = False
         self.term_of_community_control = 0
         self.type_of_community_control = "basic"
 
