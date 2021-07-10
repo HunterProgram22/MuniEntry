@@ -12,7 +12,10 @@ from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
-from Dialogs.CaseInformation import CaseInformation, CriminalCharge, CommunityControlTerms, OviDetails
+from Dialogs.CaseInformation import (
+    CaseInformation, CriminalCharge, CommunityControlTerms,
+    OviDetails, AbilityToPayDetails
+    )
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"
@@ -65,10 +68,6 @@ class BaseCriminalDialog(QDialog):
 
     def proceed_to_ability_to_pay(self):
         dialog = AbilityToPayDialog(self.case_information)
-        dialog.exec()
-
-    def proceed_to_community_control(self):
-        dialog = CommunityControlDialog(self.case_information)
         dialog.exec()
 
     def set_case_information_banner(self):
@@ -144,6 +143,24 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
+
+    def proceed_to_community_control(self):
+        self.ability_to_pay_details = AbilityToPayDetails()
+        if self.ability_to_pay_checkbox.isChecked():
+            self.ability_to_pay_details.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        if self.pretrial_jail_days_credit_box.isChecked():
+            self.ability_to_pay_details.pretrial_jail_days_credit = True
+        else:
+            self.ability_to_pay_details.pretrial_jail_days_credit = False
+        if self.community_service_for_fines_box.isChecked():
+            self.ability_to_pay_details.community_service_for_fines = True
+        else:
+            self.ability_to_pay_details.community_service_for_fines = False
+        """Judge H and AB said fines suspended upon showing license is not used by them,
+        just by KP, so maybe don't include this on UI - not currently wired up."""
+        self.case_information.ability_to_pay_details = self.ability_to_pay_details
+        dialog = CommunityControlDialog(self.case_information)
+        dialog.exec()
 
 
 class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):

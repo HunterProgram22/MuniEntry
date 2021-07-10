@@ -15,6 +15,7 @@ class CaseInformation(object):
         self.charges_list = []
         self.community_control_terms = None
         self.ovi_details = None
+        self.ability_to_pay_details = None
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
@@ -31,6 +32,7 @@ class CaseInformation(object):
             "plea_trial_date": self.plea_trial_date,
             "ovi_details": self.ovi_details,
             "charges_list": self.charges_list,
+            "ability_to_pay_details": self.ability_to_pay_details
             }
         return self.formatted_case_information
 
@@ -60,3 +62,11 @@ class OviDetails(object):
         self.ovi_high_bac_test = False
         self.ovi_refused_breathylizer = False
         self.ovi_offenses_within_twenty_years = 0
+
+
+class AbilityToPayDetails(object):
+    def __init__(self):
+        self.ability_to_pay_time = 0
+        self.pretrial_jail_days_credit = True
+        self.community_service_for_fines = True
+        self.fines_suspended_for_valid_license = False

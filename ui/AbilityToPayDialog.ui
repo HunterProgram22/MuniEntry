@@ -427,103 +427,6 @@
     </layout>
    </widget>
   </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>490</y>
-     <width>971</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_4">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>564</y>
-     <width>972</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Fines will be suspended contingent upon Defendant showing valid operators license or driving privileges</string>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboBox">
-   <property name="geometry">
-    <rect>
-     <x>370</x>
-     <y>460</y>
-     <width>100</width>
-     <height>33</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="editable">
-    <bool>true</bool>
-   </property>
-   <item>
-    <property name="text">
-     <string/>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>30 Days</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>60 Days</string>
-    </property>
-   </item>
-   <item>
-    <property name="text">
-     <string>90 Days</string>
-    </property>
-   </item>
-  </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>452</y>
-     <width>349</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Defendant claimed ability to pay in:</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>11</x>
-     <y>527</y>
-     <width>465</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Community service approved for fines and costs.</string>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QPushButton" name="createEntryButton">
    <property name="geometry">
     <rect>
@@ -537,12 +440,98 @@
     <string>Create Entry</string>
    </property>
   </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>11</x>
+     <y>452</y>
+     <width>974</width>
+     <height>146</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QCheckBox" name="ability_to_pay_checkbox">
+      <property name="text">
+       <string>Defendant claimed ability to pay in:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QComboBox" name="ability_to_pay_box">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+      <item>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>30</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>60</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>90</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>days.</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="3">
+     <widget class="QCheckBox" name="pretrial_jail_days_credit_box">
+      <property name="text">
+       <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="community_service_for_fines_box">
+      <property name="text">
+       <string>Community service approved for fines and costs.</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0" colspan="3">
+     <widget class="QCheckBox" name="checkBox_4">
+      <property name="text">
+       <string>Fines will be suspended contingent upon Defendant showing valid operators license or driving privileges</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <tabstops>
-  <tabstop>checkBox</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_3</tabstop>
+  <tabstop>ability_to_pay_checkbox</tabstop>
+  <tabstop>ability_to_pay_box</tabstop>
+  <tabstop>pretrial_jail_days_credit_box</tabstop>
+  <tabstop>community_service_for_fines_box</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>
