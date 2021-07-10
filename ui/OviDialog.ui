@@ -325,7 +325,7 @@ p, li { white-space: pre-wrap; }
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -336,7 +336,7 @@ p, li { white-space: pre-wrap; }
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="2" column="1">
-      <widget class="QComboBox" name="ovi_in_20_years">
+      <widget class="QComboBox" name="ovi_offenses_within_twenty_years_box">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -393,7 +393,7 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="ovi_offenses_within_ten_years_box">
        <item>
         <property name="text">
          <string>1st</string>
@@ -444,14 +444,14 @@ p, li { white-space: pre-wrap; }
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QCheckBox" name="refused_checkbox">
+      <widget class="QCheckBox" name="refused_breathylizer_checkbox">
        <property name="text">
         <string>Refused Breathylizer. Offenses in Past 20 Years:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QCheckBox" name="high_bac_test_checkbox">
        <property name="text">
         <string>High BAC Test</string>
        </property>
@@ -462,10 +462,10 @@ p, li { white-space: pre-wrap; }
   </widget>
  </widget>
  <tabstops>
-  <tabstop>comboBox</tabstop>
-  <tabstop>checkBox</tabstop>
-  <tabstop>refused_checkbox</tabstop>
-  <tabstop>ovi_in_20_years</tabstop>
+  <tabstop>ovi_offenses_within_ten_years_box</tabstop>
+  <tabstop>high_bac_test_checkbox</tabstop>
+  <tabstop>refused_breathylizer_checkbox</tabstop>
+  <tabstop>ovi_offenses_within_twenty_years_box</tabstop>
   <tabstop>continueButton</tabstop>
   <tabstop>pushButton_3</tabstop>
   <tabstop>textBrowser</tabstop>
@@ -489,7 +489,7 @@ p, li { white-space: pre-wrap; }
    </hints>
   </connection>
   <connection>
-   <sender>refused_checkbox</sender>
+   <sender>refused_breathylizer_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>OviDialog</receiver>
    <slot>set_dialog()</slot>
@@ -501,22 +501,6 @@ p, li { white-space: pre-wrap; }
     <hint type="destinationlabel">
      <x>62</x>
      <y>353</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>continueButton</sender>
-   <signal>clicked()</signal>
-   <receiver>OviDialog</receiver>
-   <slot>proceed_to_sentencing()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>923</x>
-     <y>377</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>910</x>
-     <y>297</y>
     </hint>
    </hints>
   </connection>
@@ -536,6 +520,22 @@ p, li { white-space: pre-wrap; }
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OviDialog</receiver>
+   <slot>proceed_to_sentencing_from_ovi()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>886</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>901</x>
+     <y>315</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -544,5 +544,6 @@ p, li { white-space: pre-wrap; }
   <slot>get_dialog_fields()</slot>
   <slot>slot2()</slot>
   <slot>close_window()</slot>
+  <slot>proceed_to_sentencing_from_ovi()</slot>
  </slots>
 </ui>

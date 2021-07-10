@@ -12,7 +12,7 @@ from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
-from Dialogs.CaseInformation import CaseInformation, CriminalCharge, CommunityControlTerms
+from Dialogs.CaseInformation import CaseInformation, CriminalCharge, CommunityControlTerms, OviDetails
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"
@@ -59,6 +59,8 @@ class BaseCriminalDialog(QDialog):
             self.case_information.case_number + "_" + self.template_name + ".docx"
         )
 
+
+
     def proceed_to_sentencing(self):
         dialog = SentencingDialog(self.case_information)
         dialog.exec()
@@ -92,13 +94,10 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
                 self.defendant_attorney_name.setEnabled(True)
 
     def update_case_information(self):
-        print(self.case_number.text())
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd yyyy")
-        print(self.case_information.defendant_name)
-
         """This slot is tied to the signal 'pressed()', but when I switch
         this to clicked with continue_dialog() not all data passes tests. Need to figure
         out why both slots can't work properly with the same signal."""
@@ -123,12 +122,23 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
         self.case_information = case_information
         self.set_case_information_banner()
 
+    def proceed_to_sentencing_from_ovi(self):
+        self.ovi_details = OviDetails()
+        self.ovi_details.ovi_offenses_within_ten_years = self.ovi_offenses_within_ten_years_box.currentText()
+        if self.high_bac_test_checkbox.isChecked():
+            self.ovi_details.ovi_high_bac_test = True
+        if self.refused_breathylizer_checkbox.isChecked():
+            self.ovi_details.ovi_refused_breathylizer = True
+            self.ovi_details.ovi_offenses_within_twenty_years = self.ovi_offenses_within_twenty_years_box.currentText()
+        self.case_information.ovi_details = self.ovi_details
+        self.proceed_to_sentencing()
+
     def set_dialog(self, bool):
-        if self.sender().objectName() == "refused_checkbox":
+        if self.sender().objectName() == "refused_breathylizer_checkbox":
             if bool == True:
-                self.ovi_in_20_years.setEnabled(True)
+                self.ovi_offenses_within_twenty_years_box.setEnabled(True)
             else:
-                self.ovi_in_20_years.setEnabled(False)
+                self.ovi_offenses_within_twenty_years_box.setEnabled(False)
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
