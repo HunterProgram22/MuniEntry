@@ -126,8 +126,12 @@ class Ui_CommunityControlDialog(object):
         self.createEntryButton.clicked.connect(CommunityControlDialog.create_entry)
         QtCore.QMetaObject.connectSlotsByName(CommunityControlDialog)
         CommunityControlDialog.setTabOrder(self.community_control_required_checkbox, self.term_of_community_control_box)
-        CommunityControlDialog.setTabOrder(self.term_of_community_control_box, self.checkBox_4)
-        CommunityControlDialog.setTabOrder(self.checkBox_4, self.continueButton)
+        CommunityControlDialog.setTabOrder(self.term_of_community_control_box, self.type_of_community_control_box)
+        CommunityControlDialog.setTabOrder(self.type_of_community_control_box, self.checkBox_4)
+        CommunityControlDialog.setTabOrder(self.checkBox_4, self.comboBox_2)
+        CommunityControlDialog.setTabOrder(self.comboBox_2, self.checkBox_2)
+        CommunityControlDialog.setTabOrder(self.checkBox_2, self.createEntryButton)
+        CommunityControlDialog.setTabOrder(self.createEntryButton, self.continueButton)
 
     def retranslateUi(self, CommunityControlDialog):
         _translate = QtCore.QCoreApplication.translate

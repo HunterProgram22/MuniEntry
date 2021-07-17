@@ -296,7 +296,11 @@
  <tabstops>
   <tabstop>community_control_required_checkbox</tabstop>
   <tabstop>term_of_community_control_box</tabstop>
+  <tabstop>type_of_community_control_box</tabstop>
   <tabstop>checkBox_4</tabstop>
+  <tabstop>comboBox_2</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>createEntryButton</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>
  <resources/>

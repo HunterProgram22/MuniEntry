@@ -12,6 +12,7 @@ from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_ui import Ui_CaseInformationDialog
+from pyuifiles.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from Dialogs.CaseInformation import (
     CaseInformation, CriminalCharge, CommunityControlTerms,
     OviDetails, AbilityToPayDetails
@@ -138,6 +139,13 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
                 self.ovi_offenses_within_twenty_years_box.setEnabled(False)
 
 
+class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+    def __init__(self, case_information, parent=None):
+        super().__init__(parent)
+        self.case_information = case_information
+        self.set_case_information_banner()
+
+
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
@@ -177,16 +185,7 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
             self.community_control_terms.type_of_community_control = self.type_of_community_control_box.currentText()
         else:
             self.community_control_terms.community_control_required = False
-        print(self.community_control_terms.community_control_required)
         self.case_information.community_control_terms = self.community_control_terms
-
-    def checked_button(self):
-        for items in self:
-            if items.isChecked():
-                checked_radiobutton = items.text()
-                return checked_radiobutton
-
-
 
 
 class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
@@ -212,3 +211,7 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.case_information.add_charge(self.criminal_charge)
         #print(self.case_information.charges_list[self.offense_count].offense)
         self.offense_count += 1
+
+    def amend_offense(self):
+        dialog = AmendOffenseDialog(self.case_information)
+        dialog.exec()

@@ -675,17 +675,24 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="4">
-      <widget class="QPushButton" name="pushButton_4">
+     <item row="5" column="4">
+      <widget class="QPushButton" name="addOffenseButton">
+       <property name="text">
+        <string>Add Another Offense</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QPushButton" name="deleteOffenseButton">
        <property name="text">
         <string>Delete Offense</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="4">
-      <widget class="QPushButton" name="addOffenseButton">
+     <item row="3" column="4">
+      <widget class="QPushButton" name="amendOffenseButton">
        <property name="text">
-        <string>Add Another Offense</string>
+        <string>Amend Offense</string>
        </property>
       </widget>
      </item>
@@ -764,8 +771,8 @@
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>871</x>
-     <y>476</y>
+     <x>969</x>
+     <y>473</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -901,10 +908,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>amend_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>941</x>
+     <y>348</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>899</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>proceed_to_ability_to_pay()</slot>
   <slot>close_window()</slot>
   <slot>add_offense()</slot>
+  <slot>amend_offense()</slot>
  </slots>
 </ui>
