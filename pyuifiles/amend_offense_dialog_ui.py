@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AmendOffenseDialog(object):
     def setupUi(self, AmendOffenseDialog):
         AmendOffenseDialog.setObjectName("AmendOffenseDialog")
-        AmendOffenseDialog.resize(1000, 376)
+        AmendOffenseDialog.resize(1000, 800)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(AmendOffenseDialog.sizePolicy().hasHeightForWidth())
         AmendOffenseDialog.setSizePolicy(sizePolicy)
-        AmendOffenseDialog.setMinimumSize(QtCore.QSize(200, 100))
+        AmendOffenseDialog.setMinimumSize(QtCore.QSize(1000, 800))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(12)
