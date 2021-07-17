@@ -174,11 +174,17 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         if self.community_control_required_checkbox.isChecked():
             self.community_control_terms.community_control_required = True
             self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
-            self.community_control_terms.type_of_community_control = self.communityControlButtonGroup.checkedButton()
+            self.community_control_terms.type_of_community_control = self.type_of_community_control_box.currentText()
         else:
             self.community_control_terms.community_control_required = False
         print(self.community_control_terms.community_control_required)
         self.case_information.community_control_terms = self.community_control_terms
+
+    def checked_button(self):
+        for items in self:
+            if items.isChecked():
+                checked_radiobutton = items.text()
+                return checked_radiobutton
 
 
 
