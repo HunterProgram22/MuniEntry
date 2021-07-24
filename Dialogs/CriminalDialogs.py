@@ -105,6 +105,8 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
         )
         if self.is_citizen_checkbox.isChecked():
             self.case_information.is_citizen = True
+        if self.citizen_deportation_checkbox.isChecked():
+            self.case_information.citizen_deportation = True
 
     def continue_dialog(self):
         """This slot is tied to the signal 'clicked()'"""
