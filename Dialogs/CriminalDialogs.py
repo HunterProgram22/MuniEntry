@@ -11,7 +11,7 @@ from pyuifiles.ovi_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
-from pyuifiles.case_information_ui import Ui_CaseInformationDialog
+from pyuifiles.case_information_dialog_ui import Ui_CaseInformationDialog
 from pyuifiles.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from Dialogs.CaseInformation import (
     CaseInformation, CriminalCharge, CommunityControlTerms,

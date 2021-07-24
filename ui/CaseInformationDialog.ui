@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>Case Information</string>
   </property>
+  <property name="toolTip">
+   <string/>
+  </property>
   <widget class="QPushButton" name="continueButton">
    <property name="geometry">
     <rect>
@@ -42,23 +45,16 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>230</y>
+     <y>520</y>
      <width>601</width>
      <height>177</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-        <underline>true</underline>
-       </font>
-      </property>
+    <item row="4" column="0">
+     <widget class="QCheckBox" name="checkBox_4">
       <property name="text">
-       <string>Check All Boxes That Apply</string>
+       <string>License Suspension (Driving, Hunting, CCW)</string>
       </property>
      </widget>
     </item>
@@ -83,10 +79,17 @@
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QCheckBox" name="checkBox_4">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
       <property name="text">
-       <string>License Suspension (Driving, Hunting, CCW)</string>
+       <string>Check All Boxes That Apply</string>
       </property>
      </widget>
     </item>
@@ -157,6 +160,9 @@
     </item>
     <item row="3" column="0">
      <widget class="QLabel" name="label_4">
+      <property name="toolTip">
+       <string/>
+      </property>
       <property name="text">
        <string>Defendant Attorney:</string>
       </property>
@@ -190,6 +196,98 @@
         <month>1</month>
         <day>1</day>
        </date>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>360</y>
+     <width>931</width>
+     <height>103</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="offense_of_violence_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Test"/>
+      </property>
+      <property name="toolTipDuration">
+       <number>-2</number>
+      </property>
+      <property name="text">
+       <string>Offense of Violence</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="violence_no_firearm_checkbox">
+      <property name="toolTip">
+       <string>Defendant informed that convcition disallows Def. to ship/transport/purchase/possess firearms/ammo if victim is current/past spouse or person living as spouse, parent or child of spouse or parent or child of Defendant.</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="text">
+       <string>Conviction prohibits ship/transport/purchase/possess firearm/ammo </string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="citizen_deportation_checkbox_2">
+      <property name="text">
+       <string>NCIC Mental Health Form shall issue</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>230</y>
+     <width>931</width>
+     <height>103</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="citizenship_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Citizenship</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="is_citizen_checkbox">
+      <property name="text">
+       <string>Defendant stated that he/she is a U.S. Citizen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="citizen_deportation_checkbox">
+      <property name="text">
+       <string>Def. advised that conviction may lead to deportation, exclusion from U.S. or denial of naturalization</string>
       </property>
      </widget>
     </item>
