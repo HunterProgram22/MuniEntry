@@ -172,13 +172,13 @@
     <string>OVI</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>22</x>
      <y>13</y>
      <width>701</width>
-     <height>171</height>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="caseinformation_gridLayout">
@@ -245,7 +245,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>22</x>
