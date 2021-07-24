@@ -67,6 +67,10 @@ class BaseCriminalDialog(QDialog):
         dialog = SentencingDialog(self.case_information)
         dialog.exec()
 
+    def proceed_to_ovi(self):
+        dialog = OviDialog(self.case_information)
+        dialog.exec()
+
     def proceed_to_ability_to_pay(self):
         dialog = AbilityToPayDialog(self.case_information)
         dialog.exec()
@@ -107,10 +111,16 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
             self.case_information.is_citizen = True
         if self.citizen_deportation_checkbox.isChecked():
             self.case_information.citizen_deportation = True
+        if self.waived_counsel_checkbox.isChecked():
+            self.case_information.waived_counsel = True
 
-    def continue_dialog(self):
+    def sentencing_dialog(self):
         """This slot is tied to the signal 'clicked()'"""
         self.proceed_to_sentencing()
+
+    def ovi_dialog(self):
+        """This slot is tied to the signal 'clicked()'"""
+        self.proceed_to_ovi()
 
 
 class OviDialog(BaseCriminalDialog, Ui_OviDialog):

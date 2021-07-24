@@ -9,6 +9,7 @@ class CaseInformation(object):
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
+        self.waived_counsel = False
         self.defendant_name = None
         self.defendant_attorney_name = None
         self.plea_trial_date = None
@@ -26,8 +27,10 @@ class CaseInformation(object):
         """Returns a dictionary with all of case information required
         to populate an entry."""
         self.formatted_case_information = {
-            "defendant_name": self.defendant_name,
             "case_number": self.case_number,
+            "defendant_name": self.defendant_name,
+            "waived_counsel": self.waived_counsel,
+            "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,
             "is_citizen": self.is_citizen,
             "citizen_deportation": self.citizen_deportation,

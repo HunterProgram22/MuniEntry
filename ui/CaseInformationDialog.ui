@@ -44,9 +44,9 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>847</x>
      <y>10</y>
-     <width>118</width>
+     <width>141</width>
      <height>80</height>
     </rect>
    </property>
@@ -67,91 +67,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>22</x>
-     <y>17</y>
-     <width>601</width>
-     <height>189</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Case Number:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="case_number"/>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Defendant Name: </string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="defendant_name"/>
-    </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QCheckBox" name="waived_counsel_checkbox">
-      <property name="text">
-       <string>Defendant waived right to counsel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="toolTip">
-       <string/>
-      </property>
-      <property name="text">
-       <string>Defendant Attorney:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="defendant_attorney_name"/>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Plea or Trial Date:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <widget class="QDateEdit" name="plea_trial_date">
-      <property name="minimumDate">
-       <date>
-        <year>2021</year>
-        <month>1</month>
-        <day>1</day>
-       </date>
-      </property>
-      <property name="calendarPopup">
-       <bool>true</bool>
-      </property>
-      <property name="date">
-       <date>
-        <year>2021</year>
-        <month>1</month>
-        <day>1</day>
-       </date>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="layoutWidget_2">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>360</y>
+     <y>471</y>
      <width>931</width>
      <height>103</height>
     </rect>
@@ -199,62 +119,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>480</y>
-     <width>271</width>
-     <height>71</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="offense_of_violence_gridLayout_2">
-    <item row="2" column="0">
-     <widget class="QComboBox" name="comboBox">
-      <item>
-       <property name="text">
-        <string>Plea</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Trial</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Plea in Abstentia</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_8">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-        <underline>true</underline>
-       </font>
-      </property>
-      <property name="toolTip">
-       <string extracomment="Test"/>
-      </property>
-      <property name="toolTipDuration">
-       <number>-2</number>
-      </property>
-      <property name="text">
-       <string>Type of Proceeding</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>230</y>
+     <y>337</y>
      <width>931</width>
      <height>103</height>
     </rect>
@@ -290,18 +159,197 @@
     </item>
    </layout>
   </widget>
+  <widget class="QPushButton" name="continueButton_2">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>740</y>
+     <width>158</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OVI</string>
+   </property>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>13</y>
+     <width>701</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="caseinformation_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Case Number:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="case_number">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Defendant Name: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="defendant_name">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="waived_counsel_checkbox">
+      <property name="text">
+       <string>Defendant waived right to counsel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Defendant Attorney:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="defendant_attorney_name">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>202</y>
+     <width>411</width>
+     <height>107</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QDateEdit" name="plea_trial_date">
+      <property name="minimumDate">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Test"/>
+      </property>
+      <property name="toolTipDuration">
+       <number>-2</number>
+      </property>
+      <property name="text">
+       <string>Type of Proceeding:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>Plea</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Trial</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Plea in Abstentia</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Plea or Trial</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>case_number</tabstop>
   <tabstop>defendant_name</tabstop>
   <tabstop>waived_counsel_checkbox</tabstop>
   <tabstop>defendant_attorney_name</tabstop>
+  <tabstop>comboBox</tabstop>
   <tabstop>plea_trial_date</tabstop>
   <tabstop>is_citizen_checkbox</tabstop>
   <tabstop>citizen_deportation_checkbox</tabstop>
   <tabstop>violence_no_firearm_checkbox</tabstop>
   <tabstop>citizen_deportation_checkbox_2</tabstop>
-  <tabstop>comboBox</tabstop>
   <tabstop>continueButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
@@ -321,22 +369,6 @@
     <hint type="destinationlabel">
      <x>387</x>
      <y>108</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>continueButton</sender>
-   <signal>clicked()</signal>
-   <receiver>CaseInformationDialog</receiver>
-   <slot>continue_dialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>820</x>
-     <y>750</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>883</x>
-     <y>608</y>
     </hint>
    </hints>
   </connection>
@@ -436,6 +468,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>pressed()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>671</x>
+     <y>750</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>released()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>707</x>
+     <y>751</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>732</x>
+     <y>648</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>ovi_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>643</x>
+     <y>749</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>582</x>
+     <y>728</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>sentencing_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>848</x>
+     <y>753</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>879</x>
+     <y>700</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>createEntry()</slot>
@@ -443,5 +539,7 @@
   <slot>close_window()</slot>
   <slot>set_dialog()</slot>
   <slot>update_case_information()</slot>
+  <slot>ovi_dialog()</slot>
+  <slot>sentencing_dialog()</slot>
  </slots>
 </ui>
