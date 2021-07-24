@@ -92,26 +92,23 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
                 self.defendant_attorney_name.setEnabled(True)
 
     def update_case_information(self):
+        """This slot is tied to the signal 'pressed()', which has precedence over
+        released() and clicked()."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd yyyy")
-        """This slot is tied to the signal 'pressed()', but when I switch
-        this to clicked with continue_dialog() not all data passes tests. Need to figure
-        out why both slots can't work properly with the same signal."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = (
             self.defendant_attorney_name.text()
         )
+        if self.is_citizen_checkbox.isChecked():
+            self.case_information.is_citizen = True
 
     def continue_dialog(self):
         """This slot is tied to the signal 'clicked()'"""
-        if self.ovi_checkbox.isChecked():
-            dialog = OviDialog(self.case_information)
-            dialog.exec()
-        else:
-            self.proceed_to_sentencing()
+        self.proceed_to_sentencing()
 
 
 class OviDialog(BaseCriminalDialog, Ui_OviDialog):

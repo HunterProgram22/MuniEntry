@@ -16,6 +16,7 @@ class CaseInformation(object):
         self.community_control_terms = None
         self.ovi_details = None
         self.ability_to_pay_details = None
+        self.is_citizen = False
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
@@ -27,6 +28,7 @@ class CaseInformation(object):
             "defendant_name": self.defendant_name,
             "case_number": self.case_number,
             "plea_trial_date": self.plea_trial_date,
+            "is_citizen": self.is_citizen,
             "ovi_details": self.ovi_details,
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,

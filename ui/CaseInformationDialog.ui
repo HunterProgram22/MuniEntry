@@ -32,68 +32,14 @@
    <property name="geometry">
     <rect>
      <x>820</x>
-     <y>750</y>
+     <y>739</y>
      <width>158</width>
-     <height>30</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
-    <string>Continue</string>
+    <string>Sentencing</string>
    </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>520</y>
-     <width>601</width>
-     <height>177</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout_2">
-    <item row="4" column="0">
-     <widget class="QCheckBox" name="checkBox_4">
-      <property name="text">
-       <string>License Suspension (Driving, Hunting, CCW)</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QCheckBox" name="ovi_checkbox">
-      <property name="text">
-       <string>Case Involves OVI Offense</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>Amendment to Charges by Prosecutor</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QCheckBox" name="checkBox_3">
-      <property name="text">
-       <string>Defendant is to be Committed to Jail</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label_5">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-        <underline>true</underline>
-       </font>
-      </property>
-      <property name="text">
-       <string>Check All Boxes That Apply</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -253,7 +199,58 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>480</y>
+     <width>271</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="offense_of_violence_gridLayout_2">
+    <item row="2" column="0">
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>Plea</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Trial</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Plea in Abstentia</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Test"/>
+      </property>
+      <property name="toolTipDuration">
+       <number>-2</number>
+      </property>
+      <property name="text">
+       <string>Type of Proceeding</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -300,10 +297,11 @@
   <tabstop>waived_counsel_checkbox</tabstop>
   <tabstop>defendant_attorney_name</tabstop>
   <tabstop>plea_trial_date</tabstop>
-  <tabstop>ovi_checkbox</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_4</tabstop>
+  <tabstop>is_citizen_checkbox</tabstop>
+  <tabstop>citizen_deportation_checkbox</tabstop>
+  <tabstop>violence_no_firearm_checkbox</tabstop>
+  <tabstop>citizen_deportation_checkbox_2</tabstop>
+  <tabstop>comboBox</tabstop>
   <tabstop>continueButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
