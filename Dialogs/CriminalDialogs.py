@@ -5,7 +5,7 @@ from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QLabel
 
 from pyuifiles.ovi_dialog_ui import Ui_OviDialog
 from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
@@ -189,9 +189,7 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.offense_count = 0
 
     def add_offense(self):
-        """TODO: have charge information populate onto UI.
-        Perhaps switch to loadUi for dialogs to load XML then
-        I can use Jinja tags in the UI display."""
+        """TODO: Shrink text as charges are added."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
@@ -204,7 +202,13 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.case_information.add_charge(self.criminal_charge)
         #print(self.case_information.charges_list[self.offense_count].offense)
         self.offense_count += 1
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.offense), 0, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.plea), 1, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.finding), 2, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.fines_amount), 3, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.fines_suspended), 4, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days), 5, self.offense_count)
+        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days_suspended), 6, self.offense_count)
 
     def amend_offense(self):
-        dialog = AmendOffenseDialog(self.case_information)
-        dialog.exec()
+        AmendOffenseDialog(self.case_information).exec()
