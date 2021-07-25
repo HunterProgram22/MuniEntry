@@ -155,11 +155,12 @@ class Ui_OviDialog(object):
 
         self.retranslateUi(OviDialog)
         self.continueButton.released.connect(OviDialog.close_window)
-        self.continueButton.clicked.connect(OviDialog.proceed_to_sentencing_from_ovi)
         self.refused_breathylizer_checkbox.toggled['bool'].connect(OviDialog.set_dialog)
         self.pushButton_2.clicked.connect(self.high_bac_test_checkbox.toggle)
         self.pushButton_2.clicked.connect(self.refused_breathylizer_checkbox.toggle)
         self.pushButton_3.clicked.connect(OviDialog.close_window)
+        self.continueButton.pressed.connect(OviDialog.update_case_information)
+        self.continueButton.clicked.connect(OviDialog.proceed_to_sentencing)
         QtCore.QMetaObject.connectSlotsByName(OviDialog)
         OviDialog.setTabOrder(self.ovi_offenses_within_ten_years_box, self.high_bac_test_checkbox)
         OviDialog.setTabOrder(self.high_bac_test_checkbox, self.refused_breathylizer_checkbox)

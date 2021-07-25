@@ -501,34 +501,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>continueButton_2</sender>
+   <sender>continueButton</sender>
    <signal>clicked()</signal>
    <receiver>CaseInformationDialog</receiver>
-   <slot>ovi_dialog()</slot>
+   <slot>proceed_to_sentencing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>643</x>
-     <y>749</y>
+     <x>899</x>
+     <y>747</y>
     </hint>
     <hint type="destinationlabel">
-     <x>582</x>
-     <y>728</y>
+     <x>873</x>
+     <y>699</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>continueButton</sender>
+   <sender>continueButton_2</sender>
    <signal>clicked()</signal>
    <receiver>CaseInformationDialog</receiver>
-   <slot>sentencing_dialog()</slot>
+   <slot>proceed_to_ovi()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>848</x>
-     <y>753</y>
+     <x>656</x>
+     <y>757</y>
     </hint>
     <hint type="destinationlabel">
-     <x>879</x>
-     <y>700</y>
+     <x>691</x>
+     <y>639</y>
     </hint>
    </hints>
   </connection>
@@ -541,5 +541,7 @@
   <slot>update_case_information()</slot>
   <slot>ovi_dialog()</slot>
   <slot>sentencing_dialog()</slot>
+  <slot>proceed_to_sentencing()</slot>
+  <slot>proceed_to_ovi()</slot>
  </slots>
 </ui>

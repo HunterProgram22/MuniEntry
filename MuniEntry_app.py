@@ -1,6 +1,4 @@
 import sys
-from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 from PyQt5.uic import loadUi
@@ -8,15 +6,8 @@ from PyQt5.QtCore import pyqtSlot
 
 from pyuifiles.main_window_ui import Ui_MainWindow
 from Dialogs.CriminalDialogs import (
-    OviDialog,
-    SentencingDialog,
     CaseInformationDialog,
 )
-
-
-# Code to update UI files to py files
-# pyuic5 -o main_window_ui.py ui/MainWndow.ui
-
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {

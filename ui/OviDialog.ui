@@ -456,22 +456,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>continueButton</sender>
-   <signal>clicked()</signal>
-   <receiver>OviDialog</receiver>
-   <slot>proceed_to_sentencing_from_ovi()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>836</x>
-     <y>736</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>901</x>
-     <y>315</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>refused_breathylizer_checkbox</sender>
    <signal>toggled(bool)</signal>
    <receiver>OviDialog</receiver>
@@ -535,6 +519,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>pressed()</signal>
+   <receiver>OviDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>890</x>
+     <y>747</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>907</x>
+     <y>656</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>OviDialog</receiver>
+   <slot>proceed_to_sentencing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>833</x>
+     <y>742</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>785</x>
+     <y>696</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -544,5 +560,6 @@
   <slot>slot2()</slot>
   <slot>close_window()</slot>
   <slot>proceed_to_sentencing_from_ovi()</slot>
+  <slot>update_case_information()</slot>
  </slots>
 </ui>

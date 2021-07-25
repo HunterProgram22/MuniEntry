@@ -59,21 +59,14 @@ class BaseCriminalDialog(QDialog):
     def set_document_name(self):
         self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
 
-        self.docname = (
-            self.case_information.case_number + "_" + self.template_name + ".docx"
-        )
-
     def proceed_to_sentencing(self):
-        dialog = SentencingDialog(self.case_information)
-        dialog.exec()
+        SentencingDialog(self.case_information).exec()
 
     def proceed_to_ovi(self):
-        dialog = OviDialog(self.case_information)
-        dialog.exec()
+        OviDialog(self.case_information).exec()
 
     def proceed_to_ability_to_pay(self):
-        dialog = AbilityToPayDialog(self.case_information)
-        dialog.exec()
+        AbilityToPayDialog(self.case_information).exec()
 
     def set_case_information_banner(self):
         self.defendant_name_label.setText(self.case_information.defendant_name)
@@ -114,14 +107,6 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
         if self.waived_counsel_checkbox.isChecked():
             self.case_information.waived_counsel = True
 
-    def sentencing_dialog(self):
-        """This slot is tied to the signal 'clicked()'"""
-        self.proceed_to_sentencing()
-
-    def ovi_dialog(self):
-        """This slot is tied to the signal 'clicked()'"""
-        self.proceed_to_ovi()
-
 
 class OviDialog(BaseCriminalDialog, Ui_OviDialog):
     def __init__(self, case_information, parent=None):
@@ -129,7 +114,7 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
         self.case_information = case_information
         self.set_case_information_banner()
 
-    def proceed_to_sentencing_from_ovi(self):
+    def update_case_information(self):
         self.ovi_details = OviDetails()
         self.ovi_details.ovi_offenses_within_ten_years = self.ovi_offenses_within_ten_years_box.currentText()
         if self.high_bac_test_checkbox.isChecked():
@@ -138,7 +123,6 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
             self.ovi_details.ovi_refused_breathylizer = True
             self.ovi_details.ovi_offenses_within_twenty_years = self.ovi_offenses_within_twenty_years_box.currentText()
         self.case_information.ovi_details = self.ovi_details
-        self.proceed_to_sentencing()
 
     def set_dialog(self, bool):
         if self.sender().objectName() == "refused_breathylizer_checkbox":
