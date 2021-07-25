@@ -19,6 +19,7 @@ class CaseInformation(object):
         self.ability_to_pay_details = None
         self.is_citizen = False
         self.citizen_deportation = False
+        self.total_charges = 0
 
     def add_charge(self, charge):
         self.charges_list.append(charge)

@@ -75,6 +75,19 @@ class BaseCriminalDialog(QDialog):
             "Attorney: " + self.case_information.defendant_attorney_name
         )
 
+    def set_charges_grid(self):
+        """TODO: the criminal charge is a list in case information so need to
+        account for that when setting charges grid to get it to work."""
+        total_charges = self.case_information.total_charges
+        for charge in range(total_charges):
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.offense), 0, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.plea), 1, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.finding), 2, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.fines_amount), 3, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.fines_suspended), 4, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.jail_days), 5, charge)
+            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.jail_days_suspended), 6, charge)
+            total_charges -=1
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
     def __init__(self, parent=None):
@@ -144,6 +157,7 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
+        #self.set_charges_grid()
 
     def proceed_to_community_control(self):
         self.ability_to_pay_details = AbilityToPayDetails()
@@ -200,7 +214,9 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.criminal_charge.jail_days = self.jail_days.text()
         self.criminal_charge.jail_days_suspended = self.jail_days_suspended.text()
         self.case_information.add_charge(self.criminal_charge)
-        #print(self.case_information.charges_list[self.offense_count].offense)
+        """CHECK: Should I be adding the charges to case information after GUI, and make
+        sure that I clean up and don't potentially have two versions - I do right now,
+        need to fix. The charge is added to case information above and then to GUI."""
         self.offense_count += 1
         self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.offense), 0, self.offense_count)
         self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.plea), 1, self.offense_count)
@@ -209,6 +225,12 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.fines_suspended), 4, self.offense_count)
         self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days), 5, self.offense_count)
         self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days_suspended), 6, self.offense_count)
+        self.case_information.total_charges = self.offense_count
+
+    def delete_offense(self):
+        """TODO: Currently this just deletes labels 'at random' but need to figure out
+        how it is indexing and modify to delete last added offense."""
+        self.charges_gridLayout.itemAt(self.offense_count).widget().deleteLater()
 
     def amend_offense(self):
         AmendOffenseDialog(self.case_information).exec()
