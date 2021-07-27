@@ -17,6 +17,7 @@ class CaseInformation(object):
         self.community_control_terms = None
         self.ovi_details = None
         self.ability_to_pay_details = None
+        self.amended_offense_details = None
         self.is_citizen = False
         self.citizen_deportation = False
         self.total_charges = 0
@@ -38,8 +39,8 @@ class CaseInformation(object):
             "ovi_details": self.ovi_details,
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,
-            "community_control_terms": self.community_control_terms
-            }
+            "community_control_terms": self.community_control_terms,
+        }
         return self.formatted_case_information
 
 
@@ -77,3 +78,11 @@ class AbilityToPayDetails(object):
         self.pretrial_jail_days_credit = True
         self.community_service_for_fines = True
         self.fines_suspended_for_valid_license = False
+
+
+class AmendOffenseDetails(object):
+    def __init__(self):
+        self.original_charge = None
+        self.amended_charge = None
+        self.amending_procedure = None
+        self.motion_disposition = "granted"

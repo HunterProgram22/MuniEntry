@@ -19,6 +19,7 @@ from Dialogs.CaseInformation import (
     CommunityControlTerms,
     OviDetails,
     AbilityToPayDetails,
+    AmendOffenseDetails,
 )
 
 PATH = str(pathlib.Path().absolute())
@@ -182,6 +183,14 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
+
+    def amend_offense(self):
+        self.amended_offense_details = AmendOffenseDetails()
+        self.original_charge = self.original_charge_box.currentText()
+        self.amended_charge = self.amended_charge_box.currentText()
+        self.amending_procedure = self.pursuant_to_box.currentText()
+        self.motion_disposition = self.motion_decision_box.currentText()
+        self.case_information.amended_offense_details = self.amended_offense_details
 
 
 class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):

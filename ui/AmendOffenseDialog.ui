@@ -172,7 +172,7 @@
      <string>Cancel</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -190,7 +190,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="offense_choice_box">
+      <widget class="QComboBox" name="motion_decision_box">
        <property name="editable">
         <bool>false</bool>
        </property>
@@ -214,7 +214,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="original_charge_box">
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -228,7 +228,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QComboBox" name="comboBox_2">
+      <widget class="QComboBox" name="amended_charge_box">
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -242,7 +242,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QComboBox" name="comboBox_3">
+      <widget class="QComboBox" name="pursuant_to_box">
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -266,10 +266,10 @@
   </widget>
  </widget>
  <tabstops>
-  <tabstop>offense_choice_box</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>comboBox_3</tabstop>
+  <tabstop>motion_decision_box</tabstop>
+  <tabstop>original_charge_box</tabstop>
+  <tabstop>amended_charge_box</tabstop>
+  <tabstop>pursuant_to_box</tabstop>
   <tabstop>continueButton</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>pushButton_3</tabstop>
@@ -327,7 +327,7 @@
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>comboBox</receiver>
+   <receiver>original_charge_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -343,7 +343,7 @@
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>comboBox_2</receiver>
+   <receiver>amended_charge_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -359,7 +359,7 @@
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>comboBox_3</receiver>
+   <receiver>pursuant_to_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -367,8 +367,24 @@
      <y>241</y>
     </hint>
     <hint type="destinationlabel">
-     <x>612</x>
-     <y>304</y>
+     <x>632</x>
+     <y>300</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>pressed()</signal>
+   <receiver>AmendOffenseDialog</receiver>
+   <slot>amend_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>843</x>
+     <y>301</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>769</x>
+     <y>370</y>
     </hint>
    </hints>
   </connection>
@@ -377,5 +393,6 @@
   <slot>proceed_to_ability_to_pay()</slot>
   <slot>close_window()</slot>
   <slot>add_offense()</slot>
+  <slot>amend_offense()</slot>
  </slots>
 </ui>
