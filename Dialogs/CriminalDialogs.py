@@ -14,13 +14,18 @@ from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_dialog_ui import Ui_CaseInformationDialog
 from pyuifiles.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from Dialogs.CaseInformation import (
-    CaseInformation, CriminalCharge, CommunityControlTerms,
-    OviDetails, AbilityToPayDetails
-    )
+    CaseInformation,
+    CriminalCharge,
+    CommunityControlTerms,
+    OviDetails,
+    AbilityToPayDetails,
+)
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"
 SAVE_PATH = PATH + "\\Saved\\"
+
+"""TODO: Need to add maximize and minimize buttons for Dialogs."""
 
 
 class BaseCriminalDialog(QDialog):
@@ -47,9 +52,9 @@ class BaseCriminalDialog(QDialog):
 
     def get_context(self):
         return {
-            'defendant_name': self.case_information.defendant_name,
-            'case_number': self.case_information.case_number,
-            'plea_trial_date': self.case_information.plea_trial_date,
+            "defendant_name": self.case_information.defendant_name,
+            "case_number": self.case_information.case_number,
+            "plea_trial_date": self.case_information.plea_trial_date,
         }
 
     def align_entry_left(self):
@@ -57,7 +62,9 @@ class BaseCriminalDialog(QDialog):
             para.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     def set_document_name(self):
-        self.docname = self.case_information.case_number + "_" + self.template_name + ".docx"
+        self.docname = (
+            self.case_information.case_number + "_" + self.template_name + ".docx"
+        )
 
     def proceed_to_sentencing(self):
         SentencingDialog(self.case_information).exec()
@@ -80,14 +87,31 @@ class BaseCriminalDialog(QDialog):
         account for that when setting charges grid to get it to work."""
         total_charges = self.case_information.total_charges
         for charge in range(total_charges):
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.offense), 0, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.plea), 1, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.finding), 2, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.fines_amount), 3, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.fines_suspended), 4, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.jail_days), 5, charge)
-            self.charges_gridLayout.addWidget(QLabel(self.case_information.criminal_charge.jail_days_suspended), 6, charge)
-            total_charges -=1
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.offense), 0, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.plea), 1, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.finding), 2, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.fines_amount), 3, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.fines_suspended), 4, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.jail_days), 5, charge
+            )
+            self.charges_gridLayout.addWidget(
+                QLabel(self.case_information.criminal_charge.jail_days_suspended),
+                6,
+                charge,
+            )
+            total_charges -= 1
+
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
     def __init__(self, parent=None):
@@ -106,8 +130,12 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
         released() and clicked()."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
-        self.case_information.defendant_attorney_name = self.defendant_attorney_name.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd yyyy")
+        self.case_information.defendant_attorney_name = (
+            self.defendant_attorney_name.text()
+        )
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
+            "MMMM dd yyyy"
+        )
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.defendant_attorney_name = (
@@ -129,12 +157,16 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
 
     def update_case_information(self):
         self.ovi_details = OviDetails()
-        self.ovi_details.ovi_offenses_within_ten_years = self.ovi_offenses_within_ten_years_box.currentText()
+        self.ovi_details.ovi_offenses_within_ten_years = (
+            self.ovi_offenses_within_ten_years_box.currentText()
+        )
         if self.high_bac_test_checkbox.isChecked():
             self.ovi_details.ovi_high_bac_test = True
         if self.refused_breathylizer_checkbox.isChecked():
             self.ovi_details.ovi_refused_breathylizer = True
-            self.ovi_details.ovi_offenses_within_twenty_years = self.ovi_offenses_within_twenty_years_box.currentText()
+            self.ovi_details.ovi_offenses_within_twenty_years = (
+                self.ovi_offenses_within_twenty_years_box.currentText()
+            )
         self.case_information.ovi_details = self.ovi_details
 
     def set_dialog(self, bool):
@@ -157,12 +189,14 @@ class AbilityToPayDialog(BaseCriminalDialog, Ui_AbilityToPayDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
-        #self.set_charges_grid()
+        # self.set_charges_grid()
 
     def proceed_to_community_control(self):
         self.ability_to_pay_details = AbilityToPayDetails()
         if self.ability_to_pay_checkbox.isChecked():
-            self.ability_to_pay_details.ability_to_pay_time = self.ability_to_pay_box.currentText()
+            self.ability_to_pay_details.ability_to_pay_time = (
+                self.ability_to_pay_box.currentText()
+            )
         if self.pretrial_jail_days_credit_checkbox.isChecked():
             self.ability_to_pay_details.pretrial_jail_days_credit = True
         else:
@@ -188,8 +222,12 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         self.community_control_terms = CommunityControlTerms()
         if self.community_control_required_checkbox.isChecked():
             self.community_control_terms.community_control_required = True
-            self.community_control_terms.term_of_community_control = self.term_of_community_control_box.currentText()
-            self.community_control_terms.type_of_community_control = self.type_of_community_control_box.currentText()
+            self.community_control_terms.term_of_community_control = (
+                self.term_of_community_control_box.currentText()
+            )
+            self.community_control_terms.type_of_community_control = (
+                self.type_of_community_control_box.currentText()
+            )
         else:
             self.community_control_terms.community_control_required = False
         self.case_information.community_control_terms = self.community_control_terms
@@ -218,13 +256,27 @@ class SentencingDialog(BaseCriminalDialog, Ui_SentencingDialog):
         sure that I clean up and don't potentially have two versions - I do right now,
         need to fix. The charge is added to case information above and then to GUI."""
         self.offense_count += 1
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.offense), 0, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.plea), 1, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.finding), 2, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.fines_amount), 3, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.fines_suspended), 4, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days), 5, self.offense_count)
-        self.charges_gridLayout.addWidget(QLabel(self.criminal_charge.jail_days_suspended), 6, self.offense_count)
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.offense), 0, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.plea), 1, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.finding), 2, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.fines_amount), 3, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.fines_suspended), 4, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.jail_days), 5, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.jail_days_suspended), 6, self.offense_count
+        )
         self.case_information.total_charges = self.offense_count
 
     def delete_offense(self):
