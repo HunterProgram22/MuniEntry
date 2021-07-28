@@ -17,7 +17,7 @@ class CaseInformation(object):
         self.community_control_terms = None
         self.ovi_details = None
         self.ability_to_pay_details = None
-        self.amended_offense_details = None
+        self.amend_offense_details = None
         self.is_citizen = False
         self.citizen_deportation = False
         self.total_charges = 0
@@ -37,6 +37,7 @@ class CaseInformation(object):
             "is_citizen": self.is_citizen,
             "citizen_deportation": self.citizen_deportation,
             "ovi_details": self.ovi_details,
+            "amend_offense_details": self.amend_offense_details,
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,
             "community_control_terms": self.community_control_terms,
