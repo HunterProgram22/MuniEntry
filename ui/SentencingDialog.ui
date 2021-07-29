@@ -140,6 +140,9 @@
    <property name="text">
     <string>Ability to Pay</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QFrame" name="frame_2">
    <property name="geometry">

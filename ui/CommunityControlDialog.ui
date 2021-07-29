@@ -43,6 +43,9 @@
    <property name="text">
     <string>Add Other Items</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QFrame" name="case_information_frame">
    <property name="geometry">
@@ -126,8 +129,8 @@
   <widget class="QPushButton" name="createEntryButton">
    <property name="geometry">
     <rect>
-     <x>800</x>
-     <y>697</y>
+     <x>600</x>
+     <y>760</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -135,52 +138,222 @@
    <property name="text">
     <string>Create Entry</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>150</y>
-     <width>311</width>
-     <height>41</height>
+     <y>130</y>
+     <width>981</width>
+     <height>241</height>
     </rect>
    </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-     <underline>true</underline>
-    </font>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
    </property>
-   <property name="text">
-    <string>Community Control Terms</string>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <property name="midLineWidth">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="layoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>961</width>
+      <height>227</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="charges_gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="offense_label_1">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Offense:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fines:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Jail Days:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Finding:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fines Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="plea_label_1">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Plea:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Jail Days Suspended:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>190</y>
+     <y>390</y>
      <width>961</width>
      <height>288</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="4">
+    <item row="1" column="0" colspan="4">
      <widget class="QCheckBox" name="community_control_required_checkbox">
       <property name="text">
        <string>Defendant is required to be under the supervision of the Office of Community Control</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0" colspan="2">
+    <item row="3" column="0" colspan="2">
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>Term of Community Control:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
+    <item row="6" column="0" colspan="3">
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="text">
+       <string>Pay $150 Diversion supervision fee within 90 Days</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1" colspan="3">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Not possess/consume alcohol/drugs of abuse, associate with a person in possession/under influence, patronize establishment that serves alcohol for on-site consumption, and shall submit to alcohol or drug testing at request of probation or other law enforcement officer</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Type of Community Control:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QComboBox" name="type_of_community_control_box">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <item>
+       <property name="text">
+        <string>basic</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>intensive</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>monitored</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="4">
+     <widget class="QCheckBox" name="not_refuse_checkbox">
+      <property name="text">
+       <string>Not refuse to consent to alcohol/drug testing at request of probation or other law enforcement officer</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
      <widget class="QComboBox" name="term_of_community_control_box">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -218,56 +391,14 @@
       </item>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>Type of Community Control:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QComboBox" name="type_of_community_control_box">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <item>
-       <property name="text">
-        <string>basic</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>intensive</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>monitored</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="3" column="0" colspan="2">
+    <item row="5" column="0" colspan="2">
      <widget class="QCheckBox" name="checkBox_4">
       <property name="text">
        <string>Complete the following program:</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="0" colspan="3">
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>Pay $150 Diversion supervision fee within 90 Days</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
+    <item row="7" column="0">
      <widget class="QCheckBox" name="not_consume_checkbox">
       <property name="maximumSize">
        <size>
@@ -280,24 +411,7 @@
       </property>
      </widget>
     </item>
-    <item row="5" column="1" colspan="3">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>Not possess/consume alcohol/drugs of abuse, associate with a person in possession/under influence, patronize establishment that serves alcohol for on-site consumption, and shall submit to alcohol or drug testing at request of probation or other law enforcement officer</string>
-      </property>
-      <property name="wordWrap">
-       <bool>true</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0" colspan="4">
-     <widget class="QCheckBox" name="not_refuse_checkbox">
-      <property name="text">
-       <string>Not refuse to consent to alcohol/drug testing at request of probation or other law enforcement officer</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
+    <item row="5" column="2">
      <widget class="QComboBox" name="comboBox_2">
       <property name="enabled">
        <bool>true</bool>
@@ -327,6 +441,20 @@
       </item>
      </widget>
     </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Community Control Terms</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
@@ -335,7 +463,10 @@
   <tabstop>term_of_community_control_box</tabstop>
   <tabstop>type_of_community_control_box</tabstop>
   <tabstop>checkBox_4</tabstop>
+  <tabstop>comboBox_2</tabstop>
   <tabstop>checkBox_2</tabstop>
+  <tabstop>not_consume_checkbox</tabstop>
+  <tabstop>not_refuse_checkbox</tabstop>
   <tabstop>createEntryButton</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>

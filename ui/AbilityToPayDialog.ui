@@ -41,7 +41,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Continue</string>
+    <string>Community Control</string>
    </property>
   </widget>
   <widget class="QFrame" name="case_information_frame">
@@ -132,6 +132,9 @@
      <height>41</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="text">
     <string>Create Entry</string>
    </property>
@@ -195,6 +198,9 @@
     </item>
     <item row="1" column="0" colspan="3">
      <widget class="QCheckBox" name="pretrial_jail_days_credit_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
       </property>
@@ -205,6 +211,9 @@
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QCheckBox" name="community_service_for_fines_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Community service approved for fines and costs.</string>
       </property>
@@ -215,6 +224,9 @@
     </item>
     <item row="3" column="0" colspan="3">
      <widget class="QCheckBox" name="checkBox_4">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Fines will be suspended contingent upon Defendant showing valid operators license or driving privileges</string>
       </property>
@@ -362,6 +374,9 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_3">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Cancel</string>
       </property>

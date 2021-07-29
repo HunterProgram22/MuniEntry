@@ -43,6 +43,9 @@
    <property name="text">
     <string>Sentencing</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -56,6 +59,9 @@
    <layout class="QGridLayout" name="gridLayout_3">
     <item row="0" column="0">
      <widget class="QPushButton" name="pushButton_2">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Clear Fields</string>
       </property>
@@ -63,6 +69,9 @@
     </item>
     <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_3">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Cancel</string>
       </property>
@@ -102,6 +111,9 @@
     </item>
     <item row="1" column="0">
      <widget class="QCheckBox" name="violence_no_firearm_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="toolTip">
        <string>Defendant informed that convcition disallows Def. to ship/transport/purchase/possess firearms/ammo if victim is current/past spouse or person living as spouse, parent or child of spouse or parent or child of Defendant.</string>
       </property>
@@ -115,6 +127,9 @@
     </item>
     <item row="2" column="0">
      <widget class="QCheckBox" name="citizen_deportation_checkbox_2">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>NCIC Mental Health Form shall issue</string>
       </property>
@@ -174,6 +189,9 @@
    <property name="text">
     <string>OVI</string>
    </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
@@ -221,6 +239,9 @@
     </item>
     <item row="2" column="0" colspan="2">
      <widget class="QCheckBox" name="waived_counsel_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Defendant waived right to counsel</string>
       </property>
@@ -313,6 +334,9 @@
     </item>
     <item row="2" column="2">
      <widget class="QCheckBox" name="understood_plea_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Defendant understood the charges and effects of plea per Crim.R. 11 / Traf.R. 10</string>
       </property>
@@ -355,16 +379,13 @@
  <tabstops>
   <tabstop>case_number</tabstop>
   <tabstop>defendant_name</tabstop>
-  <tabstop>waived_counsel_checkbox</tabstop>
   <tabstop>defendant_attorney_name</tabstop>
+  <tabstop>plea_trial_date</tabstop>
   <tabstop>comboBox</tabstop>
   <tabstop>is_citizen_checkbox</tabstop>
   <tabstop>citizen_deportation_checkbox</tabstop>
-  <tabstop>violence_no_firearm_checkbox</tabstop>
-  <tabstop>citizen_deportation_checkbox_2</tabstop>
+  <tabstop>continueButton_2</tabstop>
   <tabstop>continueButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>pushButton_3</tabstop>
  </tabstops>
  <resources/>
  <connections>

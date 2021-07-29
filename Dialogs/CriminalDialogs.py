@@ -226,7 +226,7 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
-        self.set_charges_grid()
+        # self.set_charges_grid()
 
     def update_community_control(self):
         self.community_control_terms = CommunityControlTerms()

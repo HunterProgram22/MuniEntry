@@ -65,6 +65,7 @@ class Ui_SentencingDialog(object):
         self.continueButton = QtWidgets.QPushButton(SentencingDialog)
         self.continueButton.setGeometry(QtCore.QRect(761, 755, 230, 36))
         self.continueButton.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.continueButton.setAutoDefault(False)
         self.continueButton.setObjectName("continueButton")
         self.frame_2 = QtWidgets.QFrame(SentencingDialog)
         self.frame_2.setGeometry(QtCore.QRect(10, 170, 981, 331))
