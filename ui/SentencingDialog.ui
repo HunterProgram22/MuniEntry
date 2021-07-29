@@ -134,6 +134,9 @@
      <height>36</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="text">
     <string>Ability to Pay</string>
    </property>
@@ -372,6 +375,9 @@
      </item>
      <item row="0" column="4">
       <widget class="QPushButton" name="pushButton_2">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Clear Fields</string>
        </property>
@@ -386,6 +392,9 @@
      </item>
      <item row="4" column="4">
       <widget class="QPushButton" name="deleteOffenseButton">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Delete Offense</string>
        </property>
@@ -393,6 +402,9 @@
      </item>
      <item row="3" column="4">
       <widget class="QPushButton" name="amendOffenseButton">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
         <string>Amend Offense</string>
        </property>
@@ -413,6 +425,9 @@
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="1" column="0">
      <widget class="QPushButton" name="pushButton_3">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
       <property name="text">
        <string>Cancel</string>
       </property>
@@ -441,7 +456,7 @@
    <property name="midLineWidth">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -558,7 +573,12 @@
   <tabstop>fines_suspended</tabstop>
   <tabstop>jail_days</tabstop>
   <tabstop>jail_days_suspended</tabstop>
+  <tabstop>addOffenseButton</tabstop>
   <tabstop>continueButton</tabstop>
+  <tabstop>amendOffenseButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>deleteOffenseButton</tabstop>
  </tabstops>
  <resources/>
  <connections>

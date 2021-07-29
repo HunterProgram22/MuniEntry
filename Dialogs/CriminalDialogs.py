@@ -46,21 +46,9 @@ class BaseCriminalDialog(QDialog):
     def create_entry(self):
         self.doc = DocxTemplate(self.template)
         self.doc.render(self.case_information.get_case_information())
-        self.align_entry_left()
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
         os.startfile(SAVE_PATH + self.docname)
-
-    def get_context(self):
-        return {
-            "defendant_name": self.case_information.defendant_name,
-            "case_number": self.case_information.case_number,
-            "plea_trial_date": self.case_information.plea_trial_date,
-        }
-
-    def align_entry_left(self):
-        for para in self.doc.paragraphs:
-            para.alignment = WD_ALIGN_PARAGRAPH.LEFT
 
     def set_document_name(self):
         self.docname = (
@@ -238,6 +226,7 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.set_case_information_banner()
+        self.set_charges_grid()
 
     def update_community_control(self):
         self.community_control_terms = CommunityControlTerms()
