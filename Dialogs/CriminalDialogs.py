@@ -135,7 +135,7 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
             self.defendant_attorney_name.text()
         )
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
-            "MMMM dd yyyy"
+            "MMMM dd, yyyy"
         )
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
@@ -148,6 +148,10 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
             self.case_information.citizen_deportation = True
         if self.waived_counsel_checkbox.isChecked():
             self.case_information.waived_counsel = True
+        if self.understood_plea_checkbox.isChecked():
+            self.case_information.understood_plea = True
+        else:
+            self.case_information.understood_plea = False
 
 
 class OviDialog(BaseCriminalDialog, Ui_OviDialog):
@@ -235,7 +239,7 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
         self.case_information = case_information
         self.set_case_information_banner()
 
-    def add_community_control(self):
+    def update_community_control(self):
         self.community_control_terms = CommunityControlTerms()
         if self.community_control_required_checkbox.isChecked():
             self.community_control_terms.community_control_required = True
@@ -247,6 +251,10 @@ class CommunityControlDialog(BaseCriminalDialog, Ui_CommunityControlDialog):
             )
         else:
             self.community_control_terms.community_control_required = False
+        if self.not_consume_checkbox.isChecked():
+            self.community_control_terms.not_consume = True
+        if self.not_refuse_checkbox.isChecked():
+            self.community_control_terms.not_refuse = True
         self.case_information.community_control_terms = self.community_control_terms
 
 

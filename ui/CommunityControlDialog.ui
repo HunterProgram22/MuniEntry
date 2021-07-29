@@ -35,13 +35,13 @@
    <property name="geometry">
     <rect>
      <x>800</x>
-     <y>760</y>
+     <y>757</y>
      <width>191</width>
-     <height>28</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Continue</string>
+    <string>Add Other Items</string>
    </property>
   </widget>
   <widget class="QFrame" name="case_information_frame">
@@ -127,9 +127,9 @@
    <property name="geometry">
     <rect>
      <x>800</x>
-     <y>700</y>
+     <y>697</y>
      <width>191</width>
-     <height>28</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -149,6 +149,7 @@
     <font>
      <weight>75</weight>
      <bold>true</bold>
+     <underline>true</underline>
     </font>
    </property>
    <property name="text">
@@ -158,28 +159,28 @@
   <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>191</y>
-     <width>805</width>
-     <height>187</height>
+     <x>10</x>
+     <y>190</y>
+     <width>961</width>
+     <height>288</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="3">
+    <item row="0" column="0" colspan="4">
      <widget class="QCheckBox" name="community_control_required_checkbox">
       <property name="text">
        <string>Defendant is required to be under the supervision of the Office of Community Control</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="1" column="0" colspan="2">
      <widget class="QLabel" name="label_2">
       <property name="text">
        <string>Term of Community Control:</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="1" column="2">
      <widget class="QComboBox" name="term_of_community_control_box">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -217,31 +218,37 @@
       </item>
      </widget>
     </item>
-    <item row="2" column="0">
+    <item row="2" column="0" colspan="2">
      <widget class="QLabel" name="label_3">
       <property name="text">
        <string>Type of Community Control:</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="2" column="2">
      <widget class="QComboBox" name="type_of_community_control_box">
       <property name="enabled">
        <bool>true</bool>
       </property>
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
       <item>
        <property name="text">
-        <string>Basic</string>
+        <string>basic</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Intensive</string>
+        <string>intensive</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Monitored</string>
+        <string>monitored</string>
        </property>
       </item>
      </widget>
@@ -250,6 +257,43 @@
      <widget class="QCheckBox" name="checkBox_4">
       <property name="text">
        <string>Complete the following program:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="3">
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="text">
+       <string>Pay $150 Diversion supervision fee within 90 Days</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QCheckBox" name="not_consume_checkbox">
+      <property name="maximumSize">
+       <size>
+        <width>14</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1" colspan="3">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>Not possess/consume alcohol/drugs of abuse, associate with a person in possession/under influence, patronize establishment that serves alcohol for on-site consumption, and shall submit to alcohol or drug testing at request of probation or other law enforcement officer</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="0" colspan="4">
+     <widget class="QCheckBox" name="not_refuse_checkbox">
+      <property name="text">
+       <string>Not refuse to consent to alcohol/drug testing at request of probation or other law enforcement officer</string>
       </property>
      </widget>
     </item>
@@ -283,13 +327,6 @@
       </item>
      </widget>
     </item>
-    <item row="4" column="0" colspan="3">
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="text">
-       <string>Pay $150 Diversion Supervision Fee within 90 Days</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
  </widget>
@@ -298,29 +335,12 @@
   <tabstop>term_of_community_control_box</tabstop>
   <tabstop>type_of_community_control_box</tabstop>
   <tabstop>checkBox_4</tabstop>
-  <tabstop>comboBox_2</tabstop>
   <tabstop>checkBox_2</tabstop>
   <tabstop>createEntryButton</tabstop>
   <tabstop>continueButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>continueButton</sender>
-   <signal>clicked()</signal>
-   <receiver>CommunityControlDialog</receiver>
-   <slot>add_community_control()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>818</x>
-     <y>773</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>752</x>
-     <y>743</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>createEntryButton</sender>
    <signal>clicked()</signal>
@@ -337,9 +357,41 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>createEntryButton</sender>
+   <signal>pressed()</signal>
+   <receiver>CommunityControlDialog</receiver>
+   <slot>update_community_control()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>908</x>
+     <y>704</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>830</x>
+     <y>597</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>pressed()</signal>
+   <receiver>CommunityControlDialog</receiver>
+   <slot>update_community_control()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>819</x>
+     <y>768</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>742</x>
+     <y>734</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
-  <slot>add_community_control()</slot>
+  <slot>update_community_control()</slot>
  </slots>
 </ui>

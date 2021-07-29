@@ -19,6 +19,7 @@ class CaseInformation(object):
         self.ability_to_pay_details = None
         self.amend_offense_details = None
         self.is_citizen = False
+        self.understood_plea = True
         self.citizen_deportation = False
         self.total_charges = 0
 
@@ -35,6 +36,7 @@ class CaseInformation(object):
             "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,
             "is_citizen": self.is_citizen,
+            "understood_plea": self.understood_plea,
             "citizen_deportation": self.citizen_deportation,
             "ovi_details": self.ovi_details,
             "amend_offense_details": self.amend_offense_details,
@@ -63,6 +65,8 @@ class CommunityControlTerms(object):
         self.community_control_required = False
         self.term_of_community_control = 0
         self.type_of_community_control = "basic"
+        self.not_refuse = False
+        self.not_consume = False
 
 
 class OviDetails(object):
