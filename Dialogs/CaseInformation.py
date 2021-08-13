@@ -17,6 +17,7 @@ class CaseInformation(object):
         self.community_control_terms = None
         self.ovi_details = None
         self.ability_to_pay_details = None
+        self.ability_to_pay_time = None
         self.amend_offense_details = None
         self.is_citizen = False
         self.understood_plea = True
@@ -42,6 +43,7 @@ class CaseInformation(object):
             "amend_offense_details": self.amend_offense_details,
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,
+            "ability_to_pay_time": self.ability_to_pay_time,
             "community_control_terms": self.community_control_terms,
         }
         return self.formatted_case_information

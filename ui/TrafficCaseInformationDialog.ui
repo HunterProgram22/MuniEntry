@@ -512,7 +512,21 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QDateEdit" name="dateEdit"/>
+      <widget class="QDateEdit" name="dateEdit">
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>1980</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
@@ -567,7 +581,7 @@
      <x>20</x>
      <y>599</y>
      <width>951</width>
-     <height>131</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -585,36 +599,10 @@
       <x>10</x>
       <y>10</y>
       <width>731</width>
-      <height>111</height>
+      <height>64</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="2" column="0" colspan="2">
-      <widget class="QCheckBox" name="community_service_for_fines_checkbox">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>Community service approved for fines and costs.</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" colspan="3">
-      <widget class="QCheckBox" name="pretrial_jail_days_credit_checkbox">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>All pretrial jail days served by Defendant not credited to jail sentence shall be applied to fines at $50/day.</string>
-       </property>
-       <property name="checked">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_9">
        <property name="text">
@@ -623,7 +611,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="comboBox_2">
+      <widget class="QComboBox" name="ability_to_pay_box">
        <item>
         <property name="text">
          <string>forthwith</string>
@@ -644,6 +632,30 @@
          <string>within 90 days</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_18">
+       <property name="text">
+        <string>Balance of fines and costs due by:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="balance_due_date">
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2021</year>
+         <month>1</month>
+         <day>1</day>
+        </datetime>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -679,7 +691,7 @@
   <tabstop>fines_suspended</tabstop>
   <tabstop>court_costs_box</tabstop>
   <tabstop>addOffenseButton</tabstop>
-  <tabstop>comboBox_2</tabstop>
+  <tabstop>ability_to_pay_box</tabstop>
   <tabstop>plea_trial_date</tabstop>
   <tabstop>createEntryButton</tabstop>
  </tabstops>

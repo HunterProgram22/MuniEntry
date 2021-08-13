@@ -1,14 +1,10 @@
-import sys, os, pathlib
+import pathlib
 from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
-from PyQt5.uic import loadUi
 
-from PyQt5.QtCore import QDate, Qt, QDateTime
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow,QLabel
+from PyQt5.QtWidgets import QDialog, QLabel
 
 from pyuifiles.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
-
 from Dialogs.CaseInformation import CaseInformation, CriminalCharge
 from Dialogs.CriminalDialogs import BaseCriminalDialog
 
@@ -64,3 +60,5 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         released() and clicked()."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
