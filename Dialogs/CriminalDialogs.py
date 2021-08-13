@@ -12,6 +12,7 @@ from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
 from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
 from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
 from pyuifiles.case_information_dialog_ui import Ui_CaseInformationDialog
+
 from pyuifiles.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from Dialogs.CaseInformation import (
     CaseInformation,
@@ -67,9 +68,10 @@ class BaseCriminalDialog(QDialog):
     def set_case_information_banner(self):
         self.defendant_name_label.setText(self.case_information.defendant_name)
         self.case_number_label.setText(self.case_information.case_number)
-        self.defendant_attorney_name_label.setText(
-            "Attorney: " + self.case_information.defendant_attorney_name
-        )
+        if self.case_information.defendant_attorney_name is not None:
+            self.defendant_attorney_name_label.setText(
+                "Attorney: " + self.case_information.defendant_attorney_name
+            )
 
     def set_charges_grid(self):
         """TODO: the criminal charge is a list in case information so need to
@@ -100,6 +102,9 @@ class BaseCriminalDialog(QDialog):
                 charge,
             )
             total_charges -= 1
+
+    def update_case_information(self):
+        pass
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):

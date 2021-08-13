@@ -26,7 +26,7 @@
    <string>MuniEntry</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>31</x>
@@ -64,9 +64,9 @@
       </spacer>
      </item>
      <item row="0" column="4">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="MinorTrafficEntryButton">
        <property name="text">
-        <string>Transfer Entry</string>
+        <string>Minor Traffic Entry</string>
        </property>
       </widget>
      </item>
@@ -92,7 +92,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -187,6 +187,22 @@
     <hint type="destinationlabel">
      <x>216</x>
      <y>46</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>MinorTrafficEntryButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pushButtonDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>723</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>748</x>
+     <y>40</y>
     </hint>
    </hints>
   </connection>
