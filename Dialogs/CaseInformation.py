@@ -55,6 +55,7 @@ class CriminalCharge(object):
         self.finding = None
         self.fines_amount = None
         self.fines_suspended = None
+        self.court_costs = None
         self.jail_days = None
         self.jail_days_suspended = None
         self.days_to_pay = None
