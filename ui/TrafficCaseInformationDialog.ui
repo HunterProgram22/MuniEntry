@@ -35,9 +35,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>190</y>
+     <y>230</y>
      <width>951</width>
-     <height>161</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -49,25 +49,130 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
       <width>931</width>
-      <height>141</height>
+      <height>171</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="2">
-      <widget class="QLabel" name="label_6">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="fines_amount"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_15">
        <property name="text">
-        <string>Statute / Degree:</string>
+        <string>Offense:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Plea:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="offense_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Speeding - School Zone</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Speeding &gt; 25 mph</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Speeding &gt; 35 mph</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Driving in Marked Lanes</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="court_costs_box">
+       <property name="editable">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Yes</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>No</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>Finding:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="plea_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Not Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>No Contest</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>No Plea - Dismissed</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Court Costs:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QComboBox" name="degree_choice_box">
+      <widget class="QComboBox" name="statute_choice_box">
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -108,49 +213,13 @@
        </item>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>Plea:</string>
-       </property>
-      </widget>
+     <item row="2" column="3">
+      <widget class="QLineEdit" name="fines_suspended"/>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="plea_choice_box">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Not Guilty</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>No Contest</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Guilty</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>No Plea - Dismissed</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="label_12">
+     <item row="2" column="2">
+      <widget class="QLabel" name="label_7">
        <property name="text">
-        <string>Finding:</string>
+        <string>Fines Suspended:</string>
        </property>
       </widget>
      </item>
@@ -186,51 +255,57 @@
        </item>
       </widget>
      </item>
-     <item row="1" column="5">
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Statute / Degree:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Fines Amount:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="4">
       <widget class="QPushButton" name="addOffenseButton">
        <property name="text">
-        <string>Add Another Offense</string>
+        <string>Add Offense</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>Offense:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="offense_choice_box">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
+     <item row="0" column="4">
+      <widget class="QComboBox" name="degree_choice_box">
        <item>
         <property name="text">
-         <string/>
+         <string>MM</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>OVI - R.C. 4511.19(A)(1)(a)</string>
+         <string>M1</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>OVI - R.C. 4511.19(A)(1)(b)</string>
+         <string>M2</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Failure to Control - R.C. 4511.202</string>
+         <string>M3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M4</string>
         </property>
        </item>
       </widget>
      </item>
-     <item row="2" column="3">
-      <widget class="QLineEdit" name="fines_suspended"/>
-     </item>
-     <item row="2" column="5">
+     <item row="2" column="4">
       <widget class="QPushButton" name="deleteOffenseButton">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -240,61 +315,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="fines_amount"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>Fines Amount:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Fines Suspended:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Court Costs:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="court_costs_box">
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>Yes</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>No</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="3" column="5">
+     <item row="3" column="4">
       <widget class="QPushButton" name="pushButton_4">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -311,9 +332,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>360</y>
+     <y>440</y>
      <width>951</width>
-     <height>221</height>
+     <height>281</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -331,7 +352,7 @@
       <x>10</x>
       <y>10</y>
       <width>931</width>
-      <height>201</height>
+      <height>260</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="charges_gridLayout">
@@ -351,8 +372,8 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_17">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_19">
        <property name="font">
         <font>
          <weight>75</weight>
@@ -360,11 +381,11 @@
         </font>
        </property>
        <property name="text">
-        <string>Fines:</string>
+        <string>Statute:</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="label_10">
        <property name="font">
         <font>
@@ -377,20 +398,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_14">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Finding:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="plea_label_1">
        <property name="font">
         <font>
@@ -403,7 +411,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="label_16">
        <property name="font">
         <font>
@@ -416,6 +424,45 @@
        </property>
       </widget>
      </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_14">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Finding:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_17">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fines:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_20">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Degree:</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -425,7 +472,7 @@
      <x>20</x>
      <y>10</y>
      <width>951</width>
-     <height>161</height>
+     <height>211</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -437,16 +484,44 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>781</width>
-      <height>141</height>
+      <x>11</x>
+      <y>11</y>
+      <width>931</width>
+      <height>194</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="caseinformation_gridLayout">
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Date:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QDateEdit" name="plea_trial_date">
+       <property name="minimumDate">
+        <date>
+         <year>2021</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+       <property name="date">
+        <date>
+         <year>2021</year>
+         <month>1</month>
+         <day>1</day>
+        </date>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
@@ -464,16 +539,6 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="defendant_name">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
@@ -481,8 +546,8 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="defendant_attorney_name">
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="defendant_name">
        <property name="maximumSize">
         <size>
          <width>500</width>
@@ -498,6 +563,16 @@
        </property>
        <property name="text">
         <string>Operator License Number:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="defendant_attorney_name">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -528,60 +603,26 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
+     <item row="4" column="2">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="text">
-        <string>Date:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QDateEdit" name="plea_trial_date">
-       <property name="minimumDate">
-        <date>
-         <year>2021</year>
-         <month>1</month>
-         <day>1</day>
-        </date>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-       <property name="date">
-        <date>
-         <year>2021</year>
-         <month>1</month>
-         <day>1</day>
-        </date>
+        <string>Clear Fields</string>
        </property>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>802</x>
-      <y>122</y>
-      <width>139</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-    <property name="text">
-     <string>Clear Fields</string>
-    </property>
    </widget>
   </widget>
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>599</y>
+     <y>730</y>
      <width>951</width>
-     <height>81</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -599,7 +640,7 @@
       <x>10</x>
       <y>10</y>
       <width>731</width>
-      <height>64</height>
+      <height>74</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -665,7 +706,7 @@
    <property name="geometry">
     <rect>
      <x>780</x>
-     <y>760</y>
+     <y>830</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -684,13 +725,12 @@
   <tabstop>defendant_attorney_name</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
-  <tabstop>degree_choice_box</tabstop>
+  <tabstop>statute_choice_box</tabstop>
   <tabstop>plea_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
   <tabstop>court_costs_box</tabstop>
-  <tabstop>addOffenseButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>plea_trial_date</tabstop>
   <tabstop>createEntryButton</tabstop>
@@ -704,12 +744,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>845</x>
-     <y>161</y>
+     <x>809</x>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>452</x>
-     <y>82</y>
+     <x>732</x>
+     <y>131</y>
     </hint>
    </hints>
   </connection>
@@ -720,12 +760,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>845</x>
-     <y>147</y>
+     <x>809</x>
+     <y>193</y>
     </hint>
     <hint type="destinationlabel">
-     <x>721</x>
-     <y>124</y>
+     <x>779</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -736,12 +776,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>845</x>
-     <y>161</y>
+     <x>809</x>
+     <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>697</x>
-     <y>54</y>
+     <x>779</x>
+     <y>93</y>
     </hint>
    </hints>
   </connection>
@@ -752,8 +792,8 @@
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>821</x>
-     <y>247</y>
+     <x>958</x>
+     <y>341</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -769,7 +809,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>908</x>
-     <y>778</y>
+     <y>838</y>
     </hint>
     <hint type="destinationlabel">
      <x>927</x>
@@ -785,7 +825,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>837</x>
-     <y>778</y>
+     <y>838</y>
     </hint>
     <hint type="destinationlabel">
      <x>763</x>
@@ -801,11 +841,123 @@
    <hints>
     <hint type="sourcelabel">
      <x>877</x>
-     <y>762</y>
+     <y>822</y>
     </hint>
     <hint type="destinationlabel">
      <x>742</x>
      <y>740</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>offense_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>829</x>
+     <y>330</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>272</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>plea_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>820</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_amount</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>820</x>
+     <y>327</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>401</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>statute_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>825</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>803</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>finding_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>835</x>
+     <y>331</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>774</x>
+     <y>330</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>822</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>803</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>offense_choice_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>set_statute()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>275</x>
+     <y>271</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>591</x>
+     <y>226</y>
     </hint>
    </hints>
   </connection>
@@ -821,5 +973,6 @@
   <slot>proceed_to_sentencing()</slot>
   <slot>proceed_to_ovi()</slot>
   <slot>add_offense()</slot>
+  <slot>set_statute()</slot>
  </slots>
 </ui>

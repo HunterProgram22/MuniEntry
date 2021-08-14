@@ -52,6 +52,7 @@ class CaseInformation(object):
 class CriminalCharge(object):
     def __init__(self):
         self.offense = None
+        self.statute = None
         self.degree = None
         self.plea = None
         self.finding = None

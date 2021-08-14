@@ -24,6 +24,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
     def add_offense(self):
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.plea = self.plea_choice_box.currentText()
         self.criminal_charge.finding = self.finding_choice_box.currentText()
@@ -39,19 +40,25 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
             QLabel(self.criminal_charge.offense), 0, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.plea), 1, self.offense_count
+            QLabel(self.criminal_charge.statute), 1, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.finding), 2, self.offense_count
+            QLabel(self.criminal_charge.degree), 2, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.fines_amount), 3, self.offense_count
+            QLabel(self.criminal_charge.plea), 3, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.fines_suspended), 4, self.offense_count
+            QLabel(self.criminal_charge.finding), 4, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.court_costs), 5, self.offense_count
+            QLabel(self.criminal_charge.fines_amount), 5, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.fines_suspended), 6, self.offense_count
+        )
+        self.charges_gridLayout.addWidget(
+            QLabel(self.criminal_charge.court_costs), 7, self.offense_count
         )
         self.case_information.total_charges = self.offense_count
 
@@ -62,3 +69,14 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
         self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+
+    def set_statute(self):
+        data = {"":"",
+                "Speeding - School Zone":"R.C. 4511.21(B)(1)",
+                "Speeding > 25 mph":"R.C. 4511.21(B)(2)",
+                "Speeding > 35 mph": "R.C. 4511.21(B)(3)",
+                "Driving in Marked Lanes": "R.C. 4511.33"
+                }
+        key = self.offense_choice_box.currentText()
+        value = data[key]
+        self.statute_choice_box.setCurrentText(value)

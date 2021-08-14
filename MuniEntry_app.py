@@ -25,10 +25,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def pushButtonDialog(self):
         sending_button = self.sender()
-        print(sending_button)
-        print(sending_button.objectName())
         dialog = Window.DIALOG_DICT[sending_button.objectName()]()
-        print(dialog)
         dialog.exec()
 
 
