@@ -3,6 +3,7 @@ from docx import Document
 from docxtpl import DocxTemplate
 
 from PyQt5.QtWidgets import QDialog, QLabel
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from pyuifiles.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
 from Dialogs.CaseInformation import CaseInformation, CriminalCharge
@@ -20,6 +21,9 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.offense_count = 0
         self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
         self.template_name = "Traffic Judgment Entry"
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setDatabaseName(r'C:\Users\Justin Kudela\AppData\Local\Programs\Python\Python39\MuniEntry\charges.sqlite')
+
 
     def add_offense(self):
         self.criminal_charge = CriminalCharge()
@@ -71,12 +75,27 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
 
     def set_statute(self):
-        data = {"":"",
+        """TODO: This is far from optimal as it queries the entire database each time
+        a charge is selected. Need to clean up."""
+        self.database.open()
+        key = self.offense_choice_box.currentText()
+        query = QSqlQuery()
+        query.prepare("SELECT * FROM charges")
+        print(query.exec())
+        while query.next():
+            name = query.value(1)
+            statute = query.value(2)
+            print(name, statute)
+            if name == key:
+                self.statute_choice_box.setCurrentText(statute)
+        #print(query.result())
+        #print(query.value(1))
+        """data = {"":"",
                 "Speeding - School Zone":"R.C. 4511.21(B)(1)",
                 "Speeding > 25 mph":"R.C. 4511.21(B)(2)",
                 "Speeding > 35 mph": "R.C. 4511.21(B)(3)",
                 "Driving in Marked Lanes": "R.C. 4511.33"
                 }
-        key = self.offense_choice_box.currentText()
-        value = data[key]
-        self.statute_choice_box.setCurrentText(value)
+        value = data[key]"""
+
+        self.database.close()
