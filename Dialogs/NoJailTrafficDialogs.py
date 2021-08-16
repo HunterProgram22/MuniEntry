@@ -81,21 +81,14 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare("SELECT * FROM charges")
-        print(query.exec())
+        #print(query.exec())
+        """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
             name = query.value(1)
             statute = query.value(2)
-            print(name, statute)
+            degree = query.value(3)
+            #print(name, statute, degree)
             if name == key:
                 self.statute_choice_box.setCurrentText(statute)
-        #print(query.result())
-        #print(query.value(1))
-        """data = {"":"",
-                "Speeding - School Zone":"R.C. 4511.21(B)(1)",
-                "Speeding > 25 mph":"R.C. 4511.21(B)(2)",
-                "Speeding > 35 mph": "R.C. 4511.21(B)(3)",
-                "Driving in Marked Lanes": "R.C. 4511.33"
-                }
-        value = data[key]"""
-
+                self.degree_choice_box.setCurrentText(degree)
         self.database.close()

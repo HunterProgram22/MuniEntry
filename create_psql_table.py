@@ -35,6 +35,8 @@ insertDataQuery.prepare(
     """
 )
 
+#TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
+#https://python-forum.io/thread-11659.html
 # Sample data
 data = [
     ("Speeding - School Zone", "R.C. 4511.21(B)(1)", "MM"),
