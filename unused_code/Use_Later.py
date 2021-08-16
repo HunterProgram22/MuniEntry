@@ -1,3 +1,13 @@
+        self.charge_list = [
+            "Speeding - School Zone",
+            "Speeding > 25 mph",
+            "Speeding > 35 mph",
+            "Driving in Marked Lanes",
+            "Driving Under Suspension",
+        ]
+
+
+
 def get_dialog_fields(self):
     self.fields_dict = {
         "defendant_name": self.defendant_name.text(),

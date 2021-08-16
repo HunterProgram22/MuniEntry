@@ -173,6 +173,9 @@
      </item>
      <item row="0" column="3">
       <widget class="QComboBox" name="statute_choice_box">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -278,6 +281,9 @@
      </item>
      <item row="0" column="4">
       <widget class="QComboBox" name="degree_choice_box">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <item>
         <property name="text">
          <string>MM</string>
@@ -484,7 +490,7 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -748,8 +754,8 @@
      <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>732</x>
-     <y>131</y>
+     <x>746</x>
+     <y>129</y>
     </hint>
    </hints>
   </connection>
@@ -764,8 +770,8 @@
      <y>193</y>
     </hint>
     <hint type="destinationlabel">
-     <x>779</x>
-     <y>171</y>
+     <x>746</x>
+     <y>167</y>
     </hint>
    </hints>
   </connection>
@@ -780,8 +786,8 @@
      <y>207</y>
     </hint>
     <hint type="destinationlabel">
-     <x>779</x>
-     <y>93</y>
+     <x>746</x>
+     <y>91</y>
     </hint>
    </hints>
   </connection>
@@ -792,8 +798,8 @@
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>958</x>
-     <y>341</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -856,8 +862,8 @@
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>829</x>
-     <y>330</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
      <x>401</x>
@@ -872,12 +878,12 @@
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>820</x>
-     <y>329</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>401</x>
-     <y>319</y>
+     <x>426</x>
+     <y>315</y>
     </hint>
    </hints>
   </connection>
@@ -888,12 +894,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>820</x>
-     <y>327</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>401</x>
-     <y>378</y>
+     <x>426</x>
+     <y>357</y>
     </hint>
    </hints>
   </connection>
@@ -904,12 +910,12 @@
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>825</x>
-     <y>332</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>803</x>
-     <y>276</y>
+     <x>847</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -920,12 +926,12 @@
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>835</x>
-     <y>331</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>774</x>
-     <y>330</y>
+     <x>847</x>
+     <y>315</y>
     </hint>
    </hints>
   </connection>
@@ -936,12 +942,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>822</x>
-     <y>334</y>
+     <x>959</x>
+     <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>803</x>
-     <y>378</y>
+     <x>847</x>
+     <y>357</y>
     </hint>
    </hints>
   </connection>
