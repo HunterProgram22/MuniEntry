@@ -11,10 +11,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-
 class Ui_TrafficCaseInformationDialog(object):
     def setupUi(self, TrafficCaseInformationDialog):
-        self.list = ['Test1', 'test2', 'ouch']
         TrafficCaseInformationDialog.setObjectName("TrafficCaseInformationDialog")
         TrafficCaseInformationDialog.setWindowModality(QtCore.Qt.NonModal)
         TrafficCaseInformationDialog.resize(1000, 867)
@@ -48,12 +46,12 @@ class Ui_TrafficCaseInformationDialog(object):
         self.offense_choice_box = QtWidgets.QComboBox(self.layoutWidget)
         self.offense_choice_box.setEditable(True)
         self.offense_choice_box.setObjectName("offense_choice_box")
-        self.offense_choice_box.addItems(self.list)
-        #self.offense_choice_box.setItemText(0, "")
-        #self.offense_choice_box.addItem("")
-        #self.offense_choice_box.addItem("")
-        #self.offense_choice_box.addItem("")
-        #self.offense_choice_box.addItem("")
+        self.offense_choice_box.addItem("")
+        self.offense_choice_box.setItemText(0, "")
+        self.offense_choice_box.addItem("")
+        self.offense_choice_box.addItem("")
+        self.offense_choice_box.addItem("")
+        self.offense_choice_box.addItem("")
         self.gridLayout.addWidget(self.offense_choice_box, 0, 1, 1, 1)
         self.court_costs_box = QtWidgets.QComboBox(self.layoutWidget)
         self.court_costs_box.setEditable(False)

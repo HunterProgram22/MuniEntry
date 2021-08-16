@@ -22,8 +22,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
         self.template_name = "Traffic Judgment Entry"
         self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(r'C:\Users\Justin Kudela\AppData\Local\Programs\Python\Python39\MuniEntry\charges.sqlite')
-
+        self.database.setDatabaseName(PATH + "\\charges.sqlite")
 
     def add_offense(self):
         self.criminal_charge = CriminalCharge()
@@ -71,8 +70,12 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         released() and clicked()."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
-        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
+            "MMMM dd, yyyy"
+        )
+        self.case_information.ability_to_pay_time = (
+            self.ability_to_pay_box.currentText()
+        )
 
     def set_statute(self):
         """TODO: This is far from optimal as it queries the entire database each time
@@ -81,14 +84,15 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare("SELECT * FROM charges")
-        #print(query.exec())
+        print(query.exec())
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
             name = query.value(1)
             statute = query.value(2)
             degree = query.value(3)
-            #print(name, statute, degree)
+            print(name, statute, degree)
             if name == key:
                 self.statute_choice_box.setCurrentText(statute)
                 self.degree_choice_box.setCurrentText(degree)
+                break
         self.database.close()
