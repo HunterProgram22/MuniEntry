@@ -84,7 +84,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare("SELECT * FROM charges")
-        print(query.exec())
+        query.exec()
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
             name = query.value(1)

@@ -13,6 +13,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_TrafficCaseInformationDialog(object):
     def setupUi(self, TrafficCaseInformationDialog):
+        self.charge_list = [
+            "Speeding - School Zone",
+            "Speeding > 25 mph",
+            "Speeding > 35 mph",
+            "Driving in Marked Lanes",
+            "Driving Under Suspension",
+        ]
         TrafficCaseInformationDialog.setObjectName("TrafficCaseInformationDialog")
         TrafficCaseInformationDialog.setWindowModality(QtCore.Qt.NonModal)
         TrafficCaseInformationDialog.resize(1000, 867)
@@ -46,12 +53,7 @@ class Ui_TrafficCaseInformationDialog(object):
         self.offense_choice_box = QtWidgets.QComboBox(self.layoutWidget)
         self.offense_choice_box.setEditable(True)
         self.offense_choice_box.setObjectName("offense_choice_box")
-        self.offense_choice_box.addItem("")
-        self.offense_choice_box.setItemText(0, "")
-        self.offense_choice_box.addItem("")
-        self.offense_choice_box.addItem("")
-        self.offense_choice_box.addItem("")
-        self.offense_choice_box.addItem("")
+        self.offense_choice_box.addItems(self.charge_list)
         self.gridLayout.addWidget(self.offense_choice_box, 0, 1, 1, 1)
         self.court_costs_box = QtWidgets.QComboBox(self.layoutWidget)
         self.court_costs_box.setEditable(False)
@@ -245,7 +247,9 @@ class Ui_TrafficCaseInformationDialog(object):
         self.label_5.setObjectName("label_5")
         self.gridLayout_3.addWidget(self.label_5, 4, 0, 1, 1)
         self.dateEdit = QtWidgets.QDateEdit(self.widget)
-        self.dateEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(1980, 1, 1), QtCore.QTime(0, 0, 0)))
+        self.dateEdit.setDateTime(
+            QtCore.QDateTime(QtCore.QDate(1980, 1, 1), QtCore.QTime(0, 0, 0))
+        )
         self.dateEdit.setCalendarPopup(True)
         self.dateEdit.setObjectName("dateEdit")
         self.gridLayout_3.addWidget(self.dateEdit, 4, 1, 1, 1)
@@ -279,7 +283,9 @@ class Ui_TrafficCaseInformationDialog(object):
         self.label_18.setObjectName("label_18")
         self.gridLayout_2.addWidget(self.label_18, 1, 0, 1, 1)
         self.balance_due_date = QtWidgets.QDateEdit(self.layoutWidget_3)
-        self.balance_due_date.setDateTime(QtCore.QDateTime(QtCore.QDate(2021, 1, 1), QtCore.QTime(0, 0, 0)))
+        self.balance_due_date.setDateTime(
+            QtCore.QDateTime(QtCore.QDate(2021, 1, 1), QtCore.QTime(0, 0, 0))
+        )
         self.balance_due_date.setCalendarPopup(True)
         self.balance_due_date.setObjectName("balance_due_date")
         self.gridLayout_2.addWidget(self.balance_due_date, 1, 1, 1, 1)
@@ -293,87 +299,201 @@ class Ui_TrafficCaseInformationDialog(object):
         self.pushButton_2.clicked.connect(self.defendant_attorney_name.clear)
         self.pushButton_2.clicked.connect(self.case_number.clear)
         self.addOffenseButton.clicked.connect(TrafficCaseInformationDialog.add_offense)
-        self.createEntryButton.released.connect(TrafficCaseInformationDialog.close_window)
-        self.createEntryButton.clicked.connect(TrafficCaseInformationDialog.create_entry)
-        self.createEntryButton.pressed.connect(TrafficCaseInformationDialog.update_case_information)
+        self.createEntryButton.released.connect(
+            TrafficCaseInformationDialog.close_window
+        )
+        self.createEntryButton.clicked.connect(
+            TrafficCaseInformationDialog.create_entry
+        )
+        self.createEntryButton.pressed.connect(
+            TrafficCaseInformationDialog.update_case_information
+        )
         self.addOffenseButton.clicked.connect(self.offense_choice_box.clearEditText)
         self.addOffenseButton.clicked.connect(self.plea_choice_box.clearEditText)
         self.addOffenseButton.clicked.connect(self.fines_amount.clear)
         self.addOffenseButton.clicked.connect(self.statute_choice_box.clearEditText)
         self.addOffenseButton.clicked.connect(self.finding_choice_box.clearEditText)
         self.addOffenseButton.clicked.connect(self.fines_suspended.clear)
-        self.offense_choice_box.currentTextChanged['QString'].connect(TrafficCaseInformationDialog.set_statute)
+        self.offense_choice_box.currentTextChanged["QString"].connect(
+            TrafficCaseInformationDialog.set_statute
+        )
         QtCore.QMetaObject.connectSlotsByName(TrafficCaseInformationDialog)
         TrafficCaseInformationDialog.setTabOrder(self.case_number, self.defendant_name)
-        TrafficCaseInformationDialog.setTabOrder(self.defendant_name, self.defendant_attorney_name)
-        TrafficCaseInformationDialog.setTabOrder(self.defendant_attorney_name, self.dateEdit)
+        TrafficCaseInformationDialog.setTabOrder(
+            self.defendant_name, self.defendant_attorney_name
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.defendant_attorney_name, self.dateEdit
+        )
         TrafficCaseInformationDialog.setTabOrder(self.dateEdit, self.offense_choice_box)
-        TrafficCaseInformationDialog.setTabOrder(self.offense_choice_box, self.statute_choice_box)
-        TrafficCaseInformationDialog.setTabOrder(self.statute_choice_box, self.plea_choice_box)
-        TrafficCaseInformationDialog.setTabOrder(self.plea_choice_box, self.finding_choice_box)
-        TrafficCaseInformationDialog.setTabOrder(self.finding_choice_box, self.fines_amount)
-        TrafficCaseInformationDialog.setTabOrder(self.fines_amount, self.fines_suspended)
-        TrafficCaseInformationDialog.setTabOrder(self.fines_suspended, self.court_costs_box)
-        TrafficCaseInformationDialog.setTabOrder(self.court_costs_box, self.ability_to_pay_box)
-        TrafficCaseInformationDialog.setTabOrder(self.ability_to_pay_box, self.plea_trial_date)
-        TrafficCaseInformationDialog.setTabOrder(self.plea_trial_date, self.createEntryButton)
+        TrafficCaseInformationDialog.setTabOrder(
+            self.offense_choice_box, self.statute_choice_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.statute_choice_box, self.plea_choice_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.plea_choice_box, self.finding_choice_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.finding_choice_box, self.fines_amount
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.fines_amount, self.fines_suspended
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.fines_suspended, self.court_costs_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.court_costs_box, self.ability_to_pay_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.ability_to_pay_box, self.plea_trial_date
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.plea_trial_date, self.createEntryButton
+        )
 
     def retranslateUi(self, TrafficCaseInformationDialog):
         _translate = QtCore.QCoreApplication.translate
-        TrafficCaseInformationDialog.setWindowTitle(_translate("TrafficCaseInformationDialog", "Case Information"))
+        TrafficCaseInformationDialog.setWindowTitle(
+            _translate("TrafficCaseInformationDialog", "Case Information")
+        )
         self.label_15.setText(_translate("TrafficCaseInformationDialog", "Offense:"))
         self.label_13.setText(_translate("TrafficCaseInformationDialog", "Plea:"))
-        self.offense_choice_box.setItemText(1, _translate("TrafficCaseInformationDialog", "Speeding - School Zone"))
-        self.offense_choice_box.setItemText(2, _translate("TrafficCaseInformationDialog", "Speeding > 25 mph"))
-        self.offense_choice_box.setItemText(3, _translate("TrafficCaseInformationDialog", "Speeding > 35 mph"))
-        self.offense_choice_box.setItemText(4, _translate("TrafficCaseInformationDialog", "Driving in Marked Lanes"))
-        self.court_costs_box.setItemText(0, _translate("TrafficCaseInformationDialog", "Yes"))
-        self.court_costs_box.setItemText(1, _translate("TrafficCaseInformationDialog", "No"))
+        self.court_costs_box.setItemText(
+            0, _translate("TrafficCaseInformationDialog", "Yes")
+        )
+        self.court_costs_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "No")
+        )
         self.label_12.setText(_translate("TrafficCaseInformationDialog", "Finding:"))
-        self.plea_choice_box.setItemText(1, _translate("TrafficCaseInformationDialog", "Not Guilty"))
-        self.plea_choice_box.setItemText(2, _translate("TrafficCaseInformationDialog", "No Contest"))
-        self.plea_choice_box.setItemText(3, _translate("TrafficCaseInformationDialog", "Guilty"))
-        self.plea_choice_box.setItemText(4, _translate("TrafficCaseInformationDialog", "No Plea - Dismissed"))
+        self.plea_choice_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "Not Guilty")
+        )
+        self.plea_choice_box.setItemText(
+            2, _translate("TrafficCaseInformationDialog", "No Contest")
+        )
+        self.plea_choice_box.setItemText(
+            3, _translate("TrafficCaseInformationDialog", "Guilty")
+        )
+        self.plea_choice_box.setItemText(
+            4, _translate("TrafficCaseInformationDialog", "No Plea - Dismissed")
+        )
         self.label_8.setText(_translate("TrafficCaseInformationDialog", "Court Costs:"))
-        self.statute_choice_box.setItemText(1, _translate("TrafficCaseInformationDialog", "M1"))
-        self.statute_choice_box.setItemText(2, _translate("TrafficCaseInformationDialog", "M2"))
-        self.statute_choice_box.setItemText(3, _translate("TrafficCaseInformationDialog", "M3"))
-        self.statute_choice_box.setItemText(4, _translate("TrafficCaseInformationDialog", "M4"))
-        self.statute_choice_box.setItemText(5, _translate("TrafficCaseInformationDialog", "MM"))
-        self.statute_choice_box.setItemText(6, _translate("TrafficCaseInformationDialog", "UCM"))
-        self.label_7.setText(_translate("TrafficCaseInformationDialog", "Fines Suspended:"))
-        self.finding_choice_box.setItemText(1, _translate("TrafficCaseInformationDialog", "Guilty"))
-        self.finding_choice_box.setItemText(2, _translate("TrafficCaseInformationDialog", "Not Guilty"))
-        self.finding_choice_box.setItemText(3, _translate("TrafficCaseInformationDialog", "Dismissed"))
-        self.finding_choice_box.setItemText(4, _translate("TrafficCaseInformationDialog", "Dismissed with conditions"))
-        self.label_6.setText(_translate("TrafficCaseInformationDialog", "Statute / Degree:"))
-        self.label_11.setText(_translate("TrafficCaseInformationDialog", "Fines Amount:"))
-        self.addOffenseButton.setText(_translate("TrafficCaseInformationDialog", "Add Offense"))
-        self.degree_choice_box.setItemText(0, _translate("TrafficCaseInformationDialog", "MM"))
-        self.degree_choice_box.setItemText(1, _translate("TrafficCaseInformationDialog", "M1"))
-        self.degree_choice_box.setItemText(2, _translate("TrafficCaseInformationDialog", "M2"))
-        self.degree_choice_box.setItemText(3, _translate("TrafficCaseInformationDialog", "M3"))
-        self.degree_choice_box.setItemText(4, _translate("TrafficCaseInformationDialog", "M4"))
-        self.deleteOffenseButton.setText(_translate("TrafficCaseInformationDialog", "Delete Offense"))
-        self.pushButton_4.setText(_translate("TrafficCaseInformationDialog", "Clear Fields"))
-        self.offense_label_1.setText(_translate("TrafficCaseInformationDialog", "Offense:"))
+        self.statute_choice_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "M1")
+        )
+        self.statute_choice_box.setItemText(
+            2, _translate("TrafficCaseInformationDialog", "M2")
+        )
+        self.statute_choice_box.setItemText(
+            3, _translate("TrafficCaseInformationDialog", "M3")
+        )
+        self.statute_choice_box.setItemText(
+            4, _translate("TrafficCaseInformationDialog", "M4")
+        )
+        self.statute_choice_box.setItemText(
+            5, _translate("TrafficCaseInformationDialog", "MM")
+        )
+        self.statute_choice_box.setItemText(
+            6, _translate("TrafficCaseInformationDialog", "UCM")
+        )
+        self.label_7.setText(
+            _translate("TrafficCaseInformationDialog", "Fines Suspended:")
+        )
+        self.finding_choice_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "Guilty")
+        )
+        self.finding_choice_box.setItemText(
+            2, _translate("TrafficCaseInformationDialog", "Not Guilty")
+        )
+        self.finding_choice_box.setItemText(
+            3, _translate("TrafficCaseInformationDialog", "Dismissed")
+        )
+        self.finding_choice_box.setItemText(
+            4, _translate("TrafficCaseInformationDialog", "Dismissed with conditions")
+        )
+        self.label_6.setText(
+            _translate("TrafficCaseInformationDialog", "Statute / Degree:")
+        )
+        self.label_11.setText(
+            _translate("TrafficCaseInformationDialog", "Fines Amount:")
+        )
+        self.addOffenseButton.setText(
+            _translate("TrafficCaseInformationDialog", "Add Offense")
+        )
+        self.degree_choice_box.setItemText(
+            0, _translate("TrafficCaseInformationDialog", "MM")
+        )
+        self.degree_choice_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "M1")
+        )
+        self.degree_choice_box.setItemText(
+            2, _translate("TrafficCaseInformationDialog", "M2")
+        )
+        self.degree_choice_box.setItemText(
+            3, _translate("TrafficCaseInformationDialog", "M3")
+        )
+        self.degree_choice_box.setItemText(
+            4, _translate("TrafficCaseInformationDialog", "M4")
+        )
+        self.deleteOffenseButton.setText(
+            _translate("TrafficCaseInformationDialog", "Delete Offense")
+        )
+        self.pushButton_4.setText(
+            _translate("TrafficCaseInformationDialog", "Clear Fields")
+        )
+        self.offense_label_1.setText(
+            _translate("TrafficCaseInformationDialog", "Offense:")
+        )
         self.label_19.setText(_translate("TrafficCaseInformationDialog", "Statute:"))
-        self.label_10.setText(_translate("TrafficCaseInformationDialog", "Fines Suspended:"))
+        self.label_10.setText(
+            _translate("TrafficCaseInformationDialog", "Fines Suspended:")
+        )
         self.plea_label_1.setText(_translate("TrafficCaseInformationDialog", "Plea:"))
-        self.label_16.setText(_translate("TrafficCaseInformationDialog", "Court Costs:"))
+        self.label_16.setText(
+            _translate("TrafficCaseInformationDialog", "Court Costs:")
+        )
         self.label_14.setText(_translate("TrafficCaseInformationDialog", "Finding:"))
         self.label_17.setText(_translate("TrafficCaseInformationDialog", "Fines:"))
         self.label_20.setText(_translate("TrafficCaseInformationDialog", "Degree:"))
         self.label_3.setText(_translate("TrafficCaseInformationDialog", "Date:"))
         self.label.setText(_translate("TrafficCaseInformationDialog", "Case Number:"))
-        self.label_2.setText(_translate("TrafficCaseInformationDialog", "Defendant Name: "))
-        self.label_4.setText(_translate("TrafficCaseInformationDialog", "Operator License Number:"))
-        self.label_5.setText(_translate("TrafficCaseInformationDialog", "Date of Birth:"))
-        self.pushButton_2.setText(_translate("TrafficCaseInformationDialog", "Clear Fields"))
-        self.label_9.setText(_translate("TrafficCaseInformationDialog", "Defendant shall pay fines and costs:"))
-        self.ability_to_pay_box.setItemText(0, _translate("TrafficCaseInformationDialog", "forthwith"))
-        self.ability_to_pay_box.setItemText(1, _translate("TrafficCaseInformationDialog", "within 30 days"))
-        self.ability_to_pay_box.setItemText(2, _translate("TrafficCaseInformationDialog", "within 60 days"))
-        self.ability_to_pay_box.setItemText(3, _translate("TrafficCaseInformationDialog", "within 90 days"))
-        self.label_18.setText(_translate("TrafficCaseInformationDialog", "Balance of fines and costs due by:"))
-        self.createEntryButton.setText(_translate("TrafficCaseInformationDialog", "Create Entry"))
+        self.label_2.setText(
+            _translate("TrafficCaseInformationDialog", "Defendant Name: ")
+        )
+        self.label_4.setText(
+            _translate("TrafficCaseInformationDialog", "Operator License Number:")
+        )
+        self.label_5.setText(
+            _translate("TrafficCaseInformationDialog", "Date of Birth:")
+        )
+        self.pushButton_2.setText(
+            _translate("TrafficCaseInformationDialog", "Clear Fields")
+        )
+        self.label_9.setText(
+            _translate(
+                "TrafficCaseInformationDialog", "Defendant shall pay fines and costs:"
+            )
+        )
+        self.ability_to_pay_box.setItemText(
+            0, _translate("TrafficCaseInformationDialog", "forthwith")
+        )
+        self.ability_to_pay_box.setItemText(
+            1, _translate("TrafficCaseInformationDialog", "within 30 days")
+        )
+        self.ability_to_pay_box.setItemText(
+            2, _translate("TrafficCaseInformationDialog", "within 60 days")
+        )
+        self.ability_to_pay_box.setItemText(
+            3, _translate("TrafficCaseInformationDialog", "within 90 days")
+        )
+        self.label_18.setText(
+            _translate(
+                "TrafficCaseInformationDialog", "Balance of fines and costs due by:"
+            )
+        )
+        self.createEntryButton.setText(
+            _translate("TrafficCaseInformationDialog", "Create Entry")
+        )
