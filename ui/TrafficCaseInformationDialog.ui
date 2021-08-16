@@ -34,9 +34,9 @@
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>230</y>
-     <width>951</width>
+     <width>961</width>
      <height>191</height>
     </rect>
    </property>
@@ -54,7 +54,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>931</width>
+      <width>941</width>
       <height>171</height>
      </rect>
     </property>
@@ -81,31 +81,6 @@
        <property name="editable">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Speeding - School Zone</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Speeding &gt; 25 mph</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Speeding &gt; 35 mph</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Driving in Marked Lanes</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="3" column="1">
@@ -135,7 +110,7 @@
      <item row="1" column="1">
       <widget class="QComboBox" name="plea_choice_box">
        <property name="editable">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <item>
         <property name="text">
@@ -179,41 +154,6 @@
        <property name="editable">
         <bool>true</bool>
        </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>MM</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>UCM</string>
-        </property>
-       </item>
       </widget>
      </item>
      <item row="2" column="3">
@@ -229,7 +169,7 @@
      <item row="1" column="3">
       <widget class="QComboBox" name="finding_choice_box">
        <property name="editable">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <item>
         <property name="text">
@@ -309,6 +249,11 @@
          <string>M4</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>UCM</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="2" column="4">
@@ -337,9 +282,9 @@
   <widget class="QFrame" name="frame_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>440</y>
-     <width>951</width>
+     <width>961</width>
      <height>281</height>
     </rect>
    </property>
@@ -357,7 +302,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>931</width>
+      <width>941</width>
       <height>260</height>
      </rect>
     </property>
@@ -475,9 +420,9 @@
   <widget class="QFrame" name="frame_3">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>10</y>
-     <width>951</width>
+     <width>961</width>
      <height>211</height>
     </rect>
    </property>
@@ -490,16 +435,16 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>11</x>
-      <y>11</y>
-      <width>931</width>
-      <height>194</height>
+      <x>10</x>
+      <y>8</y>
+      <width>941</width>
+      <height>191</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_3">
+    <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,2,0">
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -625,9 +570,9 @@
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>730</y>
-     <width>951</width>
+     <width>961</width>
      <height>91</height>
     </rect>
    </property>
@@ -750,12 +695,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>809</x>
-     <y>207</y>
+     <x>803</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
-     <x>746</x>
-     <y>129</y>
+     <x>740</x>
+     <y>123</y>
     </hint>
    </hints>
   </connection>
@@ -770,8 +715,8 @@
      <y>193</y>
     </hint>
     <hint type="destinationlabel">
-     <x>746</x>
-     <y>167</y>
+     <x>740</x>
+     <y>160</y>
     </hint>
    </hints>
   </connection>
@@ -782,12 +727,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>809</x>
-     <y>207</y>
+     <x>803</x>
+     <y>199</y>
     </hint>
     <hint type="destinationlabel">
-     <x>746</x>
-     <y>91</y>
+     <x>740</x>
+     <y>86</y>
     </hint>
    </hints>
   </connection>
@@ -882,7 +827,7 @@
      <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>426</x>
+     <x>416</x>
      <y>315</y>
     </hint>
    </hints>
@@ -898,7 +843,7 @@
      <y>316</y>
     </hint>
     <hint type="destinationlabel">
-     <x>426</x>
+     <x>416</x>
      <y>357</y>
     </hint>
    </hints>
@@ -967,6 +912,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>ability_to_pay_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>set_pay_date()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>472</x>
+     <y>753</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>377</x>
+     <y>835</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -980,5 +941,6 @@
   <slot>proceed_to_ovi()</slot>
   <slot>add_offense()</slot>
   <slot>set_statute()</slot>
+  <slot>set_pay_date()</slot>
  </slots>
 </ui>

@@ -2,6 +2,7 @@ import pathlib
 from docx import Document
 from docxtpl import DocxTemplate
 
+from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
@@ -96,3 +97,18 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
                 self.degree_choice_box.setCurrentText(degree)
                 break
         self.database.close()
+
+    def set_pay_date(self):
+        """Function to set the pay date based on the amount of time given the defendant
+        to pay his costs and fines."""
+        print("test")
+        if self.ability_to_pay_box.currentText() == "forthwith":
+            print("test forth")
+            self.balance_due_date.setDate(QDate.currentDate())
+        elif self.ability_to_pay_box.currentText() == "within 30 days":
+            print("test 30")
+            self.balance_due_date.setDate(QDate.currentDate().addDays(30))
+        elif self.ability_to_pay_box.currentText() == "within 60":
+            self.balance_due_date.setDateTime.currentDate().addDays(60)
+        elif self.ability_to_pay_box.currentText() == "within 90":
+            self.balance_due_date.setDateTime.currentDate().addDays(90)
