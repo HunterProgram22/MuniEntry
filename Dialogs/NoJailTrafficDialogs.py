@@ -101,14 +101,11 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
     def set_pay_date(self):
         """Function to set the pay date based on the amount of time given the defendant
         to pay his costs and fines."""
-        print("test")
         if self.ability_to_pay_box.currentText() == "forthwith":
-            print("test forth")
             self.balance_due_date.setDate(QDate.currentDate())
         elif self.ability_to_pay_box.currentText() == "within 30 days":
-            print("test 30")
             self.balance_due_date.setDate(QDate.currentDate().addDays(30))
         elif self.ability_to_pay_box.currentText() == "within 60":
-            self.balance_due_date.setDateTime.currentDate().addDays(60)
+            self.balance_due_date.setDate(QDate.currentDate().addDays(60))
         elif self.ability_to_pay_box.currentText() == "within 90":
-            self.balance_due_date.setDateTime.currentDate().addDays(90)
+            self.balance_due_date.setDate(QDate.currentDate().addDays(90))
