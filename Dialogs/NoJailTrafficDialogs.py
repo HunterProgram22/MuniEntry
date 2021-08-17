@@ -24,6 +24,10 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.template_name = "Traffic Judgment Entry"
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(PATH + "\\charges.sqlite")
+        self.database.open()
+
+    def closeEvent(self, event):
+        self.database.close()
 
     def add_offense(self):
         self.criminal_charge = CriminalCharge()
@@ -84,7 +88,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
     def set_statute(self):
         """TODO: This is far from optimal as it queries the entire database each time
         a charge is selected. Need to clean up."""
-        self.database.open()
+
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare("SELECT * FROM charges")
@@ -99,7 +103,6 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
                 self.statute_choice_box.setCurrentText(statute)
                 self.degree_choice_box.setCurrentText(degree)
                 break
-        self.database.close()
 
     def set_pay_date(self):
         """Function to set the pay date based on the amount of time given the defendant
@@ -108,7 +111,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
             self.balance_due_date.setDate(QDate.currentDate())
         elif self.ability_to_pay_box.currentText() == "within 30 days":
             self.balance_due_date.setDate(QDate.currentDate().addDays(30))
-        elif self.ability_to_pay_box.currentText() == "within 60":
+        elif self.ability_to_pay_box.currentText() == "within 60 days":
             self.balance_due_date.setDate(QDate.currentDate().addDays(60))
-        elif self.ability_to_pay_box.currentText() == "within 90":
+        elif self.ability_to_pay_box.currentText() == "within 90 days":
             self.balance_due_date.setDate(QDate.currentDate().addDays(90))

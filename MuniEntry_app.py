@@ -1,7 +1,6 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
-from PyQt5.uic import loadUi
 from PyQt5.QtCore import pyqtSlot
 
 from pyuifiles.main_window_ui import Ui_MainWindow
@@ -12,7 +11,7 @@ from Dialogs.NoJailTrafficDialogs import TrafficCaseInformationDialog
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
         "FinalJudgmentEntryButton": CaseInformationDialog,
-        "MinorTrafficEntryButton": TrafficCaseInformationDialog,
+        "MinorMisdemeanorTrafficButton": TrafficCaseInformationDialog,
     }
 
     def __init__(self, parent=None):
