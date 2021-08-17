@@ -77,6 +77,9 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.case_information.ability_to_pay_time = (
             self.ability_to_pay_box.currentText()
         )
+        self.case_information.balance_due_date = self.balance_due_date.date().toString(
+            "MMMM dd, yyyy"
+        )
 
     def set_statute(self):
         """TODO: This is far from optimal as it queries the entire database each time

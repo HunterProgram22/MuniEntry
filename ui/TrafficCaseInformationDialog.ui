@@ -9,14 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>867</height>
+    <width>983</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
+    <width>500</width>
+    <height>350</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
     <width>1000</width>
-    <height>800</height>
+    <height>700</height>
    </size>
   </property>
   <property name="font">
@@ -35,9 +41,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>210</y>
      <width>961</width>
-     <height>191</height>
+     <height>141</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -55,7 +61,7 @@
       <x>10</x>
       <y>10</y>
       <width>941</width>
-      <height>171</height>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -151,6 +157,9 @@
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -224,6 +233,9 @@
        <property name="enabled">
         <bool>true</bool>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <item>
         <property name="text">
          <string>MM</string>
@@ -283,9 +295,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>440</y>
+     <y>360</y>
      <width>961</width>
-     <height>281</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -303,7 +315,7 @@
       <x>10</x>
       <y>10</y>
       <width>941</width>
-      <height>260</height>
+      <height>221</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="charges_gridLayout">
@@ -423,7 +435,7 @@
      <x>10</x>
      <y>10</y>
      <width>961</width>
-     <height>211</height>
+     <height>191</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -435,16 +447,32 @@
    <property name="lineWidth">
     <number>2</number>
    </property>
+   <widget class="QPushButton" name="pushButton_2">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>147</y>
+      <width>111</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="text">
+     <string>Clear Fields</string>
+    </property>
+   </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>8</y>
-      <width>941</width>
-      <height>191</height>
+      <x>11</x>
+      <y>9</y>
+      <width>821</width>
+      <height>166</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_3" columnstretch="0,2,0">
+    <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -454,6 +482,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QDateEdit" name="plea_trial_date">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
        <property name="minimumDate">
         <date>
          <year>2021</year>
@@ -554,16 +585,6 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="2">
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="text">
-        <string>Clear Fields</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
   </widget>
@@ -571,9 +592,9 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>730</y>
-     <width>961</width>
-     <height>91</height>
+     <y>610</y>
+     <width>751</width>
+     <height>81</height>
     </rect>
    </property>
    <property name="frameShape">
@@ -591,17 +612,10 @@
       <x>10</x>
       <y>10</y>
       <width>731</width>
-      <height>74</height>
+      <height>64</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Defendant shall pay fines and costs:</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="ability_to_pay_box">
        <item>
@@ -626,6 +640,13 @@
        </item>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Defendant shall pay fines and costs:</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_18">
        <property name="text">
@@ -634,21 +655,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QDateEdit" name="balance_due_date">
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2021</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
+      <widget class="QDateEdit" name="balance_due_date"/>
      </item>
     </layout>
    </widget>
@@ -656,8 +663,8 @@
   <widget class="QPushButton" name="createEntryButton">
    <property name="geometry">
     <rect>
-     <x>780</x>
-     <y>830</y>
+     <x>770</x>
+     <y>660</y>
      <width>191</width>
      <height>31</height>
     </rect>
@@ -676,15 +683,18 @@
   <tabstop>defendant_attorney_name</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
-  <tabstop>statute_choice_box</tabstop>
   <tabstop>plea_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
   <tabstop>court_costs_box</tabstop>
+  <tabstop>addOffenseButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
-  <tabstop>plea_trial_date</tabstop>
+  <tabstop>balance_due_date</tabstop>
   <tabstop>createEntryButton</tabstop>
+  <tabstop>statute_choice_box</tabstop>
+  <tabstop>degree_choice_box</tabstop>
+  <tabstop>plea_trial_date</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -695,12 +705,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>803</x>
-     <y>199</y>
+     <x>960</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>740</x>
-     <y>123</y>
+     <x>840</x>
+     <y>115</y>
     </hint>
    </hints>
   </connection>
@@ -711,12 +721,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>809</x>
-     <y>193</y>
+     <x>960</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>740</x>
-     <y>160</y>
+     <x>840</x>
+     <y>149</y>
     </hint>
    </hints>
   </connection>
@@ -727,12 +737,12 @@
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>803</x>
-     <y>199</y>
+     <x>960</x>
+     <y>184</y>
     </hint>
     <hint type="destinationlabel">
-     <x>740</x>
-     <y>86</y>
+     <x>840</x>
+     <y>81</y>
     </hint>
    </hints>
   </connection>
@@ -744,7 +754,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -759,12 +769,12 @@
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>908</x>
-     <y>838</y>
+     <x>898</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
      <x>927</x>
-     <y>787</y>
+     <y>699</y>
     </hint>
    </hints>
   </connection>
@@ -775,12 +785,12 @@
    <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>837</x>
-     <y>838</y>
+     <x>827</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
      <x>763</x>
-     <y>784</y>
+     <y>699</y>
     </hint>
    </hints>
   </connection>
@@ -791,12 +801,12 @@
    <slot>update_case_information()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>877</x>
-     <y>822</y>
+     <x>867</x>
+     <y>660</y>
     </hint>
     <hint type="destinationlabel">
      <x>742</x>
-     <y>740</y>
+     <y>699</y>
     </hint>
    </hints>
   </connection>
@@ -808,11 +818,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
-     <x>401</x>
-     <y>272</y>
+     <x>421</x>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -824,11 +834,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
-     <x>416</x>
-     <y>315</y>
+     <x>421</x>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -840,11 +850,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
-     <x>416</x>
-     <y>357</y>
+     <x>421</x>
+     <y>308</y>
     </hint>
    </hints>
   </connection>
@@ -856,11 +866,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>847</x>
-     <y>274</y>
+     <y>246</y>
     </hint>
    </hints>
   </connection>
@@ -872,11 +882,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>847</x>
-     <y>315</y>
+     <y>277</y>
     </hint>
    </hints>
   </connection>
@@ -888,11 +898,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>959</x>
-     <y>316</y>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>847</x>
-     <y>357</y>
+     <y>308</y>
     </hint>
    </hints>
   </connection>
@@ -903,8 +913,8 @@
    <slot>set_statute()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>275</x>
-     <y>271</y>
+     <x>380</x>
+     <y>246</y>
     </hint>
     <hint type="destinationlabel">
      <x>591</x>
@@ -919,12 +929,108 @@
    <slot>set_pay_date()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>472</x>
-     <y>753</y>
+     <x>749</x>
+     <y>634</y>
     </hint>
     <hint type="destinationlabel">
      <x>377</x>
-     <y>835</y>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_amount</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>863</x>
+     <y>335</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>330</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>plea_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>902</x>
+     <y>326</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>352</x>
+     <y>270</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>offense_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>881</x>
+     <y>332</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>274</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>892</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>671</x>
+     <y>304</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>finding_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>880</x>
+     <y>337</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>603</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>statute_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>921</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>664</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>

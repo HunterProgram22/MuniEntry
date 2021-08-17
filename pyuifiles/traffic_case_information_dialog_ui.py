@@ -33,21 +33,22 @@ class Ui_TrafficCaseInformationDialog(object):
         self.offense_list, self.statute_list = create_offense_list()
         TrafficCaseInformationDialog.setObjectName("TrafficCaseInformationDialog")
         TrafficCaseInformationDialog.setWindowModality(QtCore.Qt.NonModal)
-        TrafficCaseInformationDialog.resize(1000, 867)
-        TrafficCaseInformationDialog.setMinimumSize(QtCore.QSize(1000, 800))
+        TrafficCaseInformationDialog.resize(983, 700)
+        TrafficCaseInformationDialog.setMinimumSize(QtCore.QSize(500, 350))
+        TrafficCaseInformationDialog.setMaximumSize(QtCore.QSize(1000, 700))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(12)
         TrafficCaseInformationDialog.setFont(font)
         TrafficCaseInformationDialog.setToolTip("")
         self.frame = QtWidgets.QFrame(TrafficCaseInformationDialog)
-        self.frame.setGeometry(QtCore.QRect(10, 230, 961, 191))
+        self.frame.setGeometry(QtCore.QRect(10, 210, 961, 141))
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame.setLineWidth(2)
         self.frame.setObjectName("frame")
         self.layoutWidget = QtWidgets.QWidget(self.frame)
-        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 941, 171))
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 941, 121))
         self.layoutWidget.setObjectName("layoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -90,6 +91,7 @@ class Ui_TrafficCaseInformationDialog(object):
         self.gridLayout.addWidget(self.label_8, 3, 0, 1, 1)
         self.statute_choice_box = QtWidgets.QComboBox(self.layoutWidget)
         self.statute_choice_box.setEnabled(True)
+        self.statute_choice_box.setFocusPolicy(QtCore.Qt.NoFocus)
         self.statute_choice_box.setEditable(True)
         self.statute_choice_box.setObjectName("statute_choice_box")
         self.statute_choice_box.addItems(self.statute_list)
@@ -121,6 +123,7 @@ class Ui_TrafficCaseInformationDialog(object):
         self.gridLayout.addWidget(self.addOffenseButton, 1, 4, 1, 1)
         self.degree_choice_box = QtWidgets.QComboBox(self.layoutWidget)
         self.degree_choice_box.setEnabled(True)
+        self.degree_choice_box.setFocusPolicy(QtCore.Qt.NoFocus)
         self.degree_choice_box.setObjectName("degree_choice_box")
         self.degree_choice_box.addItem("")
         self.degree_choice_box.addItem("")
@@ -138,13 +141,13 @@ class Ui_TrafficCaseInformationDialog(object):
         self.pushButton_4.setObjectName("pushButton_4")
         self.gridLayout.addWidget(self.pushButton_4, 3, 4, 1, 1)
         self.frame_2 = QtWidgets.QFrame(TrafficCaseInformationDialog)
-        self.frame_2.setGeometry(QtCore.QRect(10, 440, 961, 281))
+        self.frame_2.setGeometry(QtCore.QRect(10, 360, 961, 241))
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame_2.setLineWidth(2)
         self.frame_2.setObjectName("frame_2")
         self.layoutWidget_2 = QtWidgets.QWidget(self.frame_2)
-        self.layoutWidget_2.setGeometry(QtCore.QRect(10, 10, 941, 260))
+        self.layoutWidget_2.setGeometry(QtCore.QRect(10, 10, 941, 221))
         self.layoutWidget_2.setObjectName("layoutWidget_2")
         self.charges_gridLayout = QtWidgets.QGridLayout(self.layoutWidget_2)
         self.charges_gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -207,13 +210,17 @@ class Ui_TrafficCaseInformationDialog(object):
         self.label_20.setObjectName("label_20")
         self.charges_gridLayout.addWidget(self.label_20, 2, 0, 1, 1)
         self.frame_3 = QtWidgets.QFrame(TrafficCaseInformationDialog)
-        self.frame_3.setGeometry(QtCore.QRect(10, 10, 961, 211))
+        self.frame_3.setGeometry(QtCore.QRect(10, 10, 961, 191))
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame_3.setLineWidth(2)
         self.frame_3.setObjectName("frame_3")
+        self.pushButton_2 = QtWidgets.QPushButton(self.frame_3)
+        self.pushButton_2.setGeometry(QtCore.QRect(840, 147, 111, 28))
+        self.pushButton_2.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pushButton_2.setObjectName("pushButton_2")
         self.widget = QtWidgets.QWidget(self.frame_3)
-        self.widget.setGeometry(QtCore.QRect(10, 8, 941, 191))
+        self.widget.setGeometry(QtCore.QRect(11, 9, 821, 166))
         self.widget.setObjectName("widget")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.widget)
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
@@ -222,9 +229,10 @@ class Ui_TrafficCaseInformationDialog(object):
         self.label_3.setObjectName("label_3")
         self.gridLayout_3.addWidget(self.label_3, 0, 0, 1, 1)
         self.plea_trial_date = QtWidgets.QDateEdit(self.widget)
+        self.plea_trial_date.setFocusPolicy(QtCore.Qt.NoFocus)
         self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setCalendarPopup(True)
-        self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.plea_trial_date.setObjectName("plea_trial_date")
         self.gridLayout_3.addWidget(self.plea_trial_date, 0, 1, 1, 1)
         self.label = QtWidgets.QLabel(self.widget)
@@ -260,26 +268,18 @@ class Ui_TrafficCaseInformationDialog(object):
         self.dateEdit.setCalendarPopup(True)
         self.dateEdit.setObjectName("dateEdit")
         self.gridLayout_3.addWidget(self.dateEdit, 4, 1, 1, 1)
-        self.pushButton_2 = QtWidgets.QPushButton(self.widget)
-        self.pushButton_2.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.gridLayout_3.addWidget(self.pushButton_2, 4, 2, 1, 1)
-        self.gridLayout_3.setColumnStretch(1, 2)
         self.frame_4 = QtWidgets.QFrame(TrafficCaseInformationDialog)
-        self.frame_4.setGeometry(QtCore.QRect(10, 730, 961, 91))
+        self.frame_4.setGeometry(QtCore.QRect(10, 610, 751, 81))
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Plain)
         self.frame_4.setLineWidth(2)
         self.frame_4.setObjectName("frame_4")
         self.layoutWidget_3 = QtWidgets.QWidget(self.frame_4)
-        self.layoutWidget_3.setGeometry(QtCore.QRect(10, 10, 731, 74))
+        self.layoutWidget_3.setGeometry(QtCore.QRect(10, 10, 731, 64))
         self.layoutWidget_3.setObjectName("layoutWidget_3")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.layoutWidget_3)
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.label_9 = QtWidgets.QLabel(self.layoutWidget_3)
-        self.label_9.setObjectName("label_9")
-        self.gridLayout_2.addWidget(self.label_9, 0, 0, 1, 1)
         self.ability_to_pay_box = QtWidgets.QComboBox(self.layoutWidget_3)
         self.ability_to_pay_box.setObjectName("ability_to_pay_box")
         self.ability_to_pay_box.addItem("")
@@ -287,18 +287,18 @@ class Ui_TrafficCaseInformationDialog(object):
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.gridLayout_2.addWidget(self.ability_to_pay_box, 0, 1, 1, 1)
+        self.label_9 = QtWidgets.QLabel(self.layoutWidget_3)
+        self.label_9.setObjectName("label_9")
+        self.gridLayout_2.addWidget(self.label_9, 0, 0, 1, 1)
         self.label_18 = QtWidgets.QLabel(self.layoutWidget_3)
         self.label_18.setObjectName("label_18")
         self.gridLayout_2.addWidget(self.label_18, 1, 0, 1, 1)
         self.balance_due_date = QtWidgets.QDateEdit(self.layoutWidget_3)
-        self.balance_due_date.setDateTime(
-            QtCore.QDateTime(QtCore.QDate(2021, 1, 1), QtCore.QTime(0, 0, 0))
-        )
-        self.balance_due_date.setCalendarPopup(True)
         self.balance_due_date.setObjectName("balance_due_date")
+        self.balance_due_date.setDate(QtCore.QDate.currentDate())
         self.gridLayout_2.addWidget(self.balance_due_date, 1, 1, 1, 1)
         self.createEntryButton = QtWidgets.QPushButton(TrafficCaseInformationDialog)
-        self.createEntryButton.setGeometry(QtCore.QRect(780, 830, 191, 31))
+        self.createEntryButton.setGeometry(QtCore.QRect(770, 660, 191, 31))
         self.createEntryButton.setAutoDefault(False)
         self.createEntryButton.setObjectName("createEntryButton")
 
@@ -328,6 +328,12 @@ class Ui_TrafficCaseInformationDialog(object):
         self.ability_to_pay_box.currentTextChanged["QString"].connect(
             TrafficCaseInformationDialog.set_pay_date
         )
+        self.pushButton_4.clicked.connect(self.fines_amount.clear)
+        self.pushButton_4.clicked.connect(self.plea_choice_box.clearEditText)
+        self.pushButton_4.clicked.connect(self.offense_choice_box.clearEditText)
+        self.pushButton_4.clicked.connect(self.fines_suspended.clear)
+        self.pushButton_4.clicked.connect(self.finding_choice_box.clearEditText)
+        self.pushButton_4.clicked.connect(self.statute_choice_box.clearEditText)
         QtCore.QMetaObject.connectSlotsByName(TrafficCaseInformationDialog)
         TrafficCaseInformationDialog.setTabOrder(self.case_number, self.defendant_name)
         TrafficCaseInformationDialog.setTabOrder(
@@ -338,10 +344,7 @@ class Ui_TrafficCaseInformationDialog(object):
         )
         TrafficCaseInformationDialog.setTabOrder(self.dateEdit, self.offense_choice_box)
         TrafficCaseInformationDialog.setTabOrder(
-            self.offense_choice_box, self.statute_choice_box
-        )
-        TrafficCaseInformationDialog.setTabOrder(
-            self.statute_choice_box, self.plea_choice_box
+            self.offense_choice_box, self.plea_choice_box
         )
         TrafficCaseInformationDialog.setTabOrder(
             self.plea_choice_box, self.finding_choice_box
@@ -356,13 +359,25 @@ class Ui_TrafficCaseInformationDialog(object):
             self.fines_suspended, self.court_costs_box
         )
         TrafficCaseInformationDialog.setTabOrder(
-            self.court_costs_box, self.ability_to_pay_box
+            self.court_costs_box, self.addOffenseButton
         )
         TrafficCaseInformationDialog.setTabOrder(
-            self.ability_to_pay_box, self.plea_trial_date
+            self.addOffenseButton, self.ability_to_pay_box
         )
         TrafficCaseInformationDialog.setTabOrder(
-            self.plea_trial_date, self.createEntryButton
+            self.ability_to_pay_box, self.balance_due_date
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.balance_due_date, self.createEntryButton
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.createEntryButton, self.statute_choice_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.statute_choice_box, self.degree_choice_box
+        )
+        TrafficCaseInformationDialog.setTabOrder(
+            self.degree_choice_box, self.plea_trial_date
         )
 
     def retranslateUi(self, TrafficCaseInformationDialog):
@@ -454,6 +469,9 @@ class Ui_TrafficCaseInformationDialog(object):
         self.label_14.setText(_translate("TrafficCaseInformationDialog", "Finding:"))
         self.label_17.setText(_translate("TrafficCaseInformationDialog", "Fines:"))
         self.label_20.setText(_translate("TrafficCaseInformationDialog", "Degree:"))
+        self.pushButton_2.setText(
+            _translate("TrafficCaseInformationDialog", "Clear Fields")
+        )
         self.label_3.setText(_translate("TrafficCaseInformationDialog", "Date:"))
         self.label.setText(_translate("TrafficCaseInformationDialog", "Case Number:"))
         self.label_2.setText(
@@ -464,14 +482,6 @@ class Ui_TrafficCaseInformationDialog(object):
         )
         self.label_5.setText(
             _translate("TrafficCaseInformationDialog", "Date of Birth:")
-        )
-        self.pushButton_2.setText(
-            _translate("TrafficCaseInformationDialog", "Clear Fields")
-        )
-        self.label_9.setText(
-            _translate(
-                "TrafficCaseInformationDialog", "Defendant shall pay fines and costs:"
-            )
         )
         self.ability_to_pay_box.setItemText(
             0, _translate("TrafficCaseInformationDialog", "forthwith")
@@ -484,6 +494,11 @@ class Ui_TrafficCaseInformationDialog(object):
         )
         self.ability_to_pay_box.setItemText(
             3, _translate("TrafficCaseInformationDialog", "within 90 days")
+        )
+        self.label_9.setText(
+            _translate(
+                "TrafficCaseInformationDialog", "Defendant shall pay fines and costs:"
+            )
         )
         self.label_18.setText(
             _translate(

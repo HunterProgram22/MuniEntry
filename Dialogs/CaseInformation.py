@@ -45,6 +45,7 @@ class CaseInformation(object):
             "ability_to_pay_details": self.ability_to_pay_details,
             "ability_to_pay_time": self.ability_to_pay_time,
             "community_control_terms": self.community_control_terms,
+            "balance_due_date": self.balance_due_date,
         }
         return self.formatted_case_information
 
