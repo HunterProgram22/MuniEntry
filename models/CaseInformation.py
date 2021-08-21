@@ -1,4 +1,4 @@
-# File with classes for storing case information to be used in Dialogs
+# File with classes for storing case information to be used in controllers
 
 
 class CaseInformation(object):

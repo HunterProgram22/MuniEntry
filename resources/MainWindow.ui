@@ -450,7 +450,7 @@
     <property name="title">
      <string>Settings</string>
     </property>
-    <addaction name="actionDialogs"/>
+    <addaction name="actioncontrollers"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -502,9 +502,9 @@
     <string>Jury Instructions</string>
    </property>
   </action>
-  <action name="actionDialogs">
+  <action name="actioncontrollers">
    <property name="text">
-    <string>Dialogs</string>
+    <string>controllers</string>
    </property>
   </action>
   <action name="actionTemplates">

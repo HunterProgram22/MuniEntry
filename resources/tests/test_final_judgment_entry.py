@@ -11,7 +11,7 @@ from time import sleep
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
-from Dialogs.CriminalDialogs import (
+from controllers.Criminalcontrollers import (
     CaseInformationDialog,
     SentencingDialog,
     OviDialog,

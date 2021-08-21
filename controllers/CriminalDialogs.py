@@ -7,14 +7,14 @@ from PyQt5.uic import loadUi
 from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QLabel
 
-from pyuifiles.ovi_dialog_ui import Ui_OviDialog
-from pyuifiles.sentencing_dialog_ui import Ui_SentencingDialog
-from pyuifiles.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
-from pyuifiles.community_control_dialog_ui import Ui_CommunityControlDialog
-from pyuifiles.case_information_dialog_ui import Ui_CaseInformationDialog
+from views.ovi_dialog_ui import Ui_OviDialog
+from views.sentencing_dialog_ui import Ui_SentencingDialog
+from views.ability_to_pay_dialog_ui import Ui_AbilityToPayDialog
+from views.community_control_dialog_ui import Ui_CommunityControlDialog
+from views.case_information_dialog_ui import Ui_CaseInformationDialog
 
-from pyuifiles.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from Dialogs.CaseInformation import (
+from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
+from models.CaseInformation import (
     CaseInformation,
     CriminalCharge,
     CommunityControlTerms,
@@ -24,16 +24,16 @@ from Dialogs.CaseInformation import (
 )
 
 PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\Templates\\"
-SAVE_PATH = PATH + "\\Saved\\"
+TEMPLATE_PATH = PATH + "\\resources\\Templates\\"
+SAVE_PATH = PATH + "\\resources\\Saved\\"
 
-"""TODO: Need to add maximize and minimize buttons for Dialogs."""
+"""TODO: Need to add maximize and minimize buttons for controllers."""
 
 
 class BaseCriminalDialog(QDialog):
     """This class is a base class to provide methods that are used by some or all
-    class dialogs that are used in the application. This class is never instantiated
-    as its own dialog, but the init contains the setup for all inherited class dialogs."""
+    class controllers that are used in the application. This class is never instantiated
+    as its own dialog, but the init contains the setup for all inherited class controllers."""
 
     def __init__(self, parent=None):
         super().__init__(parent)

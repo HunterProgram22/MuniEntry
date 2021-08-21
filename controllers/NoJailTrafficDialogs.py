@@ -6,9 +6,9 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from pyuifiles.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
-from Dialogs.CaseInformation import CaseInformation, CriminalCharge
-from Dialogs.CriminalDialogs import BaseCriminalDialog
+from views.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
+from models.CaseInformation import CaseInformation, CriminalCharge
+from controllers.CriminalDialogs import BaseCriminalDialog
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\Templates\\"

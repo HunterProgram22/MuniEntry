@@ -3,9 +3,9 @@ import sys
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
 from PyQt5.QtCore import pyqtSlot
 
-from pyuifiles.main_window_ui import Ui_MainWindow
-from Dialogs.CriminalDialogs import CaseInformationDialog
-from Dialogs.NoJailTrafficDialogs import TrafficCaseInformationDialog
+from views.main_window_ui import Ui_MainWindow
+from controllers.CriminalDialogs import CaseInformationDialog
+from controllers.NoJailTrafficDialogs import TrafficCaseInformationDialog
 
 
 class Window(QMainWindow, Ui_MainWindow):
