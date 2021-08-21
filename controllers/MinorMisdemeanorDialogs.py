@@ -11,9 +11,11 @@ from models.CaseInformation import CaseInformation, CriminalCharge
 from controllers.CriminalDialogs import BaseCriminalDialog
 
 PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\Templates\\"
-SAVE_PATH = PATH + "\\Saved\\"
+TEMPLATE_PATH = PATH + "\\resources\\templates\\"
+SAVE_PATH = PATH + "\\resources\\saved\\"
+DB_PATH = PATH + "\\resources\\db\\"
 
+print(PATH)
 
 class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformationDialog):
     def __init__(self, parent=None):
@@ -23,7 +25,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
         self.template_name = "Traffic Judgment Entry"
         self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(PATH + "\\charges.sqlite")
+        self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
         self.database.open()
 
     def closeEvent(self, event):
@@ -90,9 +92,10 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         a charge is selected. Need to clean up."""
 
         key = self.offense_choice_box.currentText()
+        print(key)
         query = QSqlQuery()
         query.prepare("SELECT * FROM charges")
-        query.exec()
+        print(query.exec())
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
             name = query.value(1)
