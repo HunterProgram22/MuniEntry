@@ -38,8 +38,6 @@ class BaseCriminalDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.template = TEMPLATE_PATH + "Judgment_Entry_Green_Sheet.docx"
-        self.template_name = "Judgment Entry"
 
     def close_window(self):
         self.close()
