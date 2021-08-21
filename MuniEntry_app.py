@@ -5,12 +5,12 @@ from PyQt5.QtCore import pyqtSlot
 
 from views.main_window_ui import Ui_MainWindow
 from controllers.CriminalDialogs import CaseInformationDialog
-from controllers.NoJailTrafficDialogs import TrafficCaseInformationDialog
+from controllers.MinorMisdemeanorDialogs import TrafficCaseInformationDialog
 
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
-        "FinalJudgmentEntryButton": CaseInformationDialog,
+        "GreenSheetButton": CaseInformationDialog,
         "MinorMisdemeanorTrafficButton": TrafficCaseInformationDialog,
     }
 

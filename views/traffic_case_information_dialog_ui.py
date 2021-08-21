@@ -12,10 +12,12 @@ import sqlite3
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 PATH = str(pathlib.Path().absolute())
+DB_PATH = PATH + "\\resources\\db\\"
 
+print(PATH)
 
 def create_offense_list():
-    conn = sqlite3.connect(PATH + "\\charges.sqlite")
+    conn = sqlite3.connect(DB_PATH + "charges.sqlite")
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT offense, statute FROM charges")
     offense_list = cursor.fetchall()

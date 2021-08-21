@@ -163,7 +163,7 @@
      <rect>
       <x>20</x>
       <y>400</y>
-      <width>121</width>
+      <width>171</width>
       <height>31</height>
      </rect>
     </property>
@@ -270,13 +270,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>21</x>
       <y>21</y>
       <width>961</width>
-      <height>28</height>
+      <height>33</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -336,18 +336,18 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>140</y>
-      <width>641</width>
+      <width>961</width>
       <height>68</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="1">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton">
+      <widget class="QPushButton" name="GreenSheetButton">
        <property name="minimumSize">
         <size>
          <width>120</width>
@@ -433,7 +433,7 @@
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -516,7 +516,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>FinalJudgmentEntryButton</sender>
+   <sender>GreenSheetButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>pushButtonDialog()</slot>
