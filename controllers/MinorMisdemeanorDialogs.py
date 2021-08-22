@@ -2,6 +2,7 @@ import pathlib
 from docx import Document
 from docxtpl import DocxTemplate
 
+from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
@@ -9,6 +10,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from views.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
 from controllers.CriminalDialogs import BaseCriminalDialog
+from controllers.DatabaseCreation import create_offense_list
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
@@ -26,6 +28,11 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
         self.database.open()
+        self.offense_list, self.statute_list = create_offense_list()
+        self.statute_choice_box.addItems(self.statute_list)
+        self.offense_choice_box.addItems(self.offense_list)
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
     def closeEvent(self, event):
         self.database.close()
