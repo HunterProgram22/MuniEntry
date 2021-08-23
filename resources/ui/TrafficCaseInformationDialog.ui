@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>905</height>
+    <height>750</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -22,7 +22,7 @@
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>905</height>
+    <height>750</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -126,9 +126,9 @@
    <font>
     <family>Palatino Linotype</family>
     <pointsize>11</pointsize>
-    <weight>9</weight>
+    <weight>75</weight>
     <italic>false</italic>
-    <bold>false</bold>
+    <bold>true</bold>
    </font>
   </property>
   <property name="windowTitle">
@@ -140,15 +140,18 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(25, 49, 91);
 font: 75 11pt &quot;Palatino Linotype&quot;;
-</string>
+font-weight: bold;</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>130</y>
      <width>981</width>
-     <height>171</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -180,7 +183,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
       <x>12</x>
       <y>10</y>
       <width>451</width>
-      <height>151</height>
+      <height>138</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -297,7 +300,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <bool>true</bool>
        </property>
        <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
+        <enum>Qt::WheelFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -315,7 +318,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
       <x>833</x>
       <y>10</y>
       <width>141</width>
-      <height>156</height>
+      <height>136</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -376,7 +379,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
       <x>470</x>
       <y>10</y>
       <width>349</width>
-      <height>151</height>
+      <height>136</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_2">
@@ -533,18 +536,18 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>410</y>
+     <y>290</y>
      <width>981</width>
-     <height>301</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Palatino Linotype</family>
      <pointsize>11</pointsize>
-     <weight>9</weight>
+     <weight>75</weight>
      <italic>false</italic>
-     <bold>false</bold>
+     <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
@@ -565,7 +568,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
       <x>10</x>
       <y>10</y>
       <width>961</width>
-      <height>281</height>
+      <height>231</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="charges_gridLayout">
@@ -575,9 +578,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -591,9 +594,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -607,9 +610,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -623,9 +626,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -642,9 +645,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -658,9 +661,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -674,9 +677,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -690,9 +693,9 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
         <font>
          <family>Palatino Linotype</family>
          <pointsize>11</pointsize>
-         <weight>9</weight>
+         <weight>75</weight>
          <italic>false</italic>
-         <bold>false</bold>
+         <bold>true</bold>
         </font>
        </property>
        <property name="text">
@@ -709,7 +712,7 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
      <x>10</x>
      <y>10</y>
      <width>981</width>
-     <height>211</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -734,9 +737,9 @@ border-color: rgb(160, 48, 35);</string>
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>833</x>
-      <y>170</y>
-      <width>139</width>
+      <x>850</x>
+      <y>70</y>
+      <width>121</width>
       <height>30</height>
      </rect>
     </property>
@@ -750,16 +753,16 @@ border-color: rgb(160, 48, 35);</string>
      <string>Clear Fields</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>9</y>
-      <width>791</width>
-      <height>191</height>
+      <x>11</x>
+      <y>11</y>
+      <width>471</width>
+      <height>93</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_3">
+    <layout class="QFormLayout" name="formLayout_3">
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
@@ -834,7 +837,19 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>12</y>
+      <width>353</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_4">
+     <item row="0" column="0">
       <widget class="QLabel" name="label_4">
        <property name="toolTip">
         <string/>
@@ -844,7 +859,7 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="defendant_attorney_name">
        <property name="maximumSize">
         <size>
@@ -857,7 +872,7 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_5">
        <property name="toolTip">
         <string/>
@@ -867,7 +882,7 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="1" column="1">
       <widget class="QDateEdit" name="dateEdit">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -894,7 +909,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>715</y>
+     <y>550</y>
      <width>611</width>
      <height>91</height>
     </rect>
@@ -975,9 +990,9 @@ border-color: rgb(160, 48, 35);</string>
   <widget class="QPushButton" name="createEntryButton">
    <property name="geometry">
     <rect>
-     <x>790</x>
-     <y>870</y>
-     <width>201</width>
+     <x>810</x>
+     <y>700</y>
+     <width>181</width>
      <height>31</height>
     </rect>
    </property>
@@ -996,7 +1011,7 @@ background-color: rgb(160, 160, 160);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>810</y>
+     <y>650</y>
      <width>611</width>
      <height>91</height>
     </rect>
@@ -1087,9 +1102,9 @@ background-color: rgb(160, 160, 160);</string>
   <widget class="QPushButton" name="createEntryButton_2">
    <property name="geometry">
     <rect>
-     <x>790</x>
-     <y>720</y>
-     <width>201</width>
+     <x>810</x>
+     <y>550</y>
+     <width>181</width>
      <height>31</height>
     </rect>
    </property>
@@ -1114,6 +1129,7 @@ background-color: rgb(160, 160, 160);</string>
   <tabstop>defendant_attorney_name</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
+  <tabstop>statute_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
   <tabstop>plea_choice_box</tabstop>
   <tabstop>fines_amount</tabstop>
@@ -1125,7 +1141,6 @@ background-color: rgb(160, 160, 160);</string>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>createEntryButton</tabstop>
-  <tabstop>createEntryButton_2</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -1136,12 +1151,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>184</y>
+     <x>977</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
-     <x>809</x>
-     <y>128</y>
+     <x>490</x>
+     <y>112</y>
     </hint>
    </hints>
   </connection>
@@ -1152,12 +1167,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>184</y>
+     <x>977</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
-     <x>809</x>
-     <y>167</y>
+     <x>851</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -1168,12 +1183,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>184</y>
+     <x>977</x>
+     <y>84</y>
     </hint>
     <hint type="destinationlabel">
-     <x>809</x>
-     <y>89</y>
+     <x>490</x>
+     <y>79</y>
     </hint>
    </hints>
   </connection>
@@ -1184,8 +1199,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -1200,8 +1215,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>908</x>
-     <y>870</y>
+     <x>928</x>
+     <y>700</y>
     </hint>
     <hint type="destinationlabel">
      <x>927</x>
@@ -1216,8 +1231,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>837</x>
-     <y>870</y>
+     <x>857</x>
+     <y>700</y>
     </hint>
     <hint type="destinationlabel">
      <x>763</x>
@@ -1232,8 +1247,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>update_case_information()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>877</x>
-     <y>870</y>
+     <x>897</x>
+     <y>700</y>
     </hint>
     <hint type="destinationlabel">
      <x>742</x>
@@ -1249,7 +1264,7 @@ background-color: rgb(160, 160, 160);</string>
    <hints>
     <hint type="sourcelabel">
      <x>609</x>
-     <y>729</y>
+     <y>570</y>
     </hint>
     <hint type="destinationlabel">
      <x>377</x>
@@ -1264,12 +1279,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>807</x>
-     <y>268</y>
+     <x>794</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -1280,12 +1295,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>803</x>
-     <y>386</y>
+     <x>769</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -1296,12 +1311,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>341</y>
+     <x>742</x>
+     <y>237</y>
     </hint>
    </hints>
   </connection>
@@ -1312,12 +1327,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>341</y>
+     <x>742</x>
+     <y>237</y>
     </hint>
    </hints>
   </connection>
@@ -1329,7 +1344,7 @@ background-color: rgb(160, 160, 160);</string>
    <hints>
     <hint type="sourcelabel">
      <x>471</x>
-     <y>241</y>
+     <y>142</y>
     </hint>
     <hint type="destinationlabel">
      <x>591</x>
@@ -1344,12 +1359,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>736</x>
-     <y>268</y>
+     <x>794</x>
+     <y>165</y>
     </hint>
    </hints>
   </connection>
@@ -1360,12 +1375,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>305</y>
+     <x>742</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -1376,12 +1391,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>370</x>
-     <y>247</y>
+     <x>464</x>
+     <y>148</y>
     </hint>
    </hints>
   </connection>
@@ -1392,12 +1407,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>274</x>
-     <y>246</y>
+     <x>368</x>
+     <y>147</y>
     </hint>
    </hints>
   </connection>
@@ -1408,12 +1423,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>619</x>
-     <y>305</y>
+     <x>742</x>
+     <y>200</y>
     </hint>
    </hints>
   </connection>
@@ -1424,12 +1439,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>803</x>
-     <y>386</y>
+     <x>769</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
@@ -1440,12 +1455,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>amend_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>883</x>
-     <y>254</y>
+     <x>884</x>
+     <y>155</y>
     </hint>
     <hint type="destinationlabel">
      <x>710</x>
-     <y>783</y>
+     <y>749</y>
     </hint>
    </hints>
   </connection>
@@ -1456,12 +1471,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
+     <x>961</x>
+     <y>204</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
-     <y>282</y>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1472,12 +1487,12 @@ background-color: rgb(160, 160, 160);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
+     <x>960</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>471</x>
-     <y>281</y>
+     <y>202</y>
     </hint>
    </hints>
   </connection>
@@ -1488,8 +1503,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>set_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>202</x>
-     <y>292</y>
+     <x>296</x>
+     <y>202</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
