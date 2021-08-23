@@ -37,27 +37,27 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
@@ -66,27 +66,27 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
@@ -95,27 +95,27 @@
      <colorrole role="Button">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>0</red>
-        <green>145</green>
-        <blue>255</blue>
+        <red>25</red>
+        <green>49</green>
+        <blue>91</blue>
        </color>
       </brush>
      </colorrole>
@@ -138,7 +138,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(0, 145, 255);
+   <string notr="true">background-color: rgb(25, 49, 91);
 font: 75 11pt &quot;Palatino Linotype&quot;;
 </string>
   </property>
@@ -157,9 +157,13 @@ font: 75 11pt &quot;Palatino Linotype&quot;;
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(240, 240, 240);
-border-color: rgb(160, 160, 160);</string>
+
+</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
@@ -207,22 +211,6 @@ border-color: rgb(160, 160, 160);</string>
       <widget class="QLabel" name="label_6">
        <property name="text">
         <string>Statute:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="statute_choice_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -303,6 +291,22 @@ border-color: rgb(160, 160, 160);</string>
        </item>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="statute_choice_box">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -311,7 +315,7 @@ border-color: rgb(160, 160, 160);</string>
       <x>833</x>
       <y>10</y>
       <width>141</width>
-      <height>151</height>
+      <height>156</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -715,7 +719,8 @@ border-color: rgb(160, 160, 160);</string>
     </sizepolicy>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 240, 240);</string>
+    <string notr="true">background-color: rgb(240, 240, 240);
+border-color: rgb(160, 48, 35);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
@@ -1088,6 +1093,9 @@ background-color: rgb(160, 160, 160);</string>
      <height>31</height>
     </rect>
    </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(160, 160, 160);
 background-color: rgb(160, 160, 160);</string>
@@ -1107,12 +1115,17 @@ background-color: rgb(160, 160, 160);</string>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
+  <tabstop>plea_choice_box</tabstop>
+  <tabstop>fines_amount</tabstop>
+  <tabstop>fines_suspended</tabstop>
+  <tabstop>court_costs_box</tabstop>
   <tabstop>addOffenseButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>createEntryButton</tabstop>
+  <tabstop>createEntryButton_2</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -1187,8 +1200,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>898</x>
-     <y>668</y>
+     <x>908</x>
+     <y>870</y>
     </hint>
     <hint type="destinationlabel">
      <x>927</x>
@@ -1203,8 +1216,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>827</x>
-     <y>668</y>
+     <x>837</x>
+     <y>870</y>
     </hint>
     <hint type="destinationlabel">
      <x>763</x>
@@ -1219,8 +1232,8 @@ background-color: rgb(160, 160, 160);</string>
    <slot>update_case_information()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>867</x>
-     <y>660</y>
+     <x>877</x>
+     <y>870</y>
     </hint>
     <hint type="destinationlabel">
      <x>742</x>
@@ -1236,27 +1249,11 @@ background-color: rgb(160, 160, 160);</string>
    <hints>
     <hint type="sourcelabel">
      <x>609</x>
-     <y>724</y>
+     <y>729</y>
     </hint>
     <hint type="destinationlabel">
      <x>377</x>
      <y>699</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>statute_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>959</x>
-     <y>379</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>275</y>
     </hint>
    </hints>
   </connection>
@@ -1271,8 +1268,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>312</y>
     </hint>
     <hint type="destinationlabel">
-     <x>810</x>
-     <y>271</y>
+     <x>807</x>
+     <y>268</y>
     </hint>
    </hints>
   </connection>
@@ -1287,8 +1284,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>312</y>
     </hint>
     <hint type="destinationlabel">
-     <x>806</x>
-     <y>377</y>
+     <x>803</x>
+     <y>386</y>
     </hint>
    </hints>
   </connection>
@@ -1351,8 +1348,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>379</y>
     </hint>
     <hint type="destinationlabel">
-     <x>739</x>
-     <y>271</y>
+     <x>736</x>
+     <y>268</y>
     </hint>
    </hints>
   </connection>
@@ -1407,22 +1404,6 @@ background-color: rgb(160, 160, 160);</string>
   <connection>
    <sender>addOffenseButton</sender>
    <signal>clicked()</signal>
-   <receiver>statute_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>960</x>
-     <y>312</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>471</x>
-     <y>282</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addOffenseButton</sender>
-   <signal>clicked()</signal>
    <receiver>plea_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1447,8 +1428,72 @@ background-color: rgb(160, 160, 160);</string>
      <y>379</y>
     </hint>
     <hint type="destinationlabel">
-     <x>806</x>
-     <y>377</y>
+     <x>803</x>
+     <y>386</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>amend_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>883</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>710</x>
+     <y>783</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>statute_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>960</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>282</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>statute_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>959</x>
+     <y>379</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>471</x>
+     <y>281</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>statute_choice_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>set_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>202</x>
+     <y>292</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>736</x>
+     <y>748</y>
     </hint>
    </hints>
   </connection>
@@ -1466,5 +1511,7 @@ background-color: rgb(160, 160, 160);</string>
   <slot>add_offense()</slot>
   <slot>set_statute()</slot>
   <slot>set_pay_date()</slot>
+  <slot>amend_offense()</slot>
+  <slot>set_offense()</slot>
  </slots>
 </ui>

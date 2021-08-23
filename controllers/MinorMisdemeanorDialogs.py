@@ -1,6 +1,6 @@
 import pathlib
-from docx import Document
-from docxtpl import DocxTemplate
+#from docx import Document
+#from docxtpl import DocxTemplate
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -9,7 +9,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from views.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
-from controllers.CriminalDialogs import BaseCriminalDialog
+from controllers.CriminalDialogs import BaseCriminalDialog, AmendOffenseDialog
 from controllers.DatabaseCreation import create_offense_list
 
 PATH = str(pathlib.Path().absolute())
@@ -33,6 +33,9 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.offense_choice_box.addItems(self.offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    def amend_offense(self):
+        AmendOffenseDialog(self.case_information).exec()
 
     def closeEvent(self, event):
         self.database.close()
@@ -110,6 +113,26 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
             print(name, statute, degree)
             if name == key:
                 self.statute_choice_box.setCurrentText(statute)
+                self.degree_choice_box.setCurrentText(degree)
+                break
+
+    def set_offense(self):
+        """TODO: This is far from optimal as it queries the entire database each time
+        a charge is selected. Need to clean up."""
+
+        key = self.statute_choice_box.currentText()
+        print(key)
+        query = QSqlQuery()
+        query.prepare("SELECT * FROM charges")
+        print(query.exec())
+        """FIX: When typing in editable box this calls the query for every keystroke"""
+        while query.next():
+            name = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            print(name, statute, degree)
+            if statute == key:
+                self.offense_choice_box.setCurrentText(name)
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
