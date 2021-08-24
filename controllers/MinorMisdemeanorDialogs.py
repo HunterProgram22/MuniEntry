@@ -1,6 +1,4 @@
 import pathlib
-#from docx import Document
-#from docxtpl import DocxTemplate
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -28,6 +26,8 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
         self.database.open()
+
+        # View Setup
         self.offense_list, self.statute_list = create_offense_list()
         self.statute_choice_box.addItems(self.statute_list)
         self.offense_choice_box.addItems(self.offense_list)
@@ -51,6 +51,8 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge(self.criminal_charge)
+
+    def add_offense_to_view(self):
         """CHECK: Should I be adding the charges to case information after GUI, and make
         sure that I clean up and don't potentially have two versions - I do right now,
         need to fix. The charge is added to case information above and then to GUI."""

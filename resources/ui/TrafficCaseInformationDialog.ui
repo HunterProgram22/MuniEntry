@@ -180,141 +180,6 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>12</x>
-      <y>10</y>
-      <width>451</width>
-      <height>138</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
-     <property name="fieldGrowthPolicy">
-      <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
-     </property>
-     <property name="verticalSpacing">
-      <number>12</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>Offense:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="offense_choice_box">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>Statute:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_23">
-       <property name="text">
-        <string>Degree:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="degree_choice_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <item>
-        <property name="text">
-         <string>MM</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M1</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M2</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M3</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>M4</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>UCM</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>Court Costs:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="court_costs_box">
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>No</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Yes</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="statute_choice_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::WheelFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
       <x>833</x>
       <y>10</y>
       <width>141</width>
@@ -373,161 +238,297 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>10</y>
-      <width>349</width>
-      <height>136</height>
+      <x>11</x>
+      <y>11</y>
+      <width>811</width>
+      <height>128</height>
      </rect>
     </property>
-    <layout class="QFormLayout" name="formLayout_2">
-     <property name="verticalSpacing">
-      <number>10</number>
-     </property>
+    <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,0">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_13">
-       <property name="text">
-        <string>Plea:</string>
-       </property>
-      </widget>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Offense:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="offense_choice_box">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string>Statute:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="statute_choice_box">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::WheelFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="finding_choice_box">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>192</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>Degree:</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Guilty</string>
-        </property>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="degree_choice_box">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>MM</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>M1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>M2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>M3</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>M4</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>UCM</string>
+          </property>
+         </item>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Not Guilty</string>
-        </property>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Court Costs:</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Dismissed</string>
-        </property>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="court_costs_box">
+         <property name="maximumSize">
+          <size>
+           <width>16770</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>No</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Yes</string>
+          </property>
+         </item>
+        </widget>
        </item>
-      </widget>
+      </layout>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_12">
-       <property name="text">
-        <string>Finding:</string>
-       </property>
-      </widget>
+      <layout class="QFormLayout" name="formLayout_6">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Plea:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="plea_choice_box">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Guilty</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>No Contest</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Not Guilty</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dismissed</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Finding:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="finding_choice_box">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Guilty</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Not Guilty</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Dismissed</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="plea_choice_box">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>192</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="editable">
-        <bool>false</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string/>
-        </property>
+      <layout class="QFormLayout" name="formLayout_5">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Fine:</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Not Guilty</string>
-        </property>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="fines_amount">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>No Contest</string>
-        </property>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>Fine Suspended:</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Guilty</string>
-        </property>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="fines_suspended">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+        </widget>
        </item>
-       <item>
-        <property name="text">
-         <string>Dismissed</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>Fine:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="fines_amount">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Fine Suspended:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="fines_suspended">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
+      </layout>
      </item>
     </layout>
    </widget>
@@ -753,7 +754,7 @@ border-color: rgb(160, 48, 35);</string>
      <string>Clear Fields</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -839,7 +840,7 @@ border-color: rgb(160, 48, 35);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -1194,7 +1195,7 @@ background-color: rgb(160, 160, 160);</string>
   </connection>
   <connection>
    <sender>addOffenseButton</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>TrafficCaseInformationDialog</receiver>
    <slot>add_offense()</slot>
    <hints>
@@ -1283,8 +1284,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>794</x>
-     <y>165</y>
+     <x>387</x>
+     <y>233</y>
     </hint>
    </hints>
   </connection>
@@ -1299,8 +1300,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>769</x>
-     <y>274</y>
+     <x>828</x>
+     <y>268</y>
     </hint>
    </hints>
   </connection>
@@ -1315,8 +1316,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>742</x>
-     <y>237</y>
+     <x>828</x>
+     <y>235</y>
     </hint>
    </hints>
   </connection>
@@ -1331,8 +1332,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>742</x>
-     <y>237</y>
+     <x>828</x>
+     <y>235</y>
     </hint>
    </hints>
   </connection>
@@ -1363,8 +1364,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>794</x>
-     <y>165</y>
+     <x>387</x>
+     <y>233</y>
     </hint>
    </hints>
   </connection>
@@ -1379,8 +1380,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>742</x>
-     <y>200</y>
+     <x>350</x>
+     <y>264</y>
     </hint>
    </hints>
   </connection>
@@ -1427,8 +1428,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>742</x>
-     <y>200</y>
+     <x>350</x>
+     <y>264</y>
     </hint>
    </hints>
   </connection>
@@ -1443,8 +1444,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>769</x>
-     <y>274</y>
+     <x>828</x>
+     <y>268</y>
     </hint>
    </hints>
   </connection>
@@ -1475,8 +1476,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>204</y>
     </hint>
     <hint type="destinationlabel">
-     <x>471</x>
-     <y>202</y>
+     <x>531</x>
+     <y>197</y>
     </hint>
    </hints>
   </connection>
@@ -1491,8 +1492,8 @@ background-color: rgb(160, 160, 160);</string>
      <y>274</y>
     </hint>
     <hint type="destinationlabel">
-     <x>471</x>
-     <y>202</y>
+     <x>531</x>
+     <y>197</y>
     </hint>
    </hints>
   </connection>
@@ -1503,12 +1504,28 @@ background-color: rgb(160, 160, 160);</string>
    <slot>set_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>296</x>
-     <y>202</y>
+     <x>359</x>
+     <y>197</y>
     </hint>
     <hint type="destinationlabel">
      <x>736</x>
      <y>748</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>released()</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>add_offense_to_view()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>921</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>763</x>
+     <y>574</y>
     </hint>
    </hints>
   </connection>
@@ -1528,5 +1545,6 @@ background-color: rgb(160, 160, 160);</string>
   <slot>set_pay_date()</slot>
   <slot>amend_offense()</slot>
   <slot>set_offense()</slot>
+  <slot>add_offense_to_view()</slot>
  </slots>
 </ui>
