@@ -1131,11 +1131,11 @@ background-color: rgb(160, 160, 160);</string>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>statute_choice_box</tabstop>
-  <tabstop>finding_choice_box</tabstop>
   <tabstop>plea_choice_box</tabstop>
+  <tabstop>finding_choice_box</tabstop>
+  <tabstop>court_costs_box</tabstop>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
-  <tabstop>court_costs_box</tabstop>
   <tabstop>addOffenseButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>

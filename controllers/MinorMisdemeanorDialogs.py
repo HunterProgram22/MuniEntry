@@ -58,7 +58,9 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         need to fix. The charge is added to case information above and then to GUI."""
         self.offense_count += 1
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.offense), 0, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count - 1].offense),
+            0,
+            self.offense_count,
         )
         self.charges_gridLayout.addWidget(
             QLabel(self.criminal_charge.statute), 1, self.offense_count
@@ -84,8 +86,6 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.case_information.total_charges = self.offense_count
 
     def update_case_information(self):
-        """This slot is tied to the signal 'pressed()', which has precedence over
-        released() and clicked()."""
         self.case_information.case_number = self.case_number.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
@@ -105,7 +105,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         key = self.offense_choice_box.currentText()
         print(key)
         query = QSqlQuery()
-        query.prepare("SELECT * FROM charges")
+        query.prepare("SELECT * FROM charges WHERE offense=key")
         print(query.exec())
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
