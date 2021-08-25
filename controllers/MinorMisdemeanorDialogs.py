@@ -21,6 +21,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         super().__init__(parent)
         self.case_information = CaseInformation()
         self.offense_count = 0
+        self.offense_count_index = 0 #This is used to navigate the charges list
         self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
         self.template_name = "Traffic Judgment Entry"
         self.database = QSqlDatabase.addDatabase("QSQLITE")
@@ -51,39 +52,46 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge(self.criminal_charge)
+        self.offense_count += 1
+
+    def delete_offense(self):
+        del self.case_information.charges_list[self.case_information.total_charges-1]
+        self.case_information.total_charges -= 1
+        print(self.case_information.charges_list)
+
+    def delete_offense_from_view(self):
+        self.charges_gridLayout.removeWidget(QLabel(), 0, self.offense_count-1)
+
 
     def add_offense_to_view(self):
-        """CHECK: Should I be adding the charges to case information after GUI, and make
-        sure that I clean up and don't potentially have two versions - I do right now,
-        need to fix. The charge is added to case information above and then to GUI."""
-        self.offense_count += 1
         self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[self.offense_count - 1].offense),
+            QLabel(self.case_information.charges_list[self.offense_count_index].offense),
             0,
-            self.offense_count,
+            self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.statute), 1, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].statute), 1, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.degree), 2, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].degree), 2, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.plea), 3, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].plea), 3, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.finding), 4, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].finding), 4, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.fines_amount), 5, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].fines_amount), 5, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.fines_suspended), 6, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].fines_suspended), 6, self.offense_count
         )
         self.charges_gridLayout.addWidget(
-            QLabel(self.criminal_charge.court_costs), 7, self.offense_count
+            QLabel(self.case_information.charges_list[self.offense_count_index].court_costs), 7, self.offense_count
         )
         self.case_information.total_charges = self.offense_count
+        self.offense_count_index += 1
 
     def update_case_information(self):
         self.case_information.case_number = self.case_number.text()
@@ -107,6 +115,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
             )
         query.bindValue(":key", key)
         """FIX: When typing in editable box this calls the query for every keystroke"""
+        query.exec()
         while query.next():
             offense = query.value(1)
             statute = query.value(2)
@@ -125,6 +134,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
             )
         query.bindValue(":key", key)
         """FIX: When typing in editable box this calls the query for every keystroke"""
+        query.exec()
         while query.next():
             offense = query.value(1)
             statute = query.value(2)

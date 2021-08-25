@@ -27,6 +27,7 @@ class CaseInformation(object):
     def add_charge(self, charge):
         self.charges_list.append(charge)
 
+
     def get_case_information(self):
         """Returns a dictionary with all of case information required
         to populate an entry."""
