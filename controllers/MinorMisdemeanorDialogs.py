@@ -99,42 +99,38 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         )
 
     def set_statute(self):
-        """TODO: This is far from optimal as it queries the entire database each time
-        a charge is selected. Need to clean up."""
-
         key = self.offense_choice_box.currentText()
-        print(key)
         query = QSqlQuery()
-        query.prepare("SELECT * FROM charges WHERE offense=key")
-        print(query.exec())
+        query.prepare(
+            "SELECT * FROM charges WHERE "
+            "offense LIKE '%' || :key || '%'"
+            )
+        query.bindValue(":key", key)
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
-            name = query.value(1)
+            offense = query.value(1)
             statute = query.value(2)
             degree = query.value(3)
-            print(name, statute, degree)
-            if name == key:
+            if offense == key:
                 self.statute_choice_box.setCurrentText(statute)
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
     def set_offense(self):
-        """TODO: This is far from optimal as it queries the entire database each time
-        a charge is selected. Need to clean up."""
-
         key = self.statute_choice_box.currentText()
-        print(key)
         query = QSqlQuery()
-        query.prepare("SELECT * FROM charges")
-        print(query.exec())
+        query.prepare(
+            "SELECT * FROM charges WHERE "
+            "statute LIKE '%' || :key || '%'"
+            )
+        query.bindValue(":key", key)
         """FIX: When typing in editable box this calls the query for every keystroke"""
         while query.next():
-            name = query.value(1)
+            offense = query.value(1)
             statute = query.value(2)
             degree = query.value(3)
-            print(name, statute, degree)
             if statute == key:
-                self.offense_choice_box.setCurrentText(name)
+                self.offense_choice_box.setCurrentText(offense)
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
