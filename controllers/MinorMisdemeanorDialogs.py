@@ -2,7 +2,7 @@ import pathlib
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QDialog, QLabel
+from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from views.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
@@ -42,6 +42,12 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.database.close()
 
     def add_offense(self):
+        """Creates a criminal charge object and adds the data in the fields
+        in the view to the object. The criminal charge is then added to the case
+        information model (the criminal charges list).
+        The offense is added to the view by the method add_offense_to_view,
+        not this method. This method is triggered on press of the Add Offense
+        button."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
@@ -55,23 +61,22 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.offense_count += 1
 
     def delete_offense(self):
+        """Deletes the last offense in the criminal_charges list (i.e. the one that
+        was added most recently.) This method does not remove the offense from view,
+        that is done by delete_offense_from_view. Triggered on press of Delete Offense
+        button."""
         del self.case_information.charges_list[self.case_information.total_charges-1]
         self.case_information.total_charges -= 1
         print(self.case_information.charges_list)
 
-    def delete_offense_from_view(self):
-        self.charges_gridLayout.removeWidget(QLabel(), 0, self.offense_count-1)
-
-
     def add_offense_to_view(self):
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[self.offense_count_index].offense),
-            0,
-            self.offense_count
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[self.offense_count_index].statute), 1, self.offense_count
-        )
+        """Adds the offense that was added through add_offense method to the view/GUI.
+        This method is triggered on release of the Add Offense button."""
+        self.offense_label = QLabel(self.case_information.charges_list[self.offense_count_index].offense)
+        self.charges_gridLayout.addWidget(self.offense_label, 0, self.offense_count)
+        self.statute_label = QLabel(self.case_information.charges_list[self.offense_count_index].statute)
+        self.charges_gridLayout.addWidget(self.statute_label, 1, self.offense_count)
+
         self.charges_gridLayout.addWidget(
             QLabel(self.case_information.charges_list[self.offense_count_index].degree), 2, self.offense_count
         )
@@ -90,8 +95,24 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.charges_gridLayout.addWidget(
             QLabel(self.case_information.charges_list[self.offense_count_index].court_costs), 7, self.offense_count
         )
+        self.delete_button = QPushButton("Delete")
+        self.delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.delete_button.clicked.connect(self.delete_offense_test)
+        self.charges_gridLayout.addWidget(
+            self.delete_button, 8, self.offense_count
+        )
         self.case_information.total_charges = self.offense_count
         self.offense_count_index += 1
+
+    def delete_offense_test(self):
+        """TODO: Need to get the index for the column that the button is in then
+        delete everything in that column."""
+        print("test delete")
+        self.delete_offense()
+        self.charges_gridLayout.removeWidget(self.offense_label)
+        self.offense_label.deleteLater()
+        self.charges_gridLayout.removeWidget(self.statute_label)
+        self.statute_label.deleteLater()
 
     def update_case_information(self):
         self.case_information.case_number = self.case_number.text()
