@@ -1,6 +1,6 @@
 import pathlib
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
@@ -59,7 +59,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge(self.criminal_charge)
         self.offense_count += 1
-        """TODO: Add offense to view function here so its not a separate signal."""
+        self.add_offense_to_view()
 
     def delete_offense(self):
         """Deletes the last offense in the criminal_charges list (i.e. the one that
@@ -75,7 +75,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
     def add_offense_to_view(self):
         """Adds the offense that was added through add_offense method to the view/GUI.
         This method is triggered on release of the Add Offense button."""
-        column = len(self.case_information.charges_list) + 1
+        column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list)-1
         self.charges_gridLayout.addWidget(
             QLabel(self.case_information.charges_list[added_charge_index].offense), 0, column
@@ -110,12 +110,9 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.case_information.total_charges = self.offense_count
 
     def delete_offense_from_view(self):
-        """FIX: This works, but messes up the index if you add after you delete
-        and add another and try to delete again - need to fix."""
         self.delete_offense()
         index = self.charges_gridLayout.indexOf(self.sender())
         column = self.charges_gridLayout.getItemPosition(index)[1]
-        print("Column is: " + str(column))
         for row in range(self.charges_gridLayout.rowCount()):
             layout_item = self.charges_gridLayout.itemAtPosition(row, column)
             if layout_item is not None:

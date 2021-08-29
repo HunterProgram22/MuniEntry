@@ -878,7 +878,7 @@ border-color: rgb(160, 48, 35);</string>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="defendant_attorney_name">
+      <widget class="QLineEdit" name="operator_license_number">
        <property name="maximumSize">
         <size>
          <width>500</width>
@@ -1163,7 +1163,7 @@ border-color: rgb(160, 48, 35);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1255,7 +1255,7 @@ border-color: rgb(160, 48, 35);</string>
  <tabstops>
   <tabstop>case_number</tabstop>
   <tabstop>defendant_name</tabstop>
-  <tabstop>defendant_attorney_name</tabstop>
+  <tabstop>operator_license_number</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>statute_choice_box</tabstop>
@@ -1264,10 +1264,20 @@ border-color: rgb(160, 48, 35);</string>
   <tabstop>court_costs_box</tabstop>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
+  <tabstop>addOffenseButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_7</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>checkBox_5</tabstop>
+  <tabstop>checkBox_6</tabstop>
+  <tabstop>checkBox_8</tabstop>
+  <tabstop>createEntryButton_2</tabstop>
   <tabstop>createEntryButton</tabstop>
  </tabstops>
  <resources/>
@@ -1291,7 +1301,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
-   <receiver>defendant_attorney_name</receiver>
+   <receiver>operator_license_number</receiver>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1327,8 +1337,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -1392,7 +1402,7 @@ border-color: rgb(160, 48, 35);</string>
    <hints>
     <hint type="sourcelabel">
      <x>489</x>
-     <y>606</y>
+     <y>636</y>
     </hint>
     <hint type="destinationlabel">
      <x>377</x>
@@ -1407,8 +1417,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1423,8 +1433,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1439,8 +1449,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1455,8 +1465,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1487,8 +1497,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1503,8 +1513,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1519,8 +1529,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1535,8 +1545,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>446</x>
@@ -1551,8 +1561,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1567,8 +1577,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1583,8 +1593,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>amend_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>884</x>
-     <y>155</y>
+     <x>885</x>
+     <y>195</y>
     </hint>
     <hint type="destinationlabel">
      <x>710</x>
@@ -1599,8 +1609,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>204</y>
+     <x>962</x>
+     <y>300</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1615,8 +1625,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>960</x>
-     <y>274</y>
+     <x>961</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1641,18 +1651,18 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
-   <signal>released()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
-   <slot>add_offense_to_view()</slot>
+   <sender>pushButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>plea_choice_box</receiver>
+   <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>922</x>
-     <y>222</y>
+     <x>937</x>
+     <y>165</y>
     </hint>
     <hint type="destinationlabel">
-     <x>763</x>
-     <y>574</y>
+     <x>214</x>
+     <y>232</y>
     </hint>
    </hints>
   </connection>
