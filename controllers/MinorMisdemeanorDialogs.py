@@ -21,7 +21,8 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         super().__init__(parent)
         self.case_information = CaseInformation()
         self.offense_count = 0
-        self.offense_view_count_index = 0 #This is used to navigate the charges list
+        self.delete_button_index = 0 #This is used to index a delete button to the charge list
+        self.delete_button_list = [] #This is used to map a delete button to a charge in charge list
         self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
         self.template_name = "Traffic Judgment Entry"
         self.database = QSqlDatabase.addDatabase("QSQLITE")
@@ -61,56 +62,36 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.offense_count += 1
         self.add_offense_to_view()
 
-    def delete_offense(self):
-        """Deletes the last offense in the criminal_charges list (i.e. the one that
-        was added most recently.) This method does not remove the offense from view,
-        that is done by delete_offense_from_view. Triggered on press of Delete Offense
-        button."""
-        del self.case_information.charges_list[self.case_information.total_charges-1]
-        self.case_information.total_charges -= 1
-        self.offense_count -=1
-        print(self.case_information.charges_list)
-        print("Number of columns is: " + str(self.charges_gridLayout.columnCount()))
-
     def add_offense_to_view(self):
-        """Adds the offense that was added through add_offense method to the view/GUI.
-        This method is triggered on release of the Add Offense button."""
+        """Adds the offense that was added through add_offense method to the view/GUI."""
+        row = 0
+        grid_rows = 8 #This should maybe be obtained through rowCount() - not magic number
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list)-1
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].offense), 0, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].statute), 1, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].degree), 2, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].plea), 3, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].finding), 4, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].fines_amount), 5, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].fines_suspended), 6, column
-        )
-        self.charges_gridLayout.addWidget(
-            QLabel(self.case_information.charges_list[added_charge_index].court_costs), 7, column
-        )
-        self.delete_button = QPushButton("Delete")
-        self.delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
-        self.delete_button.clicked.connect(self.delete_offense_from_view)
-        self.charges_gridLayout.addWidget(
-            self.delete_button, 8, column
-        )
+        charge_dict = (vars(self.case_information.charges_list[added_charge_index]))
+        for key, value in charge_dict.items():
+            if value is not None:
+                self.charges_gridLayout.addWidget(QLabel(value), row, column)
+                row +=1
+        delete_button = QPushButton("Delete")
+        self.delete_button_list.append(delete_button)
+        delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
+        delete_button.clicked.connect(self.delete_offense)
+        self.charges_gridLayout.addWidget(delete_button, row, column)
         self.case_information.total_charges = self.offense_count
 
+    def delete_offense(self):
+        """TEST: Make sure it is deleting the offense based on the button for that offense."""
+        index = self.delete_button_list.index(self.sender())
+        #print(self.sender())
+        #print(index)
+        del self.case_information.charges_list[index]
+        del self.delete_button_list[index]
+        self.case_information.total_charges -= 1
+        self.offense_count -=1
+        self.delete_offense_from_view()
+
     def delete_offense_from_view(self):
-        self.delete_offense()
         index = self.charges_gridLayout.indexOf(self.sender())
         column = self.charges_gridLayout.getItemPosition(index)[1]
         for row in range(self.charges_gridLayout.rowCount()):
