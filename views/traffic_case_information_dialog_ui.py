@@ -530,7 +530,7 @@ class Ui_TrafficCaseInformationDialog(object):
         self.gridLayout_5.addWidget(self.checkBox_8, 3, 1, 1, 1)
         self.createEntryButton_2 = QtWidgets.QPushButton(TrafficCaseInformationDialog)
         self.createEntryButton_2.setGeometry(QtCore.QRect(510, 800, 181, 31))
-        self.createEntryButton_2.setStyleSheet("background-color: rgb(255, 255, 0);")
+        self.createEntryButton_2.setStyleSheet("background-color: rgb(157, 53, 36);")
         self.createEntryButton_2.setAutoDefault(False)
         self.createEntryButton_2.setObjectName("createEntryButton_2")
 
