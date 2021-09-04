@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CaseInformationDialog</class>
+ <widget class="QDialog" name="CaseInformationDialog">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Palatino Linotype</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Case Information</string>
+  </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <widget class="QPushButton" name="continueButton">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>739</y>
+     <width>158</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Sentencing</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>847</x>
+     <y>10</y>
+     <width>141</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_3">
+    <item row="0" column="0">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>Clear Fields</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>471</y>
+     <width>931</width>
+     <height>103</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="offense_of_violence_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Test"/>
+      </property>
+      <property name="toolTipDuration">
+       <number>-2</number>
+      </property>
+      <property name="text">
+       <string>Offense of Violence</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="violence_no_firearm_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="toolTip">
+       <string>Defendant informed that convcition disallows Def. to ship/transport/purchase/possess firearms/ammo if victim is current/past spouse or person living as spouse, parent or child of spouse or parent or child of Defendant.</string>
+      </property>
+      <property name="toolTipDuration">
+       <number>-1</number>
+      </property>
+      <property name="text">
+       <string>Conviction prohibits ship/transport/purchase/possess firearm/ammo </string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="citizen_deportation_checkbox_2">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>NCIC Mental Health Form shall issue</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>337</y>
+     <width>931</width>
+     <height>103</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="citizenship_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Citizenship</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="is_citizen_checkbox">
+      <property name="text">
+       <string>Defendant stated that he/she is a U.S. Citizen</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="citizen_deportation_checkbox">
+      <property name="text">
+       <string>Def. advised that conviction may lead to deportation, exclusion from U.S. or denial of naturalization</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QPushButton" name="continueButton_2">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>740</y>
+     <width>158</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OVI</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>13</y>
+     <width>701</width>
+     <height>161</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="caseinformation_gridLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Case Number:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="case_number">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Defendant Name: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="defendant_name">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QCheckBox" name="waived_counsel_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>Defendant waived right to counsel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Defendant Attorney:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="defendant_attorney_name">
+      <property name="maximumSize">
+       <size>
+        <width>500</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>202</y>
+     <width>921</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <weight>50</weight>
+        <bold>false</bold>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="toolTip">
+       <string extracomment="Test"/>
+      </property>
+      <property name="toolTipDuration">
+       <number>-2</number>
+      </property>
+      <property name="text">
+       <string>Type of Proceeding:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="comboBox">
+      <item>
+       <property name="text">
+        <string>Plea</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Trial</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Plea in Abstentia</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+        <underline>true</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>Plea or Trial</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QCheckBox" name="understood_plea_checkbox">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>Defendant understood the charges and effects of plea per Crim.R. 11 / Traf.R. 10</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Date:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QDateEdit" name="plea_trial_date">
+      <property name="minimumDate">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+      <property name="date">
+       <date>
+        <year>2021</year>
+        <month>1</month>
+        <day>1</day>
+       </date>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>case_number</tabstop>
+  <tabstop>defendant_name</tabstop>
+  <tabstop>defendant_attorney_name</tabstop>
+  <tabstop>plea_trial_date</tabstop>
+  <tabstop>comboBox</tabstop>
+  <tabstop>is_citizen_checkbox</tabstop>
+  <tabstop>citizen_deportation_checkbox</tabstop>
+  <tabstop>continueButton_2</tabstop>
+  <tabstop>continueButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>871</x>
+     <y>84</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>released()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>820</x>
+     <y>750</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>750</x>
+     <y>585</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>pressed()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>820</x>
+     <y>750</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>874</x>
+     <y>671</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>waived_counsel_checkbox</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>set_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>123</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>297</x>
+     <y>111</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>defendant_name</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>871</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>452</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>defendant_attorney_name</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>871</x>
+     <y>30</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>621</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>case_number</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>871</x>
+     <y>44</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>609</x>
+     <y>23</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>pressed()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>671</x>
+     <y>750</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>634</x>
+     <y>685</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>released()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>707</x>
+     <y>751</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>732</x>
+     <y>648</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>proceed_to_sentencing()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>899</x>
+     <y>747</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>873</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseInformationDialog</receiver>
+   <slot>proceed_to_ovi()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>656</x>
+     <y>757</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>691</x>
+     <y>639</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>createEntry()</slot>
+  <slot>continue_dialog()</slot>
+  <slot>close_window()</slot>
+  <slot>set_dialog()</slot>
+  <slot>update_case_information()</slot>
+  <slot>ovi_dialog()</slot>
+  <slot>sentencing_dialog()</slot>
+  <slot>proceed_to_sentencing()</slot>
+  <slot>proceed_to_ovi()</slot>
+ </slots>
+</ui>

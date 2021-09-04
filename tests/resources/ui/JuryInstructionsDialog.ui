@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>JuryInstructionsDialog</class>
+ <widget class="QDialog" name="JuryInstructionsDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>985</width>
+    <height>689</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Jury Instructions</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>281</width>
+     <height>52</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Case No.</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="CaseNo_lineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Defendant Name: </string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="DefendantName_lineEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>820</x>
+     <y>20</y>
+     <width>95</width>
+     <height>147</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>Create Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Clear Fields</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>58</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>70</y>
+     <width>710</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <layout class="QFormLayout" name="formLayout_2">
+    <item row="0" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Complaint Date</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="ComplaintDate_lineEdit"/>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string>Gender</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QRadioButton" name="radioButton_4">
+      <property name="text">
+       <string>Female</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>1st Charge</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="FirstCharge_comboBox">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
+R.C. § 4511.19(A)(1)(A)
+</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle with a Prohibited Concentration of Alcohol 
+R.C. § 4511.19(A)(1)(D)
+</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>2nd Charge</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QComboBox" name="SecondCharge_comboBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle While Under the Influence of Alcohol 
+R.C. § 4511.19(A)(1)(A)
+</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Operating a Motor Vehicle with a Prohibited Concentration of Alcohol 
+R.C. § 4511.19(A)(1)(D)
+</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="text">
+       <string>Defendant Did Not Testify</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>Victim Name</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QLineEdit" name="VictimName_lineEdit"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QRadioButton" name="radioButton_3">
+      <property name="text">
+       <string>Male</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup_2</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QRadioButton" name="radioButton">
+      <property name="text">
+       <string>Defendant Testified</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QLabel" name="label_8">
+      <property name="text">
+       <string>Defendant Testimony  </string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string>Number of Charges</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QSpinBox" name="spinBox"/>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>CaseNo_lineEdit</tabstop>
+  <tabstop>DefendantName_lineEdit</tabstop>
+  <tabstop>ComplaintDate_lineEdit</tabstop>
+  <tabstop>FirstCharge_comboBox</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>JuryInstructionsDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>821</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>387</x>
+     <y>108</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>CaseNo_lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>821</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>272</x>
+     <y>15</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>DefendantName_lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>821</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>278</x>
+     <y>45</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>JuryInstructionsDialog</receiver>
+   <slot>create_entry()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>821</x>
+     <y>23</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>389</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>create_entry()</slot>
+ </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
+ </buttongroups>
+</ui>

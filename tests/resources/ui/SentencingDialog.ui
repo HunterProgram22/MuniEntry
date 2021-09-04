@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SentencingDialog</class>
+ <widget class="QDialog" name="SentencingDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Palatino Linotype</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Sentencing</string>
+  </property>
+  <widget class="QFrame" name="case_information_frame">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>9</y>
+     <width>860</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1000</width>
+     <height>800</height>
+    </size>
+   </property>
+   <property name="cursor">
+    <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <widget class="QLabel" name="defendant_name_label">
+    <property name="geometry">
+     <rect>
+      <x>18</x>
+      <y>53</y>
+      <width>831</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="case_number_label">
+    <property name="geometry">
+     <rect>
+      <x>18</x>
+      <y>13</y>
+      <width>831</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="defendant_attorney_name_label">
+    <property name="geometry">
+     <rect>
+      <x>18</x>
+      <y>93</y>
+      <width>821</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="continueButton">
+   <property name="geometry">
+    <rect>
+     <x>761</x>
+     <y>755</y>
+     <width>230</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="text">
+    <string>Ability to Pay</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>170</y>
+     <width>981</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <property name="midLineWidth">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>9</y>
+      <width>961</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Degree:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="3">
+      <widget class="QLineEdit" name="jail_days_suspended"/>
+     </item>
+     <item row="4" column="2">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>Fines Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Jail Days:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="degree_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M3</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>M4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>MM</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>UCM</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="finding_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Not Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dismissed</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Dismissed with conditions</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="jail_days"/>
+     </item>
+     <item row="4" column="3">
+      <widget class="QLineEdit" name="fines_suspended"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>Fines Amount:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Finding:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Plea:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="2">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>Jail Days Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QComboBox" name="offense_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OVI - R.C. 4511.19(A)(1)(a)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OVI - R.C. 4511.19(A)(1)(b)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Failure to Control - R.C. 4511.202</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="fines_amount"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Offense:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="plea_choice_box">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string/>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Not Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>No Contest</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Guilty</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>No Plea - Dismissed</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Clear Fields</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="4">
+      <widget class="QPushButton" name="addOffenseButton">
+       <property name="text">
+        <string>Add Another Offense</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="4">
+      <widget class="QPushButton" name="deleteOffenseButton">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Delete Offense</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="4">
+      <widget class="QPushButton" name="amendOffenseButton">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="text">
+        <string>Amend Offense</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>875</x>
+     <y>9</y>
+     <width>118</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="1" column="0">
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>510</y>
+     <width>981</width>
+     <height>241</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <property name="midLineWidth">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>961</width>
+      <height>227</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="charges_gridLayout">
+     <item row="1" column="0">
+      <widget class="QLabel" name="plea_label_1">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Plea:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Finding:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fines Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Jail Days Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Fines:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="offense_label_1">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Offense:</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Jail Days:</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>offense_choice_box</tabstop>
+  <tabstop>degree_choice_box</tabstop>
+  <tabstop>plea_choice_box</tabstop>
+  <tabstop>finding_choice_box</tabstop>
+  <tabstop>fines_amount</tabstop>
+  <tabstop>fines_suspended</tabstop>
+  <tabstop>jail_days</tabstop>
+  <tabstop>jail_days_suspended</tabstop>
+  <tabstop>addOffenseButton</tabstop>
+  <tabstop>continueButton</tabstop>
+  <tabstop>amendOffenseButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>deleteOffenseButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>proceed_to_ability_to_pay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>409</x>
+     <y>526</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>499</x>
+     <y>444</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>continueButton</sender>
+   <signal>released()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>438</x>
+     <y>534</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>528</x>
+     <y>476</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>add_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>969</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>901</x>
+     <y>410</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>offense_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>901</x>
+     <y>458</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>597</x>
+     <y>196</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>degree_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>799</x>
+     <y>447</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>261</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>plea_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>827</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>308</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>finding_choice_box</receiver>
+   <slot>clearEditText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>779</x>
+     <y>465</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>411</x>
+     <y>365</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_amount</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>944</x>
+     <y>461</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>423</x>
+     <y>404</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>fines_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>959</x>
+     <y>457</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>729</x>
+     <y>395</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>jail_days</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>848</x>
+     <y>451</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>414</x>
+     <y>458</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>jail_days_suspended</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>853</x>
+     <y>467</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>747</x>
+     <y>449</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>amend_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>941</x>
+     <y>348</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>899</x>
+     <y>123</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SentencingDialog</receiver>
+   <slot>delete_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>971</x>
+     <y>403</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>957</x>
+     <y>92</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>proceed_to_ability_to_pay()</slot>
+  <slot>close_window()</slot>
+  <slot>add_offense()</slot>
+  <slot>amend_offense()</slot>
+  <slot>delete_offense()</slot>
+ </slots>
+</ui>

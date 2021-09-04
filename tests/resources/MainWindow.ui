@@ -10,27 +10,26 @@
     <height>800</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
+    <width>0</width>
     <height>800</height>
    </size>
   </property>
   <property name="font">
    <font>
     <family>Palatino Linotype</family>
-    <pointsize>11</pointsize>
-    <weight>75</weight>
-    <italic>false</italic>
-    <bold>true</bold>
+    <pointsize>12</pointsize>
    </font>
   </property>
   <property name="windowTitle">
    <string>MuniEntry</string>
-  </property>
-  <property name="styleSheet">
-   <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
@@ -134,10 +133,8 @@ font-weight: bold;</string>
     </property>
     <property name="font">
      <font>
-      <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
+      <pointsize>14</pointsize>
       <weight>75</weight>
-      <italic>false</italic>
       <bold>true</bold>
       <underline>true</underline>
      </font>
@@ -157,10 +154,8 @@ font-weight: bold;</string>
     </property>
     <property name="font">
      <font>
-      <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
+      <pointsize>14</pointsize>
       <weight>75</weight>
-      <italic>false</italic>
       <bold>true</bold>
       <underline>true</underline>
      </font>
@@ -181,9 +176,8 @@ font-weight: bold;</string>
     <property name="font">
      <font>
       <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
+      <pointsize>14</pointsize>
       <weight>75</weight>
-      <italic>false</italic>
       <bold>true</bold>
       <underline>true</underline>
      </font>
@@ -296,10 +290,8 @@ font-weight: bold;</string>
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <family>Palatino Linotype</family>
-         <pointsize>11</pointsize>
+         <pointsize>14</pointsize>
          <weight>75</weight>
-         <italic>false</italic>
          <bold>true</bold>
         </font>
        </property>
@@ -309,31 +301,43 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QRadioButton" name="hemmeter_radioButton">
+      <widget class="QRadioButton" name="radioButton">
        <property name="text">
         <string>Judge Hemmeter</string>
        </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QRadioButton" name="rohrer_radioButton">
+      <widget class="QRadioButton" name="radioButton_2">
        <property name="text">
         <string>Judge Rohrer</string>
        </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
       </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QRadioButton" name="pelanda_radioButton">
+      <widget class="QRadioButton" name="radioButton_3">
        <property name="text">
         <string>Magistrate Pelanda</string>
        </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
       </widget>
      </item>
      <item row="0" column="4">
-      <widget class="QRadioButton" name="bunner_radioButton">
+      <widget class="QRadioButton" name="radioButton_4">
        <property name="text">
         <string>Magistrate Bunner</string>
        </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
       </widget>
      </item>
     </layout>
@@ -357,7 +361,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Entry</string>
+        <string>Green Sheet</string>
        </property>
       </widget>
      </item>
@@ -383,7 +387,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Minor Misdemeanor</string>
+        <string>Minor Misdemeanor Only</string>
        </property>
       </widget>
      </item>
@@ -435,7 +439,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -525,7 +529,7 @@ font-weight: bold;</string>
    <hints>
     <hint type="sourcelabel">
      <x>448</x>
-     <y>171</y>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel">
      <x>216</x>
@@ -541,7 +545,7 @@ font-weight: bold;</string>
    <hints>
     <hint type="sourcelabel">
      <x>336</x>
-     <y>171</y>
+     <y>167</y>
     </hint>
     <hint type="destinationlabel">
      <x>748</x>
@@ -557,4 +561,7 @@ font-weight: bold;</string>
   <slot>pushButtonOmnibusMotion()</slot>
   <slot>pushButtonDialog()</slot>
  </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

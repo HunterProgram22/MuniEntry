@@ -1,16 +1,16 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow
 from PyQt5.QtCore import pyqtSlot
 
 from views.main_window_ui import Ui_MainWindow
-from controllers.CriminalDialogs import CaseInformationDialog
 from controllers.MinorMisdemeanorDialogs import TrafficCaseInformationDialog
+
+#from controllers.CriminalDialogs import CaseInformationDialog
 
 
 class Window(QMainWindow, Ui_MainWindow):
     DIALOG_DICT = {
-        "GreenSheetButton": CaseInformationDialog,
         "MinorMisdemeanorTrafficButton": TrafficCaseInformationDialog,
     }
 
@@ -19,6 +19,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.connectSignalsSlots()
         self.bunner_radioButton.setChecked(True)
+        self.judicial_officer = "Bunner"
         self.bunner_radioButton.clicked.connect(self.check_judicial_officer)
         self.pelanda_radioButton.clicked.connect(self.check_judicial_officer)
         self.rohrer_radioButton.clicked.connect(self.check_judicial_officer)

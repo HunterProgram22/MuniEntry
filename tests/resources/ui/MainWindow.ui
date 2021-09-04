@@ -357,7 +357,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Entry</string>
+        <string>Green Sheet</string>
        </property>
       </widget>
      </item>
@@ -383,7 +383,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Minor Misdemeanor</string>
+        <string>Misdemeanor No Jail</string>
        </property>
       </widget>
      </item>
