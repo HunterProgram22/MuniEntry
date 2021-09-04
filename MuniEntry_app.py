@@ -28,6 +28,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self) #The self argument that is called is MainWindow
+        self.connect_signal_slots()
         self.judicial_officer_dict = {
             self.bunner_radioButton: "Bunner",
             self.pelanda_radioButton: "Pelanda",
@@ -57,6 +58,10 @@ class Window(QMainWindow, Ui_MainWindow):
     def connect_entry_buttons(self):
         for key in self.dialog_dict:
             key.clicked.connect(self.entry_button_dialog_start)
+
+    def connect_signal_slots(self):
+        """This function connects menubar options."""
+        self.menu_file_exit.triggered.connect(self.close)
 
     def entry_button_dialog_start(self):
         dialog = self.dialog_dict[self.sender()](self.judicial_officer)

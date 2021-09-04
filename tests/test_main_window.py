@@ -19,6 +19,10 @@ from controllers.MinorMisdemeanorDialogs import (
 )
 
 """Functions for Testing"""
+def start_TrafficCaseInformationDialog(qtbot, judicial_officer):
+    screen = TrafficCaseInformationDialog(judicial_officer)
+    qtbot.addWidget(screen)
+    return screen
 
 @pytest.fixture
 def app(qtbot):
@@ -42,8 +46,12 @@ def test_judicial_officer_buttons(app):
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     assert app.judicial_officer == "Bunner"
 
-def test_minor_misdemeanor_traffic_buton(app):
+def test_minor_misdemeanor_traffic_buton(app, qtbot):
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
+    dialog = start_TrafficCaseInformationDialog(qtbot, app.judicial_officer)
+    assert dialog.windowTitle() == "Case Information"
 
-def test_green_sheet_buton(app):
+def test_green_sheet_buton(app, qtbot):
     QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
+    dialog = start_TrafficCaseInformationDialog(qtbot, app.judicial_officer)
+    assert dialog.windowTitle() == "Case Information"

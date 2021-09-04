@@ -458,7 +458,7 @@ font-weight: bold;</string>
     <addaction name="actionOptions"/>
     <addaction name="actionExit"/>
     <addaction name="separator"/>
-    <addaction name="actionExit_2"/>
+    <addaction name="menu_file_exit"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -491,7 +491,7 @@ font-weight: bold;</string>
     <string>Templates</string>
    </property>
   </action>
-  <action name="actionExit_2">
+  <action name="menu_file_exit">
    <property name="text">
     <string>Exit</string>
    </property>
