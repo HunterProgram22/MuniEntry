@@ -922,6 +922,25 @@ border-color: rgb(160, 48, 35);</string>
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="cancelButton">
+    <property name="geometry">
+     <rect>
+      <x>835</x>
+      <y>12</y>
+      <width>141</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(160, 160, 160);</string>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QFrame" name="frame_4">
    <property name="geometry">
@@ -1663,6 +1682,22 @@ border-color: rgb(160, 48, 35);</string>
     <hint type="destinationlabel">
      <x>214</x>
      <y>232</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>TrafficCaseInformationDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>936</x>
+     <y>33</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>910</x>
+     <y>618</y>
     </hint>
    </hints>
   </connection>

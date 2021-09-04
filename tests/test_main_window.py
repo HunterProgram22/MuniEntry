@@ -50,10 +50,8 @@ def test_minor_misdemeanor_traffic_buton(app, qtbot):
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
     dialog = start_TrafficCaseInformationDialog(qtbot, app.judicial_officer)
     assert dialog.windowTitle() == "Case Information"
-    #dialog.close_window() - need to figure out how to close dialog window for testing
 
 def test_green_sheet_buton(app, qtbot):
     QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
     dialog = start_TrafficCaseInformationDialog(qtbot, app.judicial_officer)
     assert dialog.windowTitle() == "Case Information"
-    #dialog.done(0)

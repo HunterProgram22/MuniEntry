@@ -7,10 +7,9 @@ from views.main_window_ui import Ui_MainWindow
 from controllers.MinorMisdemeanorDialogs import TrafficCaseInformationDialog
 
 class Window(QMainWindow, Ui_MainWindow):
-    """The MainWindow of the application loads the view that is created
-    initially from QtDesigner. If changes to the view are made then the command
-    'pyuic5 -o views/main_window_ui.py resources/ui/MainWindow.ui' must be
-    run to update changes to the view.
+    """The MainWindow of the application.  If changes to the view are made in
+    QtDesigner then the command 'pyuic5 -o views/main_window_ui.py
+    resources/ui/MainWindow.ui' must be run to update changes to the view.
 
     All slots and signals are connected after the view is created. Slots and signals
     can be linked in the view (using QtDesigner or directly in the view file after
@@ -23,12 +22,12 @@ class Window(QMainWindow, Ui_MainWindow):
     connect_judicial_officer_buttons.
 
     :dialog_dict: - If a new entry button is added to the view then a new key:value
-    pair needs to be added to dialog_dict (key: buttonName, value: dialog-to-be-called).
+    pair needs to be added to dialog_dict (key: buttonName, value: dialogObject).
     """
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self) #The self argument that is called is MainWindow
-        self.connect_signal_slots()
+        self.connect_menu_signal_slots()
         self.judicial_officer_dict = {
             self.bunner_radioButton: "Bunner",
             self.pelanda_radioButton: "Pelanda",
@@ -57,13 +56,12 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_entry_buttons(self):
         for key in self.dialog_dict:
-            key.clicked.connect(self.entry_button_dialog_start)
+            key.clicked.connect(self.start_dialog_from_entry_button)
 
-    def connect_signal_slots(self):
-        """This function connects menubar options."""
+    def connect_menu_signal_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
 
-    def entry_button_dialog_start(self):
+    def start_dialog_from_entry_button(self):
         dialog = self.dialog_dict[self.sender()](self.judicial_officer)
         dialog.exec()
 
