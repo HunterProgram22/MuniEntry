@@ -5,7 +5,9 @@ class CaseInformation(object):
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""
 
-    def __init__(self):
+    def __init__(self, judicial_officer):
+        self.judicial_officer = judicial_officer
+        #print(self.judicial_officer)
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None

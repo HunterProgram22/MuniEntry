@@ -309,43 +309,31 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QRadioButton" name="radioButton">
+      <widget class="QRadioButton" name="hemmeter_radioButton">
        <property name="text">
         <string>Judge Hemmeter</string>
        </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QRadioButton" name="radioButton_2">
+      <widget class="QRadioButton" name="rohrer_radioButton">
        <property name="text">
         <string>Judge Rohrer</string>
        </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
       </widget>
      </item>
      <item row="0" column="3">
-      <widget class="QRadioButton" name="radioButton_3">
+      <widget class="QRadioButton" name="pelanda_radioButton">
        <property name="text">
         <string>Magistrate Pelanda</string>
        </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
       </widget>
      </item>
      <item row="0" column="4">
-      <widget class="QRadioButton" name="radioButton_4">
+      <widget class="QRadioButton" name="bunner_radioButton">
        <property name="text">
         <string>Magistrate Bunner</string>
        </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
       </widget>
      </item>
     </layout>
@@ -536,8 +524,8 @@ font-weight: bold;</string>
    <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>125</x>
-     <y>69</y>
+     <x>448</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>216</x>
@@ -552,8 +540,8 @@ font-weight: bold;</string>
    <slot>pushButtonDialog()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>723</x>
-     <y>72</y>
+     <x>336</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>748</x>
@@ -569,7 +557,4 @@ font-weight: bold;</string>
   <slot>pushButtonOmnibusMotion()</slot>
   <slot>pushButtonDialog()</slot>
  </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>

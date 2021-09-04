@@ -18,13 +18,28 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)
         self.connectSignalsSlots()
+        self.bunner_radioButton.setChecked(True)
+        self.bunner_radioButton.clicked.connect(self.check_judicial_officer)
+        self.pelanda_radioButton.clicked.connect(self.check_judicial_officer)
+        self.rohrer_radioButton.clicked.connect(self.check_judicial_officer)
+        self.hemmeter_radioButton.clicked.connect(self.check_judicial_officer)
+
+    def check_judicial_officer(self):
+        if self.bunner_radioButton.isChecked():
+            self.judicial_officer = "Bunner"
+        elif self.pelanda_radioButton.isChecked():
+            self.judicial_officer = "Pelanda"
+        elif self.rohrer_radioButton.isChecked():
+            self.judicial_officer = "Rohrer"
+        elif self.hemmeter_radioButton.isChecked():
+            self.judicial_officer = "Hemmeter"
 
     def connectSignalsSlots(self):
         pass
 
     def pushButtonDialog(self):
         sending_button = self.sender()
-        dialog = Window.DIALOG_DICT[sending_button.objectName()]()
+        dialog = Window.DIALOG_DICT[sending_button.objectName()](self.judicial_officer)
         dialog.exec()
 
 

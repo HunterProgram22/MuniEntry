@@ -17,14 +17,13 @@ DB_PATH = PATH + "\\resources\\db\\"
 
 
 class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformationDialog):
-    def __init__(self, parent=None):
+    def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
-        self.case_information = CaseInformation()
+        self.case_information = CaseInformation(judicial_officer)
         self.offense_count = 0
         self.delete_button_index = 0 #This is used to index a delete button to the charge list
         self.delete_button_list = [] #This is used to map a delete button to a charge in charge list
-        self.template = TEMPLATE_PATH + "No_Jail_Traffic_Template.docx"
-        self.template_name = "Traffic Judgment Entry"
+        self.set_template()
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
         self.database.open()
@@ -35,6 +34,21 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
         self.offense_choice_box.addItems(self.offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    def set_template(self):
+        if self.case_information.judicial_officer == "Bunner":
+            self.template = TEMPLATE_PATH + "Bunner_No_Jail_Traffic_Template.docx"
+            self.template_name = "Traffic Judgment Entry"
+        elif self.case_information.judicial_officer == "Pelanda":
+            self.template = TEMPLATE_PATH + "Pelanda_No_Jail_Traffic_Template.docx"
+            self.template_name = "Traffic Judgment Entry"
+        elif self.case_information.judicial_officer == "Rohrer":
+            self.template = TEMPLATE_PATH + "Rohrer_No_Jail_Traffic_Template.docx"
+            self.template_name = "Traffic Judgment Entry"
+        elif self.case_information.judicial_officer == "Hemmeter":
+            self.template = TEMPLATE_PATH + "Hemmeter_No_Jail_Traffic_Template.docx"
+            self.template_name = "Traffic Judgment Entry"
+
 
     def amend_offense(self):
         AmendOffenseDialog(self.case_information).exec()
