@@ -229,8 +229,6 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuView.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.GreenSheetButton.clicked.connect(MainWindow.pushButtonDialog)
-        self.MinorMisdemeanorTrafficButton.clicked.connect(MainWindow.pushButtonDialog)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -256,9 +254,9 @@ class Ui_MainWindow(object):
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
         self.pelanda_radioButton.setText(_translate("MainWindow", "Magistrate Pelanda"))
         self.bunner_radioButton.setText(_translate("MainWindow", "Magistrate Bunner"))
-        self.GreenSheetButton.setText(_translate("MainWindow", "Green Sheet"))
+        self.GreenSheetButton.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_5.setText(_translate("MainWindow", "Entry"))
-        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Misdemeanor No Jail"))
+        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
         self.FinalJudgmentEntryButton_2.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_3.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_4.setText(_translate("MainWindow", "Entry"))
