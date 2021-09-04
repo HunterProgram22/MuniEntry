@@ -45,5 +45,5 @@ def test_judicial_officer_buttons(app):
 def test_minor_misdemeanor_traffic_buton(app):
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
 
-#def test_green_sheet_buton(app):
-    #QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
+def test_green_sheet_buton(app):
+    QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
