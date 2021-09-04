@@ -1,16 +1,15 @@
 import pytest
-
 import os, sys, inspect
+from time import sleep
+
+from pytestqt.plugin import QtBot
+from PyQt5 import QtCore
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
+
 import MuniEntry_app
-
-from time import sleep
-from pytestqt.plugin import QtBot
-from PyQt5 import QtCore
-
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
 )
@@ -20,9 +19,9 @@ from controllers.MinorMisdemeanorDialogs import (
 
 """Functions for Testing"""
 def start_TrafficCaseInformationDialog(qtbot, judicial_officer):
-    screen = TrafficCaseInformationDialog(judicial_officer)
-    qtbot.addWidget(screen)
-    return screen
+    dialog = TrafficCaseInformationDialog(judicial_officer)
+    qtbot.addWidget(dialog)
+    return dialog
 
 @pytest.fixture
 def app(qtbot):

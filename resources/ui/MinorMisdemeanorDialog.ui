@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TrafficCaseInformationDialog</class>
- <widget class="QDialog" name="TrafficCaseInformationDialog">
+ <class>MinorMisdemeanorDialog</class>
+ <widget class="QDialog" name="MinorMisdemeanorDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -132,7 +132,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Case Information</string>
+   <string>Minor Misdemeanor Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -777,12 +777,100 @@ border-color: rgb(160, 48, 35);</string>
       <x>11</x>
       <y>11</y>
       <width>471</width>
-      <height>102</height>
+      <height>104</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
      <item row="0" column="0">
       <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Case Number:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>Def. First Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Def. Last Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="case_number_lineEdit">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QPushButton" name="cancelButton">
+    <property name="geometry">
+     <rect>
+      <x>835</x>
+      <y>12</y>
+      <width>141</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(160, 160, 160);</string>
+    </property>
+    <property name="text">
+     <string>Cancel</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>13</y>
+      <width>331</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_26">
        <property name="text">
         <string>Date:</string>
        </property>
@@ -816,14 +904,17 @@ border-color: rgb(160, 48, 35);</string>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="label_4">
+       <property name="toolTip">
+        <string/>
+       </property>
        <property name="text">
-        <string>Case Number:</string>
+        <string>Operator License No:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="case_number">
+      <widget class="QLineEdit" name="operator_license_number_lineEdit">
        <property name="maximumSize">
         <size>
          <width>500</width>
@@ -836,61 +927,6 @@ border-color: rgb(160, 48, 35);</string>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>Defendant Name: </string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="defendant_name">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>12</y>
-      <width>333</width>
-      <height>66</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout_4">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="text">
-        <string>Operator License No:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="operator_license_number">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="label_5">
        <property name="toolTip">
         <string/>
@@ -900,7 +936,7 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <widget class="QDateEdit" name="dateEdit">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -921,25 +957,6 @@ border-color: rgb(160, 48, 35);</string>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="cancelButton">
-    <property name="geometry">
-     <rect>
-      <x>835</x>
-      <y>12</y>
-      <width>141</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <property name="focusPolicy">
-     <enum>Qt::NoFocus</enum>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(160, 160, 160);</string>
-    </property>
-    <property name="text">
-     <string>Cancel</string>
-    </property>
    </widget>
   </widget>
   <widget class="QFrame" name="frame_4">
@@ -1141,7 +1158,7 @@ border-color: rgb(160, 48, 35);</string>
      <x>510</x>
      <y>620</y>
      <width>481</width>
-     <height>161</height>
+     <height>171</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1188,7 +1205,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>40</y>
       <width>461</width>
-      <height>111</height>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1272,9 +1289,8 @@ border-color: rgb(160, 48, 35);</string>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>case_number</tabstop>
-  <tabstop>defendant_name</tabstop>
-  <tabstop>operator_license_number</tabstop>
+  <tabstop>defendant_first_name_lineEdit</tabstop>
+  <tabstop>operator_license_number_lineEdit</tabstop>
   <tabstop>dateEdit</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>statute_choice_box</tabstop>
@@ -1302,57 +1318,9 @@ border-color: rgb(160, 48, 35);</string>
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>defendant_name</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>490</x>
-     <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>operator_license_number</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>831</x>
-     <y>50</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>case_number</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>490</x>
-     <y>79</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>addOffenseButton</sender>
    <signal>pressed()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>add_offense()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1368,7 +1336,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>createEntryButton</sender>
    <signal>released()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1384,7 +1352,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>createEntryButton</sender>
    <signal>clicked()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>create_entry()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1400,7 +1368,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>createEntryButton</sender>
    <signal>pressed()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>update_case_information()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1416,7 +1384,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>ability_to_pay_box</sender>
    <signal>currentTextChanged(QString)</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>set_pay_date()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1496,7 +1464,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>offense_choice_box</sender>
    <signal>currentTextChanged(QString)</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>set_statute()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1608,7 +1576,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>amendOffenseButton</sender>
    <signal>clicked()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>amend_offense()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1656,7 +1624,7 @@ border-color: rgb(160, 48, 35);</string>
   <connection>
    <sender>statute_choice_box</sender>
    <signal>currentTextChanged(QString)</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>set_offense()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1686,9 +1654,57 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>case_number_lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>962</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>79</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>operator_license_number_lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>962</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>831</x>
+     <y>50</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>defendant_first_name_lineEdit</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>962</x>
+     <y>94</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>cancelButton</sender>
    <signal>clicked()</signal>
-   <receiver>TrafficCaseInformationDialog</receiver>
+   <receiver>MinorMisdemeanorDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

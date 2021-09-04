@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow
 from PyQt5.QtCore import pyqtSlot
 
 from views.main_window_ui import Ui_MainWindow
-from controllers.MinorMisdemeanorDialogs import TrafficCaseInformationDialog
+from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
 
 class Window(QMainWindow, Ui_MainWindow):
     """The MainWindow of the application.  If changes to the view are made in
@@ -35,8 +35,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.hemmeter_radioButton: "Hemmeter",
         }
         self.dialog_dict = {
-            self.MinorMisdemeanorTrafficButton: TrafficCaseInformationDialog,
-            self.GreenSheetButton: TrafficCaseInformationDialog,
+            self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
+            self.GreenSheetButton: MinorMisdemeanorDialog,
         }
 
         #Set View and Connect Signals

@@ -5,7 +5,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from views.traffic_case_information_dialog_ui import Ui_TrafficCaseInformationDialog
+from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
 from controllers.CriminalDialogs import BaseCriminalDialog, AmendOffenseDialog
 from controllers.DatabaseCreation import create_offense_list
@@ -16,7 +16,7 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 
 
-class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformationDialog):
+class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
@@ -115,7 +115,7 @@ class TrafficCaseInformationDialog(BaseCriminalDialog, Ui_TrafficCaseInformation
                 self.charges_gridLayout.removeItem(layout_item)
 
     def update_case_information(self):
-        self.case_information.case_number = self.case_number.text()
+        self.case_information.case_number = self.case_number_lineEdit.text()
         self.case_information.defendant_name = self.defendant_name.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
             "MMMM dd, yyyy"
