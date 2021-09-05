@@ -26,9 +26,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.delete_button_index = 0  # Index to delete button from charge list
         self.delete_button_list = []  # Contains delete buttons for charge in charge list
         self.set_template()
-        self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
-        self.database.open()
+        self.set_database()
 
         # View Setup
         self.offense_list, self.statute_list = create_offense_list()
@@ -36,6 +34,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_choice_box.addItems(self.offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    def set_database(self):
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
+        self.database.open()
 
     def set_template(self):
         template = TEMPLATE_DICT.get(self.case_information.judicial_officer)

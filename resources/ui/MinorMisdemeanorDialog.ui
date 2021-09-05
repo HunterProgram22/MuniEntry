@@ -193,7 +193,7 @@ font-weight: bold;</string>
         <string notr="true">background-color: rgb(160, 160, 160);</string>
        </property>
        <property name="text">
-        <string>Add Offense</string>
+        <string>Add Charge</string>
        </property>
       </widget>
      </item>
