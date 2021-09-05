@@ -7,8 +7,8 @@ from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    """The MainWindow of the application.  If changes to the view are made in
-    QtDesigner then the command 'pyuic5 -o views/main_window_ui.py
+    """The MainWindow of the application.  If changes to the view (Ui_MainWindow)
+    are made in QtDesigner then the command 'pyuic5 -o views/main_window_ui.py
     resources/ui/MainWindow.ui' must be run to update changes to the view.
 
     All slots and signals are connected after the view is created. Slots and

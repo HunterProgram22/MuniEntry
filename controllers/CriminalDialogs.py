@@ -174,10 +174,10 @@ class OviDialog(BaseCriminalDialog, Ui_OviDialog):
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
-    def __init__(self, case_information, parent=None):
+    def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
-        self.set_case_information_banner()
+        #self.set_case_information_banner()
 
     def amend_offense(self):
         self.amend_offense_details = AmendOffenseDetails()

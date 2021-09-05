@@ -76,6 +76,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_count += 1
         self.add_offense_to_view()
 
+
     def add_offense_to_view(self):
         """Adds the offense that was added through add_offense method to the view/GUI."""
         row = 0
@@ -93,6 +94,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete_button.clicked.connect(self.delete_offense)
         self.charges_gridLayout.addWidget(delete_button, row, column)
         self.case_information.total_charges = self.offense_count
+        return None
+
 
     def delete_offense(self):
         """TEST: Make sure it is deleting the offense based on the button for that offense."""
