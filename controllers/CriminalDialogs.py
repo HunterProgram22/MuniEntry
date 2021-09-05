@@ -43,7 +43,7 @@ class BaseCriminalDialog(QDialog):
         self.close()
 
     def create_entry(self):
-        self.doc = DocxTemplate(self.template)
+        self.doc = DocxTemplate(self.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
