@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/AmendOffenseDialog.ui'
+# Form implementation generated from reading ui file 'resources/ui/AmendOffenseDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -122,7 +122,6 @@ class Ui_AmendOffenseDialog(object):
         self.pushButton_2.clicked.connect(self.amended_charge_box.clearEditText)
         self.pushButton_2.clicked.connect(self.pursuant_to_box.clearEditText)
         self.continueButton.pressed.connect(AmendOffenseDialog.amend_offense)
-        self.continueButton.clicked.connect(AmendOffenseDialog.proceed_to_sentencing)
         QtCore.QMetaObject.connectSlotsByName(AmendOffenseDialog)
         AmendOffenseDialog.setTabOrder(self.motion_decision_box, self.original_charge_box)
         AmendOffenseDialog.setTabOrder(self.original_charge_box, self.amended_charge_box)

@@ -9,7 +9,7 @@ from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
 from models.Templates import TEMPLATE_DICT
 from controllers.CriminalDialogs import BaseCriminalDialog, AmendOffenseDialog
-from controllers.DatabaseCreation import create_offense_list
+from resources.db.DatabaseCreation import create_offense_list
 
 
 PATH = str(pathlib.Path().absolute())
@@ -162,7 +162,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """Function to set the pay date based on the amount of time given the
         defendant to pay his costs and fines."""
         if self.ability_to_pay_box.currentText() == "forthwith":
-            self.balance_due_date.setDate(QDate.currentDate())
+            self.balance_due_date.setDate(QDate.currentDate().addDays(0))
         elif self.ability_to_pay_box.currentText() == "within 30 days":
             self.balance_due_date.setDate(QDate.currentDate().addDays(30))
         elif self.ability_to_pay_box.currentText() == "within 60 days":
