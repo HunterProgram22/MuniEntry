@@ -16,34 +16,57 @@ PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
-
+CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
+    """This dialog is used when there will not be any jail time imposed. It does
+    not inherently limit cases to minor misdemeanors or unclassified misdemeanors,
+    however, it does not include fields to enter jail time."""
+
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
-        self.offense_count = 0
-        self.delete_button_index = 0  # Index to delete button from charge list
-        self.delete_button_list = []  # Contains delete buttons for charge in charge list
-        self.set_template()
+        self.modify_view()
+        self.set_counters()
         self.set_database()
+        self.set_template()
 
-        # View Setup
+    def modify_view(self):
+        """The modify view method updates the view that is created on init. Place
+        items in this method that can't be added directly in QtDesigner so that
+        they don't need to be changed in the view file each time pyuic5 is run."""
         self.offense_list, self.statute_list = create_offense_list()
         self.statute_choice_box.addItems(self.statute_list)
         self.offense_choice_box.addItems(self.offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
+    def set_counters(self):
+        """The counters track whether an item is added to the model/view. The
+        delete button index is used to specify which delete button in the delete
+        button list needs to be deleted when a charge is deleted."""
+        self.charge_count = 0
+        self.delete_button_index = 0  # Index to delete button from charge list
+        self.delete_button_list = []  # Contains delete buttons for charge in charge list
+
     def set_database(self):
+        """
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        """
         self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(DB_PATH + "\\charges.sqlite")
+        self.database.setDatabaseName(CHARGES_DATABASE)
         self.database.open()
 
     def set_template(self):
+        """The TEMPLATE_DICT stores a template for each judicial officer. In the
+        future this should be connected to set the template from a database with
+        the information to make updating easier."""
         template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
         self.template_path = template.template_path
         self.template_name = template.template_name
+
+        """PAUSED REFACTORING"""
 
     def amend_offense(self):
         AmendOffenseDialog(self.case_information).exec()
@@ -68,7 +91,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge(self.criminal_charge)
-        self.offense_count += 1
+        self.charge_count += 1
         self.add_offense_to_view()
 
     def add_offense_to_view(self):
@@ -86,7 +109,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
         delete_button.clicked.connect(self.delete_offense)
         self.charges_gridLayout.addWidget(delete_button, row, column)
-        self.case_information.total_charges = self.offense_count
+        self.case_information.total_charges = self.charge_count
         return None
 
     def delete_offense(self):
@@ -95,7 +118,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         del self.case_information.charges_list[index]
         del self.delete_button_list[index]
         self.case_information.total_charges -= 1
-        self.offense_count -= 1
+        self.charge_count -= 1
         self.delete_offense_from_view()
 
     def delete_offense_from_view(self):
@@ -159,13 +182,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 break
 
     def set_pay_date(self):
-        """Function to set the pay date based on the amount of time given the
-        defendant to pay his costs and fines."""
-        if self.ability_to_pay_box.currentText() == "forthwith":
-            self.balance_due_date.setDate(QDate.currentDate().addDays(0))
-        elif self.ability_to_pay_box.currentText() == "within 30 days":
-            self.balance_due_date.setDate(QDate.currentDate().addDays(30))
-        elif self.ability_to_pay_box.currentText() == "within 60 days":
-            self.balance_due_date.setDate(QDate.currentDate().addDays(60))
-        elif self.ability_to_pay_box.currentText() == "within 90 days":
-            self.balance_due_date.setDate(QDate.currentDate().addDays(90))
+        self.pay_date_dict = {
+            "forthwith" : 0,
+            "within 30 days" : 30,
+            "within 60 days" : 60,
+            "within 90 days" : 90,
+        }
+        days = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+        self.balance_due_date.setDate(QDate.currentDate().addDays(days))
