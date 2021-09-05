@@ -1,32 +1,34 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from views.main_window_ui import Ui_MainWindow
 from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
+
 
 class Window(QMainWindow, Ui_MainWindow):
     """The MainWindow of the application.  If changes to the view are made in
     QtDesigner then the command 'pyuic5 -o views/main_window_ui.py
     resources/ui/MainWindow.ui' must be run to update changes to the view.
 
-    All slots and signals are connected after the view is created. Slots and signals
-    can be linked in the view (using QtDesigner or directly in the view file after
-    pyuic5 is run), however, connecting in MainWindow (class Window) is generally
-    cleaner and allows ease of scalabilty.
+    All slots and signals are connected after the view is created. Slots and
+    signals can be linked in the view (using QtDesigner or directly in the view
+    file after pyuic5 is run), however, connecting in MainWindow (class Window)
+    is generally cleaner and allows ease of scalabilty.
 
     :judicial_officer_dict: - If a new judicial officer is added then
-    they only need a radio button added to the view (key: self.lastname_radioButton,
-    value: "Lastname").The button will be connected to the slot for self.judicial_officer by the function
+    they only need a radio button added to the view (key:
+    self.lastname_radioButton, value: "Lastname").The button will be connected
+    to the slot for self.judicial_officer by the function
     connect_judicial_officer_buttons.
 
-    :dialog_dict: - If a new entry button is added to the view then a new key:value
-    pair needs to be added to dialog_dict (key: buttonName, value: dialogObject).
+    :dialog_dict: - If a new entry button is added to the view then a new
+    key:value pair needs to be added to dialog_dict (key: buttonName, value:
+    dialogObject).
     """
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setupUi(self) #The self argument that is called is MainWindow
+        self.setupUi(self)  # The self argument that is called is MainWindow
         self.connect_menu_signal_slots()
         self.judicial_officer_dict = {
             self.bunner_radioButton: "Bunner",
@@ -39,7 +41,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.GreenSheetButton: MinorMisdemeanorDialog,
         }
 
-        #Set View and Connect Signals
+        # Set View and Connect Signals
         self.bunner_radioButton.setChecked(True)
         self.judicial_officer = "Bunner"
         self.connect_judicial_officer_buttons()
