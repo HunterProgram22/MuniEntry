@@ -18,10 +18,11 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
+
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     """This dialog is used when there will not be any jail time imposed. It does
-    not inherently limit cases to minor misdemeanors or unclassified misdemeanors,
-    however, it does not include fields to enter jail time."""
+    not inherently limit cases to minor misdemeanors or unclassified
+    misdemeanors, however, it does not include fields to enter jail time."""
 
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
@@ -32,9 +33,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.set_template()
 
     def modify_view(self):
-        """The modify view method updates the view that is created on init. Place
-        items in this method that can't be added directly in QtDesigner so that
-        they don't need to be changed in the view file each time pyuic5 is run."""
+        """The modify view method updates the view that is created on init.
+        Place items in this method that can't be added directly in QtDesigner
+        so that they don't need to be changed in the view file each time pyuic5
+        is run."""
         self.offense_list, self.statute_list = create_offense_list()
         self.statute_choice_box.addItems(self.statute_list)
         self.offense_choice_box.addItems(self.offense_list)
@@ -46,8 +48,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete button index is used to specify which delete button in the delete
         button list needs to be deleted when a charge is deleted."""
         self.charge_count = 0
-        self.delete_button_index = 0  # Index to delete button from charge list
-        self.delete_button_list = []  # Contains delete buttons for charge in charge list
+        self.delete_button_index = 0
+        self.delete_button_list = []
 
     def set_database(self):
         """
@@ -95,11 +97,14 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_offense_to_view()
 
     def add_offense_to_view(self):
-        """Adds the offense that was added through add_offense method to the view/GUI."""
+        """Adds the offense that was added through add_offense method to the
+        view/GUI."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list)-1
-        charge_dict = (vars(self.case_information.charges_list[added_charge_index]))
+        charge_dict = (vars(
+            self.case_information.charges_list[added_charge_index]
+        ))
         for key, value in charge_dict.items():
             if value is not None:
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
@@ -113,7 +118,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         return None
 
     def delete_offense(self):
-        """TEST: Make sure it is deleting the offense based on the button for that offense."""
+        """TEST: Make sure it is deleting the offense based on the button
+        for that offense."""
         index = self.delete_button_list.index(self.sender())
         del self.case_information.charges_list[index]
         del self.delete_button_list[index]
@@ -151,7 +157,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             "offense LIKE '%' || :key || '%'"
             )
         query.bindValue(":key", key)
-        """FIX: When typing in editable box this calls the query for every keystroke"""
+        """FIX: When typing in editable box this calls the query for every
+        keystroke"""
         query.exec()
         while query.next():
             offense = query.value(1)
@@ -170,7 +177,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             "statute LIKE '%' || :key || '%'"
             )
         query.bindValue(":key", key)
-        """FIX: When typing in editable box this calls the query for every keystroke"""
+        """FIX: When typing in editable box this calls the query for every
+        keystroke"""
         query.exec()
         while query.next():
             offense = query.value(1)
@@ -183,10 +191,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def set_pay_date(self):
         self.pay_date_dict = {
-            "forthwith" : 0,
-            "within 30 days" : 30,
-            "within 60 days" : 60,
-            "within 90 days" : 90,
+            "forthwith": 0,
+            "within 30 days": 30,
+            "within 60 days": 60,
+            "within 90 days": 90,
         }
         days = self.pay_date_dict[self.ability_to_pay_box.currentText()]
         self.balance_due_date.setDate(QDate.currentDate().addDays(days))
