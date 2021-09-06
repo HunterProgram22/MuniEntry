@@ -176,4 +176,4 @@ def test_amend_offense(dialog, qtbot):
     dialog.windowTitle() == "Amendment"
 
 def test_create_entry(app, dialog):
-    pass
+    QtBot.mouseClick(dialog.createEntryButton, QtCore.Qt.LeftButton)

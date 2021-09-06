@@ -31,6 +31,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject).
     """
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
