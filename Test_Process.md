@@ -8,6 +8,6 @@
 8. Run and clean with Pylint
 9. Run Black then Pylint
 10. Run Pytest
-11. Run Rope - to make changes across codebase 
+11. Run Rope - to make changes across codebase
 12. Run Wily
 13. Run pdoc
