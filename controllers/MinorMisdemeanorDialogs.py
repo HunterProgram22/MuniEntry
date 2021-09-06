@@ -1,7 +1,6 @@
 """The controller module for the minor misdemeanor dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a databse."""
-
 import pathlib
 
 from PyQt5 import QtCore
@@ -172,9 +171,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 layout_item.widget().deleteLater()
                 self.charges_gridLayout.removeItem(layout_item)
 
-    """PAUSE REFACTORING"""
-
     def update_case_information(self):
+        """PAUSE REFACTORING"""
         self.case_information.case_number = self.case_number_lineEdit.text()
         self.case_information.defendant_last_name = (
             self.defendant_last_name_lineEdit.text()

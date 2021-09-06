@@ -11,7 +11,7 @@
 11. Run Rope - to make changes across codebase
 12. Run Wily https://towardsdatascience.com/simplify-your-python-code-automating-code-complexity-analysis-with-wily-5c1e90c9a485
   Maintainability Index
-    The MI is bound between 0 and 100 in theory but not in practice (most software implementations cap it at 100). The original paper introducing the metric noted the following thresholds: if your code’s MI is below 65 is is hard to maintain; if it’s 85 or higher, your code is easy to maintain. Anything between 65 and 85 is moderately maintainable (Coleman, Lowther, and Oman, 1994). The rescaled version (to between 0 and 100) used by Visual Studio² puts the thresholds at 0 to 9 for low maintainability, 10–19 for moderate, and 20 and above for high maintainability respectively. (Please note that different IDEs and libraries may use different thresholds.)
+    The MI is bound between 0 and 100 in theory but not in practice (most software implementations cap it at 100). The original paper introducing the metric noted the following thresholds: if your code’s MI is below 65 it is hard to maintain; if it’s 85 or higher, your code is easy to maintain. Anything between 65 and 85 is moderately maintainable (Coleman, Lowther, and Oman, 1994). The rescaled version (to between 0 and 100) used by Visual Studio² puts the thresholds at 0 to 9 for low maintainability, 10–19 for moderate, and 20 and above for high maintainability respectively. (Please note that different IDEs and libraries may use different thresholds.)
   Cyclomatic complexity
     The higher the value of the CYC, the more complex your code. The Software Engineering Institute at Carnegie Mellon defines the following ranges (see this publication, p. 147):
     1–10: low risk, simple program;
