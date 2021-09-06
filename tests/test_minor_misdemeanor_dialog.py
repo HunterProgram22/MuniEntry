@@ -26,6 +26,7 @@ def add_case_information(dialog):
     QtBot.keyClicks(dialog.case_number_lineEdit, "21TRC1234")
     QtBot.keyClicks(dialog.defendant_first_name_lineEdit, "John")
     QtBot.keyClicks(dialog.defendant_last_name_lineEdit, "Smith")
+    QtBot.keyClicks(dialog.operator_license_number_lineEdit, "TF180780")
 
 def start_minor_misdemeanor_dialog(qtbot, judicial_officer):
     dialog = MinorMisdemeanorDialog(judicial_officer)
@@ -69,6 +70,7 @@ def test_case_information_dialog(app, dialog):
     assert dialog.case_number_lineEdit.text() == "21TRC1234"
     assert dialog.defendant_first_name_lineEdit.text() == "John"
     assert dialog.defendant_last_name_lineEdit.text() == "Smith"
+    assert dialog.operator_license_number_lineEdit.text() == "TF180780"
 
 def test_offense_to_statute(app, dialog):
     dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
@@ -169,6 +171,20 @@ def test_fines_due_date(app, dialog):
     assert dialog.balance_due_date.date() == TODAY + timedelta(days=60)
     dialog.ability_to_pay_box.setCurrentText("within 90 days")
     assert dialog.balance_due_date.date() == TODAY + timedelta(days=90)
+
+def test_fra_in_file_and_court(app, dialog):
+    dialog.fra_in_file_box.setCurrentText("Yes")
+    assert dialog.case_information.fra_in_file == True
+    dialog.fra_in_file_box.setCurrentText("No")
+    assert dialog.case_information.fra_in_file == False
+    dialog.fra_in_file_box.setCurrentText("N/A")
+    assert dialog.case_information.fra_in_file == False
+    dialog.fra_in_court_box.setCurrentText("Yes")
+    assert dialog.case_information.fra_in_court == True
+    dialog.fra_in_court_box.setCurrentText("No")
+    assert dialog.case_information.fra_in_court == False
+    dialog.fra_in_court_box.setCurrentText("N/A")
+    assert dialog.case_information.fra_in_court == False
 
 def test_amend_offense(dialog, qtbot):
     QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)

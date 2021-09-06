@@ -1,9 +1,9 @@
 WORKING TODO LIST
 
-1. Connect FRA information
+1. Connect FRA information to template
 2. Fix Amend Offense button/dialog
 3. Add license suspension conditions
-4. Switch last name and first name on view
+4.  
 5. Finish refactoring MinorMisdemeanorDialogs.py
 6. Refactor CriminalDialogs.py
 7. Refactor CaseInformation.py
