@@ -10,7 +10,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-import munientry_app
+import MuniEntry_app
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
     AmendOffenseDialog,
@@ -44,13 +44,13 @@ def add_offense_speeding_25(dialog):
     dialog.finding_choice_box.setCurrentText("Guilty")
     dialog.fines_amount.setText("50")
     dialog.fines_suspended.setText("25")
-    QtBot.mouseClick(dialog.addOffenseButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
 
 @pytest.fixture
 def app(qtbot):
-    test_munientry_app = munientry_app.Window()
-    qtbot.addWidget(test_munientry_app)
-    return test_munientry_app
+    test_MuniEntry_app = MuniEntry_app.Window()
+    qtbot.addWidget(test_MuniEntry_app)
+    return test_MuniEntry_app
 
 @pytest.fixture
 def dialog(app, qtbot):
@@ -107,7 +107,7 @@ def test_add_multiple_offenses(app, dialog):
     dialog.finding_choice_box.setCurrentText("Guilty")
     dialog.fines_amount.setText("75")
     dialog.fines_suspended.setText("0")
-    QtBot.mouseClick(dialog.addOffenseButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
     assert dialog.charges_gridLayout.itemAtPosition(0, 4).widget().text() == "Driving in Marked Lanes"
     assert dialog.charges_gridLayout.itemAtPosition(3, 4).widget().text() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(4, 4).widget().text() == "Guilty"
@@ -116,7 +116,7 @@ def test_add_multiple_offenses(app, dialog):
 
 def test_add_offense_and_delete_offense(app, dialog):
     add_offense_speeding_25(dialog)
-    QtBot.mouseClick(dialog.addOffenseButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(
         dialog.charges_gridLayout.itemAtPosition(8, 2).widget(),
         QtCore.Qt.LeftButton
@@ -176,4 +176,5 @@ def test_amend_offense(dialog, qtbot):
     dialog.windowTitle() == "Amendment"
 
 def test_create_entry(app, dialog):
+    """TODO: Add offenses to populate entry."""
     QtBot.mouseClick(dialog.createEntryButton, QtCore.Qt.LeftButton)

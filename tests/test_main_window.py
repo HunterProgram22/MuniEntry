@@ -9,7 +9,7 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-import munientry_app
+import MuniEntry_app
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
 )
@@ -25,9 +25,9 @@ def start_MinorMisdemeanorDialog(qtbot, judicial_officer):
 
 @pytest.fixture
 def app(qtbot):
-    test_munientry_app = munientry_app.Window()
-    qtbot.addWidget(test_munientry_app)
-    return test_munientry_app
+    test_MuniEntry_app = MuniEntry_app.Window()
+    qtbot.addWidget(test_MuniEntry_app)
+    return test_MuniEntry_app
 
 
 """TESTING"""

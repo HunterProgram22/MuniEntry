@@ -9,7 +9,7 @@ extension-pkg-allow-list=PyQt5
 # be loaded. Extensions are loading into the active Python interpreter and may
 # run arbitrary code. (This is an alternative name to extension-pkg-allow-list
 # for backward compatibility.)
-extension-pkg-whitelist=
+extension-pkg-whitelist=PyQt5
 
 # Specify a score threshold to be exceeded before program exits with error.
 fail-under=10.0
@@ -23,7 +23,7 @@ ignore-patterns=
 
 # Python code to execute, usually for sys.path manipulation such as
 # pygtk.require().
-#init-hook=
+init-hook='import sys; sys.path.append(r"C:\Users\Justin Kudela\AppData\Local\Programs\Python\Python39\MuniEntry")'
 
 # Use multiple processes to speed up Pylint. Specifying 0 will auto-detect the
 # number of processors available to use.

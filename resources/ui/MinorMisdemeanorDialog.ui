@@ -188,7 +188,7 @@ font-weight: bold;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="4" column="0">
-      <widget class="QPushButton" name="addOffenseButton">
+      <widget class="QPushButton" name="addChargeButton">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(160, 160, 160);</string>
        </property>
@@ -1205,7 +1205,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>40</y>
       <width>461</width>
-      <height>121</height>
+      <height>132</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1299,7 +1299,7 @@ border-color: rgb(160, 48, 35);</string>
   <tabstop>court_costs_box</tabstop>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
-  <tabstop>addOffenseButton</tabstop>
+  <tabstop>addChargeButton</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
@@ -1318,10 +1318,10 @@ border-color: rgb(160, 48, 35);</string>
  <resources/>
  <connections>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>pressed()</signal>
    <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>add_offense()</slot>
+   <slot>add_charge()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>962</x>
@@ -1398,7 +1398,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>finding_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -1414,7 +1414,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>fines_suspended</receiver>
    <slot>clear()</slot>
@@ -1430,7 +1430,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>fines_amount</receiver>
    <slot>clear()</slot>
@@ -1510,7 +1510,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>offense_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -1542,7 +1542,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>plea_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -1590,7 +1590,7 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>addOffenseButton</sender>
+   <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>statute_choice_box</receiver>
    <slot>clearEditText()</slot>
@@ -1665,7 +1665,7 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
     <hint type="destinationlabel">
      <x>490</x>
-     <y>79</y>
+     <y>51</y>
     </hint>
    </hints>
   </connection>
@@ -1680,8 +1680,8 @@ border-color: rgb(160, 48, 35);</string>
      <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>831</x>
-     <y>50</y>
+     <x>829</x>
+     <y>85</y>
     </hint>
    </hints>
   </connection>
@@ -1717,6 +1717,22 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>createEntryButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>close_event()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>845</x>
+     <y>816</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>789</x>
+     <y>809</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -1728,13 +1744,14 @@ border-color: rgb(160, 48, 35);</string>
   <slot>sentencing_dialog()</slot>
   <slot>proceed_to_sentencing()</slot>
   <slot>proceed_to_ovi()</slot>
-  <slot>add_offense()</slot>
+  <slot>add_charge()</slot>
   <slot>set_statute()</slot>
   <slot>set_pay_date()</slot>
   <slot>amend_offense()</slot>
   <slot>set_offense()</slot>
-  <slot>add_offense_to_view()</slot>
-  <slot>delete_offense()</slot>
-  <slot>delete_offense_from_view()</slot>
+  <slot>add_charge_to_view()</slot>
+  <slot>delete_charge()</slot>
+  <slot>delete_charge_from_view()</slot>
+  <slot>close_event()</slot>
  </slots>
 </ui>
