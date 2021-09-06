@@ -19,3 +19,4 @@
     21–50: high risk, very difficult program;
     50+: very high risk, untestable program.
 13. Run pdoc
+14. Update templates if variable names were changed

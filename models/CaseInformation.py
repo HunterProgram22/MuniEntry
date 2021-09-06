@@ -13,6 +13,7 @@ class CaseInformation(object):
         self.plaintiff_attorney_name = None
         self.waived_counsel = False
         self.defendant_last_name = None
+        self.defendant_first_name = None
         self.defendant_attorney_name = None
         self.plea_trial_date = None
         self.charges_list = []
@@ -36,6 +37,7 @@ class CaseInformation(object):
         self.formatted_case_information = {
             "case_number": self.case_number,
             "defendant_last_name": self.defendant_last_name,
+            "defendant_first_name": self.defendant_first_name,
             "waived_counsel": self.waived_counsel,
             "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,

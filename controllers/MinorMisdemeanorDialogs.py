@@ -177,6 +177,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.defendant_last_name = (
             self.defendant_last_name_lineEdit.text()
         )
+        self.case_information.defendant_first_name = (
+            self.defendant_first_name_lineEdit.text()
+        )
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
             "MMMM dd, yyyy"
         )
