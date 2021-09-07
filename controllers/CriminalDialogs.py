@@ -6,6 +6,7 @@ from PyQt5.uic import loadUi
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QLabel
+from PyQt5.QtSql import QSqlDatabase
 
 from views.case_information_dialog_ui import Ui_CaseInformationDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -14,10 +15,13 @@ from models.CaseInformation import (
     CriminalCharge,
     AmendOffenseDetails,
 )
+from resources.db.DatabaseCreation import create_offense_list
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\Templates\\"
 SAVE_PATH = PATH + "\\resources\\Saved\\"
+DB_PATH = PATH + "\\resources\\db\\"
+CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
 """TODO: Need to add maximize and minimize buttons for controllers."""
 
@@ -47,12 +51,19 @@ class BaseCriminalDialog(QDialog):
         )
 
     def set_case_information_banner(self):
-        self.defendant_name_label.setText(self.case_information.defendant_name)
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name = self.case_information.defendant_first_name,
+                defendant_last_name = self.case_information.defendant_last_name
+                )
+        )
         self.case_number_label.setText(self.case_information.case_number)
         if self.case_information.defendant_attorney_name is not None:
             self.defendant_attorney_name_label.setText(
                 "Attorney: " + self.case_information.defendant_attorney_name
             )
+        else:
+            self.defendant_attorney_name_label.setText("Attorney: None")
 
     def set_charges_grid(self):
         """TODO: the criminal charge is a list in case information so need to
@@ -132,6 +143,30 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
+        self.set_case_information_banner()
+        self.set_database()
+        self.modify_view()
+
+
+    def modify_view(self):
+        """The modify view method updates the view that is created on init.
+        Place items in this method that can't be added directly in QtDesigner
+        so that they don't need to be changed in the view file each time pyuic5
+        is run."""
+        self.offense_list, self.statute_list = create_offense_list()
+        self.original_charge_box.addItems(self.offense_list)
+        self.amended_charge_box.addItems(self.offense_list)
+
+
+
+    def set_database(self):
+        """
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        """
+        self.database = QSqlDatabase.addDatabase("QSQLITE")
+        self.database.setDatabaseName(CHARGES_DATABASE)
+        self.database.open()
 
     def amend_offense(self):
         self.amend_offense_details = AmendOffenseDetails()
