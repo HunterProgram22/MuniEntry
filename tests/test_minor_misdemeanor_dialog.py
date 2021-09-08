@@ -14,6 +14,7 @@ import MuniEntry_app
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
     AmendOffenseDialog,
+    AddConditionsDialog,
 )
 from controllers.MinorMisdemeanorDialogs import (
     MinorMisdemeanorDialog,
@@ -36,6 +37,11 @@ def start_minor_misdemeanor_dialog(qtbot, judicial_officer):
 
 def start_amendment_dialog(qtbot, case_information):
     dialog = AmendOffenseDialog(case_information)
+    qtbot.addWidget(dialog)
+    return dialog
+
+def start_add_conditions_dialog(qtbot, case_information):
+    dialog = AddConditionsDialog(case_information)
     qtbot.addWidget(dialog)
     return dialog
 
@@ -190,6 +196,11 @@ def test_amend_offense(dialog, qtbot):
     QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)
     dialog = start_amendment_dialog(qtbot, dialog.case_information)
     dialog.windowTitle() == "Amendment"
+
+def test_add_conditions(dialog, qtbot):
+    QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
+    dialog = start_add_conditions_dialog(qtbot, dialog.case_information)
+    dialog.windowTitle() == "Additional Conditions"
 
 def test_create_entry(app, dialog):
     """TODO: Add offenses to populate entry."""

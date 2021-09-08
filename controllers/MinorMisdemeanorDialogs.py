@@ -11,7 +11,11 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
 from models.Templates import TEMPLATE_DICT
-from controllers.CriminalDialogs import BaseCriminalDialog, AmendOffenseDialog
+from controllers.CriminalDialogs import (
+    BaseCriminalDialog,
+    AmendOffenseDialog,
+    AddConditionsDialog,
+)
 from resources.db.DatabaseCreation import create_offense_list
 
 
@@ -80,11 +84,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.template_path = template.template_path
         self.template_name = template.template_name
 
-    def amend_offense(self):
-        """Opens the amend offense dialog as a modal window.
-
-        TODO: The self.case_information is not currently transferring."""
+    def start_amend_offense_dialog(self):
+        """Opens the amend offense dialog as a modal window."""
         AmendOffenseDialog(self.case_information).exec()
+
+    def start_add_conditions_dialog(self):
+        """Opens the add conditions dialog as a modal window."""
+        AddConditionsDialog(self.case_information).exec()
 
     def close_event(self):
         """TODO: This does not appear to close the database. It is currently

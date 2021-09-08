@@ -10,6 +10,7 @@ from PyQt5.QtSql import QSqlDatabase
 
 from views.case_information_dialog_ui import Ui_CaseInformationDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
+from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from models.CaseInformation import (
     CaseInformation,
     CriminalCharge,
@@ -97,6 +98,12 @@ class BaseCriminalDialog(QDialog):
 
     def update_case_information(self):
         pass
+
+
+class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+    def __init__(self, case_information, parent=None):
+        super().__init__(parent)
+        self.case_information = case_information
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):

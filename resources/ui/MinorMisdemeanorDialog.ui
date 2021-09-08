@@ -986,7 +986,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>471</width>
-      <height>61</height>
+      <height>64</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -1218,6 +1218,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="0" column="1">
       <widget class="QCheckBox" name="checkBox_4">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Commitment</string>
        </property>
@@ -1232,6 +1235,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="1" column="1">
       <widget class="QCheckBox" name="checkBox_5">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Forfeiture</string>
        </property>
@@ -1239,6 +1245,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="0">
       <widget class="QCheckBox" name="checkBox_3">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Fingerprinting</string>
        </property>
@@ -1246,6 +1255,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="1">
       <widget class="QCheckBox" name="checkBox_6">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Community Control</string>
        </property>
@@ -1253,6 +1265,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkBox_7">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Vehicle Conditions</string>
        </property>
@@ -1260,6 +1275,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="3" column="1">
       <widget class="QCheckBox" name="checkBox_8">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Other</string>
        </property>
@@ -1268,7 +1286,7 @@ border-color: rgb(160, 48, 35);</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QPushButton" name="createEntryButton_2">
+  <widget class="QPushButton" name="addConditionsButton">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -1314,7 +1332,7 @@ border-color: rgb(160, 48, 35);</string>
   <tabstop>checkBox_5</tabstop>
   <tabstop>checkBox_6</tabstop>
   <tabstop>checkBox_8</tabstop>
-  <tabstop>createEntryButton_2</tabstop>
+  <tabstop>addConditionsButton</tabstop>
   <tabstop>createEntryButton</tabstop>
  </tabstops>
  <resources/>
@@ -1576,22 +1594,6 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>amendOffenseButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>amend_offense()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>885</x>
-     <y>195</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>710</x>
-     <y>749</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>addChargeButton</sender>
    <signal>clicked()</signal>
    <receiver>statute_choice_box</receiver>
@@ -1783,6 +1785,38 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addConditionsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>start_add_conditions_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>776</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>480</x>
+     <y>773</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>start_amend_offense_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>883</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>711</x>
+     <y>764</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>create_entry()</slot>
@@ -1805,5 +1839,7 @@ border-color: rgb(160, 48, 35);</string>
   <slot>close_event()</slot>
   <slot>set_fra_in_file()</slot>
   <slot>set_fra_in_court()</slot>
+  <slot>start_add_conditions_dialog()</slot>
+  <slot>start_amend_offense_dialog()</slot>
  </slots>
 </ui>
