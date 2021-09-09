@@ -10,7 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
+<<<<<<< HEAD
     <height>800</height>
+=======
+    <height>802</height>
+>>>>>>> c771ff98ae4ae5be06673c5bef258ee3f4ef96a6
    </rect>
   </property>
   <property name="sizePolicy">
@@ -149,9 +153,9 @@ font-weight: bold;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>130</y>
      <width>981</width>
-     <height>171</height>
+     <height>161</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -183,7 +187,7 @@ font-weight: bold;</string>
       <x>833</x>
       <y>10</y>
       <width>143</width>
-      <height>152</height>
+      <height>141</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -244,7 +248,7 @@ font-weight: bold;</string>
       <x>11</x>
       <y>11</y>
       <width>811</width>
-      <height>151</height>
+      <height>141</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,0">
@@ -547,7 +551,7 @@ font-weight: bold;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>320</y>
+     <y>300</y>
      <width>981</width>
      <height>291</height>
     </rect>
@@ -730,7 +734,7 @@ font-weight: bold;</string>
      <x>10</x>
      <y>10</y>
      <width>981</width>
-     <height>121</height>
+     <height>111</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -756,7 +760,7 @@ border-color: rgb(160, 48, 35);</string>
     <property name="geometry">
      <rect>
       <x>835</x>
-      <y>80</y>
+      <y>70</y>
       <width>141</width>
       <height>33</height>
      </rect>
@@ -796,7 +800,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>480</x>
       <y>11</y>
       <width>341</width>
-      <height>100</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_4">
@@ -895,7 +899,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>461</width>
-      <height>101</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
@@ -963,9 +967,9 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>620</y>
+     <y>600</y>
      <width>491</width>
-     <height>101</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -986,7 +990,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>471</width>
-      <height>81</height>
+      <height>64</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -1045,7 +1049,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>810</x>
-     <y>800</y>
+     <y>760</y>
      <width>181</width>
      <height>31</height>
     </rect>
@@ -1064,9 +1068,9 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>730</y>
+     <y>690</y>
      <width>491</width>
-     <height>101</height>
+     <height>81</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1085,9 +1089,9 @@ border-color: rgb(160, 48, 35);</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>13</y>
+      <y>10</y>
       <width>471</width>
-      <height>81</height>
+      <height>61</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -1156,9 +1160,9 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>620</y>
+     <y>600</y>
      <width>481</width>
-     <height>171</height>
+     <height>151</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1179,7 +1183,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>14</x>
       <y>10</y>
       <width>451</width>
-      <height>20</height>
+      <height>16</height>
      </rect>
     </property>
     <property name="font">
@@ -1203,9 +1207,9 @@ border-color: rgb(160, 48, 35);</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>30</y>
       <width>461</width>
-      <height>121</height>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1218,6 +1222,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="0" column="1">
       <widget class="QCheckBox" name="checkBox_4">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Commitment</string>
        </property>
@@ -1232,6 +1239,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="1" column="1">
       <widget class="QCheckBox" name="checkBox_5">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Forfeiture</string>
        </property>
@@ -1239,6 +1249,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="0">
       <widget class="QCheckBox" name="checkBox_3">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Fingerprinting</string>
        </property>
@@ -1246,6 +1259,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="1">
       <widget class="QCheckBox" name="checkBox_6">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Community Control</string>
        </property>
@@ -1253,6 +1269,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="3" column="0">
       <widget class="QCheckBox" name="checkBox_7">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Vehicle Conditions</string>
        </property>
@@ -1260,6 +1279,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="3" column="1">
       <widget class="QCheckBox" name="checkBox_8">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Other</string>
        </property>
@@ -1268,11 +1290,11 @@ border-color: rgb(160, 48, 35);</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QPushButton" name="createEntryButton_2">
+  <widget class="QPushButton" name="addConditionsButton">
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>800</y>
+     <y>760</y>
      <width>181</width>
      <height>31</height>
     </rect>
@@ -1289,7 +1311,9 @@ border-color: rgb(160, 48, 35);</string>
   </widget>
  </widget>
  <tabstops>
+  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
+  <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>operator_license_number_lineEdit</tabstop>
   <tabstop>defendant_birth_date</tabstop>
   <tabstop>offense_choice_box</tabstop>
@@ -1312,7 +1336,7 @@ border-color: rgb(160, 48, 35);</string>
   <tabstop>checkBox_5</tabstop>
   <tabstop>checkBox_6</tabstop>
   <tabstop>checkBox_8</tabstop>
-  <tabstop>createEntryButton_2</tabstop>
+  <tabstop>addConditionsButton</tabstop>
   <tabstop>createEntryButton</tabstop>
  </tabstops>
  <resources/>
@@ -1324,8 +1348,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>add_charge()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>980</x>
@@ -1404,8 +1428,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1420,8 +1444,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1436,8 +1460,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1452,8 +1476,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
@@ -1484,8 +1508,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1500,8 +1524,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1516,8 +1540,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1532,8 +1556,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>446</x>
@@ -1548,8 +1572,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>400</x>
@@ -1564,28 +1588,12 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>828</x>
      <y>268</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>amendOffenseButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>amend_offense()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>885</x>
-     <y>195</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>710</x>
-     <y>749</y>
     </hint>
    </hints>
   </connection>
@@ -1596,8 +1604,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>300</y>
+     <x>963</x>
+     <y>279</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1612,8 +1620,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>961</x>
-     <y>183</y>
+     <x>962</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>486</x>
@@ -1661,11 +1669,11 @@ border-color: rgb(160, 48, 35);</string>
    <hints>
     <hint type="sourcelabel">
      <x>845</x>
-     <y>816</y>
+     <y>776</y>
     </hint>
     <hint type="destinationlabel">
      <x>789</x>
-     <y>809</y>
+     <y>801</y>
     </hint>
    </hints>
   </connection>
@@ -1697,7 +1705,7 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
     <hint type="destinationlabel">
      <x>479</x>
-     <y>84</y>
+     <y>77</y>
     </hint>
    </hints>
   </connection>
@@ -1713,7 +1721,7 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
     <hint type="destinationlabel">
      <x>829</x>
-     <y>85</y>
+     <y>78</y>
     </hint>
    </hints>
   </connection>
@@ -1729,7 +1737,7 @@ border-color: rgb(160, 48, 35);</string>
     </hint>
     <hint type="destinationlabel">
      <x>479</x>
-     <y>49</y>
+     <y>46</y>
     </hint>
    </hints>
   </connection>
@@ -1740,8 +1748,8 @@ border-color: rgb(160, 48, 35);</string>
    <slot>set_fra_in_file()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>322</x>
-     <y>762</y>
+     <x>489</x>
+     <y>720</y>
     </hint>
     <hint type="destinationlabel">
      <x>267</x>
@@ -1756,12 +1764,60 @@ border-color: rgb(160, 48, 35);</string>
    <slot>set_fra_in_court()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>390</x>
-     <y>802</y>
+     <x>489</x>
+     <y>759</y>
     </hint>
     <hint type="destinationlabel">
      <x>719</x>
      <y>801</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>pressed()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>update_case_information()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>911</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>750</x>
+     <y>592</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>addConditionsButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>start_add_conditions_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>522</x>
+     <y>776</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>480</x>
+     <y>773</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>amendOffenseButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>start_amend_offense_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>883</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>711</x>
+     <y>764</y>
     </hint>
    </hints>
   </connection>
@@ -1787,5 +1843,7 @@ border-color: rgb(160, 48, 35);</string>
   <slot>close_event()</slot>
   <slot>set_fra_in_file()</slot>
   <slot>set_fra_in_court()</slot>
+  <slot>start_add_conditions_dialog()</slot>
+  <slot>start_amend_offense_dialog()</slot>
  </slots>
 </ui>

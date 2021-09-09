@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>800</height>
+    <height>350</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,17 +19,24 @@
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>800</height>
+    <height>350</height>
    </size>
   </property>
   <property name="font">
    <font>
     <family>Palatino Linotype</family>
-    <pointsize>12</pointsize>
+    <pointsize>11</pointsize>
+    <weight>9</weight>
+    <italic>false</italic>
+    <bold>false</bold>
    </font>
   </property>
   <property name="windowTitle">
-   <string>Amendment</string>
+   <string>Amend Charge</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(25, 49, 91);
+font: 75 11pt &quot;Palatino Linotype&quot;;</string>
   </property>
   <widget class="QFrame" name="case_information_frame">
    <property name="geometry">
@@ -55,6 +62,10 @@
    <property name="cursor">
     <cursorShape>ArrowCursor</cursorShape>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 240, 240);
+font-weight: bold;</string>
+   </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
    </property>
@@ -75,8 +86,10 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
@@ -95,8 +108,10 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
@@ -115,8 +130,10 @@
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
       <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
@@ -134,6 +151,11 @@
      <height>191</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 240, 240);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+   </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
    </property>
@@ -146,39 +168,55 @@
    <property name="midLineWidth">
     <number>0</number>
    </property>
-   <widget class="QPushButton" name="continueButton">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>130</y>
-      <width>161</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Continue</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>801</x>
-      <y>30</y>
+      <y>21</y>
       <width>161</width>
-      <height>36</height>
+      <height>151</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Cancel</string>
-    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(160, 160, 160);</string>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(160, 160, 160);</string>
+       </property>
+       <property name="text">
+        <string>Clear Fields</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="continueButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(160, 160, 160);</string>
+       </property>
+       <property name="text">
+        <string>Continue</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>20</y>
-      <width>614</width>
-      <height>152</height>
+      <x>11</x>
+      <y>21</y>
+      <width>781</width>
+      <height>151</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -191,6 +229,9 @@
      </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="motion_decision_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="editable">
         <bool>false</bool>
        </property>
@@ -204,6 +245,11 @@
          <string>Denied</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>Denied as moot</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="1" column="0">
@@ -215,6 +261,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QComboBox" name="original_charge_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -229,6 +278,9 @@
      </item>
      <item row="2" column="1">
       <widget class="QComboBox" name="amended_charge_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
@@ -243,25 +295,15 @@
      </item>
      <item row="3" column="1">
       <widget class="QComboBox" name="pursuant_to_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="editable">
         <bool>true</bool>
        </property>
       </widget>
      </item>
     </layout>
-   </widget>
-   <widget class="QPushButton" name="pushButton_2">
-    <property name="geometry">
-     <rect>
-      <x>801</x>
-      <y>80</y>
-      <width>161</width>
-      <height>36</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear Fields</string>
-    </property>
    </widget>
   </widget>
  </widget>
@@ -283,12 +325,12 @@
    <slot>close_window()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>810</x>
-     <y>280</y>
+     <x>812</x>
+     <y>277</y>
     </hint>
     <hint type="destinationlabel">
      <x>528</x>
-     <y>375</y>
+     <y>349</y>
     </hint>
    </hints>
   </connection>
@@ -368,7 +410,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>769</x>
-     <y>370</y>
+     <y>349</y>
     </hint>
    </hints>
   </connection>

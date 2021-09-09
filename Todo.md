@@ -1,9 +1,13 @@
 WORKING TODO LIST
 
 1. Connect FRA information to template
-2. Fix Amend Offense button/dialog
+2. Connect Amend Offense information to template
 3. Add license suspension conditions
+<<<<<<< HEAD
 4.  Add community control additional conditions b/c of UCM
+=======
+4.  Add community control conditions
+>>>>>>> c771ff98ae4ae5be06673c5bef258ee3f4ef96a6
 5. Finish refactoring MinorMisdemeanorDialogs.py
 6. Refactor CriminalDialogs.py
 7. Refactor CaseInformation.py

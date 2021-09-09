@@ -11,7 +11,11 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.CaseInformation import CaseInformation, CriminalCharge
 from models.Templates import TEMPLATE_DICT
-from controllers.CriminalDialogs import BaseCriminalDialog, AmendOffenseDialog
+from controllers.CriminalDialogs import (
+    BaseCriminalDialog,
+    AmendOffenseDialog,
+    AddConditionsDialog,
+)
 from resources.db.DatabaseCreation import create_offense_list
 
 
@@ -28,7 +32,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     misdemeanors, however, it does not include fields to enter jail time.
 
     FIX: Pylint says too many attributes 11/7. Possibly reduce/refactor."""
-
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
@@ -80,11 +83,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.template_path = template.template_path
         self.template_name = template.template_name
 
-    def amend_offense(self):
-        """Opens the amend offense dialog as a modal window.
-
-        TODO: The self.case_information is not currently transferring."""
+    def start_amend_offense_dialog(self):
+        """Opens the amend offense dialog as a modal window."""
         AmendOffenseDialog(self.case_information).exec()
+
+    def start_add_conditions_dialog(self):
+        """Opens the add conditions dialog as a modal window."""
+        AddConditionsDialog(self.case_information).exec()
 
     def close_event(self):
         """TODO: This does not appear to close the database. It is currently
@@ -207,7 +212,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
         self.case_information.fra_in_file = self.fra_in_file_box.currentText()
-        self.case_information.fra_in_court = self.fra_in_court_box.currentText()
+        self.case_information.fra_in_court = (
+            self.fra_in_court_box.currentText()
+        )
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
