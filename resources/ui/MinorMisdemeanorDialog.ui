@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>842</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,8 +21,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1000</width>
-    <height>800</height>
+    <width>900</width>
+    <height>750</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -889,7 +889,7 @@ border-color: rgb(160, 48, 35);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
