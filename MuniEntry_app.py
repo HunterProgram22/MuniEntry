@@ -5,10 +5,12 @@ selecting the judicial officer on the case and also different templates.
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
+from loguru import logger
 
 from views.main_window_ui import Ui_MainWindow
 from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
 
+logger.add("./resources/logs/Error_log_{time}.log")
 
 class Window(QMainWindow, Ui_MainWindow):
     """The MainWindow of the application.  If changes to the view
@@ -53,6 +55,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
 
+
     def connect_judicial_officer_buttons(self):
         """Connects the radio buttons for each judicial officer to a string of
         their name."""
@@ -77,14 +80,17 @@ class Window(QMainWindow, Ui_MainWindow):
         """Self explanatory."""
         self.menu_file_exit.triggered.connect(self.close)
 
+    #@logger.catch
     def start_dialog_from_entry_button(self):
         """Launches the dialog that is connected to each button."""
         dialog = self.dialog_dict[self.sender()](self.judicial_officer)
         dialog.exec()
 
-
-if __name__ == "__main__":
+def main():
     app = QApplication(sys.argv)
     win = Window()
     win.show()
     sys.exit(app.exec())
+
+if __name__ == "__main__":
+    main()

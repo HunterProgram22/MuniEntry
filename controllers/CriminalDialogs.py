@@ -100,6 +100,7 @@ class BaseCriminalDialog(QDialog):
         pass
 
 
+
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
@@ -154,7 +155,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.set_database()
         self.modify_view()
 
-
     def modify_view(self):
         """The modify view method updates the view that is created on init.
         Place items in this method that can't be added directly in QtDesigner
@@ -163,8 +163,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.offense_list, self.statute_list = create_offense_list()
         self.original_charge_box.addItems(self.offense_list)
         self.amended_charge_box.addItems(self.offense_list)
-
-
 
     def set_database(self):
         """

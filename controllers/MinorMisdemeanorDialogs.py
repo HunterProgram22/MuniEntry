@@ -32,7 +32,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     misdemeanors, however, it does not include fields to enter jail time.
 
     FIX: Pylint says too many attributes 11/7. Possibly reduce/refactor."""
-
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
