@@ -169,6 +169,8 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
     assert dialog.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "25"
 
 def test_fines_due_date(app, dialog):
+    """This test will fail right now because it doesn't account for the
+    next_tuesday function that is being used."""
     dialog.ability_to_pay_box.setCurrentText("forthwith")
     assert dialog.balance_due_date.date() == TODAY
     dialog.ability_to_pay_box.setCurrentText("within 30 days")
