@@ -1087,7 +1087,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>471</width>
-      <height>61</height>
+      <height>64</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -1626,22 +1626,6 @@ border-color: rgb(160, 48, 35);</string>
    </hints>
   </connection>
   <connection>
-   <sender>statute_choice_box</sender>
-   <signal>currentTextChanged(QString)</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>set_offense()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>359</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>736</x>
-     <y>748</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_4</sender>
    <signal>clicked()</signal>
    <receiver>plea_choice_box</receiver>
@@ -1814,6 +1798,22 @@ border-color: rgb(160, 48, 35);</string>
     <hint type="destinationlabel">
      <x>711</x>
      <y>764</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>statute_choice_box</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MinorMisdemeanorDialog</receiver>
+   <slot>set_offense()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>129</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>293</y>
     </hint>
    </hints>
   </connection>

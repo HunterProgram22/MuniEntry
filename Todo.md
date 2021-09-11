@@ -16,7 +16,7 @@ there is a Final JE and a Magistrate/Final JE only
 
 
 DEPLOY TODO LIST
-1. Install Gitkraken
+1. 
 2. Setup Virtual Environment and reinstall dependencies
 3. Determine File Structure (for M: drive at work)
 4. General instructions for all developer Setup
