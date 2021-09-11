@@ -136,7 +136,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list) - 1
-        charge_dict = vars(self.case_information.charges_list[added_charge_index])
+        charge_dict = vars(
+            self.case_information.charges_list[added_charge_index]
+        )
         for value in charge_dict.values():
             if value is not None:
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
@@ -196,8 +198,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.defendant_last_name = (
             self.defendant_last_name_lineEdit.text()
         )
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
-            "MMMM dd, yyyy"
+        self.case_information.plea_trial_date = (
+            self.plea_trial_date.date().toString("MMMM dd, yyyy")
         )
         self.case_information.operator_license_number = (
             self.operator_license_number_lineEdit.text()
@@ -208,11 +210,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.ability_to_pay_time = (
             self.ability_to_pay_box.currentText()
         )
-        self.case_information.balance_due_date = self.balance_due_date.date().toString(
-            "MMMM dd, yyyy"
+        self.case_information.balance_due_date = (
+            self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.fra_in_file = self.fra_in_file_box.currentText()
-        self.case_information.fra_in_court = self.fra_in_court_box.currentText()
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
@@ -238,7 +238,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         method and common code refactored."""
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
-        query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
+        query.prepare(
+            "SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'"
+        )
         query.bindValue(":key", key)
         query.exec()
         while query.next():
@@ -258,7 +260,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         method and common code refactored."""
         key = self.statute_choice_box.currentText()
         query = QSqlQuery()
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
+        query.prepare(
+            "SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'"
+        )
         query.bindValue(":key", key)
         query.exec()
         while query.next():

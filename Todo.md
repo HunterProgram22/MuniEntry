@@ -1,10 +1,10 @@
 APPLICATION TODO LIST
 
-1. Connect FRA information to template
+1.
 2. Connect Amend Offense information to template
 3. Add license suspension conditions
 4.  Add community control additional conditions b/c of UCM
-5. Finish refactoring MinorMisdemeanorDialogs.py
+5. 
 6. Refactor CriminalDialogs.py
 7. Refactor CaseInformation.py
 8. Refactor Templates.py
@@ -16,7 +16,7 @@ there is a Final JE and a Magistrate/Final JE only
 
 
 DEPLOY TODO LIST
-1. 
+1.
 2. Setup Virtual Environment and reinstall dependencies
 3. Determine File Structure (for M: drive at work)
 4. General instructions for all developer Setup
