@@ -233,7 +233,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.case_information.fra_in_court = False
 
     def set_statute(self):
-        """PAUSE REFACTORING
+        """This method queries based on the offense and then sets the statute
+        and degree based on the offense in the database.
+
         FIX: When typing in editable box this calls the query for every
         keystroke"""
         key = self.offense_choice_box.currentText()
