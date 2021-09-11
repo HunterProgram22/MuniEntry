@@ -2,6 +2,7 @@
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a databse."""
 import pathlib
+from datetime import date, datetime, timedelta
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -236,10 +237,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """This method queries based on the offense and then sets the statute
         and degree based on the offense in the database.
 
-        TEST: This is a test for gitkrkaken feature gitflow.
-        
-        FIX: When typing in editable box this calls the query for every
-        keystroke"""
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored."""
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare(
@@ -257,8 +256,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 break
 
     def set_offense(self):
-        """FIX: When typing in editable box this calls the query for every
-        keystroke"""
+        """This method queries based on the statute and then sets the offense
+        and degree based on the statute in the database.
+
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored."""
         key = self.statute_choice_box.currentText()
         query = QSqlQuery()
         query.prepare(
@@ -276,7 +278,24 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 break
 
     def set_pay_date(self):
-        """TODO: Need to update the addDays to account for the tuesday after
-        the 30, 60, 90 days."""
-        days = self.pay_date_dict[self.ability_to_pay_box.currentText()]
-        self.balance_due_date.setDate(QDate.currentDate().addDays(days))
+        """Sets the balance of fines and costs to a future date (or today)
+        depending on the selection of ability_to_pay_box. The inner function
+        will move the actual date to the next tuesday per court procedure for
+        show cause hearings being on Tuesday. Would need to be modified if the
+        policy changed."""
+        days_to_add = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+        future_date = date.today() + timedelta(days_to_add)
+        today = date.today()
+        def next_tuesday(future_date, weekday=1):
+            """This function returns the number of days to add to today to set
+            the payment due date out to the Tuesday after the number of days
+            set in the set_pay_date function. The default of 1 for weekday is
+            what sets it to a Tuesday. If it is 0 it would be Monday, 3 would
+            be Wednesday, etc."""
+            days_ahead = weekday - future_date.weekday()
+            if days_ahead <= 0: # Target day already happened this week
+                days_ahead += 7
+            return future_date + timedelta(days_ahead)
+        future_date = next_tuesday(future_date, 1)
+        total_days_to_add = (future_date-today).days
+        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
