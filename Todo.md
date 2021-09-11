@@ -1,4 +1,4 @@
-WORKING TODO LIST
+APPLICATION TODO LIST
 
 1. Connect FRA information to template
 2. Connect Amend Offense information to template
@@ -13,3 +13,12 @@ there is a Final JE and a Magistrate/Final JE only
 10. Add another add charge button to tab back to one??
 11. Have template write out minor misdemeanor instead of MM, etc
 12. Fix issue with database - currently says not open twice on load and also does not close on close_event.
+
+
+DEPLOY TODO LIST
+1. Install Gitkraken
+2. Setup Virtual Environment and reinstall dependencies
+3. Determine File Structure (for M: drive at work)
+4. General instructions for all developer Setup
+5. Look into Setup.py for distribution to Amanda
+6. Create config file with all dependencies
