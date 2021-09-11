@@ -211,8 +211,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.balance_due_date = self.balance_due_date.date().toString(
             "MMMM dd, yyyy"
         )
-        self.case_information.fra_in_file = self.fra_in_file_box.currentText()
-        self.case_information.fra_in_court = self.fra_in_court_box.currentText()
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
@@ -221,6 +219,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.case_information.fra_in_file = True
         else:
             self.case_information.fra_in_file = False
+
 
     def set_fra_in_court(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
