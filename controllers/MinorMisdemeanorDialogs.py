@@ -236,6 +236,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """This method queries based on the offense and then sets the statute
         and degree based on the offense in the database.
 
+        TEST: This is a test for gitkrkaken feature gitflow.
+        
         FIX: When typing in editable box this calls the query for every
         keystroke"""
         key = self.offense_choice_box.currentText()
