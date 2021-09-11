@@ -10,11 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-<<<<<<< HEAD
     <height>800</height>
-=======
-    <height>802</height>
->>>>>>> c771ff98ae4ae5be06673c5bef258ee3f4ef96a6
    </rect>
   </property>
   <property name="sizePolicy">
