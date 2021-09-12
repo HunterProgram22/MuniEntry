@@ -1,10 +1,10 @@
 APPLICATION TODO LIST
 
-1.
-2. Connect Amend Offense information to template
-3. Add license suspension conditions
+1. Add community service to view and template
+2. Update Amend Offense information on template
+3. Add license suspension conditions to template
 4.  Add community control additional conditions b/c of UCM
-5. 
+5.
 6. Refactor CriminalDialogs.py
 7. Refactor CaseInformation.py
 8. Refactor Templates.py
