@@ -1,10 +1,12 @@
 APPLICATION TODO LIST
 
 1. Add community service to view and template
+  There is an issue with the bool status of self.case_information.community_service
+  it reverts to False when creating the entry. 
 2. Update Amend Offense information on template
 3. Add license suspension conditions to template
 4.  Add community control additional conditions b/c of UCM
-5. Add checkbox for freeform statute/offense - then self.blocksignals 
+5. Add checkbox for freeform statute/offense - then self.blocksignals
 6. Refactor CriminalDialogs.py
 7. Refactor CaseInformation.py
 8. Refactor Templates.py

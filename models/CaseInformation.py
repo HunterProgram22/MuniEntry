@@ -30,6 +30,10 @@ class CaseInformation(object):
         self.understood_plea = True
         self.citizen_deportation = False
         self.total_charges = 0
+        self.community_service = True
+        self.hours_of_service = None
+        self.days_to_complete_service = None
+        self.due_date_for_service = None
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
@@ -57,6 +61,10 @@ class CaseInformation(object):
             "balance_due_date": self.balance_due_date,
             "fra_in_file": self.fra_in_file,
             "fra_in_court": self.fra_in_court,
+            "community_service": self.community_service,
+            "hours_of_service": self.hours_of_service,
+            "days_to_complete_service": self.days_to_complete_service,
+            "due_date_for_service": self.due_date_for_service,
         }
         return self.formatted_case_information
 

@@ -405,7 +405,7 @@ font-weight: bold;</string>
      <string>Remedial driving class required for OL return</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -494,7 +494,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>500</x>
@@ -565,12 +565,206 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
+  <widget class="QFrame" name="frame_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>480</y>
+     <width>981</width>
+     <height>121</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(240, 240, 240);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::Box</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="lineWidth">
+    <number>2</number>
+   </property>
+   <widget class="QLabel" name="label_26">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>961</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+      <underline>true</underline>
+     </font>
+    </property>
+    <property name="text">
+     <string>Community Service</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>40</y>
+      <width>451</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Days to Complete Service:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="community_service_days_to_complete_box">
+       <item>
+        <property name="text">
+         <string>30</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>60</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>90</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>120</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>150</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>180</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_22">
+       <property name="text">
+        <string>Date to Complete Service:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="community_service_date_to_complete_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>12</x>
+      <y>38</y>
+      <width>261</width>
+      <height>64</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="formLayout_4">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Community Service:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="community_service_ordered_box">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>No</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Yes</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>Hours of Service:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QSpinBox" name="community_service_hours_ordered_box"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>createEntryButton_2</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>createEntryButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>AddConditionsDialog</receiver>
+   <slot>add_conditions()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>831</x>
+     <y>810</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>753</x>
+     <y>697</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>createEntryButton_2</sender>
+   <signal>released()</signal>
+   <receiver>AddConditionsDialog</receiver>
+   <slot>close_window()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>902</x>
+     <y>815</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>707</x>
+     <y>735</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>create_entry()</slot>
   <slot>continue_dialog()</slot>
@@ -589,5 +783,6 @@ font-weight: bold;</string>
   <slot>add_offense_to_view()</slot>
   <slot>delete_offense()</slot>
   <slot>delete_offense_from_view()</slot>
+  <slot>add_conditions()</slot>
  </slots>
 </ui>

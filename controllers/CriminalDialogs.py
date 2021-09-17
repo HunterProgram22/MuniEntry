@@ -3,6 +3,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
+from loguru import logger
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QLabel
@@ -40,6 +41,7 @@ class BaseCriminalDialog(QDialog):
         self.close()
 
     def create_entry(self):
+        print(self.case_information.community_service)
         self.doc = DocxTemplate(self.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
@@ -102,9 +104,34 @@ class BaseCriminalDialog(QDialog):
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
-    def __init__(self, case_information, parent=None):
+    def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
+
+    @logger.catch
+    def add_conditions(self, case_information=None):
+        """The self.case_information.community_service keeps reverting to false
+        even when starting true, and being true through this method. It may, or
+        may not be tied to this dialog recieving of the case information."""
+        print(self.community_service_ordered_box.currentText())
+        if self.community_service_ordered_box.currentText() == "Yes":
+            self.case_information.community_service = True
+            self.case_information.hours_of_service = (
+                self.community_service_hours_ordered_box.value()
+            )
+            self.case_information.days_to_complete_service = (
+                self.community_service_days_to_complete_box.currentText()
+            )
+            self.case_information.due_date_for_service = (
+                self.community_service_date_to_complete_box.date().toString(
+                "MMMM dd, yyyy")
+            )
+            print(self.case_information.community_service)
+            print(self.case_information.days_to_complete_service)
+        #else:
+            #self.case_information.community_service = False
+
+
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):

@@ -3,6 +3,7 @@ to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a databse."""
 import pathlib
 from datetime import date, timedelta
+from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -91,6 +92,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window."""
+        print(self.case_information.community_service)
         AddConditionsDialog(self.case_information).exec()
 
     def close_event(self):
@@ -178,6 +180,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 layout_item.widget().deleteLater()
                 self.charges_gridLayout.removeItem(layout_item)
 
+    @logger.catch
     def update_case_information(self):
         """The method updates the case information model with the data for the
         case that is in the fields on the view. This does not update the model
