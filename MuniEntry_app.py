@@ -88,6 +88,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
 @logger.catch
 def main():
+    """The main loop of the application. A logger is wrapped on the function
+    but needs to be set up to properly log error files. It won't catch all
+    errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
     win = Window()
     win.show()
