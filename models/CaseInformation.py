@@ -7,7 +7,6 @@ class CaseInformation(object):
 
     def __init__(self, judicial_officer):
         self.judicial_officer = judicial_officer
-        #print(self.judicial_officer)
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
@@ -30,7 +29,7 @@ class CaseInformation(object):
         self.understood_plea = True
         self.citizen_deportation = False
         self.total_charges = 0
-        self.community_service = True
+        self.community_service = False
         self.hours_of_service = None
         self.days_to_complete_service = None
         self.due_date_for_service = None
@@ -65,6 +64,7 @@ class CaseInformation(object):
             "hours_of_service": self.hours_of_service,
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
+            "judicial_officer": self.judicial_officer
         }
         return self.formatted_case_information
 

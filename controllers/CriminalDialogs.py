@@ -41,7 +41,6 @@ class BaseCriminalDialog(QDialog):
         self.close()
 
     def create_entry(self):
-        print(self.case_information.community_service)
         self.doc = DocxTemplate(self.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
