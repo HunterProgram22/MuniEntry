@@ -7,7 +7,6 @@ class CaseInformation(object):
 
     def __init__(self, judicial_officer):
         self.judicial_officer = judicial_officer
-        #print(self.judicial_officer)
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
@@ -17,8 +16,8 @@ class CaseInformation(object):
         self.defendant_attorney_name = None
         self.defendant_date_of_birth = None
         self.operator_license_number = None
-        self.fra_in_file = False
-        self.fra_in_court = False
+        self.fra_in_file = None
+        self.fra_in_court = None
         self.plea_trial_date = None
         self.charges_list = []
         self.community_control_terms = None
@@ -30,6 +29,10 @@ class CaseInformation(object):
         self.understood_plea = True
         self.citizen_deportation = False
         self.total_charges = 0
+        self.community_service = False
+        self.hours_of_service = None
+        self.days_to_complete_service = None
+        self.due_date_for_service = None
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
@@ -57,6 +60,11 @@ class CaseInformation(object):
             "balance_due_date": self.balance_due_date,
             "fra_in_file": self.fra_in_file,
             "fra_in_court": self.fra_in_court,
+            "community_service": self.community_service,
+            "hours_of_service": self.hours_of_service,
+            "days_to_complete_service": self.days_to_complete_service,
+            "due_date_for_service": self.due_date_for_service,
+            "judicial_officer": self.judicial_officer
         }
         return self.formatted_case_information
 
@@ -105,5 +113,4 @@ class AmendOffenseDetails(object):
     def __init__(self):
         self.original_charge = None
         self.amended_charge = None
-        self.amending_procedure = None
         self.motion_disposition = "granted"

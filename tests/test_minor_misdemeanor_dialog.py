@@ -186,13 +186,13 @@ def test_fra_in_file_and_court(app, dialog):
     dialog.fra_in_file_box.setCurrentText("No")
     assert dialog.case_information.fra_in_file == False
     dialog.fra_in_file_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_file == False
+    assert dialog.case_information.fra_in_file == None
     dialog.fra_in_court_box.setCurrentText("Yes")
     assert dialog.case_information.fra_in_court == True
     dialog.fra_in_court_box.setCurrentText("No")
     assert dialog.case_information.fra_in_court == False
     dialog.fra_in_court_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_court == False
+    assert dialog.case_information.fra_in_court == None
 
 def test_amend_offense(dialog, qtbot):
     QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)

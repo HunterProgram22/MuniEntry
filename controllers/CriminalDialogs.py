@@ -3,6 +3,7 @@ from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docxtpl import DocxTemplate
 from PyQt5.uic import loadUi
+from loguru import logger
 
 from PyQt5.QtCore import QDate, Qt, QDateTime
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QMessageBox, QLabel
@@ -102,9 +103,38 @@ class BaseCriminalDialog(QDialog):
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
-    def __init__(self, case_information, parent=None):
+    def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
+
+    @logger.catch
+    def add_conditions(self, case_information=None):
+        """FIX/DEBUG: This function is only being called if two positional
+        arguments are set as parameters. Not sure why, but it works if it is
+        set up to allow self and case_information even though case_information
+        is not used directly as far as I can tell.
+
+        TODO: This is not tied to the additional conditions checkbox grid on
+        the MMD yet. It was tied to the Comm Service checkbox initially but
+        it would rever status of case_information.community_service to the
+        bool state of that box - either change variable name or remove Yes/No
+        from dialog on add conditions CS box because it can create a conflict."""
+        if self.community_service_ordered_box.currentText() == "Yes":
+            self.case_information.community_service = True
+            self.case_information.hours_of_service = (
+                self.community_service_hours_ordered_box.value()
+            )
+            self.case_information.days_to_complete_service = (
+                self.community_service_days_to_complete_box.currentText()
+            )
+            self.case_information.due_date_for_service = (
+                self.community_service_date_to_complete_box.date().toString(
+                "MMMM dd, yyyy")
+            )
+        else:
+            self.case_information.community_service = False
+
+
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
@@ -180,9 +210,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         )
         self.amend_offense_details.amended_charge = (
             self.amended_charge_box.currentText()
-        )
-        self.amend_offense_details.amending_procedure = (
-            self.pursuant_to_box.currentText()
         )
         self.amend_offense_details.motion_disposition = (
             self.motion_decision_box.currentText()
