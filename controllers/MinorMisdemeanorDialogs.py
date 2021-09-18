@@ -93,6 +93,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window."""
         print(self.case_information.community_service)
+        print("Start amend offense dialog called.")
         AddConditionsDialog(self.case_information).exec()
 
     def close_event(self):
@@ -216,10 +217,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         )
         """TODO: The community service is part of additional conditions, this
         should perhaps go somewhere else."""
-        if self.community_service_checkBox.isChecked():
-            self.case_information.community_service = True
-        else:
-            self.case_information.community_service = False
+        #if self.community_service_checkBox.isChecked():
+        #    self.case_information.community_service = True
+        #else:
+        #    self.case_information.community_service = False
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'

@@ -1,8 +1,5 @@
 APPLICATION TODO LIST
 
-1. Add community service to view and template
-  There is an issue with the bool status of self.case_information.community_service
-  it reverts to False when creating the entry. 
 2. Update Amend Offense information on template
 3. Add license suspension conditions to template
 4.  Add community control additional conditions b/c of UCM
@@ -15,6 +12,7 @@ there is a Final JE and a Magistrate/Final JE only
 10. Add another add charge button to tab back to one??
 11. Have template write out minor misdemeanor instead of MM, etc
 12. Fix issue with database - currently says not open twice on load and also does not close on close_event.
+* Review button names on all views to make sure no repeats
 
 
 DEPLOY TODO LIST

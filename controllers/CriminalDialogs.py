@@ -110,10 +110,16 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_conditions(self, case_information=None):
-        """The self.case_information.community_service keeps reverting to false
-        even when starting true, and being true through this method. It may, or
-        may not be tied to this dialog recieving of the case information."""
-        print(self.community_service_ordered_box.currentText())
+        """FIX/DEBUG: This function is only being called if two positional
+        arguments are set as parameters. Not sure why, but it works if it is
+        set up to allow self and case_information even though case_information
+        is not used directly as far as I can tell.
+
+        TODO: This is not tied to the additional conditions checkbox grid on
+        the MMD yet. It was tied to the Comm Service checkbox initially but
+        it would rever status of case_information.community_service to the
+        bool state of that box - either change variable name or remove Yes/No
+        from dialog on add conditions CS box because it can create a conflict."""
         if self.community_service_ordered_box.currentText() == "Yes":
             self.case_information.community_service = True
             self.case_information.hours_of_service = (
@@ -126,10 +132,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
                 self.community_service_date_to_complete_box.date().toString(
                 "MMMM dd, yyyy")
             )
-            print(self.case_information.community_service)
-            print(self.case_information.days_to_complete_service)
-        #else:
-            #self.case_information.community_service = False
+        else:
+            self.case_information.community_service = False
 
 
 
