@@ -16,6 +16,7 @@ from models.CaseInformation import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
+    LicenseSuspension,
 )
 from resources.db.DatabaseCreation import create_offense_list
 
@@ -106,6 +107,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
+        self.license_suspension_details = LicenseSuspension()
 
     @logger.catch
     def add_conditions(self, case_information=None):
@@ -116,7 +118,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
         TODO: This is not tied to the additional conditions checkbox grid on
         the MMD yet. It was tied to the Comm Service checkbox initially but
-        it would rever status of case_information.community_service to the
+        it would revert status of case_information.community_service to the
         bool state of that box - either change variable name or remove Yes/No
         from dialog on add conditions CS box because it can create a conflict."""
         if self.community_service_ordered_box.currentText() == "Yes":
@@ -133,8 +135,24 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             )
         else:
             self.case_information.community_service = False
-
-
+        self.license_suspension_details.license_type = (
+            self.license_type_box.currentText()
+        )
+        self.license_suspension_details.license_suspended_date = (
+            self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
+        )
+        self.license_suspension_details.license_suspension_term = (
+            self.term_of_suspension_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges = (
+            self.driving_privileges_type_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges_term = (
+            self.term_of_privileges_box.currentText()
+        )
+        self.case_information.license_suspension_details = (
+            self.license_suspension_details
+        )
 
 
 class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):

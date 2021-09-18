@@ -10,6 +10,7 @@ APPLICATION TODO LIST
 12. Fix issue with database - currently says not open twice on load and also does not close on close_event.
 * Review button names on all views to make sure no repeats
 * Add tests for amend offense and add conditions
+* Merge 2 templates to 1 and have heading change and add language for judge adopt
 
 FEATURE/CHANGE LIST
 * Move editable plea, finding, fines, etc to grid

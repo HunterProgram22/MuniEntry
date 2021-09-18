@@ -33,6 +33,7 @@ class CaseInformation(object):
         self.hours_of_service = None
         self.days_to_complete_service = None
         self.due_date_for_service = None
+        self.license_suspension_details = None
 
     def add_charge(self, charge):
         self.charges_list.append(charge)
@@ -64,7 +65,8 @@ class CaseInformation(object):
             "hours_of_service": self.hours_of_service,
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
-            "judicial_officer": self.judicial_officer
+            "judicial_officer": self.judicial_officer,
+            "license_suspension_details": self.license_suspension_details,
         }
         return self.formatted_case_information
 
@@ -114,3 +116,13 @@ class AmendOffenseDetails(object):
         self.original_charge = None
         self.amended_charge = None
         self.motion_disposition = "granted"
+
+
+class LicenseSuspension(object):
+    def __init__(self):
+        self.license_type = None
+        self.license_suspended_date = None
+        self.license_suspension_term = None
+        self.driving_privileges = None
+        self.driving_privileges_term = None
+        self.remedial_driving_class_required = False

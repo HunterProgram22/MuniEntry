@@ -92,8 +92,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window."""
-        print(self.case_information.community_service)
-        print("Start amend offense dialog called.")
         AddConditionsDialog(self.case_information).exec()
 
     def close_event(self):

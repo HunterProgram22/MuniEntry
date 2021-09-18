@@ -452,7 +452,7 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QDateEdit" name="license_suspension_date">
+      <widget class="QDateEdit" name="license_suspension_date_box">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
        </property>
@@ -612,7 +612,7 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -679,7 +679,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>12</x>
