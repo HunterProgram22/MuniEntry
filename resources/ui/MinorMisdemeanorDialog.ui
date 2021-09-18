@@ -895,7 +895,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>461</width>
-      <height>95</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
@@ -1205,7 +1205,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>30</y>
       <width>461</width>
-      <height>120</height>
+      <height>111</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">

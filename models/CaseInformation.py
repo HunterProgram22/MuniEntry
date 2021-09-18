@@ -113,5 +113,4 @@ class AmendOffenseDetails(object):
     def __init__(self):
         self.original_charge = None
         self.amended_charge = None
-        self.amending_procedure = None
         self.motion_disposition = "granted"

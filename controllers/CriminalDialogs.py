@@ -211,9 +211,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.amended_charge = (
             self.amended_charge_box.currentText()
         )
-        self.amend_offense_details.amending_procedure = (
-            self.pursuant_to_box.currentText()
-        )
         self.amend_offense_details.motion_disposition = (
             self.motion_decision_box.currentText()
         )
