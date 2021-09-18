@@ -16,8 +16,8 @@ class CaseInformation(object):
         self.defendant_attorney_name = None
         self.defendant_date_of_birth = None
         self.operator_license_number = None
-        self.fra_in_file = False
-        self.fra_in_court = False
+        self.fra_in_file = None
+        self.fra_in_court = None
         self.plea_trial_date = None
         self.charges_list = []
         self.community_control_terms = None

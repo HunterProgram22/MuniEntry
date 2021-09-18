@@ -227,16 +227,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         the FRA was shown in the complaint of file."""
         if self.fra_in_file_box.currentText() == "Yes":
             self.case_information.fra_in_file = True
-        else:
+            self.fra_in_court_box.setCurrentText("No")
+        elif self.fra_in_file_box.currentText() == "No":
             self.case_information.fra_in_file = False
+        else:
+            self.case_information.fra_in_file = None
 
     def set_fra_in_court(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         the FRA was shown in court."""
         if self.fra_in_court_box.currentText() == "Yes":
             self.case_information.fra_in_court = True
-        else:
+        elif self.fra_in_court_box.currentText() == "No":
             self.case_information.fra_in_court = False
+        else:
+            self.case_information.fra_in_court = None
 
     def set_statute(self):
         """This method queries based on the offense and then sets the statute
