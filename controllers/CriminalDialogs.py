@@ -150,6 +150,10 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.license_suspension_details.driving_privileges_term = (
             self.term_of_privileges_box.currentText()
         )
+        if self.remedial_driving_class_checkBox.isChecked():
+            self.license_suspension_details.remedial_driving_class_required = True
+        else:
+            self.remedial_driving_class_required = False
         self.case_information.license_suspension_details = (
             self.license_suspension_details
         )

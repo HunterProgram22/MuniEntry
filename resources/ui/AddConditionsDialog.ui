@@ -392,7 +392,7 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
+   <widget class="QCheckBox" name="remedial_driving_class_checkBox">
     <property name="geometry">
      <rect>
       <x>500</x>
