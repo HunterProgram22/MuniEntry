@@ -17,6 +17,7 @@ from models.CaseInformation import (
     CriminalCharge,
     AmendOffenseDetails,
     LicenseSuspension,
+    CommunityControlTerms,
 )
 from resources.db.DatabaseCreation import create_offense_list
 
@@ -108,6 +109,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         super().__init__(parent)
         self.case_information = case_information
         self.license_suspension_details = LicenseSuspension()
+        self.community_control_terms = CommunityControlTerms()
 
     @logger.catch
     def add_conditions(self, case_information=None):
@@ -154,6 +156,16 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details.remedial_driving_class_required = True
         else:
             self.remedial_driving_class_required = False
+        if self.type_of_community_control_box.currentText() != "None":
+            self.community_control_terms.type_of_community_control = (
+                self.type_of_community_control_box.currentText()
+            )
+            self.community_control_terms.term_of_community_control = (
+                self.term_of_community_control_box.currentText()
+            )
+            self.case_information.community_control_terms = (
+                self.community_control_terms
+            )
         self.case_information.license_suspension_details = (
             self.license_suspension_details
         )
