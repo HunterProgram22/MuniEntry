@@ -1,5 +1,4 @@
 APPLICATION TODO LIST
-3. Add license suspension conditions to template
 4.  Add community control additional conditions b/c of UCM
 5. Add checkbox for freeform statute/offense - then self.blocksignals
 6. Refactor CriminalDialogs.py
