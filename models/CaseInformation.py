@@ -1,4 +1,4 @@
-# File with classes for storing case information to be used in controllers
+"""Module containing all data structures for everything at the moment."""
 
 
 class CaseInformation(object):
