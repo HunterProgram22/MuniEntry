@@ -8,6 +8,7 @@ class Case(object):
 
     def __init__(self, case_number):
         self.case_number = case_number
+        self.case_type_code = case_number[2:5]
         self.case_parties = []
 
     def add_party_to_case(self, party_type):
@@ -34,7 +35,7 @@ class TrafficCase(Case):
         out the case numbers to create a case_type_code (i.e. TRC or TRD).
         """
         super().__init__(case_number)
-        self.case_type_code = case_number[2:5]
+
 
 
 test = TrafficCase("21TRC0123")
