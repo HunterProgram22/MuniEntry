@@ -18,8 +18,8 @@ from controllers.MinorMisdemeanorDialogs import (
 )
 
 """Functions for Testing"""
-def start_MinorMisdemeanorDialog(qtbot, judicial_officer):
-    dialog = MinorMisdemeanorDialog(judicial_officer)
+def start_MinorMisdemeanorDialog(qtbot, judicial_officer, judicial_officer_type):
+    dialog = MinorMisdemeanorDialog(judicial_officer, judicial_officer_type)
     qtbot.addWidget(dialog)
     return dialog
 
@@ -35,7 +35,6 @@ def test_title(app):
     assert app.windowTitle() == "MuniEntry"
 
 def test_judicial_officer_buttons(app):
-    assert app.judicial_officer == "Bunner"
     QtBot.mouseClick(app.hemmeter_radioButton, QtCore.Qt.LeftButton)
     assert app.judicial_officer == "Hemmeter"
     QtBot.mouseClick(app.rohrer_radioButton, QtCore.Qt.LeftButton)
@@ -46,11 +45,13 @@ def test_judicial_officer_buttons(app):
     assert app.judicial_officer == "Bunner"
 
 def test_minor_misdemeanor_traffic_buton(app, qtbot):
+    QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer)
+    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer, app.judicial_officer_type)
     assert dialog.windowTitle() == "Minor Misdemeanor Case Information"
 
 def test_green_sheet_buton(app, qtbot):
+    QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
-    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer)
+    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer, app.judicial_officer_type)
     assert dialog.windowTitle() == "Minor Misdemeanor Case Information"

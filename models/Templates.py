@@ -25,6 +25,6 @@ Judge_Final_Judgment_Template = Template(
 TEMPLATE_DICT = {
     "Bunner" : Magistrate_And_Judge_Final_Judgment_Template,
     "Pelanda" : Magistrate_And_Judge_Final_Judgment_Template,
-    "Rohrer" : Judge_Final_Judgment_Template,
-    "Hemmeter" : Judge_Final_Judgment_Template,
+    "Rohrer" : Magistrate_And_Judge_Final_Judgment_Template,
+    "Hemmeter" : Magistrate_And_Judge_Final_Judgment_Template,
 }

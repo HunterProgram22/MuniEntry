@@ -5,8 +5,9 @@ class CaseInformation(object):
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""
 
-    def __init__(self, judicial_officer):
+    def __init__(self, judicial_officer, judicial_officer_type):
         self.judicial_officer = judicial_officer
+        self.judicial_officer_type = judicial_officer_type
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
@@ -66,6 +67,7 @@ class CaseInformation(object):
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
             "judicial_officer": self.judicial_officer,
+            "judicial_officer_type": self.judicial_officer_type,
             "license_suspension_details": self.license_suspension_details,
         }
         return self.formatted_case_information

@@ -35,9 +35,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     FIX: Pylint says too many attributes 11/7. Possibly reduce/refactor."""
 
-    def __init__(self, judicial_officer, parent=None):
+    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
         super().__init__(parent)
-        self.case_information = CaseInformation(judicial_officer)
+        self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
         self.modify_view()
         self.set_counters()
         self.set_database()

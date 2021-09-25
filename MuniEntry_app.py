@@ -4,7 +4,7 @@ selecting the judicial officer on the case and also different templates.
 """
 import sys
 
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from loguru import logger
 
 from views.main_window_ui import Ui_MainWindow
@@ -51,8 +51,11 @@ class Window(QMainWindow, Ui_MainWindow):
         }
 
         # Set View and Connect Signals
-        self.bunner_radioButton.setChecked(True)
-        self.judicial_officer = "Bunner"
+        """FIX: If a default judicial_officer is set, then set_judicial_officer
+        is not called. Look into fixing this so that default officers can be
+        set for different users."""
+        self.judicial_officer = None
+        self.judicial_officer_type = None
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
 
@@ -64,10 +67,21 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def set_judicial_officer(self):
         """Sets the judicial officer for the main application that will be
-        transferred to the entry that is selected."""
+        transferred to the entry that is selected.
+
+        TODO: Refactor if/else for magistrates and judges - eventually tie
+        this to the model for judicial officer so that the type is part of the
+        judicial_officer model that is instantiated.
+        """
         for key in self.judicial_officer_dict:
             if key.isChecked():
                 self.judicial_officer = self.judicial_officer_dict[key]
+                if self.judicial_officer == "Bunner":
+                    self.judicial_officer_type = "Magistrate"
+                elif self.judicial_officer == "Pelanda":
+                    self.judicial_officer_type = "Magistrate"
+                else:
+                    self.judicial_officer_type = "Judge"
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and
@@ -81,9 +95,23 @@ class Window(QMainWindow, Ui_MainWindow):
         self.menu_file_exit.triggered.connect(self.close)
 
     def start_dialog_from_entry_button(self):
-        """Launches the dialog that is connected to each button."""
-        dialog = self.dialog_dict[self.sender()](self.judicial_officer)
-        dialog.exec()
+        """
+        Launches the dialog that is connected to each button.
+        The judicial_officer argument must be passed to insure the creation
+        of the proper template features.
+        """
+        try:
+            dialog = self.dialog_dict[self.sender()](
+                self.judicial_officer, self.judicial_officer_type
+                )
+            dialog.exec()
+        except AttributeError:
+            message = QMessageBox()
+            message.setIcon(QMessageBox.Warning)
+            message.setWindowTitle("Required")
+            message.setText("You must select a judicial officer.")
+            message.setStandardButtons(QMessageBox.Ok)
+            message.exec()
 
 
 @logger.catch

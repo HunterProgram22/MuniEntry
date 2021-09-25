@@ -29,8 +29,8 @@ def add_case_information(dialog):
     QtBot.keyClicks(dialog.defendant_last_name_lineEdit, "Smith")
     QtBot.keyClicks(dialog.operator_license_number_lineEdit, "TF180780")
 
-def start_minor_misdemeanor_dialog(qtbot, judicial_officer):
-    dialog = MinorMisdemeanorDialog(judicial_officer)
+def start_minor_misdemeanor_dialog(qtbot, judicial_officer, judicial_officer_type):
+    dialog = MinorMisdemeanorDialog(judicial_officer, judicial_officer_type)
     qtbot.addWidget(dialog)
     add_case_information(dialog)
     return dialog
@@ -61,8 +61,9 @@ def app(qtbot):
 
 @pytest.fixture
 def dialog(app, qtbot):
+    QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_minor_misdemeanor_dialog(qtbot, app.judicial_officer)
+    dialog = start_minor_misdemeanor_dialog(qtbot, app.judicial_officer, app.judicial_officer_type)
     return dialog
 
 """TESTING"""
@@ -81,7 +82,7 @@ def test_case_information_dialog(app, dialog):
 def test_offense_to_statute(app, dialog):
     dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
     assert dialog.statute_choice_box.currentText() == "R.C. 4511.21(B)(2)"
-    assert dialog.degree_choice_box.currentText() == "MM"
+    assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
     dialog.offense_choice_box.setCurrentText("Driving Under Suspension")
     assert dialog.statute_choice_box.currentText() == "R.C. 4510.11"
     assert dialog.degree_choice_box.currentText() == "M1"
@@ -89,10 +90,10 @@ def test_offense_to_statute(app, dialog):
 def test_statute_to_offense(app, dialog):
     dialog.statute_choice_box.setCurrentText("R.C. 4511.21(B)(3)")
     assert dialog.offense_choice_box.currentText() == "Speeding > 35 mph"
-    assert dialog.degree_choice_box.currentText() == "MM"
+    assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
     dialog.statute_choice_box.setCurrentText("R.C. 4511.33")
     assert dialog.offense_choice_box.currentText() == "Driving in Marked Lanes"
-    assert dialog.degree_choice_box.currentText() == "MM"
+    assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
 
 def test_add_offense(app, dialog):
     add_offense_speeding_25(dialog)
