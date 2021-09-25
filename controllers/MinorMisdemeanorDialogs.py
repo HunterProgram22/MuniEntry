@@ -215,12 +215,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.balance_due_date = (
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
-        """TODO: The community service is part of additional conditions, this
-        should perhaps go somewhere else."""
-        # if self.community_service_checkBox.isChecked():
-        #    self.case_information.community_service = True
-        # else:
-        #    self.case_information.community_service = False
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
@@ -249,6 +243,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
         REFACTOR: This and set_offense should likely be combined to a single
         method and common code refactored."""
+        if self.freeform_entry_checkBox.isChecked():
+            return None
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
         query.prepare(
@@ -271,6 +267,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
         REFACTOR: This and set_offense should likely be combined to a single
         method and common code refactored."""
+        if self.freeform_entry_checkBox.isChecked():
+            return None
         key = self.statute_choice_box.currentText()
         query = QSqlQuery()
         query.prepare(
