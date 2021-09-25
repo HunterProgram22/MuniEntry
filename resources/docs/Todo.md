@@ -1,10 +1,9 @@
 APPLICATION TODO LIST
-6. Refactor CriminalDialogs.py
-7. Refactor CaseInformation.py
-8. Refactor Templates.py
-10. Add another add charge button to tab back to one??
-11. Have template write out minor misdemeanor instead of MM, etc
-12. Fix issue with database - currently says not open twice on load and also does not close on close_event.
+* Refactor CriminalDialogs.py
+* Refactor CaseInformation.py
+* Refactor Templates.py
+* Add another add charge button to tab back to one??
+* Fix issue with database - currently says not open twice on load and also does not close on close_event.
 * Review button names on all views to make sure no repeats
 * Add tests for amend offense and add conditions
 * Merge 2 templates to 1 and have heading change and add language for judge adopt

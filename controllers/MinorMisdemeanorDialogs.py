@@ -73,6 +73,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """
         https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
         https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        NOTE: If running create_psql_table.py to update database, must delete
+        the old charges.sqlite file to insure it is updated.
         """
         self.database = QSqlDatabase.addDatabase("QSQLITE")
         self.database.setDatabaseName(CHARGES_DATABASE)
