@@ -43,7 +43,7 @@ createTableQuery.exec(
         id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
         offense VARCHAR(60) NOT NULL,
         statute VARCHAR(50) NOT NULL,
-        degree VARCHAR(5) NOT NULL
+        degree VARCHAR(50) NOT NULL
     )
     """
 )
