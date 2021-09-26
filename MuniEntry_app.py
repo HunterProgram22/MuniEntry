@@ -94,11 +94,17 @@ class Window(QMainWindow, Ui_MainWindow):
         """Self explanatory."""
         self.menu_file_exit.triggered.connect(self.close)
 
-    def start_dialog_from_entry_button(self):
+    @logger.catch
+    def start_dialog_from_entry_button(self, button_clicked):
         """
         Launches the dialog that is connected to each button.
         The judicial_officer argument must be passed to insure the creation
         of the proper template features.
+
+        The button_clicked is the bool that is fired when a button is clicked
+        and it is passed, but not used. It can be removed and the error is
+        ignored but better to account for the variable - maybe rethink this in
+        the future.
         """
         try:
             dialog = self.dialog_dict[self.sender()](

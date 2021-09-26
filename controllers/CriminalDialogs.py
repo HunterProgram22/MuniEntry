@@ -27,8 +27,6 @@ SAVE_PATH = PATH + "\\resources\\Saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
-"""TODO: Need to add maximize and minimize buttons for controllers."""
-
 
 class BaseCriminalDialog(QDialog):
     """This class is a base class to provide methods that are used by some or all
