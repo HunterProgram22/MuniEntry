@@ -1,4 +1,5 @@
 APPLICATION TODO LIST
+* Need to fix template and code for add conditions have the check box control if a condition is added.
 * Refactor CriminalDialogs.py
 * Refactor CaseInformation.py
 * Refactor Templates.py
