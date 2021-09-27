@@ -24,6 +24,7 @@ from models.CaseInformation import (
     AmendOffenseDetails,
     LicenseSuspension,
     CommunityControlTerms,
+    CommunityServiceTerms
 )
 from resources.db.DatabaseCreation import create_offense_list
 
@@ -95,33 +96,43 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.case_information = case_information
         self.license_suspension_details = LicenseSuspension()
         self.community_control_terms = CommunityControlTerms()
+        self.community_service_terms = CommunityServiceTerms()
 
     @logger.catch
     def add_conditions(self, case_information=None):
         """FIX/DEBUG: This function is only being called if two positional
         arguments are set as parameters. Not sure why, but it works if it is
         set up to allow self and case_information even though case_information
-        is not used directly as far as I can tell.
+        is not used directly as far as I can tell. This is likely the bool that
+        is being fired when the button is pressed and I'm only seeing this when
+        I wrap a function in a logger.
 
         TODO: This is not tied to the additional conditions checkbox grid on
         the MMD yet. It was tied to the Comm Service checkbox initially but
         it would revert status of case_information.community_service to the
         bool state of that box - either change variable name or remove Yes/No
-        from dialog on add conditions CS box because it can create a conflict."""
+        from dialog on add conditions CS box because it can create a conflict.
+
+        The dialog should only enable boxes that were checked prior to add
+        conditions. Then the values for enabled box should default to the most
+        common condition terms.
+        """
         if self.community_service_ordered_box.currentText() == "Yes":
-            self.case_information.community_service = True
-            self.case_information.hours_of_service = (
+            self.community_service_terms.hours_of_service = (
                 self.community_service_hours_ordered_box.value()
             )
-            self.case_information.days_to_complete_service = (
+            self.community_service_terms.days_to_complete_service = (
                 self.community_service_days_to_complete_box.currentText()
             )
-            self.case_information.due_date_for_service = (
+            self.community_service_terms.due_date_for_service = (
                 self.community_service_date_to_complete_box.date().toString(
                 "MMMM dd, yyyy")
             )
+            self.case_information.community_service_terms = (
+                self.community_service_terms
+            )
         else:
-            self.case_information.community_service = False
+            self.case_information.community_service_terms = None
         self.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )

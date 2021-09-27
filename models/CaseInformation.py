@@ -62,7 +62,7 @@ class CaseInformation(object):
             "balance_due_date": self.balance_due_date,
             "fra_in_file": self.fra_in_file,
             "fra_in_court": self.fra_in_court,
-            "community_service": self.community_service,
+            "community_service_terms": self.community_service_terms,
             "hours_of_service": self.hours_of_service,
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
@@ -95,6 +95,13 @@ class CommunityControlTerms(object):
         self.type_of_community_control = "basic"
         self.not_refuse = False
         self.not_consume = False
+
+
+class CommunityServiceTerms(object):
+    def __init__(self):
+        self.hours_of_service = 0
+        self.days_to_complete_service = 0
+        self.due_date_for_service = None
 
 
 class OviDetails(object):
