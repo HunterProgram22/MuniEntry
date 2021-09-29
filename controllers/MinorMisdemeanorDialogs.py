@@ -217,6 +217,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.balance_due_date = (
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
+        if self.license_suspension_checkBox.isChecked():
+            self.case_information.license_suspension_details.license_suspension_ordered = True
+        if self.community_control_checkBox.isChecked():
+            self.case_information.community_control_terms.community_control_required = True
+        if self.community_service_checkBox.isChecked():
+            self.case_information.community_service_terms.community_service_ordered = True
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'

@@ -1,5 +1,5 @@
 APPLICATION TODO LIST
-* Need to fix template and code for add conditions have the check box control if a condition is added.
+* Need to fix template and code for add conditions have the check box control if a condition is added - it now works need to refactor it.
 * Refactor CriminalDialogs.py
 * Refactor CaseInformation.py
 * Refactor Templates.py

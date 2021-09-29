@@ -117,22 +117,20 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         conditions. Then the values for enabled box should default to the most
         common condition terms.
         """
-        if self.community_service_ordered_box.currentText() == "Yes":
-            self.community_service_terms.hours_of_service = (
-                self.community_service_hours_ordered_box.value()
-            )
-            self.community_service_terms.days_to_complete_service = (
-                self.community_service_days_to_complete_box.currentText()
-            )
-            self.community_service_terms.due_date_for_service = (
-                self.community_service_date_to_complete_box.date().toString(
-                "MMMM dd, yyyy")
-            )
-            self.case_information.community_service_terms = (
-                self.community_service_terms
-            )
-        else:
-            self.case_information.community_service_terms = None
+        #if self.community_service_ordered_box.currentText() == "Yes":
+        self.community_service_terms.hours_of_service = (
+            self.community_service_hours_ordered_box.value()
+        )
+        self.community_service_terms.days_to_complete_service = (
+            self.community_service_days_to_complete_box.currentText()
+        )
+        self.community_service_terms.due_date_for_service = (
+            self.community_service_date_to_complete_box.date().toString(
+            "MMMM dd, yyyy")
+        )
+        self.case_information.community_service_terms = (
+            self.community_service_terms
+        )
         self.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )

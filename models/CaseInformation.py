@@ -30,7 +30,7 @@ class CaseInformation(object):
         self.understood_plea = True
         self.citizen_deportation = False
         self.total_charges = 0
-        self.community_service = False
+        self.community_service_terms = None
         self.hours_of_service = None
         self.days_to_complete_service = None
         self.due_date_for_service = None
@@ -99,6 +99,7 @@ class CommunityControlTerms(object):
 
 class CommunityServiceTerms(object):
     def __init__(self):
+        self.community_service_ordered = False
         self.hours_of_service = 0
         self.days_to_complete_service = 0
         self.due_date_for_service = None
@@ -129,6 +130,7 @@ class AmendOffenseDetails(object):
 
 class LicenseSuspension(object):
     def __init__(self):
+        self.license_suspension_ordered = False
         self.license_type = None
         self.license_suspended_date = None
         self.license_suspension_term = None
