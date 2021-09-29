@@ -345,7 +345,10 @@ font-weight: bold;</string>
     <bool>false</bool>
    </property>
   </widget>
-  <widget class="QFrame" name="frame_4">
+  <widget class="QFrame" name="license_suspension_frame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -570,7 +573,10 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QFrame" name="frame_5">
+  <widget class="QFrame" name="community_service_frame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -731,7 +737,10 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QFrame" name="frame_6">
+  <widget class="QFrame" name="community_control_frame">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>10</x>

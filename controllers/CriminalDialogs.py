@@ -91,33 +91,51 @@ class BaseCriminalDialog(QDialog):
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
-    def __init__(self, case_information=None, parent=None):
+    def __init__(self, case_information, community_service, community_control, license_suspension, parent=None):
         super().__init__(parent)
         self.case_information = case_information
-        self.license_suspension_details = LicenseSuspension()
-        self.community_control_terms = CommunityControlTerms()
-        self.community_service_terms = CommunityServiceTerms()
+        self.community_service = community_service
+        self.community_control = community_control
+        self.license_suspension = license_suspension
+        if self.license_suspension is True:
+            self.license_suspension_frame.setEnabled(True)
+            self.license_suspension_details = LicenseSuspension()
+        if self.community_control is True:
+            self.community_control_frame.setEnabled(True)
+            self.community_control_terms = CommunityControlTerms()
+        if self.community_service is True:
+            self.community_service_frame.setEnabled(True)
+            self.community_service_terms = CommunityServiceTerms()
 
     @logger.catch
-    def add_conditions(self, case_information=None):
-        """FIX/DEBUG: This function is only being called if two positional
-        arguments are set as parameters. Not sure why, but it works if it is
-        set up to allow self and case_information even though case_information
-        is not used directly as far as I can tell. This is likely the bool that
-        is being fired when the button is pressed and I'm only seeing this when
-        I wrap a function in a logger.
+    def add_conditions(self, button_click_bool=None):
+        """FIX(?) button_click_bool is the bool value associated with the button
+        being clicked. It is not used in the method.
 
-        TODO: This is not tied to the additional conditions checkbox grid on
-        the MMD yet. It was tied to the Comm Service checkbox initially but
-        it would revert status of case_information.community_service to the
-        bool state of that box - either change variable name or remove Yes/No
-        from dialog on add conditions CS box because it can create a conflict.
-
-        The dialog should only enable boxes that were checked prior to add
+        TODO: The dialog should only enable boxes that were checked prior to add
         conditions. Then the values for enabled box should default to the most
         common condition terms.
         """
-        #if self.community_service_ordered_box.currentText() == "Yes":
+        if self.community_service is True:
+            self.add_community_service_terms()
+        if self.community_control is True:
+            self.add_community_control_terms()
+        if self.license_suspension is True:
+            self.add_license_suspension_details()
+
+
+    def add_community_control_terms(self):
+        self.community_control_terms.type_of_community_control = (
+            self.type_of_community_control_box.currentText()
+        )
+        self.community_control_terms.term_of_community_control = (
+            self.term_of_community_control_box.currentText()
+        )
+        self.case_information.community_control_terms = (
+            self.community_control_terms
+        )
+
+    def add_community_service_terms(self):
         self.community_service_terms.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
@@ -131,6 +149,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.case_information.community_service_terms = (
             self.community_service_terms
         )
+
+    def add_license_suspension_details(self):
         self.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )
@@ -150,16 +170,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details.remedial_driving_class_required = True
         else:
             self.remedial_driving_class_required = False
-        if self.type_of_community_control_box.currentText() != "None":
-            self.community_control_terms.type_of_community_control = (
-                self.type_of_community_control_box.currentText()
-            )
-            self.community_control_terms.term_of_community_control = (
-                self.term_of_community_control_box.currentText()
-            )
-            self.case_information.community_control_terms = (
-                self.community_control_terms
-            )
         self.case_information.license_suspension_details = (
             self.license_suspension_details
         )

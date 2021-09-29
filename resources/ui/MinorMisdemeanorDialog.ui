@@ -615,7 +615,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>10</y>
       <width>961</width>
-      <height>251</height>
+      <height>276</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="charges_gridLayout">
@@ -670,8 +670,8 @@ font-weight: bold;</string>
        </property>
       </widget>
      </item>
-     <item row="7" column="0">
-      <widget class="QLabel" name="label_16">
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_17">
        <property name="font">
         <font>
          <family>Palatino Linotype</family>
@@ -682,7 +682,7 @@ font-weight: bold;</string>
         </font>
        </property>
        <property name="text">
-        <string>Court Costs:</string>
+        <string>Fines:</string>
        </property>
       </widget>
      </item>
@@ -702,22 +702,6 @@ font-weight: bold;</string>
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_17">
-       <property name="font">
-        <font>
-         <family>Palatino Linotype</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <italic>false</italic>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Fines:</string>
-       </property>
-      </widget>
-     </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_10">
        <property name="font">
@@ -731,6 +715,22 @@ font-weight: bold;</string>
        </property>
        <property name="text">
         <string>Fines Suspended:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_16">
+       <property name="font">
+        <font>
+         <family>Palatino Linotype</family>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Court Costs:</string>
        </property>
       </widget>
      </item>
@@ -832,7 +832,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>480</x>
       <y>11</y>
       <width>341</width>
-      <height>91</height>
+      <height>96</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_4">
@@ -931,7 +931,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>461</width>
-      <height>91</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
@@ -1237,11 +1237,11 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>31</y>
       <width>461</width>
       <height>101</height>
      </rect>
@@ -1282,22 +1282,22 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QCheckBox" name="checkBox_3">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Fingerprinting</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
       <widget class="QCheckBox" name="community_control_checkBox">
        <property name="enabled">
         <bool>true</bool>
        </property>
        <property name="text">
         <string>Community Control</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="checkBox_3">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Fingerprinting</string>
        </property>
       </widget>
      </item>
@@ -1467,8 +1467,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>385</x>
-     <y>297</y>
+     <x>396</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
@@ -1483,8 +1483,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>726</x>
-     <y>298</y>
+     <x>702</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
@@ -1499,8 +1499,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>726</x>
-     <y>260</y>
+     <x>702</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -1511,12 +1511,12 @@ font-weight: bold;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>726</x>
-     <y>260</y>
+     <x>702</x>
+     <y>258</y>
     </hint>
    </hints>
   </connection>
@@ -1543,12 +1543,12 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>385</x>
-     <y>297</y>
+     <x>396</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
@@ -1559,8 +1559,8 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>385</x>
@@ -1591,8 +1591,8 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>421</x>
@@ -1623,12 +1623,12 @@ font-weight: bold;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>726</x>
-     <y>298</y>
+     <x>702</x>
+     <y>295</y>
     </hint>
    </hints>
   </connection>
@@ -1655,8 +1655,8 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>962</x>
-     <y>173</y>
+     <x>963</x>
+     <y>169</y>
     </hint>
     <hint type="destinationlabel">
      <x>822</x>
@@ -1675,8 +1675,8 @@ font-weight: bold;</string>
      <y>165</y>
     </hint>
     <hint type="destinationlabel">
-     <x>214</x>
-     <y>232</y>
+     <x>337</x>
+     <y>259</y>
     </hint>
    </hints>
   </connection>
@@ -1692,7 +1692,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>789</x>
-     <y>801</y>
+     <y>799</y>
     </hint>
    </hints>
   </connection>
@@ -1724,7 +1724,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>479</x>
-     <y>77</y>
+     <y>76</y>
     </hint>
    </hints>
   </connection>
@@ -1740,7 +1740,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>829</x>
-     <y>78</y>
+     <y>76</y>
     </hint>
    </hints>
   </connection>
@@ -1756,7 +1756,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>479</x>
-     <y>46</y>
+     <y>45</y>
     </hint>
    </hints>
   </connection>
@@ -1788,7 +1788,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>719</x>
-     <y>801</y>
+     <y>799</y>
     </hint>
    </hints>
   </connection>

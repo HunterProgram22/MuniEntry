@@ -94,7 +94,19 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window."""
-        AddConditionsDialog(self.case_information).exec()
+        if self.community_service_checkBox.isChecked():
+            community_service = True
+        else:
+            community_service = False
+        if self.community_control_checkBox.isChecked():
+            community_control = True
+        else:
+            community_control = False
+        if self.license_suspension_checkBox.isChecked():
+            license_suspension = True
+        else:
+            license_suspension = False
+        AddConditionsDialog(self.case_information, community_service, community_control, license_suspension).exec()
 
     def close_event(self):
         """TODO: This does not appear to close the database. It is currently
