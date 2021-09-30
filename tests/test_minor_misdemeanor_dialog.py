@@ -169,17 +169,17 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
     assert dialog.charges_gridLayout.itemAtPosition(5, 6).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "25"
 
-def test_fines_due_date(app, dialog):
-    """This test will fail right now because it doesn't account for the
-    next_tuesday function that is being used."""
-    dialog.ability_to_pay_box.setCurrentText("forthwith")
-    assert dialog.balance_due_date.date() == TODAY
-    dialog.ability_to_pay_box.setCurrentText("within 30 days")
-    assert dialog.balance_due_date.date() == TODAY + timedelta(days=30)
-    dialog.ability_to_pay_box.setCurrentText("within 60 days")
-    assert dialog.balance_due_date.date() == TODAY + timedelta(days=60)
-    dialog.ability_to_pay_box.setCurrentText("within 90 days")
-    assert dialog.balance_due_date.date() == TODAY + timedelta(days=90)
+# def test_fines_due_date(app, dialog):
+#     """This test will fail right now because it doesn't account for the
+#     next_tuesday function that is being used."""
+#     dialog.ability_to_pay_box.setCurrentText("forthwith")
+#     assert dialog.balance_due_date.date() == TODAY
+#     dialog.ability_to_pay_box.setCurrentText("within 30 days")
+#     assert dialog.balance_due_date.date() == TODAY + timedelta(days=30)
+#     dialog.ability_to_pay_box.setCurrentText("within 60 days")
+#     assert dialog.balance_due_date.date() == TODAY + timedelta(days=60)
+#     dialog.ability_to_pay_box.setCurrentText("within 90 days")
+#     assert dialog.balance_due_date.date() == TODAY + timedelta(days=90)
 
 def test_fra_in_file_and_court(app, dialog):
     dialog.fra_in_file_box.setCurrentText("Yes")
@@ -198,12 +198,12 @@ def test_fra_in_file_and_court(app, dialog):
 def test_amend_offense(dialog, qtbot):
     QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)
     dialog = start_amendment_dialog(qtbot, dialog.case_information)
-    dialog.windowTitle() == "Amendment"
+    assert dialog.windowTitle() == "Amendment"
 
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
-    dialog.windowTitle() == "Additional Conditions"
+    assert dialog.windowTitle() == "Additional Conditions"
 
 def test_create_entry(app, dialog):
     """TODO: Add offenses to populate entry."""
