@@ -11,12 +11,19 @@ from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
-from models.CaseInformation import CaseInformation, CriminalCharge
+from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from models.Templates import TEMPLATE_DICT
+from models.CaseInformation import (
+    CaseInformation,
+    CriminalCharge,
+    AmendOffenseDetails,
+    LicenseSuspension,
+    CommunityControlTerms,
+    CommunityServiceTerms
+)
 from controllers.CriminalDialogs import (
     BaseCriminalDialog,
     AmendOffenseDialog,
-    AddConditionsDialog,
 )
 from resources.db.DatabaseCreation import create_offense_list
 
@@ -93,20 +100,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         AmendOffenseDialog(self.case_information).exec()
 
     def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window."""
-        if self.community_service_checkBox.isChecked():
-            community_service = True
-        else:
-            community_service = False
-        if self.community_control_checkBox.isChecked():
-            community_control = True
-        else:
-            community_control = False
-        if self.license_suspension_checkBox.isChecked():
-            license_suspension = True
-        else:
-            license_suspension = False
-        AddConditionsDialog(self.case_information, community_service, community_control, license_suspension).exec()
+        """Opens the add conditions dialog as a modal window. It passes the
+        instance of the class (self) as an argument so that the
+        AddConditionsDialog can access data from the MinorMisdemeanorDialog when
+        creating the AddConditionsDialog."""
+        AddConditionsDialog(self).exec()
 
     def close_event(self):
         """TODO: This does not appear to close the database. It is currently
@@ -331,3 +329,88 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.balance_due_date.setDate(QDate.currentDate().addDays(
             total_days_to_add)
             )
+
+
+class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+    def __init__(self, minor_misdemeanor_dialog, parent=None):
+        super().__init__(parent)
+        self.case_information = minor_misdemeanor_dialog.case_information
+        self.community_service = minor_misdemeanor_dialog.community_service_checkBox.isChecked()
+        self.community_control = minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        self.license_suspension = minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+        if self.license_suspension is True:
+            self.license_suspension_frame.setEnabled(True)
+            self.license_suspension_details = LicenseSuspension()
+        if self.community_control is True:
+            self.community_control_frame.setEnabled(True)
+            self.community_control_terms = CommunityControlTerms()
+        if self.community_service:
+            self.community_service_frame.setEnabled(True)
+            self.community_service_terms = CommunityServiceTerms()
+
+    @logger.catch
+    def add_conditions(self, button_click_bool=None):
+        """FIX(?) button_click_bool is the bool value associated with the button
+        being clicked. It is not used in the method.
+
+        TODO: The dialog should only enable boxes that were checked prior to add
+        conditions. Then the values for enabled box should default to the most
+        common condition terms.
+        """
+        if self.community_service is True:
+            self.add_community_service_terms()
+        if self.community_control is True:
+            self.add_community_control_terms()
+        if self.license_suspension is True:
+            self.add_license_suspension_details()
+
+
+    def add_community_control_terms(self):
+        self.community_control_terms.type_of_community_control = (
+            self.type_of_community_control_box.currentText()
+        )
+        self.community_control_terms.term_of_community_control = (
+            self.term_of_community_control_box.currentText()
+        )
+        self.case_information.community_control_terms = (
+            self.community_control_terms
+        )
+
+    def add_community_service_terms(self):
+        self.community_service_terms.hours_of_service = (
+            self.community_service_hours_ordered_box.value()
+        )
+        self.community_service_terms.days_to_complete_service = (
+            self.community_service_days_to_complete_box.currentText()
+        )
+        self.community_service_terms.due_date_for_service = (
+            self.community_service_date_to_complete_box.date().toString(
+            "MMMM dd, yyyy")
+        )
+        self.case_information.community_service_terms = (
+            self.community_service_terms
+        )
+
+    def add_license_suspension_details(self):
+        self.license_suspension_details.license_type = (
+            self.license_type_box.currentText()
+        )
+        self.license_suspension_details.license_suspended_date = (
+            self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
+        )
+        self.license_suspension_details.license_suspension_term = (
+            self.term_of_suspension_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges = (
+            self.driving_privileges_type_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges_term = (
+            self.term_of_privileges_box.currentText()
+        )
+        if self.remedial_driving_class_checkBox.isChecked():
+            self.license_suspension_details.remedial_driving_class_required = True
+        else:
+            self.remedial_driving_class_required = False
+        self.case_information.license_suspension_details = (
+            self.license_suspension_details
+        )
