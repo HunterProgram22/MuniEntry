@@ -14,10 +14,10 @@ import MuniEntry_app
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
     AmendOffenseDialog,
-    AddConditionsDialog,
 )
 from controllers.MinorMisdemeanorDialogs import (
     MinorMisdemeanorDialog,
+    AddConditionsDialog,
 )
 
 TODAY = date.today()
@@ -202,7 +202,7 @@ def test_amend_offense(dialog, qtbot):
 
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
-    dialog = start_add_conditions_dialog(qtbot, dialog.case_information)
+    dialog = start_add_conditions_dialog(qtbot, dialog)
     dialog.windowTitle() == "Additional Conditions"
 
 def test_create_entry(app, dialog):
