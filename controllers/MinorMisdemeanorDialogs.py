@@ -149,9 +149,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list) - 1
-        charge_dict = vars(
-            self.case_information.charges_list[added_charge_index]
-            )
+        charge_dict = vars(self.case_information.charges_list[added_charge_index])
         for value in charge_dict.values():
             if value is not None:
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
@@ -206,24 +204,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         date of plea/trial,operator license number, date of birth, FRA (proof
         of insurance) in complaint, FRA in court."""
         self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant_first_name = (
-            self.defendant_first_name_lineEdit.text()
-        )
-        self.case_information.defendant_last_name = (
-            self.defendant_last_name_lineEdit.text()
-        )
+        self.case_information.defendant_first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant_last_name = self.defendant_last_name_lineEdit.text()
         self.case_information.plea_trial_date = (
             self.plea_trial_date.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.operator_license_number = (
-            self.operator_license_number_lineEdit.text()
-        )
+        self.case_information.operator_license_number = self.operator_license_number_lineEdit.text()
         self.case_information.defendant_date_of_birth = (
             self.defendant_birth_date.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.ability_to_pay_time = (
-            self.ability_to_pay_box.currentText()
-        )
+        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
         self.case_information.balance_due_date = (
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
@@ -265,9 +255,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             return None
         key = self.offense_choice_box.currentText()
         query = QSqlQuery()
-        query.prepare(
-            "SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'"
-            )
+        query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
         while query.next():
@@ -289,9 +277,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             return None
         key = self.statute_choice_box.currentText()
         query = QSqlQuery()
-        query.prepare(
-            "SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'"
-            )
+        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
         while query.next():
@@ -326,9 +312,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
         future_date = next_tuesday(future_date, 1)
         total_days_to_add = (future_date - today).days
-        self.balance_due_date.setDate(QDate.currentDate().addDays(
-            total_days_to_add)
-            )
+        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
@@ -352,10 +336,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def add_conditions(self, button_click_bool=None):
         """FIX(?) button_click_bool is the bool value associated with the button
         being clicked. It is not used in the method.
-
-        TODO: The dialog should only enable boxes that were checked prior to add
-        conditions. Then the values for enabled box should default to the most
-        common condition terms.
         """
         if self.community_service is True:
             self.add_community_service_terms()

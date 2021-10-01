@@ -1,4 +1,5 @@
 APPLICATION TODO LIST
+* Refactor MinorMisdemeanorDialogs.py and rename
 * Refactor CriminalDialogs.py
 * Refactor CaseInformation.py
 * Refactor Templates.py
