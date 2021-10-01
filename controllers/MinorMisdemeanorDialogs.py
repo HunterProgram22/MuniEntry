@@ -305,8 +305,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
-    """The AddConditionsDialog is created when the addConditionsButton is pressed on
-    the Minor Misdemeanor Case Information screen is clicked. The conditions that
+    """The AddConditionsDialog is created when the addConditionsButton is clicked on
+    the Minor Misdemeanor Case Information. The conditions that
     are available to enter information for are based on the checkboxes that are
     checked on the Minor Misdemeanor Case Information screen."""
     def __init__(self, minor_misdemeanor_dialog, parent=None):
@@ -398,6 +398,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+    """The AddOffenseDialog is created when the amendOffenseButton is clicked on
+    the Minor Misdemeanor Case Information. The case information is passed in
+    order to populate the case information banner."""
     def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
