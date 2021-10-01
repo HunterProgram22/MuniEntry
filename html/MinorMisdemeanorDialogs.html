@@ -1,0 +1,1694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>MinorMisdemeanorDialogs API documentation</title>
+<meta name="description" content="The controller module for the minor misdemeanor dialog - it is not limited
+to minor misdemeanors, but does not contain functions to account for jail …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>MinorMisdemeanorDialogs</code></h1>
+</header>
+<section id="section-intro">
+<p>The controller module for the minor misdemeanor dialog - it is not limited
+to minor misdemeanors, but does not contain functions to account for jail time.
+Loads all charges - including non-minor-misdemeanors from a databse.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;The controller module for the minor misdemeanor dialog - it is not limited
+to minor misdemeanors, but does not contain functions to account for jail time.
+Loads all charges - including non-minor-misdemeanors from a databse.&#34;&#34;&#34;
+import pathlib
+from datetime import date, timedelta
+from loguru import logger
+
+from PyQt5 import QtCore
+from PyQt5.QtCore import QDate
+from PyQt5.QtWidgets import QLabel, QPushButton
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+
+from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
+from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
+from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
+from models.Templates import TEMPLATE_DICT
+from models.CaseInformation import (
+    CaseInformation,
+    CriminalCharge,
+    AmendOffenseDetails,
+    LicenseSuspension,
+    CommunityControlTerms,
+    CommunityServiceTerms
+)
+from controllers.CriminalDialogs import BaseCriminalDialog
+from resources.db.DatabaseCreation import create_offense_list
+
+
+PATH = str(pathlib.Path().absolute())
+TEMPLATE_PATH = PATH + &#34;\\resources\\templates\\&#34;
+SAVE_PATH = PATH + &#34;\\resources\\saved\\&#34;
+DB_PATH = PATH + &#34;\\resources\\db\\&#34;
+CHARGES_DATABASE = DB_PATH + &#34;\\charges.sqlite&#34;
+
+
+class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
+    &#34;&#34;&#34;This dialog is used when there will not be any jail time imposed. It does
+    not inherently limit cases to minor misdemeanors or unclassified
+    misdemeanors, however, it does not include fields to enter jail time.&#34;&#34;&#34;
+    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
+        super().__init__(parent)
+        self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
+        self.modify_view()
+        self.set_counters()
+        self.set_database()
+        self.set_template()
+        self.criminal_charge = None
+        self.pay_date_dict = {
+            &#34;forthwith&#34;: 0,
+            &#34;within 30 days&#34;: 30,
+            &#34;within 60 days&#34;: 60,
+            &#34;within 90 days&#34;: 90,
+        }
+
+    def modify_view(self):
+        &#34;&#34;&#34;The modify view method updates the view that is created on init.
+        Place items in this method that can&#39;t be added directly in QtDesigner
+        so that they don&#39;t need to be changed in the view file each time pyuic5
+        is run.&#34;&#34;&#34;
+        offense_list, statute_list = create_offense_list()
+        self.statute_choice_box.addItems(statute_list)
+        self.offense_choice_box.addItems(offense_list)
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    def set_counters(self):
+        &#34;&#34;&#34;The counters track whether an item is added to the model/view. The
+        delete button index is used to specify which delete button in the
+        delete button list needs to be deleted when a charge is deleted.&#34;&#34;&#34;
+        self.charge_count = 0
+        self.delete_button_list = []
+
+    def set_database(self):
+        &#34;&#34;&#34;
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        NOTE: If running create_psql_table.py to update database, must delete
+        the old charges.sqlite file to insure it is updated.
+        &#34;&#34;&#34;
+        self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+        self.database.setDatabaseName(CHARGES_DATABASE)
+        self.database.open()
+
+    def set_template(self):
+        &#34;&#34;&#34;The TEMPLATE_DICT stores a template for each judicial officer. In
+        the future this should be connected to set the template from a database
+        with the information to make updating easier.&#34;&#34;&#34;
+        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
+
+    def start_amend_offense_dialog(self):
+        &#34;&#34;&#34;Opens the amend offense dialog as a modal window.&#34;&#34;&#34;
+        AmendOffenseDialog(self.case_information).exec()
+
+    def start_add_conditions_dialog(self):
+        &#34;&#34;&#34;Opens the add conditions dialog as a modal window. It passes the
+        instance of the class (self) as an argument so that the
+        AddConditionsDialog can access data from the MinorMisdemeanorDialog when
+        creating the AddConditionsDialog.&#34;&#34;&#34;
+        AddConditionsDialog(self).exec()
+
+    def close_event(self):
+        &#34;&#34;&#34;TODO: This does not appear to close the database. It is currently
+        tied to clicked() on createEntryButton.&#34;&#34;&#34;
+        self.database.close()
+
+    def add_charge(self):
+        &#34;&#34;&#34;Creates a criminal charge object and adds the data in the view to
+        the object. The criminal charge is then added to the case information
+        model (by appending the charge object to the criminal charges list).
+        The offense is added to the view by the method add_charge_to_view,
+        not this method. This method is triggered on press of the Add Charge
+        button.&#34;&#34;&#34;
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.degree_choice_box.currentText()
+        self.criminal_charge.plea = self.plea_choice_box.currentText()
+        self.criminal_charge.finding = self.finding_choice_box.currentText()
+        self.criminal_charge.fines_amount = self.fines_amount.text()
+        self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        self.criminal_charge.court_costs = self.court_costs_box.currentText()
+        self.case_information.add_charge(self.criminal_charge)
+        self.charge_count += 1
+        self.add_charge_to_view()
+
+    def add_charge_to_view(self):
+        &#34;&#34;&#34;Adds the charge that was added through add_charge method to the
+        view/GUI. The first row=0 because of python zero-based indexing. The
+        column is set at one more than the current number of columns because
+        it is the column to which the charge will be added.
+
+        :added_charge_index: - The added charge index is one less than the
+        total charges in charges_list because of zero-based indexing. Thus, if
+        there is one charge, the index of the charge to be added to the
+        charge_dict from the charges_list is 0.
+
+        TODO: Is the charges_dict really necessary because it is a local
+        variable so each time the function is called only the new charge to be
+        added is in the charge_dict. Can it be done with just the list?
+        &#34;&#34;&#34;
+        row = 0
+        column = self.charges_gridLayout.columnCount() + 1
+        added_charge_index = len(self.case_information.charges_list) - 1
+        charge_dict = vars(self.case_information.charges_list[added_charge_index])
+        for value in charge_dict.values():
+            if value is not None:
+                self.charges_gridLayout.addWidget(QLabel(value), row, column)
+                row += 1
+        delete_button = QPushButton(&#34;Delete&#34;)
+        self.delete_button_list.append(delete_button)
+        delete_button.setStyleSheet(&#34;background-color: rgb(160, 160, 160);&#34;)
+        delete_button.clicked.connect(self.delete_charge)
+        self.charges_gridLayout.addWidget(delete_button, row, column)
+        self.case_information.total_charges = self.charge_count
+
+    def delete_charge(self):
+        &#34;&#34;&#34;Deletes the offense from the case_information.charges list. Then
+        decrements the total charges by one so that other functions using the
+        total charges for indexing are correct.
+
+        TODO: It is duplicative to have self.case_information.total_charges and
+        self.charge_count, can code be refactored to just use
+        self.case_information.total_charges. Issue is the timing of adding to
+        the view and the model. Perhaps add to view first??&#34;&#34;&#34;
+        index = self.delete_button_list.index(self.sender())
+        del self.case_information.charges_list[index]
+        del self.delete_button_list[index]
+        self.case_information.total_charges -= 1
+        self.charge_count -= 1
+        self.delete_charge_from_view()
+
+    def delete_charge_from_view(self):
+        &#34;&#34;&#34;Uses the delete_button that is indexed to the column to delete the
+        QLabels for the charge.&#34;&#34;&#34;
+        index = self.charges_gridLayout.indexOf(self.sender())
+        column = self.charges_gridLayout.getItemPosition(index)[1]
+        for row in range(self.charges_gridLayout.rowCount()):
+            layout_item = self.charges_gridLayout.itemAtPosition(row, column)
+            if layout_item is not None:
+                layout_item.widget().deleteLater()
+                self.charges_gridLayout.removeItem(layout_item)
+
+    @logger.catch
+    def update_case_information(self):
+        &#34;&#34;&#34;The method updates the case information model with the data for the
+        case that is in the fields on the view. This does not update the model
+        with information in the charge fields (offense, statute, plea, etc.)
+        the charge information is transferred to the model upon press of the
+        add charge button.
+
+        Fields that are updated upon pressed() of createEntryButton = case
+        number, first name, last name, ability to pay time, balance due date,
+        date of plea/trial,operator license number, date of birth, FRA (proof
+        of insurance) in complaint, FRA in court.&#34;&#34;&#34;
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.defendant_first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant_last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.plea_trial_date = (
+            self.plea_trial_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.operator_license_number = self.operator_license_number_lineEdit.text()
+        self.case_information.defendant_date_of_birth = (
+            self.defendant_birth_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.balance_due_date = (
+            self.balance_due_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        if self.license_suspension_checkBox.isChecked():
+            self.case_information.license_suspension_details.license_suspension_ordered = True
+        if self.community_control_checkBox.isChecked():
+            self.case_information.community_control_terms.community_control_required = True
+        if self.community_service_checkBox.isChecked():
+            self.case_information.community_service_terms.community_service_ordered = True
+
+    def set_fra_in_file(self):
+        &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+        the FRA was shown in the complaint of file.&#34;&#34;&#34;
+        if self.fra_in_file_box.currentText() == &#34;Yes&#34;:
+            self.case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText(&#34;No&#34;)
+        elif self.fra_in_file_box.currentText() == &#34;No&#34;:
+            self.case_information.fra_in_file = False
+        else:
+            self.case_information.fra_in_file = None
+
+    def set_fra_in_court(self):
+        &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+        the FRA was shown in court.&#34;&#34;&#34;
+        if self.fra_in_court_box.currentText() == &#34;Yes&#34;:
+            self.case_information.fra_in_court = True
+        elif self.fra_in_court_box.currentText() == &#34;No&#34;:
+            self.case_information.fra_in_court = False
+        else:
+            self.case_information.fra_in_court = None
+
+    def set_statute(self):
+        &#34;&#34;&#34;This method queries based on the offense and then sets the statute
+        and degree based on the offense in the database.
+
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored.&#34;&#34;&#34;
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        key = self.offense_choice_box.currentText()
+        query = QSqlQuery()
+        query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;offense LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+        query.bindValue(&#34;:key&#34;, key)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if offense == key:
+                self.statute_choice_box.setCurrentText(statute)
+                self.degree_choice_box.setCurrentText(degree)
+                break
+
+    def set_offense(self):
+        &#34;&#34;&#34;This method queries based on the statute and then sets the offense
+        and degree based on the statute in the database.
+
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored.&#34;&#34;&#34;
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        key = self.statute_choice_box.currentText()
+        query = QSqlQuery()
+        query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;statute LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+        query.bindValue(&#34;:key&#34;, key)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if statute == key:
+                self.offense_choice_box.setCurrentText(offense)
+                self.degree_choice_box.setCurrentText(degree)
+                break
+
+    def set_pay_date(self):
+        &#34;&#34;&#34;Sets the balance of fines and costs to a future date (or today)
+        depending on the selection of ability_to_pay_box. The inner function
+        will move the actual date to the next tuesday per court procedure for
+        show cause hearings being on Tuesday. Would need to be modified if the
+        policy changed.&#34;&#34;&#34;
+        days_to_add = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+        future_date = date.today() + timedelta(days_to_add)
+        today = date.today()
+
+        def next_tuesday(future_date, weekday=1):
+            &#34;&#34;&#34;This function returns the number of days to add to today to set
+            the payment due date out to the Tuesday after the number of days
+            set in the set_pay_date function. The default of 1 for weekday is
+            what sets it to a Tuesday. If it is 0 it would be Monday, 3 would
+            be Wednesday, etc.&#34;&#34;&#34;
+            days_ahead = weekday - future_date.weekday()
+            if days_ahead &lt;= 0:  # Target day already happened this week
+                days_ahead += 7
+            return future_date + timedelta(days_ahead)
+
+        future_date = next_tuesday(future_date, 1)
+        total_days_to_add = (future_date - today).days
+        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
+
+
+class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+    &#34;&#34;&#34;The AddConditionsDialog is created when the addConditionsButton is clicked on
+    the Minor Misdemeanor Case Information. The conditions that
+    are available to enter information for are based on the checkboxes that are
+    checked on the Minor Misdemeanor Case Information screen.&#34;&#34;&#34;
+    def __init__(self, minor_misdemeanor_dialog, parent=None):
+        super().__init__(parent)
+        self.case_information = minor_misdemeanor_dialog.case_information
+        self.community_service = minor_misdemeanor_dialog.community_service_checkBox.isChecked()
+        self.community_control = minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        self.license_suspension = minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+        if self.license_suspension is True:
+            self.license_suspension_frame.setEnabled(True)
+            self.license_suspension_details = LicenseSuspension()
+            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate().addDays(-30))
+        if self.community_control is True:
+            self.community_control_frame.setEnabled(True)
+            self.community_control_terms = CommunityControlTerms()
+        if self.community_service:
+            self.community_service_frame.setEnabled(True)
+            self.community_service_terms = CommunityServiceTerms()
+            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+
+    def add_conditions(self):
+        &#34;&#34;&#34;The method is connected to the pressed signal of continue_Button on the
+        Add Conditions screen.&#34;&#34;&#34;
+        if self.community_service is True:
+            self.add_community_service_terms()
+        if self.community_control is True:
+            self.add_community_control_terms()
+        if self.license_suspension is True:
+            self.add_license_suspension_details()
+
+    def add_community_control_terms(self):
+        &#34;&#34;&#34;The method adds the data entered to the CommunityControlTerms object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.community_control_terms.type_of_community_control = (
+            self.type_of_community_control_box.currentText()
+        )
+        self.community_control_terms.term_of_community_control = (
+            self.term_of_community_control_box.currentText()
+        )
+        self.case_information.community_control_terms = (
+            self.community_control_terms
+        )
+
+    def add_community_service_terms(self):
+        &#34;&#34;&#34;The method adds the data entered to the CommunityServiceTerms object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.community_service_terms.hours_of_service = (
+            self.community_service_hours_ordered_box.value()
+        )
+        self.community_service_terms.days_to_complete_service = (
+            self.community_service_days_to_complete_box.currentText()
+        )
+        self.community_service_terms.due_date_for_service = (
+            self.community_service_date_to_complete_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.community_service_terms = (
+            self.community_service_terms
+        )
+
+    def add_license_suspension_details(self):
+        &#34;&#34;&#34;The method adds the data entered to the LicenseSuspension object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.license_suspension_details.license_type = (
+            self.license_type_box.currentText()
+        )
+        self.license_suspension_details.license_suspended_date = (
+            self.license_suspension_date_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.license_suspension_details.license_suspension_term = (
+            self.term_of_suspension_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges = (
+            self.driving_privileges_type_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges_term = (
+            self.term_of_privileges_box.currentText()
+        )
+        if self.remedial_driving_class_checkBox.isChecked():
+            self.license_suspension_details.remedial_driving_class_required = True
+        else:
+            self.license_suspension_details.remedial_driving_class_required = False
+        self.case_information.license_suspension_details = (
+            self.license_suspension_details
+        )
+
+    def set_service_date(self):
+        &#34;&#34;&#34;Sets the community_service_date_to_complete_box based on the number
+        of days chosen in the community_service_date_to_complete_box.&#34;&#34;&#34;
+        days_added = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_added))
+
+
+class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+    &#34;&#34;&#34;The AddOffenseDialog is created when the amendOffenseButton is clicked on
+    the Minor Misdemeanor Case Information. The case information is passed in
+    order to populate the case information banner.&#34;&#34;&#34;
+    def __init__(self, case_information=None, parent=None):
+        super().__init__(parent)
+        self.case_information = case_information
+        self.amend_offense_details = AmendOffenseDetails()
+        self.set_case_information_banner()
+        self.set_database()
+        self.modify_view()
+
+    def modify_view(self):
+        &#34;&#34;&#34;The modify view method updates the view that is created on init.
+        Place items in this method that can&#39;t be added directly in QtDesigner
+        so that they don&#39;t need to be changed in the view file each time pyuic5
+        is run.&#34;&#34;&#34;
+        offense_list = create_offense_list()[0]
+        self.original_charge_box.addItems(offense_list)
+        self.amended_charge_box.addItems(offense_list)
+
+    def set_database(self):
+        &#34;&#34;&#34;
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        &#34;&#34;&#34;
+        self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+        self.database.setDatabaseName(CHARGES_DATABASE)
+        self.database.open()
+
+    def amend_offense(self):
+        &#34;&#34;&#34;Adds the data entered for the amended offense to the AmendOffenseDetails
+        object then points the case_information object to the AmendOffenseDetails
+        object.&#34;&#34;&#34;
+        self.amend_offense_details.original_charge = self.original_charge_box.currentText()
+        self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
+        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+        self.case_information.amend_offense_details = self.amend_offense_details</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog"><code class="flex name class">
+<span>class <span class="ident">AddConditionsDialog</span></span>
+<span>(</span><span>minor_misdemeanor_dialog, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The AddConditionsDialog is created when the addConditionsButton is clicked on
+the Minor Misdemeanor Case Information. The conditions that
+are available to enter information for are based on the checkboxes that are
+checked on the Minor Misdemeanor Case Information screen.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+    &#34;&#34;&#34;The AddConditionsDialog is created when the addConditionsButton is clicked on
+    the Minor Misdemeanor Case Information. The conditions that
+    are available to enter information for are based on the checkboxes that are
+    checked on the Minor Misdemeanor Case Information screen.&#34;&#34;&#34;
+    def __init__(self, minor_misdemeanor_dialog, parent=None):
+        super().__init__(parent)
+        self.case_information = minor_misdemeanor_dialog.case_information
+        self.community_service = minor_misdemeanor_dialog.community_service_checkBox.isChecked()
+        self.community_control = minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        self.license_suspension = minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+        if self.license_suspension is True:
+            self.license_suspension_frame.setEnabled(True)
+            self.license_suspension_details = LicenseSuspension()
+            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate().addDays(-30))
+        if self.community_control is True:
+            self.community_control_frame.setEnabled(True)
+            self.community_control_terms = CommunityControlTerms()
+        if self.community_service:
+            self.community_service_frame.setEnabled(True)
+            self.community_service_terms = CommunityServiceTerms()
+            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+
+    def add_conditions(self):
+        &#34;&#34;&#34;The method is connected to the pressed signal of continue_Button on the
+        Add Conditions screen.&#34;&#34;&#34;
+        if self.community_service is True:
+            self.add_community_service_terms()
+        if self.community_control is True:
+            self.add_community_control_terms()
+        if self.license_suspension is True:
+            self.add_license_suspension_details()
+
+    def add_community_control_terms(self):
+        &#34;&#34;&#34;The method adds the data entered to the CommunityControlTerms object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.community_control_terms.type_of_community_control = (
+            self.type_of_community_control_box.currentText()
+        )
+        self.community_control_terms.term_of_community_control = (
+            self.term_of_community_control_box.currentText()
+        )
+        self.case_information.community_control_terms = (
+            self.community_control_terms
+        )
+
+    def add_community_service_terms(self):
+        &#34;&#34;&#34;The method adds the data entered to the CommunityServiceTerms object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.community_service_terms.hours_of_service = (
+            self.community_service_hours_ordered_box.value()
+        )
+        self.community_service_terms.days_to_complete_service = (
+            self.community_service_days_to_complete_box.currentText()
+        )
+        self.community_service_terms.due_date_for_service = (
+            self.community_service_date_to_complete_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.community_service_terms = (
+            self.community_service_terms
+        )
+
+    def add_license_suspension_details(self):
+        &#34;&#34;&#34;The method adds the data entered to the LicenseSuspension object
+        that is created when the dialog is initialized.&#34;&#34;&#34;
+        self.license_suspension_details.license_type = (
+            self.license_type_box.currentText()
+        )
+        self.license_suspension_details.license_suspended_date = (
+            self.license_suspension_date_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.license_suspension_details.license_suspension_term = (
+            self.term_of_suspension_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges = (
+            self.driving_privileges_type_box.currentText()
+        )
+        self.license_suspension_details.driving_privileges_term = (
+            self.term_of_privileges_box.currentText()
+        )
+        if self.remedial_driving_class_checkBox.isChecked():
+            self.license_suspension_details.remedial_driving_class_required = True
+        else:
+            self.license_suspension_details.remedial_driving_class_required = False
+        self.case_information.license_suspension_details = (
+            self.license_suspension_details
+        )
+
+    def set_service_date(self):
+        &#34;&#34;&#34;Sets the community_service_date_to_complete_box based on the number
+        of days chosen in the community_service_date_to_complete_box.&#34;&#34;&#34;
+        days_added = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_added))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>controllers.CriminalDialogs.BaseCriminalDialog</li>
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+<li>views.add_conditions_dialog_ui.Ui_AddConditionsDialog</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog.add_community_control_terms"><code class="name flex">
+<span>def <span class="ident">add_community_control_terms</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method adds the data entered to the CommunityControlTerms object
+that is created when the dialog is initialized.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_community_control_terms(self):
+    &#34;&#34;&#34;The method adds the data entered to the CommunityControlTerms object
+    that is created when the dialog is initialized.&#34;&#34;&#34;
+    self.community_control_terms.type_of_community_control = (
+        self.type_of_community_control_box.currentText()
+    )
+    self.community_control_terms.term_of_community_control = (
+        self.term_of_community_control_box.currentText()
+    )
+    self.case_information.community_control_terms = (
+        self.community_control_terms
+    )</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog.add_community_service_terms"><code class="name flex">
+<span>def <span class="ident">add_community_service_terms</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method adds the data entered to the CommunityServiceTerms object
+that is created when the dialog is initialized.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_community_service_terms(self):
+    &#34;&#34;&#34;The method adds the data entered to the CommunityServiceTerms object
+    that is created when the dialog is initialized.&#34;&#34;&#34;
+    self.community_service_terms.hours_of_service = (
+        self.community_service_hours_ordered_box.value()
+    )
+    self.community_service_terms.days_to_complete_service = (
+        self.community_service_days_to_complete_box.currentText()
+    )
+    self.community_service_terms.due_date_for_service = (
+        self.community_service_date_to_complete_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+    )
+    self.case_information.community_service_terms = (
+        self.community_service_terms
+    )</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog.add_conditions"><code class="name flex">
+<span>def <span class="ident">add_conditions</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method is connected to the pressed signal of continue_Button on the
+Add Conditions screen.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_conditions(self):
+    &#34;&#34;&#34;The method is connected to the pressed signal of continue_Button on the
+    Add Conditions screen.&#34;&#34;&#34;
+    if self.community_service is True:
+        self.add_community_service_terms()
+    if self.community_control is True:
+        self.add_community_control_terms()
+    if self.license_suspension is True:
+        self.add_license_suspension_details()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog.add_license_suspension_details"><code class="name flex">
+<span>def <span class="ident">add_license_suspension_details</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method adds the data entered to the LicenseSuspension object
+that is created when the dialog is initialized.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_license_suspension_details(self):
+    &#34;&#34;&#34;The method adds the data entered to the LicenseSuspension object
+    that is created when the dialog is initialized.&#34;&#34;&#34;
+    self.license_suspension_details.license_type = (
+        self.license_type_box.currentText()
+    )
+    self.license_suspension_details.license_suspended_date = (
+        self.license_suspension_date_box.date().toString(&#34;MMMM dd, yyyy&#34;)
+    )
+    self.license_suspension_details.license_suspension_term = (
+        self.term_of_suspension_box.currentText()
+    )
+    self.license_suspension_details.driving_privileges = (
+        self.driving_privileges_type_box.currentText()
+    )
+    self.license_suspension_details.driving_privileges_term = (
+        self.term_of_privileges_box.currentText()
+    )
+    if self.remedial_driving_class_checkBox.isChecked():
+        self.license_suspension_details.remedial_driving_class_required = True
+    else:
+        self.license_suspension_details.remedial_driving_class_required = False
+    self.case_information.license_suspension_details = (
+        self.license_suspension_details
+    )</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AddConditionsDialog.set_service_date"><code class="name flex">
+<span>def <span class="ident">set_service_date</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the community_service_date_to_complete_box based on the number
+of days chosen in the community_service_date_to_complete_box.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_service_date(self):
+    &#34;&#34;&#34;Sets the community_service_date_to_complete_box based on the number
+    of days chosen in the community_service_date_to_complete_box.&#34;&#34;&#34;
+    days_added = int(self.community_service_days_to_complete_box.currentText())
+    self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_added))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AmendOffenseDialog"><code class="flex name class">
+<span>class <span class="ident">AmendOffenseDialog</span></span>
+<span>(</span><span>case_information=None, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The AddOffenseDialog is created when the amendOffenseButton is clicked on
+the Minor Misdemeanor Case Information. The case information is passed in
+order to populate the case information banner.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+    &#34;&#34;&#34;The AddOffenseDialog is created when the amendOffenseButton is clicked on
+    the Minor Misdemeanor Case Information. The case information is passed in
+    order to populate the case information banner.&#34;&#34;&#34;
+    def __init__(self, case_information=None, parent=None):
+        super().__init__(parent)
+        self.case_information = case_information
+        self.amend_offense_details = AmendOffenseDetails()
+        self.set_case_information_banner()
+        self.set_database()
+        self.modify_view()
+
+    def modify_view(self):
+        &#34;&#34;&#34;The modify view method updates the view that is created on init.
+        Place items in this method that can&#39;t be added directly in QtDesigner
+        so that they don&#39;t need to be changed in the view file each time pyuic5
+        is run.&#34;&#34;&#34;
+        offense_list = create_offense_list()[0]
+        self.original_charge_box.addItems(offense_list)
+        self.amended_charge_box.addItems(offense_list)
+
+    def set_database(self):
+        &#34;&#34;&#34;
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        &#34;&#34;&#34;
+        self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+        self.database.setDatabaseName(CHARGES_DATABASE)
+        self.database.open()
+
+    def amend_offense(self):
+        &#34;&#34;&#34;Adds the data entered for the amended offense to the AmendOffenseDetails
+        object then points the case_information object to the AmendOffenseDetails
+        object.&#34;&#34;&#34;
+        self.amend_offense_details.original_charge = self.original_charge_box.currentText()
+        self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
+        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+        self.case_information.amend_offense_details = self.amend_offense_details</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>controllers.CriminalDialogs.BaseCriminalDialog</li>
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+<li>views.amend_offense_dialog_ui.Ui_AmendOffenseDialog</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="MinorMisdemeanorDialogs.AmendOffenseDialog.amend_offense"><code class="name flex">
+<span>def <span class="ident">amend_offense</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the data entered for the amended offense to the AmendOffenseDetails
+object then points the case_information object to the AmendOffenseDetails
+object.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def amend_offense(self):
+    &#34;&#34;&#34;Adds the data entered for the amended offense to the AmendOffenseDetails
+    object then points the case_information object to the AmendOffenseDetails
+    object.&#34;&#34;&#34;
+    self.amend_offense_details.original_charge = self.original_charge_box.currentText()
+    self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
+    self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+    self.case_information.amend_offense_details = self.amend_offense_details</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AmendOffenseDialog.modify_view"><code class="name flex">
+<span>def <span class="ident">modify_view</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The modify view method updates the view that is created on init.
+Place items in this method that can't be added directly in QtDesigner
+so that they don't need to be changed in the view file each time pyuic5
+is run.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def modify_view(self):
+    &#34;&#34;&#34;The modify view method updates the view that is created on init.
+    Place items in this method that can&#39;t be added directly in QtDesigner
+    so that they don&#39;t need to be changed in the view file each time pyuic5
+    is run.&#34;&#34;&#34;
+    offense_list = create_offense_list()[0]
+    self.original_charge_box.addItems(offense_list)
+    self.amended_charge_box.addItems(offense_list)</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.AmendOffenseDialog.set_database"><code class="name flex">
+<span>def <span class="ident">set_database</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><a href="https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm">https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm</a>
+<a href="https://doc.qt.io/qtforpython/overviews/sql-connecting.html">https://doc.qt.io/qtforpython/overviews/sql-connecting.html</a></p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_database(self):
+    &#34;&#34;&#34;
+    https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+    https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+    &#34;&#34;&#34;
+    self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+    self.database.setDatabaseName(CHARGES_DATABASE)
+    self.database.open()</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog"><code class="flex name class">
+<span>class <span class="ident">MinorMisdemeanorDialog</span></span>
+<span>(</span><span>judicial_officer, judicial_officer_type, parent=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This dialog is used when there will not be any jail time imposed. It does
+not inherently limit cases to minor misdemeanors or unclassified
+misdemeanors, however, it does not include fields to enter jail time.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
+    &#34;&#34;&#34;This dialog is used when there will not be any jail time imposed. It does
+    not inherently limit cases to minor misdemeanors or unclassified
+    misdemeanors, however, it does not include fields to enter jail time.&#34;&#34;&#34;
+    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
+        super().__init__(parent)
+        self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
+        self.modify_view()
+        self.set_counters()
+        self.set_database()
+        self.set_template()
+        self.criminal_charge = None
+        self.pay_date_dict = {
+            &#34;forthwith&#34;: 0,
+            &#34;within 30 days&#34;: 30,
+            &#34;within 60 days&#34;: 60,
+            &#34;within 90 days&#34;: 90,
+        }
+
+    def modify_view(self):
+        &#34;&#34;&#34;The modify view method updates the view that is created on init.
+        Place items in this method that can&#39;t be added directly in QtDesigner
+        so that they don&#39;t need to be changed in the view file each time pyuic5
+        is run.&#34;&#34;&#34;
+        offense_list, statute_list = create_offense_list()
+        self.statute_choice_box.addItems(statute_list)
+        self.offense_choice_box.addItems(offense_list)
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    def set_counters(self):
+        &#34;&#34;&#34;The counters track whether an item is added to the model/view. The
+        delete button index is used to specify which delete button in the
+        delete button list needs to be deleted when a charge is deleted.&#34;&#34;&#34;
+        self.charge_count = 0
+        self.delete_button_list = []
+
+    def set_database(self):
+        &#34;&#34;&#34;
+        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+        NOTE: If running create_psql_table.py to update database, must delete
+        the old charges.sqlite file to insure it is updated.
+        &#34;&#34;&#34;
+        self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+        self.database.setDatabaseName(CHARGES_DATABASE)
+        self.database.open()
+
+    def set_template(self):
+        &#34;&#34;&#34;The TEMPLATE_DICT stores a template for each judicial officer. In
+        the future this should be connected to set the template from a database
+        with the information to make updating easier.&#34;&#34;&#34;
+        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
+
+    def start_amend_offense_dialog(self):
+        &#34;&#34;&#34;Opens the amend offense dialog as a modal window.&#34;&#34;&#34;
+        AmendOffenseDialog(self.case_information).exec()
+
+    def start_add_conditions_dialog(self):
+        &#34;&#34;&#34;Opens the add conditions dialog as a modal window. It passes the
+        instance of the class (self) as an argument so that the
+        AddConditionsDialog can access data from the MinorMisdemeanorDialog when
+        creating the AddConditionsDialog.&#34;&#34;&#34;
+        AddConditionsDialog(self).exec()
+
+    def close_event(self):
+        &#34;&#34;&#34;TODO: This does not appear to close the database. It is currently
+        tied to clicked() on createEntryButton.&#34;&#34;&#34;
+        self.database.close()
+
+    def add_charge(self):
+        &#34;&#34;&#34;Creates a criminal charge object and adds the data in the view to
+        the object. The criminal charge is then added to the case information
+        model (by appending the charge object to the criminal charges list).
+        The offense is added to the view by the method add_charge_to_view,
+        not this method. This method is triggered on press of the Add Charge
+        button.&#34;&#34;&#34;
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.degree_choice_box.currentText()
+        self.criminal_charge.plea = self.plea_choice_box.currentText()
+        self.criminal_charge.finding = self.finding_choice_box.currentText()
+        self.criminal_charge.fines_amount = self.fines_amount.text()
+        self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        self.criminal_charge.court_costs = self.court_costs_box.currentText()
+        self.case_information.add_charge(self.criminal_charge)
+        self.charge_count += 1
+        self.add_charge_to_view()
+
+    def add_charge_to_view(self):
+        &#34;&#34;&#34;Adds the charge that was added through add_charge method to the
+        view/GUI. The first row=0 because of python zero-based indexing. The
+        column is set at one more than the current number of columns because
+        it is the column to which the charge will be added.
+
+        :added_charge_index: - The added charge index is one less than the
+        total charges in charges_list because of zero-based indexing. Thus, if
+        there is one charge, the index of the charge to be added to the
+        charge_dict from the charges_list is 0.
+
+        TODO: Is the charges_dict really necessary because it is a local
+        variable so each time the function is called only the new charge to be
+        added is in the charge_dict. Can it be done with just the list?
+        &#34;&#34;&#34;
+        row = 0
+        column = self.charges_gridLayout.columnCount() + 1
+        added_charge_index = len(self.case_information.charges_list) - 1
+        charge_dict = vars(self.case_information.charges_list[added_charge_index])
+        for value in charge_dict.values():
+            if value is not None:
+                self.charges_gridLayout.addWidget(QLabel(value), row, column)
+                row += 1
+        delete_button = QPushButton(&#34;Delete&#34;)
+        self.delete_button_list.append(delete_button)
+        delete_button.setStyleSheet(&#34;background-color: rgb(160, 160, 160);&#34;)
+        delete_button.clicked.connect(self.delete_charge)
+        self.charges_gridLayout.addWidget(delete_button, row, column)
+        self.case_information.total_charges = self.charge_count
+
+    def delete_charge(self):
+        &#34;&#34;&#34;Deletes the offense from the case_information.charges list. Then
+        decrements the total charges by one so that other functions using the
+        total charges for indexing are correct.
+
+        TODO: It is duplicative to have self.case_information.total_charges and
+        self.charge_count, can code be refactored to just use
+        self.case_information.total_charges. Issue is the timing of adding to
+        the view and the model. Perhaps add to view first??&#34;&#34;&#34;
+        index = self.delete_button_list.index(self.sender())
+        del self.case_information.charges_list[index]
+        del self.delete_button_list[index]
+        self.case_information.total_charges -= 1
+        self.charge_count -= 1
+        self.delete_charge_from_view()
+
+    def delete_charge_from_view(self):
+        &#34;&#34;&#34;Uses the delete_button that is indexed to the column to delete the
+        QLabels for the charge.&#34;&#34;&#34;
+        index = self.charges_gridLayout.indexOf(self.sender())
+        column = self.charges_gridLayout.getItemPosition(index)[1]
+        for row in range(self.charges_gridLayout.rowCount()):
+            layout_item = self.charges_gridLayout.itemAtPosition(row, column)
+            if layout_item is not None:
+                layout_item.widget().deleteLater()
+                self.charges_gridLayout.removeItem(layout_item)
+
+    @logger.catch
+    def update_case_information(self):
+        &#34;&#34;&#34;The method updates the case information model with the data for the
+        case that is in the fields on the view. This does not update the model
+        with information in the charge fields (offense, statute, plea, etc.)
+        the charge information is transferred to the model upon press of the
+        add charge button.
+
+        Fields that are updated upon pressed() of createEntryButton = case
+        number, first name, last name, ability to pay time, balance due date,
+        date of plea/trial,operator license number, date of birth, FRA (proof
+        of insurance) in complaint, FRA in court.&#34;&#34;&#34;
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.defendant_first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant_last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.plea_trial_date = (
+            self.plea_trial_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.operator_license_number = self.operator_license_number_lineEdit.text()
+        self.case_information.defendant_date_of_birth = (
+            self.defendant_birth_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.balance_due_date = (
+            self.balance_due_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+        )
+        if self.license_suspension_checkBox.isChecked():
+            self.case_information.license_suspension_details.license_suspension_ordered = True
+        if self.community_control_checkBox.isChecked():
+            self.case_information.community_control_terms.community_control_required = True
+        if self.community_service_checkBox.isChecked():
+            self.case_information.community_service_terms.community_service_ordered = True
+
+    def set_fra_in_file(self):
+        &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+        the FRA was shown in the complaint of file.&#34;&#34;&#34;
+        if self.fra_in_file_box.currentText() == &#34;Yes&#34;:
+            self.case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText(&#34;No&#34;)
+        elif self.fra_in_file_box.currentText() == &#34;No&#34;:
+            self.case_information.fra_in_file = False
+        else:
+            self.case_information.fra_in_file = None
+
+    def set_fra_in_court(self):
+        &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+        the FRA was shown in court.&#34;&#34;&#34;
+        if self.fra_in_court_box.currentText() == &#34;Yes&#34;:
+            self.case_information.fra_in_court = True
+        elif self.fra_in_court_box.currentText() == &#34;No&#34;:
+            self.case_information.fra_in_court = False
+        else:
+            self.case_information.fra_in_court = None
+
+    def set_statute(self):
+        &#34;&#34;&#34;This method queries based on the offense and then sets the statute
+        and degree based on the offense in the database.
+
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored.&#34;&#34;&#34;
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        key = self.offense_choice_box.currentText()
+        query = QSqlQuery()
+        query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;offense LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+        query.bindValue(&#34;:key&#34;, key)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if offense == key:
+                self.statute_choice_box.setCurrentText(statute)
+                self.degree_choice_box.setCurrentText(degree)
+                break
+
+    def set_offense(self):
+        &#34;&#34;&#34;This method queries based on the statute and then sets the offense
+        and degree based on the statute in the database.
+
+        REFACTOR: This and set_offense should likely be combined to a single
+        method and common code refactored.&#34;&#34;&#34;
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        key = self.statute_choice_box.currentText()
+        query = QSqlQuery()
+        query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;statute LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+        query.bindValue(&#34;:key&#34;, key)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if statute == key:
+                self.offense_choice_box.setCurrentText(offense)
+                self.degree_choice_box.setCurrentText(degree)
+                break
+
+    def set_pay_date(self):
+        &#34;&#34;&#34;Sets the balance of fines and costs to a future date (or today)
+        depending on the selection of ability_to_pay_box. The inner function
+        will move the actual date to the next tuesday per court procedure for
+        show cause hearings being on Tuesday. Would need to be modified if the
+        policy changed.&#34;&#34;&#34;
+        days_to_add = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+        future_date = date.today() + timedelta(days_to_add)
+        today = date.today()
+
+        def next_tuesday(future_date, weekday=1):
+            &#34;&#34;&#34;This function returns the number of days to add to today to set
+            the payment due date out to the Tuesday after the number of days
+            set in the set_pay_date function. The default of 1 for weekday is
+            what sets it to a Tuesday. If it is 0 it would be Monday, 3 would
+            be Wednesday, etc.&#34;&#34;&#34;
+            days_ahead = weekday - future_date.weekday()
+            if days_ahead &lt;= 0:  # Target day already happened this week
+                days_ahead += 7
+            return future_date + timedelta(days_ahead)
+
+        future_date = next_tuesday(future_date, 1)
+        total_days_to_add = (future_date - today).days
+        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>controllers.CriminalDialogs.BaseCriminalDialog</li>
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+<li>views.minor_misdemeanor_dialog_ui.Ui_MinorMisdemeanorDialog</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge"><code class="name flex">
+<span>def <span class="ident">add_charge</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Creates a criminal charge object and adds the data in the view to
+the object. The criminal charge is then added to the case information
+model (by appending the charge object to the criminal charges list).
+The offense is added to the view by the method add_charge_to_view,
+not this method. This method is triggered on press of the Add Charge
+button.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_charge(self):
+    &#34;&#34;&#34;Creates a criminal charge object and adds the data in the view to
+    the object. The criminal charge is then added to the case information
+    model (by appending the charge object to the criminal charges list).
+    The offense is added to the view by the method add_charge_to_view,
+    not this method. This method is triggered on press of the Add Charge
+    button.&#34;&#34;&#34;
+    self.criminal_charge = CriminalCharge()
+    self.criminal_charge.offense = self.offense_choice_box.currentText()
+    self.criminal_charge.statute = self.statute_choice_box.currentText()
+    self.criminal_charge.degree = self.degree_choice_box.currentText()
+    self.criminal_charge.plea = self.plea_choice_box.currentText()
+    self.criminal_charge.finding = self.finding_choice_box.currentText()
+    self.criminal_charge.fines_amount = self.fines_amount.text()
+    self.criminal_charge.fines_suspended = self.fines_suspended.text()
+    self.criminal_charge.court_costs = self.court_costs_box.currentText()
+    self.case_information.add_charge(self.criminal_charge)
+    self.charge_count += 1
+    self.add_charge_to_view()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge_to_view"><code class="name flex">
+<span>def <span class="ident">add_charge_to_view</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds the charge that was added through add_charge method to the
+view/GUI. The first row=0 because of python zero-based indexing. The
+column is set at one more than the current number of columns because
+it is the column to which the charge will be added.</p>
+<p>:added_charge_index: - The added charge index is one less than the
+total charges in charges_list because of zero-based indexing. Thus, if
+there is one charge, the index of the charge to be added to the
+charge_dict from the charges_list is 0.</p>
+<p>TODO: Is the charges_dict really necessary because it is a local
+variable so each time the function is called only the new charge to be
+added is in the charge_dict. Can it be done with just the list?</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_charge_to_view(self):
+    &#34;&#34;&#34;Adds the charge that was added through add_charge method to the
+    view/GUI. The first row=0 because of python zero-based indexing. The
+    column is set at one more than the current number of columns because
+    it is the column to which the charge will be added.
+
+    :added_charge_index: - The added charge index is one less than the
+    total charges in charges_list because of zero-based indexing. Thus, if
+    there is one charge, the index of the charge to be added to the
+    charge_dict from the charges_list is 0.
+
+    TODO: Is the charges_dict really necessary because it is a local
+    variable so each time the function is called only the new charge to be
+    added is in the charge_dict. Can it be done with just the list?
+    &#34;&#34;&#34;
+    row = 0
+    column = self.charges_gridLayout.columnCount() + 1
+    added_charge_index = len(self.case_information.charges_list) - 1
+    charge_dict = vars(self.case_information.charges_list[added_charge_index])
+    for value in charge_dict.values():
+        if value is not None:
+            self.charges_gridLayout.addWidget(QLabel(value), row, column)
+            row += 1
+    delete_button = QPushButton(&#34;Delete&#34;)
+    self.delete_button_list.append(delete_button)
+    delete_button.setStyleSheet(&#34;background-color: rgb(160, 160, 160);&#34;)
+    delete_button.clicked.connect(self.delete_charge)
+    self.charges_gridLayout.addWidget(delete_button, row, column)
+    self.case_information.total_charges = self.charge_count</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.close_event"><code class="name flex">
+<span>def <span class="ident">close_event</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>TODO: This does not appear to close the database. It is currently
+tied to clicked() on createEntryButton.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def close_event(self):
+    &#34;&#34;&#34;TODO: This does not appear to close the database. It is currently
+    tied to clicked() on createEntryButton.&#34;&#34;&#34;
+    self.database.close()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge"><code class="name flex">
+<span>def <span class="ident">delete_charge</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Deletes the offense from the case_information.charges list. Then
+decrements the total charges by one so that other functions using the
+total charges for indexing are correct.</p>
+<p>TODO: It is duplicative to have self.case_information.total_charges and
+self.charge_count, can code be refactored to just use
+self.case_information.total_charges. Issue is the timing of adding to
+the view and the model. Perhaps add to view first??</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_charge(self):
+    &#34;&#34;&#34;Deletes the offense from the case_information.charges list. Then
+    decrements the total charges by one so that other functions using the
+    total charges for indexing are correct.
+
+    TODO: It is duplicative to have self.case_information.total_charges and
+    self.charge_count, can code be refactored to just use
+    self.case_information.total_charges. Issue is the timing of adding to
+    the view and the model. Perhaps add to view first??&#34;&#34;&#34;
+    index = self.delete_button_list.index(self.sender())
+    del self.case_information.charges_list[index]
+    del self.delete_button_list[index]
+    self.case_information.total_charges -= 1
+    self.charge_count -= 1
+    self.delete_charge_from_view()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge_from_view"><code class="name flex">
+<span>def <span class="ident">delete_charge_from_view</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Uses the delete_button that is indexed to the column to delete the
+QLabels for the charge.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete_charge_from_view(self):
+    &#34;&#34;&#34;Uses the delete_button that is indexed to the column to delete the
+    QLabels for the charge.&#34;&#34;&#34;
+    index = self.charges_gridLayout.indexOf(self.sender())
+    column = self.charges_gridLayout.getItemPosition(index)[1]
+    for row in range(self.charges_gridLayout.rowCount()):
+        layout_item = self.charges_gridLayout.itemAtPosition(row, column)
+        if layout_item is not None:
+            layout_item.widget().deleteLater()
+            self.charges_gridLayout.removeItem(layout_item)</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.modify_view"><code class="name flex">
+<span>def <span class="ident">modify_view</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The modify view method updates the view that is created on init.
+Place items in this method that can't be added directly in QtDesigner
+so that they don't need to be changed in the view file each time pyuic5
+is run.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def modify_view(self):
+    &#34;&#34;&#34;The modify view method updates the view that is created on init.
+    Place items in this method that can&#39;t be added directly in QtDesigner
+    so that they don&#39;t need to be changed in the view file each time pyuic5
+    is run.&#34;&#34;&#34;
+    offense_list, statute_list = create_offense_list()
+    self.statute_choice_box.addItems(statute_list)
+    self.offense_choice_box.addItems(offense_list)
+    self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+    self.balance_due_date.setDate(QtCore.QDate.currentDate())</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_counters"><code class="name flex">
+<span>def <span class="ident">set_counters</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The counters track whether an item is added to the model/view. The
+delete button index is used to specify which delete button in the
+delete button list needs to be deleted when a charge is deleted.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_counters(self):
+    &#34;&#34;&#34;The counters track whether an item is added to the model/view. The
+    delete button index is used to specify which delete button in the
+    delete button list needs to be deleted when a charge is deleted.&#34;&#34;&#34;
+    self.charge_count = 0
+    self.delete_button_list = []</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_database"><code class="name flex">
+<span>def <span class="ident">set_database</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><a href="https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm">https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm</a>
+<a href="https://doc.qt.io/qtforpython/overviews/sql-connecting.html">https://doc.qt.io/qtforpython/overviews/sql-connecting.html</a>
+NOTE: If running create_psql_table.py to update database, must delete
+the old charges.sqlite file to insure it is updated.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_database(self):
+    &#34;&#34;&#34;
+    https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+    https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+    NOTE: If running create_psql_table.py to update database, must delete
+    the old charges.sqlite file to insure it is updated.
+    &#34;&#34;&#34;
+    self.database = QSqlDatabase.addDatabase(&#34;QSQLITE&#34;)
+    self.database.setDatabaseName(CHARGES_DATABASE)
+    self.database.open()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_court"><code class="name flex">
+<span>def <span class="ident">set_fra_in_court</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+the FRA was shown in court.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_fra_in_court(self):
+    &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+    the FRA was shown in court.&#34;&#34;&#34;
+    if self.fra_in_court_box.currentText() == &#34;Yes&#34;:
+        self.case_information.fra_in_court = True
+    elif self.fra_in_court_box.currentText() == &#34;No&#34;:
+        self.case_information.fra_in_court = False
+    else:
+        self.case_information.fra_in_court = None</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_file"><code class="name flex">
+<span>def <span class="ident">set_fra_in_file</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+the FRA was shown in the complaint of file.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_fra_in_file(self):
+    &#34;&#34;&#34;Sets the FRA (proof of insurance) to true if the view indicates &#39;yes&#39;
+    the FRA was shown in the complaint of file.&#34;&#34;&#34;
+    if self.fra_in_file_box.currentText() == &#34;Yes&#34;:
+        self.case_information.fra_in_file = True
+        self.fra_in_court_box.setCurrentText(&#34;No&#34;)
+    elif self.fra_in_file_box.currentText() == &#34;No&#34;:
+        self.case_information.fra_in_file = False
+    else:
+        self.case_information.fra_in_file = None</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_offense"><code class="name flex">
+<span>def <span class="ident">set_offense</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This method queries based on the statute and then sets the offense
+and degree based on the statute in the database.</p>
+<p>REFACTOR: This and set_offense should likely be combined to a single
+method and common code refactored.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_offense(self):
+    &#34;&#34;&#34;This method queries based on the statute and then sets the offense
+    and degree based on the statute in the database.
+
+    REFACTOR: This and set_offense should likely be combined to a single
+    method and common code refactored.&#34;&#34;&#34;
+    if self.freeform_entry_checkBox.isChecked():
+        return None
+    key = self.statute_choice_box.currentText()
+    query = QSqlQuery()
+    query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;statute LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+    query.bindValue(&#34;:key&#34;, key)
+    query.exec()
+    while query.next():
+        offense = query.value(1)
+        statute = query.value(2)
+        degree = query.value(3)
+        if statute == key:
+            self.offense_choice_box.setCurrentText(offense)
+            self.degree_choice_box.setCurrentText(degree)
+            break</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_pay_date"><code class="name flex">
+<span>def <span class="ident">set_pay_date</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Sets the balance of fines and costs to a future date (or today)
+depending on the selection of ability_to_pay_box. The inner function
+will move the actual date to the next tuesday per court procedure for
+show cause hearings being on Tuesday. Would need to be modified if the
+policy changed.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_pay_date(self):
+    &#34;&#34;&#34;Sets the balance of fines and costs to a future date (or today)
+    depending on the selection of ability_to_pay_box. The inner function
+    will move the actual date to the next tuesday per court procedure for
+    show cause hearings being on Tuesday. Would need to be modified if the
+    policy changed.&#34;&#34;&#34;
+    days_to_add = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+    future_date = date.today() + timedelta(days_to_add)
+    today = date.today()
+
+    def next_tuesday(future_date, weekday=1):
+        &#34;&#34;&#34;This function returns the number of days to add to today to set
+        the payment due date out to the Tuesday after the number of days
+        set in the set_pay_date function. The default of 1 for weekday is
+        what sets it to a Tuesday. If it is 0 it would be Monday, 3 would
+        be Wednesday, etc.&#34;&#34;&#34;
+        days_ahead = weekday - future_date.weekday()
+        if days_ahead &lt;= 0:  # Target day already happened this week
+            days_ahead += 7
+        return future_date + timedelta(days_ahead)
+
+    future_date = next_tuesday(future_date, 1)
+    total_days_to_add = (future_date - today).days
+    self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_statute"><code class="name flex">
+<span>def <span class="ident">set_statute</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>This method queries based on the offense and then sets the statute
+and degree based on the offense in the database.</p>
+<p>REFACTOR: This and set_offense should likely be combined to a single
+method and common code refactored.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_statute(self):
+    &#34;&#34;&#34;This method queries based on the offense and then sets the statute
+    and degree based on the offense in the database.
+
+    REFACTOR: This and set_offense should likely be combined to a single
+    method and common code refactored.&#34;&#34;&#34;
+    if self.freeform_entry_checkBox.isChecked():
+        return None
+    key = self.offense_choice_box.currentText()
+    query = QSqlQuery()
+    query.prepare(&#34;SELECT * FROM charges WHERE &#34; &#34;offense LIKE &#39;%&#39; || :key || &#39;%&#39;&#34;)
+    query.bindValue(&#34;:key&#34;, key)
+    query.exec()
+    while query.next():
+        offense = query.value(1)
+        statute = query.value(2)
+        degree = query.value(3)
+        if offense == key:
+            self.statute_choice_box.setCurrentText(statute)
+            self.degree_choice_box.setCurrentText(degree)
+            break</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_template"><code class="name flex">
+<span>def <span class="ident">set_template</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The TEMPLATE_DICT stores a template for each judicial officer. In
+the future this should be connected to set the template from a database
+with the information to make updating easier.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_template(self):
+    &#34;&#34;&#34;The TEMPLATE_DICT stores a template for each judicial officer. In
+    the future this should be connected to set the template from a database
+    with the information to make updating easier.&#34;&#34;&#34;
+    self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer)</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_add_conditions_dialog"><code class="name flex">
+<span>def <span class="ident">start_add_conditions_dialog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Opens the add conditions dialog as a modal window. It passes the
+instance of the class (self) as an argument so that the
+AddConditionsDialog can access data from the MinorMisdemeanorDialog when
+creating the AddConditionsDialog.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_add_conditions_dialog(self):
+    &#34;&#34;&#34;Opens the add conditions dialog as a modal window. It passes the
+    instance of the class (self) as an argument so that the
+    AddConditionsDialog can access data from the MinorMisdemeanorDialog when
+    creating the AddConditionsDialog.&#34;&#34;&#34;
+    AddConditionsDialog(self).exec()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_amend_offense_dialog"><code class="name flex">
+<span>def <span class="ident">start_amend_offense_dialog</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Opens the amend offense dialog as a modal window.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def start_amend_offense_dialog(self):
+    &#34;&#34;&#34;Opens the amend offense dialog as a modal window.&#34;&#34;&#34;
+    AmendOffenseDialog(self.case_information).exec()</code></pre>
+</details>
+</dd>
+<dt id="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.update_case_information"><code class="name flex">
+<span>def <span class="ident">update_case_information</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>The method updates the case information model with the data for the
+case that is in the fields on the view. This does not update the model
+with information in the charge fields (offense, statute, plea, etc.)
+the charge information is transferred to the model upon press of the
+add charge button.</p>
+<p>Fields that are updated upon pressed() of createEntryButton = case
+number, first name, last name, ability to pay time, balance due date,
+date of plea/trial,operator license number, date of birth, FRA (proof
+of insurance) in complaint, FRA in court.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@logger.catch
+def update_case_information(self):
+    &#34;&#34;&#34;The method updates the case information model with the data for the
+    case that is in the fields on the view. This does not update the model
+    with information in the charge fields (offense, statute, plea, etc.)
+    the charge information is transferred to the model upon press of the
+    add charge button.
+
+    Fields that are updated upon pressed() of createEntryButton = case
+    number, first name, last name, ability to pay time, balance due date,
+    date of plea/trial,operator license number, date of birth, FRA (proof
+    of insurance) in complaint, FRA in court.&#34;&#34;&#34;
+    self.case_information.case_number = self.case_number_lineEdit.text()
+    self.case_information.defendant_first_name = self.defendant_first_name_lineEdit.text()
+    self.case_information.defendant_last_name = self.defendant_last_name_lineEdit.text()
+    self.case_information.plea_trial_date = (
+        self.plea_trial_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+    )
+    self.case_information.operator_license_number = self.operator_license_number_lineEdit.text()
+    self.case_information.defendant_date_of_birth = (
+        self.defendant_birth_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+    )
+    self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+    self.case_information.balance_due_date = (
+        self.balance_due_date.date().toString(&#34;MMMM dd, yyyy&#34;)
+    )
+    if self.license_suspension_checkBox.isChecked():
+        self.case_information.license_suspension_details.license_suspension_ordered = True
+    if self.community_control_checkBox.isChecked():
+        self.case_information.community_control_terms.community_control_required = True
+    if self.community_service_checkBox.isChecked():
+        self.case_information.community_service_terms.community_service_ordered = True</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog" href="#MinorMisdemeanorDialogs.AddConditionsDialog">AddConditionsDialog</a></code></h4>
+<ul class="">
+<li><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog.add_community_control_terms" href="#MinorMisdemeanorDialogs.AddConditionsDialog.add_community_control_terms">add_community_control_terms</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog.add_community_service_terms" href="#MinorMisdemeanorDialogs.AddConditionsDialog.add_community_service_terms">add_community_service_terms</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog.add_conditions" href="#MinorMisdemeanorDialogs.AddConditionsDialog.add_conditions">add_conditions</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog.add_license_suspension_details" href="#MinorMisdemeanorDialogs.AddConditionsDialog.add_license_suspension_details">add_license_suspension_details</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AddConditionsDialog.set_service_date" href="#MinorMisdemeanorDialogs.AddConditionsDialog.set_service_date">set_service_date</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="MinorMisdemeanorDialogs.AmendOffenseDialog" href="#MinorMisdemeanorDialogs.AmendOffenseDialog">AmendOffenseDialog</a></code></h4>
+<ul class="">
+<li><code><a title="MinorMisdemeanorDialogs.AmendOffenseDialog.amend_offense" href="#MinorMisdemeanorDialogs.AmendOffenseDialog.amend_offense">amend_offense</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AmendOffenseDialog.modify_view" href="#MinorMisdemeanorDialogs.AmendOffenseDialog.modify_view">modify_view</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.AmendOffenseDialog.set_database" href="#MinorMisdemeanorDialogs.AmendOffenseDialog.set_database">set_database</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog">MinorMisdemeanorDialog</a></code></h4>
+<ul class="">
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge">add_charge</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge_to_view" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.add_charge_to_view">add_charge_to_view</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.close_event" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.close_event">close_event</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge">delete_charge</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge_from_view" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.delete_charge_from_view">delete_charge_from_view</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.modify_view" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.modify_view">modify_view</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_counters" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_counters">set_counters</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_database" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_database">set_database</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_court" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_court">set_fra_in_court</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_file" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_fra_in_file">set_fra_in_file</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_offense" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_offense">set_offense</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_pay_date" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_pay_date">set_pay_date</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_statute" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_statute">set_statute</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_template" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.set_template">set_template</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_add_conditions_dialog" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_add_conditions_dialog">start_add_conditions_dialog</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_amend_offense_dialog" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.start_amend_offense_dialog">start_amend_offense_dialog</a></code></li>
+<li><code><a title="MinorMisdemeanorDialogs.MinorMisdemeanorDialog.update_case_information" href="#MinorMisdemeanorDialogs.MinorMisdemeanorDialog.update_case_information">update_case_information</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

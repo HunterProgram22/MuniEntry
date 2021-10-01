@@ -327,12 +327,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_terms = CommunityServiceTerms()
             self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
-    @logger.catch
-    def add_conditions(self, *args):
-        """The method is connected to the clicked signal of continue_Button on the
-        Add Conditions screen. The **args parameter currently exists just to accept
-        the bool signal that is sent when the button is pressed, but no args are
-        used in the method."""
+    def add_conditions(self):
+        """The method is connected to the pressed signal of continue_Button on the
+        Add Conditions screen."""
         if self.community_service is True:
             self.add_community_service_terms()
         if self.community_control is True:
@@ -340,8 +337,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.add_license_suspension_details()
 
-
     def add_community_control_terms(self):
+        """The method adds the data entered to the CommunityControlTerms object
+        that is created when the dialog is initialized."""
         self.community_control_terms.type_of_community_control = (
             self.type_of_community_control_box.currentText()
         )
@@ -353,6 +351,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         )
 
     def add_community_service_terms(self):
+        """The method adds the data entered to the CommunityServiceTerms object
+        that is created when the dialog is initialized."""
         self.community_service_terms.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
@@ -360,14 +360,15 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_days_to_complete_box.currentText()
         )
         self.community_service_terms.due_date_for_service = (
-            self.community_service_date_to_complete_box.date().toString(
-            "MMMM dd, yyyy")
+            self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
         )
         self.case_information.community_service_terms = (
             self.community_service_terms
         )
 
     def add_license_suspension_details(self):
+        """The method adds the data entered to the LicenseSuspension object
+        that is created when the dialog is initialized."""
         self.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )
@@ -386,15 +387,16 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.remedial_driving_class_checkBox.isChecked():
             self.license_suspension_details.remedial_driving_class_required = True
         else:
-            self.remedial_driving_class_required = False
+            self.license_suspension_details.remedial_driving_class_required = False
         self.case_information.license_suspension_details = (
             self.license_suspension_details
         )
 
     def set_service_date(self):
-        days_to_add = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_add))
-
+        """Sets the community_service_date_to_complete_box based on the number
+        of days chosen in the community_service_date_to_complete_box."""
+        days_added = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_added))
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
@@ -428,6 +430,9 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.database.open()
 
     def amend_offense(self):
+        """Adds the data entered for the amended offense to the AmendOffenseDetails
+        object then points the case_information object to the AmendOffenseDetails
+        object."""
         self.amend_offense_details.original_charge = self.original_charge_box.currentText()
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()

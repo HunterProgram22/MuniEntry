@@ -621,7 +621,7 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>13</x>
@@ -779,7 +779,7 @@ font-weight: bold;</string>
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -863,7 +863,7 @@ font-weight: bold;</string>
  <connections>
   <connection>
    <sender>continue_Button</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>AddConditionsDialog</receiver>
    <slot>add_conditions()</slot>
    <hints>
