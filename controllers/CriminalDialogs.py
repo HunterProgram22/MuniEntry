@@ -52,7 +52,7 @@ class BaseCriminalDialog(QDialog):
     def create_entry(self):
         """The standard function used to create an entry when a create entry
         button is press/click/released."""
-        self.doc = DocxTemplate(self.template_path)
+        self.doc = DocxTemplate(self.template.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
@@ -63,7 +63,7 @@ class BaseCriminalDialog(QDialog):
         must include '.docx' to make it a Word document."""
         self.docname = (
             self.case_information.case_number + "_" + \
-            self.template_name + ".docx"
+            self.template.template_name + ".docx"
         )
 
     def set_case_information_banner(self):

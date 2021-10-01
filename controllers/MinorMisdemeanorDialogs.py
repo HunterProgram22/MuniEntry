@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from loguru import logger
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QDate, Qt
+from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QPushButton
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
@@ -36,10 +36,7 @@ CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     """This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
-    misdemeanors, however, it does not include fields to enter jail time.
-
-    FIX: Pylint says too many attributes 11/7. Possibly reduce/refactor."""
-
+    misdemeanors, however, it does not include fields to enter jail time."""
     def __init__(self, judicial_officer, judicial_officer_type, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
@@ -60,9 +57,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         Place items in this method that can't be added directly in QtDesigner
         so that they don't need to be changed in the view file each time pyuic5
         is run."""
-        self.offense_list, self.statute_list = create_offense_list()
-        self.statute_choice_box.addItems(self.statute_list)
-        self.offense_choice_box.addItems(self.offense_list)
+        offense_list, statute_list = create_offense_list()
+        self.statute_choice_box.addItems(statute_list)
+        self.offense_choice_box.addItems(offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
@@ -71,7 +68,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete button index is used to specify which delete button in the
         delete button list needs to be deleted when a charge is deleted."""
         self.charge_count = 0
-        self.delete_button_index = 0
         self.delete_button_list = []
 
     def set_database(self):
@@ -89,9 +85,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """The TEMPLATE_DICT stores a template for each judicial officer. In
         the future this should be connected to set the template from a database
         with the information to make updating easier."""
-        template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
-        self.template_path = template.template_path
-        self.template_name = template.template_name
+        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
 
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window."""
@@ -314,6 +308,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+    """The AddConditionsDialog is created when the addConditionsButton is pressed on
+    the Minor Misdemeanor Case Information screen is clicked. The conditions that
+    are available to enter information for are based on the checkboxes that are
+    checked on the Minor Misdemeanor Case Information screen."""
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
@@ -331,10 +329,11 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_terms = CommunityServiceTerms()
 
     @logger.catch
-    def add_conditions(self, button_click_bool=None):
-        """FIX(?) button_click_bool is the bool value associated with the button
-        being clicked. It is not used in the method.
-        """
+    def add_conditions(self, *args):
+        """The method is connected to the clicked signal of continue_Button on the
+        Add Conditions screen. The **args parameter currently exists just to accept
+        the bool signal that is sent when the button is pressed, but no args are
+        used in the method."""
         if self.community_service is True:
             self.add_community_service_terms()
         if self.community_control is True:
@@ -398,6 +397,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     def __init__(self, case_information=None, parent=None):
         super().__init__(parent)
         self.case_information = case_information
+        self.amend_offense_details = AmendOffenseDetails()
         self.set_case_information_banner()
         self.set_database()
         self.modify_view()
@@ -407,9 +407,9 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         Place items in this method that can't be added directly in QtDesigner
         so that they don't need to be changed in the view file each time pyuic5
         is run."""
-        self.offense_list, self.statute_list = create_offense_list()
-        self.original_charge_box.addItems(self.offense_list)
-        self.amended_charge_box.addItems(self.offense_list)
+        offense_list = create_offense_list()[0]
+        self.original_charge_box.addItems(offense_list)
+        self.amended_charge_box.addItems(offense_list)
 
     def set_database(self):
         """
@@ -421,7 +421,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.database.open()
 
     def amend_offense(self):
-        self.amend_offense_details = AmendOffenseDetails()
         self.amend_offense_details.original_charge = self.original_charge_box.currentText()
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()

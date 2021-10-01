@@ -1,4 +1,5 @@
 APPLICATION TODO LIST
+* Remove yes/no from community service on add conditions and update date to complete based on days to complete service
 * Do the dialogs even need to inherit from BaseCriminalDialog
 * Refactor MinorMisdemeanorDialogs.py and rename (MinorMisdemeanorSentencing)
 * Refactor CriminalDialogs.py

@@ -200,7 +200,7 @@ def test_fra_in_file_and_court(app, dialog):
 def test_amend_offense(dialog, qtbot):
     QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)
     dialog = start_amendment_dialog(qtbot, dialog.case_information)
-    assert dialog.windowTitle() == "Amendment"
+    assert dialog.windowTitle() == "Amend Charge"
 
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
