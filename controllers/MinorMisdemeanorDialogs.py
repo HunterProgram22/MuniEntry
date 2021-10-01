@@ -161,10 +161,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         TODO: It is duplicative to have self.case_information.total_charges and
         self.charge_count, can code be refactored to just use
         self.case_information.total_charges. Issue is the timing of adding to
-        the view and the model. Perhaps add to view first??
-
-        TEST: Make sure it is deleting the offense based on the button
-        for that offense."""
+        the view and the model. Perhaps add to view first??"""
         index = self.delete_button_list.index(self.sender())
         del self.case_information.charges_list[index]
         del self.delete_button_list[index]
@@ -321,12 +318,14 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
+            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate().addDays(-30))
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
         if self.community_service:
             self.community_service_frame.setEnabled(True)
             self.community_service_terms = CommunityServiceTerms()
+            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
     def add_conditions(self, *args):
@@ -391,6 +390,11 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.case_information.license_suspension_details = (
             self.license_suspension_details
         )
+
+    def set_service_date(self):
+        days_to_add = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_add))
+
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
