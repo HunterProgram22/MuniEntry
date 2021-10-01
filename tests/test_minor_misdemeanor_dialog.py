@@ -8,19 +8,19 @@ from datetime import date, timedelta
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
 import MuniEntry_app
 from controllers.CriminalDialogs import (
     CaseInformationDialog,
-    AmendOffenseDialog,
 )
 from controllers.MinorMisdemeanorDialogs import (
     MinorMisdemeanorDialog,
     AddConditionsDialog,
+    AmendOffenseDialog,
 )
-
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir)
 
 TODAY = date.today()
 

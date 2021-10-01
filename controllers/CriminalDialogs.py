@@ -16,8 +16,6 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtSql import QSqlDatabase
 
 from views.case_information_dialog_ui import Ui_CaseInformationDialog
-from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-
 from models.CaseInformation import (
     CaseInformation,
     CriminalCharge,
@@ -72,8 +70,7 @@ class BaseCriminalDialog(QDialog):
         """Sets the banner on a view of the interface. It modifies label
         widgets on the view to text that was entered."""
         self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} " \
-            "{defendant_last_name}".format(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
                 defendant_first_name = self.case_information.defendant_first_name,
                 defendant_last_name = self.case_information.defendant_last_name
                 )
@@ -128,43 +125,3 @@ class CaseInformationDialog(BaseCriminalDialog, Ui_CaseInformationDialog):
             self.case_information.understood_plea = True
         else:
             self.case_information.understood_plea = False
-
-
-class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
-    def __init__(self, case_information=None, parent=None):
-        super().__init__(parent)
-        self.case_information = case_information
-        self.set_case_information_banner()
-        self.set_database()
-        self.modify_view()
-
-    def modify_view(self):
-        """The modify view method updates the view that is created on init.
-        Place items in this method that can't be added directly in QtDesigner
-        so that they don't need to be changed in the view file each time pyuic5
-        is run."""
-        self.offense_list, self.statute_list = create_offense_list()
-        self.original_charge_box.addItems(self.offense_list)
-        self.amended_charge_box.addItems(self.offense_list)
-
-    def set_database(self):
-        """
-        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
-        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
-        """
-        self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(CHARGES_DATABASE)
-        self.database.open()
-
-    def amend_offense(self):
-        self.amend_offense_details = AmendOffenseDetails()
-        self.amend_offense_details.original_charge = (
-            self.original_charge_box.currentText()
-        )
-        self.amend_offense_details.amended_charge = (
-            self.amended_charge_box.currentText()
-        )
-        self.amend_offense_details.motion_disposition = (
-            self.motion_decision_box.currentText()
-        )
-        self.case_information.amend_offense_details = self.amend_offense_details
