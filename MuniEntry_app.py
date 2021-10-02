@@ -39,6 +39,8 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.connect_menu_signal_slots()
+        self.judicial_officer = None
+        self.judicial_officer_type = None
         self.judicial_officer_dict = {
             self.bunner_radioButton: "Bunner",
             self.pelanda_radioButton: "Pelanda",
@@ -100,6 +102,8 @@ class Window(QMainWindow, Ui_MainWindow):
         the future.
         """
         try:
+            if self.judicial_officer is None:
+                raise AttributeError
             dialog = self.dialog_dict[self.sender()](
                 self.judicial_officer, self.judicial_officer_type
                 )

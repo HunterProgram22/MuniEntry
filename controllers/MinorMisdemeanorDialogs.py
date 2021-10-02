@@ -33,12 +33,12 @@ DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
 def createDB():
+    """Upon import of the MinorMisdemeanorDialog module into the MuniEntry_app main
+    file, the connections to the CHARGES_DATABASE are created."""
     database_offenses = QSqlDatabase.addDatabase("QSQLITE", "offenses")
     database_offenses.setDatabaseName(CHARGES_DATABASE)
-    database_offenses.open()
     database_statutes = QSqlDatabase.addDatabase("QSQLITE", "statutes")
     database_statutes.setDatabaseName(CHARGES_DATABASE)
-    database_statutes.open()
     return database_offenses, database_statutes
 
 
@@ -106,18 +106,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         creating the AddConditionsDialog."""
         AddConditionsDialog(self).exec()
 
-    @logger.catch
     def close_event(self):
-        """TODO: This does not appear to close the database. It is currently
-        tied to pressed() on createEntryButton."""
-        print("DB close called")
+        """Upon pressed of the createEntryButton this function is called. It closes
+        the database connections and removes them to prevent hanging DB's."""
         database_offenses.close()
         database_offenses.removeDatabase(CHARGES_DATABASE)
         database_statutes.close()
         database_statutes.removeDatabase(CHARGES_DATABASE)
-
-
-
 
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
@@ -138,6 +133,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.add_charge(self.criminal_charge)
         self.charge_count += 1
         self.add_charge_to_view()
+        self.court_costs_box.setCurrentText("No")
+        self.offense_choice_box.setFocus()
 
     def add_charge_to_view(self):
         """Adds the charge that was added through add_charge method to the
@@ -420,7 +417,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     the Minor Misdemeanor Case Information. The case information is passed in
     order to populate the case information banner."""
     def __init__(self, case_information=None, parent=None):
-        self.set_database()
         super().__init__(parent)
         self.case_information = case_information
         self.amend_offense_details = AmendOffenseDetails()
@@ -436,15 +432,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.original_charge_box.addItems(offense_list)
         self.amended_charge_box.addItems(offense_list)
 
-    def set_database(self):
-        """
-        https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
-        https://doc.qt.io/qtforpython/overviews/sql-connecting.html
-        """
-        self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(CHARGES_DATABASE)
-        self.database.open()
-
     def amend_offense(self):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the case_information object to the AmendOffenseDetails
@@ -453,6 +440,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
+
 
 if __name__ == "__main__":
     print("MMD ran directly")
