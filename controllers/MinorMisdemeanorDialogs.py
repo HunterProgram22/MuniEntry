@@ -1,6 +1,6 @@
 """The controller module for the minor misdemeanor dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
-Loads all charges - including non-minor-misdemeanors from a databse."""
+Loads all charges - including non-minor-misdemeanors from a database."""
 import pathlib
 from datetime import date, timedelta
 from loguru import logger
@@ -32,17 +32,26 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
+def createDB():
+    database_offenses = QSqlDatabase.addDatabase("QSQLITE", "offenses")
+    database_offenses.setDatabaseName(CHARGES_DATABASE)
+    database_offenses.open()
+    database_statutes = QSqlDatabase.addDatabase("QSQLITE", "statutes")
+    database_statutes.setDatabaseName(CHARGES_DATABASE)
+    database_statutes.open()
+    return database_offenses, database_statutes
+
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     """This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
     def __init__(self, judicial_officer, judicial_officer_type, parent=None):
+        self.open_databases()
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
         self.modify_view()
         self.set_counters()
-        self.set_database()
         self.set_template()
         self.criminal_charge = None
         self.pay_date_dict = {
@@ -70,16 +79,15 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.charge_count = 0
         self.delete_button_list = []
 
-    def set_database(self):
+    def open_databases(self):
         """
         https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
         https://doc.qt.io/qtforpython/overviews/sql-connecting.html
         NOTE: If running create_psql_table.py to update database, must delete
         the old charges.sqlite file to insure it is updated.
         """
-        self.database = QSqlDatabase.addDatabase("QSQLITE")
-        self.database.setDatabaseName(CHARGES_DATABASE)
-        self.database.open()
+        database_offenses.open()
+        database_statutes.open()
 
     def set_template(self):
         """The TEMPLATE_DICT stores a template for each judicial officer. In
@@ -98,10 +106,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         creating the AddConditionsDialog."""
         AddConditionsDialog(self).exec()
 
+    @logger.catch
     def close_event(self):
         """TODO: This does not appear to close the database. It is currently
-        tied to clicked() on createEntryButton."""
-        self.database.close()
+        tied to pressed() on createEntryButton."""
+        print("DB close called")
+        database_offenses.close()
+        database_offenses.removeDatabase(CHARGES_DATABASE)
+        database_statutes.close()
+        database_statutes.removeDatabase(CHARGES_DATABASE)
+
+
+
 
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
@@ -243,7 +259,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         if self.freeform_entry_checkBox.isChecked():
             return None
         key = self.offense_choice_box.currentText()
-        query = QSqlQuery()
+        query = QSqlQuery(database_offenses)
         query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -265,7 +281,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         if self.freeform_entry_checkBox.isChecked():
             return None
         key = self.statute_choice_box.currentText()
-        query = QSqlQuery()
+        query = QSqlQuery(database_statutes)
         query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -404,11 +420,11 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     the Minor Misdemeanor Case Information. The case information is passed in
     order to populate the case information banner."""
     def __init__(self, case_information=None, parent=None):
+        self.set_database()
         super().__init__(parent)
         self.case_information = case_information
         self.amend_offense_details = AmendOffenseDetails()
         self.set_case_information_banner()
-        self.set_database()
         self.modify_view()
 
     def modify_view(self):
@@ -437,3 +453,9 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
+
+if __name__ == "__main__":
+    print("MMD ran directly")
+else:
+    print("MMD ran when imported")
+    database_offenses, database_statutes = createDB()

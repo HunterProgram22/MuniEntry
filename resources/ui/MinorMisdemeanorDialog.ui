@@ -238,7 +238,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -449,7 +449,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -935,7 +935,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>461</width>
-      <height>91</height>
+      <height>98</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
@@ -1247,7 +1247,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>101</height>
+      <height>112</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1471,8 +1471,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>396</x>
-     <y>296</y>
+     <x>379</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -1487,8 +1487,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>702</x>
-     <y>295</y>
+     <x>721</x>
+     <y>292</y>
     </hint>
    </hints>
   </connection>
@@ -1531,8 +1531,8 @@ font-weight: bold;</string>
    <slot>set_statute()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>421</x>
-     <y>203</y>
+     <x>451</x>
+     <y>173</y>
     </hint>
     <hint type="destinationlabel">
      <x>591</x>
@@ -1551,8 +1551,8 @@ font-weight: bold;</string>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>396</x>
-     <y>296</y>
+     <x>379</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
@@ -1567,8 +1567,8 @@ font-weight: bold;</string>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>385</x>
-     <y>259</y>
+     <x>393</x>
+     <y>257</y>
     </hint>
    </hints>
   </connection>
@@ -1583,8 +1583,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>421</x>
-     <y>207</y>
+     <x>451</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1599,8 +1599,8 @@ font-weight: bold;</string>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>421</x>
-     <y>206</y>
+     <x>451</x>
+     <y>173</y>
     </hint>
    </hints>
   </connection>
@@ -1615,8 +1615,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>385</x>
-     <y>259</y>
+     <x>393</x>
+     <y>257</y>
     </hint>
    </hints>
   </connection>
@@ -1631,8 +1631,8 @@ font-weight: bold;</string>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>702</x>
-     <y>295</y>
+     <x>721</x>
+     <y>292</y>
     </hint>
    </hints>
   </connection>
@@ -1647,8 +1647,8 @@ font-weight: bold;</string>
      <y>279</y>
     </hint>
     <hint type="destinationlabel">
-     <x>822</x>
-     <y>215</y>
+     <x>451</x>
+     <y>212</y>
     </hint>
    </hints>
   </connection>
@@ -1663,8 +1663,8 @@ font-weight: bold;</string>
      <y>169</y>
     </hint>
     <hint type="destinationlabel">
-     <x>822</x>
-     <y>215</y>
+     <x>451</x>
+     <y>212</y>
     </hint>
    </hints>
   </connection>
@@ -1679,14 +1679,14 @@ font-weight: bold;</string>
      <y>165</y>
     </hint>
     <hint type="destinationlabel">
-     <x>337</x>
-     <y>259</y>
+     <x>393</x>
+     <y>257</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>createEntryButton</sender>
-   <signal>clicked()</signal>
+   <signal>pressed()</signal>
    <receiver>MinorMisdemeanorDialog</receiver>
    <slot>close_event()</slot>
    <hints>
@@ -1851,8 +1851,8 @@ font-weight: bold;</string>
    <slot>set_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>631</x>
-     <y>215</y>
+     <x>451</x>
+     <y>212</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>

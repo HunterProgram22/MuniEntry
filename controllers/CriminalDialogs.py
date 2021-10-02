@@ -24,7 +24,6 @@ from models.CaseInformation import (
     CommunityControlTerms,
     CommunityServiceTerms
 )
-from resources.db.DatabaseCreation import create_offense_list
 
 
 PATH = str(pathlib.Path().absolute())

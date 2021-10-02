@@ -49,13 +49,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
             self.GreenSheetButton: MinorMisdemeanorDialog,
         }
-
-        # Set View and Connect Signals
-        """FIX: If a default judicial_officer is set, then set_judicial_officer
-        is not called. Look into fixing this so that default officers can be
-        set for different users."""
-        self.judicial_officer = None
-        self.judicial_officer_type = None
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
 
@@ -88,14 +81,14 @@ class Window(QMainWindow, Ui_MainWindow):
         connects them to the slot for each button. Connects the starting dialog
         that will be launched upon button press."""
         for key in self.dialog_dict:
-            key.clicked.connect(self.start_dialog_from_entry_button)
+            key.pressed.connect(self.start_dialog_from_entry_button)
 
     def connect_menu_signal_slots(self):
         """Self explanatory."""
         self.menu_file_exit.triggered.connect(self.close)
 
     @logger.catch
-    def start_dialog_from_entry_button(self, button_clicked):
+    def start_dialog_from_entry_button(self):
         """
         Launches the dialog that is connected to each button.
         The judicial_officer argument must be passed to insure the creation
