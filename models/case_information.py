@@ -1,5 +1,5 @@
 """Module containing all data structures for everything at the moment."""
-from models.party_types import JudicialOfficer
+from models.party_types import JudicialOfficer, Defendant
 
 class CaseInformation(object):
     """This object stores all the information for a case both at inception and
@@ -11,8 +11,8 @@ class CaseInformation(object):
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
         self.waived_counsel = False
-        self.defendant_last_name = None
-        self.defendant_first_name = None
+        self.defendant = Defendant()
+        #self.defendant_first_name = None
         self.defendant_attorney_name = None
         self.defendant_date_of_birth = None
         self.operator_license_number = None
@@ -44,8 +44,8 @@ class CaseInformation(object):
         to populate an entry."""
         self.formatted_case_information = {
             "case_number": self.case_number,
-            "defendant_last_name": self.defendant_last_name,
-            "defendant_first_name": self.defendant_first_name,
+            "defendant_last_name": self.defendant.last_name,
+            "defendant_first_name": self.defendant.first_name,
             "waived_counsel": self.waived_counsel,
             "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,
