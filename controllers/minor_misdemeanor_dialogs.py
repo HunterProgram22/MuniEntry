@@ -237,8 +237,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         date of plea/trial,operator license number, date of birth, FRA (proof
         of insurance) in complaint, FRA in court."""
         self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant_first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant_last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
         self.case_information.plea_trial_date = (
             self.plea_trial_date.date().toString("MMMM dd, yyyy")
         )

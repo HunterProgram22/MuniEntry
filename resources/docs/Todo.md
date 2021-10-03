@@ -1,8 +1,8 @@
 APPLICATION TODO LIST
-* With clicked() @logger.catch blocks execution - switch out buttons to pressed()
+* Switch out buttons to pressed() - add conditions and amend offense
 * Move slots/signals to controllers
 * Refactor CaseInformation.py
-* Review button names on all views to make sure no repeats
+* Review button names on all views to make sure no repeats - add conditions and amend offense
 * Add tests for amend offense
 * Add dependencies list file
 
