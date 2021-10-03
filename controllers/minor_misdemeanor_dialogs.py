@@ -106,6 +106,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
+        self.add_charge_Button.released.connect(self.clear_charge_fields)
 
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
@@ -119,8 +120,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         """The order of functions that are called when the add_charge_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
         updated before the charge is added and the data cleared from the fields."""
+        self.criminal_charge = CriminalCharge()
         self.add_charge()
-        self.clear_charge_fields()
 
     def clear_charge_fields(self):
         self.finding_choice_box.clearEditText()
@@ -171,6 +172,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge_to_list(self.criminal_charge)
+        print(self.case_information.charges_list)
         self.add_charge_to_view()
         self.court_costs_box.setCurrentText("No")
         self.offense_choice_box.setFocus()
