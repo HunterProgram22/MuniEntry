@@ -1,6 +1,5 @@
 APPLICATION TODO LIST
 * Refactor CaseInformation.py
-* Refactor Templates.py
 * Review button names on all views to make sure no repeats
 * Add tests for amend offense
 * Add dependencies list file

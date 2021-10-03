@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from loguru import logger
 
 from views.main_window_ui import Ui_MainWindow
-from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
+from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 
 logger.add("./resources/logs/Error_log_{time}.log")
 

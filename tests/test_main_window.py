@@ -10,7 +10,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
+from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 
 
 """Functions for Testing"""

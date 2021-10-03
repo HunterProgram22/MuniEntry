@@ -67,4 +67,3 @@ class BaseCriminalDialog(QDialog):
     def update_case_information(self):
         """Placeholder for future use to refactor out of other dialogs and reduce
         code reuse."""
-        pass
