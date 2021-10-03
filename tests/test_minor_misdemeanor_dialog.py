@@ -204,5 +204,5 @@ def test_add_conditions(dialog, qtbot):
     assert dialog.windowTitle() == "Additional Conditions"
 
 def test_create_entry(app, dialog):
-    """TODO: Add offenses to populate entry."""
+    add_offense_speeding_25(dialog)
     QtBot.mouseClick(dialog.createEntryButton, QtCore.Qt.LeftButton)
