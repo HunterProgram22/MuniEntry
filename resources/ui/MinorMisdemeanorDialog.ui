@@ -1256,7 +1256,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>101</height>
+      <height>112</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1416,22 +1416,6 @@ font-weight: bold;</string>
     <hint type="destinationlabel">
      <x>980</x>
      <y>237</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>createEntryButton</sender>
-   <signal>released()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>close_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>928</x>
-     <y>760</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>927</x>
-     <y>699</y>
     </hint>
    </hints>
   </connection>

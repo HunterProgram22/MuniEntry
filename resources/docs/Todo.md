@@ -1,13 +1,11 @@
 APPLICATION TODO LIST
-* Do the dialogs even need to inherit from BaseCriminalDialog
 * Refactor MinorMisdemeanorDialogs.py and rename (MinorMisdemeanorSentencing)
 * Refactor CriminalDialogs.py
 * Refactor CaseInformation.py
 * Refactor Templates.py
-* Add another add charge button to tab back to one??
-* Fix issue with database - currently says not open twice on load and also does not close on close_event.
 * Review button names on all views to make sure no repeats
 * Add tests for amend offense
+* Add dependencies list file
 
 
 FEATURE/CHANGE LIST

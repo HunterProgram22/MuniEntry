@@ -36,7 +36,7 @@ class CaseInformation(object):
         self.due_date_for_service = None
         self.license_suspension_details = None
 
-    def add_charge(self, charge):
+    def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
 
 
@@ -85,7 +85,6 @@ class CriminalCharge(object):
         self.court_costs = None
         self.jail_days = None
         self.jail_days_suspended = None
-        self.days_to_pay = None
 
 
 class CommunityControlTerms(object):
