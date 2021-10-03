@@ -597,7 +597,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.addChargeButton.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.plea_choice_box.clearEditText)
-        self.createEntryButton.pressed.connect(MinorMisdemeanorDialog.close_event)
+        self.createEntryButton.released.connect(MinorMisdemeanorDialog.close_event)
         self.cancelButton.clicked.connect(MinorMisdemeanorDialog.reject)
         self.pushButton_2.clicked.connect(self.defendant_first_name_lineEdit.clear)
         self.pushButton_2.clicked.connect(self.operator_license_number_lineEdit.clear)

@@ -3,6 +3,7 @@ cases (criminal includes traffic). """
 import os
 import pathlib
 from docxtpl import DocxTemplate
+from loguru import logger
 
 from PyQt5.QtWidgets import QDialog
 
@@ -31,9 +32,11 @@ class BaseCriminalDialog(QDialog):
         to any button press/click/release to close a window."""
         self.close()
 
+    @logger.catch
     def create_entry(self):
         """The standard function used to create an entry when a create entry
         button is press/click/released."""
+        print("create entry ran")
         self.doc = DocxTemplate(self.template.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
@@ -67,3 +70,4 @@ class BaseCriminalDialog(QDialog):
     def update_case_information(self):
         """Placeholder for future use to refactor out of other dialogs and reduce
         code reuse."""
+        pass
