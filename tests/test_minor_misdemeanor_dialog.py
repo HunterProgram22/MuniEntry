@@ -28,8 +28,8 @@ def add_case_information(dialog):
     QtBot.keyClicks(dialog.defendant_last_name_lineEdit, "Smith")
     QtBot.keyClicks(dialog.operator_license_number_lineEdit, "TF180780")
 
-def start_minor_misdemeanor_dialog(qtbot, judicial_officer, judicial_officer_type):
-    dialog = MinorMisdemeanorDialog(judicial_officer, judicial_officer_type)
+def start_minor_misdemeanor_dialog(qtbot, judicial_officer):
+    dialog = MinorMisdemeanorDialog(judicial_officer)
     qtbot.addWidget(dialog)
     add_case_information(dialog)
     return dialog
@@ -50,7 +50,7 @@ def add_offense_speeding_25(dialog):
     dialog.finding_choice_box.setCurrentText("Guilty")
     dialog.fines_amount.setText("50")
     dialog.fines_suspended.setText("25")
-    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
 
 @pytest.fixture
 def app(qtbot):
@@ -62,7 +62,7 @@ def app(qtbot):
 def dialog(app, qtbot):
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_minor_misdemeanor_dialog(qtbot, app.judicial_officer, app.judicial_officer_type)
+    dialog = start_minor_misdemeanor_dialog(qtbot, app.judicial_officer)
     return dialog
 
 """TESTING"""
@@ -114,7 +114,7 @@ def test_add_multiple_offenses(app, dialog):
     dialog.finding_choice_box.setCurrentText("Guilty")
     dialog.fines_amount.setText("75")
     dialog.fines_suspended.setText("0")
-    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
     assert dialog.charges_gridLayout.itemAtPosition(0, 4).widget().text() == "Driving in Marked Lanes"
     assert dialog.charges_gridLayout.itemAtPosition(3, 4).widget().text() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(4, 4).widget().text() == "Guilty"
@@ -123,7 +123,7 @@ def test_add_multiple_offenses(app, dialog):
 
 def test_add_offense_and_delete_offense(app, dialog):
     add_offense_speeding_25(dialog)
-    QtBot.mouseClick(dialog.addChargeButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
     QtBot.mouseClick(
         dialog.charges_gridLayout.itemAtPosition(8, 2).widget(),
         QtCore.Qt.LeftButton
@@ -194,15 +194,15 @@ def test_fra_in_file_and_court(app, dialog):
     assert dialog.case_information.fra_in_court == None
 
 def test_amend_offense(dialog, qtbot):
-    QtBot.mouseClick(dialog.amendOffenseButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
     dialog = start_amendment_dialog(qtbot, dialog.case_information)
     assert dialog.windowTitle() == "Amend Charge"
 
 def test_add_conditions(dialog, qtbot):
-    QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.windowTitle() == "Additional Conditions"
 
 def test_create_entry(app, dialog):
     add_offense_speeding_25(dialog)
-    QtBot.mouseClick(dialog.createEntryButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)

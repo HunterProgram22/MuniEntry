@@ -188,7 +188,7 @@ font-weight: bold;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="4" column="0">
-      <widget class="QPushButton" name="addChargeButton">
+      <widget class="QPushButton" name="add_charge_Button">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(160, 160, 160);</string>
        </property>
@@ -198,7 +198,7 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QPushButton" name="amendOffenseButton">
+      <widget class="QPushButton" name="amend_offense_Button">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -211,7 +211,7 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="clear_fields_charge_Button">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -795,7 +795,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="clear_fields_case_Button">
     <property name="geometry">
      <rect>
       <x>835</x>
@@ -814,7 +814,7 @@ border-color: rgb(160, 48, 35);</string>
      <string>Clear Fields</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="cancelButton">
+   <widget class="QPushButton" name="cancel_Button">
     <property name="geometry">
      <rect>
       <x>835</x>
@@ -1090,7 +1090,7 @@ border-color: rgb(160, 48, 35);</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QPushButton" name="createEntryButton">
+  <widget class="QPushButton" name="create_entry_Button">
    <property name="geometry">
     <rect>
      <x>810</x>
@@ -1352,7 +1352,7 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
-  <widget class="QPushButton" name="addConditionsButton">
+  <widget class="QPushButton" name="add_conditions_Button">
    <property name="geometry">
     <rect>
      <x>510</x>
@@ -1383,7 +1383,7 @@ font-weight: bold;</string>
   <tabstop>fines_amount</tabstop>
   <tabstop>fines_suspended</tabstop>
   <tabstop>court_costs_box</tabstop>
-  <tabstop>addChargeButton</tabstop>
+  <tabstop>add_charge_Button</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
@@ -1392,8 +1392,8 @@ font-weight: bold;</string>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>community_control_checkBox</tabstop>
   <tabstop>checkBox_7</tabstop>
-  <tabstop>addConditionsButton</tabstop>
-  <tabstop>createEntryButton</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
+  <tabstop>create_entry_Button</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>checkBox_5</tabstop>
   <tabstop>checkBox_3</tabstop>
@@ -1403,54 +1403,6 @@ font-weight: bold;</string>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>addChargeButton</sender>
-   <signal>pressed()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>add_charge()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>980</x>
-     <y>237</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>createEntryButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>create_entry()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>857</x>
-     <y>760</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>763</x>
-     <y>699</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>createEntryButton</sender>
-   <signal>pressed()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>update_case_information()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>897</x>
-     <y>760</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>742</x>
-     <y>699</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>ability_to_pay_box</sender>
    <signal>currentTextChanged(QString)</signal>
@@ -1468,8 +1420,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>finding_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1484,8 +1436,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>fines_suspended</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1500,8 +1452,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>fines_amount</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1516,8 +1468,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>fines_amount</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1548,8 +1500,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>finding_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1564,24 +1516,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
-   <receiver>plea_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>393</x>
-     <y>257</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>offense_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1596,8 +1532,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>offense_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1612,8 +1548,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>plea_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1628,8 +1564,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>fines_suspended</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1644,8 +1580,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>addChargeButton</sender>
-   <signal>clicked()</signal>
+   <sender>add_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>statute_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1660,8 +1596,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>statute_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1676,8 +1612,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_4</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_charge_Button</sender>
+   <signal>pressed()</signal>
    <receiver>plea_choice_box</receiver>
    <slot>clearEditText()</slot>
    <hints>
@@ -1692,24 +1628,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>createEntryButton</sender>
+   <sender>cancel_Button</sender>
    <signal>pressed()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>close_event()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>845</x>
-     <y>776</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>789</x>
-     <y>799</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cancelButton</sender>
-   <signal>clicked()</signal>
    <receiver>MinorMisdemeanorDialog</receiver>
    <slot>reject()</slot>
    <hints>
@@ -1724,8 +1644,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_case_Button</sender>
+   <signal>pressed()</signal>
    <receiver>defendant_first_name_lineEdit</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1740,8 +1660,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_case_Button</sender>
+   <signal>pressed()</signal>
    <receiver>operator_license_number_lineEdit</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1756,8 +1676,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_case_Button</sender>
+   <signal>pressed()</signal>
    <receiver>case_number_lineEdit</receiver>
    <slot>clear()</slot>
    <hints>
@@ -1804,54 +1724,6 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>amendOffenseButton</sender>
-   <signal>pressed()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>update_case_information()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>911</x>
-     <y>199</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>750</x>
-     <y>592</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>addConditionsButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>start_add_conditions_dialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>522</x>
-     <y>776</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>480</x>
-     <y>773</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>amendOffenseButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>start_amend_offense_dialog()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>883</x>
-     <y>192</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>711</x>
-     <y>764</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>statute_choice_box</sender>
    <signal>currentTextChanged(QString)</signal>
    <receiver>MinorMisdemeanorDialog</receiver>
@@ -1868,8 +1740,8 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
+   <sender>clear_fields_case_Button</sender>
+   <signal>pressed()</signal>
    <receiver>defendant_last_name_lineEdit</receiver>
    <slot>clear()</slot>
    <hints>

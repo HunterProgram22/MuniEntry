@@ -73,6 +73,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
+        self.connect_signals_to_slots()
         self.set_template()
         self.criminal_charge = CriminalCharge()
         self.delete_button_list = []
@@ -93,9 +94,26 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_choice_box.addItems(offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
-        self.createEntryButton.released.connect(self.create_entry)
-        self.createEntryButton.pressed.connect(self.update_case_information)
-        self.createEntryButton.released.connect(self.close_event)
+
+    def connect_signals_to_slots(self):
+        """The method that connects any signals to slots that are not standard
+        functions in QtDesigner. Signals tied to clear() or clearEditText() and a
+        few others native to QtDesigner are connected in the view.
+
+        Have not yet moved: set_offense(), set_statute(), set_fra_in_file(),
+        set_fra_in_court(), set_pay_date()."""
+        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
+        self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
+        self.add_charge_Button.pressed.connect(self.add_charge)
+
+    def create_entry_process(self):
+        """The order of functioncs that are called when the create_Entry_Button is pressed()
+        on the MinorMisdemeanorDialog. The order is important to make sure the information is
+        updated before the entry is created."""
+        self.update_case_information()
+        self.create_entry()
+        self.close_event()
 
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
@@ -107,6 +125,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The case_information is passed
         to the dialog class in order to populate the case information banner."""
+        self.update_case_information()
         AmendOffenseDialog(self.case_information).exec()
 
     def start_add_conditions_dialog(self):
