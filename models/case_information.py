@@ -7,7 +7,6 @@ class CaseInformation(object):
 
     def __init__(self, judicial_officer):
         self.judicial_officer = judicial_officer
-        # self.judicial_officer_type = judicial_officer_type
         self.case_number = None
         self.plaintiff_name = None
         self.plaintiff_attorney_name = None
