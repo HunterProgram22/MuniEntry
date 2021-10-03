@@ -1420,54 +1420,6 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>finding_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>379</x>
-     <y>291</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>fines_suspended</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>721</x>
-     <y>292</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>fines_amount</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>702</x>
-     <y>258</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>clear_fields_charge_Button</sender>
    <signal>pressed()</signal>
    <receiver>fines_amount</receiver>
@@ -1516,22 +1468,6 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>offense_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>451</x>
-     <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>clear_fields_charge_Button</sender>
    <signal>pressed()</signal>
    <receiver>offense_choice_box</receiver>
@@ -1544,22 +1480,6 @@ font-weight: bold;</string>
     <hint type="destinationlabel">
      <x>451</x>
      <y>173</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>plea_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>393</x>
-     <y>257</y>
     </hint>
    </hints>
   </connection>
@@ -1576,22 +1496,6 @@ font-weight: bold;</string>
     <hint type="destinationlabel">
      <x>721</x>
      <y>292</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>add_charge_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>statute_choice_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>963</x>
-     <y>279</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>451</x>
-     <y>212</y>
     </hint>
    </hints>
   </connection>
