@@ -124,6 +124,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_charge()
 
     def clear_charge_fields(self):
+        """Does as it says and clears the fields that are used for adding a charge."""
         self.finding_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
         self.plea_choice_box.clearEditText()
@@ -174,7 +175,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge_to_list(self.criminal_charge)
-        print(self.case_information.charges_list)
         self.add_charge_to_view()
         self.court_costs_box.setCurrentText("No")
         self.offense_choice_box.setFocus()
