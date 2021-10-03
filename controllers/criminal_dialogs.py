@@ -36,7 +36,6 @@ class BaseCriminalDialog(QDialog):
     def create_entry(self):
         """The standard function used to create an entry when a create entry
         button is press/click/released."""
-        print("create entry ran")
         self.doc = DocxTemplate(self.template.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()

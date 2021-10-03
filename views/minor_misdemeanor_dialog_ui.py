@@ -532,7 +532,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.label_24.setAlignment(QtCore.Qt.AlignCenter)
         self.label_24.setObjectName("label_24")
         self.layoutWidget5 = QtWidgets.QWidget(self.frame_6)
-        self.layoutWidget5.setGeometry(QtCore.QRect(10, 31, 461, 112))
+        self.layoutWidget5.setGeometry(QtCore.QRect(10, 31, 461, 101))
         self.layoutWidget5.setObjectName("layoutWidget5")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.layoutWidget5)
         self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
@@ -580,8 +580,7 @@ class Ui_MinorMisdemeanorDialog(object):
 
         self.retranslateUi(MinorMisdemeanorDialog)
         self.addChargeButton.pressed.connect(MinorMisdemeanorDialog.add_charge)
-        self.createEntryButton.pressed.connect(MinorMisdemeanorDialog.create_entry)
-        self.createEntryButton.pressed.connect(MinorMisdemeanorDialog.update_case_information)
+
         self.ability_to_pay_box.currentTextChanged['QString'].connect(MinorMisdemeanorDialog.set_pay_date)
         self.addChargeButton.clicked.connect(self.finding_choice_box.clearEditText)
         self.addChargeButton.clicked.connect(self.fines_suspended.clear)
@@ -597,7 +596,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.addChargeButton.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.plea_choice_box.clearEditText)
-        self.createEntryButton.released.connect(MinorMisdemeanorDialog.close_event)
+
         self.cancelButton.clicked.connect(MinorMisdemeanorDialog.reject)
         self.pushButton_2.clicked.connect(self.defendant_first_name_lineEdit.clear)
         self.pushButton_2.clicked.connect(self.operator_license_number_lineEdit.clear)

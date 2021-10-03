@@ -1256,7 +1256,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>112</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
