@@ -118,7 +118,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         any cleanup items (i.e. close_databases) here that should be called when
         the entry is created and the dialog closed."""
         close_databases()
-        self.close_window()
 
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
