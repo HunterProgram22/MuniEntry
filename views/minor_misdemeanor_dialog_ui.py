@@ -580,8 +580,7 @@ class Ui_MinorMisdemeanorDialog(object):
 
         self.retranslateUi(MinorMisdemeanorDialog)
         self.addChargeButton.pressed.connect(MinorMisdemeanorDialog.add_charge)
-        self.createEntryButton.pressed.connect(MinorMisdemeanorDialog.create_entry)
-        self.createEntryButton.pressed.connect(MinorMisdemeanorDialog.update_case_information)
+
         self.ability_to_pay_box.currentTextChanged['QString'].connect(MinorMisdemeanorDialog.set_pay_date)
         self.addChargeButton.clicked.connect(self.finding_choice_box.clearEditText)
         self.addChargeButton.clicked.connect(self.fines_suspended.clear)
@@ -597,7 +596,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.addChargeButton.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.statute_choice_box.clearEditText)
         self.pushButton_4.clicked.connect(self.plea_choice_box.clearEditText)
-        self.createEntryButton.released.connect(MinorMisdemeanorDialog.close_event)
+
         self.cancelButton.clicked.connect(MinorMisdemeanorDialog.reject)
         self.pushButton_2.clicked.connect(self.defendant_first_name_lineEdit.clear)
         self.pushButton_2.clicked.connect(self.operator_license_number_lineEdit.clear)

@@ -93,6 +93,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_choice_box.addItems(offense_list)
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+        self.createEntryButton.released.connect(self.create_entry)
+        self.createEntryButton.pressed.connect(self.update_case_information)
+        self.createEntryButton.released.connect(self.close_event)
 
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
