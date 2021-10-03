@@ -13,7 +13,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from models.templates import TEMPLATE_DICT
+from models.template_types import TEMPLATE_DICT
 from models.case_information import (
     CaseInformation,
     CriminalCharge,
@@ -114,9 +114,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def close_event(self):
         """Upon pressed() of the createEntryButton this function is called. Place
         any cleanup items (i.e. close_databases) here that should be called when
-        the entry is created and the dialog closed."""
+        the entry is created and the dialog closed. DO NOT INCLUDE self.close_window()
+        as it closes the dialog too early."""
         close_databases()
-        self.close_window()
+
 
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
