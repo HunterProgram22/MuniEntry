@@ -13,9 +13,6 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.CriminalDialogs import (
-    CaseInformationDialog,
-)
 from controllers.MinorMisdemeanorDialogs import (
     MinorMisdemeanorDialog,
     AddConditionsDialog,
@@ -71,7 +68,6 @@ def dialog(app, qtbot):
 """TESTING"""
 """Two columns are added every time a charge is added with add offense to view.
 The columns with content are evens (0, 2, 4, etc)."""
-
 def test_open_minor_misdemeanor_dialog(app, dialog):
     assert dialog.windowTitle() == "Minor Misdemeanor Case Information"
 

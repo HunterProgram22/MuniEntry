@@ -11,16 +11,11 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.CriminalDialogs import (
-    CaseInformationDialog,
-
-)
 from controllers.MinorMisdemeanorDialogs import (
     MinorMisdemeanorDialog,
     AddConditionsDialog,
     AmendOffenseDialog,
 )
-
 
 
 """Functions for Testing"""
@@ -50,7 +45,6 @@ def dialog(app, qtbot):
 
 
 """TESTING"""
-
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.addConditionsButton, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)

@@ -10,12 +10,8 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.CriminalDialogs import (
-    CaseInformationDialog,
-)
-from controllers.MinorMisdemeanorDialogs import (
-    MinorMisdemeanorDialog,
-)
+from controllers.MinorMisdemeanorDialogs import MinorMisdemeanorDialog
+
 
 """Functions for Testing"""
 def start_MinorMisdemeanorDialog(qtbot, judicial_officer, judicial_officer_type):
