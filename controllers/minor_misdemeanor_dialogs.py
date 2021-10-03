@@ -68,10 +68,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
-    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
+    def __init__(self, judicial_officer, parent=None):
         open_databases()
         super().__init__(parent)
-        self.case_information = CaseInformation(judicial_officer, judicial_officer_type)
+        self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
         self.set_template()
         self.criminal_charge = CriminalCharge()
@@ -97,7 +97,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
         in the Templates.py model module."""
-        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer)
+        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
+        print(self.template.template_name)
+        print(self.template.template_path)
 
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The case_information is passed

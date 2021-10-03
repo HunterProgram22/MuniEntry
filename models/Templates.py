@@ -2,6 +2,7 @@
 application."""
 import pathlib
 
+
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 

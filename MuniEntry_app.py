@@ -7,6 +7,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from loguru import logger
 
+from models.party_types import JudicialOfficer
 from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 
@@ -42,10 +43,10 @@ class Window(QMainWindow, Ui_MainWindow):
         self.judicial_officer = None
         self.judicial_officer_type = None
         self.judicial_officer_dict = {
-            self.bunner_radioButton: "Bunner",
-            self.pelanda_radioButton: "Pelanda",
-            self.rohrer_radioButton: "Rohrer",
-            self.hemmeter_radioButton: "Hemmeter",
+            self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
+            self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
+            self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
+            self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
         }
         self.dialog_dict = {
             self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
@@ -55,8 +56,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connect_entry_buttons()
 
     def connect_judicial_officer_buttons(self):
-        """Connects the radio buttons for each judicial officer to a string of
-        their name."""
+        """Connects the radio buttons for each judicial officer to their
+        JudicialOfficer object."""
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
@@ -68,15 +69,17 @@ class Window(QMainWindow, Ui_MainWindow):
         this to the model for judicial officer so that the type is part of the
         judicial_officer model that is instantiated.
         """
-        for key in self.judicial_officer_dict:
+        for key, value in self.judicial_officer_dict.items():
             if key.isChecked():
-                self.judicial_officer = self.judicial_officer_dict[key]
+                self.judicial_officer = value
+                """
                 if self.judicial_officer == "Bunner":
                     self.judicial_officer_type = "Magistrate"
                 elif self.judicial_officer == "Pelanda":
                     self.judicial_officer_type = "Magistrate"
                 else:
                     self.judicial_officer_type = "Judge"
+                """
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and
@@ -104,9 +107,7 @@ class Window(QMainWindow, Ui_MainWindow):
         try:
             if self.judicial_officer is None:
                 raise AttributeError
-            dialog = self.dialog_dict[self.sender()](
-                self.judicial_officer, self.judicial_officer_type
-                )
+            dialog = self.dialog_dict[self.sender()](self.judicial_officer)
             dialog.exec()
         except AttributeError:
             message = QMessageBox()
