@@ -105,22 +105,35 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
-        self.add_charge_Button.pressed.connect(self.add_charge)
+        self.add_charge_Button.pressed.connect(self.add_charge_process)
 
     def create_entry_process(self):
-        """The order of functioncs that are called when the create_Entry_Button is pressed()
+        """The order of functions that are called when the create_entry_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the information is
         updated before the entry is created."""
         self.update_case_information()
         self.create_entry()
         self.close_event()
 
+    def add_charge_process(self):
+        """The order of functions that are called when the add_charge_Button is pressed()
+        on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
+        updated before the charge is added and the data cleared from the fields."""
+        self.add_charge()
+        self.clear_charge_fields()
+
+    def clear_charge_fields(self):
+        self.finding_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
+        self.plea_choice_box.clearEditText()
+        self.statute_choice_box.clearEditText()
+        self.fines_suspended.clear()
+        self.fines_amount.clear()
+
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
         in the Templates.py model module."""
         self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
-        print(self.template.template_name)
-        print(self.template.template_path)
 
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The case_information is passed
