@@ -13,7 +13,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from models.templates import TEMPLATE_DICT
+from models.template_types import TEMPLATE_DICT
 from models.case_information import (
     CaseInformation,
     CriminalCharge,
