@@ -175,7 +175,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
         self.court_costs_box.setCurrentText("No")
-        self.offense_choice_box.setFocus()
+        self.statute_choice_box.setFocus()
 
     def add_charge_to_view(self):
         """Adds the charge that was added through add_charge method to the
@@ -372,11 +372,11 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
-            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate().addDays(-30))
+            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
-        if self.community_service:
+        if self.community_service is True:
             self.community_service_frame.setEnabled(True)
             self.community_service_terms = CommunityServiceTerms()
             self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())

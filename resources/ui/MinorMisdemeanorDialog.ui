@@ -449,30 +449,36 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>9</y>
       <width>811</width>
       <height>81</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_15">
+      <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>Offense:</string>
+        <string>Statute:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="offense_choice_box">
+      <widget class="QComboBox" name="statute_choice_box">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>300</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::WheelFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -505,25 +511,19 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_6">
+      <widget class="QLabel" name="label_15">
        <property name="text">
-        <string>Statute:</string>
+        <string>Offense:</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="statute_choice_box">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
+      <widget class="QComboBox" name="offense_choice_box">
        <property name="minimumSize">
         <size>
          <width>300</width>
          <height>0</height>
         </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::WheelFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -839,7 +839,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>480</x>
       <y>11</y>
       <width>341</width>
-      <height>96</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_4">
@@ -938,44 +938,24 @@ border-color: rgb(160, 48, 35);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>461</width>
-      <height>98</height>
+      <width>441</width>
+      <height>91</height>
      </rect>
     </property>
-    <layout class="QFormLayout" name="formLayout_3">
+    <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Case Number:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="case_number_lineEdit">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="label">
        <property name="text">
         <string>Def. First Name:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="0" column="1">
       <widget class="QLineEdit" name="defendant_first_name_lineEdit">
        <property name="maximumSize">
         <size>
@@ -988,17 +968,37 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Def. Last Name:</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="QLineEdit" name="defendant_last_name_lineEdit">
        <property name="enabled">
         <bool>true</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Case Number:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="case_number_lineEdit">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1256,7 +1256,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>101</height>
+      <height>112</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1373,11 +1373,11 @@ font-weight: bold;</string>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
-  <tabstop>offense_choice_box</tabstop>
+  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>statute_choice_box</tabstop>
+  <tabstop>offense_choice_box</tabstop>
   <tabstop>plea_choice_box</tabstop>
   <tabstop>finding_choice_box</tabstop>
   <tabstop>fines_amount</tabstop>
@@ -1391,15 +1391,8 @@ font-weight: bold;</string>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>community_control_checkBox</tabstop>
-  <tabstop>checkBox_7</tabstop>
   <tabstop>add_conditions_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_8</tabstop>
-  <tabstop>operator_license_number_lineEdit</tabstop>
-  <tabstop>defendant_birth_date</tabstop>
  </tabstops>
  <resources/>
  <connections>
