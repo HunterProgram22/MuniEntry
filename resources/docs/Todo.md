@@ -1,4 +1,10 @@
 APPLICATION TODO LIST
+* Fix charge process - make sure new CriminalCharge() is added and window closes - not working on main
+* Default Seatbelt to 30 and passenger to 20
+* Flip statute/offense and case number / names
+* Fix names for judge/magistrates
+* Check spacing on template
+* Remove driving driving_privileges from license suspension and set date to today
 * Refactor CaseInformation.py
 * Review button names on all views to make sure no repeats
 * Add tests for amend offense
