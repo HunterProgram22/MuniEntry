@@ -20,7 +20,7 @@ from models.case_information import (
     AmendOffenseDetails,
     LicenseSuspension,
     CommunityControlTerms,
-    CommunityServiceTerms
+    CommunityServiceTerms,
 )
 from controllers.criminal_dialogs import BaseCriminalDialog
 from resources.db.DatabaseCreation import create_offense_list
@@ -41,7 +41,8 @@ def create_database_connections():
     offense_database_connection.setDatabaseName(CHARGES_DATABASE)
     statute_database_connection = QSqlDatabase.addDatabase("QSQLITE", "statutes")
     statute_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection , statute_database_connection
+    return offense_database_connection, statute_database_connection
+
 
 def open_databases():
     """
@@ -52,6 +53,7 @@ def open_databases():
     """
     database_offenses.open()
     database_statutes.open()
+
 
 def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
@@ -68,7 +70,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
+<<<<<<< HEAD
     def __init__(self, judicial_officer, parent=None):
+=======
+
+    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
+>>>>>>> main
         open_databases()
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
@@ -164,6 +171,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         The offense is added to the view by the method add_charge_to_view,
         not this method. This method is triggered on press of the Add Charge
         button."""
+        self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
@@ -174,6 +182,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
+        print(self.case_information.charges_list)
         self.court_costs_box.setCurrentText("No")
         self.statute_choice_box.setFocus()
 
@@ -237,18 +246,33 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         date of plea/trial,operator license number, date of birth, FRA (proof
         of insurance) in complaint, FRA in court."""
         self.case_information.case_number = self.case_number_lineEdit.text()
+<<<<<<< HEAD
         self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
         self.case_information.plea_trial_date = (
             self.plea_trial_date.date().toString("MMMM dd, yyyy")
+=======
+        self.case_information.defendant_first_name = (
+            self.defendant_first_name_lineEdit.text()
         )
-        self.case_information.operator_license_number = self.operator_license_number_lineEdit.text()
+        self.case_information.defendant_last_name = (
+            self.defendant_last_name_lineEdit.text()
+        )
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
+            "MMMM dd, yyyy"
+        )
+        self.case_information.operator_license_number = (
+            self.operator_license_number_lineEdit.text()
+>>>>>>> main
+        )
         self.case_information.defendant_date_of_birth = (
             self.defendant_birth_date.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.balance_due_date = (
-            self.balance_due_date.date().toString("MMMM dd, yyyy")
+        self.case_information.ability_to_pay_time = (
+            self.ability_to_pay_box.currentText()
+        )
+        self.case_information.balance_due_date = self.balance_due_date.date().toString(
+            "MMMM dd, yyyy"
         )
         self.check_add_conditions()
 
@@ -262,11 +286,17 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         in future refactor this to have it loop through the different conditions so code
         doesn't need to be added each time a condition is added."""
         if self.license_suspension_checkBox.isChecked():
-            self.case_information.license_suspension_details.license_suspension_ordered = True
+            self.case_information.license_suspension_details.license_suspension_ordered = (
+                True
+            )
         if self.community_control_checkBox.isChecked():
-            self.case_information.community_control_terms.community_control_required = True
+            self.case_information.community_control_terms.community_control_required = (
+                True
+            )
         if self.community_service_checkBox.isChecked():
-            self.case_information.community_service_terms.community_service_ordered = True
+            self.case_information.community_service_terms.community_service_ordered = (
+                True
+            )
 
     def set_fra_in_file(self):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
@@ -357,12 +387,19 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the MinorMisdemeanorDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
+
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
-        self.community_service = minor_misdemeanor_dialog.community_service_checkBox.isChecked()
-        self.community_control = minor_misdemeanor_dialog.community_control_checkBox.isChecked()
-        self.license_suspension = minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+        self.community_service = (
+            minor_misdemeanor_dialog.community_service_checkBox.isChecked()
+        )
+        self.community_control = (
+            minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        )
+        self.license_suspension = (
+            minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+        )
         self.enable_condition_frames()
 
     def enable_condition_frames(self):
@@ -372,14 +409,22 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
+<<<<<<< HEAD
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
+=======
+            self.license_suspension_date_box.setDate(
+                QtCore.QDate.currentDate().addDays(-30)
+            )
+>>>>>>> main
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
             self.community_service_terms = CommunityServiceTerms()
-            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+            self.community_service_date_to_complete_box.setDate(
+                QtCore.QDate.currentDate()
+            )
 
     def add_conditions(self):
         """The method is connected to the pressed() signal of continue_Button on the
@@ -441,13 +486,17 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details.remedial_driving_class_required = True
         else:
             self.license_suspension_details.remedial_driving_class_required = False
-        self.case_information.license_suspension_details = self.license_suspension_details
+        self.case_information.license_suspension_details = (
+            self.license_suspension_details
+        )
 
     def set_service_date(self):
         """Sets the community_service_date_to_complete_box based on the number
         of days chosen in the community_service_date_to_complete_box."""
         days_added = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_added))
+        self.community_service_date_to_complete_box.setDate(
+            QDate.currentDate().addDays(days_added)
+        )
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
@@ -456,6 +505,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
+
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information
@@ -476,9 +526,15 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the case_information object to the AmendOffenseDetails
         object."""
-        self.amend_offense_details.original_charge = self.original_charge_box.currentText()
-        self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
-        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+        self.amend_offense_details.original_charge = (
+            self.original_charge_box.currentText()
+        )
+        self.amend_offense_details.amended_charge = (
+            self.amended_charge_box.currentText()
+        )
+        self.amend_offense_details.motion_disposition = (
+            self.motion_decision_box.currentText()
+        )
         self.case_information.amend_offense_details = self.amend_offense_details
 
 
