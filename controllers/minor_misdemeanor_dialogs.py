@@ -156,7 +156,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         the entry is created and the dialog closed. DO NOT INCLUDE self.close_window()
         as it closes the dialog too early."""
         close_databases()
+<<<<<<< HEAD
 
+=======
+>>>>>>> refactor_models
 
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
