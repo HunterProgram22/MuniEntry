@@ -22,9 +22,9 @@ class CaseInformation(object):
         self.charges_list = []
         self.community_control_terms = None
         self.ovi_details = None
-        self.ability_to_pay_details = None
-        self.ability_to_pay_time = None
-        self.balance_due_date = None
+        self.ability_to_pay_details = None # Use Class
+        self.ability_to_pay_time = None # Use Class
+        self.balance_due_date = None # Use Class
         self.amend_offense_details = None
         self.is_citizen = False
         self.understood_plea = True
@@ -114,10 +114,9 @@ class OviDetails(object):
 
 class AbilityToPayDetails(object):
     def __init__(self):
-        self.ability_to_pay_time = 0
-        self.pretrial_jail_days_credit = True
-        self.community_service_for_fines = True
-        self.fines_suspended_for_valid_license = False
+        self.ability_to_pay_details = None
+        self.ability_to_pay_time = None
+        self.balance_due_date = None
 
 
 class AmendOffenseDetails(object):
