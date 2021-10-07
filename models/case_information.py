@@ -24,6 +24,7 @@ class CaseInformation(object):
         self.ovi_details = None
         self.ability_to_pay_details = None
         self.ability_to_pay_time = None
+        self.balance_due_date = None
         self.amend_offense_details = None
         self.is_citizen = False
         self.understood_plea = True
@@ -57,6 +58,7 @@ class CaseInformation(object):
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,
             "ability_to_pay_time": self.ability_to_pay_time,
+            "balance_due_date": self.balance_due_date,
             "community_control_terms": self.community_control_terms,
             "fra_in_file": self.fra_in_file,
             "fra_in_court": self.fra_in_court,
@@ -131,6 +133,4 @@ class LicenseSuspension(object):
         self.license_type = None
         self.license_suspended_date = None
         self.license_suspension_term = None
-        self.driving_privileges = None
-        self.driving_privileges_term = None
         self.remedial_driving_class_required = False

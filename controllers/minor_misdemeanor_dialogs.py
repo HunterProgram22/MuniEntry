@@ -70,12 +70,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
-<<<<<<< HEAD
     def __init__(self, judicial_officer, parent=None):
-=======
-
-    def __init__(self, judicial_officer, judicial_officer_type, parent=None):
->>>>>>> main
         open_databases()
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
@@ -171,18 +166,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         The offense is added to the view by the method add_charge_to_view,
         not this method. This method is triggered on press of the Add Charge
         button."""
-        self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
+        if self.offense_choice_box.currentText() == "Seatbelt - Driver":
+            self.fines_amount.setText("30")
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.plea = self.plea_choice_box.currentText()
         self.criminal_charge.finding = self.finding_choice_box.currentText()
         self.criminal_charge.fines_amount = self.fines_amount.text()
-        self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        if self.fines_suspended.text() == "":
+            self.criminal_charge.fines_suspended = "0"
+        else:
+            self.criminal_charge.fines_suspended = self.fines_suspended.text()
         self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
-        print(self.case_information.charges_list)
         self.court_costs_box.setCurrentText("No")
         self.statute_choice_box.setFocus()
 
@@ -246,24 +244,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         date of plea/trial,operator license number, date of birth, FRA (proof
         of insurance) in complaint, FRA in court."""
         self.case_information.case_number = self.case_number_lineEdit.text()
-<<<<<<< HEAD
         self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.plea_trial_date = (
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
-=======
-        self.case_information.defendant_first_name = (
-            self.defendant_first_name_lineEdit.text()
-        )
-        self.case_information.defendant_last_name = (
-            self.defendant_last_name_lineEdit.text()
-        )
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
             "MMMM dd, yyyy"
         )
         self.case_information.operator_license_number = (
             self.operator_license_number_lineEdit.text()
->>>>>>> main
         )
         self.case_information.defendant_date_of_birth = (
             self.defendant_birth_date.date().toString("MMMM dd, yyyy")
@@ -409,13 +396,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
-<<<<<<< HEAD
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
-=======
-            self.license_suspension_date_box.setDate(
-                QtCore.QDate.currentDate().addDays(-30)
-            )
->>>>>>> main
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
@@ -475,12 +456,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         )
         self.license_suspension_details.license_suspension_term = (
             self.term_of_suspension_box.currentText()
-        )
-        self.license_suspension_details.driving_privileges = (
-            self.driving_privileges_type_box.currentText()
-        )
-        self.license_suspension_details.driving_privileges_term = (
-            self.term_of_privileges_box.currentText()
         )
         if self.remedial_driving_class_checkBox.isChecked():
             self.license_suspension_details.remedial_driving_class_required = True
