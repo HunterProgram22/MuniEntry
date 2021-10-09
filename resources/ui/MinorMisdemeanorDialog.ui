@@ -449,7 +449,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -938,7 +938,7 @@ border-color: rgb(160, 48, 35);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1035,7 +1035,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>471</width>
-      <height>64</height>
+      <height>65</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
@@ -1136,7 +1136,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>471</width>
-      <height>64</height>
+      <height>66</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
@@ -1256,7 +1256,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>112</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1419,8 +1419,8 @@ font-weight: bold;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
+     <x>964</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>702</x>
@@ -1435,8 +1435,8 @@ font-weight: bold;</string>
    <slot>set_statute()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>451</x>
-     <y>173</y>
+     <x>445</x>
+     <y>211</y>
     </hint>
     <hint type="destinationlabel">
      <x>591</x>
@@ -1451,8 +1451,8 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
+     <x>964</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>379</x>
@@ -1467,12 +1467,12 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
+     <x>964</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
-     <x>451</x>
-     <y>173</y>
+     <x>445</x>
+     <y>211</y>
     </hint>
    </hints>
   </connection>
@@ -1483,8 +1483,8 @@ font-weight: bold;</string>
    <slot>clear()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
+     <x>964</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
      <x>721</x>
@@ -1499,12 +1499,12 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>963</x>
-     <y>169</y>
+     <x>964</x>
+     <y>170</y>
     </hint>
     <hint type="destinationlabel">
-     <x>451</x>
-     <y>212</y>
+     <x>445</x>
+     <y>171</y>
     </hint>
    </hints>
   </connection>
@@ -1515,11 +1515,11 @@ font-weight: bold;</string>
    <slot>clearEditText()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>937</x>
-     <y>165</y>
+     <x>938</x>
+     <y>166</y>
     </hint>
     <hint type="destinationlabel">
-     <x>393</x>
+     <x>389</x>
      <y>257</y>
     </hint>
    </hints>
@@ -1535,8 +1535,8 @@ font-weight: bold;</string>
      <y>33</y>
     </hint>
     <hint type="destinationlabel">
-     <x>910</x>
-     <y>618</y>
+     <x>795</x>
+     <y>574</y>
     </hint>
    </hints>
   </connection>
@@ -1551,8 +1551,8 @@ font-weight: bold;</string>
      <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>76</y>
+     <x>459</x>
+     <y>48</y>
     </hint>
    </hints>
   </connection>
@@ -1568,7 +1568,7 @@ font-weight: bold;</string>
     </hint>
     <hint type="destinationlabel">
      <x>829</x>
-     <y>76</y>
+     <y>77</y>
     </hint>
    </hints>
   </connection>
@@ -1583,8 +1583,8 @@ font-weight: bold;</string>
      <y>94</y>
     </hint>
     <hint type="destinationlabel">
-     <x>479</x>
-     <y>45</y>
+     <x>459</x>
+     <y>114</y>
     </hint>
    </hints>
   </connection>
@@ -1615,8 +1615,8 @@ font-weight: bold;</string>
      <y>759</y>
     </hint>
     <hint type="destinationlabel">
-     <x>719</x>
-     <y>799</y>
+     <x>604</x>
+     <y>755</y>
     </hint>
    </hints>
   </connection>
@@ -1627,8 +1627,8 @@ font-weight: bold;</string>
    <slot>set_offense()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>451</x>
-     <y>212</y>
+     <x>445</x>
+     <y>171</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1647,8 +1647,8 @@ font-weight: bold;</string>
      <y>96</y>
     </hint>
     <hint type="destinationlabel">
-     <x>465</x>
-     <y>98</y>
+     <x>459</x>
+     <y>82</y>
     </hint>
    </hints>
   </connection>
