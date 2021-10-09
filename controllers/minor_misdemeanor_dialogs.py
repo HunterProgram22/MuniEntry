@@ -7,7 +7,7 @@ from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QPushButton
+from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
@@ -22,19 +22,20 @@ from models.case_information import (
     CommunityControlTerms,
     CommunityServiceTerms,
 )
+from models.messages import TURNS_AT_INTERSECTIONS as TURNS_WARNING
 from controllers.criminal_dialogs import BaseCriminalDialog
-from resources.db.DatabaseCreation import create_offense_list
+from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
-CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
+CHARGES_DATABASE= DB_PATH + "\\charges.sqlite"
 
 
 def create_database_connections():
-    """The databases for the applicaiton are created upon import of the module, which is done
+    """The databases for the application are created upon import of the module, which is done
     on application startup. The connections to the databases are created, but the opening and
     closing of the databases is handled by the appropriate class dialog."""
     offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
@@ -91,9 +92,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         Ui_MinorMisdemeanorDialog. Place items in this method that can't be added
         directly in QtDesigner so that they don't need to be changed in the view file
         each time pyuic5 is run."""
-        offense_list, statute_list = create_offense_list()
+        statute_list = create_statute_list()
         self.statute_choice_box.addItems(statute_list)
-        self.offense_choice_box.addItems(offense_list)
+        self.offense_choice_box.addItems(create_offense_list())
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
@@ -112,10 +113,25 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
 
     def set_mandatory_fines(self):
+        """When called it will set the text in the field of fines_amount to a
+        specific amount required for certain offenses. Because the statute and
+        offense fields are automatically updated when one or the other changes,
+        it is not necessary to tie this to both statute and offense fields."""
         if self.offense_choice_box.currentText() == "Seatbelt - Driver":
             self.fines_amount.setText("30")
         elif self.offense_choice_box.currentText() == "Seatbelt - Passenger":
             self.fines_amount.setText("20")
+        elif self.offense_choice_box.currentText() == "Failure to Stop for School Bus":
+            self.fines_amount.setText("500")
+        elif self.offense_choice_box.currentText() == "Turns at Intersections":
+            message = QMessageBox()
+            message.setIcon(QMessageBox.Warning)
+            message.setWindowTitle("Enhanceable Offense")
+            message.setText(TURNS_WARNING)
+            message.setStandardButtons(QMessageBox.Ok)
+            message.exec()
+        else:
+            self.fines_amount.setText("")
 
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
@@ -311,13 +327,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         else:
             self.case_information.fra_in_court = None
 
-    def set_statute(self):
+    @logger.catch
+    def set_statute(self, key):
         """This method queries based on the offense and then sets the statute
-        and degree based on the offense in the database."""
+        and degree based on the offense in the database.
+
+        :key: is the string that is passed by the function each time the field
+        is changed on the view. This is the offense."""
         if self.freeform_entry_checkBox.isChecked():
             return None
-        key = self.offense_choice_box.currentText()
-        query = QSqlQuery(database_offenses)
+        query = QSqlQuery(database_statutes)
         query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -330,12 +349,15 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
-    def set_offense(self):
+    @logger.catch
+    def set_offense(self, key):
         """This method queries based on the statute and then sets the offense
-        and degree based on the statute in the database."""
+        and degree based on the statute in the database.
+
+        :key: is the string that is passed by the function each time the field
+        is changed on the view. This is the statute."""
         if self.freeform_entry_checkBox.isChecked():
             return None
-        key = self.statute_choice_box.currentText()
         query = QSqlQuery(database_statutes)
         query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
@@ -485,7 +507,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
-
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information

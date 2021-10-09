@@ -66,7 +66,7 @@ class CaseInformation(object):
             "hours_of_service": self.hours_of_service,
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
-            "judicial_officer": self.judicial_officer.last_name,
+            "judicial_officer": self.judicial_officer.first_name + " " + self.judicial_officer.last_name,
             "judicial_officer_type": self.judicial_officer.officer_type,
             "license_suspension_details": self.license_suspension_details,
         }

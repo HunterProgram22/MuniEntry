@@ -63,23 +63,12 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def set_judicial_officer(self):
         """Sets the judicial officer for the main application that will be
-        transferred to the entry that is selected.
-
-        TODO: Refactor if/else for magistrates and judges - eventually tie
-        this to the model for judicial officer so that the type is part of the
-        judicial_officer model that is instantiated.
-        """
+        transferred to the entry that is selected."""
         for key, value in self.judicial_officer_dict.items():
             if key.isChecked():
                 self.judicial_officer = value
-                """
-                if self.judicial_officer == "Bunner":
-                    self.judicial_officer_type = "Magistrate"
-                elif self.judicial_officer == "Pelanda":
-                    self.judicial_officer_type = "Magistrate"
-                else:
-                    self.judicial_officer_type = "Judge"
-                """
+                print(value)
+                print(self.judicial_officer)
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and

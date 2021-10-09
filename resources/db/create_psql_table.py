@@ -1,3 +1,14 @@
+"""This module is used to create the charges table.
+
+TODO: Right now it manually needs the rows in range changed
+when charges are added, need to update to call len or something
+similar.
+
+TODO: Also, eventually should this be called on load so charges
+could be added somewhere by anyone and the db created each time
+the application is loaded to account for new charges. May be
+a bit unnecessary - but perhaps adding charges by user to a shared
+db could be done."""
 import sys
 import pathlib
 from loguru import logger
@@ -11,7 +22,6 @@ PATH = str(pathlib.Path().absolute())
 
 EXCEL_FILE = PATH + "\Case_Types.xlsx"
 
-print(EXCEL_FILE)
 
 
 @logger.catch
@@ -19,7 +29,7 @@ def return_data_from_excel(excel_file):
     data = []
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
-    for row in range(2, 30):
+    for row in range(2, 35):
         offense = worksheet.cell(row=row, column=1)
         statute = worksheet.cell(row=row, column=2)
         degree = worksheet.cell(row=row, column=3)
@@ -27,13 +37,15 @@ def return_data_from_excel(excel_file):
         data.append(charge)
     return data
 
-
+# Connecting both an alphabetical (offense) and numerical (statute) ordered database
 con = QSqlDatabase.addDatabase("QSQLITE")
 con.setDatabaseName(PATH + "\\charges.sqlite")
+
 
 if not con.open():
     print("Unable to connect to database")
     sys.exit(1)
+
 
 # Create a query and execute it right away using .exec()
 createTableQuery = QSqlQuery()
@@ -47,8 +59,6 @@ createTableQuery.exec(
     )
     """
 )
-
-print(con.tables())
 
 insertDataQuery = QSqlQuery()
 insertDataQuery.prepare(
@@ -65,7 +75,7 @@ insertDataQuery.prepare(
 
 # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
 # https://python-forum.io/thread-11659.html
-# Sample data
+# Create two tables one for alpha sort and one for num sort - defintely a better way to do this
 data_from_table = return_data_from_excel(EXCEL_FILE)
 print(data_from_table)
 
