@@ -109,6 +109,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
         self.add_charge_Button.released.connect(self.clear_charge_fields)
+        self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
+
+    def set_mandatory_fines(self):
+        if self.offense_choice_box.currentText() == "Seatbelt - Driver":
+            self.fines_amount.setText("30")
+        elif self.offense_choice_box.currentText() == "Seatbelt - Passenger":
+            self.fines_amount.setText("20")
 
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
@@ -167,8 +174,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         not this method. This method is triggered on press of the Add Charge
         button."""
         self.criminal_charge.offense = self.offense_choice_box.currentText()
-        if self.offense_choice_box.currentText() == "Seatbelt - Driver":
-            self.fines_amount.setText("30")
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.plea = self.plea_choice_box.currentText()
