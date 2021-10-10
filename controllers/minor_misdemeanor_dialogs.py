@@ -401,7 +401,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the MinorMisdemeanorDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
-
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
@@ -422,7 +421,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         file.
         Gets the total number of charges from the charges in charges_list then
         loops through the charges_list and adds parts of each charge to the
-        view."""
+        view. CLEAN UP?"""
         index_of_charge_to_add = 0
         column = self.charges_gridLayout.columnCount() + 1
         total_charges_to_add = len(self.case_information.charges_list)
@@ -538,7 +537,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         Place items in this method that can't be added directly in QtDesigner
         so that they don't need to be changed in the view file each time pyuic5
         is run."""
-        offense_list = create_offense_list()[0]
+        offense_list = create_offense_list()
         self.original_charge_box.addItems(offense_list)
         self.amended_charge_box.addItems(offense_list)
 

@@ -141,7 +141,7 @@ font-weight: bold;</string>
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="cancel_Button">
     <property name="geometry">
      <rect>
       <x>832</x>
@@ -184,7 +184,7 @@ font-weight: bold;</string>
    <property name="midLineWidth">
     <number>0</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>12</x>
@@ -283,7 +283,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>830</x>
@@ -294,7 +294,7 @@ font-weight: bold;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="clear_fields_Button">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(160, 160, 160);</string>
        </property>
@@ -304,7 +304,7 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QPushButton" name="continueButton">
+      <widget class="QPushButton" name="continue_Button">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(160, 160, 160);</string>
        </property>
@@ -334,14 +334,14 @@ font-weight: bold;</string>
   <tabstop>motion_decision_box</tabstop>
   <tabstop>original_charge_box</tabstop>
   <tabstop>amended_charge_box</tabstop>
-  <tabstop>continueButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>pushButton_3</tabstop>
+  <tabstop>continue_Button</tabstop>
+  <tabstop>clear_fields_Button</tabstop>
+  <tabstop>cancel_Button</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>continueButton</sender>
+   <sender>continue_Button</sender>
    <signal>released()</signal>
    <receiver>AmendOffenseDialog</receiver>
    <slot>close_window()</slot>
@@ -357,7 +357,7 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_3</sender>
+   <sender>cancel_Button</sender>
    <signal>clicked()</signal>
    <receiver>AmendOffenseDialog</receiver>
    <slot>close_window()</slot>
@@ -373,7 +373,7 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>clear_fields_Button</sender>
    <signal>clicked()</signal>
    <receiver>original_charge_box</receiver>
    <slot>clearEditText()</slot>
@@ -389,7 +389,7 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>pushButton_2</sender>
+   <sender>clear_fields_Button</sender>
    <signal>clicked()</signal>
    <receiver>amended_charge_box</receiver>
    <slot>clearEditText()</slot>
@@ -405,7 +405,7 @@ font-weight: bold;</string>
    </hints>
   </connection>
   <connection>
-   <sender>continueButton</sender>
+   <sender>continue_Button</sender>
    <signal>pressed()</signal>
    <receiver>AmendOffenseDialog</receiver>
    <slot>amend_offense()</slot>

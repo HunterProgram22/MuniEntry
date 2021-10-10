@@ -54,8 +54,8 @@ class BaseCriminalDialog(QDialog):
         widgets on the view to text that was entered."""
         self.defendant_name_label.setText(
             "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name = self.case_information.defendant_first_name,
-                defendant_last_name = self.case_information.defendant_last_name
+                defendant_first_name = self.case_information.defendant.first_name,
+                defendant_last_name = self.case_information.defendant.last_name
                 )
             )
         self.case_number_label.setText(self.case_information.case_number)

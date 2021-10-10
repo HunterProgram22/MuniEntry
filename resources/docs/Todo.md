@@ -1,7 +1,5 @@
 APPLICATION TODO LIST
 * Refactor CaseInformation.py
-* Add charges to AddConditionsDialog
-* Review button names on all views to make sure no repeats - add conditions and amend offense
 * Add tests for amend offense
 * Move all signals/slots to controller
 * Check all functions with @logger.catch
