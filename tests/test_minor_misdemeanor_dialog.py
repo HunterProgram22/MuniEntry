@@ -78,18 +78,21 @@ def test_case_information_dialog(app, dialog):
     assert dialog.operator_license_number_lineEdit.text() == "TF180780"
 
 def test_offense_to_statute(app, dialog):
+    """This test is failing but actual functionality in app works - 
+    issue is with tab and autocomplete"""
     dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
-    assert dialog.statute_choice_box.currentText() == "R.C. 4511.21(B)(2)"
+    #QtBot.keyClicks(dialog.fines_amount, "0")
+    assert dialog.statute_choice_box.currentText() == "4511.21(B)(2)"
     assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
     dialog.offense_choice_box.setCurrentText("Driving Under Suspension")
-    assert dialog.statute_choice_box.currentText() == "R.C. 4510.11"
+    assert dialog.statute_choice_box.currentText() == "4510.11"
     assert dialog.degree_choice_box.currentText() == "M1"
 
 def test_statute_to_offense(app, dialog):
-    dialog.statute_choice_box.setCurrentText("R.C. 4511.21(B)(3)")
+    dialog.statute_choice_box.setCurrentText("4511.21(B)(3)")
     assert dialog.offense_choice_box.currentText() == "Speeding > 35 mph"
     assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
-    dialog.statute_choice_box.setCurrentText("R.C. 4511.33")
+    dialog.statute_choice_box.setCurrentText("4511.33")
     assert dialog.offense_choice_box.currentText() == "Driving in Marked Lanes"
     assert dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
 

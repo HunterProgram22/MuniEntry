@@ -1,7 +1,6 @@
 APPLICATION TODO LIST
 * Refactor CaseInformation.py
-* Add tests for amend offense - started
-* Fix failing MMD test on offense to statute
+* Add tests for amend offense
 * Make button name all same format "name_of_Button"
 * Move all signals/slots to controller
 * Check all functions with @logger.catch
@@ -23,5 +22,3 @@ NOTES
 * Objects need both data and behavior - otherwise us data
 structure (list, tuple, dict) or function
 * Add kite and linter atom packages
-* When doing tests make sure if changes to main resources are
-made that test/resources is also updated.
