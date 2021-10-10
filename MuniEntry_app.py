@@ -67,8 +67,6 @@ class Window(QMainWindow, Ui_MainWindow):
         for key, value in self.judicial_officer_dict.items():
             if key.isChecked():
                 self.judicial_officer = value
-                print(value)
-                print(self.judicial_officer)
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and

@@ -405,6 +405,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
+        self.modify_view()
         self.community_service = (
             minor_misdemeanor_dialog.community_service_checkBox.isChecked()
         )
@@ -415,6 +416,24 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
         )
         self.enable_condition_frames()
+
+    def modify_view(self):
+        """Modifies the view of AddConditionsDialog that is created by the UI
+        file.
+        Gets the total number of charges from the charges in charges_list then
+        loops through the charges_list and adds parts of each charge to the
+        view."""
+        index_of_charge_to_add = 0
+        column = self.charges_gridLayout.columnCount() + 1
+        total_charges_to_add = len(self.case_information.charges_list)
+        while index_of_charge_to_add < total_charges_to_add:
+            charge = vars(self.case_information.charges_list[index_of_charge_to_add])
+            if charge is not None:
+                self.charges_gridLayout.addWidget(QLabel(charge.get('offense')), 0, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get('statute')), 1, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get('finding')), 2, column)
+                column += 1
+                index_of_charge_to_add += 1
 
     def enable_condition_frames(self):
         """Enables the frames on the AddConditionsDialog dialog if the condition is checked
