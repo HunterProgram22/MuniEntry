@@ -31,7 +31,7 @@ PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
-CHARGES_DATABASE= DB_PATH + "\\charges.sqlite"
+CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
 
 def create_database_connections():
@@ -71,6 +71,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
+
     def __init__(self, judicial_officer, parent=None):
         open_databases()
         super().__init__(parent)
@@ -97,20 +98,24 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.offense_choice_box.addItems(create_offense_list())
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
 
     def connect_signals_to_slots(self):
         """The method that connects any signals to slots that are not standard
         functions in QtDesigner. Signals tied to clear() or clearEditText() and a
-        few others native to QtDesigner are connected in the view.
-
-        Have not yet moved: set_offense(), set_statute(), set_fra_in_file(),
-        set_fra_in_court(), set_pay_date()."""
+        few others native to QtDesigner are connected in the view."""
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
         self.add_charge_Button.released.connect(self.clear_charge_fields)
         self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
+        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
+        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
+        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
+        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
+        self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
 
     def set_mandatory_fines(self):
         """When called it will set the text in the field of fines_amount to a
@@ -160,7 +165,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
         in the Templates.py model module."""
-        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
+        self.template = TEMPLATE_DICT.get(
+            self.case_information.judicial_officer.last_name
+        )
 
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The case_information is passed
@@ -265,8 +272,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         date of plea/trial,operator license number, date of birth, FRA (proof
         of insurance) in complaint, FRA in court."""
         self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.defendant.first_name = (
+            self.defendant_first_name_lineEdit.text()
+        )
+        self.case_information.defendant.last_name = (
+            self.defendant_last_name_lineEdit.text()
+        )
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
             "MMMM dd, yyyy"
         )
@@ -401,6 +412,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the MinorMisdemeanorDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
+
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
@@ -428,9 +440,15 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         while index_of_charge_to_add < total_charges_to_add:
             charge = vars(self.case_information.charges_list[index_of_charge_to_add])
             if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get('offense')), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get('statute')), 1, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get('finding')), 2, column)
+                self.charges_gridLayout.addWidget(
+                    QLabel(charge.get("offense")), 0, column
+                )
+                self.charges_gridLayout.addWidget(
+                    QLabel(charge.get("statute")), 1, column
+                )
+                self.charges_gridLayout.addWidget(
+                    QLabel(charge.get("finding")), 2, column
+                )
                 column += 1
                 index_of_charge_to_add += 1
 
@@ -525,6 +543,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
+
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information
