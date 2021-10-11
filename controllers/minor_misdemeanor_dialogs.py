@@ -110,6 +110,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
         self.add_charge_Button.released.connect(self.clear_charge_fields)
+        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute)
@@ -117,18 +118,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
 
-    def set_mandatory_fines(self):
+    def set_mandatory_fines(self, offense):
         """When called it will set the text in the field of fines_amount to a
         specific amount required for certain offenses. Because the statute and
         offense fields are automatically updated when one or the other changes,
         it is not necessary to tie this to both statute and offense fields."""
-        if self.offense_choice_box.currentText() == "Seatbelt - Driver":
+        if offense == "Seatbelt - Driver":
             self.fines_amount.setText("30")
-        elif self.offense_choice_box.currentText() == "Seatbelt - Passenger":
+        elif offense == "Seatbelt - Passenger":
             self.fines_amount.setText("20")
-        elif self.offense_choice_box.currentText() == "Failure to Stop for School Bus":
+        elif offense == "Failure to Stop for School Bus":
             self.fines_amount.setText("500")
-        elif self.offense_choice_box.currentText() == "Turns at Intersections":
+        elif offense == "Turns at Intersections":
             message = QMessageBox()
             message.setIcon(QMessageBox.Warning)
             message.setWindowTitle("Enhanceable Offense")

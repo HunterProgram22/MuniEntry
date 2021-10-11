@@ -579,12 +579,6 @@ class Ui_MinorMisdemeanorDialog(object):
         self.add_conditions_Button.setObjectName("add_conditions_Button")
 
         self.retranslateUi(MinorMisdemeanorDialog)
-        self.clear_fields_charge_Button.pressed.connect(self.fines_amount.clear)
-        self.clear_fields_charge_Button.pressed.connect(self.finding_choice_box.clearEditText)
-        self.clear_fields_charge_Button.pressed.connect(self.offense_choice_box.clearEditText)
-        self.clear_fields_charge_Button.pressed.connect(self.fines_suspended.clear)
-        self.clear_fields_charge_Button.pressed.connect(self.statute_choice_box.clearEditText)
-        self.clear_fields_charge_Button.pressed.connect(self.plea_choice_box.clearEditText)
         self.cancel_Button.pressed.connect(MinorMisdemeanorDialog.reject)
         self.clear_fields_case_Button.pressed.connect(self.defendant_first_name_lineEdit.clear)
         self.clear_fields_case_Button.pressed.connect(self.operator_license_number_lineEdit.clear)

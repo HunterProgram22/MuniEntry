@@ -3,7 +3,6 @@ APPLICATION TODO LIST
 * Add tests for amend offense - started
 * Fix failing MMD test on offense to statute
 * Make button name all same format "name_of_Button"
-* Move all signals/slots to controller
 * Check all functions with @logger.catch
 
 
