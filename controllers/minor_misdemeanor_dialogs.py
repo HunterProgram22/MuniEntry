@@ -451,6 +451,10 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.license_suspension = (
             minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
         )
+        self.other_conditions = (
+            minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
+        )
+        print(self.other_conditions)
         self.enable_condition_frames()
 
     @logger.catch
@@ -483,6 +487,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         """Enables the frames on the AddConditionsDialog dialog if the condition is checked
         on the MinorMisdemeanorDialog screen. Also creates an instance of the object for
         each condition."""
+        if self.other_conditions is True:
+            print("if other conditions ran")
+            self.other_conditions_frame.setEnabled(True)
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
@@ -496,6 +503,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_date_to_complete_box.setDate(
                 QtCore.QDate.currentDate()
             )
+
+
 
     @logger.catch
     def add_conditions(self):

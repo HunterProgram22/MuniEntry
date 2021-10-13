@@ -839,7 +839,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>480</x>
       <y>11</y>
       <width>341</width>
-      <height>91</height>
+      <height>96</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_4">
@@ -889,6 +889,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="operator_license_number_lineEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>500</width>
@@ -915,6 +918,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="1">
       <widget class="QDateEdit" name="defendant_birth_date">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -944,7 +950,7 @@ border-color: rgb(160, 48, 35);</string>
       <x>10</x>
       <y>10</y>
       <width>441</width>
-      <height>95</height>
+      <height>98</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -1029,16 +1035,23 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="layoutWidget_3">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>11</x>
       <y>10</y>
       <width>471</width>
-      <height>65</height>
+      <height>64</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_2">
+    <layout class="QFormLayout" name="formLayout_2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>Pay fines and costs:</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="ability_to_pay_box">
        <property name="styleSheet">
@@ -1066,17 +1079,10 @@ border-color: rgb(160, 48, 35);</string>
        </item>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>Defendant shall pay fines and costs:</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_18">
        <property name="text">
-        <string>Balance of fines and costs due by:</string>
+        <string>Balance of fines and costs due:</string>
        </property>
       </widget>
      </item>
@@ -1130,16 +1136,23 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="layoutWidget_4">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>11</x>
       <y>10</y>
       <width>471</width>
       <height>66</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout_4">
+    <layout class="QFormLayout" name="formLayout_3">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_21">
+       <property name="text">
+        <string>FRA shown in complaint/file:</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="fra_in_file_box">
        <property name="styleSheet">
@@ -1160,13 +1173,6 @@ border-color: rgb(160, 48, 35);</string>
          <string>No</string>
         </property>
        </item>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_21">
-       <property name="text">
-        <string>FRA shown in complaint/file:</string>
-       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -1256,7 +1262,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>31</y>
       <width>461</width>
-      <height>104</height>
+      <height>101</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1303,7 +1309,7 @@ font-weight: bold;</string>
      <item row="2" column="0">
       <widget class="QCheckBox" name="community_control_checkBox">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>Community Control</string>
@@ -1337,9 +1343,9 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QCheckBox" name="checkBox_8">
+      <widget class="QCheckBox" name="other_conditions_checkBox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
