@@ -1,12 +1,13 @@
 APPLICATION TODO LIST
-* Refactor CaseInformation.py
-* Remove community service for fines if pay forthwith??
 * Add "Other" dialog
 * Add community control conditions checkboxes
 
 
-FEATURE/CHANGE LIST
+FEATURE/CHANGE LIST - for Version 0.2.0
+* Refactor CaseInformation.py
 * Move editable plea, finding, fines, etc to grid
+* Fix sizing of application based on screen size issue
+* Remove community service for fines if pay forthwith?? 
 
 
 DEPLOY TODO LIST
