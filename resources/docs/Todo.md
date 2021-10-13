@@ -1,7 +1,5 @@
 APPLICATION TODO LIST
 * Refactor CaseInformation.py
-* Make button name all same format "name_of_Button"
-* Check all functions with @logger.catch
 * Remove community service for fines if pay forthwith??
 * Add "Other" dialog
 * Add community control conditions checkboxes

@@ -33,7 +33,7 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
-
+@logger.catch
 def create_database_connections():
     """The databases for the application are created upon import of the module, which is done
     on application startup. The connections to the databases are created, but the opening and
@@ -44,7 +44,7 @@ def create_database_connections():
     statute_database_connection.setDatabaseName(CHARGES_DATABASE)
     return offense_database_connection, statute_database_connection
 
-
+@logger.catch
 def open_databases():
     """
     https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
@@ -55,7 +55,7 @@ def open_databases():
     database_offenses.open()
     database_statutes.open()
 
-
+@logger.catch
 def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
@@ -71,7 +71,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
-
+    @logger.catch
     def __init__(self, judicial_officer, parent=None):
         open_databases()
         super().__init__(parent)
@@ -88,6 +88,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             "within 90 days": 90,
         }
 
+    @logger.catch
     def modify_view(self):
         """The modify view method updates the view that is created on init from the
         Ui_MinorMisdemeanorDialog. Place items in this method that can't be added
@@ -101,6 +102,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
 
+    @logger.catch
     def connect_signals_to_slots(self):
         """The method that connects any signals to slots that are not standard
         functions in QtDesigner. Signals tied to clear() or clearEditText() and a
@@ -118,6 +120,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
 
+    @logger.catch
     def set_mandatory_fines(self, offense):
         """When called it will set the text in the field of fines_amount to a
         specific amount required for certain offenses. Because the statute and
@@ -139,6 +142,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         else:
             self.fines_amount.setText("")
 
+    @logger.catch
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the information is
@@ -147,22 +151,29 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.create_entry()
         self.close_event()
 
+    @logger.catch
     def add_charge_process(self):
         """The order of functions that are called when the add_charge_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
         updated before the charge is added and the data cleared from the fields."""
         self.criminal_charge = CriminalCharge()
         self.add_charge()
+        self.clear_charge_fields()
 
+    @logger.catch
     def clear_charge_fields(self):
-        """Does as it says and clears the fields that are used for adding a charge."""
-        self.finding_choice_box.clearEditText()
-        self.offense_choice_box.clearEditText()
-        self.plea_choice_box.clearEditText()
+        """Clears the fields that are used for adding a charge. The plea_choice_box and
+        finding_choice_box use the setCurrentText method because those boxes are not
+        editable. The statute_choice_box and offense_choice_box used the clearEditText
+        method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
+        self.plea_choice_box.setCurrentText("")
+        self.finding_choice_box.setCurrentText("")
         self.fines_suspended.clear()
         self.fines_amount.clear()
 
+    @logger.catch
     def set_template(self):
         """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
         in the Templates.py model module."""
@@ -170,12 +181,14 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.case_information.judicial_officer.last_name
         )
 
+    @logger.catch
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The case_information is passed
         to the dialog class in order to populate the case information banner."""
         self.update_case_information()
         AmendOffenseDialog(self.case_information).exec()
 
+    @logger.catch
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
         instance of the MinorMisdemeanorDialog class (self) as an argument
@@ -183,12 +196,14 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         MinorMisdemeanorDialog when working in the AddConditionsDialog."""
         AddConditionsDialog(self).exec()
 
+    @logger.catch
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
         close_databases()
         self.close_window()
 
+    @logger.catch
     def add_charge(self):
         """Creates a criminal charge object and adds the data in the view to
         the object. The criminal charge is then added to the case information
@@ -213,6 +228,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.court_costs_box.setCurrentText("No")
         self.statute_choice_box.setFocus()
 
+    @logger.catch
     def add_charge_to_view(self):
         """Adds the charge that was added through add_charge method to the
         view/GUI. The first row=0 because of python zero-based indexing. The
@@ -237,9 +253,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete_button = QPushButton("Delete")
         self.delete_button_list.append(delete_button)
         delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
-        delete_button.clicked.connect(self.delete_charge)
+        delete_button.pressed.connect(self.delete_charge)
         self.charges_gridLayout.addWidget(delete_button, row, column)
 
+    @logger.catch
     def delete_charge(self):
         """Deletes the offense from the case_information.charges list. Then
         decrements the total charges by one so that other functions using the
@@ -248,7 +265,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         del self.case_information.charges_list[index]
         del self.delete_button_list[index]
         self.delete_charge_from_view()
+        self.statute_choice_box.setFocus()
 
+    @logger.catch
     def delete_charge_from_view(self):
         """Uses the delete_button that is indexed to the column to delete the
         QLabels for the charge."""
@@ -296,6 +315,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         )
         self.check_add_conditions()
 
+    @logger.catch
     def check_add_conditions(self):
         """Checks to see what conditions in the Add Conditions box are checked and then
         transfers the information from the conditions to case_information model if the
@@ -318,23 +338,25 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 True
             )
 
-    def set_fra_in_file(self):
+    @logger.catch
+    def set_fra_in_file(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in the complaint of file."""
-        if self.fra_in_file_box.currentText() == "Yes":
+        if current_text == "Yes":
             self.case_information.fra_in_file = True
             self.fra_in_court_box.setCurrentText("No")
-        elif self.fra_in_file_box.currentText() == "No":
+        elif current_text == "No":
             self.case_information.fra_in_file = False
         else:
             self.case_information.fra_in_file = None
 
-    def set_fra_in_court(self):
+    @logger.catch
+    def set_fra_in_court(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in court."""
-        if self.fra_in_court_box.currentText() == "Yes":
+        if current_text == "Yes":
             self.case_information.fra_in_court = True
-        elif self.fra_in_court_box.currentText() == "No":
+        elif current_text == "No":
             self.case_information.fra_in_court = False
         else:
             self.case_information.fra_in_court = None
@@ -383,6 +405,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
+    @logger.catch
     def set_pay_date(self):
         """Sets the balance of fines and costs to a future date (or today)
         depending on the selection of ability_to_pay_box. The inner function
@@ -414,6 +437,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     the MinorMisdemeanorDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
 
+    @logger.catch
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
@@ -429,6 +453,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         )
         self.enable_condition_frames()
 
+    @logger.catch
     def modify_view(self):
         """Modifies the view of AddConditionsDialog that is created by the UI
         file.
@@ -453,6 +478,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
                 column += 1
                 index_of_charge_to_add += 1
 
+    @logger.catch
     def enable_condition_frames(self):
         """Enables the frames on the AddConditionsDialog dialog if the condition is checked
         on the MinorMisdemeanorDialog screen. Also creates an instance of the object for
@@ -471,6 +497,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
                 QtCore.QDate.currentDate()
             )
 
+    @logger.catch
     def add_conditions(self):
         """The method is connected to the pressed() signal of continue_Button on the
         Add Conditions screen."""
@@ -481,6 +508,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.license_suspension is True:
             self.add_license_suspension_details()
 
+    @logger.catch
     def add_community_control_terms(self):
         """The method adds the data entered to the CommunityControlTerms object
         that is created when the dialog is initialized. Then the data is transferred
@@ -493,6 +521,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         )
         self.case_information.community_control_terms = self.community_control_terms
 
+    @logger.catch
     def add_community_service_terms(self):
         """The method adds the data entered to the CommunityServiceTerms object
         that is created when the dialog is initialized. Then the data is transferred
@@ -508,6 +537,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         )
         self.case_information.community_service_terms = self.community_service_terms
 
+    @logger.catch
     def add_license_suspension_details(self):
         """The method adds the data entered to the LicenseSuspension object
         that is created when the dialog is initialized. Then the data is transferred
@@ -529,6 +559,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details
         )
 
+    @logger.catch
     def set_service_date(self):
         """Sets the community_service_date_to_complete_box based on the number
         of days chosen in the community_service_date_to_complete_box."""
@@ -544,7 +575,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
-
+    @logger.catch
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
         self.case_information = case_information
@@ -552,6 +583,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.set_case_information_banner()
         self.modify_view()
 
+    @logger.catch
     def modify_view(self):
         """The modify view method updates the view that is created on init.
         Place items in this method that can't be added directly in QtDesigner
@@ -561,6 +593,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.original_charge_box.addItems(offense_list)
         self.amended_charge_box.addItems(offense_list)
 
+    @logger.catch
     def amend_offense(self):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the case_information object to the AmendOffenseDetails
