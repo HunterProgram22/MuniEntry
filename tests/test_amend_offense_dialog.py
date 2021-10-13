@@ -51,13 +51,26 @@ def dialog(app, qtbot):
 
 
 """TESTING"""
-def test_amend_offense(qtbot, dialog):
+def test_amend_offense_title(qtbot, dialog):
     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
     dialog = start_amend_offense_dialog(qtbot, dialog)
     dialog.windowTitle() == "Amend Charge"
 
-#def test_license_suspension_conditions_checked(dialog, qtbot):
-#    QtBot.mouseClick(dialog.license_suspension_checkBox, QtCore.Qt.LeftButton)
-#    dialog = start_add_conditions_dialog(qtbot, dialog)
-#    assert dialog.license_suspension_frame.isEnabled() == True
-#    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
+def test_case_information_dialog(qtbot, dialog):
+    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    dialog = start_amend_offense_dialog(qtbot, dialog)
+    assert dialog.case_number_label.text() == "21TRC1234"
+    assert dialog.defendant_name_label.text() == "State of Ohio v. John Smith"
+    assert dialog.defendant_attorney_name_label.text() == "Attorney: None"
+
+def test_amend_offense_granted(qtbot, dialog):
+    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    dialog = start_amend_offense_dialog(qtbot, dialog)
+    dialog.motion_decision_box.setCurrentText("Granted")
+    assert dialog.motion_decision_box.currentText() == "Granted"
+
+def test_amend_offense_denied(qtbot, dialog):
+    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    dialog = start_amend_offense_dialog(qtbot, dialog)
+    dialog.motion_decision_box.setCurrentText("Denied")
+    assert dialog.motion_decision_box.currentText() == "Denied"

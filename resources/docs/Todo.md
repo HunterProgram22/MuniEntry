@@ -1,9 +1,11 @@
 APPLICATION TODO LIST
 * Refactor CaseInformation.py
-* Add tests for amend offense - started
 * Fix failing MMD test on offense to statute
 * Make button name all same format "name_of_Button"
 * Check all functions with @logger.catch
+* Remove community service for fines if pay forthwith??
+* Add "Other" dialog
+* Add community control conditions checkboxes
 
 
 FEATURE/CHANGE LIST
