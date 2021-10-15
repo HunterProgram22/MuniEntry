@@ -452,12 +452,12 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.license_suspension = (
             minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
         )
-        # self.community_control = (
-        #    minor_misdemeanor_dialog.community_control_checkBox.isChecked()
-        # )
-        # self.other_conditions = (
-        # minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
-        # )
+        self.community_control = (
+            minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        )
+        self.other_conditions = (
+            minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
+        )
         self.enable_condition_frames()
 
     @logger.catch
@@ -500,11 +500,11 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_date_to_complete_box.setDate(
                 QtCore.QDate.currentDate()
             )
-        # if self.other_conditions is True:
-        #    self.other_conditions_frame.setEnabled(True)
-        # if self.community_control is True:
-        #    self.community_control_frame.setEnabled(True)
-        #    self.community_control_terms = CommunityControlTerms()
+        if self.other_conditions is True:
+            self.other_conditions_frame.setEnabled(True)
+        if self.community_control is True:
+            self.community_control_frame.setEnabled(True)
+            self.community_control_terms = CommunityControlTerms()
 
     @logger.catch
     def add_conditions(self):
