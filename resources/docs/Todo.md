@@ -1,13 +1,14 @@
-APPLICATION TODO LIST
-* Add "Other" dialog
-* Add community control conditions checkboxes
+APPLICATION TODO LIST for version 0.1.0
+* DUS should default to UCM not M1?
 
 
 FEATURE/CHANGE LIST - for Version 0.2.0
 * Refactor CaseInformation.py
 * Move editable plea, finding, fines, etc to grid
 * Fix sizing of application based on screen size issue
-* Remove community service for fines if pay forthwith?? 
+* Remove community service for fines if pay forthwith
+* Add "Other" dialog
+* Add community control conditions checkboxes
 
 
 DEPLOY TODO LIST

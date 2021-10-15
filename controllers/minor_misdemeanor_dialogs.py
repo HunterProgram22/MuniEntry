@@ -33,6 +33,7 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
 
+
 @logger.catch
 def create_database_connections():
     """The databases for the application are created upon import of the module, which is done
@@ -44,6 +45,7 @@ def create_database_connections():
     statute_database_connection.setDatabaseName(CHARGES_DATABASE)
     return offense_database_connection, statute_database_connection
 
+
 @logger.catch
 def open_databases():
     """
@@ -54,6 +56,7 @@ def open_databases():
     """
     database_offenses.open()
     database_statutes.open()
+
 
 @logger.catch
 def close_databases():
@@ -71,6 +74,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
+
     @logger.catch
     def __init__(self, judicial_officer, parent=None):
         open_databases()
@@ -132,13 +136,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.fines_amount.setText("20")
         elif offense == "Failure to Stop for School Bus":
             self.fines_amount.setText("500")
-        elif offense == "Turns at Intersections":
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Enhanceable Offense")
-            message.setText(TURNS_WARNING)
-            message.setStandardButtons(QMessageBox.Ok)
-            message.exec()
+        # elif offense == "Turns at Intersections":
+        #    message = QMessageBox()
+        #    message.setIcon(QMessageBox.Warning)
+        #    message.setWindowTitle("Enhanceable Offense")
+        #    message.setText(TURNS_WARNING)
+        #    message.setStandardButtons(QMessageBox.Ok)
+        #    message.exec()
         else:
             self.fines_amount.setText("")
 
@@ -406,13 +410,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 break
 
     @logger.catch
-    def set_pay_date(self):
+    def set_pay_date(self, time_to_pay_text):
         """Sets the balance of fines and costs to a future date (or today)
         depending on the selection of ability_to_pay_box. The inner function
         will move the actual date to the next tuesday per court procedure for
         show cause hearings being on Tuesday. Would need to be modified if the
         policy changed."""
-        days_to_add = self.pay_date_dict[self.ability_to_pay_box.currentText()]
+        days_to_add = self.pay_date_dict[time_to_pay_text]
         future_date = date.today() + timedelta(days_to_add)
         today = date.today()
 
@@ -445,12 +449,15 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.community_service = (
             minor_misdemeanor_dialog.community_service_checkBox.isChecked()
         )
-        self.community_control = (
-            minor_misdemeanor_dialog.community_control_checkBox.isChecked()
-        )
         self.license_suspension = (
             minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
         )
+        # self.community_control = (
+        #    minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+        # )
+        # self.other_conditions = (
+        # minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
+        # )
         self.enable_condition_frames()
 
     @logger.catch
@@ -487,15 +494,17 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
-        if self.community_control is True:
-            self.community_control_frame.setEnabled(True)
-            self.community_control_terms = CommunityControlTerms()
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
             self.community_service_terms = CommunityServiceTerms()
             self.community_service_date_to_complete_box.setDate(
                 QtCore.QDate.currentDate()
             )
+        # if self.other_conditions is True:
+        #    self.other_conditions_frame.setEnabled(True)
+        # if self.community_control is True:
+        #    self.community_control_frame.setEnabled(True)
+        #    self.community_control_terms = CommunityControlTerms()
 
     @logger.catch
     def add_conditions(self):
@@ -507,6 +516,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.add_community_control_terms()
         if self.license_suspension is True:
             self.add_license_suspension_details()
+        if self.other_conditions is True:
+            self.add_other_condition_details()
 
     @logger.catch
     def add_community_control_terms(self):
@@ -559,13 +570,22 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details
         )
 
+    # @logger.catch
+    # def add_other_condition_details(self):
+    #    self.case_information.other_conditions = (
+    #        self.other_conditions_plainTextEdit.toPlainText()
+    #    )
+
     @logger.catch
-    def set_service_date(self):
+    def set_service_date(self, days_to_complete):
         """Sets the community_service_date_to_complete_box based on the number
         of days chosen in the community_service_date_to_complete_box."""
-        days_added = int(self.community_service_days_to_complete_box.currentText())
+        days_to_complete = int(
+            self.community_service_days_to_complete_box.currentText()
+        )
+        print(days_to_complete)
         self.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_added)
+            QDate.currentDate().addDays(days_to_complete)
         )
 
 
@@ -575,6 +595,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
+
     @logger.catch
     def __init__(self, case_information, parent=None):
         super().__init__(parent)

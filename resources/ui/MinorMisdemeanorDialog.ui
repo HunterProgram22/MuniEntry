@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1003</width>
+    <width>1000</width>
     <height>800</height>
    </rect>
   </property>
@@ -889,6 +889,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="operator_license_number_lineEdit">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="maximumSize">
         <size>
          <width>500</width>
@@ -915,6 +918,9 @@ border-color: rgb(160, 48, 35);</string>
      </item>
      <item row="2" column="1">
       <widget class="QDateEdit" name="defendant_birth_date">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
        </property>
@@ -1303,7 +1309,7 @@ font-weight: bold;</string>
      <item row="2" column="0">
       <widget class="QCheckBox" name="community_control_checkBox">
        <property name="enabled">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string>Community Control</string>
@@ -1337,9 +1343,9 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QCheckBox" name="checkBox_8">
+      <widget class="QCheckBox" name="other_conditions_checkBox">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
