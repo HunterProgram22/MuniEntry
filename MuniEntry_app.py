@@ -57,7 +57,11 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_judicial_officer_buttons(self):
         """Connects the radio buttons for each judicial officer to their
-        JudicialOfficer object."""
+        JudicialOfficer object.
+
+        'Clicked' is used instead of 'pressed' for connecting the
+        judicial_officer buttons because 'pressed' was causing an
+        inconsistent bug."""
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
@@ -85,11 +89,6 @@ class Window(QMainWindow, Ui_MainWindow):
         Launches the dialog that is connected to each button.
         The judicial_officer argument must be passed to insure the creation
         of the proper template features.
-
-        The button_clicked is the bool that is fired when a button is clicked
-        and it is passed, but not used. It can be removed and the error is
-        ignored but better to account for the variable - maybe rethink this in
-        the future.
         """
         try:
             if self.judicial_officer is None:

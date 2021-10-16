@@ -15,7 +15,7 @@ class Ui_MinorMisdemeanorDialog(object):
     def setupUi(self, MinorMisdemeanorDialog):
         MinorMisdemeanorDialog.setObjectName("MinorMisdemeanorDialog")
         MinorMisdemeanorDialog.setWindowModality(QtCore.Qt.NonModal)
-        MinorMisdemeanorDialog.resize(1003, 800)
+        MinorMisdemeanorDialog.resize(1000, 800)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -570,7 +570,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.checkBox_7.setObjectName("checkBox_7")
         self.gridLayout_5.addWidget(self.checkBox_7, 3, 0, 1, 1)
         self.other_conditions_checkBox = QtWidgets.QCheckBox(self.layoutWidget5)
-        self.other_conditions_checkBox.setEnabled(True)
+        self.other_conditions_checkBox.setEnabled(False)
         self.other_conditions_checkBox.setFocusPolicy(QtCore.Qt.NoFocus)
         self.other_conditions_checkBox.setObjectName("other_conditions_checkBox")
         self.gridLayout_5.addWidget(self.other_conditions_checkBox, 3, 1, 1, 1)

@@ -1,6 +1,7 @@
 """Module containing all data structures for everything at the moment."""
 from models.party_types import JudicialOfficer, Defendant
 
+
 class CaseInformation(object):
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""
@@ -12,7 +13,7 @@ class CaseInformation(object):
         self.plaintiff_attorney_name = None
         self.waived_counsel = False
         self.defendant = Defendant()
-        #self.defendant_first_name = None
+        # self.defendant_first_name = None
         self.defendant_attorney_name = None
         self.defendant_date_of_birth = None
         self.operator_license_number = None
@@ -22,9 +23,9 @@ class CaseInformation(object):
         self.charges_list = []
         self.community_control_terms = None
         self.ovi_details = None
-        self.ability_to_pay_details = None # Use Class
-        self.ability_to_pay_time = None # Use Class
-        self.balance_due_date = None # Use Class
+        self.ability_to_pay_details = None  # Use Class
+        self.ability_to_pay_time = None  # Use Class
+        self.balance_due_date = None  # Use Class
         self.amend_offense_details = None
         self.is_citizen = False
         self.understood_plea = True
@@ -35,10 +36,10 @@ class CaseInformation(object):
         self.days_to_complete_service = None
         self.due_date_for_service = None
         self.license_suspension_details = None
+        # self.other_conditions = None
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
-
 
     def get_case_information(self):
         """Returns a dictionary with all of case information required
@@ -66,7 +67,9 @@ class CaseInformation(object):
             "hours_of_service": self.hours_of_service,
             "days_to_complete_service": self.days_to_complete_service,
             "due_date_for_service": self.due_date_for_service,
-            "judicial_officer": self.judicial_officer.first_name + " " + self.judicial_officer.last_name,
+            "judicial_officer": self.judicial_officer.first_name
+            + " "
+            + self.judicial_officer.last_name,
             "judicial_officer_type": self.judicial_officer.officer_type,
             "license_suspension_details": self.license_suspension_details,
         }

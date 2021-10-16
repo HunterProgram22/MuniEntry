@@ -186,7 +186,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_4, 1, 2, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 27))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -233,7 +233,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.1.0 - alpha"))
         self.FinalJudgmentEntryButton_6.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_7.setText(_translate("MainWindow", "Entry"))
         self.MinorMisdemeanorTrafficButton_2.setText(_translate("MainWindow", "Entry"))
