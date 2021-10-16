@@ -324,12 +324,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def add_dispositions_and_fines(self):
         total_charges_index = len(self.case_information.charges_list) - 1
+        print(self.charges_gridLayout.columnCount())
+        column = 2
         while total_charges_index >= 0:
-            self.case_information.charges_list[total_charges_index].plea = "Guilty"
+            print(type(self.charges_gridLayout.itemAtPosition(4, column)))
+            self.case_information.charges_list[total_charges_index].plea = self.charges_gridLayout.itemAtPosition(4, column).currentText()
             self.case_information.charges_list[total_charges_index].finding = "Guilty"
             self.case_information.charges_list[total_charges_index].fines_amount = "50"
             self.case_information.charges_list[total_charges_index].fines_suspended = "0"
             total_charges_index -= 1
+            column += 2
 
 
     @logger.catch

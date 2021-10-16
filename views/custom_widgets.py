@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEd
 
 class PleaComboBox(QComboBox):
     def __init__(self, parent=None):
-        super().__init__()
+        super(QComboBox, self).__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -19,10 +19,13 @@ class PleaComboBox(QComboBox):
         self.addItem("Not Guilty")
         self.addItem("Dismissed")
 
+    def currentText(self):
+        print("this method works")
+
 
 class FindingComboBox(QComboBox):
     def __init__(self, parent=None):
-        super().__init__()
+        super(QComboBox, self).__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -40,7 +43,7 @@ class FindingComboBox(QComboBox):
 
 class FineLineEdit(QLineEdit):
     def __init__(self, parent=None):
-        super().__init__()
+        super(QLineEdit, self).__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -51,5 +54,5 @@ class FineLineEdit(QLineEdit):
 
 class FineSuspendedLineEdit(FineLineEdit):
     def __init__(self, parent=None):
-        super().__init__()
+        super(FineLineEdit, self).__init__(parent)
         self.setObjectName("fines_suspended")
