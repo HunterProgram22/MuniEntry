@@ -577,6 +577,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_other_condition_details(self):
+        """The method allows for adding other conditions based on free form text
+        entry. The text will transfer directly to the entry and there is no
+        separate object created, it is added as an attribute of case information."""
         self.case_information.other_conditions = (
             self.other_conditions_plainTextEdit.toPlainText()
         )
