@@ -10,7 +10,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from views.custom_widgets import PleaComboBox, FindingComboBox
+from views.custom_widgets import PleaComboBox, FindingComboBox, FineLineEdit, FineSuspendedLineEdit
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -115,8 +115,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         # self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
-        self.add_charge_Button.pressed.connect(self.add_charge_process)
-        self.add_charge_Button.released.connect(self.clear_charge_fields)
+        self.add_charge_Button.clicked.connect(self.add_charge_process)
+        # self.add_charge_Button.released.connect(self.clear_charge_fields)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         # self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
@@ -150,7 +150,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.close_event()
 
     @logger.catch
-    def add_charge_process(self):
+    def add_charge_process(self, bool):
         """The order of functions that are called when the add_charge_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
         updated before the charge is added and the data cleared from the fields."""
@@ -252,11 +252,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row +=1
         self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
         row +=1
-        self.charges_gridLayout.addWidget(QLineEdit(), row, column)
+        self.charges_gridLayout.addWidget(FineLineEdit(), row, column)
         row +=1
-        self.charges_gridLayout.addWidget(QLineEdit(), row, column)
-        row +=1
-        self.charges_gridLayout.addWidget(QComboBox(), row, column)
+        self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
         row +=1
         delete_button = QPushButton("Delete")
         self.delete_button_list.append(delete_button)
@@ -321,7 +319,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.balance_due_date = self.balance_due_date.date().toString(
             "MMMM dd, yyyy"
         )
+        self.add_dispositions_and_fines()
         self.check_add_conditions()
+
+    def add_dispositions_and_fines(self):
+        total_charges_index = len(self.case_information.charges_list) - 1
+        while total_charges_index >= 0:
+            self.case_information.charges_list[total_charges_index].plea = "Guilty"
+            self.case_information.charges_list[total_charges_index].finding = "Guilty"
+            self.case_information.charges_list[total_charges_index].fines_amount = "50"
+            self.case_information.charges_list[total_charges_index].fines_suspended = "0"
+            total_charges_index -= 1
+
 
     @logger.catch
     def check_add_conditions(self):
