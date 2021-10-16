@@ -136,13 +136,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.fines_amount.setText("20")
         elif offense == "Failure to Stop for School Bus":
             self.fines_amount.setText("500")
-        # elif offense == "Turns at Intersections":
-        #    message = QMessageBox()
-        #    message.setIcon(QMessageBox.Warning)
-        #    message.setWindowTitle("Enhanceable Offense")
-        #    message.setText(TURNS_WARNING)
-        #    message.setStandardButtons(QMessageBox.Ok)
-        #    message.exec()
         else:
             self.fines_amount.setText("")
 
