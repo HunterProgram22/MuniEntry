@@ -36,7 +36,7 @@ class CaseInformation(object):
         self.days_to_complete_service = None
         self.due_date_for_service = None
         self.license_suspension_details = None
-        # self.other_conditions = None
+        self.other_conditions = None
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
@@ -72,6 +72,7 @@ class CaseInformation(object):
             + self.judicial_officer.last_name,
             "judicial_officer_type": self.judicial_officer.officer_type,
             "license_suspension_details": self.license_suspension_details,
+            "other_conditions": self.other_conditions,
         }
         return self.formatted_case_information
 

@@ -1035,7 +1035,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -1136,7 +1136,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>

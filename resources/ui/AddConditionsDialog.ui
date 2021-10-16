@@ -658,28 +658,6 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="createEntryButton_3">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>80</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(160, 160, 160);</string>
-    </property>
-    <property name="text">
-     <string>Add CC Terms</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -754,76 +732,6 @@ font-weight: bold;</string>
       </widget>
      </item>
     </layout>
-   </widget>
-  </widget>
-  <widget class="QFrame" name="other_conditions_frame">
-   <property name="enabled">
-    <bool>true</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>490</y>
-     <width>981</width>
-     <height>131</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(240, 240, 240);</string>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::Box</enum>
-   </property>
-   <property name="frameShadow">
-    <enum>QFrame::Plain</enum>
-   </property>
-   <property name="lineWidth">
-    <number>2</number>
-   </property>
-   <widget class="QLabel" name="label_28">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>961</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>true</underline>
-     </font>
-    </property>
-    <property name="text">
-     <string>Other Conditions</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QTextEdit" name="other_conditions_textEdit">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>941</width>
-      <height>79</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
-    </property>
    </widget>
   </widget>
  </widget>

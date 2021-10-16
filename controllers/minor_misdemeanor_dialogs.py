@@ -461,7 +461,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.other_conditions = (
             minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
         )
-        print(self.other_conditions)
         self.enable_condition_frames()
 
     @logger.catch
@@ -495,7 +494,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         on the MinorMisdemeanorDialog screen. Also creates an instance of the object for
         each condition."""
         if self.other_conditions is True:
-            print("if other conditions ran")
             self.other_conditions_frame.setEnabled(True)
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
@@ -512,8 +510,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
-
-
 
     @logger.catch
     def add_conditions(self):
@@ -579,11 +575,13 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_details
         )
 
-    # @logger.catch
-    # def add_other_condition_details(self):
-    #    self.case_information.other_conditions = (
-    #        self.other_conditions_plainTextEdit.toPlainText()
-    #    )
+    @logger.catch
+    def add_other_condition_details(self):
+        self.case_information.other_conditions = (
+            self.other_conditions_plainTextEdit.toPlainText()
+        )
+        if self.case_information.other_conditions == "":
+            self.case_information.other_conditions = None
 
     @logger.catch
     def set_service_date(self, days_to_complete):
@@ -592,7 +590,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         days_to_complete = int(
             self.community_service_days_to_complete_box.currentText()
         )
-        print(days_to_complete)
         self.community_service_date_to_complete_box.setDate(
             QDate.currentDate().addDays(days_to_complete)
         )
@@ -604,7 +601,6 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     order to populate the case information banner.
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
-
     @logger.catch
     def __init__(self, case_information, parent=None):
         super().__init__(parent)
