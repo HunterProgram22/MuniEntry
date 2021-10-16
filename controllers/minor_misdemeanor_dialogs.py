@@ -7,9 +7,10 @@ from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox
+from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
+from views.custom_widgets import PleaComboBox, FindingComboBox
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -113,31 +114,31 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         few others native to QtDesigner are connected in the view."""
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
-        self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
+        # self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
         self.add_charge_Button.released.connect(self.clear_charge_fields)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
+        # self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute)
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
 
-    @logger.catch
-    def set_mandatory_fines(self, offense):
-        """When called it will set the text in the field of fines_amount to a
-        specific amount required for certain offenses. Because the statute and
-        offense fields are automatically updated when one or the other changes,
-        it is not necessary to tie this to both statute and offense fields."""
-        if offense == "Seatbelt - Driver":
-            self.fines_amount.setText("30")
-        elif offense == "Seatbelt - Passenger":
-            self.fines_amount.setText("20")
-        elif offense == "Failure to Stop for School Bus":
-            self.fines_amount.setText("500")
-        else:
-            self.fines_amount.setText("")
+    # @logger.catch
+    # def set_mandatory_fines(self, offense):
+    #     """When called it will set the text in the field of fines_amount to a
+    #     specific amount required for certain offenses. Because the statute and
+    #     offense fields are automatically updated when one or the other changes,
+    #     it is not necessary to tie this to both statute and offense fields."""
+    #     if offense == "Seatbelt - Driver":
+    #         self.fines_amount.setText("30")
+    #     elif offense == "Seatbelt - Passenger":
+    #         self.fines_amount.setText("20")
+    #     elif offense == "Failure to Stop for School Bus":
+    #         self.fines_amount.setText("500")
+    #     else:
+    #         self.fines_amount.setText("")
 
     @logger.catch
     def create_entry_process(self):
@@ -165,10 +166,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
-        self.plea_choice_box.setCurrentText("")
-        self.finding_choice_box.setCurrentText("")
-        self.fines_suspended.clear()
-        self.fines_amount.clear()
+        # self.plea_choice_box.setCurrentText("")
+        # self.finding_choice_box.setCurrentText("")
+        # self.fines_suspended.clear()
+        # self.fines_amount.clear()
 
     @logger.catch
     def set_template(self):
@@ -212,17 +213,17 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
-        self.criminal_charge.plea = self.plea_choice_box.currentText()
-        self.criminal_charge.finding = self.finding_choice_box.currentText()
-        self.criminal_charge.fines_amount = self.fines_amount.text()
-        if self.fines_suspended.text() == "":
-            self.criminal_charge.fines_suspended = "0"
-        else:
-            self.criminal_charge.fines_suspended = self.fines_suspended.text()
-        self.criminal_charge.court_costs = self.court_costs_box.currentText()
+        # self.criminal_charge.plea = self.plea_choice_box.currentText()
+        # self.criminal_charge.finding = self.finding_choice_box.currentText()
+        # self.criminal_charge.fines_amount = self.fines_amount.text()
+        # if self.fines_suspended.text() == "":
+        #     self.criminal_charge.fines_suspended = "0"
+        # else:
+        #     self.criminal_charge.fines_suspended = self.fines_suspended.text()
+        # self.criminal_charge.court_costs = self.court_costs_box.currentText()
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
-        self.court_costs_box.setCurrentText("No")
+        # self.court_costs_box.setCurrentText("No")
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -247,6 +248,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             if value is not None:
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
                 row += 1
+        self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(QLineEdit(), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(QLineEdit(), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(QComboBox(), row, column)
+        row +=1
         delete_button = QPushButton("Delete")
         self.delete_button_list.append(delete_button)
         delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
