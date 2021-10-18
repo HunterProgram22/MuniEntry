@@ -114,8 +114,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
-        self.add_charge_Button.pressed.connect(self.add_charge_process)
-        self.add_charge_Button.released.connect(self.clear_charge_fields)
+        self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
@@ -136,13 +135,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.fines_amount.setText("20")
         elif offense == "Failure to Stop for School Bus":
             self.fines_amount.setText("500")
-        # elif offense == "Turns at Intersections":
-        #    message = QMessageBox()
-        #    message.setIcon(QMessageBox.Warning)
-        #    message.setWindowTitle("Enhanceable Offense")
-        #    message.setText(TURNS_WARNING)
-        #    message.setStandardButtons(QMessageBox.Ok)
-        #    message.exec()
         else:
             self.fines_amount.setText("")
 
@@ -156,10 +148,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.close_event()
 
     @logger.catch
-    def add_charge_process(self):
-        """The order of functions that are called when the add_charge_Button is pressed()
+    def add_charge_process(self, bool):
+        """The order of functions that are called when the add_charge_Button is clicked()
         on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
-        updated before the charge is added and the data cleared from the fields."""
+        updated before the charge is added and the data cleared from the fields.
+
+        The bool is passed as an argument through clicked() but not used."""
         self.criminal_charge = CriminalCharge()
         self.add_charge()
         self.clear_charge_fields()

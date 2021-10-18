@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.1.0 - alpha</string>
+   <string>MuniEntry - ver 0.1.0 - beta</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -285,74 +285,6 @@ font-weight: bold;</string>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>21</x>
-      <y>21</y>
-      <width>961</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="font">
-        <font>
-         <family>Palatino Linotype</family>
-         <pointsize>11</pointsize>
-         <weight>75</weight>
-         <italic>false</italic>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Judicial Officer:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QRadioButton" name="hemmeter_radioButton">
-       <property name="text">
-        <string>Judge Hemmeter</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QRadioButton" name="rohrer_radioButton">
-       <property name="text">
-        <string>Judge Rohrer</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QRadioButton" name="pelanda_radioButton">
-       <property name="text">
-        <string>Magistrate Pelanda</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QRadioButton" name="bunner_radioButton">
-       <property name="text">
-        <string>Magistrate Bunner</string>
-       </property>
-       <attribute name="buttonGroup">
-        <string notr="true">buttonGroup</string>
-       </attribute>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
       <x>20</x>
       <y>140</y>
       <width>961</width>
@@ -436,6 +368,74 @@ font-weight: bold;</string>
        <property name="text">
         <string>Entry</string>
        </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>20</y>
+      <width>801</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Palatino Linotype</family>
+         <pointsize>11</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Judicial Officer:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QRadioButton" name="hemmeter_radioButton">
+       <property name="text">
+        <string>Judge Hemmeter</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QRadioButton" name="rohrer_radioButton">
+       <property name="text">
+        <string>Judge Rohrer</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QRadioButton" name="pelanda_radioButton">
+       <property name="text">
+        <string>Magistrate Pelanda</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QRadioButton" name="bunner_radioButton">
+       <property name="text">
+        <string>Magistrate Bunner</string>
+       </property>
+       <attribute name="buttonGroup">
+        <string notr="true">buttonGroup</string>
+       </attribute>
       </widget>
      </item>
     </layout>
