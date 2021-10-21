@@ -19,9 +19,6 @@ class PleaComboBox(QComboBox):
         self.addItem("Not Guilty")
         self.addItem("Dismissed")
 
-    def currentText(self):
-        print("this method works")
-
 
 class FindingComboBox(QComboBox):
     def __init__(self, parent=None):

@@ -323,15 +323,15 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.check_add_conditions()
 
     def add_dispositions_and_fines(self):
+        """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
+        Columns start at 0 for labels and 2 for first entry then 4 etc"""
         total_charges_index = len(self.case_information.charges_list) - 1
-        print(self.charges_gridLayout.columnCount())
         column = 2
         while total_charges_index >= 0:
-            print(type(self.charges_gridLayout.itemAtPosition(4, column)))
-            self.case_information.charges_list[total_charges_index].plea = self.charges_gridLayout.itemAtPosition(4, column).currentText()
-            self.case_information.charges_list[total_charges_index].finding = "Guilty"
-            self.case_information.charges_list[total_charges_index].fines_amount = "50"
-            self.case_information.charges_list[total_charges_index].fines_suspended = "0"
+            self.case_information.charges_list[total_charges_index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
+            self.case_information.charges_list[total_charges_index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
+            self.case_information.charges_list[total_charges_index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
+            self.case_information.charges_list[total_charges_index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
             total_charges_index -= 1
             column += 2
 
