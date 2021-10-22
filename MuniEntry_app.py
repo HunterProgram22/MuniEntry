@@ -50,7 +50,7 @@ class Window(QMainWindow, Ui_MainWindow):
         }
         self.dialog_dict = {
             self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
-            self.GreenSheetButton: MinorMisdemeanorDialog,
+            # self.GreenSheetButton: MinorMisdemeanorDialog,
         }
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()

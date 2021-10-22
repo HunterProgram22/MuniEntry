@@ -23,8 +23,9 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(75)
         MainWindow.setFont(font)
-        MainWindow.setStyleSheet("font: 75 11pt \"Palatino Linotype\";\n"
-"font-weight: bold;")
+        MainWindow.setStyleSheet(
+            'font: 75 11pt "Palatino Linotype";\n' "font-weight: bold;"
+        )
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -43,7 +44,9 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.FinalJudgmentEntryButton_7, 0, 1, 1, 1)
         self.MinorMisdemeanorTrafficButton_2 = QtWidgets.QPushButton(self.layoutWidget)
         self.MinorMisdemeanorTrafficButton_2.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton_2.setObjectName("MinorMisdemeanorTrafficButton_2")
+        self.MinorMisdemeanorTrafficButton_2.setObjectName(
+            "MinorMisdemeanorTrafficButton_2"
+        )
         self.gridLayout_3.addWidget(self.MinorMisdemeanorTrafficButton_2, 0, 2, 1, 1)
         self.FinalJudgmentEntryButton_8 = QtWidgets.QPushButton(self.layoutWidget)
         self.FinalJudgmentEntryButton_8.setMinimumSize(QtCore.QSize(120, 30))
@@ -104,9 +107,13 @@ class Ui_MainWindow(object):
         self.FinalJudgmentEntryButton_12.setMinimumSize(QtCore.QSize(120, 30))
         self.FinalJudgmentEntryButton_12.setObjectName("FinalJudgmentEntryButton_12")
         self.gridLayout_4.addWidget(self.FinalJudgmentEntryButton_12, 0, 1, 1, 1)
-        self.MinorMisdemeanorTrafficButton_3 = QtWidgets.QPushButton(self.layoutWidget_2)
+        self.MinorMisdemeanorTrafficButton_3 = QtWidgets.QPushButton(
+            self.layoutWidget_2
+        )
         self.MinorMisdemeanorTrafficButton_3.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton_3.setObjectName("MinorMisdemeanorTrafficButton_3")
+        self.MinorMisdemeanorTrafficButton_3.setObjectName(
+            "MinorMisdemeanorTrafficButton_3"
+        )
         self.gridLayout_4.addWidget(self.MinorMisdemeanorTrafficButton_3, 0, 2, 1, 1)
         self.FinalJudgmentEntryButton_13 = QtWidgets.QPushButton(self.layoutWidget_2)
         self.FinalJudgmentEntryButton_13.setMinimumSize(QtCore.QSize(120, 30))
@@ -136,7 +143,9 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_5, 0, 2, 1, 1)
         self.MinorMisdemeanorTrafficButton = QtWidgets.QPushButton(self.layoutWidget1)
         self.MinorMisdemeanorTrafficButton.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton.setObjectName("MinorMisdemeanorTrafficButton")
+        self.MinorMisdemeanorTrafficButton.setObjectName(
+            "MinorMisdemeanorTrafficButton"
+        )
         self.gridLayout_2.addWidget(self.MinorMisdemeanorTrafficButton, 0, 0, 1, 1)
         self.FinalJudgmentEntryButton_2 = QtWidgets.QPushButton(self.layoutWidget1)
         self.FinalJudgmentEntryButton_2.setMinimumSize(QtCore.QSize(120, 30))
@@ -209,7 +218,9 @@ class Ui_MainWindow(object):
         self.actionGeneral_Motion_Entry = QtWidgets.QAction(MainWindow)
         self.actionGeneral_Motion_Entry.setObjectName("actionGeneral_Motion_Entry")
         self.actionFail_to_Appear_Minor_Traffic_Offense = QtWidgets.QAction(MainWindow)
-        self.actionFail_to_Appear_Minor_Traffic_Offense.setObjectName("actionFail_to_Appear_Minor_Traffic_Offense")
+        self.actionFail_to_Appear_Minor_Traffic_Offense.setObjectName(
+            "actionFail_to_Appear_Minor_Traffic_Offense"
+        )
         self.actionOmnibus_Motion_Form = QtWidgets.QAction(MainWindow)
         self.actionOmnibus_Motion_Form.setObjectName("actionOmnibus_Motion_Form")
         self.actionJury_Instructions = QtWidgets.QAction(MainWindow)
@@ -233,7 +244,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.1.0 - beta"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.1.0"))
         self.FinalJudgmentEntryButton_6.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_7.setText(_translate("MainWindow", "Entry"))
         self.MinorMisdemeanorTrafficButton_2.setText(_translate("MainWindow", "Entry"))
@@ -251,7 +262,9 @@ class Ui_MainWindow(object):
         self.FinalJudgmentEntryButton_15.setText(_translate("MainWindow", "Entry"))
         self.GreenSheetButton.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_5.setText(_translate("MainWindow", "Entry"))
-        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
+        self.MinorMisdemeanorTrafficButton.setText(
+            _translate("MainWindow", "Minor Misdemeanor")
+        )
         self.FinalJudgmentEntryButton_2.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_3.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_4.setText(_translate("MainWindow", "Entry"))
@@ -267,9 +280,17 @@ class Ui_MainWindow(object):
         self.actionOptions.setText(_translate("MainWindow", "Options"))
         self.actionExit.setText(_translate("MainWindow", "Templates"))
         self.menu_file_exit.setText(_translate("MainWindow", "Exit"))
-        self.actionGeneral_Motion_Entry.setText(_translate("MainWindow", "General Motion Entry"))
-        self.actionFail_to_Appear_Minor_Traffic_Offense.setText(_translate("MainWindow", "Fail to Appear - Minor Traffic Offense"))
-        self.actionOmnibus_Motion_Form.setText(_translate("MainWindow", "Omnibus Motion Form"))
-        self.actionJury_Instructions.setText(_translate("MainWindow", "Jury Instructions"))
+        self.actionGeneral_Motion_Entry.setText(
+            _translate("MainWindow", "General Motion Entry")
+        )
+        self.actionFail_to_Appear_Minor_Traffic_Offense.setText(
+            _translate("MainWindow", "Fail to Appear - Minor Traffic Offense")
+        )
+        self.actionOmnibus_Motion_Form.setText(
+            _translate("MainWindow", "Omnibus Motion Form")
+        )
+        self.actionJury_Instructions.setText(
+            _translate("MainWindow", "Jury Instructions")
+        )
         self.actioncontrollers.setText(_translate("MainWindow", "controllers"))
         self.actionTemplates.setText(_translate("MainWindow", "Templates"))
