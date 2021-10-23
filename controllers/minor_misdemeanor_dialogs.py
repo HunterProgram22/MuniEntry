@@ -123,6 +123,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
+        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
 
     @logger.catch
     def create_entry_process(self):
@@ -317,6 +318,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
             index +=1
             column +=2
+
+    def guilty_all_plea_and_findings(self):
+        """Sets the plea and findings boxes to guilty for all charges currently
+        in the charges_gridLayout."""
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
+                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
+                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
+                    column +=1
+            except AttributeError:
+                pass
 
     @logger.catch
     def check_add_conditions(self):
