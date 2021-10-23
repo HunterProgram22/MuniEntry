@@ -184,27 +184,22 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def add_charge(self):
-        """Creates a criminal charge object and adds the data in the view to
-        the object. The criminal charge is then added to the case information
-        model (by appending the charge object to the criminal charges list).
+        """The add_charge_process, from which this is called, creates a criminal
+        charge object and adds the data in the view to the object. The criminal
+        charge is then added to the case information model (by appending the
+        charge object to the criminal charges list).
 
         The offense is added to the view by the method add_charge_to_view,
-        not this method. This method is triggered on press of the Add Charge
+        not this method. This method is triggered on clicked() of the Add Charge
         button."""
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
-        # self.criminal_charge.plea = self.plea_choice_box.currentText()
-        # self.criminal_charge.finding = self.finding_choice_box.currentText()
-        # self.criminal_charge.fines_amount = self.fines_amount.text()
-        # if self.fines_suspended.text() == "":
-        #     self.criminal_charge.fines_suspended = "0"
-        # else:
-        #     self.criminal_charge.fines_suspended = self.fines_suspended.text()
-        # self.criminal_charge.court_costs = self.court_costs_box.currentText()
+
+
+
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
-        # self.court_costs_box.setCurrentText("No")
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -236,10 +231,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row +=1
         self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
         row +=1
-
         self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
         row +=1
-
         self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
         row +=1
         delete_button = QPushButton("Delete")
@@ -310,17 +303,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def add_dispositions_and_fines(self):
         """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
-        Columns start at 0 for labels and 2 for first entry then 4 etc"""
-        total_charges_index = len(self.case_information.charges_list) - 1
-        column = 2
-        while total_charges_index >= 0:
-            self.case_information.charges_list[total_charges_index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
-            self.case_information.charges_list[total_charges_index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
-            self.case_information.charges_list[total_charges_index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
-            self.case_information.charges_list[total_charges_index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
-            total_charges_index -= 1
-            column += 2
+        Columns start at 0 for labels and 2 for first entry then 4 etc.
 
+        Column count increases by 2 instead of one due to grid adding two
+        columns when a charge is added (odd numbered column is empty)."""
+        column = 2
+        for index in range(len(self.case_information.charges_list)):
+            self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
+            self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
+            self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
+            if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
+                self.case_information.charges_list[index].fines_suspended = "0"
+            else:
+                self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
+            index +=1
+            column +=2
 
     @logger.catch
     def check_add_conditions(self):
