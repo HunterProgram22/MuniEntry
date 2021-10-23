@@ -28,7 +28,7 @@ def app(qtbot):
 
 """TESTING"""
 def test_title(app):
-    assert app.windowTitle() == "MuniEntry"
+    assert app.windowTitle() == "MuniEntry - ver 0.1.1"
 
 def test_judicial_officer_buttons(app):
     QtBot.mouseClick(app.hemmeter_radioButton, QtCore.Qt.LeftButton)
@@ -43,11 +43,5 @@ def test_judicial_officer_buttons(app):
 def test_minor_misdemeanor_traffic_buton(app, qtbot):
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer)
-    assert dialog.windowTitle() == "Minor Misdemeanor Case Information"
-
-def test_green_sheet_buton(app, qtbot):
-    QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.GreenSheetButton, QtCore.Qt.LeftButton)
     dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer)
     assert dialog.windowTitle() == "Minor Misdemeanor Case Information"

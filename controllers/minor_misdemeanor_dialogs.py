@@ -196,9 +196,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
-
-
-
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
         self.statute_choice_box.setFocus()
