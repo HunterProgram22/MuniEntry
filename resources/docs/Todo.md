@@ -1,19 +1,15 @@
-APPLICATION TODO LIST for version 0.1.0
-*
-
-APPLICATION TODO LIST for version 0.1.1
-* Remove community service for fines if pay forthwith
-
-BUGS
-* Sometimes double adds charge when clicking add charge - probably tied to pressed()
-perhaps switch to clicked() and account for bool that is sent. 
-
-FEATURE/CHANGE LIST - for Version 0.2.0
+APPLICATION TODO LIST for version 0.2.0
 * Refactor CaseInformation.py
 * Move editable plea, finding, fines, etc to grid
 * Fix sizing of application based on screen size issue
 * Add "Other" dialog
 * Add community control conditions checkboxes
+* Update test when editable plea, finding, etc are moved
+
+
+
+FEATURE/CHANGE LIST - for Version 0.3.0
+
 
 
 DEPLOY TODO LIST
