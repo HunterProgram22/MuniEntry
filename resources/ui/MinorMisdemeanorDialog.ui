@@ -785,7 +785,7 @@ border-color: rgb(160, 48, 35);</string>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>11</x>
       <y>10</y>
       <width>471</width>
       <height>111</height>
@@ -819,7 +819,7 @@ border-color: rgb(160, 48, 35);</string>
      <item row="1" column="0">
       <widget class="QLabel" name="label_9">
        <property name="text">
-        <string>Time to pay fines and costs:</string>
+        <string>Time to pay fines/costs:</string>
        </property>
       </widget>
      </item>
@@ -853,7 +853,7 @@ border-color: rgb(160, 48, 35);</string>
      <item row="2" column="0">
       <widget class="QLabel" name="label_18">
        <property name="text">
-        <string>Fines and costs due date:</string>
+        <string>Fines/costs due date:</string>
        </property>
       </widget>
      </item>

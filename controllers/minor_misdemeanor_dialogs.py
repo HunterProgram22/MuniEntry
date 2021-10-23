@@ -116,29 +116,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         # self.amend_offense_Button.pressed.connect(self.start_amend_offense_dialog)
         self.add_charge_Button.clicked.connect(self.add_charge_process)
-        # self.add_charge_Button.released.connect(self.clear_charge_fields)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        # self.offense_choice_box.currentTextChanged.connect(self.set_mandatory_fines)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute)
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-
-    # @logger.catch
-    # def set_mandatory_fines(self, offense):
-    #     """When called it will set the text in the field of fines_amount to a
-    #     specific amount required for certain offenses. Because the statute and
-    #     offense fields are automatically updated when one or the other changes,
-    #     it is not necessary to tie this to both statute and offense fields."""
-    #     if offense == "Seatbelt - Driver":
-    #         self.fines_amount.setText("30")
-    #     elif offense == "Seatbelt - Passenger":
-    #         self.fines_amount.setText("20")
-    #     elif offense == "Failure to Stop for School Bus":
-    #         self.fines_amount.setText("500")
-    #     else:
-    #         self.fines_amount.setText("")
 
     @logger.catch
     def create_entry_process(self):
@@ -168,10 +151,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
-        # self.plea_choice_box.setCurrentText("")
-        # self.finding_choice_box.setCurrentText("")
-        # self.fines_suspended.clear()
-        # self.fines_amount.clear()
 
     @logger.catch
     def set_template(self):
@@ -241,7 +220,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         charge_dict from the charges_list is 0.
 
         The python builtin vars function returns the __dict__ attribute of
-        the object."""
+        the object.
+
+        The self.criminal_charge.offense added as a parameter for FineLineEdit
+        is the current one added when "Add Charge" is pressed."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list) - 1
@@ -254,8 +236,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row +=1
         self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
         row +=1
-        self.charges_gridLayout.addWidget(FineLineEdit(), row, column)
+
+        self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
         row +=1
+
         self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
         row +=1
         delete_button = QPushButton("Delete")
