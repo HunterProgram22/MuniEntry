@@ -37,6 +37,7 @@ class CaseInformation(object):
         self.due_date_for_service = None
         self.license_suspension_details = None
         self.other_conditions_details = None
+        self.court_costs = None
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
@@ -83,6 +84,7 @@ class CriminalCharge(object):
         self.statute = None
         self.degree = None
         self.plea = None
+        self.type = None
         self.finding = None
         self.fines_amount = None
         self.fines_suspended = None

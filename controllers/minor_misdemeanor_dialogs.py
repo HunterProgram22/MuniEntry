@@ -199,6 +199,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
+        self.criminal_charge.type = self.set_offense_type()
         self.case_information.add_charge_to_list(self.criminal_charge)
         self.add_charge_to_view()
         self.statute_choice_box.setFocus()
@@ -219,13 +220,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         the object.
 
         The self.criminal_charge.offense added as a parameter for FineLineEdit
-        is the current one added when "Add Charge" is pressed."""
+        is the current one added when "Add Charge" is pressed.
+
+        TODO: Refactor so that there isn't a need for a if branch to skip the
+        attribute for charge type."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list) - 1
         charge = vars(self.case_information.charges_list[added_charge_index])
         for value in charge.values():
             if value is not None:
+                if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
+                    break
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
                 row += 1
         self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
@@ -301,6 +307,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         )
         self.add_dispositions_and_fines()
         self.check_add_conditions()
+        self.calculate_costs_and_fines()
+
+    def calculate_costs_and_fines(self):
+        for index, charge in enumerate(self.case_information.charges_list):
+            print(index, charge.type)
+            if charge.type == "Moving Traffic":
+                self.case_information.court_costs = "124.00"
+                print(self.case_information.court_costs)
+                break
+            elif charge.type == "Criminal":
+                self.case_information.court_costs = "114.00"
+                print(self.case_information.court_costs)
+            else:
+                self.case_information.court_costs = "95.00"
+                print(self.case_information.court_costs)
 
     @logger.catch
     def add_dispositions_and_fines(self):
@@ -395,6 +416,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         else:
             self.case_information.fra_in_court = None
 
+    def set_offense_type(self):
+        key = self.statute_choice_box.currentText()
+        print(key)
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        query = QSqlQuery(database_statutes)
+        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
+        query.bindValue(":key", key)
+        query.exec()
+        while query.next():
+            statute = query.value(2)
+            if statute == key:
+                print(query.value(4))
+                return query.value(4)
+
     @logger.catch
     def set_statute(self, key):
         """This method queries based on the offense and then sets the statute
@@ -404,7 +440,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         is changed on the view. This is the offense."""
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(database_statutes)
+        query = QSqlQuery(database_offenses)
         query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
