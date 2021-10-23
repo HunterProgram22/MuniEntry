@@ -153,7 +153,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def add_charge_process(self, bool):
         """The order of functions that are called when the add_charge_Button is pressed()
         on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
-        updated before the charge is added and the data cleared from the fields."""
+        updated before the charge is added and the data cleared from the fields.
+
+        The bool is passed as an argument through clicked() but not used."""
         self.criminal_charge = CriminalCharge()
         self.add_charge()
         self.clear_charge_fields()
