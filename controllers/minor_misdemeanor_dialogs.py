@@ -293,12 +293,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString(
             "MMMM dd, yyyy"
         )
-        self.case_information.operator_license_number = (
-            self.operator_license_number_lineEdit.text()
-        )
-        self.case_information.defendant_date_of_birth = (
-            self.defendant_birth_date.date().toString("MMMM dd, yyyy")
-        )
         self.case_information.ability_to_pay_time = (
             self.ability_to_pay_box.currentText()
         )

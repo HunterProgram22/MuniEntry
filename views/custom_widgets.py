@@ -8,8 +8,8 @@ class PleaComboBox(QComboBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(300, 0))
-        self.setMaximumSize(QtCore.QSize(300, 50))
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
         self.setObjectName("plea_choice_box")
@@ -26,8 +26,8 @@ class FindingComboBox(QComboBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(300, 0))
-        self.setMaximumSize(QtCore.QSize(300, 50))
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
         self.setObjectName("finding_choice_box")
@@ -45,8 +45,8 @@ class FineLineEdit(QLineEdit):
         self.set_up_widget(offense)
 
     def set_up_widget(self, offense):
-        self.setMinimumSize(QtCore.QSize(300, 0))
-        self.setMaximumSize(QtCore.QSize(300, 50))
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("fines_amount")
         if offense == "Seatbelt - Driver":
@@ -65,7 +65,7 @@ class FineSuspendedLineEdit(QLineEdit):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(300, 0))
-        self.setMaximumSize(QtCore.QSize(300, 50))
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("fines_suspended")
