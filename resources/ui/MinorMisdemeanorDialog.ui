@@ -149,7 +149,7 @@ font-weight: bold;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>130</y>
+     <y>110</y>
      <width>981</width>
      <height>101</height>
     </rect>
@@ -353,9 +353,9 @@ font-weight: bold;</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>240</y>
+     <y>220</y>
      <width>981</width>
-     <height>291</height>
+     <height>321</height>
     </rect>
    </property>
    <property name="font">
@@ -385,7 +385,7 @@ font-weight: bold;</string>
       <x>10</x>
       <y>10</y>
       <width>961</width>
-      <height>268</height>
+      <height>261</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="charges_gridLayout">
@@ -402,19 +402,6 @@ font-weight: bold;</string>
        </property>
        <property name="text">
         <string>Finding:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="7" column="0">
-      <widget class="QPushButton" name="guilty_all_Button">
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(160, 160, 160);</string>
-       </property>
-       <property name="text">
-        <string>Guilty All</string>
        </property>
       </widget>
      </item>
@@ -485,6 +472,13 @@ font-weight: bold;</string>
        </property>
       </widget>
      </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_20">
        <property name="font">
@@ -517,7 +511,52 @@ font-weight: bold;</string>
        </property>
       </widget>
      </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="guilty_all_Button">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>141</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(160, 160, 160);</string>
+    </property>
+    <property name="text">
+     <string>Guilty All</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="no_contest_all_Button">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>280</y>
+      <width>141</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(160, 160, 160);</string>
+    </property>
+    <property name="text">
+     <string>No Contest All</string>
+    </property>
    </widget>
   </widget>
   <widget class="QFrame" name="frame_3">
@@ -526,7 +565,7 @@ font-weight: bold;</string>
      <x>10</x>
      <y>10</y>
      <width>981</width>
-     <height>111</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -552,7 +591,7 @@ border-color: rgb(160, 48, 35);</string>
     <property name="geometry">
      <rect>
       <x>835</x>
-      <y>70</y>
+      <y>50</y>
       <width>141</width>
       <height>33</height>
      </rect>
@@ -571,7 +610,7 @@ border-color: rgb(160, 48, 35);</string>
     <property name="geometry">
      <rect>
       <x>835</x>
-      <y>12</y>
+      <y>10</y>
       <width>141</width>
       <height>33</height>
      </rect>
@@ -586,24 +625,44 @@ border-color: rgb(160, 48, 35);</string>
      <string>Cancel</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>11</y>
-      <width>341</width>
-      <height>96</height>
+      <x>11</x>
+      <y>10</y>
+      <width>811</width>
+      <height>71</height>
      </rect>
     </property>
-    <layout class="QFormLayout" name="formLayout_4">
+    <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Def. First Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+       <property name="maximumSize">
+        <size>
+         <width>500</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
       <widget class="QLabel" name="label_26">
        <property name="text">
         <string>Date:</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="0" column="3">
       <widget class="QDateEdit" name="plea_trial_date">
        <property name="focusPolicy">
         <enum>Qt::NoFocus</enum>
@@ -631,103 +690,6 @@ border-color: rgb(160, 48, 35);</string>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="text">
-        <string>License No.</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="operator_license_number_lineEdit">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="text">
-        <string>Date of Birth:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QDateEdit" name="defendant_birth_date">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="focusPolicy">
-        <enum>Qt::NoFocus</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>1980</year>
-         <month>1</month>
-         <day>1</day>
-        </datetime>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>441</width>
-      <height>98</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Def. First Name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-       <property name="maximumSize">
-        <size>
-         <width>500</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(255, 255, 255);</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>Def. Last Name:</string>
@@ -744,14 +706,14 @@ border-color: rgb(160, 48, 35);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="2">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Case Number:</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="3">
       <widget class="QLineEdit" name="case_number_lineEdit">
        <property name="maximumSize">
         <size>
@@ -771,7 +733,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>540</y>
+     <y>550</y>
      <width>491</width>
      <height>131</height>
     </rect>
@@ -988,9 +950,9 @@ border-color: rgb(160, 48, 35);</string>
    <property name="geometry">
     <rect>
      <x>510</x>
-     <y>540</y>
+     <y>550</y>
      <width>481</width>
-     <height>191</height>
+     <height>181</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1011,7 +973,7 @@ font-weight: bold;</string>
     <property name="geometry">
      <rect>
       <x>14</x>
-      <y>10</y>
+      <y>30</y>
       <width>451</width>
       <height>16</height>
      </rect>
@@ -1037,9 +999,9 @@ font-weight: bold;</string>
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>31</y>
+      <y>50</y>
       <width>461</width>
-      <height>141</height>
+      <height>131</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
@@ -1203,22 +1165,6 @@ font-weight: bold;</string>
     <hint type="destinationlabel">
      <x>459</x>
      <y>47</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_case_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>operator_license_number_lineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>829</x>
-     <y>77</y>
     </hint>
    </hints>
   </connection>

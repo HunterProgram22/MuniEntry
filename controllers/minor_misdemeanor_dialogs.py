@@ -87,6 +87,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.set_template()
         self.criminal_charge = CriminalCharge()
         self.delete_button_list = []
+        self.amend_button_list = []
         self.pay_date_dict = {
             "forthwith": 0,
             "within 30 days": 30,
@@ -124,6 +125,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
         self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
 
     @logger.catch
     def create_entry_process(self):
@@ -239,6 +241,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
         delete_button.pressed.connect(self.delete_charge)
         self.charges_gridLayout.addWidget(delete_button, row, column)
+        row +=1
+        amend_button = QPushButton("Amend Charge")
+        self.amend_button_list.append(amend_button)
+        amend_button.setStyleSheet("background-color: rgb(160, 160, 160);")
+        amend_button.pressed.connect(self.delete_charge)
+        self.charges_gridLayout.addWidget(amend_button, row, column)
 
     @logger.catch
     def delete_charge(self):
@@ -326,6 +334,18 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
+                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
+                    column +=1
+            except AttributeError:
+                pass
+
+    def no_contest_all_plea_and_findings(self):
+        """Sets the plea box to no contest and findings boxes to guilty for all
+        charges currently in the charges_gridLayout."""
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
+                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("No Contest")
                     self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
                     column +=1
             except AttributeError:
