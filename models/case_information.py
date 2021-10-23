@@ -36,7 +36,7 @@ class CaseInformation(object):
         self.days_to_complete_service = None
         self.due_date_for_service = None
         self.license_suspension_details = None
-        self.other_conditions = None
+        self.other_conditions_details = None
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
