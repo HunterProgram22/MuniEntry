@@ -1,9 +1,9 @@
 APPLICATION TODO LIST for version 0.2.0
 * Refactor CaseInformation.py
 * Fix sizing of application based on screen size issue
-* Add "Other" dialog
-* Add community control conditions checkboxes
 * Update test when editable plea, finding, etc are moved
+* Add multi-charge guilty/guilty and no contest/guilty
+* Clean up naming for classes of Add Conditions
 
 
 
@@ -11,6 +11,7 @@ FEATURE/CHANGE LIST - for Version 0.3.0
 * Calculate court costs - plug in fixed costs and add additional costs based
 on moving traffic, non-traffic misdemanor, or non-moving traffic - set type in
 charge database and select highest level
+* Add community control conditions checkboxes
 
 
 

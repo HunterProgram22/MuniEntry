@@ -72,7 +72,7 @@ class CaseInformation(object):
             + self.judicial_officer.last_name,
             "judicial_officer_type": self.judicial_officer.officer_type,
             "license_suspension_details": self.license_suspension_details,
-            "other_conditions": self.other_conditions,
+            "other_conditions_details": self.other_conditions_details,
         }
         return self.formatted_case_information
 
@@ -137,3 +137,9 @@ class LicenseSuspension(object):
         self.license_suspended_date = None
         self.license_suspension_term = None
         self.remedial_driving_class_required = False
+
+
+class OtherConditionsDetails(object):
+    def __init__(self):
+        self.other_conditions_ordered = False
+        self.other_conditions_terms = None

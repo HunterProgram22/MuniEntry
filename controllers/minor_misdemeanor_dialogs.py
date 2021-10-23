@@ -22,6 +22,7 @@ from models.case_information import (
     LicenseSuspension,
     CommunityControlTerms,
     CommunityServiceTerms,
+    OtherConditionsDetails,
 )
 from models.messages import TURNS_AT_INTERSECTIONS as TURNS_WARNING
 from controllers.criminal_dialogs import BaseCriminalDialog
@@ -301,6 +302,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_dispositions_and_fines()
         self.check_add_conditions()
 
+    @logger.catch
     def add_dispositions_and_fines(self):
         """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
         Columns start at 0 for labels and 2 for first entry then 4 etc.
@@ -339,6 +341,10 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             )
         if self.community_service_checkBox.isChecked():
             self.case_information.community_service_terms.community_service_ordered = (
+                True
+            )
+        if self.other_conditions_checkBox.isChecked():
+            self.case_information.other_conditions_details.other_conditions_ordered = (
                 True
             )
 
@@ -495,6 +501,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         each condition."""
         if self.other_conditions is True:
             self.other_conditions_frame.setEnabled(True)
+            self.other_conditions_details = OtherConditionsDetails()
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
             self.license_suspension_details = LicenseSuspension()
@@ -505,8 +512,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_date_to_complete_box.setDate(
                 QtCore.QDate.currentDate()
             )
-        if self.other_conditions is True:
-            self.other_conditions_frame.setEnabled(True)
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
             self.community_control_terms = CommunityControlTerms()
@@ -578,13 +583,14 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_other_condition_details(self):
         """The method allows for adding other conditions based on free form text
-        entry. The text will transfer directly to the entry and there is no
-        separate object created, it is added as an attribute of case information."""
-        self.case_information.other_conditions = (
+        entry."""
+        self.other_conditions_details.other_conditions_terms = (
             self.other_conditions_plainTextEdit.toPlainText()
         )
-        if self.case_information.other_conditions == "":
-            self.case_information.other_conditions = None
+        self.case_information.other_conditions_details = (
+            self.other_conditions_details
+        )
+
 
     @logger.catch
     def set_service_date(self, days_to_complete):
