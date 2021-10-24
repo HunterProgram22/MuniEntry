@@ -126,7 +126,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
         self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
         self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
-        self.costs_and_fines_Button.pressed.connect(self.show_costs_and_fines)
+        self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
     def create_entry_process(self):
@@ -310,37 +310,53 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
-    def show_costs_and_fines(self):
+    def show_costs_and_fines(self, bool):
+        """The bool is the toggle from the clicked() of the button pressed. No
+        action is taken with respect to it."""
         self.update_case_information()
         message = QMessageBox()
         message.setIcon(QMessageBox.Information)
         message.setWindowTitle("Total Costs and Fines")
-        message.setInformativeText("Costs: " + str(self.case_information.court_costs) + "\n Fines: " + str(self.case_information.total_fines))
-        total_fines_and_costs = self.case_information.court_costs + self.case_information.total_fines
-        message.setText("Total Fines: " + str(total_fines_and_costs))
+        message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +\
+            "\nFines: $" + str(self.case_information.total_fines) +\
+            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended))
+        total_fines_and_costs = (self.case_information.court_costs +\
+            self.case_information.total_fines) - self.case_information.total_fines_suspended
+        message.setText("Total Costs and Fines Due: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
 
     def calculate_costs_and_fines(self):
-        for index, charge in enumerate(self.case_information.charges_list):
-            print(index, charge.type)
-            if self.case_information.court_costs == 124:
-                break
-            else:
-                if charge.type == "Moving Traffic":
-                    self.case_information.court_costs = 124
-                    #print(self.case_information.court_costs)
+        self.case_information.court_costs = 0
+        if self.court_costs_box.currentText() == "Yes":
+            for index, charge in enumerate(self.case_information.charges_list):
+                if self.case_information.court_costs == 124:
                     break
-                elif charge.type == "Criminal":
-                    self.case_information.court_costs = 114
-                    #print(self.case_information.court_costs)
-                elif charge.type == "Non-moving Traffic":
-                    self.case_information.court_costs = 95
-                    #print(self.case_information.court_costs)
+                else:
+                    if charge.type == "Moving Traffic":
+                        if self.case_information.court_costs < 124:
+                            self.case_information.court_costs = 124
+                    elif charge.type == "Criminal":
+                        if self.case_information.court_costs < 114:
+                            self.case_information.court_costs = 114
+                    elif charge.type == "Non-moving Traffic":
+                        if self.case_information.court_costs < 95:
+                            self.case_information.court_costs = 95
         total_fines = 0
-        for index, charge in enumerate(self.case_information.charges_list):
-            total_fines = total_fines + int(charge.fines_amount)
-        self.case_information.total_fines = total_fines
+        try:
+            for index, charge in enumerate(self.case_information.charges_list):
+                if charge.fines_amount == '':
+                    charge.fines_amount = 0
+                total_fines = total_fines + int(charge.fines_amount)
+            self.case_information.total_fines = total_fines
+            total_fines_suspended = 0
+            for index, charge in enumerate(self.case_information.charges_list):
+                if charge.fines_suspended == '':
+                    charge.fines_suspended = 0
+                total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+            self.case_information.total_fines_suspended = total_fines_suspended
+        except TypeError:
+            print("A type error was allowed to pass - this is because of deleted charge.")
 
 
 
@@ -352,16 +368,19 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         Column count increases by 2 instead of one due to grid adding two
         columns when a charge is added (odd numbered column is empty)."""
         column = 2
-        for index in range(len(self.case_information.charges_list)):
-            self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
-            self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
-            self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
-            if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
-                self.case_information.charges_list[index].fines_suspended = "0"
-            else:
-                self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
-            index +=1
-            column +=2
+        try:
+            for index in range(len(self.case_information.charges_list)):
+                self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
+                self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
+                self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
+                if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
+                    self.case_information.charges_list[index].fines_suspended = "0"
+                else:
+                    self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
+                index +=1
+                column +=2
+        except AttributeError:
+            print("Attribute error allowed to pass for lack of widget")
 
     def guilty_all_plea_and_findings(self):
         """Sets the plea and findings boxes to guilty for all charges currently
@@ -439,7 +458,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     def set_offense_type(self):
         key = self.statute_choice_box.currentText()
-        print(key)
         if self.freeform_entry_checkBox.isChecked():
             return None
         query = QSqlQuery(database_statutes)
@@ -448,9 +466,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         query.exec()
         while query.next():
             statute = query.value(2)
+            offense_type = query.value(4)
             if statute == key:
-                print(query.value(4))
-                return query.value(4)
+                return offense_type
 
     @logger.catch
     def set_statute(self, key):

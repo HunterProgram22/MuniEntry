@@ -3,7 +3,8 @@ APPLICATION TODO LIST for version 0.2.0
 * Fix sizing of application based on screen size issue
 * Update test when editable plea, finding, etc are moved - partially done.
 * Clean up naming for classes of Add Conditions
-* Calculate costs and fines for case. 
+* Calculate costs and fines for case.
+* Remove magic numbers throughout. 
 
 
 
