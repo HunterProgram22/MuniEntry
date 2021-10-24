@@ -37,6 +37,7 @@ class CaseInformation(object):
         self.due_date_for_service = None
         self.license_suspension_details = None
         self.other_conditions_details = None
+        self.court_costs_ordered = None
         self.court_costs = 0
         self.total_fines = 0
 
@@ -75,6 +76,7 @@ class CaseInformation(object):
             "judicial_officer_type": self.judicial_officer.officer_type,
             "license_suspension_details": self.license_suspension_details,
             "other_conditions_details": self.other_conditions_details,
+            "court_costs_ordered": self.court_costs_ordered,
         }
         return self.formatted_case_information
 

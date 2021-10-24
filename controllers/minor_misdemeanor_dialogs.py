@@ -10,7 +10,14 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from views.custom_widgets import PleaComboBox, FindingComboBox, FineLineEdit, FineSuspendedLineEdit
+from views.custom_widgets import (
+    PleaComboBox,
+    FindingComboBox,
+    FineLineEdit,
+    FineSuspendedLineEdit,
+    DeleteButton,
+    AmendButton,
+)
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import (
@@ -86,16 +93,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.set_template()
-        self.criminal_charge = CriminalCharge()
+        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
         self.delete_button_list = []
         self.amend_button_list = []
-        self.pay_date_dict = {
-            "forthwith": 0,
-            "within 30 days": 30,
-            "within 60 days": 60,
-            "within 90 days": 90,
-        }
 
     @logger.catch
     def modify_view(self):
@@ -113,9 +113,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method that connects any signals to slots that are not standard
-        functions in QtDesigner. Signals tied to clear() or clearEditText() and a
-        few others native to QtDesigner are connected in the view."""
+        """The method connects any signals to slots. Generally, connecting with
+        pressed is preferred to clicked because a clicked event sends a bool
+        argument to the function. However, clicked is used in some instances
+        because it is a press and release of a button. Using pressed sometimes
+        caused an event to be triggered twice."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.add_charge_Button.clicked.connect(self.add_charge_process)
@@ -129,47 +133,24 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
-    @logger.catch
-    def create_entry_process(self):
-        """The order of functions that are called when the create_entry_Button is pressed()
-        on the MinorMisdemeanorDialog. The order is important to make sure the information is
-        updated before the entry is created."""
-        self.update_case_information()
-        self.create_entry()
-        self.close_event()
+    def clear_case_information_fields(self):
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
 
-    @logger.catch
-    def add_charge_process(self, bool):
-        """The order of functions that are called when the add_charge_Button is pressed()
-        on the MinorMisdemeanorDialog. The order is important to make sure the informaiton is
-        updated before the charge is added and the data cleared from the fields.
-
-        The bool is passed as an argument through clicked() but not used."""
-        self.criminal_charge = CriminalCharge()
-        self.add_charge()
-        self.clear_charge_fields()
-
-    @logger.catch
     def clear_charge_fields(self):
-        """Clears the fields that are used for adding a charge. The plea_choice_box and
-        finding_choice_box use the setCurrentText method because those boxes are not
-        editable. The statute_choice_box and offense_choice_box used the clearEditText
+        """Clears the fields that are used for adding a charge. The
+        statute_choice_box and offense_choice_box use the clearEditText
         method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
 
     @logger.catch
-    def set_template(self):
-        """The TEMPLATE_DICT stores the templates that are assigned to each judicial officer
-        in the Templates.py model module."""
-        self.template = TEMPLATE_DICT.get(
-            self.case_information.judicial_officer.last_name
-        )
-
-    @logger.catch
     def start_amend_offense_dialog(self):
-        """Opens the amend offense dialog as a modal window. The case_information is passed
-        to the dialog class in order to populate the case information banner."""
+        """Opens the amend offense dialog as a modal window. The
+        case_information is passed to the dialog class in order to populate
+        the case information banner."""
         self.update_case_information()
         AmendOffenseDialog(self.case_information).exec()
 
@@ -250,16 +231,14 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_amend_button_to_view(row, column)
 
     def add_delete_button_to_view(self, row, column):
-        delete_button = QPushButton("Delete")
+        delete_button = DeleteButton()
         self.delete_button_list.append(delete_button)
-        delete_button.setStyleSheet("background-color: rgb(160, 160, 160);")
         delete_button.pressed.connect(self.delete_charge)
         self.charges_gridLayout.addWidget(delete_button, row, column)
 
     def add_amend_button_to_view(self, row, column):
-        amend_button = QPushButton("Amend Charge")
+        amend_button = AmendButton()
         self.amend_button_list.append(amend_button)
-        amend_button.setStyleSheet("background-color: rgb(160, 160, 160);")
         amend_button.pressed.connect(self.start_amend_offense_dialog)
         self.charges_gridLayout.addWidget(amend_button, row, column)
 
@@ -314,6 +293,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def update_costs_and_fines_information(self):
+        self.case_information.court_costs_ordered = self.court_costs_box.currentText()
         self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
         self.case_information.balance_due_date = self.balance_due_date.date().toString("MMMM dd, yyyy")
 
@@ -407,10 +387,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         message.setWindowTitle("Total Costs and Fines")
         message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +\
             "\nFines: $" + str(self.case_information.total_fines) +\
-            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended))
+            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +\
+            "\n\n*Does not include possible bond forfeiture or other costs \n that may be assesed as a result of prior actions in case. ")
         total_fines_and_costs = (self.case_information.court_costs +\
             self.case_information.total_fines) - self.case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due: $" + str(total_fines_and_costs))
+        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
 
@@ -425,6 +406,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                     column +=1
             except AttributeError:
                 pass
+        self.set_cursor_to_FineLineEdit()
 
     def no_contest_all_plea_and_findings(self):
         """Sets the plea box to no contest and findings boxes to guilty for all
@@ -435,6 +417,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                     self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("No Contest")
                     self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
                     column +=1
+            except AttributeError:
+                pass
+        self.set_cursor_to_FineLineEdit()
+
+    def set_cursor_to_FineLineEdit(self):
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(5, column).widget(), FineLineEdit):
+                    self.charges_gridLayout.itemAtPosition(5, column).widget().setFocus()
+                    break
             except AttributeError:
                 pass
 

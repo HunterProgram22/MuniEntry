@@ -12,6 +12,7 @@ class PleaComboBox(QComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
         self.setObjectName("plea_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -30,6 +31,7 @@ class FindingComboBox(QComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
         self.setObjectName("finding_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -69,3 +71,27 @@ class FineSuspendedLineEdit(QLineEdit):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("fines_suspended")
+
+
+class DeleteButton(QPushButton):
+    def __init__(self, parent=None):
+        super(QPushButton, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.setText("Delete")
+        self.setObjectName("delete_Button")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+
+
+class AmendButton(QPushButton):
+    def __init__(self, parent=None):
+        super(QPushButton, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.setText("Amend")
+        self.setObjectName("amend_Button")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)

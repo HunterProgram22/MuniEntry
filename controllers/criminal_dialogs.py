@@ -6,6 +6,10 @@ from docxtpl import DocxTemplate
 from loguru import logger
 
 from PyQt5.QtWidgets import QDialog
+from PyQt5 import QtCore
+from PyQt5.QtCore import QDate
+from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from models.case_information import (
     CaseInformation,
@@ -39,11 +43,37 @@ class BaseCriminalDialog(QDialog):
         self.setupUi(self)
         self.doc = None
         self.docname = None
+        self.pay_date_dict = {
+            "forthwith": 0,
+            "within 30 days": 30,
+            "within 60 days": 60,
+            "within 90 days": 90,
+        }
 
     def close_window(self):
         """Function connected to a button to close the window. Can be connected
         to any button press/click/release to close a window."""
         self.close()
+
+    @logger.catch
+    def add_charge_process(self, bool):
+        """The order of functions that are called when the add_charge_Button is
+        clicked(). The order is important to make sure the informaiton is
+        updated before the charge is added and the data cleared from the fields.
+
+        The bool is passed as an argument through clicked() but not used."""
+        self.criminal_charge = CriminalCharge()
+        self.add_charge()
+        self.clear_charge_fields()
+
+    @logger.catch
+    def create_entry_process(self):
+        """The order of functions that are called when the create_entry_Button is pressed()
+        on the MinorMisdemeanorDialog. The order is important to make sure the information is
+        updated before the entry is created."""
+        self.update_case_information()
+        self.create_entry()
+        self.close_event()
 
     @logger.catch
     def create_entry(self):

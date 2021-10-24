@@ -647,7 +647,7 @@ border-color: rgb(160, 48, 35);</string>
      <string>Cancel</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>11</x>
@@ -772,7 +772,7 @@ border-color: rgb(160, 48, 35);</string>
    <property name="lineWidth">
     <number>2</number>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -1157,72 +1157,7 @@ font-weight: bold;</string>
   <tabstop>create_entry_Button</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>cancel_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>MinorMisdemeanorDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>936</x>
-     <y>33</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>795</x>
-     <y>574</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_case_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>defendant_first_name_lineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>47</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_case_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>case_number_lineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>962</x>
-     <y>94</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>113</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_case_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>defendant_last_name_lineEdit</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>887</x>
-     <y>96</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>80</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>create_entry()</slot>
   <slot>continue_dialog()</slot>
