@@ -9,27 +9,16 @@ class CaseInformation(object):
     def __init__(self, judicial_officer):
         self.judicial_officer = judicial_officer
         self.case_number = None
-        self.plaintiff_name = None
-        self.plaintiff_attorney_name = None
-        self.waived_counsel = False
         self.defendant = Defendant()
-        # self.defendant_first_name = None
-        self.defendant_attorney_name = None
-        self.defendant_date_of_birth = None
-        self.operator_license_number = None
         self.fra_in_file = None
         self.fra_in_court = None
         self.plea_trial_date = None
         self.charges_list = []
         self.community_control_terms = None
-        self.ovi_details = None
         self.ability_to_pay_details = None  # Use Class
         self.ability_to_pay_time = None  # Use Class
         self.balance_due_date = None  # Use Class
         self.amend_offense_details = None
-        self.is_citizen = False
-        self.understood_plea = True
-        self.citizen_deportation = False
         self.total_charges = 0
         self.community_service_terms = None
         self.hours_of_service = None
@@ -51,13 +40,8 @@ class CaseInformation(object):
             "case_number": self.case_number,
             "defendant_last_name": self.defendant.last_name,
             "defendant_first_name": self.defendant.first_name,
-            "waived_counsel": self.waived_counsel,
             "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,
-            "is_citizen": self.is_citizen,
-            "understood_plea": self.understood_plea,
-            "citizen_deportation": self.citizen_deportation,
-            "ovi_details": self.ovi_details,
             "amend_offense_details": self.amend_offense_details,
             "charges_list": self.charges_list,
             "ability_to_pay_details": self.ability_to_pay_details,
