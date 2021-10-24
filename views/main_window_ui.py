@@ -23,9 +23,10 @@ class Ui_MainWindow(object):
         font.setItalic(False)
         font.setWeight(75)
         MainWindow.setFont(font)
-        MainWindow.setStyleSheet(
-            'font: 75 11pt "Palatino Linotype";\n' "font-weight: bold;"
-        )
+        MainWindow.setStyleSheet("font: 75 11pt \"Palatino Linotype\";\n"
+"color: rgb(255, 0, 0);\n"
+"selection-color: rgb(255, 0, 0);\n"
+"font-weight: bold;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
@@ -44,9 +45,7 @@ class Ui_MainWindow(object):
         self.gridLayout_3.addWidget(self.FinalJudgmentEntryButton_7, 0, 1, 1, 1)
         self.MinorMisdemeanorTrafficButton_2 = QtWidgets.QPushButton(self.layoutWidget)
         self.MinorMisdemeanorTrafficButton_2.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton_2.setObjectName(
-            "MinorMisdemeanorTrafficButton_2"
-        )
+        self.MinorMisdemeanorTrafficButton_2.setObjectName("MinorMisdemeanorTrafficButton_2")
         self.gridLayout_3.addWidget(self.MinorMisdemeanorTrafficButton_2, 0, 2, 1, 1)
         self.FinalJudgmentEntryButton_8 = QtWidgets.QPushButton(self.layoutWidget)
         self.FinalJudgmentEntryButton_8.setMinimumSize(QtCore.QSize(120, 30))
@@ -107,13 +106,9 @@ class Ui_MainWindow(object):
         self.FinalJudgmentEntryButton_12.setMinimumSize(QtCore.QSize(120, 30))
         self.FinalJudgmentEntryButton_12.setObjectName("FinalJudgmentEntryButton_12")
         self.gridLayout_4.addWidget(self.FinalJudgmentEntryButton_12, 0, 1, 1, 1)
-        self.MinorMisdemeanorTrafficButton_3 = QtWidgets.QPushButton(
-            self.layoutWidget_2
-        )
+        self.MinorMisdemeanorTrafficButton_3 = QtWidgets.QPushButton(self.layoutWidget_2)
         self.MinorMisdemeanorTrafficButton_3.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton_3.setObjectName(
-            "MinorMisdemeanorTrafficButton_3"
-        )
+        self.MinorMisdemeanorTrafficButton_3.setObjectName("MinorMisdemeanorTrafficButton_3")
         self.gridLayout_4.addWidget(self.MinorMisdemeanorTrafficButton_3, 0, 2, 1, 1)
         self.FinalJudgmentEntryButton_13 = QtWidgets.QPushButton(self.layoutWidget_2)
         self.FinalJudgmentEntryButton_13.setMinimumSize(QtCore.QSize(120, 30))
@@ -143,9 +138,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_5, 0, 2, 1, 1)
         self.MinorMisdemeanorTrafficButton = QtWidgets.QPushButton(self.layoutWidget1)
         self.MinorMisdemeanorTrafficButton.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton.setObjectName(
-            "MinorMisdemeanorTrafficButton"
-        )
+        self.MinorMisdemeanorTrafficButton.setObjectName("MinorMisdemeanorTrafficButton")
         self.gridLayout_2.addWidget(self.MinorMisdemeanorTrafficButton, 0, 0, 1, 1)
         self.FinalJudgmentEntryButton_2 = QtWidgets.QPushButton(self.layoutWidget1)
         self.FinalJudgmentEntryButton_2.setMinimumSize(QtCore.QSize(120, 30))
@@ -159,13 +152,13 @@ class Ui_MainWindow(object):
         self.FinalJudgmentEntryButton_4.setMinimumSize(QtCore.QSize(120, 30))
         self.FinalJudgmentEntryButton_4.setObjectName("FinalJudgmentEntryButton_4")
         self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_4, 1, 2, 1, 1)
-        self.widget = QtWidgets.QWidget(self.centralwidget)
-        self.widget.setGeometry(QtCore.QRect(22, 20, 801, 27))
-        self.widget.setObjectName("widget")
-        self.gridLayout = QtWidgets.QGridLayout(self.widget)
+        self.layoutWidget2 = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget2.setGeometry(QtCore.QRect(22, 20, 817, 31))
+        self.layoutWidget2.setObjectName("layoutWidget2")
+        self.gridLayout = QtWidgets.QGridLayout(self.layoutWidget2)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
-        self.label = QtWidgets.QLabel(self.widget)
+        self.label = QtWidgets.QLabel(self.layoutWidget2)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -175,27 +168,27 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-        self.hemmeter_radioButton = QtWidgets.QRadioButton(self.widget)
+        self.hemmeter_radioButton = QtWidgets.QRadioButton(self.layoutWidget2)
         self.hemmeter_radioButton.setObjectName("hemmeter_radioButton")
         self.buttonGroup = QtWidgets.QButtonGroup(MainWindow)
         self.buttonGroup.setObjectName("buttonGroup")
         self.buttonGroup.addButton(self.hemmeter_radioButton)
         self.gridLayout.addWidget(self.hemmeter_radioButton, 0, 1, 1, 1)
-        self.rohrer_radioButton = QtWidgets.QRadioButton(self.widget)
+        self.rohrer_radioButton = QtWidgets.QRadioButton(self.layoutWidget2)
         self.rohrer_radioButton.setObjectName("rohrer_radioButton")
         self.buttonGroup.addButton(self.rohrer_radioButton)
         self.gridLayout.addWidget(self.rohrer_radioButton, 0, 2, 1, 1)
-        self.pelanda_radioButton = QtWidgets.QRadioButton(self.widget)
+        self.pelanda_radioButton = QtWidgets.QRadioButton(self.layoutWidget2)
         self.pelanda_radioButton.setObjectName("pelanda_radioButton")
         self.buttonGroup.addButton(self.pelanda_radioButton)
         self.gridLayout.addWidget(self.pelanda_radioButton, 0, 3, 1, 1)
-        self.bunner_radioButton = QtWidgets.QRadioButton(self.widget)
+        self.bunner_radioButton = QtWidgets.QRadioButton(self.layoutWidget2)
         self.bunner_radioButton.setObjectName("bunner_radioButton")
         self.buttonGroup.addButton(self.bunner_radioButton)
         self.gridLayout.addWidget(self.bunner_radioButton, 0, 4, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 31))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -218,9 +211,7 @@ class Ui_MainWindow(object):
         self.actionGeneral_Motion_Entry = QtWidgets.QAction(MainWindow)
         self.actionGeneral_Motion_Entry.setObjectName("actionGeneral_Motion_Entry")
         self.actionFail_to_Appear_Minor_Traffic_Offense = QtWidgets.QAction(MainWindow)
-        self.actionFail_to_Appear_Minor_Traffic_Offense.setObjectName(
-            "actionFail_to_Appear_Minor_Traffic_Offense"
-        )
+        self.actionFail_to_Appear_Minor_Traffic_Offense.setObjectName("actionFail_to_Appear_Minor_Traffic_Offense")
         self.actionOmnibus_Motion_Form = QtWidgets.QAction(MainWindow)
         self.actionOmnibus_Motion_Form.setObjectName("actionOmnibus_Motion_Form")
         self.actionJury_Instructions = QtWidgets.QAction(MainWindow)
@@ -244,7 +235,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.1.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.2.0 - alpha"))
         self.FinalJudgmentEntryButton_6.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_7.setText(_translate("MainWindow", "Entry"))
         self.MinorMisdemeanorTrafficButton_2.setText(_translate("MainWindow", "Entry"))
@@ -262,9 +253,7 @@ class Ui_MainWindow(object):
         self.FinalJudgmentEntryButton_15.setText(_translate("MainWindow", "Entry"))
         self.GreenSheetButton.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_5.setText(_translate("MainWindow", "Entry"))
-        self.MinorMisdemeanorTrafficButton.setText(
-            _translate("MainWindow", "Minor Misdemeanor")
-        )
+        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
         self.FinalJudgmentEntryButton_2.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_3.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_4.setText(_translate("MainWindow", "Entry"))
@@ -280,17 +269,9 @@ class Ui_MainWindow(object):
         self.actionOptions.setText(_translate("MainWindow", "Options"))
         self.actionExit.setText(_translate("MainWindow", "Templates"))
         self.menu_file_exit.setText(_translate("MainWindow", "Exit"))
-        self.actionGeneral_Motion_Entry.setText(
-            _translate("MainWindow", "General Motion Entry")
-        )
-        self.actionFail_to_Appear_Minor_Traffic_Offense.setText(
-            _translate("MainWindow", "Fail to Appear - Minor Traffic Offense")
-        )
-        self.actionOmnibus_Motion_Form.setText(
-            _translate("MainWindow", "Omnibus Motion Form")
-        )
-        self.actionJury_Instructions.setText(
-            _translate("MainWindow", "Jury Instructions")
-        )
+        self.actionGeneral_Motion_Entry.setText(_translate("MainWindow", "General Motion Entry"))
+        self.actionFail_to_Appear_Minor_Traffic_Offense.setText(_translate("MainWindow", "Fail to Appear - Minor Traffic Offense"))
+        self.actionOmnibus_Motion_Form.setText(_translate("MainWindow", "Omnibus Motion Form"))
+        self.actionJury_Instructions.setText(_translate("MainWindow", "Jury Instructions"))
         self.actioncontrollers.setText(_translate("MainWindow", "controllers"))
         self.actionTemplates.setText(_translate("MainWindow", "Templates"))
