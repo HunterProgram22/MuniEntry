@@ -558,6 +558,28 @@ font-weight: bold;</string>
      <string>No Contest All</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="costs_and_fines_Button">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>290</y>
+      <width>141</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(160, 160, 160);</string>
+    </property>
+    <property name="text">
+     <string>Costs/Fines</string>
+    </property>
+    <property name="flat">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QFrame" name="frame_3">
    <property name="geometry">

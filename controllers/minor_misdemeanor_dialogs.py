@@ -126,6 +126,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
         self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
         self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
+        self.costs_and_fines_Button.pressed.connect(self.show_costs_and_fines)
 
     @logger.catch
     def create_entry_process(self):
@@ -309,19 +310,39 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
+    def show_costs_and_fines(self):
+        self.update_case_information()
+        message = QMessageBox()
+        message.setIcon(QMessageBox.Information)
+        message.setWindowTitle("Total Costs and Fines")
+        message.setInformativeText("Costs: " + str(self.case_information.court_costs) + "\n Fines: " + str(self.case_information.total_fines))
+        total_fines_and_costs = self.case_information.court_costs + self.case_information.total_fines
+        message.setText("Total Fines: " + str(total_fines_and_costs))
+        message.setStandardButtons(QMessageBox.Ok)
+        message.exec_()
+
     def calculate_costs_and_fines(self):
         for index, charge in enumerate(self.case_information.charges_list):
             print(index, charge.type)
-            if charge.type == "Moving Traffic":
-                self.case_information.court_costs = "124.00"
-                print(self.case_information.court_costs)
+            if self.case_information.court_costs == 124:
                 break
-            elif charge.type == "Criminal":
-                self.case_information.court_costs = "114.00"
-                print(self.case_information.court_costs)
             else:
-                self.case_information.court_costs = "95.00"
-                print(self.case_information.court_costs)
+                if charge.type == "Moving Traffic":
+                    self.case_information.court_costs = 124
+                    #print(self.case_information.court_costs)
+                    break
+                elif charge.type == "Criminal":
+                    self.case_information.court_costs = 114
+                    #print(self.case_information.court_costs)
+                elif charge.type == "Non-moving Traffic":
+                    self.case_information.court_costs = 95
+                    #print(self.case_information.court_costs)
+        total_fines = 0
+        for index, charge in enumerate(self.case_information.charges_list):
+            total_fines = total_fines + int(charge.fines_amount)
+        self.case_information.total_fines = total_fines
+
+
 
     @logger.catch
     def add_dispositions_and_fines(self):

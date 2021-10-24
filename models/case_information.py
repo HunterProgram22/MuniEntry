@@ -37,7 +37,8 @@ class CaseInformation(object):
         self.due_date_for_service = None
         self.license_suspension_details = None
         self.other_conditions_details = None
-        self.court_costs = None
+        self.court_costs = 0
+        self.total_fines = 0
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
