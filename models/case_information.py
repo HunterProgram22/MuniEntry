@@ -40,7 +40,6 @@ class CaseInformation(object):
             "case_number": self.case_number,
             "defendant_last_name": self.defendant.last_name,
             "defendant_first_name": self.defendant.first_name,
-            "defendant_attorney_name": self.defendant_attorney_name,
             "plea_trial_date": self.plea_trial_date,
             "amend_offense_details": self.amend_offense_details,
             "charges_list": self.charges_list,
