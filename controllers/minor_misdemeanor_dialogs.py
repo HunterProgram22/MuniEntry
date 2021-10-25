@@ -24,10 +24,10 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspension,
+    LicenseSuspensionTerms,
     CommunityControlTerms,
     CommunityServiceTerms,
-    OtherConditionsDetails,
+    OtherConditionsTerms,
 )
 from models.messages import TURNS_AT_INTERSECTIONS as TURNS_WARNING
 from controllers.criminal_dialogs import (

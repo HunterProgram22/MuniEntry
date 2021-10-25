@@ -15,10 +15,10 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspension,
+    LicenseSuspensionTerms,
     CommunityControlTerms,
     CommunityServiceTerms,
-    OtherConditionsDetails,
+    OtherConditionsTerms,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -174,10 +174,10 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         each condition."""
         if self.other_conditions is True:
             self.other_conditions_frame.setEnabled(True)
-            self.other_conditions_details = OtherConditionsDetails()
+            self.other_conditions_details = OtherConditionsTerms()
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
-            self.license_suspension_details = LicenseSuspension()
+            self.license_suspension_details = LicenseSuspensionTerms()
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
@@ -233,7 +233,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_license_suspension_details(self):
-        """The method adds the data entered to the LicenseSuspension object
+        """The method adds the data entered to the LicenseSuspensionTerms object
         that is created when the dialog is initialized. Then the data is transferred
         to case_information."""
         self.license_suspension_details.license_type = (

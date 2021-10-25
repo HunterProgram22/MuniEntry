@@ -15,11 +15,9 @@ class CaseInformation(object):
         self.plea_trial_date = None
         self.charges_list = []
         self.community_control_terms = None
-        self.ability_to_pay_details = None  # Use Class
-        self.ability_to_pay_time = None  # Use Class
-        self.balance_due_date = None  # Use Class
+        self.ability_to_pay_time = None
+        self.balance_due_date = None
         self.amend_offense_details = None
-        self.total_charges = 0
         self.community_service_terms = None
         self.hours_of_service = None
         self.days_to_complete_service = None
@@ -43,7 +41,6 @@ class CaseInformation(object):
             "plea_trial_date": self.plea_trial_date,
             "amend_offense_details": self.amend_offense_details,
             "charges_list": self.charges_list,
-            "ability_to_pay_details": self.ability_to_pay_details,
             "ability_to_pay_time": self.ability_to_pay_time,
             "balance_due_date": self.balance_due_date,
             "community_control_terms": self.community_control_terms,
@@ -79,6 +76,14 @@ class CriminalCharge(object):
         self.jail_days_suspended = None
 
 
+class AmendOffenseDetails(object):
+    """TODO: This should be refactored to a pure function most likely."""
+    def __init__(self):
+        self.original_charge = None
+        self.amended_charge = None
+        self.motion_disposition = "granted"
+
+
 class CommunityControlTerms(object):
     def __init__(self):
         self.community_control_required = False
@@ -96,29 +101,7 @@ class CommunityServiceTerms(object):
         self.due_date_for_service = None
 
 
-class OviDetails(object):
-    def __init__(self):
-        self.ovi_offenses_within_ten_years = 0
-        self.ovi_high_bac_test = False
-        self.ovi_refused_breathylizer = False
-        self.ovi_offenses_within_twenty_years = 0
-
-
-class AbilityToPayDetails(object):
-    def __init__(self):
-        self.ability_to_pay_details = None
-        self.ability_to_pay_time = None
-        self.balance_due_date = None
-
-
-class AmendOffenseDetails(object):
-    def __init__(self):
-        self.original_charge = None
-        self.amended_charge = None
-        self.motion_disposition = "granted"
-
-
-class LicenseSuspension(object):
+class LicenseSuspensionTerms(object):
     def __init__(self):
         self.license_suspension_ordered = False
         self.license_type = None
@@ -127,7 +110,7 @@ class LicenseSuspension(object):
         self.remedial_driving_class_required = False
 
 
-class OtherConditionsDetails(object):
+class OtherConditionsTerms(object):
     def __init__(self):
         self.other_conditions_ordered = False
         self.other_conditions_terms = None
