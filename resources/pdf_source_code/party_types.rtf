@@ -1,0 +1,60 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green0\blue170;\red0\green170\blue0;\red170\green0\blue0;\red0\green153\blue153;\red170\green85\blue0;\red30\green144\blue255;\red0\green0\blue128;\red187\green187\blue187;\red136\green136\blue136;\red76\green131\blue23;\red128\green0\blue128;\red0\green170\blue170;\red170\green170\blue170;\red136\green0\blue0;\red255\green0\blue0;\red255\green170\blue170;\red85\green85\blue85;}\f0 {\cf5 """Module containing all the data structures for parties in cases."""}\par
+\par
+{\cf1 class} {\cf2\ul Party}({\cf12 object}):\par
+    {\cf5 """The base object from which all other party objects are inherited."""}\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}, party_type, party_name: {\cf12 str}):\par
+        {\cf12 self}.party_type = party_type {\cf13\i # Either Person or Entity}\par
+\par
+\par
+{\cf1 class} {\cf2\ul PlaintiffEntity}(Party):\par
+    {\cf5 """A type of party in a case. Generally the State of Ohio in a criminal\par
+    case."""}\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}, party_type: {\cf5 '}{\cf5 Entity}{\cf5 '}):\par
+        {\cf12 super}().{\cf2 __init__}(party_type)\par
+        {\cf12 self}.full_name = party_type.entity_name\par
+\par
+\par
+{\cf1 class} {\cf2\ul Person}({\cf12 object}):\par
+    {\cf5 """A base class for all people of any party type."""}\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}) -> {\cf12 None}:\par
+        {\cf12 self}.first_name = {\cf12 None}\par
+        {\cf12 self}.last_name = {\cf12 None}\par
+        {\cf12 self}.date_of_birth = {\cf12 None}\par
+\par
+\par
+{\cf1 class} {\cf2\ul Defendant}(Person):\par
+    {\cf5 """Class for defendants that inherits from Person class."""}\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}):\par
+        {\cf12 super}().{\cf2 __init__}()\par
+\par
+\par
+{\cf1 class} {\cf2\ul JudicialOfficer}(Person):\par
+    {\cf5 """\par
+    A subclass of a person that is for all different types of judicial\par
+    officers: Judges, Visiting Judges, Acting Judges, Magistrates.\par
+\par
+    In the future may want to add attorney registration number to this class.\par
+    """}\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}, first_name: {\cf12 str}, last_name: {\cf12 str}, officer_type: {\cf12 str}) -> {\cf12 None}:\par
+        {\cf12 super}().{\cf2 __init__}()\par
+        {\cf12 self}.first_name = first_name\par
+        {\cf12 self}.last_name = last_name\par
+        {\cf12 self}.officer_type = officer_type\par
+\par
+\par
+{\cf1 class} {\cf2\ul Entity}({\cf12 object}):\par
+    {\cf5 """A base class for non-person parties\par
+    (i.e. State of Ohio or a business)."""}\par
+\par
+    {\cf1 def} {\cf2 __init__}({\cf12 self}, entity_name: {\cf12 str}):\par
+        {\cf12 self}.entity_name = entity_name\par
+\par
+\par
+{\cf5 """\par
+test = JudicialOfficer("Marianne", "Hemmeter", "Judge")\par
+print(test.officer_type)\par
+test_2 = PlaintiffEntity(Entity("State of Ohio"))\par
+print(test_2.party_type)\par
+print(test_2.full_name)\par
+"""}\par
+}
