@@ -1,18 +1,18 @@
 APPLICATION TODO LIST for version 0.2.0
 * Refactor CaseInformation.py
-* Fix sizing of application based on screen size issue
 * Update test when editable plea, finding, etc are moved - partially done.
 * Clean up naming for classes of Add Conditions
-* Calculate costs and fines for case.
-* Remove magic numbers throughout. 
+* Update Main Window
+* Change data models to dataclass models
+* Add LEAP templates
+* Remove magic numbers throughout.
+* Have AB review case types for proper case type (moving, non-moving, crim)
 
 
 
 FEATURE/CHANGE LIST - for Version 0.3.0
-* Calculate court costs - plug in fixed costs and add additional costs based
-on moving traffic, non-traffic misdemanor, or non-moving traffic - set type in
-charge database and select highest level
 * Add community control conditions checkboxes
+* Fix sizing of application based on screen size issue
 
 
 

@@ -35,102 +35,12 @@ selection-color: rgb(255, 0, 0);
 font-weight: bold;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>290</y>
-      <width>641</width>
-      <height>68</height>
-     </rect>
-    </property>
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_6">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_7">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="MinorMisdemeanorTrafficButton_2">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_8">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_9">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_10">
-       <property name="minimumSize">
-        <size>
-         <width>120</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Entry</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>100</y>
-      <width>151</width>
+      <width>261</width>
       <height>31</height>
      </rect>
     </property>
@@ -145,30 +55,7 @@ font-weight: bold;</string>
      </font>
     </property>
     <property name="text">
-     <string>Traffic Entries</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>250</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-      <underline>true</underline>
-     </font>
-    </property>
-    <property name="text">
-     <string>Criminal Entries</string>
+     <string>Traffic and Criminal Entries</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_4">
@@ -295,7 +182,7 @@ font-weight: bold;</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="1">
-      <widget class="QPushButton" name="GreenSheetButton">
+      <widget class="QPushButton" name="LeapPleaLongButton">
        <property name="minimumSize">
         <size>
          <width>120</width>
@@ -303,7 +190,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Entry</string>
+        <string>LEAP Plea JE</string>
        </property>
       </widget>
      </item>
@@ -449,7 +336,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>31</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

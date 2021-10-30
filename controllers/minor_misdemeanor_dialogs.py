@@ -133,19 +133,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
-    def clear_case_information_fields(self):
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
-    def clear_charge_fields(self):
-        """Clears the fields that are used for adding a charge. The
-        statute_choice_box and offense_choice_box use the clearEditText
-        method because those boxes are editable."""
-        self.statute_choice_box.clearEditText()
-        self.offense_choice_box.clearEditText()
-
     @logger.catch
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The
@@ -161,32 +148,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         so that the AddConditionsDialog can access all data from the
         MinorMisdemeanorDialog when working in the AddConditionsDialog."""
         AddConditionsDialog(self).exec()
-
-    @logger.catch
-    def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        close_databases()
-        self.close_window()
-
-    @logger.catch
-    def add_charge(self):
-        """The add_charge_process, from which this is called, creates a criminal
-        charge object and adds the data in the view to the object. The criminal
-        charge (offense, statute, degree and type) is then added to the case
-        information model (by appending the charge object to the criminal
-        charges list).
-
-        The offense, statute and degree are added to the view by the method
-        add_charge_to_view, not this method. This method is triggered on
-        clicked() of the Add Charge button."""
-        self.criminal_charge.offense = self.offense_choice_box.currentText()
-        self.criminal_charge.statute = self.statute_choice_box.currentText()
-        self.criminal_charge.degree = self.degree_choice_box.currentText()
-        self.criminal_charge.type = self.set_offense_type()
-        self.case_information.add_charge_to_list(self.criminal_charge)
-        self.add_charge_to_view()
-        self.statute_choice_box.setFocus()
 
     @logger.catch
     def add_charge_to_view(self):
@@ -395,32 +356,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
 
-    def guilty_all_plea_and_findings(self):
-        """Sets the plea and findings boxes to guilty for all charges currently
-        in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
-                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
-                    column +=1
-            except AttributeError:
-                pass
-        self.set_cursor_to_FineLineEdit()
-
-    def no_contest_all_plea_and_findings(self):
-        """Sets the plea box to no contest and findings boxes to guilty for all
-        charges currently in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("No Contest")
-                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
-                    column +=1
-            except AttributeError:
-                pass
-        self.set_cursor_to_FineLineEdit()
-
     def set_cursor_to_FineLineEdit(self):
         for column in range(self.charges_gridLayout.columnCount()):
             try:
@@ -453,64 +388,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         else:
             self.case_information.fra_in_court = None
 
-    def set_offense_type(self):
-        key = self.statute_choice_box.currentText()
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(database_statutes)
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            statute = query.value(2)
-            offense_type = query.value(4)
-            if statute == key:
-                return offense_type
-
-    @logger.catch
-    def set_statute(self, key):
-        """This method queries based on the offense and then sets the statute
-        and degree based on the offense in the database.
-
-        :key: is the string that is passed by the function each time the field
-        is changed on the view. This is the offense."""
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(database_offenses)
-        query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if offense == key:
-                self.statute_choice_box.setCurrentText(statute)
-                self.degree_choice_box.setCurrentText(degree)
-                break
-
-    @logger.catch
-    def set_offense(self, key):
-        """This method queries based on the statute and then sets the offense
-        and degree based on the statute in the database.
-
-        :key: is the string that is passed by the function each time the field
-        is changed on the view. This is the statute."""
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(database_statutes)
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if statute == key:
-                self.offense_choice_box.setCurrentText(offense)
-                self.degree_choice_box.setCurrentText(degree)
-                break
-
     @logger.catch
     def set_pay_date(self, time_to_pay_text):
         """Sets the balance of fines and costs to a future date (or today)
@@ -542,4 +419,4 @@ if __name__ == "__main__":
     print("MMD ran directly")
 else:
     print("MMD ran when imported")
-    database_offenses, database_statutes = create_database_connections()
+    #database_offenses, database_statutes = create_database_connections()

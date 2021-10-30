@@ -10,6 +10,7 @@ from loguru import logger
 from models.party_types import JudicialOfficer
 from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
+from controllers.leap_plea_dialogs import LeapPleaLongDialog
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
@@ -50,7 +51,7 @@ class Window(QMainWindow, Ui_MainWindow):
         }
         self.dialog_dict = {
             self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
-            # self.GreenSheetButton: MinorMisdemeanorDialog,
+            self.LeapPleaLongButton: LeapPleaLongDialog,
         }
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
