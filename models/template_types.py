@@ -10,25 +10,23 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 class Template():
     """Template objects contain all the relevant data for each type of template.
     Changes to content of template should be made on the template directly."""
-    def __init__(self, template_name, template_path):
+    def __init__(self, template_name, template_dialog, template_path):
         self.template_name = template_name
+        self.template_dialog = template_dialog
         self.template_path = TEMPLATE_PATH + template_path
 
 
 Magistrate_And_Judge_Final_Judgment_Template = Template(
     "Traffic Judgment Entry",
+    "Minor Misdemeanor Dialog",
     "Magistrate_And_Judge_Final_Judgment_Template.docx",
-)
-
-Judge_Final_Judgment_Template = Template(
-    "Traffic Judgment Entry",
-    "Judge_Final_Judgment_Template.docx",
 )
 
 
 TEMPLATE_DICT = {
     "Bunner": Magistrate_And_Judge_Final_Judgment_Template,
     "Pelanda": Magistrate_And_Judge_Final_Judgment_Template,
+    "Kudela": Magistrate_And_Judge_Final_Judgment_Template,
     "Rohrer": Magistrate_And_Judge_Final_Judgment_Template,
     "Hemmeter": Magistrate_And_Judge_Final_Judgment_Template,
 }

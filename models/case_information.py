@@ -1,4 +1,6 @@
 """Module containing all data structures for everything at the moment."""
+from dataclasses import dataclass
+
 from models.party_types import JudicialOfficer, Defendant
 
 
@@ -63,56 +65,65 @@ class CaseInformation(object):
         return self.formatted_case_information
 
 
-class CriminalCharge(object):
-    def __init__(self):
-        self.offense = None
-        self.statute = None
-        self.degree = None
-        self.plea = None
-        self.type = None
-        self.finding = None
-        self.fines_amount = None
-        self.fines_suspended = None
-        self.court_costs = None
-        self.jail_days = None
-        self.jail_days_suspended = None
+@dataclass
+class CriminalCharge:
+    """Class for keeping track of all information that is specific to each
+    individual charge in a case.
+
+    TODO: Perhaps switch fine/jail to int/float?"""
+    offense: str = None
+    statute: str = None
+    degree: str = None
+    plea: str = None
+    type: str = None
+    finding: str = None
+    fines_amount: str = None
+    fines_suspended: str = None
+    jail_days: str = None
+    jail_days_suspended: str = None
 
 
+@dataclass
 class AmendOffenseDetails(object):
     """TODO: This should be refactored to a pure function most likely."""
-    def __init__(self):
-        self.original_charge = None
-        self.amended_charge = None
-        self.motion_disposition = "granted"
+    original_charge: str = None
+    amended_charge: str = None
+    motion_disposition: str = "granted"
 
 
+@dataclass
 class CommunityControlTerms(object):
-    def __init__(self):
-        self.community_control_required = False
-        self.term_of_community_control = 0
-        self.type_of_community_control = "basic"
-        self.not_refuse = False
-        self.not_consume = False
+    """Class for keeping track of all community control terms that are tied to
+    a specific case."""
+    community_control_required: bool = False
+    term_of_community_control: int = 0
+    type_of_community_control: str = "basic"
 
 
+@dataclass
 class CommunityServiceTerms(object):
-    def __init__(self):
-        self.community_service_ordered = False
-        self.hours_of_service = 0
-        self.days_to_complete_service = 0
-        self.due_date_for_service = None
+    """Class for keeping track of all community service terms that are tied to
+    a specific case."""
+    community_service_ordered: bool = False
+    hours_of_service: int = 0
+    days_to_complete_service: int = 0
+    due_date_for_service: str = None
 
 
+@dataclass
 class LicenseSuspensionTerms(object):
-    def __init__(self):
-        self.license_suspension_ordered = False
-        self.license_type = None
-        self.license_suspended_date = None
-        self.license_suspension_term = None
-        self.remedial_driving_class_required = False
+    """Class for keeping track of the license suspension terms that are tied to
+    a specific case."""
+    license_suspension_ordered: bool = False
+    license_type: str = None
+    license_suspended_date: str = None
+    license_suspension_term: str = None
+    remedial_driving_class_required: bool = False
 
 
+@dataclass
 class OtherConditionsTerms(object):
-    def __init__(self):
-        self.other_conditions_ordered = False
-        self.other_conditions_terms = None
+    """Class for keeping track of other conditions that are tied to
+    a specific case. This condition is a freeform text entry box in the UI."""
+    other_conditions_ordered: bool = False
+    other_conditions_terms: str = None

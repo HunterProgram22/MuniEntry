@@ -46,6 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.judicial_officer_dict = {
             self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
             self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
+            self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
             self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
         }

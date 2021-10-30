@@ -55,7 +55,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def __init__(self, judicial_officer, parent=None):
-        open_databases()
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
