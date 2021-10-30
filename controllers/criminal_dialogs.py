@@ -31,13 +31,7 @@ from views.custom_widgets import (
     DeleteButton,
     AmendButton,
 )
-
-
-PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\resources\\Templates\\"
-SAVE_PATH = PATH + "\\resources\\Saved\\"
-DB_PATH = PATH + "\\resources\\db\\"
-CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
+from settings import TEMPLATE_PATH, SAVE_PATH, DB_PATH, CHARGES_DATABASE
 
 
 @logger.catch
@@ -79,18 +73,60 @@ class BaseCriminalDialog(QDialog):
     instantiated as its own dialog, but the init contains the setup for all
     inherited class controllers."""
 
-    def __init__(self, parent=None):
+    def __init__(self, judicial_officer, parent=None):
+        """Databases must be opened first in order for them to be accessed
+        when the UI is built so it can populate fields.The setupUI calls to
+        the view to create the UI."""
         open_databases()
         super().__init__(parent)
         self.setupUi(self)
+        self.modify_view()
+        self.connect_signals_to_slots()
+        self.delete_button_list = []
         self.doc = None
         self.docname = None
-        self.pay_date_dict = {
-            "forthwith": 0,
-            "within 30 days": 30,
-            "within 60 days": 60,
-            "within 90 days": 90,
-        }
+
+    @logger.catch
+    def modify_view(self):
+        """The modify view method updates the view that is created on init with
+        self.setupUI. Place items in this method that can't be added
+        directly in QtDesigner (or are more easily added later) so that they
+        don't need to be changed in the view file each time pyuic5 is run."""
+        statute_list = create_statute_list()
+        self.statute_choice_box.addItems(statute_list)
+        self.offense_choice_box.addItems(create_offense_list())
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects any signals to slots. Generally, connecting with
+        pressed is preferred to clicked because a clicked event sends a bool
+        argument to the function. However, clicked is used in some instances
+        because it is a press and release of a button. Using pressed sometimes
+        caused an event to be triggered twice.
+
+        At present this includes buttons common to all criminal dialogs. Buttons
+        that are specific to only a certain dialog are added in the subclassed
+        version of the method."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
+        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        self.add_charge_Button.clicked.connect(self.add_charge_process)
+        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
+        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
+        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
+        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+
+    @logger.catch
+    def update_case_information(self):
+        """"The method calls functions to update the case information model
+        with the data for the case that is in the fields on the view. This
+        method may be called in multiple places when a button is pressed to
+        make sure all information is current."""
+        self.update_party_information()
+        self.add_dispositions_and_fines()
 
     def close_window(self):
         """Function connected to a button to close the window. Can be connected
@@ -164,10 +200,7 @@ class BaseCriminalDialog(QDialog):
         else:
             self.defendant_attorney_name_label.setText("Attorney: None")
 
-    def update_case_information(self):
-        """Placeholder for future use to refactor out of other dialogs and reduce
-        code reuse."""
-        pass
+
 
     @logger.catch
     def close_event(self):
@@ -300,9 +333,10 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def __init__(self, minor_misdemeanor_dialog, parent=None):
-        super().__init__(parent)
         self.case_information = minor_misdemeanor_dialog.case_information
+        super().__init__(parent)
         self.modify_view()
+        self.connect_signals_to_slots()
         self.community_service = (
             minor_misdemeanor_dialog.community_service_checkBox.isChecked()
         )
@@ -319,6 +353,13 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
         )
         self.enable_condition_frames()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.continue_Button.pressed.connect(self.add_conditions)
+        self.continue_Button.released.connect(self.close_window)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(self.set_service_date)
 
     @logger.catch
     def modify_view(self):

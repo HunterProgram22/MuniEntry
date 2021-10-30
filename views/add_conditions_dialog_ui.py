@@ -302,11 +302,13 @@ class Ui_AddConditionsDialog(object):
         self.term_of_community_control_box.addItem("")
         self.term_of_community_control_box.addItem("")
         self.gridLayout_2.addWidget(self.term_of_community_control_box, 1, 1, 1, 1)
+        self.cancel_Button = QtWidgets.QPushButton(AddConditionsDialog)
+        self.cancel_Button.setGeometry(QtCore.QRect(590, 800, 181, 33))
+        self.cancel_Button.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.cancel_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.cancel_Button.setObjectName("cancel_Button")
 
         self.retranslateUi(AddConditionsDialog)
-        self.continue_Button.pressed.connect(AddConditionsDialog.add_conditions)
-        self.continue_Button.released.connect(AddConditionsDialog.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged['int'].connect(AddConditionsDialog.set_service_date)
         QtCore.QMetaObject.connectSlotsByName(AddConditionsDialog)
 
     def retranslateUi(self, AddConditionsDialog):
@@ -350,3 +352,4 @@ class Ui_AddConditionsDialog(object):
         self.term_of_community_control_box.setItemText(1, _translate("AddConditionsDialog", "12 months"))
         self.term_of_community_control_box.setItemText(2, _translate("AddConditionsDialog", "18 months"))
         self.term_of_community_control_box.setItemText(3, _translate("AddConditionsDialog", "24 months"))
+        self.cancel_Button.setText(_translate("AddConditionsDialog", "Cancel"))

@@ -23,13 +23,7 @@ from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation, CriminalCharge
 from controllers.criminal_dialogs import BaseCriminalDialog
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
-
-
-PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\resources\\templates\\"
-SAVE_PATH = PATH + "\\resources\\saved\\"
-DB_PATH = PATH + "\\resources\\db\\"
-CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
+from settings import LEAP_COMPLETE_DATE_DICT
 
 
 class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
@@ -40,74 +34,27 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
-        self.modify_view()
-        self.connect_signals_to_slots()
         self.dialog_name = "Leap Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.delete_button_list = []
-        self.complete_program_date_dict = {
-            "forthwith": 0,
-            "120 days": 120,
-        }
-        self.set_sentencing_date("120 days")
-
-    @logger.catch
-    def create_entry(self):
-        """The standard function used to create an entry when a create entry
-        button is press/click/released.
-
-        TODO: This needs to be refactored back to Criminal Dialogs with template
-        and path information set to the template module."""
-        self.doc = DocxTemplate(self.template.template_path)
-        self.doc.render(self.case_information.get_case_information())
-        self.set_document_name()
-        self.doc.save(SAVE_PATH + self.docname)
-        os.startfile(SAVE_PATH + self.docname)
 
     @logger.catch
     def modify_view(self):
-        """The modify view method updates the view that is created on init from the
-        Ui_MinorMisdemeanorDialog. Place items in this method that can't be added
-        directly in QtDesigner so that they don't need to be changed in the view file
-        each time pyuic5 is run."""
-        statute_list = create_statute_list()
-        self.statute_choice_box.addItems(statute_list)
-        self.offense_choice_box.addItems(create_offense_list())
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        #self.balance_due_date.setDate(QtCore.QDate.currentDate())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
+        """The modify view method updates the view that is created on init."""
+        super().modify_view()
+        self.set_sentencing_date("120 days")
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method connects any signals to slots. Generally, connecting with
-        pressed is preferred to clicked because a clicked event sends a bool
-        argument to the function. However, clicked is used in some instances
-        because it is a press and release of a button. Using pressed sometimes
-        caused an event to be triggered twice."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
-        self.add_charge_Button.clicked.connect(self.add_charge_process)
-        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
-        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        """The method connects additional signals to slots. That are not
+        included in the BaseCriminalDialog."""
+        super().connect_signals_to_slots()
         self.time_to_complete_box.currentTextChanged.connect(self.set_sentencing_date)
 
     @logger.catch
     def update_case_information(self):
-        """The method calls functions to update the case information model
-        with the data for the case that is in the fields on the view. This does
-        not update the model
-        with information in the charge fields (offense, statute, plea, etc.)
-        the charge information is transferred to the model upon press of the
-        add charge button.
+        """The method calls functions to update the case information model."""
+        super().update_case_information()
 
-        Fields that are updated upon pressed() of createEntryButton = case
-        number, first name, last name."""
-        self.update_party_information()
-        self.add_dispositions_and_fines()
 
     @logger.catch
     def update_party_information(self):
@@ -213,7 +160,7 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         """Sets the sentencing date. This function is similar to set pay date.
 
         TODO: Refactor into single subclassed function."""
-        days_to_add = self.complete_program_date_dict[time_to_pay_text]
+        days_to_add = LEAP_COMPLETE_DATE_DICT[time_to_pay_text]
         future_date = date.today() + timedelta(days_to_add)
         today = date.today()
 

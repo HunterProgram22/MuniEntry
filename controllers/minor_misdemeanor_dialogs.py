@@ -36,13 +36,7 @@ from controllers.criminal_dialogs import (
     AmendOffenseDialog,
 )
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
-
-
-PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\resources\\templates\\"
-SAVE_PATH = PATH + "\\resources\\saved\\"
-DB_PATH = PATH + "\\resources\\db\\"
-CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
+from settings import PAY_DATE_DICT
 
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
@@ -57,48 +51,34 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
         self.case_information = CaseInformation(judicial_officer)
-        self.modify_view()
-        self.connect_signals_to_slots()
         self.dialog_name = "Minor Misdemeanor Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.delete_button_list = []
         self.amend_button_list = []
 
     @logger.catch
     def modify_view(self):
-        """The modify view method updates the view that is created on init from the
-        Ui_MinorMisdemeanorDialog. Place items in this method that can't be added
-        directly in QtDesigner so that they don't need to be changed in the view file
-        each time pyuic5 is run."""
-        statute_list = create_statute_list()
-        self.statute_choice_box.addItems(statute_list)
-        self.offense_choice_box.addItems(create_offense_list())
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        """The modify view method updates the view that is created on init."""
+        super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method connects any signals to slots. Generally, connecting with
-        pressed is preferred to clicked because a clicked event sends a bool
-        argument to the function. However, clicked is used in some instances
-        because it is a press and release of a button. Using pressed sometimes
-        caused an event to be triggered twice."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        """The method connects additional signals to slots. That are not
+        included in the BaseCriminalDialog."""
+        super().connect_signals_to_slots()
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
-        self.add_charge_Button.clicked.connect(self.add_charge_process)
-        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
         self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
+
+    @logger.catch
+    def update_case_information(self):
+        """The method calls functions to update the case information."""
+        super().update_case_information()
+        self.check_add_conditions()
+        self.calculate_costs_and_fines()
 
     @logger.catch
     def start_amend_offense_dialog(self):
@@ -193,24 +173,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 layout_item.widget().deleteLater()
                 self.charges_gridLayout.removeItem(layout_item)
 
-    @logger.catch
-    def update_case_information(self):
-        """The method calls functions to update the case information model
-        with the data for the case that is in the fields on the view. This does
-        not update the model
-        with information in the charge fields (offense, statute, plea, etc.)
-        the charge information is transferred to the model upon press of the
-        add charge button.
 
-        Fields that are updated upon pressed() of createEntryButton = case
-        number, first name, last name, ability to pay time, balance due date,
-        date of plea/trial,operator license number, date of birth, FRA (proof
-        of insurance) in complaint, FRA in court."""
-        self.update_party_information()
-        self.update_costs_and_fines_information()
-        self.add_dispositions_and_fines()
-        self.check_add_conditions()
-        self.calculate_costs_and_fines()
 
     @logger.catch
     def update_party_information(self):
@@ -362,7 +325,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         will move the actual date to the next tuesday per court procedure for
         show cause hearings being on Tuesday. Would need to be modified if the
         policy changed."""
-        days_to_add = self.pay_date_dict[time_to_pay_text]
+        days_to_add = PAY_DATE_DICT[time_to_pay_text]
         future_date = date.today() + timedelta(days_to_add)
         today = date.today()
 

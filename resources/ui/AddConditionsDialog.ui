@@ -734,61 +734,31 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
+  <widget class="QPushButton" name="cancel_Button">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>800</y>
+     <width>181</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(160, 160, 160);</string>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>continue_Button</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>add_conditions()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>831</x>
-     <y>810</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>753</x>
-     <y>697</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>released()</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>close_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>902</x>
-     <y>815</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>707</x>
-     <y>735</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>community_service_days_to_complete_box</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>set_service_date()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>632</x>
-     <y>327</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>573</x>
-     <y>721</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>create_entry()</slot>
   <slot>continue_dialog()</slot>
