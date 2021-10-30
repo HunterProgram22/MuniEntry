@@ -17,6 +17,7 @@ class CaseInformation(object):
         self.community_control_terms = None
         self.ability_to_pay_time = None
         self.balance_due_date = None
+        self.sentencing_date = None
         self.amend_offense_details = None
         self.community_service_terms = None
         self.hours_of_service = None
@@ -57,6 +58,7 @@ class CaseInformation(object):
             "license_suspension_details": self.license_suspension_details,
             "other_conditions_details": self.other_conditions_details,
             "court_costs_ordered": self.court_costs_ordered,
+            "sentencing_date": self.sentencing_date,
         }
         return self.formatted_case_information
 

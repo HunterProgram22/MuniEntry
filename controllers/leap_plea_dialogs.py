@@ -1,7 +1,9 @@
 """The controller module for the LEAP plea dialog."""
+import os
 import pathlib
 from datetime import date, timedelta
 from loguru import logger
+from docxtpl import DocxTemplate
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -40,9 +42,36 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
+        self.template = TEMPLATE_PATH + "Leap_Admission_Plea_Judgment_Entry.docx"
         self.delete_button_list = []
-        self.amend_button_list = []
+        self.complete_program_date_dict = {
+            "forthwith": 0,
+            "120 days": 120,
+        }
+        self.set_sentencing_date("120 days")
+
+    @logger.catch
+    def create_entry(self):
+        """The standard function used to create an entry when a create entry
+        button is press/click/released.
+
+        TODO: This needs to be refactored back to Criminal Dialogs with template
+        and path information set to the template module."""
+        self.doc = DocxTemplate(TEMPLATE_PATH + "Leap_Admission_Plea_Judgment_Entry.docx")
+        self.doc.render(self.case_information.get_case_information())
+        self.set_document_name()
+        self.doc.save(SAVE_PATH + self.docname)
+        os.startfile(SAVE_PATH + self.docname)
+
+    def set_document_name(self):
+        """Sets document name based on the case number and name of the template
+        must include '.docx' to make it a Word document.
+
+        TODO: This needs to be refactored back to Criminal Dialogs with template
+        and path information set to the template module."""
+        self.docname = (
+            self.case_information.case_number + "_Leap_Plea_And_Admission_JE.docx"
+        )
 
     @logger.catch
     def modify_view(self):
@@ -73,6 +102,45 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute)
         self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        self.time_to_complete_box.currentTextChanged.connect(self.set_sentencing_date)
+
+    @logger.catch
+    def update_case_information(self):
+        """The method calls functions to update the case information model
+        with the data for the case that is in the fields on the view. This does
+        not update the model
+        with information in the charge fields (offense, statute, plea, etc.)
+        the charge information is transferred to the model upon press of the
+        add charge button.
+
+        Fields that are updated upon pressed() of createEntryButton = case
+        number, first name, last name."""
+        self.update_party_information()
+        self.add_dispositions_and_fines()
+
+    @logger.catch
+    def update_party_information(self):
+        """This is subclassed from Criminal Dialogs (TODO: it will be once i refactor)."""
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.case_information.sentencing_date = self.sentencing_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
+    def add_dispositions_and_fines(self):
+        """Row 3 - plea.
+
+        Column count increases by 2 instead of one due to grid adding two
+        columns when a charge is added (odd numbered column is empty)."""
+        column = 2
+        try:
+            for index in range(len(self.case_information.charges_list)):
+                self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
+                index +=1
+                column +=2
+        except AttributeError:
+            print("Attribute error allowed to pass for lack of widget")
 
     @logger.catch
     def add_charge_to_view(self):
@@ -149,6 +217,29 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
             except AttributeError:
                 pass
 
+    @logger.catch
+    def set_sentencing_date(self, time_to_pay_text):
+        """Sets the sentencing date. This function is similar to set pay date.
+
+        TODO: Refactor into single subclassed function."""
+        days_to_add = self.complete_program_date_dict[time_to_pay_text]
+        future_date = date.today() + timedelta(days_to_add)
+        today = date.today()
+
+        def next_monday(future_date, weekday=0):
+            """This function returns the number of days to add to today to set
+            the payment due date out to the Tuesday after the number of days
+            set in the set_pay_date function. The default of 0 for weekday is
+            what sets it to a Monday. If it is 1 it would be Tuesday, 3 would
+            be Wednesday, etc."""
+            days_ahead = weekday - future_date.weekday()
+            if days_ahead <= 0:  # Target day already happened this week
+                days_ahead += 7
+            return future_date + timedelta(days_ahead)
+
+        future_date = next_monday(future_date, 0)
+        total_days_to_add = (future_date - today).days
+        self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
 if __name__ == "__main__":
