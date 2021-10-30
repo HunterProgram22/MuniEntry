@@ -58,7 +58,7 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
 
         TODO: This needs to be refactored back to Criminal Dialogs with template
         and path information set to the template module."""
-        self.doc = DocxTemplate(TEMPLATE_PATH + "Leap_Admission_Plea_Judgment_Entry.docx")
+        self.doc = DocxTemplate(self.template.template_path)
         self.doc.render(self.case_information.get_case_information())
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)

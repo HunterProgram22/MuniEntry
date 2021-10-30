@@ -10,7 +10,7 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 class Template():
     """Template objects contain all the relevant data for each type of template.
     Changes to content of template should be made on the template directly."""
-    def __init__(self, template_name, template_dialog, template_path):
+    def __init__(self, template_name, template_path):
         self.template_name = template_name
         self.template_path = TEMPLATE_PATH + template_path
 
