@@ -12,21 +12,21 @@ class Template():
     Changes to content of template should be made on the template directly."""
     def __init__(self, template_name, template_dialog, template_path):
         self.template_name = template_name
-        self.template_dialog = template_dialog
         self.template_path = TEMPLATE_PATH + template_path
 
 
 Magistrate_And_Judge_Final_Judgment_Template = Template(
     "Traffic Judgment Entry",
-    "Minor Misdemeanor Dialog",
     "Magistrate_And_Judge_Final_Judgment_Template.docx",
+)
+
+Leap_Plea_And_Admission_Template = Template(
+    "LEAP Plea Admission Entry",
+    "Leap_Plea_Admission_Template.docx",
 )
 
 
 TEMPLATE_DICT = {
-    "Bunner": Magistrate_And_Judge_Final_Judgment_Template,
-    "Pelanda": Magistrate_And_Judge_Final_Judgment_Template,
-    "Kudela": Magistrate_And_Judge_Final_Judgment_Template,
-    "Rohrer": Magistrate_And_Judge_Final_Judgment_Template,
-    "Hemmeter": Magistrate_And_Judge_Final_Judgment_Template,
+    "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
+    "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
 }

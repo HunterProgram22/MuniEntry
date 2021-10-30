@@ -42,7 +42,8 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.template = TEMPLATE_PATH + "Leap_Admission_Plea_Judgment_Entry.docx"
+        self.dialog_name = "Leap Plea Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.delete_button_list = []
         self.complete_program_date_dict = {
             "forthwith": 0,
@@ -62,16 +63,6 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         self.set_document_name()
         self.doc.save(SAVE_PATH + self.docname)
         os.startfile(SAVE_PATH + self.docname)
-
-    def set_document_name(self):
-        """Sets document name based on the case number and name of the template
-        must include '.docx' to make it a Word document.
-
-        TODO: This needs to be refactored back to Criminal Dialogs with template
-        and path information set to the template module."""
-        self.docname = (
-            self.case_information.case_number + "_Leap_Plea_And_Admission_JE.docx"
-        )
 
     @logger.catch
     def modify_view(self):

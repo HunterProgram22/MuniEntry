@@ -59,7 +59,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.case_information = CaseInformation(judicial_officer)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.template = TEMPLATE_DICT.get(self.case_information.judicial_officer.last_name)
+        self.dialog_name = "Minor Misdemeanor Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.delete_button_list = []
         self.amend_button_list = []
 
