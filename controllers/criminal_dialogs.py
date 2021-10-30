@@ -23,6 +23,14 @@ from models.case_information import (
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
+from views.custom_widgets import (
+    PleaComboBox,
+    FindingComboBox,
+    FineLineEdit,
+    FineSuspendedLineEdit,
+    DeleteButton,
+    AmendButton,
+)
 
 
 PATH = str(pathlib.Path().absolute())
