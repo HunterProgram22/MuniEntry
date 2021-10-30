@@ -1,10 +1,8 @@
 APPLICATION TODO LIST for version 0.2.0
 * Refactor CaseInformation.py
 * Update test when editable plea, finding, etc are moved - partially done.
-* Clean up naming for classes of Add Conditions
-* Update Main Window
+* Clean up naming for classes of Add Conditions - check functionality
 * Change data models to dataclass models
-* Add LEAP templates
 * Remove magic numbers throughout.
 * Have AB review case types for proper case type (moving, non-moving, crim)
 
