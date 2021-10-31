@@ -111,12 +111,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
     @logger.catch
-    def start_amend_offense_dialog(self):
+    def start_amend_offense_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The
         case_information is passed to the dialog class in order to populate
-        the case information banner."""
+        the case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
-        AmendOffenseDialog(self.case_information).exec()
+        button_index = self.amend_button_list.index(self.sender())
+        AmendOffenseDialog(self.case_information, button_index).exec()
 
     @logger.catch
     def start_add_conditions_dialog(self):

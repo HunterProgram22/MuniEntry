@@ -89,12 +89,15 @@ class BaseCriminalDialog(QDialog):
         self.setupUI. Place items in this method that can't be added
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
-        statute_list = create_statute_list()
-        self.statute_choice_box.addItems(statute_list)
-        self.offense_choice_box.addItems(create_offense_list())
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
+        try:
+            statute_list = create_statute_list()
+            self.statute_choice_box.addItems(statute_list)
+            self.offense_choice_box.addItems(create_offense_list())
+            self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+            self.statute_choice_box.setCurrentText("")
+            self.offense_choice_box.setCurrentText("")
+        except AttributeError:
+            pass
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -107,14 +110,17 @@ class BaseCriminalDialog(QDialog):
         At present this includes buttons common to all criminal dialogs. Buttons
         that are specific to only a certain dialog are added in the subclassed
         version of the method."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
-        self.add_charge_Button.clicked.connect(self.add_charge_process)
-        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
-        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        try:
+            self.cancel_Button.pressed.connect(self.close_event)
+            self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
+            self.create_entry_Button.pressed.connect(self.create_entry_process)
+            self.add_charge_Button.clicked.connect(self.add_charge_process)
+            self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
+            self.statute_choice_box.currentTextChanged.connect(self.set_offense)
+            self.offense_choice_box.currentTextChanged.connect(self.set_statute)
+            self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        except AttributeError:
+            pass
 
     @logger.catch
     def update_case_information(self):
@@ -300,7 +306,7 @@ class BaseCriminalDialog(QDialog):
         correct row."""
         amend_button = AmendButton()
         self.amend_button_list.append(amend_button)
-        amend_button.pressed.connect(self.start_amend_offense_dialog)
+        amend_button.clicked.connect(self.start_amend_offense_dialog)
         self.charges_gridLayout.addWidget(amend_button, row, column)
 
     @logger.catch
@@ -711,21 +717,20 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
 
     The set_case_information_banner is an inherited method from BaseCriminalDialog."""
     @logger.catch
-    def __init__(self, case_information, parent=None):
+    def __init__(self, case_information, button_index, parent=None):
         super().__init__(parent)
         self.case_information = case_information
         self.amend_offense_details = AmendOffenseDetails()
         self.set_case_information_banner()
-        self.modify_view()
+        self.modify_view_local(button_index)
 
     @logger.catch
-    def modify_view(self):
-        """The modify view method updates the view that is created on init.
-        Place items in this method that can't be added directly in QtDesigner
-        so that they don't need to be changed in the view file each time pyuic5
-        is run."""
+    def modify_view_local(self, button_index):
+        """The modify view sets the original charge based on the item in the main dialog
+        for which amend button was pressed."""
         offense_list = create_offense_list()
         self.original_charge_box.addItems(offense_list)
+        self.original_charge_box.setCurrentText(self.case_information.charges_list[button_index].offense)
         self.amended_charge_box.addItems(offense_list)
 
     @logger.catch
@@ -743,6 +748,11 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
             self.motion_decision_box.currentText()
         )
         self.case_information.amend_offense_details = self.amend_offense_details
+
+    @logger.catch
+    def close_event(self):
+        """Uses subclass of close_event so that it doesn't close databases."""
+        self.close_window()
 
 
 if __name__ == "__main__":
