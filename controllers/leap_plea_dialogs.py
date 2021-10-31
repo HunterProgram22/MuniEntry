@@ -90,5 +90,3 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
 
 if __name__ == "__main__":
     print("LPD ran directly")
-else:
-    print("LPD ran when imported")

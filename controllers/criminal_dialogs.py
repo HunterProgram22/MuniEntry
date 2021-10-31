@@ -278,6 +278,87 @@ class BaseCriminalDialog(QDialog):
                 layout_item.widget().deleteLater()
                 self.charges_gridLayout.removeItem(layout_item)
 
+    @logger.catch
+    def guilty_all_plea_and_findings(self):
+        """Sets the plea and findings boxes to guilty for all charges currently
+        in the charges_gridLayout."""
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
+                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
+                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
+                    column +=1
+            except AttributeError:
+                pass
+        try:
+            self.set_cursor_to_FineLineEdit()
+        except AttributeError:
+            pass
+
+    @logger.catch
+    def no_contest_all_plea_and_findings(self):
+        """Sets the plea box to no contest and findings boxes to guilty for all
+        charges currently in the charges_gridLayout."""
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
+                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("No Contest")
+                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
+                    column +=1
+            except AttributeError:
+                pass
+        self.set_cursor_to_FineLineEdit()
+
+    @logger.catch
+    def set_cursor_to_FineLineEdit(self):
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(5, column).widget(), FineLineEdit):
+                    self.charges_gridLayout.itemAtPosition(5, column).widget().setFocus()
+                    break
+            except AttributeError:
+                pass
+
+    @logger.catch
+    def show_costs_and_fines(self, bool):
+        """The bool is the toggle from the clicked() of the button pressed. No
+        action is taken with respect to it."""
+        self.update_case_information()
+        message = QMessageBox()
+        message.setIcon(QMessageBox.Information)
+        message.setWindowTitle("Total Costs and Fines")
+        message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +\
+            "\nFines: $" + str(self.case_information.total_fines) +\
+            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +\
+            "\n\n*Does not include possible bond forfeiture or other costs \n that may be assesed as a result of prior actions in case. ")
+        total_fines_and_costs = (self.case_information.court_costs +\
+            self.case_information.total_fines) - self.case_information.total_fines_suspended
+        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
+        message.setStandardButtons(QMessageBox.Ok)
+        message.exec_()
+
+    @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.case_information.fra_in_file = False
+        else:
+            self.case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.case_information.fra_in_court = True
+        elif current_text == "No":
+            self.case_information.fra_in_court = False
+        else:
+            self.case_information.fra_in_court = None
 
 
 
@@ -420,34 +501,7 @@ class BaseCriminalDialog(QDialog):
                 self.degree_choice_box.setCurrentText(degree)
                 break
 
-    def guilty_all_plea_and_findings(self):
-        """Sets the plea and findings boxes to guilty for all charges currently
-        in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
-                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
-                    column +=1
-            except AttributeError:
-                pass
-        try:
-            self.set_cursor_to_FineLineEdit()
-        except AttributeError:
-            pass
 
-    def no_contest_all_plea_and_findings(self):
-        """Sets the plea box to no contest and findings boxes to guilty for all
-        charges currently in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("No Contest")
-                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
-                    column +=1
-            except AttributeError:
-                pass
-        self.set_cursor_to_FineLineEdit()
 
     def clear_case_information_fields(self):
         self.defendant_first_name_lineEdit.clear()

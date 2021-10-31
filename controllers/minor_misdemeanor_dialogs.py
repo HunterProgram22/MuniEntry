@@ -123,8 +123,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.add_amend_button_to_view(row, column)
 
 
-
-
     @logger.catch
     def start_amend_offense_dialog(self):
         """Opens the amend offense dialog as a modal window. The
@@ -142,60 +140,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.update_case_information()
         AddConditionsDialog(self).exec()
 
-
-
-
-
-
-
-    def show_costs_and_fines(self, bool):
-        """The bool is the toggle from the clicked() of the button pressed. No
-        action is taken with respect to it."""
-        self.update_case_information()
-        message = QMessageBox()
-        message.setIcon(QMessageBox.Information)
-        message.setWindowTitle("Total Costs and Fines")
-        message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +\
-            "\nFines: $" + str(self.case_information.total_fines) +\
-            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +\
-            "\n\n*Does not include possible bond forfeiture or other costs \n that may be assesed as a result of prior actions in case. ")
-        total_fines_and_costs = (self.case_information.court_costs +\
-            self.case_information.total_fines) - self.case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
-        message.setStandardButtons(QMessageBox.Ok)
-        message.exec_()
-
-    def set_cursor_to_FineLineEdit(self):
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(5, column).widget(), FineLineEdit):
-                    self.charges_gridLayout.itemAtPosition(5, column).widget().setFocus()
-                    break
-            except AttributeError:
-                pass
-
-    @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.case_information.fra_in_file = False
-        else:
-            self.case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.case_information.fra_in_court = True
-        elif current_text == "No":
-            self.case_information.fra_in_court = False
-        else:
-            self.case_information.fra_in_court = None
 
     @logger.catch
     def set_pay_date(self, days_to_add):
