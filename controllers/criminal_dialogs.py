@@ -474,12 +474,6 @@ class BaseCriminalDialog(QDialog):
                 )
             )
         self.case_number_label.setText(self.case_information.case_number)
-        if self.case_information.defendant_attorney_name is not None:
-            self.defendant_attorney_name_label.setText(
-                "Attorney: " + self.case_information.defendant_attorney_name
-            )
-        else:
-            self.defendant_attorney_name_label.setText("Attorney: None")
 
     @logger.catch
     def set_offense_type(self):
