@@ -152,28 +152,32 @@ class BaseCriminalDialog(QDialog):
         """Checks to see what conditions in the Add Conditions box are checked and then
         transfers the information from the conditions to case_information model if the
         box is checked.
-        FIX: This is showing a none on logger.catch when starting the AddConditionsDialog,
-        but it is necessary to make sure the conditions are added to the entry. Refacotr.
+        FIX: Resolved AttributeError with try and except, but perhaps refactor
+        to create a license suspension details object at init for CaseInformation
+        (and for other conditions as well). 
 
         TODO:
         in future refactor this to have it loop through the different conditions so code
         doesn't need to be added each time a condition is added."""
-        if self.license_suspension_checkBox.isChecked():
-            self.case_information.license_suspension_details.license_suspension_ordered = (
-                True
-            )
-        if self.community_control_checkBox.isChecked():
-            self.case_information.community_control_terms.community_control_required = (
-                True
-            )
-        if self.community_service_checkBox.isChecked():
-            self.case_information.community_service_terms.community_service_ordered = (
-                True
-            )
-        if self.other_conditions_checkBox.isChecked():
-            self.case_information.other_conditions_details.other_conditions_ordered = (
-                True
-            )
+        try:
+            if self.license_suspension_checkBox.isChecked():
+                self.case_information.license_suspension_details.license_suspension_ordered = (
+                    True
+                )
+            if self.community_control_checkBox.isChecked():
+                self.case_information.community_control_terms.community_control_required = (
+                    True
+                )
+            if self.community_service_checkBox.isChecked():
+                self.case_information.community_service_terms.community_service_ordered = (
+                    True
+                )
+            if self.other_conditions_checkBox.isChecked():
+                self.case_information.other_conditions_details.other_conditions_ordered = (
+                    True
+                )
+        except AttributeError:
+            pass
 
     @logger.catch
     def calculate_costs_and_fines(self):

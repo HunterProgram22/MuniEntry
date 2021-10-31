@@ -194,7 +194,7 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
     assert dialog.charges_gridLayout.itemAtPosition(6, 2) == None
     # Add third offense, but two total since one deleted.
     add_offense_speeding_25_after_delete(dialog)
-    # Second Added check
+    # Third added check
     assert (
         dialog.charges_gridLayout.itemAtPosition(0, 6).widget().text()
         == "Speeding > 25 mph"
@@ -205,17 +205,6 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
     assert dialog.charges_gridLayout.itemAtPosition(4, 6).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 6).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "25"
-    # Third added check
-    assert (
-        dialog.charges_gridLayout.itemAtPosition(0, 8).widget().text()
-        == "Speeding > 25 mph"
-    )
-    assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 8).widget().currentText() == "Not Guilty"
-    )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 8).widget().currentText() == "Guilty"
-    assert dialog.charges_gridLayout.itemAtPosition(5, 8).widget().text() == "50"
-    assert dialog.charges_gridLayout.itemAtPosition(6, 8).widget().text() == "25"
 
 
 # def test_fines_due_date(app, dialog):
