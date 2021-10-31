@@ -1,15 +1,17 @@
-APPLICATION TODO LIST
+APPLICATION TODO LIST for version 0.2.0
 * Refactor CaseInformation.py
-* Fix failing MMD test on offense to statute
-* Make button name all same format "name_of_Button"
-* Check all functions with @logger.catch
-* Remove community service for fines if pay forthwith??
-* Add "Other" dialog
+* Update test when editable plea, finding, etc are moved - partially done.
+* Clean up naming for classes of Add Conditions - check functionality
+* Change data models to dataclass models
+* Remove magic numbers throughout.
+* Have AB review case types for proper case type (moving, non-moving, crim)
+
+
+
+FEATURE/CHANGE LIST - for Version 0.3.0
 * Add community control conditions checkboxes
+* Fix sizing of application based on screen size issue
 
-
-FEATURE/CHANGE LIST
-* Move editable plea, finding, fines, etc to grid
 
 
 DEPLOY TODO LIST

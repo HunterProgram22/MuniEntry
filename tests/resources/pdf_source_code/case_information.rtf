@@ -1,0 +1,117 @@
+{\rtf1\ansi\uc0\deff0{\fonttbl{\f0\fmodern\fprq1\fcharset0;}}{\colortbl;\red0\green153\blue153;\red170\green85\blue0;\red0\green170\blue0;\red0\green0\blue170;\red170\green0\blue0;\red0\green170\blue170;\red128\green0\blue128;\red187\green187\blue187;\red136\green136\blue136;\red30\green144\blue255;\red255\green0\blue0;\red255\green170\blue170;\red170\green170\blue170;\red85\green85\blue85;\red76\green131\blue23;\red136\green0\blue0;\red0\green0\blue128;}\f0 {\cf2 """Module containing all data structures for everything at the moment."""}\par
+{\cf4 from} {\cf6\ul models.party_types} {\cf4 import} JudicialOfficer, Defendant\par
+\par
+\par
+{\cf4 class} {\cf3\ul CaseInformation}({\cf6 object}):\par
+    {\cf2 """This object stores all the information for a case both at inception and\par
+    as it is populated through the application."""}\par
+\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}, judicial_officer):\par
+        {\cf6 self}.judicial_officer = judicial_officer\par
+        {\cf6 self}.case_number = {\cf6 None}\par
+        {\cf6 self}.defendant = Defendant()\par
+        {\cf6 self}.fra_in_file = {\cf6 None}\par
+        {\cf6 self}.fra_in_court = {\cf6 None}\par
+        {\cf6 self}.plea_trial_date = {\cf6 None}\par
+        {\cf6 self}.charges_list = []\par
+        {\cf6 self}.community_control_terms = {\cf6 None}\par
+        {\cf6 self}.ability_to_pay_time = {\cf6 None}\par
+        {\cf6 self}.balance_due_date = {\cf6 None}\par
+        {\cf6 self}.amend_offense_details = {\cf6 None}\par
+        {\cf6 self}.community_service_terms = {\cf6 None}\par
+        {\cf6 self}.hours_of_service = {\cf6 None}\par
+        {\cf6 self}.days_to_complete_service = {\cf6 None}\par
+        {\cf6 self}.due_date_for_service = {\cf6 None}\par
+        {\cf6 self}.license_suspension_details = {\cf6 None}\par
+        {\cf6 self}.other_conditions_details = {\cf6 None}\par
+        {\cf6 self}.court_costs_ordered = {\cf6 None}\par
+        {\cf6 self}.court_costs = {\cf1 0}\par
+        {\cf6 self}.total_fines = {\cf1 0}\par
+\par
+    {\cf4 def} {\cf3 add_charge_to_list}({\cf6 self}, charge):\par
+        {\cf6 self}.charges_list.append(charge)\par
+\par
+    {\cf4 def} {\cf3 get_case_information}({\cf6 self}):\par
+        {\cf2 """Returns a dictionary with all of case information required\par
+        to populate an entry."""}\par
+        {\cf6 self}.formatted_case_information = \{\par
+            {\cf2 "}{\cf2 case_number}{\cf2 "}: {\cf6 self}.case_number,\par
+            {\cf2 "}{\cf2 defendant_last_name}{\cf2 "}: {\cf6 self}.defendant.last_name,\par
+            {\cf2 "}{\cf2 defendant_first_name}{\cf2 "}: {\cf6 self}.defendant.first_name,\par
+            {\cf2 "}{\cf2 plea_trial_date}{\cf2 "}: {\cf6 self}.plea_trial_date,\par
+            {\cf2 "}{\cf2 amend_offense_details}{\cf2 "}: {\cf6 self}.amend_offense_details,\par
+            {\cf2 "}{\cf2 charges_list}{\cf2 "}: {\cf6 self}.charges_list,\par
+            {\cf2 "}{\cf2 ability_to_pay_time}{\cf2 "}: {\cf6 self}.ability_to_pay_time,\par
+            {\cf2 "}{\cf2 balance_due_date}{\cf2 "}: {\cf6 self}.balance_due_date,\par
+            {\cf2 "}{\cf2 community_control_terms}{\cf2 "}: {\cf6 self}.community_control_terms,\par
+            {\cf2 "}{\cf2 fra_in_file}{\cf2 "}: {\cf6 self}.fra_in_file,\par
+            {\cf2 "}{\cf2 fra_in_court}{\cf2 "}: {\cf6 self}.fra_in_court,\par
+            {\cf2 "}{\cf2 community_service_terms}{\cf2 "}: {\cf6 self}.community_service_terms,\par
+            {\cf2 "}{\cf2 hours_of_service}{\cf2 "}: {\cf6 self}.hours_of_service,\par
+            {\cf2 "}{\cf2 days_to_complete_service}{\cf2 "}: {\cf6 self}.days_to_complete_service,\par
+            {\cf2 "}{\cf2 due_date_for_service}{\cf2 "}: {\cf6 self}.due_date_for_service,\par
+            {\cf2 "}{\cf2 judicial_officer}{\cf2 "}: {\cf6 self}.judicial_officer.first_name\par
+            + {\cf2 "}{\cf2  }{\cf2 "}\par
+            + {\cf6 self}.judicial_officer.last_name,\par
+            {\cf2 "}{\cf2 judicial_officer_type}{\cf2 "}: {\cf6 self}.judicial_officer.officer_type,\par
+            {\cf2 "}{\cf2 license_suspension_details}{\cf2 "}: {\cf6 self}.license_suspension_details,\par
+            {\cf2 "}{\cf2 other_conditions_details}{\cf2 "}: {\cf6 self}.other_conditions_details,\par
+            {\cf2 "}{\cf2 court_costs_ordered}{\cf2 "}: {\cf6 self}.court_costs_ordered,\par
+        \}\par
+        {\cf4 return} {\cf6 self}.formatted_case_information\par
+\par
+\par
+{\cf4 class} {\cf3\ul CriminalCharge}({\cf6 object}):\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.offense = {\cf6 None}\par
+        {\cf6 self}.statute = {\cf6 None}\par
+        {\cf6 self}.degree = {\cf6 None}\par
+        {\cf6 self}.plea = {\cf6 None}\par
+        {\cf6 self}.type = {\cf6 None}\par
+        {\cf6 self}.finding = {\cf6 None}\par
+        {\cf6 self}.fines_amount = {\cf6 None}\par
+        {\cf6 self}.fines_suspended = {\cf6 None}\par
+        {\cf6 self}.court_costs = {\cf6 None}\par
+        {\cf6 self}.jail_days = {\cf6 None}\par
+        {\cf6 self}.jail_days_suspended = {\cf6 None}\par
+\par
+\par
+{\cf4 class} {\cf3\ul AmendOffenseDetails}({\cf6 object}):\par
+    {\cf2 """TODO: This should be refactored to a pure function most likely."""}\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.original_charge = {\cf6 None}\par
+        {\cf6 self}.amended_charge = {\cf6 None}\par
+        {\cf6 self}.motion_disposition = {\cf2 "}{\cf2 granted}{\cf2 "}\par
+\par
+\par
+{\cf4 class} {\cf3\ul CommunityControlTerms}({\cf6 object}):\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.community_control_required = {\cf6 False}\par
+        {\cf6 self}.term_of_community_control = {\cf1 0}\par
+        {\cf6 self}.type_of_community_control = {\cf2 "}{\cf2 basic}{\cf2 "}\par
+        {\cf6 self}.not_refuse = {\cf6 False}\par
+        {\cf6 self}.not_consume = {\cf6 False}\par
+\par
+\par
+{\cf4 class} {\cf3\ul CommunityServiceTerms}({\cf6 object}):\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.community_service_ordered = {\cf6 False}\par
+        {\cf6 self}.hours_of_service = {\cf1 0}\par
+        {\cf6 self}.days_to_complete_service = {\cf1 0}\par
+        {\cf6 self}.due_date_for_service = {\cf6 None}\par
+\par
+\par
+{\cf4 class} {\cf3\ul LicenseSuspensionTerms}({\cf6 object}):\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.license_suspension_ordered = {\cf6 False}\par
+        {\cf6 self}.license_type = {\cf6 None}\par
+        {\cf6 self}.license_suspended_date = {\cf6 None}\par
+        {\cf6 self}.license_suspension_term = {\cf6 None}\par
+        {\cf6 self}.remedial_driving_class_required = {\cf6 False}\par
+\par
+\par
+{\cf4 class} {\cf3\ul OtherConditionsTerms}({\cf6 object}):\par
+    {\cf4 def} {\cf3 __init__}({\cf6 self}):\par
+        {\cf6 self}.other_conditions_ordered = {\cf6 False}\par
+        {\cf6 self}.other_conditions_terms = {\cf6 None}\par
+}

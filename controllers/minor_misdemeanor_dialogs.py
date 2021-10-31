@@ -1,43 +1,26 @@
 """The controller module for the minor misdemeanor dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a database."""
-import pathlib
-from datetime import date, timedelta
 from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from views.custom_widgets import (
-    PleaComboBox,
     FindingComboBox,
     FineLineEdit,
     FineSuspendedLineEdit,
-    DeleteButton,
-    AmendButton,
 )
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.template_types import TEMPLATE_DICT
-from models.case_information import (
-    CaseInformation,
-    CriminalCharge,
-    AmendOffenseDetails,
-    LicenseSuspensionTerms,
-    CommunityControlTerms,
-    CommunityServiceTerms,
-    OtherConditionsTerms,
-)
-from models.messages import TURNS_AT_INTERSECTIONS as TURNS_WARNING
+from models.case_information import CaseInformation
+from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import (
     BaseCriminalDialog,
     AddConditionsDialog,
     AmendOffenseDialog,
 )
-from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 from settings import PAY_DATE_DICT
-from controllers.helper_functions import set_future_date
 
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
@@ -74,14 +57,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
-    def update_case_information(self):
-        """The method calls functions to update the case information."""
-        super().update_case_information()
-
-    def update_party_information(self):
-        super().update_party_information()
-
-    @logger.catch
     def add_dispositions_and_fines(self):
         """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
         Columns start at 0 for labels and 2 for first entry then 4 etc.
@@ -91,20 +66,28 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         column = 2
         try:
             for index in range(len(self.case_information.charges_list)):
-                self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
-                self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
-                self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
-                if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
+                self.case_information.charges_list[index].plea = (
+                    self.charges_gridLayout.itemAtPosition(
+                        3, column).widget().currentText()
+                )
+                self.case_information.charges_list[index].finding = (
+                    self.charges_gridLayout.itemAtPosition(
+                        4, column).widget().currentText()
+                )
+                self.case_information.charges_list[index].fines_amount = (
+                    self.charges_gridLayout.itemAtPosition(
+                        5, column).widget().text()
+                )
+                if self.charges_gridLayout.itemAtPosition(6, column).widget().text() == "":
                     self.case_information.charges_list[index].fines_suspended = "0"
                 else:
-                    self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
-                index +=1
-                column +=2
+                    self.case_information.charges_list[index].fines_suspended = (
+                        self.charges_gridLayout.itemAtPosition(6, column).widget().text()
+                    )
+                index += 1
+                column += 2
         except AttributeError:
             print("Attribute error allowed to pass for lack of widget")
-
-    def check_add_conditions(self):
-        super().check_add_conditions()
 
     @logger.catch
     def add_charge_to_view(self):
@@ -112,13 +95,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         view/GUI."""
         row, column = super().add_charge_to_view()
         self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
-        row +=1
+        row += 1
         self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
-        row +=1
+        row += 1
         self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
-        row +=1
+        row += 1
         self.add_delete_button_to_view(row, column)
-        row +=1
+        row += 1
         self.add_amend_button_to_view(row, column)
 
     @logger.catch
