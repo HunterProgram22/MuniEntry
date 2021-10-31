@@ -24,6 +24,7 @@ from models.case_information import CaseInformation, CriminalCharge
 from controllers.criminal_dialogs import BaseCriminalDialog
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 from settings import LEAP_COMPLETE_DATE_DICT
+from controllers.helper_functions import set_future_date
 
 
 class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
@@ -80,31 +81,10 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         row, column = super().add_charge_to_view()
         self.add_delete_button_to_view(row, column)
 
-
-
-
     @logger.catch
-    def set_sentencing_date(self, time_to_pay_text):
-        """Sets the sentencing date. This function is similar to set pay date.
-
-        TODO: Refactor into single subclassed function."""
-        days_to_add = LEAP_COMPLETE_DATE_DICT[time_to_pay_text]
-        future_date = date.today() + timedelta(days_to_add)
-        today = date.today()
-
-        def next_monday(future_date, weekday=0):
-            """This function returns the number of days to add to today to set
-            the payment due date out to the Tuesday after the number of days
-            set in the set_pay_date function. The default of 0 for weekday is
-            what sets it to a Monday. If it is 1 it would be Tuesday, 3 would
-            be Wednesday, etc."""
-            days_ahead = weekday - future_date.weekday()
-            if days_ahead <= 0:  # Target day already happened this week
-                days_ahead += 7
-            return future_date + timedelta(days_ahead)
-
-        future_date = next_monday(future_date, 0)
-        total_days_to_add = (future_date - today).days
+    def set_sentencing_date(self, days_to_add):
+        "Sets the sentencing date to the Monday (0) after the days added."""
+        total_days_to_add = set_future_date(days_to_add, LEAP_COMPLETE_DATE_DICT, 0)
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 

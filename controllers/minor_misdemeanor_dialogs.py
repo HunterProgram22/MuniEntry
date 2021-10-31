@@ -37,6 +37,7 @@ from controllers.criminal_dialogs import (
 )
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 from settings import PAY_DATE_DICT
+from controllers.helper_functions import set_future_date
 
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
@@ -197,29 +198,9 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.case_information.fra_in_court = None
 
     @logger.catch
-    def set_pay_date(self, time_to_pay_text):
-        """Sets the balance of fines and costs to a future date (or today)
-        depending on the selection of ability_to_pay_box. The inner function
-        will move the actual date to the next tuesday per court procedure for
-        show cause hearings being on Tuesday. Would need to be modified if the
-        policy changed."""
-        days_to_add = PAY_DATE_DICT[time_to_pay_text]
-        future_date = date.today() + timedelta(days_to_add)
-        today = date.today()
-
-        def next_tuesday(future_date, weekday=1):
-            """This function returns the number of days to add to today to set
-            the payment due date out to the Tuesday after the number of days
-            set in the set_pay_date function. The default of 1 for weekday is
-            what sets it to a Tuesday. If it is 0 it would be Monday, 3 would
-            be Wednesday, etc."""
-            days_ahead = weekday - future_date.weekday()
-            if days_ahead <= 0:  # Target day already happened this week
-                days_ahead += 7
-            return future_date + timedelta(days_ahead)
-
-        future_date = next_tuesday(future_date, 1)
-        total_days_to_add = (future_date - today).days
+    def set_pay_date(self, days_to_add):
+        "Sets the sentencing date to the Tuesday (1) after the days added."""
+        total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
         self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
