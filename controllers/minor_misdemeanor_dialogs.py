@@ -32,8 +32,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     misdemeanors, however, it does not include fields to enter jail time."""
     @logger.catch
     def __init__(self, judicial_officer, parent=None):
-        super().__init__(parent)
-        self.case_information = CaseInformation(judicial_officer)
+        super().__init__(judicial_officer, parent)
+        self.case_information = CaseInformation(self.judicial_officer)
         self.dialog_name = "Minor Misdemeanor Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.amend_button_list = []
