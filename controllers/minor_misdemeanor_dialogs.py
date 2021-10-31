@@ -106,6 +106,22 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def check_add_conditions(self):
         super().check_add_conditions()
 
+    @logger.catch
+    def add_charge_to_view(self):
+        """Adds the charge that was added through add_charge method to the
+        view/GUI."""
+        row, column = super().add_charge_to_view()
+        self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
+        row +=1
+        self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
+        row +=1
+        self.add_delete_button_to_view(row, column)
+        row +=1
+        self.add_amend_button_to_view(row, column)
+
+
 
 
     @logger.catch
@@ -125,53 +141,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.update_case_information()
         AddConditionsDialog(self).exec()
 
-    @logger.catch
-    def add_charge_to_view(self):
-        """Adds the charge that was added through add_charge method to the
-        view/GUI. The first row=0 because of python zero-based indexing. The
-        column is set at one more than the current number of columns because
-        it is the column to which the charge will be added.
 
-        :added_charge_index: - The added charge index is one less than the
-        total charges in charges_list because of zero-based indexing. Thus, if
-        there is one charge, the index of the charge to be added to the
-        charge_dict from the charges_list is 0.
-
-        The python builtin vars function returns the __dict__ attribute of
-        the object.
-
-        The self.criminal_charge.offense added as a parameter for FineLineEdit
-        is the current one added when "Add Charge" is pressed.
-
-        TODO: Refactor so that there isn't a need for a if branch to skip the
-        attribute for charge type."""
-        row = 0
-        column = self.charges_gridLayout.columnCount() + 1
-        added_charge_index = len(self.case_information.charges_list) - 1
-        charge = vars(self.case_information.charges_list[added_charge_index])
-        for value in charge.values():
-            if value is not None:
-                if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
-                    break
-                self.charges_gridLayout.addWidget(QLabel(value), row, column)
-                row += 1
-        self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
-        row +=1
-        self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
-        row +=1
-        self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
-        row +=1
-        self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
-        row +=1
-        self.add_delete_button_to_view(row, column)
-        row +=1
-        self.add_amend_button_to_view(row, column)
-
-    def add_amend_button_to_view(self, row, column):
-        amend_button = AmendButton()
-        self.amend_button_list.append(amend_button)
-        amend_button.pressed.connect(self.start_amend_offense_dialog)
-        self.charges_gridLayout.addWidget(amend_button, row, column)
 
 
 

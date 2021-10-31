@@ -75,56 +75,13 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         except AttributeError:
             print("Attribute error allowed to pass for lack of widget")
 
-
-
     @logger.catch
     def add_charge_to_view(self):
-        """Adds the charge that was added through add_charge method to the
-        view/GUI. The first row=0 because of python zero-based indexing. The
-        column is set at one more than the current number of columns because
-        it is the column to which the charge will be added.
-
-        :added_charge_index: - The added charge index is one less than the
-        total charges in charges_list because of zero-based indexing. Thus, if
-        there is one charge, the index of the charge to be added to the
-        charge_dict from the charges_list is 0.
-
-        The python builtin vars function returns the __dict__ attribute of
-        the object.
-
-        The self.criminal_charge.offense added as a parameter for FineLineEdit
-        is the current one added when "Add Charge" is pressed.
-
-        TODO: Refactor so that there isn't a need for a if branch to skip the
-        attribute for charge type."""
-        row = 0
-        column = self.charges_gridLayout.columnCount() + 1
-        added_charge_index = len(self.case_information.charges_list) - 1
-        charge = vars(self.case_information.charges_list[added_charge_index])
-        for value in charge.values():
-            if value is not None:
-                if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
-                    break
-                self.charges_gridLayout.addWidget(QLabel(value), row, column)
-                row += 1
-        self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
-        row +=1
+        row, column = super().add_charge_to_view()
         self.add_delete_button_to_view(row, column)
 
 
 
-
-    def guilty_all_plea_and_findings(self):
-        """Sets the plea and findings boxes to guilty for all charges currently
-        in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(3,column).widget().setCurrentText("Guilty")
-                    self.charges_gridLayout.itemAtPosition(4,column).widget().setCurrentText("Guilty")
-                    column +=1
-            except AttributeError:
-                pass
 
     @logger.catch
     def set_sentencing_date(self, time_to_pay_text):
