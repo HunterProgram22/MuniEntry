@@ -25,7 +25,7 @@ class CaseInformation(object):
         self.hours_of_service = None
         self.days_to_complete_service = None
         self.due_date_for_service = None
-        #self.license_suspension_details = None
+        self.license_suspension_details = None
         self.other_conditions_details = None
         self.court_costs_ordered = None
         self.court_costs = 0

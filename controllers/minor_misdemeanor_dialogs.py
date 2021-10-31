@@ -167,44 +167,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row +=1
         self.add_amend_button_to_view(row, column)
 
-    def add_delete_button_to_view(self, row, column):
-        delete_button = DeleteButton()
-        self.delete_button_list.append(delete_button)
-        delete_button.pressed.connect(self.delete_charge)
-        self.charges_gridLayout.addWidget(delete_button, row, column)
-
     def add_amend_button_to_view(self, row, column):
         amend_button = AmendButton()
         self.amend_button_list.append(amend_button)
         amend_button.pressed.connect(self.start_amend_offense_dialog)
         self.charges_gridLayout.addWidget(amend_button, row, column)
-
-    @logger.catch
-    def delete_charge(self):
-        """Deletes the offense from the case_information.charges list. Then
-        decrements the total charges by one so that other functions using the
-        total charges for indexing are correct."""
-        index = self.delete_button_list.index(self.sender())
-        del self.case_information.charges_list[index]
-        del self.delete_button_list[index]
-        self.delete_charge_from_view()
-        self.statute_choice_box.setFocus()
-
-    @logger.catch
-    def delete_charge_from_view(self):
-        """Uses the delete_button that is indexed to the column to delete the
-        QLabels for the charge."""
-        index = self.charges_gridLayout.indexOf(self.sender())
-        column = self.charges_gridLayout.getItemPosition(index)[1]
-        for row in range(self.charges_gridLayout.rowCount()):
-            layout_item = self.charges_gridLayout.itemAtPosition(row, column)
-            if layout_item is not None:
-                layout_item.widget().deleteLater()
-                self.charges_gridLayout.removeItem(layout_item)
-
-
-
-
 
 
 
