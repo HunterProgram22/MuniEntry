@@ -53,22 +53,17 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def update_case_information(self):
         """The method calls functions to update the case information model."""
-        super().update_case_information()
-
+        self.update_party_information()
+        self.add_dispositions_and_fines()
 
     @logger.catch
     def update_party_information(self):
-        """This is subclassed from Criminal Dialogs (TODO: it will be once i refactor)."""
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        super().update_party_information()
         self.case_information.sentencing_date = self.sentencing_date.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def add_dispositions_and_fines(self):
         """Row 3 - plea.
-
         Column count increases by 2 instead of one due to grid adding two
         columns when a charge is added (odd numbered column is empty)."""
         column = 2
@@ -79,6 +74,8 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
                 column +=2
         except AttributeError:
             print("Attribute error allowed to pass for lack of widget")
+
+
 
     @logger.catch
     def add_charge_to_view(self):

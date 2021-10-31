@@ -127,6 +127,90 @@ class BaseCriminalDialog(QDialog):
         make sure all information is current."""
         self.update_party_information()
         self.add_dispositions_and_fines()
+        self.update_costs_and_fines_information()
+        self.check_add_conditions()
+        self.calculate_costs_and_fines()
+
+    @logger.catch
+    def update_party_information(self):
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    def add_dispositions_and_fines(self):
+        """This method is specfic to each subclass."""
+        pass
+
+    @logger.catch
+    def update_costs_and_fines_information(self):
+        self.case_information.court_costs_ordered = self.court_costs_box.currentText()
+        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.balance_due_date = self.balance_due_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
+    def check_add_conditions(self):
+        """Checks to see what conditions in the Add Conditions box are checked and then
+        transfers the information from the conditions to case_information model if the
+        box is checked.
+        FIX: This is showing a none on logger.catch when starting the AddConditionsDialog,
+        but it is necessary to make sure the conditions are added to the entry. Refacotr.
+
+        TODO:
+        in future refactor this to have it loop through the different conditions so code
+        doesn't need to be added each time a condition is added."""
+        if self.license_suspension_checkBox.isChecked():
+            self.case_information.license_suspension_details.license_suspension_ordered = (
+                True
+            )
+        if self.community_control_checkBox.isChecked():
+            self.case_information.community_control_terms.community_control_required = (
+                True
+            )
+        if self.community_service_checkBox.isChecked():
+            self.case_information.community_service_terms.community_service_ordered = (
+                True
+            )
+        if self.other_conditions_checkBox.isChecked():
+            self.case_information.other_conditions_details.other_conditions_ordered = (
+                True
+            )
+
+    @logger.catch
+    def calculate_costs_and_fines(self):
+        self.case_information.court_costs = 0
+        if self.court_costs_box.currentText() == "Yes":
+            for index, charge in enumerate(self.case_information.charges_list):
+                if self.case_information.court_costs == 124:
+                    break
+                else:
+                    if charge.type == "Moving Traffic":
+                        if self.case_information.court_costs < 124:
+                            self.case_information.court_costs = 124
+                    elif charge.type == "Criminal":
+                        if self.case_information.court_costs < 114:
+                            self.case_information.court_costs = 114
+                    elif charge.type == "Non-moving Traffic":
+                        if self.case_information.court_costs < 95:
+                            self.case_information.court_costs = 95
+        total_fines = 0
+        try:
+            for index, charge in enumerate(self.case_information.charges_list):
+                if charge.fines_amount == '':
+                    charge.fines_amount = 0
+                total_fines = total_fines + int(charge.fines_amount)
+            self.case_information.total_fines = total_fines
+            total_fines_suspended = 0
+            for index, charge in enumerate(self.case_information.charges_list):
+                if charge.fines_suspended == '':
+                    charge.fines_suspended = 0
+                total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+            self.case_information.total_fines_suspended = total_fines_suspended
+        except TypeError:
+            print("A type error was allowed to pass - this is because of deleted charge.")
+
+
+
 
     def close_window(self):
         """Function connected to a button to close the window. Can be connected
@@ -335,8 +419,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def __init__(self, minor_misdemeanor_dialog, parent=None):
         self.case_information = minor_misdemeanor_dialog.case_information
         super().__init__(parent)
-        self.modify_view()
-        self.connect_signals_to_slots()
         self.community_service = (
             minor_misdemeanor_dialog.community_service_checkBox.isChecked()
         )

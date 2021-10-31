@@ -77,8 +77,36 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     def update_case_information(self):
         """The method calls functions to update the case information."""
         super().update_case_information()
-        self.check_add_conditions()
-        self.calculate_costs_and_fines()
+
+    def update_party_information(self):
+        super().update_party_information()
+
+    @logger.catch
+    def add_dispositions_and_fines(self):
+        """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
+        Columns start at 0 for labels and 2 for first entry then 4 etc.
+
+        Column count increases by 2 instead of one due to grid adding two
+        columns when a charge is added (odd numbered column is empty)."""
+        column = 2
+        try:
+            for index in range(len(self.case_information.charges_list)):
+                self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
+                self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
+                self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
+                if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
+                    self.case_information.charges_list[index].fines_suspended = "0"
+                else:
+                    self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
+                index +=1
+                column +=2
+        except AttributeError:
+            print("Attribute error allowed to pass for lack of widget")
+
+    def check_add_conditions(self):
+        super().check_add_conditions()
+
+
 
     @logger.catch
     def start_amend_offense_dialog(self):
@@ -94,6 +122,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         instance of the MinorMisdemeanorDialog class (self) as an argument
         so that the AddConditionsDialog can access all data from the
         MinorMisdemeanorDialog when working in the AddConditionsDialog."""
+        self.update_case_information()
         AddConditionsDialog(self).exec()
 
     @logger.catch
@@ -175,99 +204,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
 
 
-    @logger.catch
-    def update_party_information(self):
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
-    @logger.catch
-    def update_costs_and_fines_information(self):
-        self.case_information.court_costs_ordered = self.court_costs_box.currentText()
-        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.balance_due_date = self.balance_due_date.date().toString("MMMM dd, yyyy")
 
-    @logger.catch
-    def add_dispositions_and_fines(self):
-        """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
-        Columns start at 0 for labels and 2 for first entry then 4 etc.
 
-        Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty)."""
-        column = 2
-        try:
-            for index in range(len(self.case_information.charges_list)):
-                self.case_information.charges_list[index].plea = self.charges_gridLayout.itemAtPosition(3,column).widget().currentText()
-                self.case_information.charges_list[index].finding = self.charges_gridLayout.itemAtPosition(4,column).widget().currentText()
-                self.case_information.charges_list[index].fines_amount = self.charges_gridLayout.itemAtPosition(5,column).widget().text()
-                if self.charges_gridLayout.itemAtPosition(6,column).widget().text() == "":
-                    self.case_information.charges_list[index].fines_suspended = "0"
-                else:
-                    self.case_information.charges_list[index].fines_suspended = self.charges_gridLayout.itemAtPosition(6,column).widget().text()
-                index +=1
-                column +=2
-        except AttributeError:
-            print("Attribute error allowed to pass for lack of widget")
 
-    @logger.catch
-    def check_add_conditions(self):
-        """Checks to see what conditions in the Add Conditions box are checked and then
-        transfers the information from the conditions to case_information model if the
-        box is checked.
 
-        TODO:
-        in future refactor this to have it loop through the different conditions so code
-        doesn't need to be added each time a condition is added."""
-        if self.license_suspension_checkBox.isChecked():
-            self.case_information.license_suspension_details.license_suspension_ordered = (
-                True
-            )
-        if self.community_control_checkBox.isChecked():
-            self.case_information.community_control_terms.community_control_required = (
-                True
-            )
-        if self.community_service_checkBox.isChecked():
-            self.case_information.community_service_terms.community_service_ordered = (
-                True
-            )
-        if self.other_conditions_checkBox.isChecked():
-            self.case_information.other_conditions_details.other_conditions_ordered = (
-                True
-            )
-
-    @logger.catch
-    def calculate_costs_and_fines(self):
-        self.case_information.court_costs = 0
-        if self.court_costs_box.currentText() == "Yes":
-            for index, charge in enumerate(self.case_information.charges_list):
-                if self.case_information.court_costs == 124:
-                    break
-                else:
-                    if charge.type == "Moving Traffic":
-                        if self.case_information.court_costs < 124:
-                            self.case_information.court_costs = 124
-                    elif charge.type == "Criminal":
-                        if self.case_information.court_costs < 114:
-                            self.case_information.court_costs = 114
-                    elif charge.type == "Non-moving Traffic":
-                        if self.case_information.court_costs < 95:
-                            self.case_information.court_costs = 95
-        total_fines = 0
-        try:
-            for index, charge in enumerate(self.case_information.charges_list):
-                if charge.fines_amount == '':
-                    charge.fines_amount = 0
-                total_fines = total_fines + int(charge.fines_amount)
-            self.case_information.total_fines = total_fines
-            total_fines_suspended = 0
-            for index, charge in enumerate(self.case_information.charges_list):
-                if charge.fines_suspended == '':
-                    charge.fines_suspended = 0
-                total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
-            self.case_information.total_fines_suspended = total_fines_suspended
-        except TypeError:
-            print("A type error was allowed to pass - this is because of deleted charge.")
 
     def show_costs_and_fines(self, bool):
         """The bool is the toggle from the clicked() of the button pressed. No
