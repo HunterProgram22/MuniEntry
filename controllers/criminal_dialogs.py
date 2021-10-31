@@ -72,7 +72,6 @@ class BaseCriminalDialog(QDialog):
     all class controllers that are used in the application. This class is never
     instantiated as its own dialog, but the init contains the setup for all
     inherited class controllers."""
-
     def __init__(self, judicial_officer, parent=None):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
@@ -360,7 +359,7 @@ class BaseCriminalDialog(QDialog):
         else:
             self.case_information.fra_in_court = None
 
-
+    """"""
 
     def close_window(self):
         """Function connected to a button to close the window. Can be connected

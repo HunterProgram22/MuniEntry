@@ -47,7 +47,6 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     This dialog is used when there will not be any jail time imposed. It does
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
-
     @logger.catch
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
@@ -122,6 +121,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         row +=1
         self.add_amend_button_to_view(row, column)
 
+    @logger.catch
+    def set_pay_date(self, days_to_add):
+        "Sets the sentencing date to the Tuesday (1) after the days added."""
+        total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
+        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
     @logger.catch
     def start_amend_offense_dialog(self):
@@ -141,14 +145,5 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         AddConditionsDialog(self).exec()
 
 
-    @logger.catch
-    def set_pay_date(self, days_to_add):
-        "Sets the sentencing date to the Tuesday (1) after the days added."""
-        total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
-        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
-
-
 if __name__ == "__main__":
     print("MMD ran directly")
-else:
-    print("MMD ran when imported")

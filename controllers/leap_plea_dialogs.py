@@ -30,7 +30,6 @@ from controllers.helper_functions import set_future_date
 class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
-
     @logger.catch
     def __init__(self, judicial_officer, parent=None):
         super().__init__(parent)
