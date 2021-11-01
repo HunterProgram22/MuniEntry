@@ -25,8 +25,14 @@ Leap_Plea_And_Admission_Template = Template(
     "Leap_Plea_Admission_Template.docx",
 )
 
+Leap_Plea_Precourt_Completion_Template = Template(
+    "LEAP Plea Precourt Completion Entry",
+    "Leap_Plea_Precourt_Completion_Template.docx",
+)
+
 
 TEMPLATE_DICT = {
     "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
     "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
+    "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
 }

@@ -195,7 +195,7 @@ font-weight: bold;</string>
       </widget>
      </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="FinalJudgmentEntryButton_5">
+      <widget class="QPushButton" name="LeapPleaShortButton">
        <property name="minimumSize">
         <size>
          <width>120</width>
@@ -203,7 +203,7 @@ font-weight: bold;</string>
         </size>
        </property>
        <property name="text">
-        <string>Entry</string>
+        <string>LEAP Plea Pre-Court Complete JE</string>
        </property>
       </widget>
      </item>
@@ -261,7 +261,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>25</x>
@@ -346,7 +346,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>31</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
