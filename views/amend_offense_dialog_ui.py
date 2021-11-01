@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_AmendOffenseDialog(object):
     def setupUi(self, AmendOffenseDialog):
         AmendOffenseDialog.setObjectName("AmendOffenseDialog")
-        AmendOffenseDialog.resize(1000, 300)
+        AmendOffenseDialog.resize(1000, 775)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(AmendOffenseDialog.sizePolicy().hasHeightForWidth())
         AmendOffenseDialog.setSizePolicy(sizePolicy)
-        AmendOffenseDialog.setMinimumSize(QtCore.QSize(1000, 300))
+        AmendOffenseDialog.setMinimumSize(QtCore.QSize(1000, 775))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -129,11 +129,6 @@ class Ui_AmendOffenseDialog(object):
         self.gridLayout_2.addWidget(self.amended_charge_box, 2, 1, 1, 1)
 
         self.retranslateUi(AmendOffenseDialog)
-        self.continue_Button.released.connect(AmendOffenseDialog.close_window)
-        self.cancel_Button.clicked.connect(AmendOffenseDialog.close_window)
-        self.clear_fields_Button.clicked.connect(self.original_charge_box.clearEditText)
-        self.clear_fields_Button.clicked.connect(self.amended_charge_box.clearEditText)
-        self.continue_Button.pressed.connect(AmendOffenseDialog.amend_offense)
         QtCore.QMetaObject.connectSlotsByName(AmendOffenseDialog)
         AmendOffenseDialog.setTabOrder(self.motion_decision_box, self.original_charge_box)
         AmendOffenseDialog.setTabOrder(self.original_charge_box, self.amended_charge_box)

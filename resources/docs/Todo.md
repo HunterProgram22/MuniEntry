@@ -1,8 +1,8 @@
 APPLICATION TODO LIST for version 0.2.0
-* Refactor CaseInformation.py
+* Refactor CaseInformation.py - Change data models to dataclass models - finish for Case Information
 * Wire up amend offense dialog again - works on basic level - need to move signals to dialog
 and perhaps update the actual original charge to indicate amended.
-* Change data models to dataclass models - finish for Case Information
+* Move create entry and other general methods to helper functions
 * Have AB review case types for proper case type (moving, non-moving, crim)
 
 
