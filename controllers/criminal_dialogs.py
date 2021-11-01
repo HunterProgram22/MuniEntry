@@ -723,6 +723,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details = AmendOffenseDetails()
         self.set_case_information_banner()
         self.modify_view_local(button_index)
+        self.connect_signals_to_slots()
 
     @logger.catch
     def modify_view_local(self, button_index):
@@ -732,6 +733,19 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.original_charge_box.addItems(offense_list)
         self.original_charge_box.setCurrentText(self.case_information.charges_list[button_index].offense)
         self.amended_charge_box.addItems(offense_list)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """TODO: the continue button signals/slots should be refactored into single ordered method
+        like with other dialogs."""
+        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
+        self.continue_Button.pressed.connect(self.amend_offense)
+        self.continue_Button.released.connect(self.close_event)
+
+    @logger.catch
+    def clear_amend_charge_fields(self):
+        self.original_charge_box.clearEditText()
+        self.amended_charge_box.clearEditText()
 
     @logger.catch
     def amend_offense(self):
