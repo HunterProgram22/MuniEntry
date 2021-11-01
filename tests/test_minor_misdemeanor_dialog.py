@@ -22,8 +22,6 @@ from controllers.minor_misdemeanor_dialogs import (
 TODAY = date.today()
 
 """Functions for Testing"""
-
-
 def add_case_information(dialog):
     QtBot.keyClicks(dialog.case_number_lineEdit, "21TRC1234")
     QtBot.keyClicks(dialog.defendant_first_name_lineEdit, "John")
@@ -52,11 +50,19 @@ def start_add_conditions_dialog(qtbot, case_information):
 
 def add_offense_speeding_25(dialog):
     dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
-    dialog.plea_choice_box.setCurrentText("Not Guilty")
-    dialog.finding_choice_box.setCurrentText("Guilty")
-    dialog.fines_amount.setText("50")
-    dialog.fines_suspended.setText("25")
     QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
+    dialog.charges_gridLayout.itemAtPosition(3, 2).widget().setCurrentText("Not Guilty")
+    dialog.charges_gridLayout.itemAtPosition(4, 2).widget().setCurrentText("Guilty")
+    dialog.charges_gridLayout.itemAtPosition(5, 2).widget().setText("50")
+    dialog.charges_gridLayout.itemAtPosition(6, 2).widget().setText("25")
+
+def add_offense_speeding_25_after_delete(dialog):
+    dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
+    QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
+    dialog.charges_gridLayout.itemAtPosition(3, 6).widget().setCurrentText("Not Guilty")
+    dialog.charges_gridLayout.itemAtPosition(4, 6).widget().setCurrentText("Guilty")
+    dialog.charges_gridLayout.itemAtPosition(5, 6).widget().setText("50")
+    dialog.charges_gridLayout.itemAtPosition(6, 6).widget().setText("25")
 
 
 @pytest.fixture
@@ -77,7 +83,6 @@ def dialog(app, qtbot):
 """TESTING"""
 """Two columns are added every time a charge is added with add offense to view.
 The columns with content are evens (0, 2, 4, etc)."""
-
 
 def test_open_minor_misdemeanor_dialog(app, dialog):
     assert dialog.windowTitle() == "Minor Misdemeanor Case Information"
@@ -117,9 +122,9 @@ def test_add_offense(app, dialog):
         == "Speeding > 25 mph"
     )
     assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().text() == "Not Guilty"
+        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().currentText() == "Not Guilty"
     )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().text() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 2).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "25"
 
@@ -131,33 +136,32 @@ def test_add_multiple_offenses(app, dialog):
         == "Speeding > 25 mph"
     )
     assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().text() == "Not Guilty"
+        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().currentText() == "Not Guilty"
     )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().text() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 2).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "25"
     # Second Charge
     dialog.offense_choice_box.setCurrentText("Driving in Marked Lanes")
-    dialog.plea_choice_box.setCurrentText("Guilty")
-    dialog.finding_choice_box.setCurrentText("Guilty")
-    dialog.fines_amount.setText("75")
-    dialog.fines_suspended.setText("0")
     QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
+    dialog.charges_gridLayout.itemAtPosition(3, 4).widget().setCurrentText("Guilty")
+    dialog.charges_gridLayout.itemAtPosition(4, 4).widget().setCurrentText("Guilty")
+    dialog.charges_gridLayout.itemAtPosition(5, 4).widget().setText("75")
+    dialog.charges_gridLayout.itemAtPosition(6, 4).widget().setText("0")
     assert (
         dialog.charges_gridLayout.itemAtPosition(0, 4).widget().text()
         == "Driving in Marked Lanes"
     )
-    assert dialog.charges_gridLayout.itemAtPosition(3, 4).widget().text() == "Guilty"
-    assert dialog.charges_gridLayout.itemAtPosition(4, 4).widget().text() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(3, 4).widget().currentText() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(4, 4).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 4).widget().text() == "75"
     assert dialog.charges_gridLayout.itemAtPosition(6, 4).widget().text() == "0"
 
 
 def test_add_offense_and_delete_offense(app, dialog):
     add_offense_speeding_25(dialog)
-    QtBot.mouseClick(dialog.add_charge_Button, QtCore.Qt.LeftButton)
     QtBot.mouseClick(
-        dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton
+        dialog.charges_gridLayout.itemAtPosition(7, 2).widget(), QtCore.Qt.LeftButton
     )
     assert dialog.charges_gridLayout.itemAtPosition(0, 2) == None
     assert dialog.charges_gridLayout.itemAtPosition(3, 2) == None
@@ -174,14 +178,14 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
         == "Speeding > 25 mph"
     )
     assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().text() == "Not Guilty"
+        dialog.charges_gridLayout.itemAtPosition(3, 2).widget().currentText() == "Not Guilty"
     )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().text() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 2).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "25"
     # Delete first offense and check
     QtBot.mouseClick(
-        dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton
+        dialog.charges_gridLayout.itemAtPosition(7, 2).widget(), QtCore.Qt.LeftButton
     )
     assert dialog.charges_gridLayout.itemAtPosition(0, 2) == None
     assert dialog.charges_gridLayout.itemAtPosition(3, 2) == None
@@ -189,27 +193,16 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
     assert dialog.charges_gridLayout.itemAtPosition(5, 2) == None
     assert dialog.charges_gridLayout.itemAtPosition(6, 2) == None
     # Add third offense, but two total since one deleted.
-    add_offense_speeding_25(dialog)
-    # Second Added check
-    assert (
-        dialog.charges_gridLayout.itemAtPosition(0, 4).widget().text()
-        == "Speeding > 25 mph"
-    )
-    assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 4).widget().text() == "Not Guilty"
-    )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 4).widget().text() == "Guilty"
-    assert dialog.charges_gridLayout.itemAtPosition(5, 4).widget().text() == "50"
-    assert dialog.charges_gridLayout.itemAtPosition(6, 4).widget().text() == "25"
+    add_offense_speeding_25_after_delete(dialog)
     # Third added check
     assert (
         dialog.charges_gridLayout.itemAtPosition(0, 6).widget().text()
         == "Speeding > 25 mph"
     )
     assert (
-        dialog.charges_gridLayout.itemAtPosition(3, 6).widget().text() == "Not Guilty"
+        dialog.charges_gridLayout.itemAtPosition(3, 6).widget().currentText() == "Not Guilty"
     )
-    assert dialog.charges_gridLayout.itemAtPosition(4, 6).widget().text() == "Guilty"
+    assert dialog.charges_gridLayout.itemAtPosition(4, 6).widget().currentText() == "Guilty"
     assert dialog.charges_gridLayout.itemAtPosition(5, 6).widget().text() == "50"
     assert dialog.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "25"
 
@@ -242,10 +235,10 @@ def test_fra_in_file_and_court(app, dialog):
     assert dialog.case_information.fra_in_court == None
 
 
-def test_amend_offense(dialog, qtbot):
-    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
-    dialog = start_amendment_dialog(qtbot, dialog.case_information)
-    assert dialog.windowTitle() == "Amend Charge"
+# def test_amend_offense(dialog, qtbot):
+#     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+#     dialog = start_amendment_dialog(qtbot, dialog.case_information)
+#     assert dialog.windowTitle() == "Amend Charge"
 
 
 def test_add_conditions(dialog, qtbot):

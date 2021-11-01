@@ -33,7 +33,8 @@ def return_data_from_excel(excel_file):
         offense = worksheet.cell(row=row, column=1)
         statute = worksheet.cell(row=row, column=2)
         degree = worksheet.cell(row=row, column=3)
-        charge = (offense.value, statute.value, degree.value)
+        type = worksheet.cell(row=row, column=4)
+        charge = (offense.value, statute.value, degree.value, type.value)
         data.append(charge)
     return data
 
@@ -55,7 +56,8 @@ createTableQuery.exec(
         id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
         offense VARCHAR(60) NOT NULL,
         statute VARCHAR(50) NOT NULL,
-        degree VARCHAR(50) NOT NULL
+        degree VARCHAR(50) NOT NULL,
+        type VARCHAR(50) NOT NULL
     )
     """
 )
@@ -66,9 +68,10 @@ insertDataQuery.prepare(
     INSERT INTO charges (
         offense,
         statute,
-        degree
+        degree,
+        type
     )
-    VALUES (?, ?, ?)
+    VALUES (?, ?, ?, ?)
     """
 )
 
@@ -80,8 +83,9 @@ data_from_table = return_data_from_excel(EXCEL_FILE)
 print(data_from_table)
 
 # Use .addBindValue() to insert data
-for offense, statute, degree in data_from_table:
+for offense, statute, degree, type in data_from_table:
     insertDataQuery.addBindValue(offense)
     insertDataQuery.addBindValue(statute)
     insertDataQuery.addBindValue(degree)
+    insertDataQuery.addBindValue(type)
     insertDataQuery.exec()

@@ -474,7 +474,7 @@ font-weight: bold;</string>
      <item row="0" column="0">
       <widget class="QLabel" name="label_15">
        <property name="text">
-        <string>Hours of Service:</string>
+        <string>Hours:</string>
        </property>
       </widget>
      </item>
@@ -484,7 +484,7 @@ font-weight: bold;</string>
      <item row="0" column="2">
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Days to Complete Service:</string>
+        <string>Days to Complete:</string>
        </property>
       </widget>
      </item>
@@ -530,7 +530,7 @@ font-weight: bold;</string>
      <item row="0" column="4">
       <widget class="QLabel" name="label_22">
        <property name="text">
-        <string>Date to Complete Service:</string>
+        <string>Date to Complete:</string>
        </property>
       </widget>
      </item>
@@ -658,28 +658,6 @@ font-weight: bold;</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="createEntryButton_3">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>790</x>
-      <y>80</y>
-      <width>181</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(160, 160, 160);</string>
-    </property>
-    <property name="text">
-     <string>Add CC Terms</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
@@ -756,61 +734,31 @@ font-weight: bold;</string>
     </layout>
    </widget>
   </widget>
+  <widget class="QPushButton" name="cancel_Button">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>800</y>
+     <width>181</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(160, 160, 160);</string>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>continue_Button</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>add_conditions()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>831</x>
-     <y>810</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>753</x>
-     <y>697</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>released()</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>close_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>902</x>
-     <y>815</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>707</x>
-     <y>735</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>community_service_days_to_complete_box</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>AddConditionsDialog</receiver>
-   <slot>set_service_date()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>568</x>
-     <y>529</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>573</x>
-     <y>721</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>create_entry()</slot>
   <slot>continue_dialog()</slot>

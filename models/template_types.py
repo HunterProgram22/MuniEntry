@@ -20,15 +20,13 @@ Magistrate_And_Judge_Final_Judgment_Template = Template(
     "Magistrate_And_Judge_Final_Judgment_Template.docx",
 )
 
-Judge_Final_Judgment_Template = Template(
-    "Traffic Judgment Entry",
-    "Judge_Final_Judgment_Template.docx",
+Leap_Plea_And_Admission_Template = Template(
+    "LEAP Plea Admission Entry",
+    "Leap_Plea_Admission_Template.docx",
 )
 
 
 TEMPLATE_DICT = {
-    "Bunner": Magistrate_And_Judge_Final_Judgment_Template,
-    "Pelanda": Magistrate_And_Judge_Final_Judgment_Template,
-    "Rohrer": Magistrate_And_Judge_Final_Judgment_Template,
-    "Hemmeter": Magistrate_And_Judge_Final_Judgment_Template,
+    "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
+    "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
 }
