@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         MainWindow.setFont(font)
         MainWindow.setStyleSheet("font: 75 11pt \"Palatino Linotype\";\n"
-"color: rgb(0, 0, 0);\n"
+"color: rgb(255, 0, 0);\n"
 "selection-color: rgb(0, 0, 0);\n"
 "font-weight: bold;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -151,7 +151,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.pelanda_radioButton, 2, 2, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 31))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
