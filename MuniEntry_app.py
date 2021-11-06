@@ -11,6 +11,7 @@ from models.party_types import JudicialOfficer
 from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
+from controllers.fta_bond_dialogs import FTABondDialog
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
@@ -54,6 +55,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
             self.LeapPleaLongButton: LeapPleaLongDialog,
             self.LeapPleaShortButton: LeapPleaShortDialog,
+            self.FTABondButton: FTABondDialog,
         }
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
