@@ -28,7 +28,7 @@ def app(qtbot):
 
 """TESTING"""
 def test_title(app):
-    assert app.windowTitle() == "MuniEntry - ver 0.2.0 - beta"
+    assert app.windowTitle() == "MuniEntry - ver 0.2.0"
 
 def test_judicial_officer_buttons(app):
     QtBot.mouseClick(app.hemmeter_radioButton, QtCore.Qt.LeftButton)
