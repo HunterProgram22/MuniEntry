@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>300</height>
+    <height>775</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>300</height>
+    <height>775</height>
    </size>
   </property>
   <property name="font">
@@ -103,28 +103,6 @@ font-weight: bold;</string>
       <x>18</x>
       <y>13</y>
       <width>831</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Palatino Linotype</family>
-      <pointsize>11</pointsize>
-      <weight>75</weight>
-      <italic>false</italic>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="defendant_attorney_name_label">
-    <property name="geometry">
-     <rect>
-      <x>18</x>
-      <y>93</y>
-      <width>821</width>
       <height>27</height>
      </rect>
     </property>
@@ -229,7 +207,7 @@ font-weight: bold;</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>13</x>
@@ -313,88 +291,7 @@ font-weight: bold;</string>
   <tabstop>cancel_Button</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>released()</signal>
-   <receiver>AmendOffenseDialog</receiver>
-   <slot>close_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>842</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>528</x>
-     <y>349</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cancel_Button</sender>
-   <signal>clicked()</signal>
-   <receiver>AmendOffenseDialog</receiver>
-   <slot>close_window()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>860</x>
-     <y>41</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>853</x>
-     <y>144</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_Button</sender>
-   <signal>clicked()</signal>
-   <receiver>original_charge_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>874</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>594</x>
-     <y>214</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>clear_fields_Button</sender>
-   <signal>clicked()</signal>
-   <receiver>amended_charge_box</receiver>
-   <slot>clearEditText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>853</x>
-     <y>197</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>781</x>
-     <y>258</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>continue_Button</sender>
-   <signal>pressed()</signal>
-   <receiver>AmendOffenseDialog</receiver>
-   <slot>amend_offense()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>873</x>
-     <y>283</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>769</x>
-     <y>349</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>proceed_to_ability_to_pay()</slot>
   <slot>close_window()</slot>

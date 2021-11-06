@@ -1,16 +1,17 @@
 APPLICATION TODO LIST for version 0.2.0
-* Refactor CaseInformation.py
-* Update test when editable plea, finding, etc are moved - partially done.
-* Clean up naming for classes of Add Conditions - check functionality
-* Change data models to dataclass models
-* Remove magic numbers throughout.
+* Refactor CaseInformation.py - Change data models to dataclass models - finish for Case Information
+* Wire up amend offense dialog again - works on basic level - need to move signals to dialog
+and perhaps update the actual original charge to indicate amended.
+* Move create entry and other general methods to helper functions
 * Have AB review case types for proper case type (moving, non-moving, crim)
 
 
 
 FEATURE/CHANGE LIST - for Version 0.3.0
+* Add functionality for allied offenses
 * Add community control conditions checkboxes
 * Fix sizing of application based on screen size issue
+* Remove magic numbers throughout.
 
 
 
@@ -23,8 +24,8 @@ DEPLOY TODO LIST
 * Create config file with all dependencies
 
 NOTES
-* Objects need both data and behavior - otherwise us data
-structure (list, tuple, dict) or function
+* Objects need both data and behavior - otherwise use data
+structure (list, tuple, dict), dataclass, or function
 * Add kite and linter atom packages
 * When doing tests make sure if changes to main resources are
 made that test/resources is also updated.
