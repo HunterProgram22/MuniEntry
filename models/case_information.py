@@ -29,6 +29,7 @@ class CaseInformation:
     court_costs_ordered: str  = None
     court_costs: int  = 0
     total_fines: int  = 0
+    fta_bond_conditions: object = None
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
@@ -58,7 +59,18 @@ class CriminalCharge:
 
 
 @dataclass
-class AmendOffenseDetails(object):
+class FTABondConditions:
+    """Conditions specific to an FTA Bond Dialog. They are an object
+    that is then part of CaseInformation."""
+    appearance_reason: str = None
+    forefeit_bond: str = None
+    issue_warrant: str = None
+    forfeit_license: str = None
+    vehicle_registration_block: str = None
+
+
+@dataclass
+class AmendOffenseDetails:
     """TODO: This should be refactored to a pure function most likely."""
     original_charge: str = None
     amended_charge: str = None
@@ -66,7 +78,7 @@ class AmendOffenseDetails(object):
 
 
 @dataclass
-class CommunityControlTerms(object):
+class CommunityControlTerms:
     """Class for keeping track of all community control terms that are tied to
     a specific case."""
     community_control_required: bool = False
@@ -75,7 +87,7 @@ class CommunityControlTerms(object):
 
 
 @dataclass
-class CommunityServiceTerms(object):
+class CommunityServiceTerms:
     """Class for keeping track of all community service terms that are tied to
     a specific case."""
     community_service_ordered: bool = False
@@ -85,7 +97,7 @@ class CommunityServiceTerms(object):
 
 
 @dataclass
-class LicenseSuspensionTerms(object):
+class LicenseSuspensionTerms:
     """Class for keeping track of the license suspension terms that are tied to
     a specific case."""
     license_suspension_ordered: bool = False
@@ -96,7 +108,7 @@ class LicenseSuspensionTerms(object):
 
 
 @dataclass
-class OtherConditionsTerms(object):
+class OtherConditionsTerms:
     """Class for keeping track of other conditions that are tied to
     a specific case. This condition is a freeform text entry box in the UI."""
     other_conditions_ordered: bool = False
