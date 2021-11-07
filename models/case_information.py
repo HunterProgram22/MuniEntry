@@ -67,6 +67,8 @@ class FTABondConditions:
     issue_warrant: str = None
     forfeit_license: str = None
     vehicle_registration_block: str = None
+    bond_type: str = None
+    bond_amount: str = None
 
 
 @dataclass

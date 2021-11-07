@@ -32,6 +32,7 @@ class FTABondDialog(BaseCriminalDialog, Ui_FTABondDialog):
     def update_case_information(self):
         self.update_party_information()
         self.update_fta_conditions()
+        self.update_bond_conditions()
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
 
     @logger.catch
@@ -46,3 +47,9 @@ class FTABondDialog(BaseCriminalDialog, Ui_FTABondDialog):
         self.fta_bond_conditions.issue_warrant = self.issue_warrant_box.currentText()
         self.fta_bond_conditions.forfeit_license = self.forfeit_license_box.currentText()
         self.fta_bond_conditions.vehicle_registration_block = self.vehicle_registration_block_box.currentText()
+
+    @logger.catch
+    def update_bond_conditions(self):
+        """Updates the bond conditions from the GUI(view) and saves it to the model."""
+        self.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
+        self.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
