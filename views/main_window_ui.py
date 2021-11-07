@@ -24,7 +24,7 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         MainWindow.setFont(font)
         MainWindow.setStyleSheet("font: 75 11pt \"Palatino Linotype\";\n"
-"color: rgb(0, 0, 0);\n"
+"color: rgb(255, 0, 0);\n"
 "selection-color: rgb(0, 0, 0);\n"
 "font-weight: bold;")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -99,10 +99,10 @@ class Ui_MainWindow(object):
         self.MinorMisdemeanorTrafficButton.setMinimumSize(QtCore.QSize(120, 30))
         self.MinorMisdemeanorTrafficButton.setObjectName("MinorMisdemeanorTrafficButton")
         self.gridLayout_2.addWidget(self.MinorMisdemeanorTrafficButton, 0, 0, 1, 1)
-        self.FinalJudgmentEntryButton_2 = QtWidgets.QPushButton(self.layoutWidget)
-        self.FinalJudgmentEntryButton_2.setMinimumSize(QtCore.QSize(120, 30))
-        self.FinalJudgmentEntryButton_2.setObjectName("FinalJudgmentEntryButton_2")
-        self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_2, 1, 0, 1, 1)
+        self.FTABondButton = QtWidgets.QPushButton(self.layoutWidget)
+        self.FTABondButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.FTABondButton.setObjectName("FTABondButton")
+        self.gridLayout_2.addWidget(self.FTABondButton, 1, 0, 1, 1)
         self.FinalJudgmentEntryButton_3 = QtWidgets.QPushButton(self.layoutWidget)
         self.FinalJudgmentEntryButton_3.setMinimumSize(QtCore.QSize(120, 30))
         self.FinalJudgmentEntryButton_3.setObjectName("FinalJudgmentEntryButton_3")
@@ -151,7 +151,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.pelanda_radioButton, 2, 2, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 31))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -210,7 +210,7 @@ class Ui_MainWindow(object):
         self.LeapPleaLongButton.setText(_translate("MainWindow", "LEAP Plea JE"))
         self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete JE"))
         self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
-        self.FinalJudgmentEntryButton_2.setText(_translate("MainWindow", "Entry"))
+        self.FTABondButton.setText(_translate("MainWindow", "FTA / Bond"))
         self.FinalJudgmentEntryButton_3.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_4.setText(_translate("MainWindow", "Entry"))
         self.label.setText(_translate("MainWindow", "Judicial Officer:"))
