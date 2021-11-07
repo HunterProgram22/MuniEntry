@@ -15,7 +15,7 @@ class Ui_FTABondDialog(object):
     def setupUi(self, FTABondDialog):
         FTABondDialog.setObjectName("FTABondDialog")
         FTABondDialog.setWindowModality(QtCore.Qt.NonModal)
-        FTABondDialog.resize(997, 775)
+        FTABondDialog.resize(1006, 782)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

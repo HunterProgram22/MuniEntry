@@ -63,7 +63,7 @@ class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CaseInformation."""
     appearance_reason: str = None
-    forefeit_bond: str = None
+    forfeit_bond: str = None
     issue_warrant: str = None
     forfeit_license: str = None
     vehicle_registration_block: str = None
