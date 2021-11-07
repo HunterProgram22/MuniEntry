@@ -288,7 +288,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QComboBox" name="comboBox_6">
+       <widget class="QComboBox" name="vehicle_registration_block_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -305,7 +305,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="appearance_reason_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -332,7 +332,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QComboBox" name="comboBox_3">
+       <widget class="QComboBox" name="forfeit_license_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -356,7 +356,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QComboBox" name="comboBox_2">
+       <widget class="QComboBox" name="issue_warrant_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -394,7 +394,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox_7">
+       <widget class="QComboBox" name="forfeit_bond_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -433,7 +433,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QComboBox" name="comboBox_4">
+       <widget class="QComboBox" name="bond_type_box">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -462,7 +462,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QComboBox" name="comboBox_5">
+       <widget class="QComboBox" name="bond_amount_box">
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
@@ -691,13 +691,13 @@ font-weight: bold;</string>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
-  <tabstop>comboBox</tabstop>
-  <tabstop>comboBox_7</tabstop>
-  <tabstop>comboBox_2</tabstop>
-  <tabstop>comboBox_3</tabstop>
-  <tabstop>comboBox_6</tabstop>
-  <tabstop>comboBox_4</tabstop>
-  <tabstop>comboBox_5</tabstop>
+  <tabstop>appearance_reason_box</tabstop>
+  <tabstop>forfeit_bond_box</tabstop>
+  <tabstop>issue_warrant_box</tabstop>
+  <tabstop>forfeit_license_box</tabstop>
+  <tabstop>vehicle_registration_block_box</tabstop>
+  <tabstop>bond_type_box</tabstop>
+  <tabstop>bond_amount_box</tabstop>
   <tabstop>checkBox</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>checkBox_2</tabstop>
