@@ -89,11 +89,11 @@ class BaseCriminalDialog(QDialog):
         self.setupUI. Place items in this method that can't be added
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         try:
             statute_list = create_statute_list()
             self.statute_choice_box.addItems(statute_list)
             self.offense_choice_box.addItems(create_offense_list())
-            self.plea_trial_date.setDate(QtCore.QDate.currentDate())
             self.statute_choice_box.setCurrentText("")
             self.offense_choice_box.setCurrentText("")
         except AttributeError:
