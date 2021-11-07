@@ -11,7 +11,7 @@ from views.custom_widgets import (
     FineLineEdit,
     FineSuspendedLineEdit,
 )
-from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
+from views.MMD_Reformat_ui import Ui_MinorMisdemeanorDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation
 from controllers.helper_functions import set_future_date
