@@ -69,6 +69,14 @@ class FTABondConditions:
     vehicle_registration_block: str = None
     bond_type: str = None
     bond_amount: str = None
+    no_contact: bool = False
+    no_alcohol_drugs: bool = False
+    alcohol_drugs_assessment: bool = False
+    alcohol_test_kiosk: bool = False
+    specialized_docket: bool = False
+    specialized_docket_type: str = None
+    monitoring: bool = False
+    monitoring_type: str = None
 
 
 @dataclass

@@ -5,6 +5,9 @@
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -536,7 +539,7 @@ font-weight: bold;</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="1" column="0">
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="no_contact_checkBox">
         <property name="text">
          <string>Have no contact with complaining witness(es) / persons as listed.</string>
         </property>
@@ -563,21 +566,24 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="7" column="0">
-       <widget class="QCheckBox" name="checkBox_5">
+       <widget class="QCheckBox" name="monitoring_checkBox">
         <property name="text">
          <string>Report prior to release/forthwith to Office of Community Control for:</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QCheckBox" name="checkBox_3">
+       <widget class="QCheckBox" name="specialized_docket_checkBox">
         <property name="text">
          <string>Report to Specialized Docket Coordinator for screening for:</string>
         </property>
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="QComboBox" name="comboBox_9">
+       <widget class="QComboBox" name="monitoring_type_box">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -599,7 +605,10 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QComboBox" name="comboBox_8">
+       <widget class="QComboBox" name="specialized_docket_type_box">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
@@ -621,21 +630,21 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QCheckBox" name="checkBox_6">
+       <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
         <property name="text">
          <string>Report to Office of Community Control: Set schedule for AB (Alcohol) Kiosk testing.</string>
         </property>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
         <property name="text">
          <string>Report to Office of Community Control: Obtain alcohol/drug assessment. </string>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QCheckBox" name="checkBox_4">
+       <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
         <property name="text">
          <string>Not consume, possess, or purchase alcohol or drugs of abuse.</string>
         </property>
@@ -698,14 +707,14 @@ font-weight: bold;</string>
   <tabstop>vehicle_registration_block_box</tabstop>
   <tabstop>bond_type_box</tabstop>
   <tabstop>bond_amount_box</tabstop>
-  <tabstop>checkBox</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_6</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>comboBox_8</tabstop>
-  <tabstop>checkBox_5</tabstop>
-  <tabstop>comboBox_9</tabstop>
+  <tabstop>no_contact_checkBox</tabstop>
+  <tabstop>no_alcohol_drugs_checkBox</tabstop>
+  <tabstop>alcohol_drugs_assessment_checkBox</tabstop>
+  <tabstop>alcohol_test_kiosk_checkBox</tabstop>
+  <tabstop>specialized_docket_checkBox</tabstop>
+  <tabstop>specialized_docket_type_box</tabstop>
+  <tabstop>monitoring_checkBox</tabstop>
+  <tabstop>monitoring_type_box</tabstop>
   <tabstop>create_entry_Button</tabstop>
  </tabstops>
  <resources/>
