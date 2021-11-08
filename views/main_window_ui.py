@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 800)
+        MainWindow.resize(1000, 803)
         MainWindow.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -191,8 +191,8 @@ class Ui_MainWindow(object):
         self.pelanda_radioButton.setText(_translate("MainWindow", "Magistrate Pelanda"))
         self.label_2.setText(_translate("MainWindow", "Traffic and Criminal Entries"))
         self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
-        self.LeapPleaLongButton.setText(_translate("MainWindow", "LEAP Plea JE"))
-        self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete JE"))
+        self.LeapPleaLongButton.setText(_translate("MainWindow", "LEAP Plea "))
+        self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete"))
         self.FTABondButton.setText(_translate("MainWindow", "FTA / Bond"))
         self.FinalJudgmentEntryButton_3.setText(_translate("MainWindow", "Entry"))
         self.FinalJudgmentEntryButton_4.setText(_translate("MainWindow", "Entry"))

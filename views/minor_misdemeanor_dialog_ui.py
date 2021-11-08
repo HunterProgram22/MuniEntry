@@ -427,7 +427,7 @@ class Ui_MinorMisdemeanorDialog(object):
         self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.fra_in_court_box)
         self.gridLayout_4.addWidget(self.frame_7, 1, 0, 2, 1)
         self.add_conditions_Button = QtWidgets.QPushButton(self.frame_4)
-        self.add_conditions_Button.setStyleSheet("background-color: rgb(157, 53, 36);")
+        self.add_conditions_Button.setStyleSheet("background-color: rgb(255, 255, 0);")
         self.add_conditions_Button.setAutoDefault(False)
         self.add_conditions_Button.setObjectName("add_conditions_Button")
         self.gridLayout_4.addWidget(self.add_conditions_Button, 2, 1, 1, 1)
