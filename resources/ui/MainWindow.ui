@@ -141,7 +141,7 @@ font-weight: bold;</string>
        </size>
       </property>
       <property name="text">
-       <string>LEAP Plea JE</string>
+       <string>LEAP Plea </string>
       </property>
      </widget>
     </item>
@@ -154,7 +154,7 @@ font-weight: bold;</string>
        </size>
       </property>
       <property name="text">
-       <string>LEAP Plea Pre-Court Complete JE</string>
+       <string>LEAP Plea Pre-Court Complete</string>
       </property>
      </widget>
     </item>

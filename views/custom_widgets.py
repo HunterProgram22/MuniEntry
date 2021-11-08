@@ -79,7 +79,7 @@ class DeleteButton(QPushButton):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.setStyleSheet("background-color: rgb(170, 58, 63);")
         self.setText("Delete")
         self.setObjectName("delete_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
@@ -91,7 +91,7 @@ class AmendButton(QPushButton):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
         self.setObjectName("amend_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)

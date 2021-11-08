@@ -6,6 +6,9 @@ APPLICATION TODO LIST for version 0.3.0
 * Wire up amend offense dialog again - works on basic level - need to move signals to dialog
 and perhaps update the actual original charge to indicate amended.
 * Move create entry and other general methods to helper functions
+* Add Warning if add condition boxes are checked but conditions have not been added.
+* Add Warning if plea and finding boxes are None
+* Add new tests - fix test amend offense because button is now in grid.
 
 
 
