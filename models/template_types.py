@@ -32,7 +32,7 @@ Leap_Plea_Precourt_Completion_Template = Template(
 
 FTA_Bond_Template = Template(
     "FTA Bond Dialog",
-    "Leap_Plea_Precourt_Completion_Template.docx",
+    "FTA_Bond_Template.docx",
 )
 
 
@@ -40,4 +40,5 @@ TEMPLATE_DICT = {
     "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
     "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
     "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
+    "FTA Bond Dialog": FTA_Bond_Template,
 }

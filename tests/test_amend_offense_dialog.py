@@ -29,7 +29,6 @@ def add_case_information(dialog):
     QtBot.keyClicks(dialog.case_number_lineEdit, "21TRC1234")
     QtBot.keyClicks(dialog.defendant_first_name_lineEdit, "John")
     QtBot.keyClicks(dialog.defendant_last_name_lineEdit, "Smith")
-    QtBot.keyClicks(dialog.operator_license_number_lineEdit, "TF180780")
 
 def start_amend_offense_dialog(qtbot, dialog):
     dialog = AmendOffenseDialog(dialog.case_information)

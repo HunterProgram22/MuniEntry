@@ -1,17 +1,19 @@
-APPLICATION TODO LIST for version 0.2.0
-* Refactor CaseInformation.py - Change data models to dataclass models - finish for Case Information
+APPLICATION TODO LIST for version 0.3.0
+* Add Yellow Sheet templates (FTA/Bond, Not Guilty/Bond, CC Violation)
+* Add functionality for allied offenses
+* Add community control conditions checkboxes
+* Remove magic numbers throughout.
 * Wire up amend offense dialog again - works on basic level - need to move signals to dialog
 and perhaps update the actual original charge to indicate amended.
 * Move create entry and other general methods to helper functions
-* Have AB review case types for proper case type (moving, non-moving, crim)
+* Add Warning if add condition boxes are checked but conditions have not been added.
+* Add Warning if plea and finding boxes are None
 
 
 
-FEATURE/CHANGE LIST - for Version 0.3.0
-* Add functionality for allied offenses
-* Add community control conditions checkboxes
-* Fix sizing of application based on screen size issue
-* Remove magic numbers throughout.
+
+FEATURE/CHANGE LIST - for Version 0.4.0
+
 
 
 

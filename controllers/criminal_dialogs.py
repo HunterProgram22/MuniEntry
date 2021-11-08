@@ -90,10 +90,13 @@ class BaseCriminalDialog(QDialog):
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
         try:
+            self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        except AttributeError:
+            pass
+        try:
             statute_list = create_statute_list()
             self.statute_choice_box.addItems(statute_list)
             self.offense_choice_box.addItems(create_offense_list())
-            self.plea_trial_date.setDate(QtCore.QDate.currentDate())
             self.statute_choice_box.setCurrentText("")
             self.offense_choice_box.setCurrentText("")
         except AttributeError:
@@ -709,6 +712,12 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             QDate.currentDate().addDays(days_to_complete)
         )
 
+    @logger.catch
+    def close_event(self):
+        """This close event is called instead of the parent class close_event because the databases
+        need to remain open and the parent class close_event closes the databases."""
+        self.close_window()
+
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amendOffenseButton is clicked on
@@ -741,6 +750,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
         self.continue_Button.pressed.connect(self.amend_offense)
         self.continue_Button.released.connect(self.close_event)
+        self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
     def clear_amend_charge_fields(self):
