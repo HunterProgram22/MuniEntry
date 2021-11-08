@@ -9,6 +9,7 @@ and perhaps update the actual original charge to indicate amended.
 * Add Warning if add condition boxes are checked but conditions have not been added.
 * Add Warning if plea and finding boxes are None
 * Add new tests - fix test amend offense because button is now in grid.
+* Add checkbox for allied offense - then have it default to a guilty-allied offense if checked.
 
 
 
