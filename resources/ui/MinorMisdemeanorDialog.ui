@@ -460,6 +460,22 @@ font-weight: bold;</string>
         <item row="0" column="0" colspan="3">
          <layout class="QGridLayout" name="charges_gridLayout">
           <item row="4" column="0">
+           <widget class="QLabel" name="plea_label_1">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Plea:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
            <widget class="QLabel" name="label_14">
             <property name="font">
              <font>
@@ -475,8 +491,8 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="plea_label_1">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_10">
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
@@ -487,7 +503,46 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Plea:</string>
+             <string>Fines Suspended:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Degree:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_17">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Fines:</string>
             </property>
            </widget>
           </item>
@@ -526,65 +581,17 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_17">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Fines:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
+          <item row="8" column="0">
            <widget class="QLabel" name="label_4">
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_20">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>Degree:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Fines Suspended:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string/>
+             <string>Allied Offense:</string>
             </property>
            </widget>
           </item>

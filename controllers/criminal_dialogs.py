@@ -25,6 +25,7 @@ from views.custom_widgets import (
     FineLineEdit,
     DeleteButton,
     AmendButton,
+    AlliedCheckbox,
 )
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 from settings import SAVE_PATH, CHARGES_DATABASE
@@ -285,6 +286,8 @@ class BaseCriminalDialog(QDialog):
                     break
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
                 row += 1
+        self.charges_gridLayout.addWidget(AlliedCheckbox(), row, column)
+        row += 1
         self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
         row += 1
         return row, column
@@ -342,11 +345,16 @@ class BaseCriminalDialog(QDialog):
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
-                        3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(
-                        3, column).widget().setCurrentText("Guilty")
+                        4, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(
                         4, column).widget().setCurrentText("Guilty")
+                    if self.charges_gridLayout.itemAtPosition(
+                            3, column).widget().isChecked():
+                        self.charges_gridLayout.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.charges_gridLayout.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty")
                     column += 1
             except AttributeError:
                 pass
@@ -362,11 +370,16 @@ class BaseCriminalDialog(QDialog):
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
-                        3, column).widget(), PleaComboBox):
+                        4, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(
-                        3, column).widget().setCurrentText("No Contest")
-                    self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().setCurrentText("Guilty")
+                        4, column).widget().setCurrentText("No Contest")
+                    if self.charges_gridLayout.itemAtPosition(
+                            3, column).widget().isChecked():
+                        self.charges_gridLayout.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.charges_gridLayout.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty")
                     column += 1
             except AttributeError:
                 pass

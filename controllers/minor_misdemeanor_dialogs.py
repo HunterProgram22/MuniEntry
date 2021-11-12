@@ -58,7 +58,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def add_dispositions_and_fines(self):
-        """Row 3 - plea, 4 - finding, 5 - fine, 6 fine-suspended.
+        """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine, 7 fine-suspended.
         Columns start at 0 for labels and 2 for first entry then 4 etc.
 
         Column count increases by 2 instead of one due to grid adding two
@@ -68,21 +68,21 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             for index in range(len(self.case_information.charges_list)):
                 self.case_information.charges_list[index].plea = (
                     self.charges_gridLayout.itemAtPosition(
-                        3, column).widget().currentText()
+                        4, column).widget().currentText()
                 )
                 self.case_information.charges_list[index].finding = (
                     self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().currentText()
+                        5, column).widget().currentText()
                 )
                 self.case_information.charges_list[index].fines_amount = (
                     self.charges_gridLayout.itemAtPosition(
-                        5, column).widget().text()
+                        6, column).widget().text()
                 )
-                if self.charges_gridLayout.itemAtPosition(6, column).widget().text() == "":
+                if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
                     self.case_information.charges_list[index].fines_suspended = "0"
                 else:
                     self.case_information.charges_list[index].fines_suspended = (
-                        self.charges_gridLayout.itemAtPosition(6, column).widget().text()
+                        self.charges_gridLayout.itemAtPosition(7, column).widget().text()
                     )
                 index += 1
                 column += 2
