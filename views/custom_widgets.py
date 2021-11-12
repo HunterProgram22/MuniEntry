@@ -106,3 +106,4 @@ class AlliedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
