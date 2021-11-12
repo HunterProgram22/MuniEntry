@@ -25,6 +25,7 @@ from views.custom_widgets import (
     FineLineEdit,
     DeleteButton,
     AmendButton,
+    AlliedCheckbox,
 )
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
 from settings import SAVE_PATH, CHARGES_DATABASE
@@ -285,6 +286,8 @@ class BaseCriminalDialog(QDialog):
                     break
                 self.charges_gridLayout.addWidget(QLabel(value), row, column)
                 row += 1
+        self.charges_gridLayout.addWidget(AlliedCheckbox(), row, column)
+        row += 1
         self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
         row += 1
         return row, column
