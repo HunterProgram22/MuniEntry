@@ -348,8 +348,12 @@ class BaseCriminalDialog(QDialog):
                         3, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(
                         3, column).widget().setCurrentText("Guilty")
-                    self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().setCurrentText("Guilty")
+                    if self.allied_checkBox.isChecked():
+                        self.charges_gridLayout.itemAtPosition(
+                            4, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.charges_gridLayout.itemAtPosition(
+                            4, column).widget().setCurrentText("Guilty")
                     column += 1
             except AttributeError:
                 pass

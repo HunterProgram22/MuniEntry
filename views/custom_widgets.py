@@ -102,6 +102,7 @@ class AlliedCheckbox(QCheckBox):
         super(QCheckBox, self).__init__(parent)
         self.set_up_widget()
 
+
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
