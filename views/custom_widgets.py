@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit
+from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox
 
 class PleaComboBox(QComboBox):
     def __init__(self, parent=None):
@@ -94,4 +94,16 @@ class AmendButton(QPushButton):
         self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
         self.setObjectName("amend_Button")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+
+
+class AlliedCheckbox(QCheckBox):
+    def __init__(self, parent=None):
+        super(QCheckBox, self).__init__(parent)
+        self.set_up_widget()
+
+
+    def set_up_widget(self):
+        self.setText("Allied Offense")
+        self.setObjectName("allied_checkBox")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
