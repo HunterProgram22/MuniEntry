@@ -7,6 +7,7 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from loguru import logger
+from dataclasses import dataclass
 
 from models.party_types import JudicialOfficer
 from views.main_window_ui import Ui_MainWindow
@@ -22,12 +23,17 @@ logger.add("./resources/logs/Error_log_{time}.log")
 
 @logger.catch
 def create_database_connections():
-    """The databases for the application are created upon import of the module, which is done
-    on application startup. The connections to the databases are created, but the opening and
-    closing of the databases is handled by the appropriate class dialog."""
+    """Opends a connection to the database and returns that connection the arraignments_database."""
     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
     return arraignments_database_connection
+
+@dataclass
+class Case:
+    case_number: str
+    defendant_last_name: str
+    defendant_first_name: str
+
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -52,7 +58,7 @@ class Window(QMainWindow, Ui_MainWindow):
     dialogObject).
     """
 
-    def __init__(self, arraignment_list, parent=None):
+    def __init__(self, arraignments_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.connect_menu_signal_slots()
@@ -75,6 +81,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connect_entry_buttons()
         self.arraignment_list = create_cases_list()
         self.load_arraignment_case_list()
+        self.arraignments_database = arraignments_database
 
 
     def load_arraignment_case_list(self):
@@ -94,11 +101,8 @@ class Window(QMainWindow, Ui_MainWindow):
         """Sets the judicial officer for the main application that will be
         transferred to the entry that is selected."""
         for key, value in self.judicial_officer_dict.items():
-            print("SJO Ran")
             if key.isChecked():
-                print("Checked")
                 self.judicial_officer = value
-                print(self.judicial_officer)
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and
@@ -121,40 +125,37 @@ class Window(QMainWindow, Ui_MainWindow):
         TODO: "Issue is in the self.arraignment list is pulling the string case number from the create_cases_list
         in the databasecreation module. Need to load the case object. Use get case to load function  "
         """
-        #try:
-        print(self.judicial_officer)
-        if self.judicial_officer is None:
-            print(self.judicial_officer)
-            #raise AttributeError
-        case_to_load = next((case for case in self.arraignment_list if case.case_number == self.arraignment_cases_box.currentText()), None)
-        dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
-        dialog.exec()
-        # except AttributeError:
-        #     print(AttributeError)
-        #     message = QMessageBox()
-        #     message.setIcon(QMessageBox.Warning)
-        #     message.setWindowTitle("Required")
-        #     message.setText("You must select a judicial officer.")
-        #     message.setStandardButtons(QMessageBox.Ok)
-        #     message.exec()
+        try:
+            if self.judicial_officer is None:
+                raise AttributeError
+            self.arraignments_database.open()
+            case_to_load = self.get_case_to_load()
+            dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+            dialog.exec()
+        except AttributeError:
+            message = QMessageBox()
+            message.setIcon(QMessageBox.Warning)
+            message.setWindowTitle("Required")
+            message.setText("You must select a judicial officer.")
+            message.setStandardButtons(QMessageBox.Ok)
+            message.exec()
 
     @logger.catch
     def get_case_to_load(self):
-        """This calls the database_statutes and behind the scenes sets the appropriate case type
-        for each charge. It does not show up in the view, but is used for calculating costs."""
-        key = self.statute_choice_box.currentText()
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(database_statutes)
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
+        """Query arraignment_list based on case number to return the data to load for the
+        dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
+        key = self.arraignment_cases_box.currentText()
+        query = QSqlQuery(self.arraignments_database)
+        query.prepare("SELECT * FROM cases WHERE case_number LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
         while query.next():
-            statute = query.value(2)
-            offense_type = query.value(4)
-            if statute == key:
-                return offense_type
-
+            print(query.value(0))
+            case_number = query.value(1)
+            defendant_last_name = query.value(2)
+            defendant_first_name = query.value(3)
+            break #Eventually remove break statement to get multipe subcases/charges
+        return Case(case_number, defendant_last_name, defendant_first_name)
 
 @logger.catch
 def main():
@@ -162,9 +163,9 @@ def main():
     but needs to be set up to properly log error files. It won't catch all
     errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
-    arraignment_list = create_database_connections()
+    arraignments_database = create_database_connections()
     #arraignment_list.open()
-    win = Window(arraignment_list)
+    win = Window(arraignments_database)
     win.show()
     sys.exit(app.exec())
 
