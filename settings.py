@@ -7,6 +7,7 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
+CASES_DATABASE = DB_PATH + "\\arraignments.sqlite"
 
 PAY_DATE_DICT = {
     "forthwith": 0,

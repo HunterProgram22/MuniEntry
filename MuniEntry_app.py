@@ -5,6 +5,7 @@ selecting the judicial officer on the case and also different templates.
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from loguru import logger
 
 from models.party_types import JudicialOfficer
@@ -12,20 +13,21 @@ from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
+from settings import CASES_DATABASE
+from resources.db.DatabaseCreation import create_cases_list
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
-class CaseLoadData():
-    def __init__(self, case_number, defendant_first_name, defendant_last_name):
-        self.case_number = case_number
-        self.defendant_first_name = defendant_first_name
-        self.defendant_last_name = defendant_last_name
 
 
-CLD_1 = CaseLoadData("21TRD1234", "Justin", "Kudela")
-CLD_2 = CaseLoadData("22TRD3344", "Pat", "Datillo")
-CLD_3 = CaseLoadData("21CRB0122", "John", "Smith")
-arraignment_list = [CLD_1, CLD_2, CLD_3]
+@logger.catch
+def create_database_connections():
+    """The databases for the application are created upon import of the module, which is done
+    on application startup. The connections to the databases are created, but the opening and
+    closing of the databases is handled by the appropriate class dialog."""
+    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
+    arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    return arraignments_database_connection
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -69,14 +71,14 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
         }
-        self.arraignment_list = arraignment_list
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
+        self.arraignment_list = create_cases_list()
         self.load_arraignment_case_list()
 
+
     def load_arraignment_case_list(self):
-        for count, case in enumerate(self.arraignment_list):
-            self.arraignment_cases_box.addItem(case.case_number)
+        self.arraignment_cases_box.addItems(self.arraignment_list)
 
     def connect_judicial_officer_buttons(self):
         """Connects the radio buttons for each judicial officer to their
@@ -92,8 +94,11 @@ class Window(QMainWindow, Ui_MainWindow):
         """Sets the judicial officer for the main application that will be
         transferred to the entry that is selected."""
         for key, value in self.judicial_officer_dict.items():
+            print("SJO Ran")
             if key.isChecked():
+                print("Checked")
                 self.judicial_officer = value
+                print(self.judicial_officer)
 
     def connect_entry_buttons(self):
         """Cycles through all buttons that are listed in the dialog_dict and
@@ -112,20 +117,43 @@ class Window(QMainWindow, Ui_MainWindow):
         Launches the dialog that is connected to each button.
         The judicial_officer argument must be passed to insure the creation
         of the proper template features.
+
+        TODO: "Issue is in the self.arraignment list is pulling the string case number from the create_cases_list
+        in the databasecreation module. Need to load the case object. Use get case to load function  "
         """
-        try:
-            if self.judicial_officer is None:
-                raise AttributeError
-            case_to_load = next((case for case in self.arraignment_list if case.case_number == self.arraignment_cases_box.currentText()), None)
-            dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
-            dialog.exec()
-        except AttributeError:
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Required")
-            message.setText("You must select a judicial officer.")
-            message.setStandardButtons(QMessageBox.Ok)
-            message.exec()
+        #try:
+        print(self.judicial_officer)
+        if self.judicial_officer is None:
+            print(self.judicial_officer)
+            #raise AttributeError
+        case_to_load = next((case for case in self.arraignment_list if case.case_number == self.arraignment_cases_box.currentText()), None)
+        dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+        dialog.exec()
+        # except AttributeError:
+        #     print(AttributeError)
+        #     message = QMessageBox()
+        #     message.setIcon(QMessageBox.Warning)
+        #     message.setWindowTitle("Required")
+        #     message.setText("You must select a judicial officer.")
+        #     message.setStandardButtons(QMessageBox.Ok)
+        #     message.exec()
+
+    @logger.catch
+    def get_case_to_load(self):
+        """This calls the database_statutes and behind the scenes sets the appropriate case type
+        for each charge. It does not show up in the view, but is used for calculating costs."""
+        key = self.statute_choice_box.currentText()
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        query = QSqlQuery(database_statutes)
+        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
+        query.bindValue(":key", key)
+        query.exec()
+        while query.next():
+            statute = query.value(2)
+            offense_type = query.value(4)
+            if statute == key:
+                return offense_type
 
 
 @logger.catch
@@ -134,6 +162,8 @@ def main():
     but needs to be set up to properly log error files. It won't catch all
     errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
+    arraignment_list = create_database_connections()
+    #arraignment_list.open()
     win = Window(arraignment_list)
     win.show()
     sys.exit(app.exec())
