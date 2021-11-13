@@ -5,6 +5,13 @@ from models.party_types import JudicialOfficer, Defendant
 
 
 @dataclass
+class CaseLoadData:
+    case_number: str
+    defendant_last_name: str
+    defendant_first_name: str
+
+
+@dataclass
 class CaseInformation:
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""

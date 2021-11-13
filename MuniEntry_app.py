@@ -9,7 +9,10 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from loguru import logger
 from dataclasses import dataclass
 
+from resources.db import create_arraignment_table
+
 from models.party_types import JudicialOfficer
+from models.case_information import CaseLoadData
 from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -23,17 +26,10 @@ logger.add("./resources/logs/Error_log_{time}.log")
 
 @logger.catch
 def create_database_connections():
-    """Opends a connection to the database and returns that connection the arraignments_database."""
+    """Opens a connection to the database and returns that connection to the arraignments_database."""
     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
     return arraignments_database_connection
-
-@dataclass
-class Case:
-    case_number: str
-    defendant_last_name: str
-    defendant_first_name: str
-
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -117,14 +113,9 @@ class Window(QMainWindow, Ui_MainWindow):
 
     @logger.catch
     def start_dialog_from_entry_button(self):
-        """
-        Launches the dialog that is connected to each button.
+        """ Launches the dialog that is connected to each button.
         The judicial_officer argument must be passed to insure the creation
-        of the proper template features.
-
-        TODO: "Issue is in the self.arraignment list is pulling the string case number from the create_cases_list
-        in the databasecreation module. Need to load the case object. Use get case to load function  "
-        """
+        of the proper template features."""
         try:
             if self.judicial_officer is None:
                 raise AttributeError
@@ -150,12 +141,14 @@ class Window(QMainWindow, Ui_MainWindow):
         query.bindValue(":key", key)
         query.exec()
         while query.next():
-            print(query.value(0))
             case_number = query.value(1)
             defendant_last_name = query.value(2)
             defendant_first_name = query.value(3)
             break #Eventually remove break statement to get multipe subcases/charges
-        return Case(case_number, defendant_last_name, defendant_first_name)
+        if self.arraignment_cases_box.currentText() == "":
+            return CaseLoadData("", "", "")
+        else:
+            return CaseLoadData(case_number, defendant_last_name, defendant_first_name)
 
 @logger.catch
 def main():
@@ -164,7 +157,6 @@ def main():
     errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
     arraignments_database = create_database_connections()
-    #arraignment_list.open()
     win = Window(arraignments_database)
     win.show()
     sys.exit(app.exec())

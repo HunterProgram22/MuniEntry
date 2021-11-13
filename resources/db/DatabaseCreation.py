@@ -6,6 +6,7 @@ PATH = str(pathlib.Path().absolute())
 DB_PATH = PATH + "\\resources\\db\\"
 
 
+
 def create_offense_list():
     conn = sqlite3.connect(DB_PATH + "charges.sqlite")
     cursor = conn.cursor()
@@ -40,4 +41,5 @@ def create_cases_list():
         clean_cases_list.append(i[0])
     clean_cases_list.sort()
     conn.close()
+    clean_cases_list.insert(0, None)
     return clean_cases_list
