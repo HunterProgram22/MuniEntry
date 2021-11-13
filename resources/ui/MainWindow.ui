@@ -35,41 +35,28 @@ selection-color: rgb(0, 0, 0);
 font-weight: bold;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <family>Palatino Linotype</family>
-        <pointsize>11</pointsize>
-        <weight>75</weight>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
+   <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0,0,0,0,0,0,0,0,0,0,0">
+    <item row="1" column="3" colspan="2">
+     <widget class="QRadioButton" name="pelanda_radioButton">
       <property name="text">
-       <string>Judicial Officer:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" colspan="2">
-     <widget class="QRadioButton" name="hemmeter_radioButton">
-      <property name="text">
-       <string>Judge Hemmeter</string>
+       <string>Magistrate Pelanda</string>
       </property>
       <attribute name="buttonGroup">
        <string notr="true">buttonGroup</string>
       </attribute>
      </widget>
     </item>
-    <item row="0" column="3" colspan="2">
-     <widget class="QRadioButton" name="bunner_radioButton">
-      <property name="text">
-       <string>Magistrate Bunner</string>
+    <item row="9" column="2" colspan="2">
+     <widget class="QPushButton" name="FinalJudgmentEntryButton_3">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
       </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
+      <property name="text">
+       <string>Entry</string>
+      </property>
      </widget>
     </item>
     <item row="0" column="5">
@@ -82,27 +69,66 @@ font-weight: bold;</string>
       </attribute>
      </widget>
     </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="QRadioButton" name="rohrer_radioButton">
-      <property name="text">
-       <string>Judge Rohrer</string>
+    <item row="9" column="0" colspan="2">
+     <widget class="QPushButton" name="FTABondButton">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
       </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
+      <property name="text">
+       <string>FTA / Bond</string>
+      </property>
      </widget>
     </item>
-    <item row="1" column="3" colspan="2">
-     <widget class="QRadioButton" name="pelanda_radioButton">
-      <property name="text">
-       <string>Magistrate Pelanda</string>
+    <item row="8" column="4" colspan="2">
+     <widget class="QPushButton" name="LeapPleaShortButton">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
       </property>
-      <attribute name="buttonGroup">
-       <string notr="true">buttonGroup</string>
-      </attribute>
+      <property name="text">
+       <string>LEAP Plea Pre-Court Complete</string>
+      </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
+    <item row="2" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>Arraignment Cases List:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="4" colspan="2">
+     <widget class="QPushButton" name="FinalJudgmentEntryButton_4">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="2" colspan="2">
+     <widget class="QPushButton" name="FinalJudgmentEntryButton_12">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0" colspan="2">
      <widget class="QLabel" name="label_2">
       <property name="font">
        <font>
@@ -119,85 +145,7 @@ font-weight: bold;</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="QPushButton" name="MinorMisdemeanorTrafficButton">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Minor Misdemeanor</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2" colspan="2">
-     <widget class="QPushButton" name="LeapPleaLongButton">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>LEAP Plea </string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="4" colspan="2">
-     <widget class="QPushButton" name="LeapPleaShortButton">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>LEAP Plea Pre-Court Complete</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0" colspan="2">
-     <widget class="QPushButton" name="FTABondButton">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>FTA / Bond</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="2" colspan="2">
-     <widget class="QPushButton" name="FinalJudgmentEntryButton_3">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="4" colspan="2">
-     <widget class="QPushButton" name="FinalJudgmentEntryButton_4">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
+    <item row="10" column="0">
      <widget class="QLabel" name="label_4">
       <property name="font">
        <font>
@@ -214,59 +162,7 @@ font-weight: bold;</string>
       </property>
      </widget>
     </item>
-    <item row="6" column="0" colspan="2">
-     <widget class="QPushButton" name="FinalJudgmentEntryButton_11">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="2" colspan="2">
-     <widget class="QPushButton" name="FinalJudgmentEntryButton_12">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="4" colspan="2">
-     <widget class="QPushButton" name="MinorMisdemeanorTrafficButton_3">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="0" colspan="2">
-     <widget class="QPushButton" name="FinalJudgmentEntryButton_13">
-      <property name="minimumSize">
-       <size>
-        <width>120</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>Entry</string>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="2" colspan="2">
+    <item row="12" column="2" colspan="2">
      <widget class="QPushButton" name="FinalJudgmentEntryButton_14">
       <property name="minimumSize">
        <size>
@@ -279,7 +175,59 @@ font-weight: bold;</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="4" colspan="2">
+    <item row="12" column="0" colspan="2">
+     <widget class="QPushButton" name="FinalJudgmentEntryButton_13">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <family>Palatino Linotype</family>
+        <pointsize>11</pointsize>
+        <weight>75</weight>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Judicial Officer:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="2" colspan="2">
+     <widget class="QPushButton" name="LeapPleaLongButton">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>LEAP Plea </string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="3" colspan="2">
+     <widget class="QRadioButton" name="bunner_radioButton">
+      <property name="text">
+       <string>Magistrate Bunner</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="12" column="4" colspan="2">
      <widget class="QPushButton" name="FinalJudgmentEntryButton_15">
       <property name="minimumSize">
        <size>
@@ -292,6 +240,72 @@ font-weight: bold;</string>
       </property>
      </widget>
     </item>
+    <item row="11" column="0" colspan="2">
+     <widget class="QPushButton" name="FinalJudgmentEntryButton_11">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="4" colspan="2">
+     <widget class="QPushButton" name="MinorMisdemeanorTrafficButton_3">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Entry</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="2">
+     <widget class="QRadioButton" name="hemmeter_radioButton">
+      <property name="text">
+       <string>Judge Hemmeter</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QComboBox" name="arraignment_cases_box">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QRadioButton" name="rohrer_radioButton">
+      <property name="text">
+       <string>Judge Rohrer</string>
+      </property>
+      <attribute name="buttonGroup">
+       <string notr="true">buttonGroup</string>
+      </attribute>
+     </widget>
+    </item>
+    <item row="8" column="0" colspan="2">
+     <widget class="QPushButton" name="MinorMisdemeanorTrafficButton">
+      <property name="minimumSize">
+       <size>
+        <width>120</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Minor Misdemeanor</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -300,7 +314,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>1000</width>
-     <height>27</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

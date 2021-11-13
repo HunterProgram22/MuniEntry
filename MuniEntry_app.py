@@ -15,6 +15,18 @@ from controllers.fta_bond_dialogs import FTABondDialog
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
+class CaseLoadData():
+    def __init__(self, case_number, defendant_first_name, defendant_last_name):
+        self.case_number = case_number
+        self.defendant_first_name = defendant_first_name
+        self.defendant_last_name = defendant_last_name
+
+
+CLD_1 = CaseLoadData("21TRD1234", "Justin", "Kudela")
+CLD_2 = CaseLoadData("22TRD3344", "Pat", "Datillo")
+CLD_3 = CaseLoadData("21CRB0122", "John", "Smith")
+arraignment_list = [CLD_1, CLD_2, CLD_3]
+
 
 class Window(QMainWindow, Ui_MainWindow):
     """The MainWindow of the application.  If changes to the view
@@ -38,7 +50,7 @@ class Window(QMainWindow, Ui_MainWindow):
     dialogObject).
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, arraignment_list, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.connect_menu_signal_slots()
@@ -57,8 +69,14 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
         }
+        self.arraignment_list = arraignment_list
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
+        self.load_arraignment_case_list()
+
+    def load_arraignment_case_list(self):
+        for count, case in enumerate(self.arraignment_list):
+            self.arraignment_cases_box.addItem(case.case_number)
 
     def connect_judicial_officer_buttons(self):
         """Connects the radio buttons for each judicial officer to their
@@ -98,7 +116,8 @@ class Window(QMainWindow, Ui_MainWindow):
         try:
             if self.judicial_officer is None:
                 raise AttributeError
-            dialog = self.dialog_dict[self.sender()](self.judicial_officer)
+            case_to_load = next((case for case in self.arraignment_list if case.case_number == self.arraignment_cases_box.currentText()), None)
+            dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
             dialog.exec()
         except AttributeError:
             message = QMessageBox()
@@ -115,7 +134,7 @@ def main():
     but needs to be set up to properly log error files. It won't catch all
     errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
-    win = Window()
+    win = Window(arraignment_list)
     win.show()
     sys.exit(app.exec())
 

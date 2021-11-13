@@ -31,8 +31,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     not inherently limit cases to minor misdemeanors or unclassified
     misdemeanors, however, it does not include fields to enter jail time."""
     @logger.catch
-    def __init__(self, judicial_officer, parent=None):
-        super().__init__(judicial_officer, parent)
+    def __init__(self, judicial_officer, case, parent=None):
+        super().__init__(judicial_officer, case, parent)
         self.case_information = CaseInformation(self.judicial_officer)
         self.dialog_name = "Minor Misdemeanor Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
@@ -40,9 +40,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
 
     @logger.catch
     def modify_view(self):
-        """The modify view method updates the view that is created on init."""
+        """The modify view method updates the view that is created on init and loads
+        case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+        self.case_number_lineEdit.setText(self.case.case_number)
+        self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
+        self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
 
     @logger.catch
     def connect_signals_to_slots(self):
