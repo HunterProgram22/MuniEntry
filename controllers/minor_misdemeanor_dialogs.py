@@ -64,30 +64,33 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         Column count increases by 2 instead of one due to grid adding two
         columns when a charge is added (odd numbered column is empty)."""
         column = 2
-        try:
-            for index in range(len(self.case_information.charges_list)):
-                self.case_information.charges_list[index].plea = (
+        loop_counter = 0
+        charge_index = 0
+        while loop_counter < self.charges_gridLayout.columnCount():
+            try:
+                self.case_information.charges_list[charge_index].plea = (
                     self.charges_gridLayout.itemAtPosition(
                         4, column).widget().currentText()
                 )
-                self.case_information.charges_list[index].finding = (
+                self.case_information.charges_list[charge_index].finding = (
                     self.charges_gridLayout.itemAtPosition(
                         5, column).widget().currentText()
                 )
-                self.case_information.charges_list[index].fines_amount = (
-                    self.charges_gridLayout.itemAtPosition(
-                        6, column).widget().text()
+                self.case_information.charges_list[charge_index].fines_amount = (
+                    self.charges_gridLayout.itemAtPosition(6, column).widget().text()
                 )
                 if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
-                    self.case_information.charges_list[index].fines_suspended = "0"
+                    self.case_information.charges_list[charge_index].fines_suspended = "0"
                 else:
-                    self.case_information.charges_list[index].fines_suspended = (
+                    self.case_information.charges_listcharge_[charge_index].fines_suspended = (
                         self.charges_gridLayout.itemAtPosition(7, column).widget().text()
                     )
-                index += 1
-                column += 2
-        except AttributeError:
-            print("Attribute error allowed to pass for lack of widget")
+                charge_index += 1
+            except AttributeError:
+                print("Attribute error allowed to pass for lack of widget")
+            column += 2
+            loop_counter += 1
+
 
     @logger.catch
     def add_charge_to_view(self):
