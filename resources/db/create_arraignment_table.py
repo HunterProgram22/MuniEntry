@@ -31,7 +31,6 @@ def return_data_from_excel(excel_file):
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
     row_count = worksheet.max_row + 1
-    print(row_count)
     for row in range(2,row_count):
         case_number = worksheet.cell(row=row, column=1)
         defendant_last_name = worksheet.cell(row=row, column=3)
@@ -101,7 +100,7 @@ insertDataQuery.prepare(
 # https://python-forum.io/thread-11659.html
 # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
 data_from_table = return_data_from_excel(EXCEL_FILE)
-print(data_from_table)
+# print(data_from_table)
 
 # Use .addBindValue() to insert data
 for case_number, defendant_last_name, defendant_first_name, offense, statute, degree, fra_in_file in data_from_table:

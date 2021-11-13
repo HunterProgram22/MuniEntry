@@ -5,7 +5,7 @@ selecting the judicial officer on the case and also different templates.
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+from PyQt5.QtSql import QSqlQuery
 from loguru import logger
 from dataclasses import dataclass
 
@@ -17,19 +17,10 @@ from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
-from settings import CASES_DATABASE
+from settings import create_arraignments_database_connection
 from resources.db.DatabaseCreation import create_cases_list
 
 logger.add("./resources/logs/Error_log_{time}.log")
-
-
-
-@logger.catch
-def create_database_connections():
-    """Opens a connection to the database and returns that connection to the arraignments_database."""
-    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
-    arraignments_database_connection.setDatabaseName(CASES_DATABASE)
-    return arraignments_database_connection
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -85,11 +76,7 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_judicial_officer_buttons(self):
         """Connects the radio buttons for each judicial officer to their
-        JudicialOfficer object.
-
-        'Clicked' is used instead of 'pressed' for connecting the
-        judicial_officer buttons because 'pressed' was causing an
-        inconsistent bug."""
+        JudicialOfficer object."""
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
@@ -159,7 +146,7 @@ def main():
     but needs to be set up to properly log error files. It won't catch all
     errors from the application, only those causing a main loop error."""
     app = QApplication(sys.argv)
-    arraignments_database = create_database_connections()
+    arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
     win.show()
     sys.exit(app.exec())
