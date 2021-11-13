@@ -13,7 +13,7 @@ from views.custom_widgets import (
 )
 from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation
+from models.case_information import CaseInformation, CriminalCharge
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import (
     BaseCriminalDialog,
@@ -25,11 +25,7 @@ from settings import PAY_DATE_DICT
 
 class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
-    Ui_MinorMisdemeanorDialog (view).
-
-    This dialog is used when there will not be any jail time imposed. It does
-    not inherently limit cases to minor misdemeanors or unclassified
-    misdemeanors, however, it does not include fields to enter jail time."""
+    Ui_MinorMisdemeanorDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
@@ -37,6 +33,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.dialog_name = "Minor Misdemeanor Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.amend_button_list = []
+        self.load_arraignment_data()
+
+    def load_arraignment_data(self):
+        self.case_number_lineEdit.setText(self.case.case_number)
+        self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
+        self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+        self.add_charge_from_caseloaddata()
 
     @logger.catch
     def modify_view(self):
@@ -44,9 +47,16 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
-        self.case_number_lineEdit.setText(self.case.case_number)
-        self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-        self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+
+    def add_charge_from_caseloaddata(self):
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.case.offense
+        self.criminal_charge.statute = self.case.statute
+        self.criminal_charge.degree = self.case.degree
+        # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
+        self.case_information.add_charge_to_list(self.criminal_charge)
+        self.add_charge_to_view()
+        self.statute_choice_box.setFocus()
 
     @logger.catch
     def connect_signals_to_slots(self):

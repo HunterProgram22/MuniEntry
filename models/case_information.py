@@ -9,6 +9,9 @@ class CaseLoadData:
     case_number: str
     defendant_last_name: str
     defendant_first_name: str
+    offense: str
+    statute: str
+    degree: str
 
 
 @dataclass

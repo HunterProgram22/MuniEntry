@@ -144,11 +144,14 @@ class Window(QMainWindow, Ui_MainWindow):
             case_number = query.value(1)
             defendant_last_name = query.value(2)
             defendant_first_name = query.value(3)
+            offense = query.value(4)
+            statute = query.value(5)
+            degree = query.value(6)
             break #Eventually remove break statement to get multipe subcases/charges
         if self.arraignment_cases_box.currentText() == "":
             return CaseLoadData("", "", "")
         else:
-            return CaseLoadData(case_number, defendant_last_name, defendant_first_name)
+            return CaseLoadData(case_number, defendant_last_name, defendant_first_name, offense, statute, degree)
 
 @logger.catch
 def main():
