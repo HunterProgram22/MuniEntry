@@ -96,7 +96,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
                     self.case_information.charges_list[charge_index].fines_suspended = "0"
                 else:
-                    self.case_information.charges_listcharge_[charge_index].fines_suspended = (
+                    self.case_information.charges_list[charge_index].fines_suspended = (
                         self.charges_gridLayout.itemAtPosition(7, column).widget().text()
                     )
                 charge_index += 1

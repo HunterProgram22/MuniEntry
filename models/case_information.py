@@ -41,6 +41,7 @@ class CaseInformation:
     court_costs_ordered: str  = None
     court_costs: int  = 0
     total_fines: int  = 0
+    total_fines_suspended: int = 0
     fta_bond_conditions: object = None
 
     def add_charge_to_list(self, charge):

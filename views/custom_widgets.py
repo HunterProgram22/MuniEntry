@@ -42,7 +42,7 @@ class FindingComboBox(QComboBox):
 
 
 class FineLineEdit(QLineEdit):
-    def __init__(self, offense, parent=None):
+    def __init__(self, offense=None, parent=None):
         super(QLineEdit, self).__init__(parent)
         self.set_up_widget(offense)
 

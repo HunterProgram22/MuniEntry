@@ -54,7 +54,6 @@ def return_data_from_excel(excel_file):
 con = QSqlDatabase.addDatabase("QSQLITE")
 con.setDatabaseName(PATH + "\\resources\db\\arraignments.sqlite")
 
-print(PATH)
 
 if not con.open():
     print("Unable to connect to database")
