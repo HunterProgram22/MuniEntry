@@ -36,10 +36,11 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.load_arraignment_data()
 
     def load_arraignment_data(self):
-        self.case_number_lineEdit.setText(self.case.case_number)
-        self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-        self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-        self.add_charge_from_caseloaddata()
+        if self.case.case_number != None:
+            self.case_number_lineEdit.setText(self.case.case_number)
+            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
+            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+            self.add_charge_from_caseloaddata()
 
     @logger.catch
     def modify_view(self):
