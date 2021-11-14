@@ -326,10 +326,10 @@ class BaseCriminalDialog(QDialog):
                     column += 1
             except AttributeError:
                 pass
-            try:
-                self.set_cursor_to_fine_line_edit()
-            except AttributeError:
-                pass
+        try:
+            self.set_cursor_to_fine_line_edit()
+        except AttributeError:
+            pass
 
 
 
@@ -354,8 +354,7 @@ class BaseCriminalDialog(QDialog):
             except AttributeError:
                 print("No contest all attribute error")
                 pass
-            finally:
-                self.set_cursor_to_fine_line_edit()
+        self.set_cursor_to_fine_line_edit()
 
     @logger.catch
     def set_cursor_to_fine_line_edit(self):
@@ -365,8 +364,8 @@ class BaseCriminalDialog(QDialog):
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
-                        7, column).widget(), FineLineEdit):
-                    self.charges_gridLayout.itemAtPosition(7, column).widget().setFocus()
+                        6, column).widget(), FineLineEdit):
+                    self.charges_gridLayout.itemAtPosition(6, column).widget().setFocus()
                     break
             except AttributeError:
                 pass
