@@ -1,7 +1,5 @@
 APPLICATION TODO LIST for version 0.3.0
-* Allow for multiple charges on arraignments
 * Add Yellow Sheet templates (FTA/Bond, Not Guilty/Bond, CC Violation)
-* Add functionality for allied offenses
 * Remove magic numbers throughout.
 * Wire up amend offense dialog again - works on basic level - need to move signals to dialog
 and perhaps update the actual original charge to indicate amended.
@@ -16,6 +14,8 @@ and perhaps update the actual original charge to indicate amended.
 
 FEATURE/CHANGE LIST - for Version 0.4.0
 * Add community control conditions checkboxes
+* Add Jail entries
+* Add DUI sub-dialog
 
 
 
