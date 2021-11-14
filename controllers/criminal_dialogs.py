@@ -326,13 +326,8 @@ class BaseCriminalDialog(QDialog):
                     column += 1
             except AttributeError:
                 pass
-        try:
-            self.set_cursor_to_fine_line_edit()
-        except AttributeError:
-            pass
-
-
-
+        self.set_cursor_to_fine_line_edit()
+    
     @logger.catch
     def no_contest_all_plea_and_findings(self):
         """Sets the plea box to no contest and findings boxes to guilty for all

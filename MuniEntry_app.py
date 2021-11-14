@@ -135,6 +135,7 @@ class Window(QMainWindow, Ui_MainWindow):
             statute = query.value(5)
             degree = query.value(6)
             break #Eventually remove break statement to get multipe subcases/charges
+            # print("Same Case")
         if self.arraignment_cases_box.currentText() == "":
             return CaseLoadData("", "", "")
         else:
