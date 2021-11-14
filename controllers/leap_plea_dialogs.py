@@ -2,11 +2,13 @@
 from loguru import logger
 
 from PyQt5.QtCore import QDate
+from PyQt5.QtWidgets import QLabel
 
 from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
 from views.leap_precompletion_dialog_ui import Ui_LeapPleaShortDialog
+from views.custom_widgets import PleaComboBox
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation
+from models.case_information import CaseInformation, CriminalCharge
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import BaseCriminalDialog
 from settings import LEAP_COMPLETE_DATE_DICT
@@ -16,11 +18,29 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, parent=None):
-        super().__init__(parent)
+    def __init__(self, judicial_officer, case, parent=None):
+        super().__init__(judicial_officer, case, parent)
         self.case_information = CaseInformation(judicial_officer)
         self.dialog_name = "Leap Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_arraignment_data()
+
+
+    @logger.catch
+    def load_arraignment_data(self):
+        if self.case.case_number != None:
+            self.case_number_lineEdit.setText(self.case.case_number)
+            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
+            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+            self.add_charge_from_caseloaddata()
+
+    def add_charge_from_caseloaddata(self):
+        for index, charge in enumerate(self.case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute, self.criminal_charge.degree)  = self.case.charges_list[index]
+            self.case_information.add_charge_to_list(self.criminal_charge)
+            self.add_charge_to_view()
+            self.statute_choice_box.setFocus()
 
     @logger.catch
     def modify_view(self):
@@ -61,7 +81,20 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
 
     @logger.catch
     def add_charge_to_view(self):
-        row, column = super().add_charge_to_view()
+        """This add charge to view largely copies the base version in criminal_dialogs, could be
+        refactored."""
+        row = 0
+        column = self.charges_gridLayout.columnCount() + 1
+        added_charge_index = len(self.case_information.charges_list) - 1
+        charge = vars(self.case_information.charges_list[added_charge_index])
+        for value in charge.values():
+            if value is not None:
+                if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
+                    break
+                self.charges_gridLayout.addWidget(QLabel(value), row, column)
+                row += 1
+        self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
+        row += 1
         self.add_delete_button_to_view(row, column)
 
     @logger.catch
@@ -69,6 +102,24 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
         "Sets the sentencing date to the Monday (0) after the days added."""
         total_days_to_add = set_future_date(days_to_add, LEAP_COMPLETE_DATE_DICT, 0)
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
+
+    @logger.catch
+    def guilty_all_plea_and_findings(self):
+        """Sets the plea boxes to guilty for all charges currently
+        in the charges_gridLayout."""
+        for column in range(self.charges_gridLayout.columnCount()):
+            try:
+                if isinstance(self.charges_gridLayout.itemAtPosition(
+                        3, column).widget(), PleaComboBox):
+                    self.charges_gridLayout.itemAtPosition(
+                        3, column).widget().setCurrentText("Guilty")
+                    column += 1
+            except AttributeError:
+                pass
+        try:
+            self.set_cursor_to_fine_line_edit()
+        except AttributeError:
+            pass
 
 
 class LeapPleaShortDialog(BaseCriminalDialog, Ui_LeapPleaShortDialog):
