@@ -8,12 +8,13 @@ from models.party_types import JudicialOfficer, Defendant
 class CaseLoadData:
     """This object is used to store data from the arraignments database that is loaded. The data can
     then be passed to the specific dialog selected and will be transferred to case information."""
-    case_number: str
-    defendant_last_name: str
-    defendant_first_name: str
-    offense: str
-    statute: str
-    degree: str
+    case_number: str = None
+    defendant_last_name: str = None
+    defendant_first_name: str = None
+    offense: str = None
+    statute: str = None
+    degree: str = None
+    fra_in_file: str = None
 
 
 @dataclass

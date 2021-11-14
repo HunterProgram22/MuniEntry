@@ -28,7 +28,40 @@ from views.custom_widgets import (
     AlliedCheckbox,
 )
 from resources.db.DatabaseCreation import create_offense_list, create_statute_list
-from settings import SAVE_PATH, create_database_connections, open_databases, close_databases
+from settings import SAVE_PATH, CHARGES_DATABASE
+
+
+@logger.catch
+def create_database_connections():
+    """The databases for the application are created upon import of the module, which is done
+    on application startup. The connections to the databases are created, but the opening and
+    closing of the databases is handled by the appropriate class dialog."""
+    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
+    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
+    statute_database_connection = QSqlDatabase.addDatabase("QSQLITE", "statutes")
+    statute_database_connection.setDatabaseName(CHARGES_DATABASE)
+    return offense_database_connection, statute_database_connection
+
+
+@logger.catch
+def open_databases():
+    """
+    https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+    https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+    NOTE: If running create_psql_table.py to update database, must delete
+    the old charges.sqlite file to insure it is updated.
+    """
+    database_offenses.open()
+    database_statutes.open()
+
+
+@logger.catch
+def close_databases():
+    """Closes any databases that were opened at the start of the dialog."""
+    database_offenses.close()
+    database_offenses.removeDatabase(CHARGES_DATABASE)
+    database_statutes.close()
+    database_statutes.removeDatabase(CHARGES_DATABASE)
 
 
 class BaseCriminalDialog(QDialog):
@@ -36,11 +69,11 @@ class BaseCriminalDialog(QDialog):
     all class controllers that are used in the application. This class is never
     instantiated as its own dialog, but the init contains the setup for all
     inherited class controllers."""
-    def __init__(self, judicial_officer, case, parent=None):
+    def __init__(self, judicial_officer, case=None, parent=None):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
-        self.database_statutes, self.database_offenses = open_databases()
+        open_databases()
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.case = case
@@ -352,7 +385,6 @@ class BaseCriminalDialog(QDialog):
                             5, column).widget().setCurrentText("Guilty")
                     column += 1
             except AttributeError:
-                print("No contest all attribute error")
                 pass
         self.set_cursor_to_fine_line_edit()
 
@@ -360,7 +392,6 @@ class BaseCriminalDialog(QDialog):
     def set_cursor_to_fine_line_edit(self):
         """Moves the cursor to the FineLineEdit box. Row is set to 7, but for different dialogs
         this could end up changing."""
-        print("cursor called")
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
@@ -415,6 +446,7 @@ class BaseCriminalDialog(QDialog):
     def close_window(self):
         """Function connected to a button to close the window. Can be connected
         to any button press/click/release to close a window."""
+        close_databases()
         self.close()
 
     def clear_case_information_fields(self):
@@ -455,7 +487,7 @@ class BaseCriminalDialog(QDialog):
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
-        close_databases(self.database_offenses, self.database_statutes)
+        close_databases()
         self.close_window()
 
     def set_case_information_banner(self):
@@ -476,7 +508,7 @@ class BaseCriminalDialog(QDialog):
         key = self.statute_choice_box.currentText()
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(self.database_statutes)
+        query = QSqlQuery(database_statutes)
         query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -484,6 +516,7 @@ class BaseCriminalDialog(QDialog):
             statute = query.value(2)
             offense_type = query.value(4)
             if statute == key:
+                query.finish()
                 return offense_type
 
     @logger.catch
@@ -495,7 +528,7 @@ class BaseCriminalDialog(QDialog):
         is changed on the view. This is the offense."""
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(self.database_offenses)
+        query = QSqlQuery(database_offenses)
         query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -506,6 +539,7 @@ class BaseCriminalDialog(QDialog):
             if offense == key:
                 self.statute_choice_box.setCurrentText(statute)
                 self.degree_choice_box.setCurrentText(degree)
+                query.finish()
                 break
 
     @logger.catch
@@ -517,7 +551,7 @@ class BaseCriminalDialog(QDialog):
         is changed on the view. This is the statute."""
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(self.database_statutes)
+        query = QSqlQuery(database_statutes)
         query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -528,6 +562,7 @@ class BaseCriminalDialog(QDialog):
             if statute == key:
                 self.offense_choice_box.setCurrentText(offense)
                 self.degree_choice_box.setCurrentText(degree)
+                query.finish()
                 break
 
 
@@ -705,11 +740,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
 
 class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
-    """The AddOffenseDialog is created when the amendOffenseButton is clicked on
-    the MinorMisdemeanorDialog screen. The case information is passed in
-    order to populate the case information banner.
-
-    The set_case_information_banner is an inherited method from BaseCriminalDialog."""
+    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
+    The case information is passed in order to populate the case information banner. The
+    button_index is to determine which charge the amend_button is amending."""
     @logger.catch
     def __init__(self, case_information, button_index, parent=None):
         super().__init__(parent)
@@ -768,3 +801,4 @@ if __name__ == "__main__":
     print("BCD ran directly")
 else:
     print("BCD ran when imported")
+    database_offenses, database_statutes = create_database_connections()
