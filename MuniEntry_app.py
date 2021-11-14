@@ -125,9 +125,12 @@ class Window(QMainWindow, Ui_MainWindow):
         query.finish() is called to avoid memory leaks."""
         key = self.arraignment_cases_box.currentText()
         query = QSqlQuery(self.arraignments_database)
-        query.prepare("SELECT * FROM cases WHERE case_number LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
+        query_string = "SELECT * FROM cases WHERE case_number=16TRC00001"
+        print(query_string)
+        query.prepare(query_string)
+        #query.bindValue(":key", key)
         query.exec()
+        charges_list = []
         while query.next():
             case_number = query.value(1)
             defendant_last_name = query.value(2)
@@ -135,6 +138,9 @@ class Window(QMainWindow, Ui_MainWindow):
             offense = query.value(4)
             statute = query.value(5)
             degree = query.value(6)
+            new_charge = (offense, statute, degree)
+            charges_list.append(new_charge)
+            print(charges_list)
             fra_in_file = query.value(7)
             break #Eventually remove break statement to get multipe subcases/charges
         if self.arraignment_cases_box.currentText() == "":
