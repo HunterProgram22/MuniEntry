@@ -10,6 +10,7 @@ the application is loaded to account for new charges. May be
 a bit unnecessary - but perhaps adding charges by user to a shared
 db could be done."""
 import sys
+import os
 import pathlib
 from loguru import logger
 
@@ -50,7 +51,10 @@ def return_data_from_excel(excel_file):
         data.append(case)
     return data
 
-
+if os.path.exists(PATH + "\\resources\db\\arraignments.sqlite"):
+  os.remove(PATH + "\\resources\db\\arraignments.sqlite")
+else:
+  print("The file does not exist")
 con = QSqlDatabase.addDatabase("QSQLITE")
 con.setDatabaseName(PATH + "\\resources\db\\arraignments.sqlite")
 
