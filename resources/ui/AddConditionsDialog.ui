@@ -558,12 +558,12 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="continue_Button">
+       <widget class="QPushButton" name="add_conditions_Button">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 0);</string>
+         <string notr="true">background-color: rgb(62, 146, 255)</string>
         </property>
         <property name="text">
-         <string>Continue</string>
+         <string>Add Conditions</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>

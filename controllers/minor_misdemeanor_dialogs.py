@@ -42,6 +42,8 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
             self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
             fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
             self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
+            self.set_fra_in_file(self.fra_in_file_box.currentText())
+            self.set_fra_in_court(self.fra_in_court_box.currentText())
             self.add_charge_from_caseloaddata()
 
     @logger.catch

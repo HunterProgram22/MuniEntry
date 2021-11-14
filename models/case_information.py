@@ -24,8 +24,8 @@ class CaseInformation:
     judicial_officer: object
     case_number: str  = None
     defendant: object = Defendant()
-    fra_in_file: str  = None
-    fra_in_court: str  = None
+    fra_in_file: bool  = None
+    fra_in_court: bool  = None
     plea_trial_date: str  = None
     charges_list: list = field(default_factory=list)
     community_control_terms: str  = None

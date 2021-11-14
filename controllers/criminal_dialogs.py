@@ -594,8 +594,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def connect_signals_to_slots(self):
         self.cancel_Button.pressed.connect(self.close_event)
-        self.continue_Button.pressed.connect(self.add_conditions)
-        self.continue_Button.released.connect(self.close_window)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
             self.set_service_date)
 
@@ -648,7 +648,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_conditions(self):
-        """The method is connected to the pressed() signal of continue_Button on the
+        """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen."""
         if self.community_service is True:
             self.add_community_service_terms()
@@ -766,8 +766,8 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         """TODO: the continue button signals/slots should be refactored into single ordered method
         like with other dialogs."""
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
-        self.continue_Button.pressed.connect(self.amend_offense)
-        self.continue_Button.released.connect(self.close_event)
+        self.amend_offense_Button.pressed.connect(self.amend_offense)
+        self.amend_offense_Button.released.connect(self.close_event)
         self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
