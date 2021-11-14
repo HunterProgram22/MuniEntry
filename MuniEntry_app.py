@@ -121,7 +121,8 @@ class Window(QMainWindow, Ui_MainWindow):
     @logger.catch
     def get_case_to_load(self):
         """Query arraignment_list based on case number to return the data to load for the
-        dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
+        dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name.
+        query.finish() is called to avoid memory leaks."""
         key = self.arraignment_cases_box.currentText()
         query = QSqlQuery(self.arraignments_database)
         query.prepare("SELECT * FROM cases WHERE case_number LIKE '%' || :key || '%'")
@@ -137,8 +138,10 @@ class Window(QMainWindow, Ui_MainWindow):
             fra_in_file = query.value(7)
             break #Eventually remove break statement to get multipe subcases/charges
         if self.arraignment_cases_box.currentText() == "":
+            query.finish()
             return CaseLoadData()
         else:
+            query.finish()
             return CaseLoadData(case_number, defendant_last_name, defendant_first_name, offense, statute, degree, fra_in_file)
 
 @logger.catch
