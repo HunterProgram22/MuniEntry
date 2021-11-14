@@ -122,7 +122,10 @@ class Window(QMainWindow, Ui_MainWindow):
     def get_case_to_load(self):
         """Query arraignment_list based on case number to return the data to load for the
         dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name.
-        query.finish() is called to avoid memory leaks."""
+        query.finish() is called to avoid memory leaks.
+
+        TODO: The query.next() while loop should be refactored so it only assigns charges on
+        subsequent loops."""
         key = self.arraignment_cases_box.currentText()
         query = QSqlQuery(self.arraignments_database)
         query_string = f"""
@@ -130,7 +133,6 @@ class Window(QMainWindow, Ui_MainWindow):
             FROM cases
             WHERE case_number = '{key}'
             """
-        print(query_string)
         query.prepare(query_string)
         query.bindValue(key, key)
         charges_list = []
@@ -144,15 +146,13 @@ class Window(QMainWindow, Ui_MainWindow):
             degree = query.value(6)
             new_charge = (offense, statute, degree)
             charges_list.append(new_charge)
-            print(charges_list)
             fra_in_file = query.value(7)
-            # break #Eventually remove break statement to get multipe subcases/charges
         if self.arraignment_cases_box.currentText() == "":
             query.finish()
             return CaseLoadData()
         else:
             query.finish()
-            return CaseLoadData(case_number, defendant_last_name, defendant_first_name, offense, statute, degree, fra_in_file)
+            return CaseLoadData(case_number, defendant_last_name, defendant_first_name, charges_list, fra_in_file)
 
 @logger.catch
 def main():

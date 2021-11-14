@@ -54,14 +54,13 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
     def add_charge_from_caseloaddata(self):
-        self.criminal_charge = CriminalCharge()
-        self.criminal_charge.offense = self.case.offense
-        self.criminal_charge.statute = self.case.statute
-        self.criminal_charge.degree = self.case.degree
-        # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
-        self.case_information.add_charge_to_list(self.criminal_charge)
-        self.add_charge_to_view()
-        self.statute_choice_box.setFocus()
+        for index, charge in enumerate(self.case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute, self.criminal_charge.degree)  = self.case.charges_list[index]
+            # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
+            self.case_information.add_charge_to_list(self.criminal_charge)
+            self.add_charge_to_view()
+            self.statute_choice_box.setFocus()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -106,7 +105,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                     )
                 charge_index += 1
             except AttributeError:
-                print("Attribute error allowed to pass for lack of widget")
+                pass
             column += 2
             loop_counter += 1
 

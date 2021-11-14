@@ -11,9 +11,7 @@ class CaseLoadData:
     case_number: str = None
     defendant_last_name: str = None
     defendant_first_name: str = None
-    offense: str = None
-    statute: str = None
-    degree: str = None
+    charges_list: list = field(default_factory=list)
     fra_in_file: str = None
 
 
