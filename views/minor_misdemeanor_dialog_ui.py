@@ -15,8 +15,8 @@ class Ui_MinorMisdemeanorDialog(object):
     def setupUi(self, MinorMisdemeanorDialog):
         MinorMisdemeanorDialog.setObjectName("MinorMisdemeanorDialog")
         MinorMisdemeanorDialog.setWindowModality(QtCore.Qt.NonModal)
-        MinorMisdemeanorDialog.resize(1000, 789)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        MinorMisdemeanorDialog.resize(800, 740)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MinorMisdemeanorDialog.sizePolicy().hasHeightForWidth())
