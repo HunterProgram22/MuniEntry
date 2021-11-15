@@ -43,6 +43,7 @@ class NotGuiltyBondDialog(BaseCriminalDialog, Ui_NotGuiltyBondDialog):
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
+        self.case_information.not_guilty_conditions = self.not_guilty_conditions
 
     @logger.catch
     def update_party_information(self):
