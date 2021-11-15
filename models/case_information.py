@@ -71,6 +71,14 @@ class CriminalCharge:
 
 
 @dataclass
+class NotGuiltyConditions:
+    """Conditions specific to entering a not guilty plea."""
+    appearance_reason: str = None
+    plea: str = None
+    waive_speedy_trial: bool = False
+
+
+@dataclass
 class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CaseInformation."""

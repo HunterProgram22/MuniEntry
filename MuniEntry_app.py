@@ -17,6 +17,7 @@ from views.main_window_ui import Ui_MainWindow
 from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
+from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from settings import create_arraignments_database_connection
 from resources.db.DatabaseCreation import create_cases_list
 
@@ -63,6 +64,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LeapPleaLongButton: LeapPleaLongDialog,
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
+            self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
         self.connect_judicial_officer_buttons()
         self.connect_entry_buttons()
