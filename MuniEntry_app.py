@@ -27,26 +27,17 @@ logger.add("./resources/logs/Error_log_{time}.log")
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    """The MainWindow of the application.  If changes to the view
-    (Ui_MainWindow) are made in QtDesigner then the command
-    'pyuic5 -o views/main_window_ui.py resources/ui/MainWindow.ui' must be run
-    to update changes to the view file.
+    """The MainWindow of the application from which the judicial officer and template for creating
+    an entry is selected.
 
-    All slots and signals are connected after the view is created. Slots and
-    signals can be linked in the view (using QtDesigner or directly in the view
-    file after pyuic5 is run), however, connecting in MainWindow (class Window)
-    is cleaner and allows easier scaling of the application.
-
-    :judicial_officer_dict: - If a new judicial officer is added then
-    they only need a radio button added to the view (key:
-    self.lastname_radioButton, value: "Lastname").The button will be connected
-    to the slot for self.judicial_officer by the function
-    connect_judicial_officer_buttons.
+    :judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
+    officer is added to the view then add new judicial officer to dict (key:
+    self.lastname_radioButton, value: "Lastname").The button will be connected to the slot for
+    self.judicial_officer by the function connect_judicial_officer_buttons.
 
     :dialog_dict: - If a new entry button is added to the view then a new
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
-    dialogObject).
-    """
+    dialogObject)."""
 
     def __init__(self, arraignments_database, parent=None):
         super().__init__(parent)
@@ -59,7 +50,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.arraignments_database = arraignments_database
 
     def connect_menu_signal_slots(self):
-        """Self explanatory."""
+        """This is for connecting top level MainWindow menu options to slots/functions."""
         self.menu_file_exit.triggered.connect(self.close)
 
     def load_judicial_officers(self):
