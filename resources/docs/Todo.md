@@ -19,11 +19,6 @@ FEATURE/CHANGE LIST - for Version 0.4.0
 * Make statutes hyperlink
 
 
-REFACTORING
-* Look for try and except and use conditional expressions instead
-* Look for range, len and lists and use enumerate
-* Remove unused files and modules
-
 
 
 DEPLOY TODO LIST
