@@ -1,14 +1,4 @@
-"""This module is used to create the charges table.
-
-TODO: Right now it manually needs the rows in range changed
-when charges are added, need to update to call len or something
-similar.
-
-TODO: Also, eventually should this be called on load so charges
-could be added somewhere by anyone and the db created each time
-the application is loaded to account for new charges. May be
-a bit unnecessary - but perhaps adding charges by user to a shared
-db could be done."""
+"""This module is used to create the arraignments table."""
 import sys
 import os
 import pathlib
