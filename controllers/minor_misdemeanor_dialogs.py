@@ -20,10 +20,11 @@ from controllers.criminal_dialogs import (
     AddConditionsDialog,
     AmendOffenseDialog,
 )
+from .criminal_dialogs import CriminalPleaDialog
 from settings import PAY_DATE_DICT
 
 
-class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
+class MinorMisdemeanorDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_MinorMisdemeanorDialog (view)."""
     @logger.catch

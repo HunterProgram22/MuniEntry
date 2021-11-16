@@ -1,12 +1,15 @@
 """Helper functions that are used throughout the application."""
-
+import os
 from datetime import date, timedelta
 
+from docxtpl import DocxTemplate
+from loguru import logger
+
+from settings import SAVE_PATH
 
 @logger.catch
 def create_entry(dialog):
-    """The standard function used to create an entry when a create entry
-    button is press/click/released."""
+    """The dialog is the controller dialog that is the source of case information."""
     dialog.doc = DocxTemplate(dialog.template.template_path)
     dialog.doc.render(dialog.case_information.get_case_information())
     docname = set_document_name(dialog)

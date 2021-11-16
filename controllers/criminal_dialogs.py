@@ -29,7 +29,7 @@ from views.custom_widgets import (
 )
 from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import SAVE_PATH, CHARGES_DATABASE
-from helper_functions import create_entry
+from .helper_functions import create_entry
 
 
 @logger.catch
@@ -90,7 +90,6 @@ class BaseCriminalDialog(QDialog):
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        print("criminal dialog modify view ran")
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -166,7 +165,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
     """This class subclasses the BaseCriminalDialog for methods that are specific to
     dialogs/entries that require entering a plea and finding in a case."""
     def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(parent)
+        super().__init__(judicial_officer, case, parent)
         self.delete_button_list = []
         self.criminal_charge = None
 
