@@ -285,18 +285,8 @@ class BaseCriminalDialog(QDialog):
             if value is not None:
                 if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
                     break
-                print(value)
-                if value in ["4511.19A1A*", "4511.19A2*", "4511.202"]:
-                    link_format = "https://codes.ohio.gov/ohio-revised-code/section-{value}".format(value=value[:7])
-                    print(link_format)
-                    hyperlink_format = '<a href="{link}">{text}</a>'.format(link=link_format, text=value)
-                    print(hyperlink_format)
-                    self.charges_gridLayout.addWidget(QLabel(hyperlink_format), row, column)
-                    self.charges_gridLayout.itemAtPosition(row, column).widget().setOpenExternalLinks(True)
-                    row += 1
-                else:
-                    self.charges_gridLayout.addWidget(QLabel(value), row, column)
-                    row += 1
+                self.charges_gridLayout.addWidget(QLabel(value), row, column)
+                row += 1
         self.charges_gridLayout.addWidget(AlliedCheckbox(), row, column)
         row += 1
         self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
