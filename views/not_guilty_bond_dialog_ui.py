@@ -291,7 +291,7 @@ class Ui_NotGuiltyBondDialog(object):
 
     def retranslateUi(self, NotGuiltyBondDialog):
         _translate = QtCore.QCoreApplication.translate
-        NotGuiltyBondDialog.setWindowTitle(_translate("NotGuiltyBondDialog", "Not Guilty Bond"))
+        NotGuiltyBondDialog.setWindowTitle(_translate("NotGuiltyBondDialog", "Not Guilty Bond Case Information"))
         self.label_26.setText(_translate("NotGuiltyBondDialog", "Date:"))
         self.label.setText(_translate("NotGuiltyBondDialog", "Def. First Name:"))
         self.label_2.setText(_translate("NotGuiltyBondDialog", "Def. Last Name:"))
