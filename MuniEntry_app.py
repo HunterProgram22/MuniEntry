@@ -19,7 +19,7 @@ from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialo
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from settings import create_arraignments_database_connection
-from resources.db.DatabaseCreation import create_cases_list
+from resources.db.create_data_lists import create_cases_list
 
 logger.add("./resources/logs/Error_log_{time}.log")
 

@@ -27,7 +27,7 @@ from views.custom_widgets import (
     AmendButton,
     AlliedCheckbox,
 )
-from resources.db.DatabaseCreation import create_offense_list, create_statute_list
+from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import SAVE_PATH, CHARGES_DATABASE
 
 
