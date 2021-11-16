@@ -2,6 +2,25 @@
 
 from datetime import date, timedelta
 
+
+@logger.catch
+def create_entry(dialog):
+    """The standard function used to create an entry when a create entry
+    button is press/click/released."""
+    dialog.doc = DocxTemplate(dialog.template.template_path)
+    dialog.doc.render(dialog.case_information.get_case_information())
+    docname = set_document_name(dialog)
+    dialog.doc.save(SAVE_PATH + docname)
+    os.startfile(SAVE_PATH + docname)
+
+
+def set_document_name(dialog):
+    """Sets document name based on the case number and name of the template
+    must include '.docx' to make it a Word document."""
+    return dialog.case_information.case_number + "_" + dialog.template.template_name + ".docx"
+
+
+@logger.catch
 def set_future_date(days_to_add, days_to_add_dict, next_day):
     """This is a general helper function that will accept the numbers of days to
     add to the current date and set a new date.

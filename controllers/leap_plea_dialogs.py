@@ -10,11 +10,11 @@ from views.custom_widgets import PleaComboBox
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation, CriminalCharge
 from controllers.helper_functions import set_future_date
-from controllers.criminal_dialogs import BaseCriminalDialog
+from controllers.criminal_dialogs import CriminalPleaDialog
 from settings import LEAP_COMPLETE_DATE_DICT
 
 
-class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
+class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
@@ -122,7 +122,7 @@ class LeapPleaLongDialog(BaseCriminalDialog, Ui_LeapPleaLongDialog):
             pass
 
 
-class LeapPleaShortDialog(BaseCriminalDialog, Ui_LeapPleaShortDialog):
+class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_LeapPleaShortDialog (view).
 

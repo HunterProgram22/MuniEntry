@@ -29,6 +29,7 @@ from views.custom_widgets import (
 )
 from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import SAVE_PATH, CHARGES_DATABASE
+from helper_functions import create_entry
 
 
 @logger.catch
@@ -79,8 +80,6 @@ class BaseCriminalDialog(QDialog):
         self.setupUi(self)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.delete_button_list = []
-        self.criminal_charge = None
         self.doc = None
         self.docname = None
 
@@ -90,53 +89,23 @@ class BaseCriminalDialog(QDialog):
         self.setupUI. Place items in this method that can't be added
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
-        try:
-            self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        except AttributeError:
-            pass
-        try:
-            statute_list = create_statute_list()
-            self.statute_choice_box.addItems(statute_list)
-            self.offense_choice_box.addItems(create_offense_list())
-            self.statute_choice_box.setCurrentText("")
-            self.offense_choice_box.setCurrentText("")
-        except AttributeError:
-            pass
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        print("criminal dialog modify view ran")
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method connects any signals to slots. Generally, connecting with
-        pressed is preferred to clicked because a clicked event sends a bool
-        argument to the function. However, clicked is used in some instances
-        because it is a press and release of a button. Using pressed sometimes
-        caused an event to be triggered twice.
-
-        At present this includes buttons common to all criminal dialogs. Buttons
-        that are specific to only a certain dialog are added in the subclassed
-        version of the method."""
-        try:
-            self.cancel_Button.pressed.connect(self.close_event)
-            self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-            self.create_entry_Button.pressed.connect(self.create_entry_process)
-            self.add_charge_Button.clicked.connect(self.add_charge_process)
-            self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-            self.statute_choice_box.currentTextChanged.connect(self.set_offense)
-            self.offense_choice_box.currentTextChanged.connect(self.set_statute)
-            self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
-        except AttributeError:
-            pass
+        """At present this includes buttons common to all criminal dialogs. Buttons that are
+        specific to only a certain dialog are added in the subclassed version of the method."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
+        self.create_entry_Button.pressed.connect(self.create_entry_process)
 
     @logger.catch
     def update_case_information(self):
-        """"The method calls functions to update the case information model
-        with the data for the case that is in the fields on the view. This
-        method may be called in multiple places when a button is pressed to
-        make sure all information is current."""
+        """"This method may be called in multiple places when a button is pressed to
+        make sure all information is current. The subclass version of the method
+        will call updates to specific portions of the view for that dialog."""
         self.update_party_information()
-        self.add_dispositions_and_fines()
-        self.update_costs_and_fines_information()
-        self.check_add_conditions()
-        self.calculate_costs_and_fines()
 
     @logger.catch
     def update_party_information(self):
@@ -147,6 +116,82 @@ class BaseCriminalDialog(QDialog):
         self.case_information.plea_trial_date = (
             self.plea_trial_date.date().toString("MMMM dd, yyyy")
         )
+
+    @logger.catch
+    def close_window(self):
+        """Function connected to a button to close the window. Can be connected
+        to any button press/click/release to close a window."""
+        close_databases()
+        self.close()
+
+    @logger.catch
+    def clear_case_information_fields(self):
+        """Clears the text in the fields in the top case information frame and resets the cursor
+        to the first text entry box."""
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
+
+    @logger.catch
+    def create_entry_process(self):
+        """The order of functions that are called when the create_entry_Button is pressed()
+        on a criminal dialog. The order is important to make sure the information is
+        updated before the entry is created."""
+        self.update_case_information()
+        create_entry(self)
+        self.close_event()
+
+    @logger.catch
+    def close_event(self):
+        """Place any cleanup items (i.e. close_databases) here that should be
+        called when the entry is created and the dialog closed."""
+        close_databases()
+        self.close_window()
+
+    @logger.catch
+    def set_case_information_banner(self):
+        """Sets the banner on a view of the interface. It modifies label
+        widgets on the view to text that was entered."""
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.case_information.defendant.first_name,
+                defendant_last_name=self.case_information.defendant.last_name
+                )
+            )
+        self.case_number_label.setText(self.case_information.case_number)
+
+
+class CriminalPleaDialog(BaseCriminalDialog):
+    """This class subclasses the BaseCriminalDialog for methods that are specific to
+    dialogs/entries that require entering a plea and finding in a case."""
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(parent)
+        self.delete_button_list = []
+        self.criminal_charge = None
+
+    def modify_view(self):
+        super().modify_view()
+        statute_list = create_statute_list()
+        self.statute_choice_box.addItems(statute_list)
+        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
+
+    def connect_signals_to_slots(self):
+        super().connect_signals_to_slots()
+        self.add_charge_Button.clicked.connect(self.add_charge_process)
+        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
+        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
+        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
+        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+
+    def update_case_information(self):
+        super().update_case_information()
+        self.add_dispositions_and_fines()
+        self.update_costs_and_fines_information()
+        self.check_add_conditions()
+        self.calculate_costs_and_fines()
 
     def add_dispositions_and_fines(self):
         """This method is specfic to each subclass."""
@@ -363,8 +408,6 @@ class BaseCriminalDialog(QDialog):
         except AttributeError:
             pass
 
-
-
     @logger.catch
     def no_contest_all_plea_and_findings(self):
         """Sets the plea box to no contest and findings boxes to guilty for all
@@ -442,64 +485,6 @@ class BaseCriminalDialog(QDialog):
         else:
             self.case_information.fra_in_court = None
 
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window."""
-        close_databases()
-        self.close()
-
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top case information frame and resets the cursor
-        to the first text entry box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of functions that are called when the create_entry_Button is pressed()
-        on a dialog. The order is important to make sure the information is
-        updated before the entry is created."""
-        self.update_case_information()
-        self.create_entry()
-        self.close_event()
-
-    @logger.catch
-    def create_entry(self):
-        """The standard function used to create an entry when a create entry
-        button is press/click/released."""
-        self.doc = DocxTemplate(self.template.template_path)
-        self.doc.render(self.case_information.get_case_information())
-        self.set_document_name()
-        self.doc.save(SAVE_PATH + self.docname)
-        os.startfile(SAVE_PATH + self.docname)
-
-    def set_document_name(self):
-        """Sets document name based on the case number and name of the template
-        must include '.docx' to make it a Word document."""
-        self.docname = (
-            self.case_information.case_number + "_" + self.template.template_name + ".docx"
-        )
-
-    @logger.catch
-    def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        close_databases()
-        self.close_window()
-
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-                )
-            )
-        self.case_number_label.setText(self.case_information.case_number)
-
     @logger.catch
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate case type
@@ -565,7 +550,7 @@ class BaseCriminalDialog(QDialog):
                 break
 
 
-class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
+class AddConditionsDialog(CriminalPleaDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the MinorMisdemeanorDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
@@ -738,7 +723,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.close_window()
 
 
-class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+class AmendOffenseDialog(CriminalPleaDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The case information is passed in order to populate the case information banner. The
     button_index is to determine which charge the amend_button is amending."""
