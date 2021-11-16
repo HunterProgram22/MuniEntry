@@ -65,10 +65,9 @@ def close_databases():
 
 
 class BaseCriminalDialog(QDialog):
-    """This class is a base class to provide methods that are used by some or
-    all class controllers that are used in the application. This class is never
-    instantiated as its own dialog, but the init contains the setup for all
-    inherited class controllers."""
+    """This class is a base class to provide methods that are used by some criminal controllers
+     in the application. This class is never instantiated as its own dialog, but the init contains
+     the setup for all inherited class controllers."""
     def __init__(self, judicial_officer, case=None, parent=None):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
