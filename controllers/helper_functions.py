@@ -10,10 +10,10 @@ from settings import SAVE_PATH
 @logger.catch
 def create_entry(dialog):
     """The dialog is the controller dialog that is the source of case information."""
-    dialog.doc = DocxTemplate(dialog.template.template_path)
-    dialog.doc.render(dialog.case_information.get_case_information())
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.case_information.get_case_information())
     docname = set_document_name(dialog)
-    dialog.doc.save(SAVE_PATH + docname)
+    doc.save(SAVE_PATH + docname)
     os.startfile(SAVE_PATH + docname)
 
 

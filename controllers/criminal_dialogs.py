@@ -204,7 +204,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute)
-        self.guilty_all_Button.pressed.connect(self.guilty_all_plea_and_findings)
+        self.guilty_all_Button.pressed.connect(self.set_all_plea_and_findings)
 
     def update_case_information(self):
         super().update_case_information()
@@ -404,15 +404,17 @@ class CriminalPleaDialog(BaseCriminalDialog):
                 self.charges_gridLayout.removeItem(layout_item)
 
     @logger.catch
-    def guilty_all_plea_and_findings(self):
-        """Sets the plea and findings boxes to guilty for all charges currently
+    def set_all_plea_and_findings(self):
+        """Sets the plea and findings boxes for all charges currently
         in the charges_gridLayout."""
+        plea_dict = {self.guilty_all_Button: "Guilty", self.no_contest_all_Button: "No Contest"}
+        plea = plea_dict[self.sender()]
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
                         4, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().setCurrentText("Guilty")
+                        4, column).widget().setCurrentText(plea)
                     if self.charges_gridLayout.itemAtPosition(
                             3, column).widget().isChecked():
                         self.charges_gridLayout.itemAtPosition(
@@ -427,28 +429,6 @@ class CriminalPleaDialog(BaseCriminalDialog):
             self.set_cursor_to_fine_line_edit()
         except AttributeError:
             pass
-
-    @logger.catch
-    def no_contest_all_plea_and_findings(self):
-        """Sets the plea box to no contest and findings boxes to guilty for all
-        charges currently in the charges_gridLayout."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(
-                        4, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().setCurrentText("No Contest")
-                    if self.charges_gridLayout.itemAtPosition(
-                            3, column).widget().isChecked():
-                        self.charges_gridLayout.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.charges_gridLayout.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty")
-                    column += 1
-            except AttributeError:
-                pass
-        self.set_cursor_to_fine_line_edit()
 
     @logger.catch
     def set_cursor_to_fine_line_edit(self):

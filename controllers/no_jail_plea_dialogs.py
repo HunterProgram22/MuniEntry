@@ -31,7 +31,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        
+
     @logger.catch
     def load_arraignment_data(self):
         super().load_arraignment_data()
@@ -56,7 +56,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
+        self.no_contest_all_Button.pressed.connect(self.set_all_plea_and_findings)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
