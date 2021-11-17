@@ -281,21 +281,15 @@ class CriminalPleaDialog(BaseCriminalDialog):
         updated before the charge is added and the data cleared from the fields.
 
         The _bool is passed as an argument through clicked() but not used."""
-        self.criminal_charge = CriminalCharge()
         self.add_charge()
         self.clear_charge_fields()
 
     @logger.catch
     def add_charge(self):
-        """The add_charge_process, from which this is called, creates a criminal
-        charge object and adds the data in the view to the object. The criminal
-        charge (offense, statute, degree and type) is then added to the case
-        information model (by appending the charge object to the criminal
-        charges list).
-
-        The offense, statute and degree are added to the view by the method
+        """The offense, statute and degree are added to the view by the method
         add_charge_to_view, not this method. This method is triggered on
         clicked() of the Add Charge button."""
+        self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
@@ -317,23 +311,17 @@ class CriminalPleaDialog(BaseCriminalDialog):
         charge_dict from the charges_list is 0.
 
         The python builtin vars function returns the __dict__ attribute of
-        the object.
-
-        The self.criminal_charge.offense added as a parameter for FineLineEdit
-        is the current one added when "Add Charge" is pressed.
-
-        TODO: Refactor so that there isn't a need for a if branch to skip the
-        attribute for charge type."""
+        the object."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
         added_charge_index = len(self.case_information.charges_list) - 1
         charge = vars(self.case_information.charges_list[added_charge_index])
-        for value in charge.values():
-            if value is not None:
-                if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
-                    break
-                self.charges_gridLayout.addWidget(QLabel(value), row, column)
-                row += 1
+        self.charges_gridLayout.addWidget(QLabel(charge['offense']), row, column)
+        row += 1
+        self.charges_gridLayout.addWidget(QLabel(charge['statute']), row, column)
+        row += 1
+        self.charges_gridLayout.addWidget(QLabel(charge['degree']), row, column)
+        row += 1
         self.charges_gridLayout.addWidget(AlliedCheckbox(), row, column)
         row += 1
         self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
