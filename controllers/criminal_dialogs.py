@@ -193,8 +193,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
 
     def modify_view(self):
         super().modify_view()
-        statute_list = create_statute_list()
-        self.statute_choice_box.addItems(statute_list)
+        self.statute_choice_box.addItems(create_statute_list())
         self.offense_choice_box.addItems(create_offense_list())
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
