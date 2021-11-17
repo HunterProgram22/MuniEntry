@@ -528,21 +528,11 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.charges_list = main_dialog.case_information.charges_list # This is placed here so the banner show charges
         super().__init__(parent)
         self.case_information = main_dialog.case_information
-        self.community_service = (
-            main_dialog.community_service_checkBox.isChecked()
-        )
-        self.license_suspension = (
-            main_dialog.license_suspension_checkBox.isChecked()
-        )
-        self.community_control = (
-            main_dialog.community_control_checkBox.isChecked()
-        )
-        self.other_conditions = (
-            main_dialog.other_conditions_checkBox.isChecked()
-        )
-        self.other_conditions = (
-            main_dialog.other_conditions_checkBox.isChecked()
-        )
+        self.community_service = main_dialog.community_service_checkBox.isChecked()
+        self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
+        self.community_control = main_dialog.community_control_checkBox.isChecked()
+        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
+        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         self.enable_condition_frames()
 
     @logger.catch
@@ -556,27 +546,17 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def modify_view(self):
         """Modifies the view of AddConditionsDialog that is created by the UI
-        file.
-        Gets the total number of charges from the charges in charges_list then
+        file. Gets the total number of charges from the charges in charges_list then
         loops through the charges_list and adds parts of each charge to the
-        view. CLEAN UP?"""
-        index_of_charge_to_add = 0
+        view."""
         column = self.charges_gridLayout.columnCount() + 1
-        total_charges_to_add = len(self.charges_list)
-        while index_of_charge_to_add < total_charges_to_add:
-            charge = vars(self.charges_list[index_of_charge_to_add])
+        for index, charge in enumerate(self.charges_list):
+            charge = vars(charge)
             if charge is not None:
-                self.charges_gridLayout.addWidget(
-                    QLabel(charge.get("offense")), 0, column
-                )
-                self.charges_gridLayout.addWidget(
-                    QLabel(charge.get("statute")), 1, column
-                )
-                self.charges_gridLayout.addWidget(
-                    QLabel(charge.get("finding")), 2, column
-                )
+                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
-                index_of_charge_to_add += 1
 
     @logger.catch
     def enable_condition_frames(self):
@@ -593,7 +573,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
-
 
     @logger.catch
     def add_conditions(self):
