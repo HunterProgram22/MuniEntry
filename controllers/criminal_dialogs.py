@@ -237,25 +237,34 @@ class CriminalPleaDialog(BaseCriminalDialog):
         TODO:
         in future refactor this to have it loop through the different conditions so code
         doesn't need to be added each time a condition is added."""
-        try:
-            if self.license_suspension_checkBox.isChecked():
-                self.case_information.license_suspension_details.license_suspension_ordered = (
-                    True
-                )
-            if self.community_control_checkBox.isChecked():
-                self.case_information.community_control_terms.community_control_required = (
-                    True
-                )
-            if self.community_service_checkBox.isChecked():
-                self.case_information.community_service_terms.community_service_ordered = (
-                    True
-                )
-            if self.other_conditions_checkBox.isChecked():
-                self.case_information.other_conditions_details.other_conditions_ordered = (
-                    True
-                )
-        except AttributeError:
-            pass
+        add_conditions_dict = {
+            self.license_suspension_checkBox: self.case_information.license_suspension_details.license_suspension_ordered,
+            self.community_control_checkBox: self.case_information.community_control_terms.community_control_required,
+            self.community_service_checkBox: self.case_information.community_service_terms.community_service_ordered,
+            self.other_conditions_checkBox: self.case_information.other_conditions_details.other_conditions_ordered,
+        }
+        for key, value in add_conditions_dict.items():
+            if key.isChecked():
+                value = True
+        # try:
+        #     if self.license_suspension_checkBox.isChecked():
+        #         self.case_information.license_suspension_details.license_suspension_ordered = (
+        #             True
+        #         )
+        #     if self.community_control_checkBox.isChecked():
+        #         self.case_information.community_control_terms.community_control_required = (
+        #             True
+        #         )
+        #     if self.community_service_checkBox.isChecked():
+        #         self.case_information.community_service_terms.community_service_ordered = (
+        #             True
+        #         )
+        #     if self.other_conditions_checkBox.isChecked():
+        #         self.case_information.other_conditions_details.other_conditions_ordered = (
+        #             True
+        #         )
+        # except AttributeError:
+        #     pass
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -409,7 +418,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         in the charges_gridLayout."""
         if self.sender() == self.guilty_all_Button:
             plea = "Guilty"
-        elif self.sender() == self.no_contest_all_Button: 
+        elif self.sender() == self.no_contest_all_Button:
             plea = "No Contest"
         for column in range(self.charges_gridLayout.columnCount()):
             try:
@@ -555,7 +564,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the NoJailPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the MMD screen."""
+    for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.case_information = main_dialog.case_information
@@ -624,7 +633,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
-            self.community_service_terms = CommunityServiceTerms()
+            #self.community_service_terms = CommunityServiceTerms()
             self.community_service_date_to_complete_box.setDate(
                 QtCore.QDate.currentDate()
             )
@@ -663,16 +672,18 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         """The method adds the data entered to the CommunityServiceTerms object
         that is created when the dialog is initialized. Then the data is transferred
         to case_information."""
-        self.community_service_terms.hours_of_service = (
+        self.case_information.community_service_terms.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
-        self.community_service_terms.days_to_complete_service = (
+        self.case_information.community_service_terms.days_to_complete_service = (
             self.community_service_days_to_complete_box.currentText()
         )
-        self.community_service_terms.due_date_for_service = (
+        self.case_information.community_service_terms.due_date_for_service = (
             self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.community_service_terms = self.community_service_terms
+        self.case_information.community_service_terms.community_service_ordered = True
+        print(self.case_information.community_service_terms.hours_of_service)
+
 
     @logger.catch
     def add_license_suspension_details(self):
