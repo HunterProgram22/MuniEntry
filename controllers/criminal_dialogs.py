@@ -383,7 +383,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         elif self.sender() == self.no_contest_all_Button:
             plea = "No Contest"
         for column in range(self.charges_gridLayout.columnCount()):
-            try:
+            if self.charges_gridLayout.itemAtPosition(4, column) is not None:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
                         4, column).widget(), PleaComboBox):
                     self.charges_gridLayout.itemAtPosition(
@@ -395,26 +395,22 @@ class CriminalPleaDialog(BaseCriminalDialog):
                     else:
                         self.charges_gridLayout.itemAtPosition(
                             5, column).widget().setCurrentText("Guilty")
-                    column += 1
-            except AttributeError:
-                pass
-        try:
-            self.set_cursor_to_fine_line_edit()
-        except AttributeError:
-            pass
+                column += 1
+            else:
+                column += 1
+        self.set_cursor_to_fine_line_edit()
 
     @logger.catch
     def set_cursor_to_fine_line_edit(self):
-        """Moves the cursor to the FineLineEdit box. Row is set to 7, but for different dialogs
+        """Moves the cursor to the FineLineEdit box. Row is set to 6, but for different dialogs
         this could end up changing."""
         for column in range(self.charges_gridLayout.columnCount()):
-            try:
+            if self.charges_gridLayout.itemAtPosition(4, column) is not None:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
                         6, column).widget(), FineLineEdit):
                     self.charges_gridLayout.itemAtPosition(6, column).widget().setFocus()
                     break
-            except AttributeError:
-                pass
+            column += 1
 
     @logger.catch
     def show_costs_and_fines(self, _bool):
