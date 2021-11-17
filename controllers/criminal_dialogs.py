@@ -570,8 +570,6 @@ class CriminalPleaDialog(BaseCriminalDialog):
                 break
 
 
-
-
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the NoJailPleaDialog. The conditions that are available to enter information
@@ -745,27 +743,25 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.close_window()
 
 
-class AmendOffenseDialog(CriminalPleaDialog, Ui_AmendOffenseDialog):
+class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The case information is passed in order to populate the case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
     def __init__(self, case_information, button_index, parent=None):
-        super().__init__(parent)
+        self.button_index = button_index
         self.case_information = case_information
         self.amend_offense_details = AmendOffenseDetails()
+        super().__init__(parent)
         self.set_case_information_banner()
-        self.modify_view_local(button_index)
         self.connect_signals_to_slots()
 
     @logger.catch
-    def modify_view_local(self, button_index):
+    def modify_view(self):
         """The modify view sets the original charge based on the item in the main dialog
         for which amend button was pressed."""
-        offense_list = create_offense_list()
-        self.original_charge_box.addItems(offense_list)
-        self.original_charge_box.setCurrentText(self.case_information.charges_list[button_index].offense)
-        self.amended_charge_box.addItems(offense_list)
+        self.original_charge_box.setCurrentText(self.case_information.charges_list[self.button_index].offense)
+        self.amended_charge_box.addItems(create_offense_list())
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -773,7 +769,6 @@ class AmendOffenseDialog(CriminalPleaDialog, Ui_AmendOffenseDialog):
         like with other dialogs."""
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
         self.amend_offense_Button.pressed.connect(self.amend_offense)
-        self.amend_offense_Button.released.connect(self.close_event)
         self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
@@ -796,6 +791,7 @@ class AmendOffenseDialog(CriminalPleaDialog, Ui_AmendOffenseDialog):
             self.motion_decision_box.currentText()
         )
         self.case_information.amend_offense_details = self.amend_offense_details
+        self.close_event()
 
     @logger.catch
     def close_event(self):

@@ -48,17 +48,13 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def add_dispositions_and_fines(self):
         """Row 3 - plea. Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty)."""
+        columns when a charge is added (odd numbered column is empty). Column starts at 2
+        because column 0 is labels."""
         column = 2
-        try:
-            for index in range(len(self.case_information.charges_list)):
-                self.case_information.charges_list[index].plea = (
-                    self.charges_gridLayout.itemAtPosition(3, column).widget().currentText()
-                )
-                index += 1
-                column += 2
-        except AttributeError:
-            print("Attribute error allowed to pass for lack of widget")
+        for index, charge in enumerate(self.case_information.charges_list):
+            charge.plea = self.charges_gridLayout.itemAtPosition(
+                3, column).widget().currentText()
+            column += 2
 
     @logger.catch
     def add_charge_to_view(self):
