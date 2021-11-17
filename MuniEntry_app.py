@@ -16,7 +16,7 @@ from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
 from models.case_information import CaseLoadData
 from views.main_window_ui import Ui_MainWindow
-from controllers.minor_misdemeanor_dialogs import MinorMisdemeanorDialog
+from controllers.minor_misdemeanor_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
@@ -76,7 +76,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
         self.dialog_dict = {
-            self.MinorMisdemeanorTrafficButton: MinorMisdemeanorDialog,
+            self.MinorMisdemeanorTrafficButton: NoJailPleaDialog,
             self.LeapPleaLongButton: LeapPleaLongDialog,
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,

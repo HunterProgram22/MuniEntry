@@ -12,7 +12,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.minor_misdemeanor_dialogs import (
-    MinorMisdemeanorDialog,
+    NoJailPleaDialog,
     AddConditionsDialog,
     AmendOffenseDialog,
 )
@@ -20,7 +20,7 @@ from controllers.minor_misdemeanor_dialogs import (
 
 """Functions for Testing"""
 def start_minor_misdemeanor_dialog(qtbot, judicial_officer, judicial_officer_type):
-    dialog = MinorMisdemeanorDialog(judicial_officer, judicial_officer_type)
+    dialog = NoJailPleaDialog(judicial_officer, judicial_officer_type)
     qtbot.addWidget(dialog)
     add_case_information(dialog)
     return dialog

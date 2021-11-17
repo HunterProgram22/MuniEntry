@@ -24,7 +24,7 @@ from .criminal_dialogs import CriminalPleaDialog
 from settings import PAY_DATE_DICT
 
 
-class MinorMisdemeanorDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
+class NoJailPleaDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
     """The dialog inherits from the BaseCriminalDialog (controller) and the
     Ui_MinorMisdemeanorDialog (view)."""
     @logger.catch
@@ -144,9 +144,9 @@ class MinorMisdemeanorDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
     @logger.catch
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
-        instance of the MinorMisdemeanorDialog class (self) as an argument
+        instance of the NoJailPleaDialog class (self) as an argument
         so that the AddConditionsDialog can access all data from the
-        MinorMisdemeanorDialog when working in the AddConditionsDialog."""
+        NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddConditionsDialog(self).exec()
 

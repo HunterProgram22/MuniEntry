@@ -551,7 +551,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
 
 class AddConditionsDialog(CriminalPleaDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
-    the MinorMisdemeanorDialog. The conditions that are available to enter information
+    the NoJailPleaDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
     @logger.catch
     def __init__(self, minor_misdemeanor_dialog, parent=None):
@@ -610,7 +610,7 @@ class AddConditionsDialog(CriminalPleaDialog, Ui_AddConditionsDialog):
     @logger.catch
     def enable_condition_frames(self):
         """Enables the frames on the AddConditionsDialog dialog if the condition is checked
-        on the MinorMisdemeanorDialog screen. Also creates an instance of the object for
+        on the NoJailPleaDialog screen. Also creates an instance of the object for
         each condition."""
         if self.other_conditions is True:
             self.other_conditions_frame.setEnabled(True)
