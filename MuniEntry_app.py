@@ -16,7 +16,7 @@ from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
 from models.case_information import CaseLoadData
 from views.main_window_ui import Ui_MainWindow
-from controllers.minor_misdemeanor_dialogs import NoJailPleaDialog
+from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog

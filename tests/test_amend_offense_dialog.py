@@ -11,7 +11,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.minor_misdemeanor_dialogs import (
+from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
     AddConditionsDialog,
     AmendOffenseDialog,

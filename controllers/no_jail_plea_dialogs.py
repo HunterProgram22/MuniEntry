@@ -11,7 +11,7 @@ from views.custom_widgets import (
     FineLineEdit,
     FineSuspendedLineEdit,
 )
-from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
+from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation, CriminalCharge
 from controllers.helper_functions import set_future_date
@@ -24,14 +24,14 @@ from .criminal_dialogs import CriminalPleaDialog
 from settings import PAY_DATE_DICT
 
 
-class NoJailPleaDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
-    """The dialog inherits from the BaseCriminalDialog (controller) and the
-    Ui_MinorMisdemeanorDialog (view)."""
+class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
+    """The dialog inherits from the CriminalPleaDialog (controller) and the
+    Ui_NoJailPleaDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.case_information = CaseInformation(self.judicial_officer)
-        self.dialog_name = "Minor Misdemeanor Dialog"
+        self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.amend_button_list = []
         self.load_arraignment_data()
@@ -152,4 +152,4 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_MinorMisdemeanorDialog):
 
 
 if __name__ == "__main__":
-    print("MMD ran directly")
+    print("NJPD ran directly")

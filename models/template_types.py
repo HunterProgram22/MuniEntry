@@ -43,7 +43,7 @@ Not_Guilty_Bond_Template = Template(
 
 
 TEMPLATE_DICT = {
-    "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
+    "No Jail Plea Dialog": Magistrate_And_Judge_Final_Judgment_Template,
     "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
     "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
     "FTA Bond Dialog": FTA_Bond_Template,
