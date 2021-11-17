@@ -407,8 +407,10 @@ class CriminalPleaDialog(BaseCriminalDialog):
     def set_all_plea_and_findings(self):
         """Sets the plea and findings boxes for all charges currently
         in the charges_gridLayout."""
-        plea_dict = {self.guilty_all_Button: "Guilty", self.no_contest_all_Button: "No Contest"}
-        plea = plea_dict[self.sender()]
+        if self.sender() == self.guilty_all_Button:
+            plea = "Guilty"
+        elif self.sender() == self.no_contest_all_Button: 
+            plea = "No Contest"
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(

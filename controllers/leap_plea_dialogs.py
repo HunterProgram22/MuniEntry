@@ -81,9 +81,11 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
     @logger.catch
-    def guilty_all_plea_and_findings(self):
+    def set_all_plea_and_findings(self):
         """Sets the plea boxes to guilty for all charges currently
-        in the charges_gridLayout."""
+        in the charges_gridLayout.
+
+        TODO: Refactor from criminal dialog version."""
         for column in range(self.charges_gridLayout.columnCount()):
             try:
                 if isinstance(self.charges_gridLayout.itemAtPosition(
