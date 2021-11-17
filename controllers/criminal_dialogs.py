@@ -229,14 +229,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
     def check_add_conditions(self):
         """Checks to see what conditions in the Add Conditions box are checked and then
         transfers the information from the conditions to case_information model if the
-        box is checked.
-        FIX: Resolved AttributeError with try and except, but perhaps refactor
-        to create a license suspension details object at init for CaseInformation
-        (and for other conditions as well).
-
-        TODO:
-        in future refactor this to have it loop through the different conditions so code
-        doesn't need to be added each time a condition is added."""
+        box is checked."""
         add_conditions_dict = {
             self.license_suspension_checkBox: self.case_information.license_suspension_details.license_suspension_ordered,
             self.community_control_checkBox: self.case_information.community_control_terms.community_control_required,
@@ -246,25 +239,6 @@ class CriminalPleaDialog(BaseCriminalDialog):
         for key, value in add_conditions_dict.items():
             if key.isChecked():
                 value = True
-        # try:
-        #     if self.license_suspension_checkBox.isChecked():
-        #         self.case_information.license_suspension_details.license_suspension_ordered = (
-        #             True
-        #         )
-        #     if self.community_control_checkBox.isChecked():
-        #         self.case_information.community_control_terms.community_control_required = (
-        #             True
-        #         )
-        #     if self.community_service_checkBox.isChecked():
-        #         self.case_information.community_service_terms.community_service_ordered = (
-        #             True
-        #         )
-        #     if self.other_conditions_checkBox.isChecked():
-        #         self.case_information.other_conditions_details.other_conditions_ordered = (
-        #             True
-        #         )
-        # except AttributeError:
-        #     pass
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -567,8 +541,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.case_information = main_dialog.case_information
+        self.charges_list = main_dialog.case_information.charges_list # This is placed here so the banner show charges
         super().__init__(parent)
+        self.case_information = main_dialog.case_information
         self.community_service = (
             main_dialog.community_service_checkBox.isChecked()
         )
@@ -603,9 +578,9 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         view. CLEAN UP?"""
         index_of_charge_to_add = 0
         column = self.charges_gridLayout.columnCount() + 1
-        total_charges_to_add = len(self.case_information.charges_list)
+        total_charges_to_add = len(self.charges_list)
         while index_of_charge_to_add < total_charges_to_add:
-            charge = vars(self.case_information.charges_list[index_of_charge_to_add])
+            charge = vars(self.charges_list[index_of_charge_to_add])
             if charge is not None:
                 self.charges_gridLayout.addWidget(
                     QLabel(charge.get("offense")), 0, column
@@ -626,20 +601,15 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         each condition."""
         if self.other_conditions is True:
             self.other_conditions_frame.setEnabled(True)
-            self.other_conditions_details = OtherConditionsTerms()
         if self.license_suspension is True:
             self.license_suspension_frame.setEnabled(True)
-            self.license_suspension_details = LicenseSuspensionTerms()
             self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
-            #self.community_service_terms = CommunityServiceTerms()
-            self.community_service_date_to_complete_box.setDate(
-                QtCore.QDate.currentDate()
-            )
+            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
         if self.community_control is True:
             self.community_control_frame.setEnabled(True)
-            self.community_control_terms = CommunityControlTerms()
+
 
     @logger.catch
     def add_conditions(self):
@@ -659,13 +629,13 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         """The method adds the data entered to the CommunityControlTerms object
         that is created when the dialog is initialized. Then the data is transferred
         to case_information."""
-        self.community_control_terms.type_of_community_control = (
+        self.case_information.community_control_terms.type_of_community_control = (
             self.type_of_community_control_box.currentText()
         )
-        self.community_control_terms.term_of_community_control = (
+        self.case_information.community_control_terms.term_of_community_control = (
             self.term_of_community_control_box.currentText()
         )
-        self.case_information.community_control_terms = self.community_control_terms
+        self.case_information.community_control_terms.community_control_required = True
 
     @logger.catch
     def add_community_service_terms(self):
@@ -682,41 +652,35 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
             self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
         )
         self.case_information.community_service_terms.community_service_ordered = True
-        print(self.case_information.community_service_terms.hours_of_service)
-
 
     @logger.catch
     def add_license_suspension_details(self):
         """The method adds the data entered to the LicenseSuspensionTerms object
         that is created when the dialog is initialized. Then the data is transferred
         to case_information."""
-        self.license_suspension_details.license_type = (
+        self.case_information.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )
-        self.license_suspension_details.license_suspended_date = (
+        self.case_information.license_suspension_details.license_suspended_date = (
             self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
         )
-        self.license_suspension_details.license_suspension_term = (
+        self.case_information.license_suspension_details.license_suspension_term = (
             self.term_of_suspension_box.currentText()
         )
         if self.remedial_driving_class_checkBox.isChecked():
-            self.license_suspension_details.remedial_driving_class_required = True
+            self.case_information.license_suspension_details.remedial_driving_class_required = True
         else:
-            self.license_suspension_details.remedial_driving_class_required = False
-        self.case_information.license_suspension_details = (
-            self.license_suspension_details
-        )
+            self.case_information.license_suspension_details.remedial_driving_class_required = False
+        self.case_information.license_suspension_details.license_suspension_ordered = True
 
     @logger.catch
     def add_other_condition_details(self):
         """The method allows for adding other conditions based on free form text
         entry."""
-        self.other_conditions_details.other_conditions_terms = (
+        self.case_information.other_conditions_details.other_conditions_terms = (
             self.other_conditions_plainTextEdit.toPlainText()
         )
-        self.case_information.other_conditions_details = (
-            self.other_conditions_details
-        )
+        self.case_information.other_conditions_details.other_conditions_ordered = True
 
     @logger.catch
     def set_service_date(self, days_to_complete):
