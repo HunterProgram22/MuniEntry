@@ -13,10 +13,9 @@ from views.custom_widgets import (
 )
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation, CriminalCharge
+from models.case_information import CaseInformation
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import (
-    BaseCriminalDialog,
     AddConditionsDialog,
     AmendOffenseDialog,
 )
@@ -30,22 +29,16 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
-        self.case_information = CaseInformation(self.judicial_officer)
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.amend_button_list = []
-        self.load_arraignment_data()
-
+        
+    @logger.catch
     def load_arraignment_data(self):
-        if self.case.case_number != None:
-            self.case_number_lineEdit.setText(self.case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-            fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
-            self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
-            self.set_fra_in_file(self.fra_in_file_box.currentText())
-            self.set_fra_in_court(self.fra_in_court_box.currentText())
-            self.add_charge_from_caseloaddata()
+        super().load_arraignment_data()
+        fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
+        self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
+        self.set_fra_in_file(self.fra_in_file_box.currentText())
+        self.set_fra_in_court(self.fra_in_court_box.currentText())
 
     @logger.catch
     def modify_view(self):
@@ -53,15 +46,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
-
-    def add_charge_from_caseloaddata(self):
-        for index, charge in enumerate(self.case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, self.criminal_charge.degree)  = self.case.charges_list[index]
-            # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
-            self.case_information.add_charge_to_list(self.criminal_charge)
-            self.add_charge_to_view()
-            self.statute_choice_box.setFocus()
 
     @logger.catch
     def connect_signals_to_slots(self):

@@ -11,6 +11,7 @@ from PyQt5.QtWidgets import QLabel, QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from models.case_information import (
+    CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
     LicenseSuspensionTerms,
@@ -166,8 +167,29 @@ class CriminalPleaDialog(BaseCriminalDialog):
     dialogs/entries that require entering a plea and finding in a case."""
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.case_information = CaseInformation(self.judicial_officer)
         self.delete_button_list = []
+        self.amend_button_list = []
         self.criminal_charge = None
+        self.load_arraignment_data()
+
+    @logger.catch
+    def load_arraignment_data(self):
+        if self.case.case_number != None:
+            self.case_number_lineEdit.setText(self.case.case_number)
+            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
+            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+            self.add_charge_from_caseloaddata()
+
+    def add_charge_from_caseloaddata(self):
+        for index, charge in enumerate(self.case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute, self.criminal_charge.degree) = \
+            self.case.charges_list[index]
+            # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
+            self.case_information.add_charge_to_list(self.criminal_charge)
+            self.add_charge_to_view()
+            self.statute_choice_box.setFocus()
 
     def modify_view(self):
         super().modify_view()
@@ -549,28 +571,30 @@ class CriminalPleaDialog(BaseCriminalDialog):
                 break
 
 
-class AddConditionsDialog(CriminalPleaDialog, Ui_AddConditionsDialog):
+
+
+class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
     the NoJailPleaDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the MMD screen."""
     @logger.catch
-    def __init__(self, minor_misdemeanor_dialog, parent=None):
-        self.case_information = minor_misdemeanor_dialog.case_information
+    def __init__(self, main_dialog, parent=None):
+        self.case_information = main_dialog.case_information
         super().__init__(parent)
         self.community_service = (
-            minor_misdemeanor_dialog.community_service_checkBox.isChecked()
+            main_dialog.community_service_checkBox.isChecked()
         )
         self.license_suspension = (
-            minor_misdemeanor_dialog.license_suspension_checkBox.isChecked()
+            main_dialog.license_suspension_checkBox.isChecked()
         )
         self.community_control = (
-            minor_misdemeanor_dialog.community_control_checkBox.isChecked()
+            main_dialog.community_control_checkBox.isChecked()
         )
         self.other_conditions = (
-            minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
+            main_dialog.other_conditions_checkBox.isChecked()
         )
         self.other_conditions = (
-            minor_misdemeanor_dialog.other_conditions_checkBox.isChecked()
+            main_dialog.other_conditions_checkBox.isChecked()
         )
         self.enable_condition_frames()
 
