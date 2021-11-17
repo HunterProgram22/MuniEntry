@@ -561,8 +561,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def enable_condition_frames(self):
         """Enables the frames on the AddConditionsDialog dialog if the condition is checked
-        on the NoJailPleaDialog screen. Also creates an instance of the object for
-        each condition."""
+        on the NoJailPleaDialog screen."""
         if self.other_conditions is True:
             self.other_conditions_frame.setEnabled(True)
         if self.license_suspension is True:
@@ -590,8 +589,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_community_control_terms(self):
         """The method adds the data entered to the CommunityControlTerms object
-        that is created when the dialog is initialized. Then the data is transferred
-        to case_information."""
+        that is created when the dialog is initialized."""
         self.case_information.community_control_terms.type_of_community_control = (
             self.type_of_community_control_box.currentText()
         )
@@ -603,8 +601,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_community_service_terms(self):
         """The method adds the data entered to the CommunityServiceTerms object
-        that is created when the dialog is initialized. Then the data is transferred
-        to case_information."""
+        that is created when the dialog is initialized."""
         self.case_information.community_service_terms.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
@@ -619,8 +616,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_license_suspension_details(self):
         """The method adds the data entered to the LicenseSuspensionTerms object
-        that is created when the dialog is initialized. Then the data is transferred
-        to case_information."""
+        that is created when the dialog is initialized."""
         self.case_information.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )
@@ -649,9 +645,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def set_service_date(self, days_to_complete):
         """Sets the community_service_date_to_complete_box based on the number
         of days chosen in the community_service_date_to_complete_box."""
-        days_to_complete = int(
-            self.community_service_days_to_complete_box.currentText()
-        )
+        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
         self.community_service_date_to_complete_box.setDate(
             QDate.currentDate().addDays(days_to_complete)
         )
@@ -680,13 +674,13 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
     def modify_view(self):
         """The modify view sets the original charge based on the item in the main dialog
         for which amend button was pressed."""
-        self.original_charge_box.setCurrentText(self.case_information.charges_list[self.button_index].offense)
+        self.original_charge_box.setCurrentText(
+            self.case_information.charges_list[self.button_index].offense
+        )
         self.amended_charge_box.addItems(create_offense_list())
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """TODO: the continue button signals/slots should be refactored into single ordered method
-        like with other dialogs."""
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
         self.amend_offense_Button.pressed.connect(self.amend_offense)
         self.cancel_Button.pressed.connect(self.close_event)
@@ -701,15 +695,9 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the case_information object to the AmendOffenseDetails
         object."""
-        self.amend_offense_details.original_charge = (
-            self.original_charge_box.currentText()
-        )
-        self.amend_offense_details.amended_charge = (
-            self.amended_charge_box.currentText()
-        )
-        self.amend_offense_details.motion_disposition = (
-            self.motion_decision_box.currentText()
-        )
+        self.amend_offense_details.original_charge = self.original_charge_box.currentText()
+        self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
+        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
         self.close_event()
 
