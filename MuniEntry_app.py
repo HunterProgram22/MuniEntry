@@ -20,6 +20,7 @@ from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from controllers.juror_payment_dialogs import JurorPaymentDialog
 from settings import create_arraignments_database_connection
 
 
@@ -81,6 +82,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
+            self.JurorPaymentButton: JurorPaymentDialog,
         }
         for key in self.dialog_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
