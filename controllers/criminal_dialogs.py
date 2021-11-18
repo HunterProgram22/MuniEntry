@@ -1,7 +1,5 @@
 """The module that contains all controller classes that are commmon to criminal
 cases (criminal includes traffic). """
-import os
-from docxtpl import DocxTemplate
 from loguru import logger
 
 from PyQt5.QtWidgets import QDialog
@@ -14,10 +12,6 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspensionTerms,
-    CommunityControlTerms,
-    CommunityServiceTerms,
-    OtherConditionsTerms,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -29,7 +23,7 @@ from views.custom_widgets import (
     AlliedCheckbox,
 )
 from resources.db.create_data_lists import create_offense_list, create_statute_list
-from settings import SAVE_PATH, CHARGES_DATABASE
+from settings import CHARGES_DATABASE
 from .helper_functions import create_entry
 
 
@@ -40,9 +34,7 @@ def create_database_connections():
     closing of the databases is handled by the appropriate class dialog."""
     offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
     offense_database_connection.setDatabaseName(CHARGES_DATABASE)
-    statute_database_connection = QSqlDatabase.addDatabase("QSQLITE", "statutes")
-    statute_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection, statute_database_connection
+    return offense_database_connection
 
 
 @logger.catch
@@ -50,11 +42,10 @@ def open_databases():
     """
     https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
     https://doc.qt.io/qtforpython/overviews/sql-connecting.html
-    NOTE: If running create_psql_table.py to update database, must delete
+    NOTE: If running create_charges_table.py to update database, must delete
     the old charges.sqlite file to insure it is updated.
     """
     database_offenses.open()
-    database_statutes.open()
 
 
 @logger.catch
@@ -62,8 +53,6 @@ def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
-    database_statutes.close()
-    database_statutes.removeDatabase(CHARGES_DATABASE)
 
 
 class BaseCriminalDialog(QDialog):
@@ -183,7 +172,8 @@ class CriminalPleaDialog(BaseCriminalDialog):
             self.add_charge_from_caseloaddata()
 
     def add_charge_from_caseloaddata(self):
-        for index, charge in enumerate(self.case.charges_list):
+        """Loads the data from the case object that is created from the sql table."""
+        for _index, charge in enumerate(self.case.charges_list):
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute, \
                 self.criminal_charge.degree) = charge
@@ -203,8 +193,8 @@ class CriminalPleaDialog(BaseCriminalDialog):
         super().connect_signals_to_slots()
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.statute_choice_box.currentTextChanged.connect(self.set_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute)
+        self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
+        self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.guilty_all_Button.pressed.connect(self.set_all_plea_and_findings)
 
     def update_case_information(self):
@@ -466,7 +456,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         key = self.statute_choice_box.currentText()
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(database_statutes)
+        query = QSqlQuery(database_offenses)
         query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -478,50 +468,34 @@ class CriminalPleaDialog(BaseCriminalDialog):
                 return offense_type
 
     @logger.catch
-    def set_statute(self, key):
-        """This method queries based on the offense and then sets the statute
-        and degree based on the offense in the database.
-
-        :key: is the string that is passed by the function each time the field
-        is changed on the view. This is the offense."""
+    def set_statute_and_offense(self, key):
+        """:key: is the string that is passed by the function each time the field
+        is changed on the view."""
         if self.freeform_entry_checkBox.isChecked():
             return None
+        if self.sender() == self.statute_choice_box:
+            field = 'statute'
+        elif self.sender() == self.offense_choice_box:
+            field = 'offense'
         query = QSqlQuery(database_offenses)
-        query.prepare("SELECT * FROM charges WHERE " "offense LIKE '%' || :key || '%'")
+        query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
+        query.prepare(query_string)
         query.bindValue(":key", key)
+        query.bindValue(field, field)
         query.exec()
         while query.next():
             offense = query.value(1)
             statute = query.value(2)
             degree = query.value(3)
-            if offense == key:
-                self.statute_choice_box.setCurrentText(statute)
-                self.degree_choice_box.setCurrentText(degree)
-                query.finish()
-                break
-
-    @logger.catch
-    def set_offense(self, key):
-        """This method queries based on the statute and then sets the offense
-        and degree based on the statute in the database.
-
-        :key: is the string that is passed by the function each time the field
-        is changed on the view. This is the statute."""
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(database_statutes)
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if statute == key:
-                self.offense_choice_box.setCurrentText(offense)
-                self.degree_choice_box.setCurrentText(degree)
-                query.finish()
-                break
+            if field == 'offense':
+                if offense == key:
+                    self.statute_choice_box.setCurrentText(statute)
+            elif field == 'statute':
+                if statute == key:
+                    self.offense_choice_box.setCurrentText(offense)
+            self.degree_choice_box.setCurrentText(degree)
+            query.finish()
+            break
 
 
 class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
@@ -531,6 +505,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.case_information.charges_list # Show charges on banner
+        super().__init__(self)
         self.case_information = main_dialog.case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
@@ -545,7 +520,8 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_service_date)
+            self.set_service_date
+        )
 
     @logger.catch
     def modify_view(self):
@@ -554,7 +530,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         loops through the charges_list and adds parts of each charge to the
         view."""
         column = self.charges_gridLayout.columnCount() + 1
-        for index, charge in enumerate(self.charges_list):
+        for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)
             if charge is not None:
                 self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
@@ -691,6 +667,7 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
 
     @logger.catch
     def clear_amend_charge_fields(self):
+        """Clears the fields in the view."""
         self.original_charge_box.clearEditText()
         self.amended_charge_box.clearEditText()
 
@@ -715,4 +692,4 @@ if __name__ == "__main__":
     print("BCD ran directly")
 else:
     print("BCD ran when imported")
-    database_offenses, database_statutes = create_database_connections()
+    database_offenses = create_database_connections()
