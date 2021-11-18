@@ -175,7 +175,8 @@ class CriminalPleaDialog(BaseCriminalDialog):
 
     @logger.catch
     def load_arraignment_data(self):
-        if self.case.case_number != None:
+        """Uses the case number selected to get the case object from main and load case data."""
+        if self.case.case_number is not None:
             self.case_number_lineEdit.setText(self.case.case_number)
             self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
             self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
@@ -184,8 +185,8 @@ class CriminalPleaDialog(BaseCriminalDialog):
     def add_charge_from_caseloaddata(self):
         for index, charge in enumerate(self.case.charges_list):
             self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, self.criminal_charge.degree) = \
-            self.case.charges_list[index]
+            (self.criminal_charge.offense, self.criminal_charge.statute, \
+                self.criminal_charge.degree) = charge
             # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
             self.case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_view()
@@ -231,10 +232,14 @@ class CriminalPleaDialog(BaseCriminalDialog):
         transfers the information from the conditions to case_information model if the
         box is checked."""
         add_conditions_dict = {
-            self.license_suspension_checkBox: self.case_information.license_suspension_details.license_suspension_ordered,
-            self.community_control_checkBox: self.case_information.community_control_terms.community_control_required,
-            self.community_service_checkBox: self.case_information.community_service_terms.community_service_ordered,
-            self.other_conditions_checkBox: self.case_information.other_conditions_details.other_conditions_ordered,
+            self.license_suspension_checkBox: \
+                self.case_information.license_suspension_details.license_suspension_ordered,
+            self.community_control_checkBox: \
+                self.case_information.community_control_terms.community_control_required,
+            self.community_service_checkBox: \
+                self.case_information.community_service_terms.community_service_ordered,
+            self.other_conditions_checkBox: \
+                self.case_information.other_conditions_details.other_conditions_ordered,
         }
         for key, value in add_conditions_dict.items():
             if key.isChecked():
@@ -525,8 +530,7 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.case_information.charges_list # This is placed here so the banner show charges
-        super().__init__(parent)
+        self.charges_list = main_dialog.case_information.charges_list # Show charges on banner
         self.case_information = main_dialog.case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
