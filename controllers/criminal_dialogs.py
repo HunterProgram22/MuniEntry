@@ -21,6 +21,7 @@ from views.custom_widgets import (
     DeleteButton,
     AmendButton,
     AlliedCheckbox,
+    RequiredBox,
 )
 from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import CHARGES_DATABASE
@@ -128,8 +129,45 @@ class BaseCriminalDialog(QDialog):
         on a criminal dialog. The order is important to make sure the information is
         updated before the entry is created."""
         self.update_case_information()
+        if self.check_plea_and_findings() is None:
+            return None
         create_entry(self)
         self.close_event()
+
+    def check_plea_and_findings(self):
+        """Shows warning if no plea or findings are entered. Checks one at a time so unless all
+        fields have a plea and finding you will get the warning until they are filled in.
+
+        MOVE: Should this be in CriminalPleaDialog or a decorator or standalone function???"""
+        row_plea, row_finding = self.set_plea_and_finding_rows()
+        column = 2
+        loop_counter = 0
+        while loop_counter < self.charges_gridLayout.columnCount():
+            try:
+                if self.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
+                    RequiredBox("You must enter a plea.")
+                    return None
+                if self.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
+                    RequiredBox("You must enter a finding.")
+                    return None
+            except AttributeError:
+                pass
+            column += 2
+            loop_counter += 1
+        return "Pass"
+
+    def set_plea_and_finding_rows(self):
+        """The initial values of row_plea and row_finding are the common rows, and allow this to
+        return both values even if there is no finding row (i.e. LEAP Dialog).
+        TODO: Probably better way to do this to have it pass when no finding row on dialog."""
+        row_plea = 4
+        row_finding = 5
+        for row in range(self.charges_gridLayout.rowCount()):
+            if self.charges_gridLayout.itemAtPosition(row, 0).widget().text() == "Plea:":
+                row_plea = row
+            if self.charges_gridLayout.itemAtPosition(row, 0).widget().text() == "Finding:":
+                row_finding = row
+        return row_plea, row_finding
 
     @logger.catch
     def close_event(self):
@@ -457,7 +495,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         if self.freeform_entry_checkBox.isChecked():
             return None
         query = QSqlQuery(database_offenses)
-        query.prepare("SELECT * FROM charges WHERE " "statute LIKE '%' || :key || '%'")
+        query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
         while query.next():
