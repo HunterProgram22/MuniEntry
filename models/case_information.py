@@ -16,44 +16,6 @@ class CaseLoadData:
 
 
 @dataclass
-class CaseInformation:
-    """This object stores all the information for a case both at inception and
-    as it is populated through the application."""
-    judicial_officer: object
-    case_number: str  = None
-    defendant: object = Defendant()
-    fra_in_file: bool  = None
-    fra_in_court: bool  = None
-    plea_trial_date: str  = None
-    charges_list: list = field(default_factory=list)
-    community_control_terms: str  = None
-    ability_to_pay_time: str  = None
-    balance_due_date: str  = None
-    sentencing_date: str  = None
-    amend_offense_details: str  = None
-    community_service_terms: str  = None
-    hours_of_service: str  = None
-    days_to_complete_service: str  = None
-    due_date_for_service: str  = None
-    license_suspension_details: str  = None
-    other_conditions_details: str  = None
-    court_costs_ordered: str  = None
-    court_costs: int  = 0
-    total_fines: int  = 0
-    total_fines_suspended: int = 0
-    fta_bond_conditions: object = None
-    not_guilty_conditions: object = None
-
-    def add_charge_to_list(self, charge):
-        self.charges_list.append(charge)
-
-    def get_case_information(self):
-        """Returns a dictionary with all of case information required
-        to populate an entry."""
-        return asdict(self)
-
-
-@dataclass
 class CriminalCharge:
     """Class for keeping track of all information that is specific to each
     individual charge in a case.
@@ -144,3 +106,41 @@ class OtherConditionsTerms:
     a specific case. This condition is a freeform text entry box in the UI."""
     other_conditions_ordered: bool = False
     other_conditions_terms: str = None
+
+
+@dataclass
+class CaseInformation:
+    """This object stores all the information for a case both at inception and
+    as it is populated through the application."""
+    judicial_officer: object
+    case_number: str  = None
+    defendant: object = Defendant()
+    fra_in_file: bool  = None
+    fra_in_court: bool  = None
+    plea_trial_date: str  = None
+    charges_list: list = field(default_factory=list)
+    community_control_terms: object = CommunityControlTerms()
+    ability_to_pay_time: str  = None
+    balance_due_date: str  = None
+    sentencing_date: str  = None
+    amend_offense_details: str  = None
+    community_service_terms: object = CommunityServiceTerms()
+    hours_of_service: str  = None
+    days_to_complete_service: str  = None
+    due_date_for_service: str  = None
+    license_suspension_details: object = LicenseSuspensionTerms()
+    other_conditions_details: object = OtherConditionsTerms()
+    court_costs_ordered: str  = None
+    court_costs: int  = 0
+    total_fines: int  = 0
+    total_fines_suspended: int = 0
+    fta_bond_conditions: object = None
+    not_guilty_conditions: object = None
+
+    def add_charge_to_list(self, charge):
+        self.charges_list.append(charge)
+
+    def get_case_information(self):
+        """Returns a dictionary with all of case information required
+        to populate an entry."""
+        return asdict(self)

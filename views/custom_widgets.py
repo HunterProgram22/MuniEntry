@@ -102,8 +102,21 @@ class AlliedCheckbox(QCheckBox):
         super(QCheckBox, self).__init__(parent)
         self.set_up_widget()
 
-
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+
+
+class RequiredBox(QMessageBox):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setIcon(QMessageBox.Warning)
+        self.setWindowTitle("Required")
+        self.setText(self.message)
+        self.setStandardButtons(QMessageBox.Ok)
+        self.exec()

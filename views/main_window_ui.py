@@ -210,7 +210,7 @@ class Ui_MainWindow(object):
         self.MinorMisdemeanorTrafficButton_3.setText(_translate("MainWindow", "Entry"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
-        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "Minor Misdemeanor"))
+        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "No Jail Plea"))
         self.label_3.setText(_translate("MainWindow", "Arraignment Cases List:"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuSettings.setTitle(_translate("MainWindow", "Settings"))

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MinorMisdemeanorDialog</class>
- <widget class="QDialog" name="MinorMisdemeanorDialog">
+ <class>NoJailPleaDialog</class>
+ <widget class="QDialog" name="NoJailPleaDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>683</height>
+    <width>782</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -132,7 +132,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Minor Misdemeanor Case Information</string>
+   <string>No Jail Plea Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -832,7 +832,7 @@ font-weight: bold;</string>
           </widget>
          </item>
          <item row="1" column="0">
-          <layout class="QGridLayout" name="gridLayout_5">
+          <layout class="QGridLayout" name="add_conditions_gridLayout">
            <item row="0" column="0">
             <widget class="QCheckBox" name="license_suspension_checkBox">
              <property name="text">
