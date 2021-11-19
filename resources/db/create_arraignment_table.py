@@ -29,7 +29,11 @@ def return_data_from_excel(excel_file):
         offense = worksheet.cell(row=row, column=5)
         statute = worksheet.cell(row=row, column=6)
         degree = worksheet.cell(row=row, column=7)
-        fra_in_file = worksheet.cell(row=row, column=8)
+        if worksheet.cell(row=row, column=8).value == None:
+            worksheet.cell(row=row, column=8).value = "U"
+            fra_in_file = worksheet.cell(row=row, column=8)
+        else:
+            fra_in_file = worksheet.cell(row=row, column=8)
         case = (case_number.value,
                 defendant_last_name.value,
                 defendant_first_name.value,

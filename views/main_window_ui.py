@@ -210,7 +210,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.2.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.3.0 - beta"))
         self.LeapPleaLongButton.setText(_translate("MainWindow", "LEAP Plea "))
         self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete"))
         self.FTABondButton.setText(_translate("MainWindow", "FTA / Bond"))

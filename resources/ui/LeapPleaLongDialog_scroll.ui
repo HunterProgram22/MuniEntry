@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>792</height>
+    <width>923</width>
+    <height>762</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -163,6 +163,9 @@ font-weight: bold;</string>
      <layout class="QGridLayout" name="gridLayout_4">
       <item row="0" column="0">
        <widget class="QScrollArea" name="scrollArea">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
@@ -171,11 +174,11 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>960</width>
-           <height>752</height>
+           <width>883</width>
+           <height>722</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,2,2,4,2">
           <item row="0" column="0" colspan="2">
            <widget class="QFrame" name="frame_2">
             <property name="styleSheet">
@@ -698,6 +701,19 @@ p, li { white-space: pre-wrap; }
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>defendant_first_name_lineEdit</tabstop>
+  <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>statute_choice_box</tabstop>
+  <tabstop>offense_choice_box</tabstop>
+  <tabstop>add_charge_Button</tabstop>
+  <tabstop>time_to_complete_box</tabstop>
+  <tabstop>sentencing_date</tabstop>
+  <tabstop>create_entry_Button</tabstop>
+  <tabstop>textBrowser</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>
