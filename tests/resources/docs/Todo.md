@@ -1,18 +1,22 @@
 APPLICATION TODO LIST for version 0.3.0
-* Add Yellow Sheet templates (FTA/Bond, Not Guilty/Bond, CC Violation)
-* Add functionality for allied offenses
-* Add community control conditions checkboxes
+* Add Yellow Sheet templates (CC Violation)
 * Remove magic numbers throughout.
 * Wire up amend offense dialog again - works on basic level - need to move signals to dialog
 and perhaps update the actual original charge to indicate amended.
 * Move create entry and other general methods to helper functions
 * Add Warning if add condition boxes are checked but conditions have not been added.
 * Add Warning if plea and finding boxes are None
+* Add new tests - fix test amend offense because button is now in grid.
+* Fix database connection names in criminal dialogs and elsewhere - make clearer.
 
 
 
 
 FEATURE/CHANGE LIST - for Version 0.4.0
+* Add community control conditions checkboxes
+* Add Jail entries
+* Add DUI sub-dialog
+* Make statutes hyperlink
 
 
 

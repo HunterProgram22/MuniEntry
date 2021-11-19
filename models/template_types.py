@@ -35,10 +35,22 @@ FTA_Bond_Template = Template(
     "FTA_Bond_Template.docx",
 )
 
+Not_Guilty_Bond_Template = Template(
+    "Not Guilty Bond Dialog",
+    "Not_Guilty_Bond_Template.docx",
+)
+
+Juror_Payment_Template = Template(
+    "Juror Payment Dialog",
+    "Juror_Payment_Template.docx",
+)
+
 
 TEMPLATE_DICT = {
-    "Minor Misdemeanor Dialog": Magistrate_And_Judge_Final_Judgment_Template,
+    "No Jail Plea Dialog": Magistrate_And_Judge_Final_Judgment_Template,
     "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
     "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
     "FTA Bond Dialog": FTA_Bond_Template,
+    "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
+    "Juror Payment Dialog": Juror_Payment_Template,
 }
