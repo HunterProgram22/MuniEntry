@@ -1,4 +1,4 @@
-"""The controller module for the minor misdemeanor dialog - it is not limited
+"""The controller module for the no jail plea dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a database."""
 from loguru import logger
