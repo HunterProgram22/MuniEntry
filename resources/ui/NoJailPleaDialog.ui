@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>782</width>
-    <height>739</height>
+    <width>834</width>
+    <height>833</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -125,7 +125,7 @@
   <property name="font">
    <font>
     <family>Palatino Linotype</family>
-    <pointsize>10</pointsize>
+    <pointsize>9</pointsize>
     <weight>75</weight>
     <italic>false</italic>
     <bold>true</bold>
@@ -139,7 +139,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(25, 49, 91);
-font: 75 10pt &quot;Palatino Linotype&quot;;
+font: 75 9pt &quot;Palatino Linotype&quot;;
 font-weight: bold;</string>
   </property>
   <property name="sizeGripEnabled">
@@ -482,7 +482,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -498,7 +498,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -514,7 +514,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -537,7 +537,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -553,7 +553,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -569,7 +569,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
@@ -588,7 +588,7 @@ font-weight: bold;</string>
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
-              <pointsize>10</pointsize>
+              <pointsize>9</pointsize>
               <weight>75</weight>
               <italic>false</italic>
               <bold>true</bold>
