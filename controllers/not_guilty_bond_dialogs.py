@@ -8,6 +8,7 @@ from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation, FTABondConditions, NotGuiltyConditions
 from controllers.criminal_dialogs import BaseCriminalDialog, CriminalPleaDialog
+from .helper_functions import create_entry
 
 
 class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
@@ -31,6 +32,15 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def modify_view(self):
         super().modify_view()
+
+    @logger.catch
+    def create_entry_process(self):
+        """The order of functions that are called when the create_entry_Button is pressed()
+        on a criminal dialog. The order is important to make sure the information is
+        updated before the entry is created."""
+        self.update_case_information()
+        create_entry(self)
+        self.close_event()
 
     @logger.catch
     def connect_signals_to_slots(self):
