@@ -128,7 +128,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         the case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
-        AmendOffenseDialog(self.case_information, button_index).exec()
+        AmendOffenseDialog(self, self.case_information, button_index).exec()
 
     @logger.catch
     def start_add_conditions_dialog(self):

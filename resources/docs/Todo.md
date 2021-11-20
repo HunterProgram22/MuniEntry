@@ -1,5 +1,4 @@
 APPLICATION TODO LIST for version 0.3.0
-* Wire up amend offense dialog again - works on basic level - need to move signals to dialog and perhaps update the actual original charge to indicate amended.
 * Add charges_grid to Not guilty? - fix the bug on create entry.
 * Updated dialogs/templates for Not Guilty and FTA per AB Notes.
 
