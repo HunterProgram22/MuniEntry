@@ -30,7 +30,7 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def modify_view(self):
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        super().modify_view()
 
     @logger.catch
     def connect_signals_to_slots(self):

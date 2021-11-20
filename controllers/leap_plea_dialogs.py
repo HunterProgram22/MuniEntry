@@ -22,6 +22,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.set_statute_and_offense_choice_boxes()
 
     @logger.catch
     def modify_view(self):
@@ -105,6 +106,7 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.set_statute_and_offense_choice_boxes()
 
     @logger.catch
     def update_case_information(self):

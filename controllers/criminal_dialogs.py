@@ -81,6 +81,8 @@ class BaseCriminalDialog(QDialog):
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
+            QtCore.Qt.WindowMaximizeButtonHint)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -222,6 +224,10 @@ class CriminalPleaDialog(BaseCriminalDialog):
 
     def modify_view(self):
         super().modify_view()
+
+    def set_statute_and_offense_choice_boxes(self):
+        """This method is set in CriminalPleaDialog class but called in subclasses because
+        NotGuiltyBondDialog doesn't currently have statute and offense choice boxes."""
         self.statute_choice_box.addItems(create_statute_list())
         self.offense_choice_box.addItems(create_offense_list())
         self.statute_choice_box.setCurrentText("")

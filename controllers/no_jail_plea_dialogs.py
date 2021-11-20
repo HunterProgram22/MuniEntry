@@ -31,6 +31,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.set_statute_and_offense_choice_boxes()
 
     @logger.catch
     def load_arraignment_data(self):
@@ -49,6 +50,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
 
     @logger.catch
     def connect_signals_to_slots(self):
