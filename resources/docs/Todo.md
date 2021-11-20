@@ -1,16 +1,13 @@
 APPLICATION TODO LIST for version 0.3.0
-* Remove magic numbers throughout - Look to check_plea_and_findings method as an example.
-* Wire up amend offense dialog again - works on basic level - need to move signals to dialog
-and perhaps update the actual original charge to indicate amended.
-* Move general methods to helper functions
-* Add Warning if add condition boxes are checked but conditions have not been added.
-* Add new tests - fix test amend offense because button is now in grid.
-* Fix database connection names in criminal dialogs and elsewhere - make clearer.
+* Wire up amend offense dialog again - works on basic level - need to move signals to dialog and perhaps update the actual original charge to indicate amended.
 * Add charges_grid to Not guilty? - fix the bug on create entry.
 * Updated dialogs/templates for Not Guilty and FTA per AB Notes.
-* Add Max Min buttons to dialogs.
 
 
+GENERAL PERIODIC CLEANUP
+* Move general methods to helper functions
+* Remove magic numbers throughout - Look to check_plea_and_findings method as an example.
+* Add new tests - fix test amend offense because button is now in grid.
 
 
 FEATURE/CHANGE LIST - for Version 0.4.0
@@ -19,6 +16,7 @@ FEATURE/CHANGE LIST - for Version 0.4.0
 * Add DUI sub-dialog
 * Make statutes hyperlink
 * Add Yellow Sheet templates (CC Violation)
+* Add Warning if add condition boxes are checked but conditions have not been added.
 
 
 

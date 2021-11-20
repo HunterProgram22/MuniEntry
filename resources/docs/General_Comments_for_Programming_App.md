@@ -7,3 +7,8 @@ is cleaner and allows easier scaling of the application.
 * Generally, connecting with pressed is preferred to clicked because a clicked event sends a bool
 argument to the function. However, clicked is used in some instances because it is a press and release
 of a button. Using pressed sometimes caused an event to be triggered twice.
+
+
+DATABASES
+https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
+https://doc.qt.io/qtforpython/overviews/sql-connecting.html

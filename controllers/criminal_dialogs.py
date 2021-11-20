@@ -40,12 +40,6 @@ def create_database_connections():
 
 @logger.catch
 def open_databases():
-    """
-    https://www.tutorialspoint.com/pyqt/pyqt_database_handling.htm
-    https://doc.qt.io/qtforpython/overviews/sql-connecting.html
-    NOTE: If running create_charges_table.py to update database, must delete
-    the old charges.sqlite file to insure it is updated.
-    """
     database_offenses.open()
 
 
