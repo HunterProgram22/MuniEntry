@@ -10,6 +10,8 @@ import sys
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtSql import QSqlQuery
+from PyQt5 import QtCore
+from PyQt5 import QtGui
 
 from resources.db import create_arraignment_table # This import is used only to load - better way?
 from resources.db.create_data_lists import create_cases_list
@@ -43,6 +45,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, arraignments_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
+        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
         self.load_judicial_officers()
