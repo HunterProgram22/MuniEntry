@@ -33,6 +33,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.set_statute_and_offense_choice_boxes()
 
+
     @logger.catch
     def load_arraignment_data(self):
         super().load_arraignment_data()
@@ -98,22 +99,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
                 pass
             column += 2
             loop_counter += 1
-
-
-    @logger.catch
-    def add_charge_to_view(self):
-        """Adds the charge that was added through add_charge method to the
-        view/GUI."""
-        row, column = super().add_charge_to_view()
-        self.charges_gridLayout.addWidget(FindingComboBox(), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(FineLineEdit(self.criminal_charge.offense), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(FineSuspendedLineEdit(), row, column)
-        row += 1
-        self.add_delete_button_to_view(row, column)
-        row += 1
-        self.add_amend_button_to_view(row, column)
 
     @logger.catch
     def set_pay_date(self, days_to_add):

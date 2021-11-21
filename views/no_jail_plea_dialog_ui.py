@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from views.custom_widgets import ChargesGrid
 
 
 class Ui_NoJailPleaDialog(object):
@@ -216,7 +217,7 @@ class Ui_NoJailPleaDialog(object):
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.gridLayout_3 = QtWidgets.QGridLayout()
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.charges_gridLayout = QtWidgets.QGridLayout()
+        self.charges_gridLayout = ChargesGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.plea_label_1 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()
