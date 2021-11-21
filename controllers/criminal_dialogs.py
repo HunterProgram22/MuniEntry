@@ -183,7 +183,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
                 self.criminal_charge.degree) = charge
             # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
             self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_to_grid(self)
+            self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
             self.statute_choice_box.setFocus()
 
     def modify_view(self):
@@ -301,7 +301,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.type = self.set_offense_type()
         self.case_information.add_charge_to_list(self.criminal_charge)
-        self.charges_gridLayout.add_charge_to_grid(self)
+        self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
 
     def clear_charge_fields(self):

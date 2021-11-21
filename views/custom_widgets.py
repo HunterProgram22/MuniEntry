@@ -129,7 +129,7 @@ class ChargesGrid(QGridLayout):
         super(QGridLayout, self).__init__(parent)
 
     @logger.catch
-    def add_charge_to_grid(self, dialog):
+    def add_charge_only_to_grid(self, dialog, add_allied_box=True):
         """Adds the charge that was added through add_charge method to the
         view/GUI. The first row=0 because of python zero-based indexing. The
         column is set at one more than the current number of columns because
@@ -152,10 +152,15 @@ class ChargesGrid(QGridLayout):
         row += 1
         self.addWidget(QLabel(charge['degree']), row, column)
         row += 1
-        self.addWidget(AlliedCheckbox(), row, column)
-        row += 1
+        if add_allied_box == True:
+            self.addWidget(AlliedCheckbox(), row, column)
+            row += 1
         self.addWidget(PleaComboBox(), row, column)
         row += 1
+        return row, column
+
+    def add_charge_finding_and_fines_to_grid(self, dialog):
+        row, column = self.add_charge_only_to_grid(dialog)
         self.addWidget(FindingComboBox(), row, column)
         row += 1
         self.addWidget(FineLineEdit(dialog.criminal_charge.offense), row, column)
@@ -232,37 +237,48 @@ class ChargesGrid(QGridLayout):
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
         """Sets the plea and findings boxes for all charges currently
-        in the charges_gridLayout."""
+        in the charges_gridLayout.
+
+        TODO: Row-1 = should be allied-checkbox and row+1 = should be finding choice box.
+        This can be refactored better."""
         if self.sender() == dialog.guilty_all_Button:
             plea = "Guilty"
         elif self.sender() == dialog.no_contest_all_Button:
             plea = "No Contest"
-        for column in range(self.columnCount()):
-            if self.itemAtPosition(4, column) is not None:
-                if isinstance(self.itemAtPosition(
-                        4, column).widget(), PleaComboBox):
-                    self.itemAtPosition(
-                        4, column).widget().setCurrentText(plea)
-                    if self.itemAtPosition(
-                            3, column).widget().isChecked():
+        for row in range(self.rowCount()):
+            for column in range(self.columnCount()):
+                if self.itemAtPosition(row, column) is not None:
+                    if isinstance(self.itemAtPosition(
+                            row, column).widget(), PleaComboBox):
                         self.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty")
-                column += 1
-            else:
-                column += 1
+                            row, column).widget().setCurrentText(plea)
+                        if isinstance(self.itemAtPosition(
+                                row, column).widget(), AlliedCheckbox):
+                            if self.itemAtPosition(
+                                    row-1, column).widget().isChecked():
+                                self.itemAtPosition(
+                                    row+1, column).widget().setCurrentText("Guilty - Allied Offense")
+                        else:
+                            if self.itemAtPosition(row+1, column) is not None:
+                                self.itemAtPosition(
+                                    row+1, column).widget().setCurrentText("Guilty")
+                    column += 1
+                else:
+                    column += 1
         self.set_cursor_to_fine_line_edit()
 
     @logger.catch
     def set_cursor_to_fine_line_edit(self):
         """Moves the cursor to the FineLineEdit box. Row is set to 6, but for different dialogs
         this could end up changing."""
-        for column in range(self.columnCount()):
-            if self.itemAtPosition(4, column) is not None:
-                if isinstance(self.itemAtPosition(
-                        6, column).widget(), FineLineEdit):
-                    self.itemAtPosition(6, column).widget().setFocus()
-                    break
-            column += 1
+        try:
+            for column in range(self.columnCount()):
+                if self.itemAtPosition(4, column) is not None:
+                    if isinstance(self.itemAtPosition(
+                            6, column).widget(), FineLineEdit):
+                        self.itemAtPosition(6, column).widget().setFocus()
+                        break
+                column += 1
+        except AttributeError:
+            print("Fix this later - rows are off in LEAP Dialog because using Magic Numbers.")
+            pass
