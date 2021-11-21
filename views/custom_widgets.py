@@ -162,11 +162,11 @@ class ChargesGrid(QGridLayout):
         row += 1
         self.addWidget(FineSuspendedLineEdit(), row, column)
         row += 1
-        self.add_delete_button_to_view(dialog, row, column)
+        self.add_amend_button_to_grid(dialog, row, column)
         row += 1
-        self.add_amend_button_to_view(dialog, row, column)
+        self.add_delete_button_to_grid(dialog, row, column)
 
-    def add_delete_button_to_view(self, dialog, row, column):
+    def add_delete_button_to_grid(self, dialog, row, column):
         """This method is called in the dialog subclass so that it is inserted in the
         correct row."""
         delete_button = DeleteButton()
@@ -174,10 +174,95 @@ class ChargesGrid(QGridLayout):
         delete_button.pressed.connect(dialog.delete_charge)
         self.addWidget(delete_button, row, column)
 
-    def add_amend_button_to_view(self, dialog, row, column):
+    def add_amend_button_to_grid(self, dialog, row, column):
         """This method is called in the dialog subclass so that it is inserted in the
         correct row."""
         amend_button = AmendButton()
         dialog.amend_button_list.append(amend_button)
         amend_button.clicked.connect(dialog.start_amend_offense_dialog)
         self.addWidget(amend_button, row, column)
+
+    def check_plea_and_findings(self):
+        """Shows warning if no plea or findings are entered. Checks one at a time so unless all
+        fields have a plea and finding you will get the warning until they are filled in.
+
+        MOVE: Should this be in CriminalPleaDialog or a decorator or standalone function???"""
+        row_plea, row_finding = self.set_plea_and_finding_rows()
+        column = 2
+        loop_counter = 0
+        while loop_counter < self.columnCount():
+            try:
+                if self.itemAtPosition(row_plea, column).widget().currentText() == "":
+                    RequiredBox("You must enter a plea.")
+                    return None
+                if self.itemAtPosition(row_finding, column).widget().currentText() == "":
+                    RequiredBox("You must enter a finding.")
+                    return None
+            except AttributeError:
+                pass
+            column += 2
+            loop_counter += 1
+        return "Pass"
+
+    def set_plea_and_finding_rows(self):
+        """The initial values of row_plea and row_finding are the common rows, and allow this to
+        return both values even if there is no finding row (i.e. LEAP Dialog).
+        TODO: Probably better way to do this to have it pass when no finding row on dialog."""
+        row_plea = 4
+        row_finding = 5
+        for row in range(self.rowCount()):
+            if self.itemAtPosition(row, 0).widget().text() == "Plea:":
+                row_plea = row
+            if self.itemAtPosition(row, 0).widget().text() == "Finding:":
+                row_finding = row
+        return row_plea, row_finding
+
+    @logger.catch
+    def delete_charge_from_grid(self):
+        """Uses the delete_button that is indexed to the column to delete the
+        QLabels for the charge."""
+        index = self.indexOf(self.sender())
+        column = self.getItemPosition(index)[1]
+        for row in range(self.rowCount()):
+            layout_item = self.itemAtPosition(row, column)
+            if layout_item is not None:
+                layout_item.widget().deleteLater()
+                self.removeItem(layout_item)
+
+    @logger.catch
+    def set_all_plea_and_findings(self, dialog):
+        """Sets the plea and findings boxes for all charges currently
+        in the charges_gridLayout."""
+        if self.sender() == dialog.guilty_all_Button:
+            plea = "Guilty"
+        elif self.sender() == dialog.no_contest_all_Button:
+            plea = "No Contest"
+        for column in range(self.columnCount()):
+            if self.itemAtPosition(4, column) is not None:
+                if isinstance(self.itemAtPosition(
+                        4, column).widget(), PleaComboBox):
+                    self.itemAtPosition(
+                        4, column).widget().setCurrentText(plea)
+                    if self.itemAtPosition(
+                            3, column).widget().isChecked():
+                        self.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.itemAtPosition(
+                            5, column).widget().setCurrentText("Guilty")
+                column += 1
+            else:
+                column += 1
+        self.set_cursor_to_fine_line_edit()
+
+    @logger.catch
+    def set_cursor_to_fine_line_edit(self):
+        """Moves the cursor to the FineLineEdit box. Row is set to 6, but for different dialogs
+        this could end up changing."""
+        for column in range(self.columnCount()):
+            if self.itemAtPosition(4, column) is not None:
+                if isinstance(self.itemAtPosition(
+                        6, column).widget(), FineLineEdit):
+                    self.itemAtPosition(6, column).widget().setFocus()
+                    break
+            column += 1
