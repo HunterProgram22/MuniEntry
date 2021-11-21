@@ -241,10 +241,14 @@ class ChargesGrid(QGridLayout):
 
         TODO: Row-1 = should be allied-checkbox and row+1 = should be finding choice box.
         This can be refactored better."""
-        if self.sender() == dialog.guilty_all_Button:
-            plea = "Guilty"
-        elif self.sender() == dialog.no_contest_all_Button:
-            plea = "No Contest"
+        button_dict = {}
+        if hasattr(dialog, "guilty_all_Button"):
+            button_dict[dialog.guilty_all_Button] = "Guilty"
+        if hasattr(dialog, "no_contest_all_Button"):
+            button_dict[dialog.no_contest_all_Button] = "No Contest"
+        if hasattr(dialog, "not_guilty_all_Button"):
+            button_dict[dialog.not_guilty_all_Button] = "Not Guilty"
+        plea = button_dict.get(self.sender())
         for row in range(self.rowCount()):
             for column in range(self.columnCount()):
                 if self.itemAtPosition(row, column) is not None:

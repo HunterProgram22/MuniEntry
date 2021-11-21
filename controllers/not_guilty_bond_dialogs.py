@@ -6,7 +6,7 @@ from PyQt5.QtCore import QDate
 
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation, FTABondConditions, NotGuiltyConditions
+from models.case_information import CaseInformation, FTABondConditions, CriminalCharge
 from controllers.criminal_dialogs import BaseCriminalDialog, CriminalPleaDialog
 from .helper_functions import create_entry
 
@@ -19,7 +19,6 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.not_guilty_conditions = NotGuiltyConditions()
         self.fta_bond_conditions = FTABondConditions()
 
     @logger.catch
@@ -28,6 +27,17 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
             self.case_number_lineEdit.setText(self.case.case_number)
             self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
             self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+            self.add_charge_from_caseloaddata()
+
+    def add_charge_from_caseloaddata(self):
+        """Loads the data from the case object that is created from the sql table."""
+        for _index, charge in enumerate(self.case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute, \
+                self.criminal_charge.degree) = charge
+            self.case_information.add_charge_to_list(self.criminal_charge)
+            self.charges_gridLayout.add_charge_only_to_grid(self, False) # The False is so add allied box doesn't populate
+            self.statute_choice_box.setFocus()
 
     @logger.catch
     def modify_view(self):
@@ -44,9 +54,8 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        super().connect_signals_to_slots()
+        self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     @logger.catch
     def update_case_information(self):
@@ -54,16 +63,23 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
-        self.case_information.not_guilty_conditions = self.not_guilty_conditions
+
 
     @logger.catch
     def update_not_guilty_conditions(self):
-        self.not_guilty_conditions.appearance_reason = self.appearance_reason_box.currentText()
-        self.not_guilty_conditions.plea = self.plea_box.currentText()
-        if self.speedy_trial_box.currentText() == "Yes":
-            self.not_guilty_conditions.waive_speedy_trial = True
-        else:
-            self.not_guilty_conditions.waive_speedy_trial = False
+        self.case_information.appearance_reason = self.appearance_reason_box.currentText()
+        self.add_dispositions_and_fines()
+
+    @logger.catch
+    def add_dispositions_and_fines(self):
+        """Row 3 - plea. Column count increases by 2 instead of one due to grid adding two
+        columns when a charge is added (odd numbered column is empty). Column starts at 2
+        because column 0 is labels."""
+        column = 2
+        for index, charge in enumerate(self.case_information.charges_list):
+            charge.plea = self.charges_gridLayout.itemAtPosition(
+                3, column).widget().currentText()
+            column += 2
 
     @logger.catch
     def update_bond_conditions(self):

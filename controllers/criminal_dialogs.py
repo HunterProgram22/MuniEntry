@@ -206,7 +206,12 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        try:
+            self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        except AttributeError:
+            pass
+        
+
 
     def set_plea_and_findings_process(self):
         self.charges_gridLayout.set_all_plea_and_findings(self)

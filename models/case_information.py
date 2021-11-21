@@ -33,13 +33,6 @@ class CriminalCharge:
     jail_days_suspended: str = None
 
 
-@dataclass
-class NotGuiltyConditions:
-    """Conditions specific to entering a not guilty plea."""
-    appearance_reason: str = None
-    plea: str = None
-    waive_speedy_trial: bool = False
-
 
 @dataclass
 class FTABondConditions:
@@ -134,6 +127,7 @@ class CaseInformation:
     court_costs: int  = 0
     total_fines: int  = 0
     total_fines_suspended: int = 0
+    appearance_reason: str = None
     fta_bond_conditions: object = None
     not_guilty_conditions: object = None
 
