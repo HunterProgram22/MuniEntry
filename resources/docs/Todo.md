@@ -1,6 +1,11 @@
-APPLICATION TODO LIST for version 0.3.0
-* Add charges_grid to Not guilty? - fix the bug on create entry.
+APPLICATION TODO LIST for version 0.4.0
 * Updated dialogs/templates for Not Guilty and FTA per AB Notes.
+* Add community control conditions checkboxes
+* Add Jail entries
+* Add DUI sub-dialog
+* Make statutes hyperlink
+* Add Yellow Sheet templates (CC Violation)
+* Add Warning if add condition boxes are checked but conditions have not been added.
 
 
 GENERAL PERIODIC CLEANUP
@@ -9,13 +14,7 @@ GENERAL PERIODIC CLEANUP
 * Add new tests - fix test amend offense because button is now in grid.
 
 
-FEATURE/CHANGE LIST - for Version 0.4.0
-* Add community control conditions checkboxes
-* Add Jail entries
-* Add DUI sub-dialog
-* Make statutes hyperlink
-* Add Yellow Sheet templates (CC Violation)
-* Add Warning if add condition boxes are checked but conditions have not been added.
+FEATURE/CHANGE LIST - for Version 0.5.0
 
 
 
