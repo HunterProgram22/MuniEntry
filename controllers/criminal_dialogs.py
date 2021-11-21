@@ -22,6 +22,7 @@ from views.custom_widgets import (
     AmendButton,
     AlliedCheckbox,
     RequiredBox,
+    ChargesGrid,
 )
 from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import CHARGES_DATABASE
@@ -151,9 +152,14 @@ class BaseCriminalDialog(QDialog):
 
 class CriminalPleaDialog(BaseCriminalDialog):
     """This class subclasses the BaseCriminalDialog for methods that are specific to
-    dialogs/entries that require entering a plea and finding in a case."""
+    dialogs/entries that require entering a plea and finding in a case.
+
+    The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
+    custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
+    in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.charges_gridLayout.__class__ = ChargesGrid
         self.case_information = CaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
