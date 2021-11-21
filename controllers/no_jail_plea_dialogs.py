@@ -1,4 +1,4 @@
-"""The controller module for the minor misdemeanor dialog - it is not limited
+"""The controller module for the no jail plea dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a database."""
 from loguru import logger
@@ -11,38 +11,46 @@ from views.custom_widgets import (
     FineLineEdit,
     FineSuspendedLineEdit,
 )
-from views.minor_misdemeanor_dialog_ui import Ui_MinorMisdemeanorDialog
+from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import (
-    BaseCriminalDialog,
     AddConditionsDialog,
     AmendOffenseDialog,
 )
+from .criminal_dialogs import CriminalPleaDialog
 from settings import PAY_DATE_DICT
 
 
-class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
-    """The dialog inherits from the BaseCriminalDialog (controller) and the
-    Ui_MinorMisdemeanorDialog (view).
-
-    This dialog is used when there will not be any jail time imposed. It does
-    not inherently limit cases to minor misdemeanors or unclassified
-    misdemeanors, however, it does not include fields to enter jail time."""
+class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
+    """The dialog inherits from the CriminalPleaDialog (controller) and the
+    Ui_NoJailPleaDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, parent=None):
-        super().__init__(judicial_officer, parent)
-        self.case_information = CaseInformation(self.judicial_officer)
-        self.dialog_name = "Minor Misdemeanor Dialog"
+    def __init__(self, judicial_officer, case, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.amend_button_list = []
+        self.set_statute_and_offense_choice_boxes()
+
+    @logger.catch
+    def load_arraignment_data(self):
+        super().load_arraignment_data()
+        fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
+        if self.case.fra_in_file in fra_value_dict:
+            self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
+        else:
+            self.fra_in_file_box.setCurrentText("N/A")
+        self.set_fra_in_file(self.fra_in_file_box.currentText())
+        self.set_fra_in_court(self.fra_in_court_box.currentText())
 
     @logger.catch
     def modify_view(self):
-        """The modify view method updates the view that is created on init."""
+        """The modify view method updates the view that is created on init and loads
+        case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -53,7 +61,7 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
         self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.no_contest_all_Button.pressed.connect(self.no_contest_all_plea_and_findings)
+        self.no_contest_all_Button.pressed.connect(self.set_all_plea_and_findings)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
@@ -82,12 +90,12 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
                 if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
                     self.case_information.charges_list[charge_index].fines_suspended = "0"
                 else:
-                    self.case_information.charges_listcharge_[charge_index].fines_suspended = (
+                    self.case_information.charges_list[charge_index].fines_suspended = (
                         self.charges_gridLayout.itemAtPosition(7, column).widget().text()
                     )
                 charge_index += 1
             except AttributeError:
-                print("Attribute error allowed to pass for lack of widget")
+                pass
             column += 2
             loop_counter += 1
 
@@ -120,17 +128,17 @@ class MinorMisdemeanorDialog(BaseCriminalDialog, Ui_MinorMisdemeanorDialog):
         the case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
-        AmendOffenseDialog(self.case_information, button_index).exec()
+        AmendOffenseDialog(self, self.case_information, button_index).exec()
 
     @logger.catch
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
-        instance of the MinorMisdemeanorDialog class (self) as an argument
+        instance of the NoJailPleaDialog class (self) as an argument
         so that the AddConditionsDialog can access all data from the
-        MinorMisdemeanorDialog when working in the AddConditionsDialog."""
+        NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddConditionsDialog(self).exec()
 
 
 if __name__ == "__main__":
-    print("MMD ran directly")
+    print("NJPD ran directly")

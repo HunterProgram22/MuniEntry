@@ -201,6 +201,9 @@ font-weight: bold;</string>
    </item>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="styleSheet">
+      <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -219,12 +222,22 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QPushButton" name="continue_Button">
+       <widget class="QPushButton" name="amend_offense_Button">
+        <property name="font">
+         <font>
+          <family>Palatino Linotype</family>
+          <pointsize>11</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 0);</string>
+         <string notr="true">background-color: rgb(62, 146, 255);
+font: 75 11pt &quot;Palatino Linotype&quot;;</string>
         </property>
         <property name="text">
-         <string>Continue</string>
+         <string>Amend Offense</string>
         </property>
        </widget>
       </item>
