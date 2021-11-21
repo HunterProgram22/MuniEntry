@@ -159,7 +159,10 @@ class CriminalPleaDialog(BaseCriminalDialog):
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
-        self.charges_gridLayout.__class__ = ChargesGrid
+        try:
+            self.charges_gridLayout.__class__ = ChargesGrid
+        except AttributeError:
+            pass
         self.case_information = CaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
