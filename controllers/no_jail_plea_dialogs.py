@@ -31,7 +31,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.set_statute_and_offense_choice_boxes()
+        
 
 
     @logger.catch

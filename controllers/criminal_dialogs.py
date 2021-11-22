@@ -165,6 +165,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
             pass
         self.case_information = CaseInformation(self.judicial_officer)
         self.criminal_charge = None
+        self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
         self.amend_button_list = []
         self.load_arraignment_data()
