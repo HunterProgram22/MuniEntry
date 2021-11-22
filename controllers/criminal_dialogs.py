@@ -210,7 +210,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
             self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         except AttributeError:
             pass
-        
+
 
 
     def set_plea_and_findings_process(self):

@@ -36,8 +36,22 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
             (self.criminal_charge.offense, self.criminal_charge.statute, \
                 self.criminal_charge.degree) = charge
             self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_only_to_grid(self, False) # The False is so add allied box doesn't populate
+            self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # The False is so add allied box doesn't populate True is delete button
             self.statute_choice_box.setFocus()
+
+    @logger.catch
+    def add_charge(self):
+        """The offense, statute and degree are added to the view by the method
+        add_charge_to_view, not this method. This method is triggered on
+        clicked() of the Add Charge button."""
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.degree_choice_box.currentText()
+        self.criminal_charge.type = self.set_offense_type()
+        self.case_information.add_charge_to_list(self.criminal_charge)
+        self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied, True is delete button
+        self.statute_choice_box.setFocus()
 
     @logger.catch
     def modify_view(self):

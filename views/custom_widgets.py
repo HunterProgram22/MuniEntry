@@ -129,7 +129,7 @@ class ChargesGrid(QGridLayout):
         super(QGridLayout, self).__init__(parent)
 
     @logger.catch
-    def add_charge_only_to_grid(self, dialog, add_allied_box=True):
+    def add_charge_only_to_grid(self, dialog, add_allied_box=True, add_delete_button=False):
         """Adds the charge that was added through add_charge method to the
         view/GUI. The first row=0 because of python zero-based indexing. The
         column is set at one more than the current number of columns because
@@ -157,6 +157,9 @@ class ChargesGrid(QGridLayout):
             row += 1
         self.addWidget(PleaComboBox(), row, column)
         row += 1
+        if add_delete_button == True:
+            self.add_delete_button_to_grid(dialog, row, column)
+            row += 1
         return row, column
 
     def add_charge_finding_and_fines_to_grid(self, dialog):
@@ -172,16 +175,12 @@ class ChargesGrid(QGridLayout):
         self.add_delete_button_to_grid(dialog, row, column)
 
     def add_delete_button_to_grid(self, dialog, row, column):
-        """This method is called in the dialog subclass so that it is inserted in the
-        correct row."""
         delete_button = DeleteButton()
         dialog.delete_button_list.append(delete_button)
         delete_button.pressed.connect(dialog.delete_charge)
         self.addWidget(delete_button, row, column)
 
     def add_amend_button_to_grid(self, dialog, row, column):
-        """This method is called in the dialog subclass so that it is inserted in the
-        correct row."""
         amend_button = AmendButton()
         dialog.amend_button_list.append(amend_button)
         amend_button.clicked.connect(dialog.start_amend_offense_dialog)
@@ -263,9 +262,12 @@ class ChargesGrid(QGridLayout):
                                 self.itemAtPosition(
                                     row+1, column).widget().setCurrentText("Guilty - Allied Offense")
                         else:
-                            if self.itemAtPosition(row+1, column) is not None:
-                                self.itemAtPosition(
-                                    row+1, column).widget().setCurrentText("Guilty")
+                            try:
+                                if self.itemAtPosition(row+1, column) is not None:
+                                    self.itemAtPosition(
+                                        row+1, column).widget().setCurrentText("Guilty")
+                            except AttributeError:
+                                pass
                     column += 1
                 else:
                     column += 1
