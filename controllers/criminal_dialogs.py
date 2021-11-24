@@ -356,6 +356,8 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         file. Gets the total number of charges from the charges in charges_list then
         loops through the charges_list and adds parts of each charge to the
         view."""
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint)
         column = self.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)
@@ -484,6 +486,8 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     def modify_view(self):
         """The modify view sets the original charge based on the item in the main dialog
         for which amend button was pressed."""
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint)
         self.original_charge_box.setCurrentText(self.current_offense)
         self.amended_charge_box.addItems(create_offense_list())
 

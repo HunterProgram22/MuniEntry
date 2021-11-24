@@ -3,6 +3,7 @@ from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog
+from PyQt5 import QtGui
 
 from controllers.helper_functions import create_entry
 
@@ -16,6 +17,7 @@ class BaseDialog(QDialog):
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
         super().__init__(parent)
+        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
         self.judicial_officer = judicial_officer
         self.case = case
         self.setupUi(self)

@@ -10,10 +10,9 @@ import sys
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtSql import QSqlQuery
-from PyQt5 import QtCore
 from PyQt5 import QtGui
 
-from resources.db import create_arraignment_table # This import is used only to load - better way?
+from resources.db import create_arraignment_table  # This import is used only to load - better way?
 from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
 from models.case_information import CaseLoadData
@@ -48,6 +47,21 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
+        self.judicial_officer_dict = {
+            self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
+            self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
+            self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
+            self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
+            self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
+        }
+        self.dialog_dict = {
+            self.MinorMisdemeanorTrafficButton: NoJailPleaDialog,
+            self.LeapPleaLongButton: LeapPleaLongDialog,
+            self.LeapPleaShortButton: LeapPleaShortDialog,
+            self.FTABondButton: FTABondDialog,
+            self.NotGuiltyBondButton: NotGuiltyBondDialog,
+            self.JurorPaymentButton: JurorPaymentDialog,
+        }
         self.load_judicial_officers()
         self.connect_entry_buttons()
         self.load_arraignment_case_list()
@@ -61,13 +75,6 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads judicial officers and connects the radio button for each judicial officer to the
         radio button so that if it is selected when an entry dialog button is pressed to load the
         dialog, then the judicial officer that is selected will be passed to the dialog."""
-        self.judicial_officer_dict = {
-            self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
-            self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
-            self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
-            self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
-            self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
-        }
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
@@ -79,14 +86,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
-        self.dialog_dict = {
-            self.MinorMisdemeanorTrafficButton: NoJailPleaDialog,
-            self.LeapPleaLongButton: LeapPleaLongDialog,
-            self.LeapPleaShortButton: LeapPleaShortDialog,
-            self.FTABondButton: FTABondDialog,
-            self.NotGuiltyBondButton: NotGuiltyBondDialog,
-            self.JurorPaymentButton: JurorPaymentDialog,
-        }
         for key in self.dialog_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
 
@@ -144,6 +143,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if self.arraignment_cases_box.currentText() == "":
             return CaseLoadData()
         return CaseLoadData(case_number, defendant_last_name, defendant_first_name, charges_list, fra_in_file)
+
 
 @logger.catch
 def main():
