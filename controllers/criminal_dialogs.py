@@ -72,18 +72,20 @@ class CriminalPleaDialog(BaseDialog):
             self.case_number_lineEdit.setText(self.case.case_number)
             self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
             self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-            self.add_charge_from_caseloaddata()
+            self.add_charge_from_caseloaddata_process()
 
-    def add_charge_from_caseloaddata(self):
-        """Loads the data from the case object that is created from the sql table."""
+    def add_charge_from_caseloaddata_process(self):
+        self.add_caseloaddata_to_case_information()
+        self.add_charge_to_grid()
+
+    def add_caseloaddata_to_case_information(self):
+        """Loads the data from the case object that is created from the sql table.
+        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
         for _index, charge in enumerate(self.case.charges_list):
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
-            # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
             self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
-            self.statute_choice_box.setFocus()
 
     def modify_view(self):
         super().modify_view()

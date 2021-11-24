@@ -23,25 +23,6 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.fta_bond_conditions = FTABondConditions()
 
     @logger.catch
-    def load_arraignment_data(self):
-        if self.case.case_number != None:
-            self.case_number_lineEdit.setText(self.case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-            self.add_charge_from_caseloaddata()
-
-    def add_charge_from_caseloaddata(self):
-        """Loads the data from the case object that is created from the sql table."""
-        for _index, charge in enumerate(self.case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, \
-                self.criminal_charge.degree) = charge
-            self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # The False is so add allied box doesn't populate True is delete button
-            self.statute_choice_box.setFocus()
-
-    @logger.catch
-
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied, True is delete button
         self.statute_choice_box.setFocus()

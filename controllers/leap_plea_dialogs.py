@@ -8,7 +8,6 @@ from views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
 from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
 from views.custom_widgets import PleaComboBox
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation, CriminalCharge
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import CriminalPleaDialog
 from settings import LEAP_COMPLETE_DATE_DICT
@@ -46,18 +45,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         )
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied box arg
+        self.charges_gridLayout.add_charge_only_to_grid(self, False, True)  # False is allied box arg
         self.statute_choice_box.setFocus()
-
-    def add_charge_from_caseloaddata(self):
-        """Loads the data from the case object that is created from the sql table."""
-        for _index, charge in enumerate(self.case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, \
-                self.criminal_charge.degree) = charge
-            self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # The False is so add allied box doesn't populate
-            self.statute_choice_box.setFocus()
 
     @logger.catch
     def add_dispositions_and_fines(self):
@@ -120,18 +109,8 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def add_charge_from_caseloaddata(self):
-        """Loads the data from the case object that is created from the sql table."""
-        for _index, charge in enumerate(self.case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, \
-                self.criminal_charge.degree) = charge
-            self.case_information.add_charge_to_list(self.criminal_charge)
-            self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # The False is so add allied box doesn't populate
-            self.statute_choice_box.setFocus()
-
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied box arg
+        self.charges_gridLayout.add_charge_only_to_grid(self, False, True)  # False is allied box arg
         self.statute_choice_box.setFocus()
 
     @logger.catch

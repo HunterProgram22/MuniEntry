@@ -6,14 +6,8 @@ from loguru import logger
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 
-from views.custom_widgets import (
-    FindingComboBox,
-    FineLineEdit,
-    FineSuspendedLineEdit,
-)
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
-from models.case_information import CaseInformation
 from controllers.helper_functions import set_future_date
 from controllers.criminal_dialogs import (
     AddConditionsDialog,
@@ -32,8 +26,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         
-
-
     @logger.catch
     def load_arraignment_data(self):
         super().load_arraignment_data()
@@ -51,7 +43,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         case data from the arraignment case that is selected."""
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
-
 
     @logger.catch
     def connect_signals_to_slots(self):
