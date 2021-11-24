@@ -15,7 +15,7 @@ from settings import LEAP_COMPLETE_DATE_DICT
 
 
 class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
-    """The dialog inherits from the BaseCriminalDialog (controller) and the
+    """The dialog inherits from the BaseDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):

@@ -7,7 +7,8 @@ from PyQt5.QtCore import QDate
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import CaseInformation, FTABondConditions, CriminalCharge
-from controllers.criminal_dialogs import BaseCriminalDialog, CriminalPleaDialog
+from controllers.criminal_dialogs import CriminalPleaDialog
+from controllers.base_dialogs import BaseDialog
 from .helper_functions import create_entry
 
 

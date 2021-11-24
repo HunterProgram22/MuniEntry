@@ -56,7 +56,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def connect_signals_to_slots(self):
         """The method connects additional signals to slots. That are not
-        included in the BaseCriminalDialog."""
+        included in the BaseDialog."""
         super().connect_signals_to_slots()
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
