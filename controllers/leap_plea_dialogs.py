@@ -45,16 +45,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
 
-    @logger.catch
-    def add_charge(self):
-        """This method overrieds the CriminalPleaDialog method because no amend and other items are
-        added to the charges_gridLayout."""
-        self.criminal_charge = CriminalCharge()
-        self.criminal_charge.offense = self.offense_choice_box.currentText()
-        self.criminal_charge.statute = self.statute_choice_box.currentText()
-        self.criminal_charge.degree = self.degree_choice_box.currentText()
-        self.criminal_charge.type = self.set_offense_type()
-        self.case_information.add_charge_to_list(self.criminal_charge)
+    def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied box arg
         self.statute_choice_box.setFocus()
 
@@ -139,16 +130,7 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
             self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # The False is so add allied box doesn't populate
             self.statute_choice_box.setFocus()
 
-    @logger.catch
-    def add_charge(self):
-        """This method overrides the CriminalPleaDialog method because no amend and other items are
-        added to the charges_gridLayout."""
-        self.criminal_charge = CriminalCharge()
-        self.criminal_charge.offense = self.offense_choice_box.currentText()
-        self.criminal_charge.statute = self.statute_choice_box.currentText()
-        self.criminal_charge.degree = self.degree_choice_box.currentText()
-        self.criminal_charge.type = self.set_offense_type()
-        self.case_information.add_charge_to_list(self.criminal_charge)
+    def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied box arg
         self.statute_choice_box.setFocus()
 

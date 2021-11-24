@@ -155,7 +155,7 @@ class CriminalPleaDialog(BaseDialog):
     @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the case type (moving, non-moving, criminal) and
-        then adds it to any fines that are in the fines_amount box and substracts fines in the
+        then adds it to any fines that are in the fines_amount box and subtracts fines in the
         fines_suspended box. The loop stops when a case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
         not used but is required to unpack enumerate()."""
@@ -193,11 +193,12 @@ class CriminalPleaDialog(BaseDialog):
         updated before the charge is added and the data cleared from the fields.
 
         The _bool is passed as an argument through clicked() but not used."""
-        self.add_charge()
+        self.add_charge_to_case_information()
+        self.add_charge_to_grid()
         self.clear_charge_fields()
 
     @logger.catch
-    def add_charge(self):
+    def add_charge_to_case_information(self):
         """The offense, statute and degree are added to the view by the method
         add_charge_to_view, not this method. This method is triggered on
         clicked() of the Add Charge button."""
@@ -207,6 +208,8 @@ class CriminalPleaDialog(BaseDialog):
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.type = self.set_offense_type()
         self.case_information.add_charge_to_list(self.criminal_charge)
+
+    def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
 
@@ -237,12 +240,12 @@ class CriminalPleaDialog(BaseDialog):
         message.setIcon(QMessageBox.Information)
         message.setWindowTitle("Total Costs and Fines")
         message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +
-            "\nFines: $" + str(self.case_information.total_fines) +
-            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
-            "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-            "may be assesed as a result of prior actions in case. ")
+                                   "\nFines: $" + str(self.case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
+                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
+                                   "may be assessed as a result of prior actions in case. ")
         total_fines_and_costs = (self.case_information.court_costs +
-            self.case_information.total_fines) - self.case_information.total_fines_suspended
+                                 self.case_information.total_fines) - self.case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
@@ -326,8 +329,8 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.case_information.charges_list # Show charges on banner
-        super().__init__(self)
+        self.charges_list = main_dialog.case_information.charges_list  # Show charges on banner
+        super().__init__(self, parent)
         self.case_information = main_dialog.case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
@@ -342,7 +345,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_service_date
+            self.set_community_service_date
         )
 
     @logger.catch
@@ -444,9 +447,10 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         self.case_information.other_conditions_details.other_conditions_ordered = True
 
     @logger.catch
-    def set_service_date(self, days_to_complete):
+    def set_community_service_date(self, _index):
         """Sets the community_service_date_to_complete_box based on the number
-        of days chosen in the community_service_date_to_complete_box."""
+        of days chosen in the community_service_date_to_complete_box. The _index is passed from the
+        signal but not used."""
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
         self.community_service_date_to_complete_box.setDate(
             QDate.currentDate().addDays(days_to_complete)
@@ -506,7 +510,8 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.case_information.charges_list[self.button_index].offense = amended_charge
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
             if self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None:
-                if self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense:
+                if self.main_dialog.charges_gridLayout.itemAtPosition(
+                        0, columns).widget().text() == self.current_offense:
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
 
