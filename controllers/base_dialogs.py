@@ -1,6 +1,9 @@
+"""The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 from loguru import logger
+
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog
+
 from controllers.helper_functions import create_entry
 
 
@@ -12,7 +15,6 @@ class BaseDialog(QDialog):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
-
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.case = case
@@ -30,11 +32,11 @@ class BaseDialog(QDialog):
         don't need to be changed in the view file each time pyuic5 is run."""
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-            QtCore.Qt.WindowMaximizeButtonHint)
+                            QtCore.Qt.WindowMaximizeButtonHint)
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """At present this includes buttons common to all criminal dialogs. Buttons that are
+        """This method includes buttons common to all dialogs. Buttons that are
         specific to only a certain dialog are added in the subclassed version of the method."""
         self.cancel_Button.pressed.connect(self.close_event)
         self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
@@ -87,7 +89,6 @@ class BaseDialog(QDialog):
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
-
         self.close_window()
 
     @logger.catch

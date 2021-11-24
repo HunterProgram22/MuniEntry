@@ -78,7 +78,7 @@ class CriminalPleaDialog(BaseDialog):
         """Loads the data from the case object that is created from the sql table."""
         for _index, charge in enumerate(self.case.charges_list):
             self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, \
+            (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
             # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
             self.case_information.add_charge_to_list(self.criminal_charge)
@@ -111,8 +111,6 @@ class CriminalPleaDialog(BaseDialog):
         except AttributeError:
             pass
 
-
-
     def set_plea_and_findings_process(self):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
@@ -141,13 +139,13 @@ class CriminalPleaDialog(BaseDialog):
         transfers the information from the conditions to case_information model if the
         box is checked."""
         add_conditions_dict = {
-            self.license_suspension_checkBox: \
+            self.license_suspension_checkBox:
                 self.case_information.license_suspension_details.license_suspension_ordered,
-            self.community_control_checkBox: \
+            self.community_control_checkBox:
                 self.case_information.community_control_terms.community_control_required,
-            self.community_service_checkBox: \
+            self.community_service_checkBox:
                 self.case_information.community_service_terms.community_service_ordered,
-            self.other_conditions_checkBox: \
+            self.other_conditions_checkBox:
                 self.case_information.other_conditions_details.other_conditions_ordered,
         }
         for key, value in add_conditions_dict.items():
@@ -294,6 +292,7 @@ class CriminalPleaDialog(BaseDialog):
     def set_statute_and_offense(self, key):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
+        field = None
         if self.freeform_entry_checkBox.isChecked():
             return None
         if self.sender() == self.statute_choice_box:

@@ -1,7 +1,7 @@
 """Module containing all data structures for everything at the moment."""
 from dataclasses import dataclass, field, asdict
 
-from models.party_types import JudicialOfficer, Defendant
+from models.party_types import Defendant
 
 
 @dataclass
@@ -31,7 +31,6 @@ class CriminalCharge:
     fines_suspended: str = None
     jail_days: str = None
     jail_days_suspended: str = None
-
 
 
 @dataclass
@@ -106,26 +105,26 @@ class CaseInformation:
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""
     judicial_officer: object
-    case_number: str  = None
+    case_number: str = None
     defendant: object = Defendant()
-    fra_in_file: bool  = None
-    fra_in_court: bool  = None
-    plea_trial_date: str  = None
+    fra_in_file: bool = None
+    fra_in_court: bool = None
+    plea_trial_date: str = None
     charges_list: list = field(default_factory=list)
     community_control_terms: object = CommunityControlTerms()
-    ability_to_pay_time: str  = None
-    balance_due_date: str  = None
-    sentencing_date: str  = None
-    amend_offense_details: str  = None
+    ability_to_pay_time: str = None
+    balance_due_date: str = None
+    sentencing_date: str = None
+    amend_offense_details: str = None
     community_service_terms: object = CommunityServiceTerms()
-    hours_of_service: str  = None
-    days_to_complete_service: str  = None
-    due_date_for_service: str  = None
+    hours_of_service: str = None
+    days_to_complete_service: str = None
+    due_date_for_service: str = None
     license_suspension_details: object = LicenseSuspensionTerms()
     other_conditions_details: object = OtherConditionsTerms()
-    court_costs_ordered: str  = None
-    court_costs: int  = 0
-    total_fines: int  = 0
+    court_costs_ordered: str = None
+    court_costs: int = 0
+    total_fines: int = 0
     total_fines_suspended: int = 0
     appearance_reason: str = None
     fta_bond_conditions: object = None

@@ -3,7 +3,7 @@
 import pathlib
 from loguru import logger
 
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+from PyQt5.QtSql import QSqlDatabase
 
 PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
