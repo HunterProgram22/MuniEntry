@@ -45,7 +45,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         )
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self, False, True)  # False is allied box arg
+        self.charges_gridLayout.add_charge_only_to_grid(
+            self, add_allied_box=False, add_delete_button=True)
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -110,7 +111,8 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self, False, True)  # False is allied box arg
+        self.charges_gridLayout.add_charge_only_to_grid(
+            self, add_allied_box=False, add_delete_button=True)  
         self.statute_choice_box.setFocus()
 
     @logger.catch

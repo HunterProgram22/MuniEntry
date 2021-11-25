@@ -12,7 +12,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtSql import QSqlQuery
 from PyQt5 import QtGui
 
-from resources.db import create_arraignment_table  # This import is used only to load - better way?
 from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
 from models.case_information import CaseLoadData
@@ -157,4 +156,5 @@ def main():
 
 
 if __name__ == "__main__":
+    from resources.db import create_arraignment_table
     main()

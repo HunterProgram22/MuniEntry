@@ -24,7 +24,8 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self, False, True) # False is allied, True is delete button
+        self.charges_gridLayout.add_charge_only_to_grid(
+            self, add_allied_box=False, add_delete_button=True) 
         self.statute_choice_box.setFocus()
 
     @logger.catch

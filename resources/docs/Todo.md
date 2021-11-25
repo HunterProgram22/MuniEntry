@@ -6,7 +6,6 @@ APPLICATION TODO LIST for version 0.4.0
 * Make statutes hyperlink
 * Add Yellow Sheet templates (CC Violation)
 * Add Warning if add condition boxes are checked but conditions have not been added.
-* Fix add_charge_only_to_grid False and True keywords so future programmer knows why they are there without a comment.
 
 
 GENERAL PERIODIC CLEANUP
@@ -31,6 +30,5 @@ DEPLOY TODO LIST
 NOTES
 * Objects need both data and behavior - otherwise use data
 structure (list, tuple, dict), dataclass, or function
-* Add kite and linter atom packages
 * When doing tests make sure if changes to main resources are
 made that test/resources is also updated.
