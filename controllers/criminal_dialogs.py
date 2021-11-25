@@ -76,7 +76,7 @@ class CriminalPleaDialog(BaseDialog):
 
     def add_charge_from_caseloaddata_process(self):
         self.add_caseloaddata_to_case_information()
-        self.add_charge_to_grid()
+        #self.add_charge_to_grid()
 
     def add_caseloaddata_to_case_information(self):
         """Loads the data from the case object that is created from the sql table.
@@ -86,6 +86,7 @@ class CriminalPleaDialog(BaseDialog):
             (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
             self.case_information.add_charge_to_list(self.criminal_charge)
+            self.add_charge_to_grid()
 
     def modify_view(self):
         super().modify_view()

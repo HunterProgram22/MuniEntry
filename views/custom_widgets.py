@@ -288,3 +288,10 @@ class ChargesGrid(QGridLayout):
         except AttributeError:
             print("Fix this later - rows are off in LEAP Dialog because using Magic Numbers.")
             pass
+
+def main():
+    pass
+
+if __name__ == "__main__":
+   # stuff only to run when not called via 'import' here
+   main()
