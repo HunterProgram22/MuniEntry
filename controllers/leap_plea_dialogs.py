@@ -50,19 +50,6 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         self.statute_choice_box.setFocus()
 
     @logger.catch
-    def add_dispositions_and_fines(self):
-        """Row 3 - plea. Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty). Column starts at 2
-        because column 0 is labels."""
-        column = 2
-        for index, charge in enumerate(self.case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 2
-            charge.plea = self.charges_gridLayout.itemAtPosition(
-                3, column).widget().currentText()
-            column += 2
-
-    @logger.catch
     def add_charge_to_view(self):
         """This add charge to view largely copies the base version in criminal_dialogs, could be
         refactored."""
@@ -104,8 +91,11 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
 
 
 class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
-    """The dialog inherits from the LeapPleaLongDialog(controller) and the
-    Ui_LeapPleaShortDialog (view)."""
+    """The dialog inherits from the CriminalPleaDialog(controller) and the
+    Ui_LeapPleaShortDialog (view).
+
+    TODO: Ideally it should inherit from LeapPleaLongDialog but then the
+    LeapPleaLongDialog is opening."""
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
@@ -121,19 +111,6 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
     def update_case_information(self):
         self.update_party_information()
         self.add_dispositions_and_fines()
-
-    @logger.catch
-    def add_dispositions_and_fines(self):
-        """Row 3 - plea. Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty). Column starts at 2
-        because column 0 is labels."""
-        column = 2
-        for index, charge in enumerate(self.case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 2
-            charge.plea = self.charges_gridLayout.itemAtPosition(
-                3, column).widget().currentText()
-            column += 2
 
 
 if __name__ == "__main__":

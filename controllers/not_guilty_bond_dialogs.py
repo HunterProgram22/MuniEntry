@@ -29,10 +29,6 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.statute_choice_box.setFocus()
 
     @logger.catch
-    def modify_view(self):
-        super().modify_view()
-
-    @logger.catch
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
         on a criminal dialog. The order is important to make sure the information is
@@ -53,24 +49,10 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.update_bond_conditions()
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
 
-
     @logger.catch
     def update_not_guilty_conditions(self):
         self.case_information.appearance_reason = self.appearance_reason_box.currentText()
         self.add_dispositions_and_fines()
-
-    @logger.catch
-    def add_dispositions_and_fines(self):
-        """Row 3 - plea. Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty). Column starts at 2
-        because column 0 is labels."""
-        column = 2
-        for index, charge in enumerate(self.case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 2
-            charge.plea = self.charges_gridLayout.itemAtPosition(
-                3, column).widget().currentText()
-            column += 2
 
     @logger.catch
     def update_bond_conditions(self):

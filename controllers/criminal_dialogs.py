@@ -72,11 +72,7 @@ class CriminalPleaDialog(BaseDialog):
             self.case_number_lineEdit.setText(self.case.case_number)
             self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
             self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-            self.add_charge_from_caseloaddata_process()
-
-    def add_charge_from_caseloaddata_process(self):
-        self.add_caseloaddata_to_case_information()
-        #self.add_charge_to_grid()
+            self.add_caseloaddata_to_case_information()
 
     def add_caseloaddata_to_case_information(self):
         """Loads the data from the case object that is created from the sql table.
@@ -87,9 +83,6 @@ class CriminalPleaDialog(BaseDialog):
                 self.criminal_charge.degree) = charge
             self.case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_grid()
-
-    def modify_view(self):
-        super().modify_view()
 
     def close_event(self):
         close_databases()
@@ -124,8 +117,22 @@ class CriminalPleaDialog(BaseDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
+    @logger.catch
     def add_dispositions_and_fines(self):
-        """This method is specific to each subclass."""
+        """Row 3 - plea when no allied checkbox added. Column count increases
+        by 2 instead of one due to grid adding two
+        columns when a charge is added (odd numbered column is empty). Column starts at 2
+        because column 0 is labels. This method only adds the plea and is used in
+        LEAP short and long and Not Guilty. No Jail Plea overrides this to include
+        findings and fines.
+        TODO: Rename and refactor out magic numbers?."""
+        column = 2
+        for index, charge in enumerate(self.case_information.charges_list):
+            while self.charges_gridLayout.itemAtPosition(3, column) is None:
+                column += 2
+            charge.plea = self.charges_gridLayout.itemAtPosition(
+                3, column).widget().currentText()
+            column += 2
 
     @logger.catch
     def update_costs_and_fines_information(self):

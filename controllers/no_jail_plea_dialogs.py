@@ -25,7 +25,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        
+
     @logger.catch
     def load_arraignment_data(self):
         super().load_arraignment_data()
@@ -60,36 +60,27 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     def add_dispositions_and_fines(self):
         """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine, 7 fine-suspended.
         Columns start at 0 for labels and 2 for first entry then 4 etc.
-
         Column count increases by 2 instead of one due to grid adding two
         columns when a charge is added (odd numbered column is empty)."""
         column = 2
-        loop_counter = 0
-        charge_index = 0
-        while loop_counter < self.charges_gridLayout.columnCount():
-            try:
-                self.case_information.charges_list[charge_index].plea = (
+        for index, charge in enumerate(self.case_information.charges_list):
+            while self.charges_gridLayout.itemAtPosition(3, column) is None:
+                column += 2
+            charge.plea = self.charges_gridLayout.itemAtPosition(
+                4, column).widget().currentText()
+            charge.finding = self.charges_gridLayout.itemAtPosition(
+                5, column).widget().currentText()
+            charge.fines_amount = self.charges_gridLayout.itemAtPosition(
+                6, column).widget().text()
+            if self.charges_gridLayout.itemAtPosition(
+                7, column).widget().text() == "":
+                charge.fines_suspended = "0"
+            else:
+                charge.fines_suspended = (
                     self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().currentText()
+                        7, column).widget().text()
                 )
-                self.case_information.charges_list[charge_index].finding = (
-                    self.charges_gridLayout.itemAtPosition(
-                        5, column).widget().currentText()
-                )
-                self.case_information.charges_list[charge_index].fines_amount = (
-                    self.charges_gridLayout.itemAtPosition(6, column).widget().text()
-                )
-                if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
-                    self.case_information.charges_list[charge_index].fines_suspended = "0"
-                else:
-                    self.case_information.charges_list[charge_index].fines_suspended = (
-                        self.charges_gridLayout.itemAtPosition(7, column).widget().text()
-                    )
-                charge_index += 1
-            except AttributeError:
-                pass
             column += 2
-            loop_counter += 1
 
     @logger.catch
     def set_pay_date(self, days_to_add):
