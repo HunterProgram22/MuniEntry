@@ -56,6 +56,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         because column 0 is labels."""
         column = 2
         for index, charge in enumerate(self.case_information.charges_list):
+            while self.charges_gridLayout.itemAtPosition(3, column) is None:
+                column += 2
             charge.plea = self.charges_gridLayout.itemAtPosition(
                 3, column).widget().currentText()
             column += 2
@@ -112,7 +114,7 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(
-            self, add_allied_box=False, add_delete_button=True)  
+            self, add_allied_box=False, add_delete_button=True)
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -127,6 +129,8 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
         because column 0 is labels."""
         column = 2
         for index, charge in enumerate(self.case_information.charges_list):
+            while self.charges_gridLayout.itemAtPosition(3, column) is None:
+                column += 2
             charge.plea = self.charges_gridLayout.itemAtPosition(
                 3, column).widget().currentText()
             column += 2
