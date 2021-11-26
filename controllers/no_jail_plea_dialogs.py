@@ -58,14 +58,12 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
 
     @logger.catch
     def add_dispositions_and_fines(self):
-        """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine, 7 fine-suspended.
-        Columns start at 0 for labels and 2 for first entry then 4 etc.
-        Column count increases by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty)."""
-        column = 2
+        """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
+        7 fine-suspended. Columns start at 1 because 0 is labels."""
+        column = 1
         for index, charge in enumerate(self.case_information.charges_list):
             while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 2
+                column += 1
             charge.plea = self.charges_gridLayout.itemAtPosition(
                 4, column).widget().currentText()
             charge.finding = self.charges_gridLayout.itemAtPosition(
@@ -80,7 +78,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
                     self.charges_gridLayout.itemAtPosition(
                         7, column).widget().text()
                 )
-            column += 2
+            column += 1
 
     @logger.catch
     def set_pay_date(self, days_to_add):
