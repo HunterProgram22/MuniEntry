@@ -275,19 +275,19 @@ class ChargesGrid(QGridLayout):
 
     @logger.catch
     def set_cursor_to_fine_line_edit(self):
-        """Moves the cursor to the FineLineEdit box. Row is set to 6, but for different dialogs
-        this could end up changing."""
-        try:
-            for column in range(self.columnCount()):
-                if self.itemAtPosition(4, column) is not None:
-                    if isinstance(self.itemAtPosition(
-                            6, column).widget(), FineLineEdit):
-                        self.itemAtPosition(6, column).widget().setFocus()
-                        break
+        """Moves the cursor to the FineLineEdit box. Row is set to 6, but
+        for different dialogs this could end up changing, however, the check
+        for the delete button may resolve this issue."""
+        for column in range(1, self.columnCount()):
+            if self.itemAtPosition(4, column) is not None:
+                if isinstance(self.itemAtPosition(4, column).widget(), DeleteButton):
+                    return None
+                elif isinstance(self.itemAtPosition(
+                        6, column).widget(), FineLineEdit):
+                    self.itemAtPosition(6, column).widget().setFocus()
+                    break
                 column += 1
-        except AttributeError:
-            print("Fix this later - rows are off in LEAP Dialog because using Magic Numbers.")
-            pass
+
 
 def main():
     pass
