@@ -16,6 +16,7 @@ from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from views.custom_widgets import (
     ChargesGrid,
+    PleaComboBox,
 )
 from controllers.base_dialogs import BaseDialog
 from resources.db.create_data_lists import create_offense_list, create_statute_list
@@ -119,20 +120,24 @@ class CriminalPleaDialog(BaseDialog):
 
     @logger.catch
     def add_dispositions_and_fines(self):
-        """Row 3 - plea when no allied checkbox added. Column count increases
-        by 2 instead of one due to grid adding two
-        columns when a charge is added (odd numbered column is empty). Column starts at 2
-        because column 0 is labels. This method only adds the plea and is used in
-        LEAP short and long and Not Guilty. No Jail Plea overrides this to include
-        findings and fines.
-        TODO: Rename and refactor out magic numbers?."""
-        column = 2
+        """Row 3 - plea when no allied checkbox added. Column starts at 1
+        because column 0 is labels. The grid adds an empty column every time a
+        charge is added, could increment by 2, but by incrementing by 1 and
+        checking for None it ensures it will catch any weird add/delete.
+        This method only adds the plea and is used in LEAP short and long and
+        Not Guilty. No Jail Plea overrides this to include findings and fines.
+        TODO: Rename and refactor out magic numbers."""
+        column = 1
+        row = 3
         for index, charge in enumerate(self.case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 2
-            charge.plea = self.charges_gridLayout.itemAtPosition(
-                3, column).widget().currentText()
-            column += 2
+            while self.charges_gridLayout.itemAtPosition(row, column) is None:
+                column += 1
+            if isinstance(self.charges_gridLayout.itemAtPosition(
+                          row, column).widget(), PleaComboBox):
+                charge.plea = self.charges_gridLayout.itemAtPosition(
+                              row, column).widget().currentText()
+                column += 1
+            column += 1
 
     @logger.catch
     def update_costs_and_fines_information(self):
