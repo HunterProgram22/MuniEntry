@@ -4,7 +4,7 @@ from loguru import logger
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import FTABondConditions
-from controllers.criminal_dialogs import CriminalPleaDialog
+from controllers.criminal_dialogs import CriminalPleaDialog, AddSpecialBondConditionsDialog
 from .helper_functions import create_entry
 
 
@@ -37,6 +37,7 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
         self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
 
     @logger.catch
     def update_case_information(self):
@@ -60,3 +61,9 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
         self.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
         self.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
+
+    @logger.catch
+    def start_add_special_bond_conditions_dialog(self):
+        """Opens special conditions for bond."""
+        self.update_case_information()
+        AddSpecialBondConditionsDialog(self).exec()

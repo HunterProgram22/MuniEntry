@@ -13,6 +13,7 @@ from models.case_information import (
     AmendOffenseDetails,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
+from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from views.custom_widgets import (
     ChargesGrid,
@@ -479,6 +480,38 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         need to remain open and the parent class close_event closes the databases."""
         self.close_window()
 
+
+class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
+    """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
+    @logger.catch
+    def __init__(self, main_dialog, parent=None):
+        self.charges_list = main_dialog.case_information.charges_list  # Show charges on banner
+        super().__init__(self, parent)
+        self.case_information = main_dialog.case_information
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_special_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_special_conditions_Button.released.connect(self.close_window)
+
+    @logger.catch
+    def modify_view(self):
+        """Modifies the view that is created by the UI file. Gets the total number of charges
+        from the charges in charges_list then loops through the charges_list and adds parts of
+        each charge to the view."""
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint)
+        column = self.charges_gridLayout.columnCount() + 1
+        for _index, charge in enumerate(self.charges_list):
+            charge = vars(charge)
+            if charge is not None:
+                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                column += 1
+
+    def add_conditions(self):
+        pass
 
 class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.

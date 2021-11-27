@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'resources/ui/NoJailPleaDialog.ui'
+# Form implementation generated from reading ui file 'views/ui/NoJailPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -68,6 +68,7 @@ class Ui_NoJailPleaDialog(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(NoJailPleaDialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.scrollArea = QtWidgets.QScrollArea(NoJailPleaDialog)
+        self.scrollArea.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()

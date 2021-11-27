@@ -1,10 +1,5 @@
 APPLICATION TODO LIST for version 0.4.0
-* Updated dialogs/templates for Not Guilty and FTA per AB Notes.
-* Add community control conditions checkboxes
-* Add Jail entries
-* Add DUI sub-dialog
-* Make statutes hyperlink
-* Add Yellow Sheet templates (CC Violation)
+* Updated dialogs/templates for Not Guilty per AB Notes.
 * Add Warning if add condition boxes are checked but conditions have not been added.
 
 
@@ -15,8 +10,12 @@ GENERAL PERIODIC CLEANUP
 
 
 FEATURE/CHANGE LIST - for Version 0.5.0
-
-
+* Add DUI sub-dialog
+* Make statutes hyperlink
+* Updated dialogs/templates for FTA per AB Notes.
+* Add community control conditions checkboxes
+* Add Jail entries
+* Add Yellow Sheet templates (CC Violation)
 
 
 DEPLOY TODO LIST
