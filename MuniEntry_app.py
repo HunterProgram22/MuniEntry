@@ -147,7 +147,7 @@ class Window(QMainWindow, Ui_MainWindow):
 @logger.catch
 def main():
     """The main loop of the application. The arraignments database is created each time the
-    applicaiton is loaded after any existing prior version is deleted."""
+    application is loaded after any existing prior version is deleted."""
     app = QApplication(sys.argv)
     arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
