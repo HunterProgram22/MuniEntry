@@ -172,7 +172,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>984</width>
-           <height>936</height>
+           <height>846</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
@@ -345,18 +345,9 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QTextEdit" name="textEdit">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+              <widget class="QLineEdit" name="lineEdit_7">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
                </property>
               </widget>
              </item>
@@ -587,7 +578,7 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3">
+            <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,1">
              <item row="1" column="0">
               <widget class="QPlainTextEdit" name="other_conditions_plainTextEdit">
                <property name="sizePolicy">
