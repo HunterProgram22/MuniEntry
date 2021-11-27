@@ -209,9 +209,9 @@ class ChargesGrid(QGridLayout):
         return "Pass"
 
     def set_plea_and_finding_rows(self):
-        """The initial values of row_plea and row_finding are the common rows, and allow this to
-        return both values even if there is no finding row (i.e. LEAP Dialog).
-        TODO: Probably better way to do this to have it pass when no finding row on dialog."""
+        """The initial values of row_plea and row_finding are the common rows for plea and findings.
+        They are set to allow this method to return both values even if there is no finding row
+        (i.e. LEAP Dialog)."""
         row_plea = 4
         row_finding = 5
         for row in range(self.rowCount()):
@@ -237,7 +237,6 @@ class ChargesGrid(QGridLayout):
     def set_all_plea_and_findings(self, dialog):
         """Sets the plea and findings boxes for all charges currently
         in the charges_gridLayout.
-
         TODO: Row-1 = should be allied-checkbox and row+1 = should be finding choice box.
         This can be refactored better."""
         button_dict = {}

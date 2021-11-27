@@ -19,7 +19,6 @@ class CaseLoadData:
 class CriminalCharge:
     """Class for keeping track of all information that is specific to each
     individual charge in a case.
-
     TODO: Perhaps switch fine/jail to int/float?"""
     offense: str = None
     statute: str = None

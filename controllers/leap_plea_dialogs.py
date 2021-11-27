@@ -73,29 +73,10 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         total_days_to_add = set_future_date(days_to_add, LEAP_COMPLETE_DATE_DICT, 0)
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
-    @logger.catch
-    def set_all_plea_and_findings(self):
-        """Sets the plea boxes to guilty for all charges currently
-        in the charges_gridLayout.
-
-        TODO: Refactor from criminal dialog version."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            try:
-                if isinstance(self.charges_gridLayout.itemAtPosition(
-                        3, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(
-                        3, column).widget().setCurrentText("Guilty")
-                    column += 1
-            except AttributeError:
-                pass
-
 
 class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
     """The dialog inherits from the CriminalPleaDialog(controller) and the
-    Ui_LeapPleaShortDialog (view).
-
-    TODO: Ideally it should inherit from LeapPleaLongDialog but then the
-    LeapPleaLongDialog is opening."""
+    Ui_LeapPleaShortDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
