@@ -9,11 +9,6 @@ from loguru import logger
 
 from settings import SAVE_PATH
 
-# def required_message(func):
-#     def wrapper(*args, **kwargs):
-#         message = RequiredBox("TEST")
-#         func(*args, **kwargs)
-#     return wrapper
 
 @logger.catch
 def create_entry(dialog):
