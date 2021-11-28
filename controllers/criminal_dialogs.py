@@ -505,6 +505,26 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         if self.admin_license_suspension is True:
             self.admin_license_suspension_frame.setEnabled(True)
 
+    @logger.catch
+    def add_special_conditions(self):
+        """The method is connected to the pressed() signal of add_conditions_Button on the
+        Add Conditions screen."""
+        if self.domestic_violence is True:
+            self.add_domestic_violence_terms()
+        if self.admin_license_suspension is True:
+            self.add_admin_license_suspension_terms()
+
+    @logger.catch
+    def add_domestic_violence_terms(self):
+        self.case_information.special_bond_conditions.domestic_violence_vacate = (
+            self.domestic_violence_vacate_checkBox.isChecked()
+        )
+
+    @logger.catch
+    def add_admin_license_suspension_terms(self):
+        self.case_information.special_bond_conditions.admin_license_suspension_objection = (
+            self.admin_license_suspension_objection_box.value()
+        )
 
     @logger.catch
     def modify_view(self):

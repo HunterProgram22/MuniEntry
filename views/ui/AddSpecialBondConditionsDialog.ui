@@ -177,7 +177,7 @@ font-weight: bold;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0" colspan="2">
-           <widget class="QFrame" name="domestic_violence_frame">
+           <widget class="QFrame" name="banner_frame">
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
@@ -355,7 +355,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="domestic_violence_frame_2">
+           <widget class="QFrame" name="domestic_violence_frame">
             <property name="enabled">
              <bool>false</bool>
             </property>
