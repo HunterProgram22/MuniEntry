@@ -488,12 +488,23 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.charges_list = main_dialog.case_information.charges_list  # Show charges on banner
         super().__init__(self, parent)
         self.case_information = main_dialog.case_information
+        self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
+        self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
+        self.enable_condition_frames()
 
     @logger.catch
     def connect_signals_to_slots(self):
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_special_conditions_Button.pressed.connect(self.add_conditions)
         self.add_special_conditions_Button.released.connect(self.close_window)
+
+    @logger.catch
+    def enable_condition_frames(self):
+        if self.domestic_violence is True:
+            self.domestic_violence_frame.setEnabled(True)
+        if self.admin_license_suspension is True:
+            self.admin_license_suspension_frame.setEnabled(True)
+
 
     @logger.catch
     def modify_view(self):

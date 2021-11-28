@@ -62,6 +62,24 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
         self.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
 
+    def update_case_information(self):
+        self.check_add_special_conditions()
+
+    @logger.catch
+    def check_add_special_conditions(self):
+        """Checks to see what conditions in the Add Conditions box are checked and then
+        transfers the information from the conditions to case_information model if the
+        box is checked."""
+        add__special_conditions_dict = {
+            self.admin_license_suspension_checkBox:
+                self.case_information.special_bond_conditions.admin_license_suspension_ordered,
+            self.domestic_violence_checkBox:
+                self.case_information.special_bond_conditions.domestic_violence_conditions,
+        }
+        for key, value in add__special_conditions_dict.items():
+            if key.isChecked():
+                value = True
+
     @logger.catch
     def start_add_special_bond_conditions_dialog(self):
         """Opens special conditions for bond."""

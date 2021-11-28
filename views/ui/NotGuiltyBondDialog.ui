@@ -914,21 +914,21 @@ border-color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="domestic_violence_checkBox">
                <property name="text">
                 <string>Domestic Violence Restrictions</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QCheckBox" name="checkBox_3">
+              <widget class="QCheckBox" name="vehicle_seizure_checkBox">
                <property name="text">
                 <string>Vehicle Seizure / Immobilization</string>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
+              <widget class="QCheckBox" name="admin_license_suspension_checkBox">
                <property name="text">
                 <string>Administrative License Suspension</string>
                </property>
@@ -948,14 +948,14 @@ border-color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QCheckBox" name="checkBox_4">
+              <widget class="QCheckBox" name="custodial_supervision_checkBox">
                <property name="text">
                 <string>Custodial Supervision</string>
                </property>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QCheckBox" name="no_contact_checkBox_2">
+              <widget class="QCheckBox" name="other_conditions_checkBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>1</horstretch>

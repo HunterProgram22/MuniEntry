@@ -171,13 +171,13 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>984</width>
-           <height>846</height>
+           <width>1005</width>
+           <height>833</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0" colspan="2">
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="domestic_violence_frame">
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
@@ -243,9 +243,9 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QFrame" name="license_suspension_frame">
+           <widget class="QFrame" name="admin_license_suspension_frame">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
@@ -297,7 +297,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="license_type_box">
+              <widget class="QComboBox" name="admin_license_suspension_objection_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -321,7 +321,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="term_of_suspension_box">
+              <widget class="QComboBox" name="admin_license_suspension_disposition_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -345,7 +345,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QLineEdit" name="lineEdit_7">
+              <widget class="QLineEdit" name="admin_license_suspension_explanation_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -355,7 +355,10 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="frame_4">
+           <widget class="QFrame" name="domestic_violence_frame_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(230, 230, 230);</string>
             </property>
@@ -424,7 +427,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox_4">
+              <widget class="QCheckBox" name="domestic_violence_vacate_checkBox">
                <property name="text">
                 <string>Vacate Residence located at:</string>
                </property>

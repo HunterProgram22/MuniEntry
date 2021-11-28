@@ -52,6 +52,21 @@ class FTABondConditions:
     monitoring: bool = False
     monitoring_type: str = None
 
+@dataclass
+class SpecialBondConditions:
+    """Special Bond Conditions for the NGBond Dialog."""
+    admin_license_suspension_ordered: bool = False
+    admin_license_suspension_objection: str = None
+    admin_license_suspension_disposition: str = None
+    admin_license_suspension_explanation: str = None
+    domestic_violence_conditions: bool = False
+    domestic_violence_vacate: bool = False
+    domestic_violence_residence: str = None
+    domestic_violence_exclusive_possession: str = None
+    domestic_violence_surrender_weapons: bool = False
+    domestic_violence_surrender_weapons_date: str = None
+
+
 
 @dataclass
 class AmendOffenseDetails:
@@ -121,6 +136,7 @@ class CaseInformation:
     due_date_for_service: str = None
     license_suspension_details: object = LicenseSuspensionTerms()
     other_conditions_details: object = OtherConditionsTerms()
+    special_bond_conditions: object = SpecialBondConditions()
     court_costs_ordered: str = None
     court_costs: int = 0
     total_fines: int = 0
