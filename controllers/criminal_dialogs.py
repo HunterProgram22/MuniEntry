@@ -490,6 +490,10 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.case_information = main_dialog.case_information
         self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
         self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
+        self.vehicle_seizure = main_dialog.vehicle_seizure_checkBox.isChecked()
+        self.no_contact = main_dialog.no_contact_checkBox.isChecked()
+        self.custodial_supervision = main_dialog.custodial_supervision_checkBox.isChecked()
+        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         self.enable_condition_frames()
 
     @logger.catch
@@ -504,6 +508,14 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             self.domestic_violence_frame.setEnabled(True)
         if self.admin_license_suspension is True:
             self.admin_license_suspension_frame.setEnabled(True)
+        if self.vehicle_seizure is True:
+            self.vehicle_seizure_frame.setEnabled(True)
+        if self.no_contact is True:
+            self.no_contact_frame.setEnabled(True)
+        if self.custodial_supervision is True:
+            self.custodial_supervision_frame.setEnabled(True)
+        if self.other_conditions is True:
+            self.other_conditions_frame.setEnabled(True)
 
     @logger.catch
     def add_special_conditions(self):

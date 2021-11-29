@@ -444,7 +444,10 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
-           <widget class="QFrame" name="frame_3">
+           <widget class="QFrame" name="no_contact_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(230, 230, 230);</string>
             </property>
@@ -499,7 +502,10 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="4" column="0" colspan="2">
-           <widget class="QFrame" name="frame_5">
+           <widget class="QFrame" name="vehicle_seizure_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(230, 230, 230);</string>
             </property>
@@ -570,7 +576,7 @@ font-weight: bold;</string>
           <item row="5" column="0">
            <widget class="QFrame" name="other_conditions_frame">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
@@ -663,7 +669,10 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="6" column="0">
-           <widget class="QFrame" name="frame_6">
+           <widget class="QFrame" name="custodial_supervision_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(230, 230, 230);</string>
             </property>
