@@ -499,7 +499,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def connect_signals_to_slots(self):
         self.cancel_Button.pressed.connect(self.close_event)
-        self.add_special_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_special_conditions_Button.pressed.connect(self.add_special_conditions)
         self.add_special_conditions_Button.released.connect(self.close_window)
 
     @logger.catch
@@ -519,8 +519,8 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_special_conditions(self):
-        """The method is connected to the pressed() signal of add_conditions_Button on the
-        Add Conditions screen."""
+        """The method is connected to the pressed() signal of add_special_conditions_Button on the
+        Add Special Conditions screen."""
         if self.domestic_violence is True:
             self.add_domestic_violence_terms()
         if self.admin_license_suspension is True:
@@ -534,8 +534,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_admin_license_suspension_terms(self):
+        self.case_information.special_bond_conditions.admin_license_suspension_ordered = (
+            self.admin_license_suspension
+        )
         self.case_information.special_bond_conditions.admin_license_suspension_objection = (
-            self.admin_license_suspension_objection_box.value()
+            self.admin_license_suspension_objection_box.currentText()
+        )
+        self.case_information.special_bond_conditions.admin_license_suspension_disposition = (
+            self.admin_license_suspension_disposition_box.currentText()
+        )
+        self.case_information.special_bond_conditions.admin_license_suspension_explanation = (
+            self.admin_license_suspension_explanation_box.text()
         )
 
     @logger.catch
@@ -553,8 +562,6 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
                 column += 1
 
-    def add_conditions(self):
-        pass
 
 class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.

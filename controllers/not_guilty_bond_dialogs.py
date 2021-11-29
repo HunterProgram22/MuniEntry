@@ -25,11 +25,19 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.statute_choice_box.setFocus()
 
     @logger.catch
+    def update_case_information_local(self):
+        print("NGBD update case ran")
+        self.update_party_information()
+        self.update_not_guilty_conditions()
+        self.update_bond_conditions()
+
+    @logger.catch
     def create_entry_process(self):
         """The order of functions that are called when the create_entry_Button is pressed()
         on a criminal dialog. The order is important to make sure the information is
         updated before the entry is created."""
-        self.update_case_information()
+        print("NGBD create entry ran")
+        self.update_case_information_local()
         create_entry(self)
         self.close_event()
 
@@ -40,11 +48,15 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
 
     @logger.catch
-    def update_case_information(self):
-        self.update_party_information()
-        self.update_not_guilty_conditions()
-        self.update_bond_conditions()
-        self.case_information.fta_bond_conditions = self.fta_bond_conditions
+    def update_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        print("NGBD update party information ran")
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.plea_trial_date = (
+            self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        )
 
     @logger.catch
     def update_not_guilty_conditions(self):

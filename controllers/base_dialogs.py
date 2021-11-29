@@ -49,11 +49,13 @@ class BaseDialog(QDialog):
         """"This method may be called in multiple places when a button is pressed to
         make sure all information is current. The subclass version of the method
         will call updates to specific portions of the view for that dialog."""
+        print("base update case information ran")
         self.update_party_information()
 
     @logger.catch
     def update_party_information(self):
         """Updates the party information from the GUI(view) and saves it to the model."""
+        print("Base update party information ran")
         self.case_information.case_number = self.case_number_lineEdit.text()
         self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
