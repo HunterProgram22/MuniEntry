@@ -53,12 +53,8 @@ class FTABondConditions:
     monitoring_type: str = None
 
 @dataclass
-class SpecialBondConditions:
-    """Special Bond Conditions for the NGBond Dialog."""
-    admin_license_suspension_ordered: bool = False
-    admin_license_suspension_objection: str = None
-    admin_license_suspension_disposition: str = None
-    admin_license_suspension_explanation: str = None
+class DomesticViolenceBondConditions:
+    """Domestic Violence Bond Conditions for Special Bond Conditions."""
     domestic_violence_conditions: bool = False
     domestic_violence_vacate: bool = False
     domestic_violence_residence: str = None
@@ -66,6 +62,13 @@ class SpecialBondConditions:
     domestic_violence_surrender_weapons: bool = False
     domestic_violence_surrender_weapons_date: str = None
 
+@dataclass
+class AdminLicenseSuspensionConditions:
+    """Admin License Suspension Conditions for Special Bond Conditions."""
+    admin_license_suspension_ordered: bool = False
+    admin_license_suspension_objection: str = None
+    admin_license_suspension_disposition: str = None
+    admin_license_suspension_explanation: str = None
 
 
 @dataclass
@@ -142,7 +145,8 @@ class CaseInformation:
     total_fines: int = 0
     total_fines_suspended: int = 0
     appearance_reason: str = None
-    fta_bond_conditions: object = FTABondConditions()
+    domestic_violence_bond_conditions: object = DomesticViolenceBondConditions()
+    admin_license_bond_conditions: object = AdminLicenseSuspensionConditions()
     not_guilty_conditions: object = None
 
     def add_charge_to_list(self, charge):
