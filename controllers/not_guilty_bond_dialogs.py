@@ -16,7 +16,7 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.fta_bond_conditions = FTABondConditions()
+        self.case_information.fta_bond_conditions = FTABondConditions()
 
     @logger.catch
     def add_charge_to_grid(self):
@@ -25,38 +25,16 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.statute_choice_box.setFocus()
 
     @logger.catch
-    def update_case_information_local(self):
-        print("NGBD update case ran")
+    def update_case_information(self):
         self.update_party_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of functions that are called when the create_entry_Button is pressed()
-        on a criminal dialog. The order is important to make sure the information is
-        updated before the entry is created."""
-        print("NGBD create entry ran")
-        self.update_case_information_local()
-        create_entry(self)
-        self.close_event()
 
     @logger.catch
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
         self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        print("NGBD update party information ran")
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.plea_trial_date = (
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
-        )
 
     @logger.catch
     def update_not_guilty_conditions(self):
@@ -66,16 +44,13 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def update_bond_conditions(self):
         """Updates the bond conditions from the GUI(view) and saves it to the model."""
-        self.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
-        self.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
-        self.fta_bond_conditions.no_alcohol_drugs = self.no_alcohol_drugs_checkBox.isChecked()
-        self.fta_bond_conditions.alcohol_drugs_assessment = self.alcohol_drugs_assessment_checkBox.isChecked()
-        self.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
-        self.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
-        self.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
-
-    def update_case_information(self):
-        self.check_add_special_conditions()
+        self.case_information.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
+        self.case_information.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
+        self.case_information.fta_bond_conditions.no_alcohol_drugs = self.no_alcohol_drugs_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = self.alcohol_drugs_assessment_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
 
     @logger.catch
     def check_add_special_conditions(self):
@@ -95,5 +70,5 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def start_add_special_bond_conditions_dialog(self):
         """Opens special conditions for bond."""
-        self.update_case_information()
+        self.check_add_special_conditions()
         AddSpecialBondConditionsDialog(self).exec()

@@ -142,7 +142,7 @@ class CaseInformation:
     total_fines: int = 0
     total_fines_suspended: int = 0
     appearance_reason: str = None
-    fta_bond_conditions: object = None
+    fta_bond_conditions: object = FTABondConditions()
     not_guilty_conditions: object = None
 
     def add_charge_to_list(self, charge):
