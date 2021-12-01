@@ -110,11 +110,11 @@ class LicenseSuspensionTerms:
 
 
 @dataclass
-class OtherConditionsTerms:
+class OtherConditions:
     """Class for keeping track of other conditions that are tied to
     a specific case. This condition is a freeform text entry box in the UI."""
-    other_conditions_ordered: bool = False
-    other_conditions_terms: str = None
+    ordered: bool = False
+    terms: str = None
 
 
 @dataclass
@@ -142,7 +142,7 @@ class CaseInformation:
     community_control_terms: object = CommunityControlTerms()
     community_service_terms: object = CommunityServiceTerms()
     license_suspension_details: object = LicenseSuspensionTerms()
-    other_conditions_details: object = OtherConditionsTerms()
+    other_conditions: object = OtherConditions()
     domestic_violence_conditions: object = DomesticViolenceBondConditions()
     admin_license_suspension: object = AdminLicenseSuspensionConditions()
 

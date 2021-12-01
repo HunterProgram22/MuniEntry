@@ -14,7 +14,7 @@ from models.case_information import (
     LicenseSuspensionTerms,
     CommunityControlTerms,
     CommunityServiceTerms,
-    OtherConditionsTerms,
+    OtherConditions,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -167,7 +167,7 @@ class CriminalPleaDialog(BaseDialog):
             self.community_service_checkBox:
                 self.case_information.community_service_terms.community_service_ordered,
             self.other_conditions_checkBox:
-                self.case_information.other_conditions_details.other_conditions_ordered,
+                self.case_information.other_conditions.other_conditions_ordered,
         }
         for key, value in add_conditions_dict.items():
             if key.isChecked():
@@ -417,7 +417,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
             self.case_information.license_suspension_details = LicenseSuspensionTerms()
             self.add_license_suspension_details()
         if self.other_conditions is True:
-            self.case_information.other_conditions_details = OtherConditionsTerms()
+            self.case_information.other_conditions = OtherConditions()
             self.add_other_condition_details()
 
     @logger.catch
@@ -470,10 +470,10 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     def add_other_condition_details(self):
         """The method allows for adding other conditions based on free form text
         entry."""
-        self.case_information.other_conditions_details.other_conditions_terms = (
+        self.case_information.other_conditions.terms = (
             self.other_conditions_plainTextEdit.toPlainText()
         )
-        self.case_information.other_conditions_details.other_conditions_ordered = True
+        self.case_information.other_conditions.ordered = True
 
     @logger.catch
     def set_community_service_date(self, _index):

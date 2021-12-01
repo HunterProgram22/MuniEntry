@@ -49,7 +49,6 @@ class BaseDialog(QDialog):
         """"This method may be called in multiple places when a button is pressed to
         make sure all information is current. The subclass version of the method
         will call updates to specific portions of the view for that dialog."""
-        print("base update case information ran")
         self.update_party_information()
 
     @logger.catch
@@ -93,7 +92,6 @@ class BaseDialog(QDialog):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
         self.close_window()
-        del self.case_information
 
     @logger.catch
     def set_case_information_banner(self):

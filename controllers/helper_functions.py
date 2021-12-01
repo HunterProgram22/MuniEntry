@@ -14,7 +14,6 @@ from settings import SAVE_PATH
 def create_entry(dialog):
     """The dialog is the controller dialog that is the source of case information."""
     doc = DocxTemplate(dialog.template.template_path)
-    # print(dialog.case_information.get_case_information())
     doc.render(dialog.case_information.get_case_information())
     docname = set_document_name(dialog)
     doc.save(SAVE_PATH + docname)
