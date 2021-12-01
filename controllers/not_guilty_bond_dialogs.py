@@ -29,6 +29,7 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.update_party_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
+        self.check_add_special_conditions()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -59,13 +60,15 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         box is checked."""
         add__special_conditions_dict = {
             self.admin_license_suspension_checkBox:
-                self.case_information.special_bond_conditions.admin_license_suspension_ordered,
+                self.case_information.admin_license_suspension.ordered,
             self.domestic_violence_checkBox:
-                self.case_information.special_bond_conditions.domestic_violence_conditions,
+                self.case_information.domestic_violence_conditions.ordered,
         }
         for key, value in add__special_conditions_dict.items():
             if key.isChecked():
                 value = True
+            else:
+                value = False
 
     @logger.catch
     def start_add_special_bond_conditions_dialog(self):

@@ -21,6 +21,7 @@ def create_entry(dialog):
     os.startfile(SAVE_PATH + docname)
 
 
+
 def set_document_name(dialog):
     """Sets document name based on the case number and name of the template
     must include '.docx' to make it a Word document."""

@@ -55,20 +55,20 @@ class FTABondConditions:
 @dataclass
 class DomesticViolenceBondConditions:
     """Domestic Violence Bond Conditions for Special Bond Conditions."""
-    domestic_violence_conditions: bool = False
-    domestic_violence_vacate: bool = False
-    domestic_violence_residence: str = None
-    domestic_violence_exclusive_possession: str = None
-    domestic_violence_surrender_weapons: bool = False
-    domestic_violence_surrender_weapons_date: str = None
+    ordered: bool = False
+    vacate_residence: bool = False
+    residence_address: str = None
+    exclusive_possession: str = None
+    surrender_weapons: bool = False
+    surrender_weapons_date: str = None
 
 @dataclass
 class AdminLicenseSuspensionConditions:
     """Admin License Suspension Conditions for Special Bond Conditions."""
-    admin_license_suspension_ordered: bool = False
-    admin_license_suspension_objection: str = None
-    admin_license_suspension_disposition: str = None
-    admin_license_suspension_explanation: str = None
+    ordered: bool = False
+    objection: str = None
+    disposition: str = None
+    explanation: str = None
 
 
 @dataclass
@@ -128,26 +128,23 @@ class CaseInformation:
     fra_in_court: bool = None
     plea_trial_date: str = None
     charges_list: list = field(default_factory=list)
-    community_control_terms: object = CommunityControlTerms()
     ability_to_pay_time: str = None
     balance_due_date: str = None
     sentencing_date: str = None
     amend_offense_details: str = None
-    community_service_terms: object = CommunityServiceTerms()
-    hours_of_service: str = None
-    days_to_complete_service: str = None
-    due_date_for_service: str = None
-    license_suspension_details: object = LicenseSuspensionTerms()
-    other_conditions_details: object = OtherConditionsTerms()
-    special_bond_conditions: object = SpecialBondConditions()
     court_costs_ordered: str = None
     court_costs: int = 0
     total_fines: int = 0
     total_fines_suspended: int = 0
     appearance_reason: str = None
-    domestic_violence_bond_conditions: object = DomesticViolenceBondConditions()
-    admin_license_bond_conditions: object = AdminLicenseSuspensionConditions()
     not_guilty_conditions: object = None
+    fta_bond_conditions: object = FTABondConditions()
+    community_control_terms: object = CommunityControlTerms()
+    community_service_terms: object = CommunityServiceTerms()
+    license_suspension_details: object = LicenseSuspensionTerms()
+    other_conditions_details: object = OtherConditionsTerms()
+    domestic_violence_conditions: object = DomesticViolenceBondConditions()
+    admin_license_suspension: object = AdminLicenseSuspensionConditions()
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)

@@ -65,6 +65,7 @@ class CriminalPleaDialog(BaseDialog):
         except AttributeError:
             pass
         self.case_information = CaseInformation(self.judicial_officer)
+        print(self.case_information)
         self.criminal_charge = None
         self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
@@ -544,16 +545,16 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_admin_license_suspension_terms(self):
-        self.case_information.special_bond_conditions.admin_license_suspension_ordered = (
+        self.case_information.admin_license_suspension.ordered = (
             self.admin_license_suspension
         )
-        self.case_information.special_bond_conditions.admin_license_suspension_objection = (
+        self.case_information.admin_license_suspension.objection = (
             self.admin_license_suspension_objection_box.currentText()
         )
-        self.case_information.special_bond_conditions.admin_license_suspension_disposition = (
+        self.case_information.admin_license_suspension.disposition = (
             self.admin_license_suspension_disposition_box.currentText()
         )
-        self.case_information.special_bond_conditions.admin_license_suspension_explanation = (
+        self.case_information.admin_license_suspension.explanation = (
             self.admin_license_suspension_explanation_box.text()
         )
 

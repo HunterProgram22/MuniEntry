@@ -93,6 +93,7 @@ class BaseDialog(QDialog):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
         self.close_window()
+        del self.case_information
 
     @logger.catch
     def set_case_information_banner(self):
