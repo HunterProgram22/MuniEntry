@@ -65,6 +65,11 @@ class CriminalPleaDialog(BaseDialog):
             pass
         self.case_information = CaseInformation(self.judicial_officer)
         self.criminal_charge = None
+        self.add_conditions_dict = {
+            self.license_suspension_checkBox: self.case_information.license_suspension.ordered,
+            self.community_service_checkBox: self.case_information.community_service_terms.community_service_ordered,
+            self.other_conditions_checkBox: self.case_information.other_conditions.ordered,
+        }
         self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
         self.amend_button_list = []
@@ -154,22 +159,17 @@ class CriminalPleaDialog(BaseDialog):
 
     @logger.catch
     def check_add_conditions(self):
-        """Checks to see what conditions in the Add Conditions box are checked and then
-        transfers the information from the conditions to case_information model if the
-        box is checked."""
-        add_conditions_dict = {
-            self.license_suspension_checkBox:
-                self.case_information.license_suspension.ordered,
-            self.community_service_checkBox:
-                self.case_information.community_service_terms.community_service_ordered,
-            self.other_conditions_checkBox:
-                self.case_information.other_conditions.ordered,
-        }
-        for key, value in add_conditions_dict.items():
+        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
+        because of a dictionary being used. Refactor back away from dictionary?"""
+        for key, value in self.add_conditions_dict.items():
+            print(key, value)
             if key.isChecked():
-                value = True
+                print("Key is checked")
+                self.add_conditions_dict[key] = True
+                print(self.add_conditions_dict[key])
             else:
-                value = False
+                self.add_conditions_dict[key] = False
+            print(self.add_conditions_dict)
 
     @logger.catch
     def calculate_costs_and_fines(self):
