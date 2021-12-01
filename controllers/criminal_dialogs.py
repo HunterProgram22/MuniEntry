@@ -161,7 +161,7 @@ class CriminalPleaDialog(BaseDialog):
         box is checked."""
         add_conditions_dict = {
             self.license_suspension_checkBox:
-                self.case_information.license_suspension_details.license_suspension_ordered,
+                self.case_information.license_suspension_details.ordered,
             self.community_control_checkBox:
                 self.case_information.community_control_terms.community_control_required,
             self.community_service_checkBox:
@@ -464,7 +464,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
             self.case_information.license_suspension_details.remedial_driving_class_required = True
         else:
             self.case_information.license_suspension_details.remedial_driving_class_required = False
-        self.case_information.license_suspension_details.license_suspension_ordered = True
+        self.case_information.license_suspension_details.ordered = True
 
     @logger.catch
     def add_other_condition_details(self):

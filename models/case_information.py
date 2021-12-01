@@ -102,7 +102,7 @@ class CommunityServiceTerms:
 class LicenseSuspensionTerms:
     """Class for keeping track of the license suspension terms that are tied to
     a specific case."""
-    license_suspension_ordered: bool = False
+    ordered: bool = False
     license_type: str = None
     license_suspended_date: str = None
     license_suspension_term: str = None
