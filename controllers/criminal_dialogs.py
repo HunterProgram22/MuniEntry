@@ -12,7 +12,6 @@ from models.case_information import (
     CriminalCharge,
     AmendOffenseDetails,
     LicenseSuspension,
-    CommunityControlTerms,
     CommunityServiceTerms,
     OtherConditions,
 )
@@ -161,8 +160,6 @@ class CriminalPleaDialog(BaseDialog):
         add_conditions_dict = {
             self.license_suspension_checkBox:
                 self.case_information.license_suspension.ordered,
-            self.community_control_checkBox:
-                self.case_information.community_control_terms.community_control_required,
             self.community_service_checkBox:
                 self.case_information.community_service_terms.community_service_ordered,
             self.other_conditions_checkBox:
@@ -356,7 +353,6 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         self.case_information = main_dialog.case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
-        self.community_control = main_dialog.community_control_checkBox.isChecked()
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         self.enable_condition_frames()
@@ -399,8 +395,6 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         if self.community_service is True:
             self.community_service_frame.setEnabled(True)
             self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
-        if self.community_control is True:
-            self.community_control_frame.setEnabled(True)
 
     @logger.catch
     def add_conditions(self):
@@ -409,27 +403,12 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         if self.community_service is True:
             self.case_information.community_service_terms = CommunityServiceTerms()
             self.add_community_service_terms()
-        if self.community_control is True:
-            self.case_information.community_control_terms = CommunityControlTerms()
-            self.add_community_control_terms()
         if self.license_suspension is True:
             self.case_information.license_suspension = LicenseSuspension()
             self.add_license_suspension_details()
         if self.other_conditions is True:
             self.case_information.other_conditions = OtherConditions()
             self.add_other_condition_details()
-
-    @logger.catch
-    def add_community_control_terms(self):
-        """The method adds the data entered to the CommunityControlTerms object
-        that is created when the dialog is initialized."""
-        self.case_information.community_control_terms.type_of_community_control = (
-            self.type_of_community_control_box.currentText()
-        )
-        self.case_information.community_control_terms.term_of_community_control = (
-            self.term_of_community_control_box.currentText()
-        )
-        self.case_information.community_control_terms.community_control_required = True
 
     @logger.catch
     def add_community_service_terms(self):

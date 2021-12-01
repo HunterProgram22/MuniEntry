@@ -80,15 +80,6 @@ class AmendOffenseDetails:
 
 
 @dataclass
-class CommunityControlTerms:
-    """Class for keeping track of all community control terms that are tied to
-    a specific case."""
-    community_control_required: bool = False
-    term_of_community_control: int = 0
-    type_of_community_control: str = "basic"
-
-
-@dataclass
 class CommunityServiceTerms:
     """Class for keeping track of all community service terms that are tied to
     a specific case."""
@@ -139,7 +130,6 @@ class CaseInformation:
     appearance_reason: str = None
     not_guilty_conditions: object = None
     fta_bond_conditions: object = FTABondConditions()
-    community_control_terms: object = CommunityControlTerms()
     community_service_terms: object = CommunityServiceTerms()
     license_suspension: object = LicenseSuspension()
     other_conditions: object = OtherConditions()
