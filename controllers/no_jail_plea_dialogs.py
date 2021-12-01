@@ -51,7 +51,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
-
     @logger.catch
     def connect_signals_to_slots(self):
         """The method connects additional signals to slots. That are not
@@ -98,7 +97,6 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
                 pass
             column += 2
             loop_counter += 1
-
 
     @logger.catch
     def add_charge_to_view(self):
