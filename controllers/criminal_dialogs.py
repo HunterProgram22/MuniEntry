@@ -12,7 +12,10 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspensionTerms
+    LicenseSuspensionTerms,
+    CommunityControlTerms,
+    CommunityServiceTerms,
+    OtherConditionsTerms,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -272,12 +275,9 @@ class CriminalPleaDialog(BaseCriminalDialog):
         }
         for key, value in add_conditions_dict.items():
             if key.isChecked():
-                print(key, value)
                 value = True
-                print(value)
             else:
                 value = False
-                print("Else: " + str(value))
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -602,12 +602,16 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
         """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen."""
         if self.community_service is True:
+            self.case_information.community_service_terms = CommunityServiceTerms()
             self.add_community_service_terms()
         if self.community_control is True:
+            self.case_information.community_control_terms = CommunityControlTerms()
             self.add_community_control_terms()
         if self.license_suspension is True:
+            self.case_information.license_suspension_details = LicenseSuspensionTerms()
             self.add_license_suspension_details()
         if self.other_conditions is True:
+            self.case_information.other_conditions_details = OtherConditionsTerms()
             self.add_other_condition_details()
 
     @logger.catch
@@ -641,7 +645,6 @@ class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
     def add_license_suspension_details(self):
         """The method adds the data entered to the LicenseSuspensionTerms object
         that is created when the dialog is initialized."""
-        self.case_information.license_suspension_details = LicenseSuspensionTerms()
         self.case_information.license_suspension_details.license_type = (
             self.license_type_box.currentText()
         )
