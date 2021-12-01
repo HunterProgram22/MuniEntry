@@ -11,7 +11,7 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspensionTerms,
+    LicenseSuspension,
     CommunityControlTerms,
     CommunityServiceTerms,
     OtherConditions,
@@ -65,7 +65,6 @@ class CriminalPleaDialog(BaseDialog):
         except AttributeError:
             pass
         self.case_information = CaseInformation(self.judicial_officer)
-        print(self.case_information)
         self.criminal_charge = None
         self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
@@ -161,13 +160,13 @@ class CriminalPleaDialog(BaseDialog):
         box is checked."""
         add_conditions_dict = {
             self.license_suspension_checkBox:
-                self.case_information.license_suspension_details.ordered,
+                self.case_information.license_suspension.ordered,
             self.community_control_checkBox:
                 self.case_information.community_control_terms.community_control_required,
             self.community_service_checkBox:
                 self.case_information.community_service_terms.community_service_ordered,
             self.other_conditions_checkBox:
-                self.case_information.other_conditions.other_conditions_ordered,
+                self.case_information.other_conditions.ordered,
         }
         for key, value in add_conditions_dict.items():
             if key.isChecked():
@@ -414,7 +413,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
             self.case_information.community_control_terms = CommunityControlTerms()
             self.add_community_control_terms()
         if self.license_suspension is True:
-            self.case_information.license_suspension_details = LicenseSuspensionTerms()
+            self.case_information.license_suspension = LicenseSuspension()
             self.add_license_suspension_details()
         if self.other_conditions is True:
             self.case_information.other_conditions = OtherConditions()
@@ -449,22 +448,22 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_license_suspension_details(self):
-        """The method adds the data entered to the LicenseSuspensionTerms object
+        """The method adds the data entered to the LicenseSuspension object
         that is created when the dialog is initialized."""
-        self.case_information.license_suspension_details.license_type = (
+        self.case_information.license_suspension.license_type = (
             self.license_type_box.currentText()
         )
-        self.case_information.license_suspension_details.license_suspended_date = (
+        self.case_information.license_suspension.suspended_date = (
             self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.license_suspension_details.license_suspension_term = (
+        self.case_information.license_suspension.suspension_term = (
             self.term_of_suspension_box.currentText()
         )
         if self.remedial_driving_class_checkBox.isChecked():
-            self.case_information.license_suspension_details.remedial_driving_class_required = True
+            self.case_information.license_suspension.remedial_driving_class_required = True
         else:
-            self.case_information.license_suspension_details.remedial_driving_class_required = False
-        self.case_information.license_suspension_details.ordered = True
+            self.case_information.license_suspension.remedial_driving_class_required = False
+        self.case_information.license_suspension.ordered = True
 
     @logger.catch
     def add_other_condition_details(self):

@@ -99,13 +99,13 @@ class CommunityServiceTerms:
 
 
 @dataclass
-class LicenseSuspensionTerms:
+class LicenseSuspension:
     """Class for keeping track of the license suspension terms that are tied to
     a specific case."""
     ordered: bool = False
     license_type: str = None
-    license_suspended_date: str = None
-    license_suspension_term: str = None
+    suspended_date: str = None
+    suspension_term: str = None
     remedial_driving_class_required: bool = False
 
 
@@ -141,7 +141,7 @@ class CaseInformation:
     fta_bond_conditions: object = FTABondConditions()
     community_control_terms: object = CommunityControlTerms()
     community_service_terms: object = CommunityServiceTerms()
-    license_suspension_details: object = LicenseSuspensionTerms()
+    license_suspension: object = LicenseSuspension()
     other_conditions: object = OtherConditions()
     domestic_violence_conditions: object = DomesticViolenceBondConditions()
     admin_license_suspension: object = AdminLicenseSuspensionConditions()
