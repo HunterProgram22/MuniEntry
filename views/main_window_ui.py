@@ -269,7 +269,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.3.0"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.3.1"))
         self.FinalJudgmentEntryButton_14.setText(_translate("MainWindow", "Entry"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.MinorMisdemeanorTrafficButton_3.setText(_translate("MainWindow", "Entry"))

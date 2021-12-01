@@ -11,6 +11,10 @@ from models.case_information import (
     CaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
+    LicenseSuspensionTerms,
+    CommunityControlTerms,
+    CommunityServiceTerms,
+    OtherConditionsTerms,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -167,6 +171,8 @@ class CriminalPleaDialog(BaseDialog):
         for key, value in add_conditions_dict.items():
             if key.isChecked():
                 value = True
+            else:
+                value = False
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -401,12 +407,16 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen."""
         if self.community_service is True:
+            self.case_information.community_service_terms = CommunityServiceTerms()
             self.add_community_service_terms()
         if self.community_control is True:
+            self.case_information.community_control_terms = CommunityControlTerms()
             self.add_community_control_terms()
         if self.license_suspension is True:
+            self.case_information.license_suspension_details = LicenseSuspensionTerms()
             self.add_license_suspension_details()
         if self.other_conditions is True:
+            self.case_information.other_conditions_details = OtherConditionsTerms()
             self.add_other_condition_details()
 
     @logger.catch
