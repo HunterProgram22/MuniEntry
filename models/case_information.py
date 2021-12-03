@@ -80,10 +80,10 @@ class AmendOffenseDetails:
 
 
 @dataclass
-class CommunityServiceTerms:
+class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific case."""
-    community_service_ordered: bool = False
+    ordered: bool = False
     hours_of_service: int = 0
     days_to_complete_service: int = 0
     due_date_for_service: str = None
@@ -109,6 +109,16 @@ class OtherConditions:
 
 
 @dataclass
+class CourtCosts:
+    """Class for data related to court costs. The ability to pay and balance due date apply in entries to
+    fines as well."""
+    ordered: str = None
+    amount: int = 0
+    ability_to_pay_time: str = None
+    balance_due_date: str = None
+
+
+@dataclass
 class CaseInformation:
     """This object stores all the information for a case both at inception and
     as it is populated through the application."""
@@ -119,18 +129,14 @@ class CaseInformation:
     fra_in_court: bool = None
     plea_trial_date: str = None
     charges_list: list = field(default_factory=list)
-    ability_to_pay_time: str = None
-    balance_due_date: str = None
     sentencing_date: str = None
     amend_offense_details: str = None
-    court_costs_ordered: str = None
-    court_costs: int = 0
     total_fines: int = 0
     total_fines_suspended: int = 0
     appearance_reason: str = None
-    not_guilty_conditions: object = None
+    court_costs: object = CourtCosts()
     fta_bond_conditions: object = FTABondConditions()
-    community_service_terms: object = CommunityServiceTerms()
+    community_service: object = CommunityService()
     license_suspension: object = LicenseSuspension()
     other_conditions: object = OtherConditions()
     domestic_violence_conditions: object = DomesticViolenceBondConditions()

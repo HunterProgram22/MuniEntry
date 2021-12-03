@@ -12,7 +12,7 @@ from models.case_information import (
     CriminalCharge,
     AmendOffenseDetails,
     LicenseSuspension,
-    CommunityServiceTerms,
+    CommunityService,
     OtherConditions,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
@@ -67,7 +67,7 @@ class CriminalPleaDialog(BaseDialog):
         self.criminal_charge = None
         self.add_conditions_dict = {
             self.license_suspension_checkBox: self.case_information.license_suspension.ordered,
-            self.community_service_checkBox: self.case_information.community_service_terms.community_service_ordered,
+            self.community_service_checkBox: self.case_information.community_service.ordered,
             self.other_conditions_checkBox: self.case_information.other_conditions.ordered,
         }
         self.set_statute_and_offense_choice_boxes()
@@ -151,9 +151,9 @@ class CriminalPleaDialog(BaseDialog):
     @logger.catch
     def update_costs_and_fines_information(self):
         """Updates the costs and fines from the GUI(view) and saves it to the model."""
-        self.case_information.court_costs_ordered = self.court_costs_box.currentText()
-        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.balance_due_date = (
+        self.case_information.court_costs.ordered = self.court_costs_box.currentText()
+        self.case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.court_costs.balance_due_date = (
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
 
@@ -162,14 +162,11 @@ class CriminalPleaDialog(BaseDialog):
         """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
         because of a dictionary being used. Refactor back away from dictionary?"""
         for key, value in self.add_conditions_dict.items():
-            print(key, value)
             if key.isChecked():
-                print("Key is checked")
                 self.add_conditions_dict[key] = True
-                print(self.add_conditions_dict[key])
             else:
                 self.add_conditions_dict[key] = False
-            print(self.add_conditions_dict)
+
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -178,17 +175,17 @@ class CriminalPleaDialog(BaseDialog):
         fines_suspended box. The loop stops when a case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
         not used but is required to unpack enumerate()."""
-        self.case_information.court_costs = 0
+        self.case_information.court_costs.amount = 0
         if self.court_costs_box.currentText() == "Yes":
             for _index, charge in enumerate(self.case_information.charges_list):
-                if self.case_information.court_costs == 124:
+                if self.case_information.court_costs.amount == 124:
                     break
                 if charge.type == "Moving Traffic":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 124)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 124)
                 elif charge.type == "Criminal":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 114)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 114)
                 elif charge.type == "Non-moving Traffic":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 95)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 95)
         total_fines = 0
         try:
             for _index, charge in enumerate(self.case_information.charges_list):
@@ -401,7 +398,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen."""
         if self.community_service is True:
-            self.case_information.community_service_terms = CommunityServiceTerms()
+            self.case_information.community_service = CommunityService()
             self.add_community_service_terms()
         if self.license_suspension is True:
             self.case_information.license_suspension = LicenseSuspension()
@@ -412,18 +409,18 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def add_community_service_terms(self):
-        """The method adds the data entered to the CommunityServiceTerms object
+        """The method adds the data entered to the CommunityService object
         that is created when the dialog is initialized."""
-        self.case_information.community_service_terms.hours_of_service = (
+        self.case_information.community_service.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
-        self.case_information.community_service_terms.days_to_complete_service = (
+        self.case_information.community_service.days_to_complete_service = (
             self.community_service_days_to_complete_box.currentText()
         )
-        self.case_information.community_service_terms.due_date_for_service = (
+        self.case_information.community_service.due_date_for_service = (
             self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
         )
-        self.case_information.community_service_terms.community_service_ordered = True
+        self.case_information.community_service.ordered = True
 
     @logger.catch
     def add_license_suspension_details(self):
