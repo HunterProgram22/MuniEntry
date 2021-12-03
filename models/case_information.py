@@ -52,6 +52,7 @@ class FTABondConditions:
     monitoring: bool = False
     monitoring_type: str = None
 
+
 @dataclass
 class DomesticViolenceBondConditions:
     """Domestic Violence Bond Conditions for Special Bond Conditions."""
@@ -61,6 +62,7 @@ class DomesticViolenceBondConditions:
     exclusive_possession: str = None
     surrender_weapons: bool = False
     surrender_weapons_date: str = None
+
 
 @dataclass
 class AdminLicenseSuspensionConditions:
@@ -121,19 +123,20 @@ class CourtCosts:
 @dataclass
 class CaseInformation:
     """This object stores all the information for a case both at inception and
-    as it is populated through the application."""
+    as it is populated through the application.
+    TODO: Should also still refactor amend_offense_details to object of dataclass."""
     judicial_officer: object
     case_number: str = None
+    plea_trial_date: str = None
+    appearance_reason: str = None
+    sentencing_date: str = None
     defendant: object = Defendant()
     fra_in_file: bool = None
     fra_in_court: bool = None
-    plea_trial_date: str = None
     charges_list: list = field(default_factory=list)
-    sentencing_date: str = None
     amend_offense_details: str = None
     total_fines: int = 0
     total_fines_suspended: int = 0
-    appearance_reason: str = None
     court_costs: object = CourtCosts()
     fta_bond_conditions: object = FTABondConditions()
     community_service: object = CommunityService()
