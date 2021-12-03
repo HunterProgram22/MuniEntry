@@ -23,6 +23,11 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.add_conditions_dict = {
+            self.license_suspension_checkBox: self.case_information.license_suspension.ordered,
+            self.community_service_checkBox: self.case_information.community_service.ordered,
+            self.other_conditions_checkBox: self.case_information.other_conditions.ordered,
+        }
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
@@ -55,6 +60,16 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
         self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
+
+    @logger.catch
+    def check_add_conditions(self):
+        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
+        because of a dictionary being used. Refactor back away from dictionary?"""
+        for key, value in self.add_conditions_dict.items():
+            if key.isChecked():
+                self.add_conditions_dict[key] = True
+            else:
+                self.add_conditions_dict[key] = False
 
     @logger.catch
     def add_dispositions_and_fines(self):

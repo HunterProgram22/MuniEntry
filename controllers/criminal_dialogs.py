@@ -65,11 +65,6 @@ class CriminalPleaDialog(BaseDialog):
             pass
         self.case_information = CaseInformation(self.judicial_officer)
         self.criminal_charge = None
-        self.add_conditions_dict = {
-            self.license_suspension_checkBox: self.case_information.license_suspension.ordered,
-            self.community_service_checkBox: self.case_information.community_service.ordered,
-            self.other_conditions_checkBox: self.case_information.other_conditions.ordered,
-        }
         self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
         self.amend_button_list = []
@@ -156,17 +151,6 @@ class CriminalPleaDialog(BaseDialog):
         self.case_information.court_costs.balance_due_date = (
             self.balance_due_date.date().toString("MMMM dd, yyyy")
         )
-
-    @logger.catch
-    def check_add_conditions(self):
-        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
-        because of a dictionary being used. Refactor back away from dictionary?"""
-        for key, value in self.add_conditions_dict.items():
-            if key.isChecked():
-                self.add_conditions_dict[key] = True
-            else:
-                self.add_conditions_dict[key] = False
-
 
     @logger.catch
     def calculate_costs_and_fines(self):
