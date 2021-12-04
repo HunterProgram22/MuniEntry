@@ -519,6 +519,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         if self.custodial_supervision is True:
             self.case_information.custodial_supervision = CustodialSupervision()
             self.add_custodial_supervision_terms()
+        if self.other_conditions is True:
+            self.case_information.other_conditions = OtherConditions()
+            self.add_other_condition_terms()
+
+    @logger.catch
+    def add_other_condition_terms(self):
+        """The method allows for adding other conditions based on free form text
+        entry.
+        TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
+        self.case_information.other_conditions.ordered = self.other_conditions
+        self.case_information.other_conditions.terms = self.other_conditions_plainTextEdit.toPlainText()
 
     @logger.catch
     def add_custodial_supervision_terms(self):
