@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.3.1</string>
+   <string>MuniEntry - ver 0.4.0</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -129,6 +129,9 @@ font-weight: bold;</string>
             <height>30</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
+          </property>
           <property name="text">
            <string>LEAP Plea </string>
           </property>
@@ -141,6 +144,9 @@ font-weight: bold;</string>
             <width>120</width>
             <height>30</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
           </property>
           <property name="text">
            <string>Not Guilty / Bond</string>
@@ -221,6 +227,9 @@ font-weight: bold;</string>
             <height>30</height>
            </size>
           </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
+          </property>
           <property name="text">
            <string>LEAP Plea Pre-Court Complete</string>
           </property>
@@ -233,6 +242,9 @@ font-weight: bold;</string>
             <width>120</width>
             <height>30</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
           </property>
           <property name="text">
            <string>No Jail Plea</string>
@@ -310,6 +322,9 @@ font-weight: bold;</string>
             <width>120</width>
             <height>30</height>
            </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
           </property>
           <property name="text">
            <string>FTA / Bond</string>
