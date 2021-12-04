@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'resources/ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'views/ui/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -108,10 +108,10 @@ class Ui_MainWindow(object):
         self.LeapPleaShortButton.setMinimumSize(QtCore.QSize(120, 30))
         self.LeapPleaShortButton.setObjectName("LeapPleaShortButton")
         self.gridLayout_2.addWidget(self.LeapPleaShortButton, 5, 4, 1, 2)
-        self.MinorMisdemeanorTrafficButton = QtWidgets.QPushButton(self.tab)
-        self.MinorMisdemeanorTrafficButton.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton.setObjectName("MinorMisdemeanorTrafficButton")
-        self.gridLayout_2.addWidget(self.MinorMisdemeanorTrafficButton, 5, 0, 1, 2)
+        self.NoJailPleaButton = QtWidgets.QPushButton(self.tab)
+        self.NoJailPleaButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.NoJailPleaButton.setObjectName("NoJailPleaButton")
+        self.gridLayout_2.addWidget(self.NoJailPleaButton, 5, 0, 1, 2)
         self.rohrer_radioButton = QtWidgets.QRadioButton(self.tab)
         self.rohrer_radioButton.setObjectName("rohrer_radioButton")
         self.buttonGroup.addButton(self.rohrer_radioButton)
@@ -284,7 +284,7 @@ class Ui_MainWindow(object):
         self.kudela_radioButton.setText(_translate("MainWindow", "Magistrate Kudela"))
         self.pelanda_radioButton.setText(_translate("MainWindow", "Magistrate Pelanda"))
         self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete"))
-        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "No Jail Plea"))
+        self.NoJailPleaButton.setText(_translate("MainWindow", "No Jail Plea"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
         self.bunner_radioButton.setText(_translate("MainWindow", "Magistrate Bunner"))
         self.label_2.setText(_translate("MainWindow", "Traffic and Criminal Entries"))

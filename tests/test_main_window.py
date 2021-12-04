@@ -19,7 +19,7 @@ from settings import create_arraignments_database_connection
 arraignments_database = create_arraignments_database_connection()
 
 """Functions for Testing"""
-def start_MinorMisdemeanorDialog(qtbot, judicial_officer, case):
+def start_NoJailPleaDialog(qtbot, judicial_officer, case):
     dialog = NoJailPleaDialog(judicial_officer, case)
     qtbot.addWidget(dialog)
     return dialog
@@ -53,7 +53,7 @@ def app(qtbot):
 
 """TESTING"""
 def test_title(app):
-    assert app.windowTitle() == "MuniEntry - ver 0.2.1"
+    assert app.windowTitle() == "MuniEntry - ver 0.3.1"
 
 def test_judicial_officer_buttons(app):
     QtBot.mouseClick(app.hemmeter_radioButton, QtCore.Qt.LeftButton)
@@ -67,12 +67,12 @@ def test_judicial_officer_buttons(app):
     QtBot.mouseClick(app.kudela_radioButton, QtCore.Qt.LeftButton)
     assert app.judicial_officer.last_name == "Kudela"
 
-def test_minor_misdemeanor_traffic_buton(app, qtbot):
+def test_no_jail_plea_buton(app, qtbot):
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.NoJailPleaButton, QtCore.Qt.LeftButton)
     case = "16TRC00001"
-    dialog = start_MinorMisdemeanorDialog(qtbot, app.judicial_officer, case)
-    assert dialog.windowTitle() == "Minor Misdemeanor Case Information"
+    dialog = start_NoJailPleaDialog(qtbot, app.judicial_officer, case)
+    assert dialog.windowTitle() == "No Jail Plea Case Information"
 
 def test_leap_plea_buton(app, qtbot):
     QtBot.mouseClick(app.hemmeter_radioButton, QtCore.Qt.LeftButton)

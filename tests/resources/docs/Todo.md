@@ -1,24 +1,21 @@
-APPLICATION TODO LIST for version 0.3.0
-* Add Yellow Sheet templates (CC Violation)
-* Remove magic numbers throughout.
-* Wire up amend offense dialog again - works on basic level - need to move signals to dialog
-and perhaps update the actual original charge to indicate amended.
-* Move create entry and other general methods to helper functions
+APPLICATION TODO LIST for version 0.4.0
+* Updated dialogs/templates for Not Guilty per AB Notes.
 * Add Warning if add condition boxes are checked but conditions have not been added.
-* Add Warning if plea and finding boxes are None
+
+
+GENERAL PERIODIC CLEANUP
+* Move general methods to helper functions
+* Remove magic numbers throughout - Look to check_plea_and_findings method as an example.
 * Add new tests - fix test amend offense because button is now in grid.
-* Fix database connection names in criminal dialogs and elsewhere - make clearer.
 
 
-
-
-FEATURE/CHANGE LIST - for Version 0.4.0
-* Add community control conditions checkboxes
-* Add Jail entries
+FEATURE/CHANGE LIST - for Version 0.5.0
 * Add DUI sub-dialog
 * Make statutes hyperlink
-
-
+* Updated dialogs/templates for FTA per AB Notes.
+* Add community control conditions checkboxes
+* Add Jail entries
+* Add Yellow Sheet templates (CC Violation)
 
 
 DEPLOY TODO LIST
@@ -32,6 +29,5 @@ DEPLOY TODO LIST
 NOTES
 * Objects need both data and behavior - otherwise use data
 structure (list, tuple, dict), dataclass, or function
-* Add kite and linter atom packages
 * When doing tests make sure if changes to main resources are
 made that test/resources is also updated.

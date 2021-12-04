@@ -54,7 +54,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
         }
         self.dialog_dict = {
-            self.MinorMisdemeanorTrafficButton: NoJailPleaDialog,
+            self.NoJailPleaButton: NoJailPleaDialog,
             self.LeapPleaLongButton: LeapPleaLongDialog,
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
