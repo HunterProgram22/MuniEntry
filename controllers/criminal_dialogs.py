@@ -495,12 +495,20 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             self.add_domestic_violence_terms()
         if self.admin_license_suspension is True:
             self.add_admin_license_suspension_terms()
+        if self.no_contact is True:
+            self.add_no_contact_terms()
 
     @logger.catch
     def add_domestic_violence_terms(self):
+        """Not proper format """
         self.case_information.special_bond_conditions.domestic_violence_vacate = (
             self.domestic_violence_vacate_checkBox.isChecked()
         )
+
+    @logger.catch
+    def add_no_contact_terms(self):
+        self.case_information.no_contact.ordered = self.no_contact
+        self.case_information.no_contact.name = self.no_contact_name_box.text()
 
     @logger.catch
     def add_admin_license_suspension_terms(self):

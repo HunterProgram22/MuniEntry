@@ -14,11 +14,13 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def __init__(self, judicial_officer, case, parent=None):
         super().__init__(judicial_officer, case, parent)
-        self.add__special_conditions_dict = {
+        self.add_special_conditions_dict = {
             self.admin_license_suspension_checkBox:
                 self.case_information.admin_license_suspension.ordered,
             self.domestic_violence_checkBox:
                 self.case_information.domestic_violence_conditions.ordered,
+            self.no_contact_checkBox:
+                self.case_information.no_contact.ordered,
         }
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
@@ -64,7 +66,7 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         """Checks to see what conditions in the Add Conditions box are checked and then
         transfers the information from the conditions to case_information model if the
         box is checked.
-        TODO: Bug that also exists in check_add_conditions in no_jail_plea dialog 
+        TODO: Bug that also exists in check_add_conditions in no_jail_plea dialog
         likely exists here."""
         for key, value in self.add_special_conditions_dict.items():
             if key.isChecked():

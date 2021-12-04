@@ -466,7 +466,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_5">
+              <widget class="QLineEdit" name="no_contact_name_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>

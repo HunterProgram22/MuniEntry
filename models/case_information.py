@@ -72,6 +72,11 @@ class AdminLicenseSuspensionConditions:
     disposition: str = None
     explanation: str = None
 
+@dataclass
+class NoContact:
+    """No Contact conditions for Special Bond Conditions."""
+    ordered: bool = False
+    name: str = None
 
 @dataclass
 class AmendOffenseDetails:
@@ -138,6 +143,7 @@ class CaseInformation:
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
+    no_contact: object = NoContact()
     fta_bond_conditions: object = FTABondConditions()
     community_service: object = CommunityService()
     license_suspension: object = LicenseSuspension()
