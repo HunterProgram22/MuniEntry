@@ -108,6 +108,7 @@ class VehicleSeizure:
     ordered: bool = False
     vehicle_make_model: str = None
     vehicle_license_plate: str = None
+    tow_to_residence: bool = False
 
 
 @dataclass

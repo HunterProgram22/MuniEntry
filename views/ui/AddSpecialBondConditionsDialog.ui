@@ -171,8 +171,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1005</width>
-           <height>833</height>
+           <width>984</width>
+           <height>850</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
@@ -523,13 +523,6 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="vehicle_make_model_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
@@ -537,8 +530,8 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="vehicle_license_plate_box">
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="vehicle_make_model_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -567,6 +560,20 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="vehicle_license_plate_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="2">
+              <widget class="QCheckBox" name="tow_to_residence_checkBox">
+               <property name="text">
+                <string>Permit Tow and Immobilization at Defendant's Residence</string>
                </property>
               </widget>
              </item>

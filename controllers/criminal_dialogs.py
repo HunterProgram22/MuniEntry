@@ -532,6 +532,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.case_information.vehicle_seizure.ordered = self.vehicle_seizure
         self.case_information.vehicle_seizure.vehicle_make_model = self.vehicle_make_model_box.text()
         self.case_information.vehicle_seizure.vehicle_license_plate = self.vehicle_license_plate_box.text()
+        self.case_information.vehicle_seizure.tow_to_residence = self.tow_to_residence_checkBox.isChecked()
 
     @logger.catch
     def add_other_condition_terms(self):
