@@ -14,6 +14,10 @@ from models.case_information import (
     LicenseSuspension,
     CommunityService,
     OtherConditions,
+    CustodialSupervision,
+    AdminLicenseSuspensionConditions,
+    NoContact,
+    DomesticViolenceBondConditions,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -380,7 +384,13 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_conditions(self):
         """The method is connected to the pressed() signal of add_conditions_Button on the
-        Add Conditions screen."""
+        Add Conditions screen.
+
+        TODO: Creating a new instance of the special conditions here to avoid data being persistent
+        and carrying over to a future case. This requires resetting ordered to true even though it
+        is set to true by the add_conditions_dict. Fix is probably to not set a default
+        instance of the class in the dataclass.
+        """
         if self.community_service is True:
             self.case_information.community_service = CommunityService()
             self.add_community_service_terms()
@@ -394,7 +404,8 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     @logger.catch
     def add_community_service_terms(self):
         """The method adds the data entered to the CommunityService object
-        that is created when the dialog is initialized."""
+        that is created when the dialog is initialized.
+        SEE COMMENT in add_conditions about need to rest value to true."""
         self.case_information.community_service.hours_of_service = (
             self.community_service_hours_ordered_box.value()
         )
@@ -490,14 +501,23 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def add_special_conditions(self):
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
-        Add Special Conditions screen."""
+        Add Special Conditions screen.
+
+        TODO: Creating a new instance of the special conditions here to avoid data being persistent
+        and carrying over to a future case. This requires resetting ordered to true even though it
+        is set to true by the add_special_conditions_dict. Fix is probably to not set a default
+        instance of the class in the dataclass."""
         if self.domestic_violence is True:
+            self.case_information.domestic_violence_conditions = DomesticViolenceBondConditions()
             self.add_domestic_violence_terms()
         if self.admin_license_suspension is True:
+            self.case_information.admin_license_suspension = AdminLicenseSuspensionConditions()
             self.add_admin_license_suspension_terms()
         if self.no_contact is True:
+            self.case_information.no_contact = NoContact()
             self.add_no_contact_terms()
         if self.custodial_supervision is True:
+            self.case_information.custodial_supervision = CustodialSupervision()
             self.add_custodial_supervision_terms()
 
     @logger.catch
