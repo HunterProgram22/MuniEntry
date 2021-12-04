@@ -79,6 +79,12 @@ class NoContact:
     name: str = None
 
 @dataclass
+class CustodialSupervision:
+    """Custodial Supervision conditions for Special Bond Conditions."""
+    ordered: bool = False
+    supervisor: str = None
+
+@dataclass
 class AmendOffenseDetails:
     """TODO: This should be refactored to a pure function most likely."""
     original_charge: str = None
@@ -144,6 +150,7 @@ class CaseInformation:
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
     no_contact: object = NoContact()
+    custodial_supervision: object = CustodialSupervision()
     fta_bond_conditions: object = FTABondConditions()
     community_service: object = CommunityService()
     license_suspension: object = LicenseSuspension()

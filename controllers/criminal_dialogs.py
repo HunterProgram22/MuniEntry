@@ -497,6 +497,13 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             self.add_admin_license_suspension_terms()
         if self.no_contact is True:
             self.add_no_contact_terms()
+        if self.custodial_supervision is True:
+            self.add_custodial_supervision_terms()
+
+    @logger.catch
+    def add_custodial_supervision_terms(self):
+        self.case_information.custodial_supervision.ordered = self.custodial_supervision
+        self.case_information.custodial_supervision.supervisor = self.custodial_supervision_supervisor_box.text()
 
     @logger.catch
     def add_domestic_violence_terms(self):

@@ -709,17 +709,17 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="checkBox">
-               <property name="text">
-                <string>Shall submit to supervision in custody of:</string>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="custodial_supervision_supervisor_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_6">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Shall submit to the custody of:</string>
                </property>
               </widget>
              </item>

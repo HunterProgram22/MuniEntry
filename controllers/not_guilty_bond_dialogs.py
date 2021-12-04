@@ -21,6 +21,8 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
                 self.case_information.domestic_violence_conditions.ordered,
             self.no_contact_checkBox:
                 self.case_information.no_contact.ordered,
+            self.custodial_supervision_checkBox:
+                self.case_information.custodial_supervision.ordered,
         }
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
