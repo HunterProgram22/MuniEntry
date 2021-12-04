@@ -18,6 +18,7 @@ from models.case_information import (
     AdminLicenseSuspensionConditions,
     NoContact,
     DomesticViolenceBondConditions,
+    VehicleSeizure,
 )
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -522,6 +523,15 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         if self.other_conditions is True:
             self.case_information.other_conditions = OtherConditions()
             self.add_other_condition_terms()
+        if self.vehicle_seizure is True:
+            self.case_information.vehicle_seizure = VehicleSeizure()
+            self.add_vehicle_seizure_terms()
+
+    @logger.catch
+    def add_vehicle_seizure_terms(self):
+        self.case_information.vehicle_seizure.ordered = self.vehicle_seizure
+        self.case_information.vehicle_seizure.vehicle_make_model = self.vehicle_make_model_box.text()
+        self.case_information.vehicle_seizure.vehicle_license_plate = self.vehicle_license_plate_box.text()
 
     @logger.catch
     def add_other_condition_terms(self):

@@ -457,7 +457,7 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6">
+            <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,2">
              <item row="1" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
@@ -515,7 +515,35 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_8">
+            <layout class="QGridLayout" name="gridLayout_8" columnstretch="1,2">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Vehicle Year/Make/Model:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="vehicle_make_model_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>License Plate Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="vehicle_license_plate_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_27">
                <property name="sizePolicy">
@@ -539,34 +567,6 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Vehicle Make/Model:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_3">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>License Plate Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="lineEdit_4">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -735,6 +735,23 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>admin_license_suspension_objection_box</tabstop>
+  <tabstop>admin_license_suspension_disposition_box</tabstop>
+  <tabstop>admin_license_suspension_explanation_box</tabstop>
+  <tabstop>domestic_violence_vacate_checkBox</tabstop>
+  <tabstop>domestic_violence_residence_box</tabstop>
+  <tabstop>domestic_violence_exclusive_possession_to_box</tabstop>
+  <tabstop>domestic_violence_surrender_weapons_checkBox</tabstop>
+  <tabstop>domestic_violence_surrender_weapons_dateBox</tabstop>
+  <tabstop>no_contact_name_box</tabstop>
+  <tabstop>vehicle_make_model_box</tabstop>
+  <tabstop>vehicle_license_plate_box</tabstop>
+  <tabstop>other_conditions_plainTextEdit</tabstop>
+  <tabstop>custodial_supervision_supervisor_box</tabstop>
+  <tabstop>add_special_conditions_Button</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>

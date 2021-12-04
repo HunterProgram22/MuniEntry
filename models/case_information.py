@@ -103,6 +103,14 @@ class CommunityService:
 
 
 @dataclass
+class VehicleSeizure:
+    """Class for vehicle seizure terms in special bond conditions."""
+    ordered: bool = False
+    vehicle_make_model: str = None
+    vehicle_license_plate: str = None
+
+
+@dataclass
 class LicenseSuspension:
     """Class for keeping track of the license suspension terms that are tied to
     a specific case."""
@@ -157,6 +165,7 @@ class CaseInformation:
     other_conditions: object = OtherConditions()
     domestic_violence_conditions: object = DomesticViolenceBondConditions()
     admin_license_suspension: object = AdminLicenseSuspensionConditions()
+    vehicle_seizure: object = VehicleSeizure()
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
