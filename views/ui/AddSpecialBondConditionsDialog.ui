@@ -403,21 +403,21 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="lineEdit_2">
+              <widget class="QLineEdit" name="domestic_violence_exclusive_possession_to_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
              <item row="2" column="3">
-              <widget class="QCheckBox" name="checkBox_5">
+              <widget class="QCheckBox" name="domestic_violence_surrender_weapons_checkBox">
                <property name="text">
                 <string>Surrender deadly weapons no later than:</string>
                </property>
               </widget>
              </item>
              <item row="2" column="4">
-              <widget class="QDateEdit" name="dateEdit">
+              <widget class="QDateEdit" name="domestic_violence_surrender_weapons_dateBox">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -434,7 +434,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1" colspan="4">
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="domestic_violence_residence_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>

@@ -59,7 +59,7 @@ class DomesticViolenceBondConditions:
     ordered: bool = False
     vacate_residence: bool = False
     residence_address: str = None
-    exclusive_possession: str = None
+    exclusive_possession_to: str = None
     surrender_weapons: bool = False
     surrender_weapons_date: str = None
 

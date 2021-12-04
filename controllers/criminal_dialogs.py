@@ -500,10 +500,12 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_domestic_violence_terms(self):
-        """Not proper format """
-        self.case_information.special_bond_conditions.domestic_violence_vacate = (
-            self.domestic_violence_vacate_checkBox.isChecked()
-        )
+        self.case_information.domestic_violence_conditions.ordered = self.domestic_violence
+        self.case_information.domestic_violence_conditions.vacate_residence = self.domestic_violence_vacate_checkBox.isChecked()
+        self.case_information.domestic_violence_conditions.residence_address = self.domestic_violence_residence_box.text()
+        self.case_information.domestic_violence_conditions.exclusive_possession_to = self.domestic_violence_exclusive_possession_to_box.text()
+        self.case_information.domestic_violence_conditions.surrender_weapons = self.domestic_violence_surrender_weapons_checkBox.isChecked()
+        self.case_information.domestic_violence_conditions.surrender_weapons_date = self.domestic_violence_surrender_weapons_dateBox.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def add_no_contact_terms(self):
