@@ -59,17 +59,20 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def update_bond_conditions(self):
         """Updates the bond conditions from the GUI(view) and saves it to the model."""
-        self.case_information.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
-        self.case_information.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
-        self.case_information.fta_bond_conditions.no_alcohol_drugs = self.no_alcohol_drugs_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = (
-                self.alcohol_drugs_assessment_checkBox.isChecked()
-        )
-        self.case_information.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.specialized_docket_type = (
-                self.specialized_docket_type_box.currentText()
-        )
+        self.case_information.fta_bond_conditions.bond_type = \
+            self.bond_type_box.currentText()
+        self.case_information.fta_bond_conditions.bond_amount = \
+            self.bond_amount_box.currentText()
+        self.case_information.fta_bond_conditions.no_alcohol_drugs = \
+            self.no_alcohol_drugs_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = \
+            self.alcohol_drugs_assessment_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.alcohol_test_kiosk = \
+            self.alcohol_test_kiosk_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.specialized_docket = \
+            self.specialized_docket_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.specialized_docket_type = \
+            self.specialized_docket_type_box.currentText()
 
     @logger.catch
     def check_add_special_conditions(self):

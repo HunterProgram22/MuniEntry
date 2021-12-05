@@ -142,9 +142,8 @@ class CriminalPleaDialog(BaseDialog):
         """Updates the costs and fines from the GUI(view) and saves it to the model."""
         self.case_information.court_costs.ordered = self.court_costs_box.currentText()
         self.case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.court_costs.balance_due_date = (
+        self.case_information.court_costs.balance_due_date = \
             self.balance_due_date.date().toString("MMMM dd, yyyy")
-        )
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -240,8 +239,9 @@ class CriminalPleaDialog(BaseDialog):
                                    "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
                                    "\n\n*Does not include possible bond forfeiture or other costs \n that " +
                                    "may be assessed as a result of prior actions in case. ")
-        total_fines_and_costs = (self.case_information.court_costs.amount +
-                                 self.case_information.total_fines) - self.case_information.total_fines_suspended
+        total_fines_and_costs = \
+            (self.case_information.court_costs.amount + self.case_information.total_fines) - \
+            self.case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()

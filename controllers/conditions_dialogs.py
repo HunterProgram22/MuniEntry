@@ -88,30 +88,24 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         """The method adds the data entered to the CommunityService object
         that is created when the dialog is initialized.
         SEE COMMENT in add_conditions about need to rest value to true."""
-        self.case_information.community_service.hours_of_service = (
+        self.case_information.community_service.hours_of_service = \
             self.community_service_hours_ordered_box.value()
-        )
-        self.case_information.community_service.days_to_complete_service = (
+        self.case_information.community_service.days_to_complete_service = \
             self.community_service_days_to_complete_box.currentText()
-        )
-        self.case_information.community_service.due_date_for_service = (
+        self.case_information.community_service.due_date_for_service = \
             self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
-        )
         self.case_information.community_service.ordered = True
 
     @logger.catch
     def add_license_suspension_details(self):
         """The method adds the data entered to the LicenseSuspension object
         that is created when the dialog is initialized."""
-        self.case_information.license_suspension.license_type = (
+        self.case_information.license_suspension.license_type = \
             self.license_type_box.currentText()
-        )
-        self.case_information.license_suspension.suspended_date = (
+        self.case_information.license_suspension.suspended_date = \
             self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
-        )
-        self.case_information.license_suspension.suspension_term = (
+        self.case_information.license_suspension.suspension_term = \
             self.term_of_suspension_box.currentText()
-        )
         if self.remedial_driving_class_checkBox.isChecked():
             self.case_information.license_suspension.remedial_driving_class_required = True
         else:
@@ -211,12 +205,18 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def add_vehicle_seizure_terms(self):
         self.case_information.vehicle_seizure.ordered = self.vehicle_seizure
-        self.case_information.vehicle_seizure.vehicle_make_model = self.vehicle_make_model_box.text()
-        self.case_information.vehicle_seizure.vehicle_license_plate = self.vehicle_license_plate_box.text()
-        self.case_information.vehicle_seizure.tow_to_residence = self.tow_to_residence_checkBox.isChecked()
-        self.case_information.vehicle_seizure.motion_to_return_vehicle = self.motion_to_return_vehicle_checkBox.isChecked()
-        self.case_information.vehicle_seizure.state_opposes = self.state_opposes_box.currentText()
-        self.case_information.vehicle_seizure.disposition_motion_to_return = self.disposition_motion_to_return_box.currentText()
+        self.case_information.vehicle_seizure.vehicle_make_model = \
+            self.vehicle_make_model_box.text()
+        self.case_information.vehicle_seizure.vehicle_license_plate = \
+            self.vehicle_license_plate_box.text()
+        self.case_information.vehicle_seizure.tow_to_residence = \
+            self.tow_to_residence_checkBox.isChecked()
+        self.case_information.vehicle_seizure.motion_to_return_vehicle = \
+            self.motion_to_return_vehicle_checkBox.isChecked()
+        self.case_information.vehicle_seizure.state_opposes = \
+            self.state_opposes_box.currentText()
+        self.case_information.vehicle_seizure.disposition_motion_to_return = \
+            self.disposition_motion_to_return_box.currentText()
 
     @logger.catch
     def add_other_condition_terms(self):
@@ -224,21 +224,28 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         entry.
         TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
         self.case_information.other_conditions.ordered = self.other_conditions
-        self.case_information.other_conditions.terms = self.other_conditions_plainTextEdit.toPlainText()
+        self.case_information.other_conditions.terms = \
+            self.other_conditions_plainTextEdit.toPlainText()
 
     @logger.catch
     def add_custodial_supervision_terms(self):
         self.case_information.custodial_supervision.ordered = self.custodial_supervision
-        self.case_information.custodial_supervision.supervisor = self.custodial_supervision_supervisor_box.text()
+        self.case_information.custodial_supervision.supervisor = \
+            self.custodial_supervision_supervisor_box.text()
 
     @logger.catch
     def add_domestic_violence_terms(self):
         self.case_information.domestic_violence_conditions.ordered = self.domestic_violence
-        self.case_information.domestic_violence_conditions.vacate_residence = self.domestic_violence_vacate_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.residence_address = self.domestic_violence_residence_box.text()
-        self.case_information.domestic_violence_conditions.exclusive_possession_to = self.domestic_violence_exclusive_possession_to_box.text()
-        self.case_information.domestic_violence_conditions.surrender_weapons = self.domestic_violence_surrender_weapons_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.surrender_weapons_date = self.domestic_violence_surrender_weapons_dateBox.date().toString("MMMM dd, yyyy")
+        self.case_information.domestic_violence_conditions.vacate_residence = \
+            self.domestic_violence_vacate_checkBox.isChecked()
+        self.case_information.domestic_violence_conditions.residence_address = \
+            self.domestic_violence_residence_box.text()
+        self.case_information.domestic_violence_conditions.exclusive_possession_to = \
+            self.domestic_violence_exclusive_possession_to_box.text()
+        self.case_information.domestic_violence_conditions.surrender_weapons = \
+            self.domestic_violence_surrender_weapons_checkBox.isChecked()
+        self.case_information.domestic_violence_conditions.surrender_weapons_date = \
+            self.domestic_violence_surrender_weapons_dateBox.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def add_no_contact_terms(self):
@@ -247,18 +254,14 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_admin_license_suspension_terms(self):
-        self.case_information.admin_license_suspension.ordered = (
+        self.case_information.admin_license_suspension.ordered = \
             self.admin_license_suspension
-        )
-        self.case_information.admin_license_suspension.objection = (
+        self.case_information.admin_license_suspension.objection = \
             self.admin_license_suspension_objection_box.currentText()
-        )
-        self.case_information.admin_license_suspension.disposition = (
+        self.case_information.admin_license_suspension.disposition = \
             self.admin_license_suspension_disposition_box.currentText()
-        )
-        self.case_information.admin_license_suspension.explanation = (
+        self.case_information.admin_license_suspension.explanation = \
             self.admin_license_suspension_explanation_box.text()
-        )
 
     @logger.catch
     def modify_view(self):
