@@ -13,10 +13,9 @@ sys.path.insert(0, parent_dir)
 import MuniEntry_app
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AddConditionsDialog,
     AmendOffenseDialog,
 )
-
+from controllers.conditions_dialogs import AddConditionsDialog
 
 """Functions for Testing"""
 
