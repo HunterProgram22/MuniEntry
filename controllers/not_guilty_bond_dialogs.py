@@ -5,7 +5,6 @@ from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import FTABondConditions
 from controllers.criminal_dialogs import CriminalPleaDialog, AddSpecialBondConditionsDialog
-from .helper_functions import create_entry
 
 
 class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
@@ -62,10 +61,14 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.case_information.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
         self.case_information.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
         self.case_information.fta_bond_conditions.no_alcohol_drugs = self.no_alcohol_drugs_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = self.alcohol_drugs_assessment_checkBox.isChecked()
+        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = (
+                self.alcohol_drugs_assessment_checkBox.isChecked()
+        )
         self.case_information.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
         self.case_information.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
+        self.case_information.fta_bond_conditions.specialized_docket_type = (
+                self.specialized_docket_type_box.currentText()
+        )
 
     @logger.catch
     def check_add_special_conditions(self):

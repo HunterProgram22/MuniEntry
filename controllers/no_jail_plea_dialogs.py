@@ -85,8 +85,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
                 5, column).widget().currentText()
             charge.fines_amount = self.charges_gridLayout.itemAtPosition(
                 6, column).widget().text()
-            if self.charges_gridLayout.itemAtPosition(
-                7, column).widget().text() == "":
+            if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
                 charge.fines_suspended = "0"
             else:
                 charge.fines_suspended = (

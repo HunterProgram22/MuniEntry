@@ -72,17 +72,20 @@ class AdminLicenseSuspensionConditions:
     disposition: str = None
     explanation: str = None
 
+
 @dataclass
 class NoContact:
     """No Contact conditions for Special Bond Conditions."""
     ordered: bool = False
     name: str = None
 
+
 @dataclass
 class CustodialSupervision:
     """Custodial Supervision conditions for Special Bond Conditions."""
     ordered: bool = False
     supervisor: str = None
+
 
 @dataclass
 class AmendOffenseDetails:

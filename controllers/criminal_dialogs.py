@@ -236,6 +236,7 @@ class CriminalPleaDialog(BaseDialog):
         self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
 
+    # noinspection PyUnresolvedReferences
     @logger.catch
     def show_costs_and_fines(self, _bool):
         """The _bool is the toggle from the clicked() of the button pressed. No
@@ -244,12 +245,13 @@ class CriminalPleaDialog(BaseDialog):
         message = QMessageBox()
         message.setIcon(QMessageBox.Information)
         message.setWindowTitle("Total Costs and Fines")
-        message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +
+        # noinspection PyUnresolvedReferences
+        message.setInformativeText("Costs: $" + str(self.case_information.court_costs.amount) +
                                    "\nFines: $" + str(self.case_information.total_fines) +
                                    "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
                                    "\n\n*Does not include possible bond forfeiture or other costs \n that " +
                                    "may be assessed as a result of prior actions in case. ")
-        total_fines_and_costs = (self.case_information.court_costs +
+        total_fines_and_costs = (self.case_information.court_costs.amount +
                                  self.case_information.total_fines) - self.case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
