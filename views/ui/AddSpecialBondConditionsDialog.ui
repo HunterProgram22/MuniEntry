@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1045</width>
+    <width>1217</width>
     <height>873</height>
    </rect>
   </property>
@@ -171,8 +171,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>984</width>
-           <height>850</height>
+           <width>1156</width>
+           <height>852</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
@@ -515,7 +515,7 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_8" columnstretch="1,2">
+            <layout class="QGridLayout" name="gridLayout_8">
              <item row="1" column="0">
               <widget class="QLabel" name="label_4">
                <property name="text">
@@ -523,21 +523,93 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>License Plate Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
+             <item row="1" column="1" colspan="3">
               <widget class="QLineEdit" name="vehicle_make_model_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="2">
+             <item row="1" column="4" colspan="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>License Plate Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="6" colspan="2">
+              <widget class="QLineEdit" name="vehicle_license_plate_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="4">
+              <widget class="QCheckBox" name="tow_to_residence_checkBox">
+               <property name="text">
+                <string>Permit Tow and Immobilization at Defendant's Residence</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="2">
+              <widget class="QCheckBox" name="motion_to_return_vehicle_checkBox">
+               <property name="text">
+                <string>Motion for return of vehicle Filed.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>The State:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3" colspan="2">
+              <widget class="QComboBox" name="state_opposes_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>objects</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>does not object</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="5" colspan="2">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Motion to Return Disposition:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="7">
+              <widget class="QComboBox" name="disposition_motion_to_return_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Denied</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Granted</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="8">
               <widget class="QLabel" name="label_27">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -560,20 +632,6 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="vehicle_license_plate_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QCheckBox" name="tow_to_residence_checkBox">
-               <property name="text">
-                <string>Permit Tow and Immobilization at Defendant's Residence</string>
                </property>
               </widget>
              </item>
@@ -752,8 +810,6 @@ font-weight: bold;</string>
   <tabstop>domestic_violence_surrender_weapons_checkBox</tabstop>
   <tabstop>domestic_violence_surrender_weapons_dateBox</tabstop>
   <tabstop>no_contact_name_box</tabstop>
-  <tabstop>vehicle_make_model_box</tabstop>
-  <tabstop>vehicle_license_plate_box</tabstop>
   <tabstop>other_conditions_plainTextEdit</tabstop>
   <tabstop>custodial_supervision_supervisor_box</tabstop>
   <tabstop>add_special_conditions_Button</tabstop>

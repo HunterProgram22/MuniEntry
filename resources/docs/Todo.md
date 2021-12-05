@@ -1,6 +1,7 @@
 APPLICATION TODO LIST for version 0.4.0
 * Updated dialogs/templates for Not Guilty per AB Notes.
 * Add Warning if add condition boxes are checked but conditions have not been added.
+* Increase length of Dep Clerk line in templates
 
 
 GENERAL PERIODIC CLEANUP

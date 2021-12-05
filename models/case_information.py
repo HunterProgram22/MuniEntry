@@ -109,6 +109,9 @@ class VehicleSeizure:
     vehicle_make_model: str = None
     vehicle_license_plate: str = None
     tow_to_residence: bool = False
+    motion_to_return_vehicle: bool = False
+    state_opposes: str = None
+    disposition_motion_to_return: str = None
 
 
 @dataclass
