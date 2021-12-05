@@ -1,7 +1,4 @@
 APPLICATION TODO LIST for version 0.4.0
-* Updated dialogs/templates for Not Guilty per AB Notes.
-* Add Warning if add condition boxes are checked but conditions have not been added.
-* Increase length of Dep Clerk line in templates
 
 
 GENERAL PERIODIC CLEANUP
@@ -17,6 +14,7 @@ FEATURE/CHANGE LIST - for Version 0.5.0
 * Add community control conditions checkboxes
 * Add Jail entries
 * Add Yellow Sheet templates (CC Violation)
+* Add Warning if add condition boxes are checked but conditions have not been added.
 
 
 DEPLOY TODO LIST
