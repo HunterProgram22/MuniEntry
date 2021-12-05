@@ -350,6 +350,18 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
+    def set_case_information_banner(self):
+        """Sets the banner on a view of the interface. It modifies label
+        widgets on the view to text that was entered."""
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.case_information.defendant.first_name,
+                defendant_last_name=self.case_information.defendant.last_name
+            )
+        )
+        self.case_number_label.setText(self.case_information.case_number)
+
+    @logger.catch
     def clear_amend_charge_fields(self):
         """Clears the fields in the view."""
         self.original_charge_box.clearEditText()

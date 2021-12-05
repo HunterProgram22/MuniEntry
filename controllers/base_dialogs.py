@@ -91,15 +91,3 @@ class BaseDialog(QDialog):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
         self.close_window()
-
-    @logger.catch
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-                )
-            )
-        self.case_number_label.setText(self.case_information.case_number)
