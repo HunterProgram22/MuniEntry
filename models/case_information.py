@@ -35,7 +35,7 @@ class CriminalCharge:
 @dataclass
 class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
-    that is then part of CaseInformation."""
+    that is then part of CriminalCaseInformation."""
     appearance_reason: str = None
     forfeit_bond: str = None
     issue_warrant: str = None
@@ -147,11 +147,11 @@ class CourtCosts:
 
 
 @dataclass
-class CaseInformation:
+class CriminalCaseInformation:
     """This object stores all the information for a case both at inception and
     as it is populated through the application.
     TODO: Should also still refactor amend_offense_details to object of dataclass."""
-    judicial_officer: object
+    judicial_officer: object = None
     case_number: str = None
     plea_trial_date: str = None
     appearance_reason: str = None

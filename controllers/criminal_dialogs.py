@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from models.case_information import (
-    CaseInformation,
+    CriminalCaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
 )
@@ -57,7 +57,7 @@ class CriminalPleaDialog(BaseDialog):
             self.charges_gridLayout.__class__ = ChargesGrid
         except AttributeError:
             pass
-        self.case_information = CaseInformation(self.judicial_officer)
+        self.case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.set_statute_and_offense_choice_boxes()
         self.delete_button_list = []
@@ -69,8 +69,8 @@ class CriminalPleaDialog(BaseDialog):
         """Uses the case number selected to get the case object from main and load case data."""
         if self.case.case_number is not None:
             self.case_number_lineEdit.setText(self.case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
+            self.defendant_first_name_lineEdit.setText(self.case.defendant.first_name)
+            self.defendant_last_name_lineEdit.setText(self.case.defendant.last_name)
             self.add_caseloaddata_to_case_information()
 
     def add_caseloaddata_to_case_information(self):

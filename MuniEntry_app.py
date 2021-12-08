@@ -9,12 +9,12 @@ import sys
 
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from PyQt5.QtSql import QSqlQuery
+
 from PyQt5 import QtGui
 
 from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
-from models.case_information import CaseLoadData
+from models.data_loader import CriminalCaseSQLRetriever
 from views.main_window_ui import Ui_MainWindow
 from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -105,43 +105,14 @@ class Window(QMainWindow, Ui_MainWindow):
             message.exec()
         else:
             self.arraignments_database.open()
-            case_to_load = self.get_case_to_load()
-            dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+            if self.arraignment_cases_box.currentText() == "":
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer)
+            else:
+                database = self.arraignments_database
+                case_number = self.arraignment_cases_box.currentText()
+                case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
             dialog.exec()
-
-
-    @logger.catch
-    def get_case_to_load(self):
-        """Query arraignment_list based on case number to return the data to load for the
-        dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name.
-        query.finish() is called to avoid memory leaks."""
-        key = self.arraignment_cases_box.currentText()
-        query = QSqlQuery(self.arraignments_database)
-        query_string = f"""
-            SELECT *
-            FROM cases
-            WHERE case_number = '{key}'
-            """
-        query.prepare(query_string)
-        query.bindValue(key, key)
-        charges_list = []
-        case_number = None
-        query.exec()
-        while query.next():
-            if case_number is None:
-                case_number = query.value(1)
-                defendant_last_name = query.value(2)
-                defendant_first_name = query.value(3)
-                fra_in_file = query.value(7)
-            offense = query.value(4)
-            statute = query.value(5)
-            degree = query.value(6)
-            new_charge = (offense, statute, degree)
-            charges_list.append(new_charge)
-        query.finish()
-        if self.arraignment_cases_box.currentText() == "":
-            return CaseLoadData()
-        return CaseLoadData(case_number, defendant_last_name, defendant_first_name, charges_list, fra_in_file)
 
 
 @logger.catch
