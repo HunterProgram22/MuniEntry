@@ -17,7 +17,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, case, parent=None):
+    def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
@@ -78,7 +78,7 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
     """The dialog inherits from the CriminalPleaDialog(controller) and the
     Ui_LeapPleaShortDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, case, parent=None):
+    def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)

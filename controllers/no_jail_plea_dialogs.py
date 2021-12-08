@@ -21,7 +21,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalPleaDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, case, parent=None):
+    def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.add_conditions_dict = {
             self.license_suspension_checkBox: self.case_information.license_suspension.ordered,

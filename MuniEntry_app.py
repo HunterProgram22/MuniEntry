@@ -15,6 +15,7 @@ from PyQt5 import QtGui
 from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
+from models.case_information import CriminalCaseInformation
 from views.main_window_ui import Ui_MainWindow
 from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -106,7 +107,8 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             self.arraignments_database.open()
             if self.arraignment_cases_box.currentText() == "":
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer)
+                case_to_load = CriminalCaseInformation()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
             else:
                 database = self.arraignments_database
                 case_number = self.arraignment_cases_box.currentText()

@@ -1,5 +1,5 @@
 APPLICATION TODO LIST for version 0.4.0
-
+* Bug exists for FRA - if fra_in_file is "No" and fra_in_court is "N/A" nothing shows in entry. 
 
 GENERAL PERIODIC CLEANUP
 * Move general methods to helper functions
