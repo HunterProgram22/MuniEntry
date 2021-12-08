@@ -84,6 +84,7 @@ class CriminalPleaDialog(BaseDialog):
             self.add_charge_to_grid()
 
     def close_event(self):
+        """This method closes the databases before calling the base dialog close_event."""
         close_databases()
         super().close_event()
 
@@ -100,6 +101,8 @@ class CriminalPleaDialog(BaseDialog):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
 
     def connect_signals_to_slots(self):
+        """This method extends the base_dialog method to add additional signals
+        and slots to be connected."""
         super().connect_signals_to_slots()
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
@@ -349,6 +352,8 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """This method overrides the base_dialog method to connect signals and
+        slots specific to the amend_offense dialog."""
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
         self.amend_offense_Button.pressed.connect(self.amend_offense)
         self.cancel_Button.pressed.connect(self.close_event)
@@ -388,11 +393,6 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
                         0, columns).widget().text() == self.current_offense:
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
-
-    @logger.catch
-    def close_event(self):
-        """Uses subclass of close_event so that it doesn't close databases."""
-        self.close_window()
 
 
 if __name__ == "__main__":

@@ -21,14 +21,6 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
         self.fta_bond_conditions = FTABondConditions()
 
     @logger.catch
-    def modify_view(self):
-        super().modify_view()
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        super().connect_signals_to_slots()
-
-    @logger.catch
     def update_case_information(self):
         self.update_party_information()
         self.update_fta_conditions()

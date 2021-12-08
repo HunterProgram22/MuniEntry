@@ -47,6 +47,8 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
         super().connect_signals_to_slots()
         self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)

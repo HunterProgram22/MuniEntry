@@ -26,6 +26,8 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        there are no fields to clear or create_entry_button to press."""
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
@@ -131,12 +133,6 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
             QDate.currentDate().addDays(days_to_complete)
         )
 
-    @logger.catch
-    def close_event(self):
-        """This close event is called instead of the parent class close_event because the databases
-        need to remain open and the parent class close_event closes the databases."""
-        self.close_window()
-
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
@@ -155,6 +151,8 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """This method overrides the base_dialog method because there are no
+        fields to clear or create_entry button to press."""
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_special_conditions_Button.pressed.connect(self.add_special_conditions)
         self.add_special_conditions_Button.released.connect(self.close_window)

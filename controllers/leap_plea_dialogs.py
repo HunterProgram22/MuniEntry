@@ -29,6 +29,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
         super().connect_signals_to_slots()
         self.time_to_complete_box.currentTextChanged.connect(self.set_sentencing_date)
 
