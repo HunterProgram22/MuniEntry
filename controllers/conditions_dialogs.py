@@ -266,8 +266,6 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         """Modifies the view that is created by the UI file. Gets the total number of charges
         from the charges in charges_list then loops through the charges_list and adds parts of
         each charge to the view."""
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint)
         column = self.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)

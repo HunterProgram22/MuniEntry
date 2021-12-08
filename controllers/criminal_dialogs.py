@@ -60,6 +60,7 @@ class CriminalPleaDialog(BaseDialog):
         self.case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.set_statute_and_offense_choice_boxes()
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.delete_button_list = []
         self.amend_button_list = []
         self.load_arraignment_data()
@@ -95,10 +96,6 @@ class CriminalPleaDialog(BaseDialog):
         self.offense_choice_box.addItems(create_offense_list())
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
-
-    @logger.catch
-    def modify_view(self):
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
 
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
@@ -345,8 +342,6 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     def modify_view(self):
         """The modify view sets the original charge based on the item in the main dialog
         for which amend button was pressed."""
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint)
         self.original_charge_box.setCurrentText(self.current_offense)
         self.amended_charge_box.addItems(create_offense_list())
 
