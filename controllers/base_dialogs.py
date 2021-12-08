@@ -32,7 +32,7 @@ class BaseDialog(QDialog):
         self.setupUI. Place items in this method that can't be added
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        pass
 
     @logger.catch
     def connect_signals_to_slots(self):

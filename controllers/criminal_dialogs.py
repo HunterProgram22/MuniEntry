@@ -95,6 +95,10 @@ class CriminalPleaDialog(BaseDialog):
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
 
+    @logger.catch
+    def modify_view(self):
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
         self.add_charge_Button.clicked.connect(self.add_charge_process)
