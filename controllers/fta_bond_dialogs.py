@@ -36,10 +36,6 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
 
     @logger.catch
-    def update_party_information(self):
-        super().update_party_information()
-
-    @logger.catch
     def update_fta_conditions(self):
         """Updates the fta conditions from the GUI(view) and saves it to the model."""
         self.fta_bond_conditions.appearance_reason = self.appearance_reason_box.currentText()

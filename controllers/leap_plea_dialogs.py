@@ -36,10 +36,6 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     def update_case_information(self):
         self.update_party_information()
         self.add_dispositions_and_fines()
-
-    @logger.catch
-    def update_party_information(self):
-        super().update_party_information()
         self.case_information.sentencing_date = (
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
