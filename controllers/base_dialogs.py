@@ -18,13 +18,13 @@ class BaseDialog(QDialog):
         the view to create the UI."""
         super().__init__(parent)
         self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
+        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint)
         self.judicial_officer = judicial_officer
         self.case = case
         self.setupUi(self)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.doc = None
-        self.docname = None
 
     @logger.catch
     def modify_view(self):
@@ -33,8 +33,6 @@ class BaseDialog(QDialog):
         directly in QtDesigner (or are more easily added later) so that they
         don't need to be changed in the view file each time pyuic5 is run."""
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint)
 
     @logger.catch
     def connect_signals_to_slots(self):
