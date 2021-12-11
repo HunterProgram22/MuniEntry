@@ -22,14 +22,28 @@ class CasePartyUpdater:
         self.case_information.case_number = self.case_number_lineEdit.text()
         self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
-    @logger.catchc
+    @logger.catch
     def set_party_information(self):
         """Updates the party information from the GUI(view) and saves it to the model."""
         self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
 
-class BaseDialog(QDialog, CasePartyUpdater):
+class DialogCleanUp:
+    @logger.catch
+    def close_window(self):
+        """Function connected to a button to close the window. Can be connected
+        to any button press/click/release to close a window."""
+        self.close()
+
+    @logger.catch
+    def close_event(self):
+        """Place any cleanup items (i.e. close_databases) here that should be
+        called when the entry is created and the dialog closed."""
+        self.close_window()
+
+
+class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
@@ -65,8 +79,6 @@ class BaseDialog(QDialog, CasePartyUpdater):
         self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
         self.create_entry_Button.pressed.connect(self.create_entry_process)
 
-    # User input and update
-
     # Processes
     @logger.catch
     def clear_case_information_fields(self):
@@ -87,16 +99,3 @@ class BaseDialog(QDialog, CasePartyUpdater):
             return None
         create_entry(self)
         self.close_event()
-
-    # Clean-up
-    @logger.catch
-    def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        self.close_window()
-
-    @logger.catch
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window."""
-        self.close()
