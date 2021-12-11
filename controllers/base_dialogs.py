@@ -48,6 +48,9 @@ class BaseDialog(QDialog):
         make sure all information is current. The subclass version of the method
         will call updates to specific portions of the view for that dialog."""
         self.update_party_information()
+        self.set_case_number_and_date()
+
+    def set_case_number_and_date(self):
         self.case_information.case_number = self.case_number_lineEdit.text()
         self.case_information.plea_trial_date = \
             self.plea_trial_date.date().toString("MMMM dd, yyyy")

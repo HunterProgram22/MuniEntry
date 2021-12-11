@@ -1,4 +1,5 @@
 """The controller module for the LEAP plea dialog."""
+from controllers.base_dialogs import BaseDialog
 from loguru import logger
 
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
@@ -40,19 +41,19 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def update_case_information(self):
-        self.update_party_information()
+        super().update_case_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
         self.check_add_special_conditions()
 
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = \
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
+    # @logger.catch
+    # def update_party_information(self):
+    #     """Updates the party information from the GUI(view) and saves it to the model."""
+    #     self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+    #     self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+    #     self.case_information.case_number = self.case_number_lineEdit.text()
+    #     self.case_information.plea_trial_date = \
+    #         self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def connect_signals_to_slots(self):

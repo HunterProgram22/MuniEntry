@@ -111,18 +111,18 @@ def test_leap_plea_court_complete_button_with_arraignment_case(app, qtbot):
     QtBot.mouseClick(dialog.guilty_all_Button, QtCore.Qt.LeftButton)
     QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
 
-def test_fta_bond_button(app, qtbot):
-    QtBot.mouseClick(app.rohrer_radioButton, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.FTABondButton, QtCore.Qt.LeftButton)
-    dialog = start_FTABondDialog(qtbot, app.judicial_officer, app.case_to_load)
-    assert dialog.windowTitle() == "FTA Bond Case Information"
-
-def test_fta_bond_button_with_arraignment_case(app, qtbot):
-    QtBot.mouseClick(app.rohrer_radioButton, QtCore.Qt.LeftButton)
-    QtBot.keyClicks(app.arraignment_cases_box, '21TRC08418')
-    QtBot.mouseClick(app.FTABondButton, QtCore.Qt.LeftButton)
-    dialog = start_FTABondDialog(qtbot, app.judicial_officer, app.case_to_load)
-    assert dialog.windowTitle() == "FTA Bond Case Information"
+# def test_fta_bond_button(app, qtbot):
+#     QtBot.mouseClick(app.rohrer_radioButton, QtCore.Qt.LeftButton)
+#     QtBot.mouseClick(app.FTABondButton, QtCore.Qt.LeftButton)
+#     dialog = start_FTABondDialog(qtbot, app.judicial_officer, app.case_to_load)
+#     assert dialog.windowTitle() == "FTA Bond Case Information"
+#
+# def test_fta_bond_button_with_arraignment_case(app, qtbot):
+#     QtBot.mouseClick(app.rohrer_radioButton, QtCore.Qt.LeftButton)
+#     QtBot.keyClicks(app.arraignment_cases_box, '21TRC08418')
+#     QtBot.mouseClick(app.FTABondButton, QtCore.Qt.LeftButton)
+#     dialog = start_FTABondDialog(qtbot, app.judicial_officer, app.case_to_load)
+#     assert dialog.windowTitle() == "FTA Bond Case Information"
 
 def test_not_guilty_bond_button(app, qtbot):
     QtBot.mouseClick(app.pelanda_radioButton, QtCore.Qt.LeftButton)
