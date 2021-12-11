@@ -46,6 +46,15 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
         self.check_add_special_conditions()
 
     @logger.catch
+    def update_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = \
+            self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
     def connect_signals_to_slots(self):
         """The method connects additional signals to slots. That are not
         included in the BaseDialog."""

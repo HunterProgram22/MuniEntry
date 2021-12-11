@@ -42,6 +42,15 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
 
+    @logger.catch
+    def update_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = \
+            self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(
             self, add_allied_box=False, add_delete_button=True)
@@ -90,6 +99,15 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
     def update_case_information(self):
         self.update_party_information()
         self.add_dispositions_and_fines()
+
+    @logger.catch
+    def update_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = \
+            self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
 
 if __name__ == "__main__":
