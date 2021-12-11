@@ -12,6 +12,8 @@ class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
+
+    # Properties, vars and constructors
     def __init__(self, judicial_officer, case=None, parent=None):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
@@ -42,6 +44,7 @@ class BaseDialog(QDialog):
         self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
         self.create_entry_Button.pressed.connect(self.create_entry_process)
 
+    # User input and update
     @logger.catch
     def update_case_information(self):
         """"This method may be called in multiple places when a button is pressed to
@@ -61,12 +64,7 @@ class BaseDialog(QDialog):
         self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
-    @logger.catch
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window."""
-        self.close()
-
+    # Processes
     @logger.catch
     def clear_case_information_fields(self):
         """Clears the text in the fields in the top case information frame and resets the cursor
@@ -87,8 +85,15 @@ class BaseDialog(QDialog):
         create_entry(self)
         self.close_event()
 
+    # Clean-up
     @logger.catch
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
         self.close_window()
+
+    @logger.catch
+    def close_window(self):
+        """Function connected to a button to close the window. Can be connected
+        to any button press/click/release to close a window."""
+        self.close()
