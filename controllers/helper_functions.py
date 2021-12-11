@@ -5,7 +5,10 @@ from datetime import date, timedelta
 from docxtpl import DocxTemplate
 from loguru import logger
 
+# from views.custom_widgets import RequiredBox
+
 from settings import SAVE_PATH
+
 
 @logger.catch
 def create_entry(dialog):
@@ -15,6 +18,7 @@ def create_entry(dialog):
     docname = set_document_name(dialog)
     doc.save(SAVE_PATH + docname)
     os.startfile(SAVE_PATH + docname)
+
 
 
 def set_document_name(dialog):

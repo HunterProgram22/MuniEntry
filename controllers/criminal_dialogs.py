@@ -1,35 +1,24 @@
-"""The module that contains all controller classes that are commmon to criminal
+"""The module that contains all controller classes that are common to criminal
 cases (criminal includes traffic). """
 from loguru import logger
 
-from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtCore
-from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QMessageBox
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from models.case_information import (
-    CaseInformation,
+    CriminalCaseInformation,
     CriminalCharge,
     AmendOffenseDetails,
-    LicenseSuspensionTerms,
-    CommunityControlTerms,
-    CommunityServiceTerms,
-    OtherConditionsTerms,
 )
-from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from views.custom_widgets import (
+    ChargesGrid,
     PleaComboBox,
-    FineLineEdit,
-    DeleteButton,
-    AmendButton,
-    AlliedCheckbox,
-    RequiredBox,
 )
+from controllers.base_dialogs import BaseDialog
 from resources.db.create_data_lists import create_offense_list, create_statute_list
 from settings import CHARGES_DATABASE
-from .helper_functions import create_entry
 
 
 @logger.catch
@@ -54,150 +43,26 @@ def close_databases():
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
 
-class BaseCriminalDialog(QDialog):
-    """This class is a base class to provide methods that are used by some criminal controllers
-     in the application. This class is never instantiated as its own dialog, but the init contains
-     the setup for all inherited class controllers."""
+class CriminalPleaDialog(BaseDialog):
+    """This class subclasses the BaseDialog for methods that are specific to
+    dialogs/entries that require entering a plea and finding in a case.
+
+    The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
+    custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
+    in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, case=None, parent=None):
-        """Databases must be opened first in order for them to be accessed
-        when the UI is built so it can populate fields.The setupUI calls to
-        the view to create the UI."""
         open_databases()
-        super().__init__(parent)
-        self.judicial_officer = judicial_officer
-        self.case = case
-        self.setupUi(self)
-        self.modify_view()
-        self.connect_signals_to_slots()
-        self.doc = None
-        self.docname = None
-
-    @logger.catch
-    def modify_view(self):
-        """The modify view method updates the view that is created on init with
-        self.setupUI. Place items in this method that can't be added
-        directly in QtDesigner (or are more easily added later) so that they
-        don't need to be changed in the view file each time pyuic5 is run."""
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-            QtCore.Qt.WindowMaximizeButtonHint)
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """At present this includes buttons common to all criminal dialogs. Buttons that are
-        specific to only a certain dialog are added in the subclassed version of the method."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
-
-    @logger.catch
-    def update_case_information(self):
-        """"This method may be called in multiple places when a button is pressed to
-        make sure all information is current. The subclass version of the method
-        will call updates to specific portions of the view for that dialog."""
-        self.update_party_information()
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.plea_trial_date = (
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
-        )
-
-    @logger.catch
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window."""
-        close_databases()
-        self.close()
-
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top case information frame and resets the cursor
-        to the first text entry box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of functions that are called when the create_entry_Button is pressed()
-        on a criminal dialog. The order is important to make sure the information is
-        updated before the entry is created."""
-        self.update_case_information()
-        if self.check_plea_and_findings() is None:
-            return None
-        create_entry(self)
-        self.close_event()
-
-    def check_plea_and_findings(self):
-        """Shows warning if no plea or findings are entered. Checks one at a time so unless all
-        fields have a plea and finding you will get the warning until they are filled in.
-
-        MOVE: Should this be in CriminalPleaDialog or a decorator or standalone function???"""
-        row_plea, row_finding = self.set_plea_and_finding_rows()
-        column = 2
-        loop_counter = 0
-        while loop_counter < self.charges_gridLayout.columnCount():
-            try:
-                if self.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
-                    RequiredBox("You must enter a plea.")
-                    return None
-                if self.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
-                    RequiredBox("You must enter a finding.")
-                    return None
-            except AttributeError:
-                pass
-            column += 2
-            loop_counter += 1
-        return "Pass"
-
-    def set_plea_and_finding_rows(self):
-        """The initial values of row_plea and row_finding are the common rows, and allow this to
-        return both values even if there is no finding row (i.e. LEAP Dialog).
-        TODO: Probably better way to do this to have it pass when no finding row on dialog."""
-        row_plea = 4
-        row_finding = 5
-        for row in range(self.charges_gridLayout.rowCount()):
-            if self.charges_gridLayout.itemAtPosition(row, 0).widget().text() == "Plea:":
-                row_plea = row
-            if self.charges_gridLayout.itemAtPosition(row, 0).widget().text() == "Finding:":
-                row_finding = row
-        return row_plea, row_finding
-
-    @logger.catch
-    def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        close_databases()
-        self.close_window()
-
-    @logger.catch
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-                )
-            )
-        self.case_number_label.setText(self.case_information.case_number)
-
-
-class CriminalPleaDialog(BaseCriminalDialog):
-    """This class subclasses the BaseCriminalDialog for methods that are specific to
-    dialogs/entries that require entering a plea and finding in a case."""
-    def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
-        self.case_information = CaseInformation(self.judicial_officer)
+        try:
+            self.charges_gridLayout.__class__ = ChargesGrid
+        except AttributeError:
+            pass
+        self.case_information = CriminalCaseInformation(self.judicial_officer)
+        self.criminal_charge = None
+        self.set_statute_and_offense_choice_boxes()
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.delete_button_list = []
         self.amend_button_list = []
-        self.criminal_charge = None
         self.load_arraignment_data()
 
     @logger.catch
@@ -205,23 +70,24 @@ class CriminalPleaDialog(BaseCriminalDialog):
         """Uses the case number selected to get the case object from main and load case data."""
         if self.case.case_number is not None:
             self.case_number_lineEdit.setText(self.case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.case.defendant_first_name)
-            self.defendant_last_name_lineEdit.setText(self.case.defendant_last_name)
-            self.add_charge_from_caseloaddata()
+            self.defendant_first_name_lineEdit.setText(self.case.defendant.first_name)
+            self.defendant_last_name_lineEdit.setText(self.case.defendant.last_name)
+            self.add_caseloaddata_to_case_information()
 
-    def add_charge_from_caseloaddata(self):
-        """Loads the data from the case object that is created from the sql table."""
+    def add_caseloaddata_to_case_information(self):
+        """Loads the data from the case object that is created from the sql table.
+        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
         for _index, charge in enumerate(self.case.charges_list):
             self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute, \
+            (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
-            # self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS
             self.case_information.add_charge_to_list(self.criminal_charge)
-            self.add_charge_to_view()
-            self.statute_choice_box.setFocus()
+            self.add_charge_to_grid()
 
-    def modify_view(self):
-        super().modify_view()
+    def close_event(self):
+        """This method closes the databases before calling the base dialog close_event."""
+        close_databases()
+        super().close_event()
 
     def set_statute_and_offense_choice_boxes(self):
         """This method is set in CriminalPleaDialog class but called in subclasses because
@@ -232,12 +98,20 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.offense_choice_box.setCurrentText("")
 
     def connect_signals_to_slots(self):
+        """This method extends the base_dialog method to add additional signals
+        and slots to be connected."""
         super().connect_signals_to_slots()
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        self.guilty_all_Button.pressed.connect(self.set_all_plea_and_findings)
+        try:
+            self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        except AttributeError:
+            pass
+
+    def set_plea_and_findings_process(self):
+        self.charges_gridLayout.set_all_plea_and_findings(self)
 
     def update_case_information(self):
         super().update_case_information()
@@ -246,57 +120,53 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
+    @logger.catch
     def add_dispositions_and_fines(self):
-        """This method is specfic to each subclass."""
+        """Row 3 - plea when no allied checkbox added. Column starts at 1
+        because column 0 is labels. The grid adds an empty column every time a
+        charge is added, could increment by 2, but by incrementing by 1 and
+        checking for None it ensures it will catch any weird add/delete.
+        This method only adds the plea and is used in LEAP short and long and
+        Not Guilty. No Jail Plea overrides this to include findings and fines.
+        TODO: Rename and refactor out magic numbers."""
+        column = 1
+        row = 3
+        for index, charge in enumerate(self.case_information.charges_list):
+            while self.charges_gridLayout.itemAtPosition(row, column) is None:
+                column += 1
+            if isinstance(self.charges_gridLayout.itemAtPosition(
+                          row, column).widget(), PleaComboBox):
+                charge.plea = self.charges_gridLayout.itemAtPosition(
+                              row, column).widget().currentText()
+                column += 1
+            column += 1
 
     @logger.catch
     def update_costs_and_fines_information(self):
         """Updates the costs and fines from the GUI(view) and saves it to the model."""
-        self.case_information.court_costs_ordered = self.court_costs_box.currentText()
-        self.case_information.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.balance_due_date = (
+        self.case_information.court_costs.ordered = self.court_costs_box.currentText()
+        self.case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.case_information.court_costs.balance_due_date = \
             self.balance_due_date.date().toString("MMMM dd, yyyy")
-        )
-
-    @logger.catch
-    def check_add_conditions(self):
-        """Checks to see what conditions in the Add Conditions box are checked and then
-        transfers the information from the conditions to case_information model if the
-        box is checked."""
-        add_conditions_dict = {
-            self.license_suspension_checkBox: \
-                self.case_information.license_suspension_details.license_suspension_ordered,
-            self.community_control_checkBox: \
-                self.case_information.community_control_terms.community_control_required,
-            self.community_service_checkBox: \
-                self.case_information.community_service_terms.community_service_ordered,
-            self.other_conditions_checkBox: \
-                self.case_information.other_conditions_details.other_conditions_ordered,
-        }
-        for key, value in add_conditions_dict.items():
-            if key.isChecked():
-                value = True
-            else:
-                value = False
 
     @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the case type (moving, non-moving, criminal) and
-        then adds it to any fines that are in the fines_amount box and substracts fines in the
+        then adds it to any fines that are in the fines_amount box and subtracts fines in the
         fines_suspended box. The loop stops when a case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
         not used but is required to unpack enumerate()."""
-        self.case_information.court_costs = 0
+        self.case_information.court_costs.amount = 0
         if self.court_costs_box.currentText() == "Yes":
             for _index, charge in enumerate(self.case_information.charges_list):
-                if self.case_information.court_costs == 124:
+                if self.case_information.court_costs.amount == 124:
                     break
                 if charge.type == "Moving Traffic":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 124)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 124)
                 elif charge.type == "Criminal":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 114)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 114)
                 elif charge.type == "Non-moving Traffic":
-                    self.case_information.court_costs = max(self.case_information.court_costs, 95)
+                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 95)
         total_fines = 0
         try:
             for _index, charge in enumerate(self.case_information.charges_list):
@@ -320,11 +190,12 @@ class CriminalPleaDialog(BaseCriminalDialog):
         updated before the charge is added and the data cleared from the fields.
 
         The _bool is passed as an argument through clicked() but not used."""
-        self.add_charge()
+        self.add_charge_to_case_information()
+        self.add_charge_to_grid()
         self.clear_charge_fields()
 
     @logger.catch
-    def add_charge(self):
+    def add_charge_to_case_information(self):
         """The offense, statute and degree are added to the view by the method
         add_charge_to_view, not this method. This method is triggered on
         clicked() of the Add Charge button."""
@@ -334,38 +205,10 @@ class CriminalPleaDialog(BaseCriminalDialog):
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.type = self.set_offense_type()
         self.case_information.add_charge_to_list(self.criminal_charge)
-        self.add_charge_to_view()
+
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
-
-    @logger.catch
-    def add_charge_to_view(self):
-        """Adds the charge that was added through add_charge method to the
-        view/GUI. The first row=0 because of python zero-based indexing. The
-        column is set at one more than the current number of columns because
-        it is the column to which the charge will be added.
-
-        :added_charge_index: - The added charge index is one less than the
-        total charges in charges_list because of zero-based indexing. Thus, if
-        there is one charge, the index of the charge to be added to the
-        charge_dict from the charges_list is 0.
-
-        The python builtin vars function returns the __dict__ attribute of
-        the object."""
-        row = 0
-        column = self.charges_gridLayout.columnCount() + 1
-        added_charge_index = len(self.case_information.charges_list) - 1
-        charge = vars(self.case_information.charges_list[added_charge_index])
-        self.charges_gridLayout.addWidget(QLabel(charge['offense']), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(QLabel(charge['statute']), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(QLabel(charge['degree']), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(AlliedCheckbox(), row, column)
-        row += 1
-        self.charges_gridLayout.addWidget(PleaComboBox(), row, column)
-        row += 1
-        return row, column
 
     def clear_charge_fields(self):
         """Clears the fields that are used for adding a charge. The
@@ -373,22 +216,6 @@ class CriminalPleaDialog(BaseCriminalDialog):
         method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
-
-    def add_delete_button_to_view(self, row, column):
-        """This method is called in the dialog subclass so that it is inserted in the
-        correct row."""
-        delete_button = DeleteButton()
-        self.delete_button_list.append(delete_button)
-        delete_button.pressed.connect(self.delete_charge)
-        self.charges_gridLayout.addWidget(delete_button, row, column)
-
-    def add_amend_button_to_view(self, row, column):
-        """This method is called in the dialog subclass so that it is inserted in the
-        correct row."""
-        amend_button = AmendButton()
-        self.amend_button_list.append(amend_button)
-        amend_button.clicked.connect(self.start_amend_offense_dialog)
-        self.charges_gridLayout.addWidget(amend_button, row, column)
 
     @logger.catch
     def delete_charge(self):
@@ -398,59 +225,10 @@ class CriminalPleaDialog(BaseCriminalDialog):
         index = self.delete_button_list.index(self.sender())
         del self.case_information.charges_list[index]
         del self.delete_button_list[index]
-        self.delete_charge_from_view()
+        self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
 
-    @logger.catch
-    def delete_charge_from_view(self):
-        """Uses the delete_button that is indexed to the column to delete the
-        QLabels for the charge."""
-        index = self.charges_gridLayout.indexOf(self.sender())
-        column = self.charges_gridLayout.getItemPosition(index)[1]
-        for row in range(self.charges_gridLayout.rowCount()):
-            layout_item = self.charges_gridLayout.itemAtPosition(row, column)
-            if layout_item is not None:
-                layout_item.widget().deleteLater()
-                self.charges_gridLayout.removeItem(layout_item)
-
-    @logger.catch
-    def set_all_plea_and_findings(self):
-        """Sets the plea and findings boxes for all charges currently
-        in the charges_gridLayout."""
-        if self.sender() == self.guilty_all_Button:
-            plea = "Guilty"
-        elif self.sender() == self.no_contest_all_Button:
-            plea = "No Contest"
-        for column in range(self.charges_gridLayout.columnCount()):
-            if self.charges_gridLayout.itemAtPosition(4, column) is not None:
-                if isinstance(self.charges_gridLayout.itemAtPosition(
-                        4, column).widget(), PleaComboBox):
-                    self.charges_gridLayout.itemAtPosition(
-                        4, column).widget().setCurrentText(plea)
-                    if self.charges_gridLayout.itemAtPosition(
-                            3, column).widget().isChecked():
-                        self.charges_gridLayout.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.charges_gridLayout.itemAtPosition(
-                            5, column).widget().setCurrentText("Guilty")
-                column += 1
-            else:
-                column += 1
-        self.set_cursor_to_fine_line_edit()
-
-    @logger.catch
-    def set_cursor_to_fine_line_edit(self):
-        """Moves the cursor to the FineLineEdit box. Row is set to 6, but for different dialogs
-        this could end up changing."""
-        for column in range(self.charges_gridLayout.columnCount()):
-            if self.charges_gridLayout.itemAtPosition(4, column) is not None:
-                if isinstance(self.charges_gridLayout.itemAtPosition(
-                        6, column).widget(), FineLineEdit):
-                    self.charges_gridLayout.itemAtPosition(6, column).widget().setFocus()
-                    break
-            column += 1
-
+    # noinspection PyUnresolvedReferences
     @logger.catch
     def show_costs_and_fines(self, _bool):
         """The _bool is the toggle from the clicked() of the button pressed. No
@@ -459,13 +237,15 @@ class CriminalPleaDialog(BaseCriminalDialog):
         message = QMessageBox()
         message.setIcon(QMessageBox.Information)
         message.setWindowTitle("Total Costs and Fines")
-        message.setInformativeText("Costs: $" + str(self.case_information.court_costs) +
-            "\nFines: $" + str(self.case_information.total_fines) +
-            "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
-            "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-            "may be assesed as a result of prior actions in case. ")
-        total_fines_and_costs = (self.case_information.court_costs +
-            self.case_information.total_fines) - self.case_information.total_fines_suspended
+        # noinspection PyUnresolvedReferences
+        message.setInformativeText("Costs: $" + str(self.case_information.court_costs.amount) +
+                                   "\nFines: $" + str(self.case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
+                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
+                                   "may be assessed as a result of prior actions in case. ")
+        total_fines_and_costs = \
+            (self.case_information.court_costs.amount + self.case_information.total_fines) - \
+            self.case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
@@ -515,6 +295,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
     def set_statute_and_offense(self, key):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
+        field = None
         if self.freeform_entry_checkBox.isChecked():
             return None
         if self.sender() == self.statute_choice_box:
@@ -542,150 +323,7 @@ class CriminalPleaDialog(BaseCriminalDialog):
             break
 
 
-class AddConditionsDialog(BaseCriminalDialog, Ui_AddConditionsDialog):
-    """The AddConditionsDialog is created when the addConditionsButton is clicked on
-    the NoJailPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the NJPD screen."""
-    @logger.catch
-    def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.case_information.charges_list # Show charges on banner
-        super().__init__(self)
-        self.case_information = main_dialog.case_information
-        self.community_service = main_dialog.community_service_checkBox.isChecked()
-        self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
-        self.community_control = main_dialog.community_control_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.enable_condition_frames()
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_service_date
-        )
-
-    @logger.catch
-    def modify_view(self):
-        """Modifies the view of AddConditionsDialog that is created by the UI
-        file. Gets the total number of charges from the charges in charges_list then
-        loops through the charges_list and adds parts of each charge to the
-        view."""
-        column = self.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
-                column += 1
-
-    @logger.catch
-    def enable_condition_frames(self):
-        """Enables the frames on the AddConditionsDialog dialog if the condition is checked
-        on the NoJailPleaDialog screen."""
-        if self.other_conditions is True:
-            self.other_conditions_frame.setEnabled(True)
-        if self.license_suspension is True:
-            self.license_suspension_frame.setEnabled(True)
-            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
-        if self.community_service is True:
-            self.community_service_frame.setEnabled(True)
-            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
-        if self.community_control is True:
-            self.community_control_frame.setEnabled(True)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method is connected to the pressed() signal of add_conditions_Button on the
-        Add Conditions screen."""
-        if self.community_service is True:
-            self.case_information.community_service_terms = CommunityServiceTerms()
-            self.add_community_service_terms()
-        if self.community_control is True:
-            self.case_information.community_control_terms = CommunityControlTerms()
-            self.add_community_control_terms()
-        if self.license_suspension is True:
-            self.case_information.license_suspension_details = LicenseSuspensionTerms()
-            self.add_license_suspension_details()
-        if self.other_conditions is True:
-            self.case_information.other_conditions_details = OtherConditionsTerms()
-            self.add_other_condition_details()
-
-    @logger.catch
-    def add_community_control_terms(self):
-        """The method adds the data entered to the CommunityControlTerms object
-        that is created when the dialog is initialized."""
-        self.case_information.community_control_terms.type_of_community_control = (
-            self.type_of_community_control_box.currentText()
-        )
-        self.case_information.community_control_terms.term_of_community_control = (
-            self.term_of_community_control_box.currentText()
-        )
-        self.case_information.community_control_terms.community_control_required = True
-
-    @logger.catch
-    def add_community_service_terms(self):
-        """The method adds the data entered to the CommunityServiceTerms object
-        that is created when the dialog is initialized."""
-        self.case_information.community_service_terms.hours_of_service = (
-            self.community_service_hours_ordered_box.value()
-        )
-        self.case_information.community_service_terms.days_to_complete_service = (
-            self.community_service_days_to_complete_box.currentText()
-        )
-        self.case_information.community_service_terms.due_date_for_service = (
-            self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
-        )
-        self.case_information.community_service_terms.community_service_ordered = True
-
-    @logger.catch
-    def add_license_suspension_details(self):
-        """The method adds the data entered to the LicenseSuspensionTerms object
-        that is created when the dialog is initialized."""
-        self.case_information.license_suspension_details.license_type = (
-            self.license_type_box.currentText()
-        )
-        self.case_information.license_suspension_details.license_suspended_date = (
-            self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
-        )
-        self.case_information.license_suspension_details.license_suspension_term = (
-            self.term_of_suspension_box.currentText()
-        )
-        if self.remedial_driving_class_checkBox.isChecked():
-            self.case_information.license_suspension_details.remedial_driving_class_required = True
-        else:
-            self.case_information.license_suspension_details.remedial_driving_class_required = False
-        self.case_information.license_suspension_details.license_suspension_ordered = True
-
-    @logger.catch
-    def add_other_condition_details(self):
-        """The method allows for adding other conditions based on free form text
-        entry."""
-        self.case_information.other_conditions_details.other_conditions_terms = (
-            self.other_conditions_plainTextEdit.toPlainText()
-        )
-        self.case_information.other_conditions_details.other_conditions_ordered = True
-
-    @logger.catch
-    def set_service_date(self, days_to_complete):
-        """Sets the community_service_date_to_complete_box based on the number
-        of days chosen in the community_service_date_to_complete_box."""
-        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_to_complete)
-        )
-
-    @logger.catch
-    def close_event(self):
-        """This close event is called instead of the parent class close_event because the databases
-        need to remain open and the parent class close_event closes the databases."""
-        self.close_window()
-
-
-class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
+class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The case information is passed in order to populate the case information banner. The
     button_index is to determine which charge the amend_button is amending."""
@@ -709,9 +347,23 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
+        """This method overrides the base_dialog method to connect signals and
+        slots specific to the amend_offense dialog."""
         self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
         self.amend_offense_Button.pressed.connect(self.amend_offense)
         self.cancel_Button.pressed.connect(self.close_event)
+
+    @logger.catch
+    def set_case_information_banner(self):
+        """Sets the banner on a view of the interface. It modifies label
+        widgets on the view to text that was entered."""
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.case_information.defendant.first_name,
+                defendant_last_name=self.case_information.defendant.last_name
+            )
+        )
+        self.case_number_label.setText(self.case_information.case_number)
 
     @logger.catch
     def clear_amend_charge_fields(self):
@@ -732,14 +384,10 @@ class AmendOffenseDialog(BaseCriminalDialog, Ui_AmendOffenseDialog):
         self.case_information.charges_list[self.button_index].offense = amended_charge
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
             if self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None:
-                if self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense:
+                if self.main_dialog.charges_gridLayout.itemAtPosition(
+                        0, columns).widget().text() == self.current_offense:
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
-
-    @logger.catch
-    def close_event(self):
-        """Uses subclass of close_event so that it doesn't close databases."""
-        self.close_window()
 
 
 if __name__ == "__main__":

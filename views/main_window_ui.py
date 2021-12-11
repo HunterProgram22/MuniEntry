@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'resources/ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'views/ui/MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -65,10 +65,12 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.FinalJudgmentEntryButton_4, 6, 4, 1, 2)
         self.LeapPleaLongButton = QtWidgets.QPushButton(self.tab)
         self.LeapPleaLongButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.LeapPleaLongButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.LeapPleaLongButton.setObjectName("LeapPleaLongButton")
         self.gridLayout_2.addWidget(self.LeapPleaLongButton, 5, 2, 1, 2)
         self.NotGuiltyBondButton = QtWidgets.QPushButton(self.tab)
         self.NotGuiltyBondButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.NotGuiltyBondButton.setStyleSheet("background-color: rgb(255, 255, 127);")
         self.NotGuiltyBondButton.setObjectName("NotGuiltyBondButton")
         self.gridLayout_2.addWidget(self.NotGuiltyBondButton, 6, 2, 1, 2)
         self.label_4 = QtWidgets.QLabel(self.tab)
@@ -106,12 +108,14 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.pelanda_radioButton, 1, 3, 1, 2)
         self.LeapPleaShortButton = QtWidgets.QPushButton(self.tab)
         self.LeapPleaShortButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.LeapPleaShortButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.LeapPleaShortButton.setObjectName("LeapPleaShortButton")
         self.gridLayout_2.addWidget(self.LeapPleaShortButton, 5, 4, 1, 2)
-        self.MinorMisdemeanorTrafficButton = QtWidgets.QPushButton(self.tab)
-        self.MinorMisdemeanorTrafficButton.setMinimumSize(QtCore.QSize(120, 30))
-        self.MinorMisdemeanorTrafficButton.setObjectName("MinorMisdemeanorTrafficButton")
-        self.gridLayout_2.addWidget(self.MinorMisdemeanorTrafficButton, 5, 0, 1, 2)
+        self.NoJailPleaButton = QtWidgets.QPushButton(self.tab)
+        self.NoJailPleaButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.NoJailPleaButton.setStyleSheet("background-color: rgb(85, 170, 127);")
+        self.NoJailPleaButton.setObjectName("NoJailPleaButton")
+        self.gridLayout_2.addWidget(self.NoJailPleaButton, 5, 0, 1, 2)
         self.rohrer_radioButton = QtWidgets.QRadioButton(self.tab)
         self.rohrer_radioButton.setObjectName("rohrer_radioButton")
         self.buttonGroup.addButton(self.rohrer_radioButton)
@@ -144,6 +148,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.arraignment_cases_box, 3, 0, 1, 2)
         self.FTABondButton = QtWidgets.QPushButton(self.tab)
         self.FTABondButton.setMinimumSize(QtCore.QSize(120, 30))
+        self.FTABondButton.setStyleSheet("background-color: rgb(255, 255, 127);")
         self.FTABondButton.setObjectName("FTABondButton")
         self.gridLayout_2.addWidget(self.FTABondButton, 6, 0, 1, 2)
         self.tabWidget.addTab(self.tab, "")
@@ -269,7 +274,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.3.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.4.0-beta"))
         self.FinalJudgmentEntryButton_14.setText(_translate("MainWindow", "Entry"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.MinorMisdemeanorTrafficButton_3.setText(_translate("MainWindow", "Entry"))
@@ -284,7 +289,7 @@ class Ui_MainWindow(object):
         self.kudela_radioButton.setText(_translate("MainWindow", "Magistrate Kudela"))
         self.pelanda_radioButton.setText(_translate("MainWindow", "Magistrate Pelanda"))
         self.LeapPleaShortButton.setText(_translate("MainWindow", "LEAP Plea Pre-Court Complete"))
-        self.MinorMisdemeanorTrafficButton.setText(_translate("MainWindow", "No Jail Plea"))
+        self.NoJailPleaButton.setText(_translate("MainWindow", "No Jail Plea"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
         self.bunner_radioButton.setText(_translate("MainWindow", "Magistrate Bunner"))
         self.label_2.setText(_translate("MainWindow", "Traffic and Criminal Entries"))

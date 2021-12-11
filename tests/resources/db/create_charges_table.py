@@ -38,7 +38,12 @@ def return_data_from_excel(excel_file):
         data.append(charge)
     return data
 
-# Connecting both an alphabetical (offense) and numerical (statute) ordered database
+# Deletes existing database and creates a new one to ensure all old charges aren't duplicated in
+# the table. 
+if os.path.exists(PATH + "\\charges.sqlite"):
+  os.remove(PATH + "\\charges.sqlite")
+else:
+  print("The file does not exist")
 con = QSqlDatabase.addDatabase("QSQLITE")
 con.setDatabaseName(PATH + "\\charges.sqlite")
 

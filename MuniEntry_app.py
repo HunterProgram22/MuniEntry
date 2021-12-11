@@ -9,14 +9,13 @@ import sys
 
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from PyQt5.QtSql import QSqlQuery
-from PyQt5 import QtCore
+
 from PyQt5 import QtGui
 
-from resources.db import create_arraignment_table # This import is used only to load - better way?
 from resources.db.create_data_lists import create_cases_list
 from models.party_types import JudicialOfficer
-from models.case_information import CaseLoadData
+from models.data_loader import CriminalCaseSQLRetriever
+from models.case_information import CriminalCaseInformation
 from views.main_window_ui import Ui_MainWindow
 from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -48,6 +47,21 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
+        self.judicial_officer_dict = {
+            self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
+            self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
+            self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
+            self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
+            self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
+        }
+        self.dialog_dict = {
+            self.NoJailPleaButton: NoJailPleaDialog,
+            self.LeapPleaLongButton: LeapPleaLongDialog,
+            self.LeapPleaShortButton: LeapPleaShortDialog,
+            self.FTABondButton: FTABondDialog,
+            self.NotGuiltyBondButton: NotGuiltyBondDialog,
+            self.JurorPaymentButton: JurorPaymentDialog,
+        }
         self.load_judicial_officers()
         self.connect_entry_buttons()
         self.load_arraignment_case_list()
@@ -61,13 +75,6 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads judicial officers and connects the radio button for each judicial officer to the
         radio button so that if it is selected when an entry dialog button is pressed to load the
         dialog, then the judicial officer that is selected will be passed to the dialog."""
-        self.judicial_officer_dict = {
-            self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
-            self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
-            self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
-            self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
-            self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
-        }
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
@@ -79,14 +86,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
-        self.dialog_dict = {
-            self.MinorMisdemeanorTrafficButton: NoJailPleaDialog,
-            self.LeapPleaLongButton: LeapPleaLongDialog,
-            self.LeapPleaShortButton: LeapPleaShortDialog,
-            self.FTABondButton: FTABondDialog,
-            self.NotGuiltyBondButton: NotGuiltyBondDialog,
-            self.JurorPaymentButton: JurorPaymentDialog,
-        }
         for key in self.dialog_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
 
@@ -107,48 +106,21 @@ class Window(QMainWindow, Ui_MainWindow):
             message.exec()
         else:
             self.arraignments_database.open()
-            case_to_load = self.get_case_to_load()
-            dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+            if self.arraignment_cases_box.currentText() == "":
+                case_to_load = CriminalCaseInformation()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+            else:
+                database = self.arraignments_database
+                case_number = self.arraignment_cases_box.currentText()
+                case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
             dialog.exec()
 
-
-    @logger.catch
-    def get_case_to_load(self):
-        """Query arraignment_list based on case number to return the data to load for the
-        dialog. Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name.
-        query.finish() is called to avoid memory leaks."""
-        key = self.arraignment_cases_box.currentText()
-        query = QSqlQuery(self.arraignments_database)
-        query_string = f"""
-            SELECT *
-            FROM cases
-            WHERE case_number = '{key}'
-            """
-        query.prepare(query_string)
-        query.bindValue(key, key)
-        charges_list = []
-        case_number = None
-        query.exec()
-        while query.next():
-            if case_number is None:
-                case_number = query.value(1)
-                defendant_last_name = query.value(2)
-                defendant_first_name = query.value(3)
-                fra_in_file = query.value(7)
-            offense = query.value(4)
-            statute = query.value(5)
-            degree = query.value(6)
-            new_charge = (offense, statute, degree)
-            charges_list.append(new_charge)
-        query.finish()
-        if self.arraignment_cases_box.currentText() == "":
-            return CaseLoadData()
-        return CaseLoadData(case_number, defendant_last_name, defendant_first_name, charges_list, fra_in_file)
 
 @logger.catch
 def main():
     """The main loop of the application. The arraignments database is created each time the
-    applicaiton is loaded after any existing prior version is deleted."""
+    application is loaded after any existing prior version is deleted."""
     app = QApplication(sys.argv)
     arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
@@ -157,4 +129,5 @@ def main():
 
 
 if __name__ == "__main__":
+    from resources.db import create_arraignment_table
     main()

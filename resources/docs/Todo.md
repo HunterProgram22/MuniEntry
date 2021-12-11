@@ -1,7 +1,5 @@
-APPLICATION TODO LIST for version 0.3.0
-* Add charges_grid to Not guilty? - fix the bug on create entry.
-* Updated dialogs/templates for Not Guilty and FTA per AB Notes.
-
+APPLICATION TODO LIST for version 0.4.0
+* Bug exists for FRA - if fra_in_file is "No" and fra_in_court is "N/A" nothing shows in entry. 
 
 GENERAL PERIODIC CLEANUP
 * Move general methods to helper functions
@@ -9,15 +7,14 @@ GENERAL PERIODIC CLEANUP
 * Add new tests - fix test amend offense because button is now in grid.
 
 
-FEATURE/CHANGE LIST - for Version 0.4.0
-* Add community control conditions checkboxes
-* Add Jail entries
+FEATURE/CHANGE LIST - for Version 0.5.0
 * Add DUI sub-dialog
 * Make statutes hyperlink
+* Updated dialogs/templates for FTA per AB Notes.
+* Add community control conditions checkboxes
+* Add Jail entries
 * Add Yellow Sheet templates (CC Violation)
 * Add Warning if add condition boxes are checked but conditions have not been added.
-
-
 
 
 DEPLOY TODO LIST
@@ -31,6 +28,5 @@ DEPLOY TODO LIST
 NOTES
 * Objects need both data and behavior - otherwise use data
 structure (list, tuple, dict), dataclass, or function
-* Add kite and linter atom packages
 * When doing tests make sure if changes to main resources are
 made that test/resources is also updated.

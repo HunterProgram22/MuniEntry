@@ -11,17 +11,19 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
+from models.case_information import CaseLoadData
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AddConditionsDialog,
     AmendOffenseDialog,
 )
+from controllers.conditions_dialogs import AddConditionsDialog
+from settings import create_arraignments_database_connection
 
-
+arraignments_database = create_arraignments_database_connection()
 """Functions for Testing"""
 
 
-def start_minor_misdemeanor_dialog(qtbot, judicial_officer, judicial_officer_type):
+def start_no_jail_plea_dialog(qtbot, judicial_officer, judicial_officer_type):
     dialog = NoJailPleaDialog(judicial_officer, judicial_officer_type)
     qtbot.addWidget(dialog)
     # add_case_information(dialog)
@@ -36,18 +38,17 @@ def start_add_conditions_dialog(qtbot, case_information):
 
 @pytest.fixture
 def app(qtbot):
-    test_MuniEntry_app = MuniEntry_app.Window()
+    test_MuniEntry_app = MuniEntry_app.Window(arraignments_database)
     qtbot.addWidget(test_MuniEntry_app)
     return test_MuniEntry_app
 
 
 @pytest.fixture
 def dialog(app, qtbot):
+    case = CaseLoadData()
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_minor_misdemeanor_dialog(
-        qtbot, app.judicial_officer, app.judicial_officer_type
-    )
+    QtBot.mouseClick(app.NoJailPleaButton, QtCore.Qt.LeftButton)
+    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, case)
     return dialog
 
 
@@ -64,36 +65,23 @@ def test_license_suspension_conditions_checked(dialog, qtbot):
     QtBot.mouseClick(dialog.license_suspension_checkBox, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.license_suspension_frame.isEnabled() == True
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_license_suspension_conditions_unchecked(dialog, qtbot):
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.license_suspension_frame.isEnabled() == False
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_community_service_conditions_checked(dialog, qtbot):
     QtBot.mouseClick(dialog.community_service_checkBox, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.community_service_frame.isEnabled() == True
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_community_service_conditions_unchecked(dialog, qtbot):
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.community_service_frame.isEnabled() == False
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
-
-
-def test_community_control_conditions_checked(dialog, qtbot):
-    QtBot.mouseClick(dialog.community_control_checkBox, QtCore.Qt.LeftButton)
-    dialog = start_add_conditions_dialog(qtbot, dialog)
-    assert dialog.community_control_frame.isEnabled() == True
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
-
-
-def test_community_control_conditions_unchecked(dialog, qtbot):
-    dialog = start_add_conditions_dialog(qtbot, dialog)
-    assert dialog.community_control_frame.isEnabled() == False
-    QtBot.mouseClick(dialog.continue_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
