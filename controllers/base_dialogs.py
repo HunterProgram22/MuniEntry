@@ -8,7 +8,29 @@ from PyQt5 import QtGui
 from controllers.helper_functions import create_entry
 
 
-class BaseDialog(QDialog):
+class CasePartyUpdater:
+    """A class containing all methods for updating case number, date and parties."""
+    @logger.catch
+    def update_case_information(self):
+        """"This method may be called in multiple places when a button is pressed to
+        make sure all information is current. The subclass version of the method
+        will call updates to specific portions of the view for that dialog."""
+        self.set_case_number_and_date()
+        self.update_party_information()
+
+
+    def set_case_number_and_date(self):
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
+    def update_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+
+
+class BaseDialog(QDialog, CasePartyUpdater):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
@@ -45,24 +67,6 @@ class BaseDialog(QDialog):
         self.create_entry_Button.pressed.connect(self.create_entry_process)
 
     # User input and update
-    @logger.catch
-    def update_case_information(self):
-        """"This method may be called in multiple places when a button is pressed to
-        make sure all information is current. The subclass version of the method
-        will call updates to specific portions of the view for that dialog."""
-        self.update_party_information()
-        self.set_case_number_and_date()
-
-    def set_case_number_and_date(self):
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = \
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
     # Processes
     @logger.catch
