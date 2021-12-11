@@ -47,6 +47,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
+        self.case_to_load = None
         self.judicial_officer_dict = {
             self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
             self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
@@ -107,13 +108,13 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             self.arraignments_database.open()
             if self.arraignment_cases_box.currentText() == "":
-                case_to_load = CriminalCaseInformation()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+                self.case_to_load = CriminalCaseInformation()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
             else:
                 database = self.arraignments_database
                 case_number = self.arraignment_cases_box.currentText()
-                case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+                self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
             dialog.exec()
 
 
