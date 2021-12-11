@@ -22,7 +22,7 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
 
     @logger.catch
     def update_case_information(self):
-        self.update_party_information()
+        self.set_party_information()
         self.update_fta_conditions()
         self.update_bond_conditions()
         self.case_information.fta_bond_conditions = self.fta_bond_conditions
