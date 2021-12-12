@@ -15,60 +15,60 @@ from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
     AmendOffenseDialog,
 )
-from controllers.conditions_dialogs import AddConditionsDialog
+from settings import create_arraignments_database_connection
+
+arraignments_database = create_arraignments_database_connection()
 
 """Functions for Testing"""
-def start_minor_misdemeanor_dialog(qtbot, judicial_officer, judicial_officer_type):
-    dialog = NoJailPleaDialog(judicial_officer, judicial_officer_type)
+def start_no_jail_plea_dialog(qtbot, judicial_officer, case):
+    dialog = NoJailPleaDialog(judicial_officer, case)
     qtbot.addWidget(dialog)
-    add_case_information(dialog)
     return dialog
 
-def add_case_information(dialog):
-    QtBot.keyClicks(dialog.case_number_lineEdit, "21TRC1234")
-    QtBot.keyClicks(dialog.defendant_first_name_lineEdit, "John")
-    QtBot.keyClicks(dialog.defendant_last_name_lineEdit, "Smith")
-
 def start_amend_offense_dialog(qtbot, dialog):
-    dialog = AmendOffenseDialog(dialog.case_information)
+    button_index = 0  # Set to 0 for first charge in list for texting
+    dialog = AmendOffenseDialog(dialog, dialog.case_information, button_index)
     qtbot.addWidget(dialog)
     return dialog
 
 @pytest.fixture
 def app(qtbot):
-    test_MuniEntry_app = MuniEntry_app.Window()
+    test_MuniEntry_app = MuniEntry_app.Window(arraignments_database)
     qtbot.addWidget(test_MuniEntry_app)
     return test_MuniEntry_app
 
 @pytest.fixture
 def dialog(app, qtbot):
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.MinorMisdemeanorTrafficButton, QtCore.Qt.LeftButton)
-    dialog = start_minor_misdemeanor_dialog(qtbot, app.judicial_officer, app.judicial_officer_type)
+    QtBot.keyClicks(app.arraignment_cases_box, '21TRD09200')
+    QtBot.mouseClick(app.NoJailPleaButton, QtCore.Qt.LeftButton)
+    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, app.case_to_load)
     return dialog
 
 
 """TESTING"""
 def test_amend_offense_title(qtbot, dialog):
-    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
     dialog = start_amend_offense_dialog(qtbot, dialog)
-    dialog.windowTitle() == "Amend Charge"
+    assert dialog.windowTitle() == "Amend Charge"
+
 
 def test_case_information_dialog(qtbot, dialog):
-    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
     dialog = start_amend_offense_dialog(qtbot, dialog)
-    assert dialog.case_number_label.text() == "21TRC1234"
-    assert dialog.defendant_name_label.text() == "State of Ohio v. John Smith"
-    assert dialog.defendant_attorney_name_label.text() == "Attorney: None"
+    assert dialog.case_number_label.text() == "21TRD09200"
+    assert dialog.defendant_name_label.text() == "State of Ohio v. BRANDON ROWEDDA"
+
 
 def test_amend_offense_granted(qtbot, dialog):
-    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
     dialog = start_amend_offense_dialog(qtbot, dialog)
     dialog.motion_decision_box.setCurrentText("Granted")
     assert dialog.motion_decision_box.currentText() == "Granted"
 
+
 def test_amend_offense_denied(qtbot, dialog):
-    QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
     dialog = start_amend_offense_dialog(qtbot, dialog)
     dialog.motion_decision_box.setCurrentText("Denied")
     assert dialog.motion_decision_box.currentText() == "Denied"

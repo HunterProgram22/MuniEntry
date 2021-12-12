@@ -78,10 +78,9 @@ def app(qtbot):
 
 @pytest.fixture
 def dialog(app, qtbot):
-    case = CaseLoadData()
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.NoJailPleaButton, QtCore.Qt.LeftButton)
-    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, case)
+    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, app.case_to_load)
     return dialog
 
 
@@ -97,7 +96,6 @@ def test_case_information_dialog(app, dialog):
     assert dialog.case_number_lineEdit.text() == "21TRC1234"
     assert dialog.defendant_first_name_lineEdit.text() == "John"
     assert dialog.defendant_last_name_lineEdit.text() == "Smith"
-    # assert dialog.operator_license_number_lineEdit.text() == "TF180780"
 
 
 def test_offense_to_statute(app, dialog):
