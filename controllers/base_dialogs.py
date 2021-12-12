@@ -1,23 +1,43 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+import os
+
+from controllers.helper_functions import set_document_name
+from docxtpl import DocxTemplate
 from loguru import logger
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtGui
-
-from controllers.helper_functions import create_entry
+from settings import SAVE_PATH
 
 
 @logger.catch
 def create_entry_process(dialog):
-    """The order of functions that are called when the create_entry_Button is pressed()
-    on a criminal dialog. The order is important to make sure the information is
-    updated before the entry is created."""
+    """The order of the create entry process is important to make sure the
+    information is updated before the entry is created."""
     dialog.update_case_information()
     if dialog.charges_gridLayout.check_plea_and_findings() is None:
         return None
     create_entry(dialog)
     dialog.close_event()
+
+@logger.catch
+def create_entry(dialog):
+    """The dialog is the controller dialog that is the source of case information."""
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.case_information.get_case_information())
+    docname = set_document_name(dialog)
+    doc.save(SAVE_PATH + docname)
+    os.startfile(SAVE_PATH + docname)
+
+@logger.catch
+def clear_case_information_fields(dialog):
+    """Clears the text in the fields in the top case information frame and resets the cursor
+    to the first text entry box."""
+    dialog.defendant_first_name_lineEdit.clear()
+    dialog.defendant_last_name_lineEdit.clear()
+    dialog.case_number_lineEdit.clear()
+    dialog.defendant_first_name_lineEdit.setFocus()
 
 
 class CasePartyUpdater:
@@ -55,19 +75,7 @@ class DialogCleanUp:
         self.close()
 
 
-class SlotFunctions:
-
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top case information frame and resets the cursor
-        to the first text entry box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
-
-class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp, SlotFunctions):
+class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
@@ -102,5 +110,5 @@ class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp, SlotFunctions):
         passed as an argument (dialog = self) and if it is connected without lambda it would be called on
         dialog creation instead of upon button pressed."""
         self.cancel_Button.pressed.connect(self.close_event)
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(lambda self=self: create_entry_process(self))
+        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: clear_case_information_fields(dialog))
+        self.create_entry_Button.pressed.connect(lambda dialog=self: create_entry_process(dialog))
