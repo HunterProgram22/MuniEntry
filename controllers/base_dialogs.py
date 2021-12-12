@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5 import QtGui
 from settings import SAVE_PATH
 
-
+# Slot Functions
 @logger.catch
 def create_entry_process(dialog):
     """The order of the create entry process is important to make sure the
