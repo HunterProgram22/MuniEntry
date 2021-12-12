@@ -65,6 +65,24 @@ class CriminalPleaDialog(BaseDialog):
         self.amend_button_list = []
         self.load_arraignment_data()
 
+    def modify_view(self):
+        pass
+
+    def connect_signals_to_slots(self):
+        """This method extends the base_dialog method to add additional signals
+        and slots to be connected."""
+        super().connect_signals_to_slots()
+        self.add_charge_Button.clicked.connect(self.add_charge_process)
+        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
+        self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
+        self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
+        try:
+            self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        except AttributeError:
+            pass
+
+
+    # CMS Loader Functions
     @logger.catch
     def load_arraignment_data(self):
         """Uses the case number selected to get the case object from main and load case data."""
@@ -84,6 +102,9 @@ class CriminalPleaDialog(BaseDialog):
             self.case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_grid()
 
+
+
+    # Criminal DialogCleanUp Functions
     def close_event(self):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
@@ -97,22 +118,9 @@ class CriminalPleaDialog(BaseDialog):
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
 
-    def connect_signals_to_slots(self):
-        """This method extends the base_dialog method to add additional signals
-        and slots to be connected."""
-        super().connect_signals_to_slots()
-        self.add_charge_Button.clicked.connect(self.add_charge_process)
-        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
-        self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        try:
-            self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        except AttributeError:
-            pass
 
-    def set_plea_and_findings_process(self):
-        self.charges_gridLayout.set_all_plea_and_findings(self)
 
+    # Criminal CasePartyUpdater Functions
     def update_case_information(self):
         """REMOVE / MOVE this down because additional case information is not in all dialogs. Already done in refactor
         branch."""
@@ -188,6 +196,9 @@ class CriminalPleaDialog(BaseDialog):
         except TypeError:
             print("A type error was allowed to pass - this is because of deleted charge.")
 
+
+
+    # Slot Functions
     @logger.catch
     def add_charge_process(self, _bool):
         """The order of functions that are called when the add_charge_Button is
@@ -222,38 +233,42 @@ class CriminalPleaDialog(BaseDialog):
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
 
-    @logger.catch
-    def delete_charge(self):
-        """Deletes the offense from the case_information.charges list. Then
-        decrements the total charges by one so that other functions using the
-        total charges for indexing are correct."""
-        index = self.delete_button_list.index(self.sender())
-        del self.case_information.charges_list[index]
-        del self.delete_button_list[index]
-        self.charges_gridLayout.delete_charge_from_grid()
-        self.statute_choice_box.setFocus()
 
-    # noinspection PyUnresolvedReferences
+
+    # Setter Functions
     @logger.catch
-    def show_costs_and_fines(self, _bool):
-        """The _bool is the toggle from the clicked() of the button pressed. No
-        action is taken with respect to it."""
-        self.update_case_information()
-        message = QMessageBox()
-        message.setIcon(QMessageBox.Information)
-        message.setWindowTitle("Total Costs and Fines")
-        # noinspection PyUnresolvedReferences
-        message.setInformativeText("Costs: $" + str(self.case_information.court_costs.amount) +
-                                   "\nFines: $" + str(self.case_information.total_fines) +
-                                   "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
-                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in case. ")
-        total_fines_and_costs = \
-            (self.case_information.court_costs.amount + self.case_information.total_fines) - \
-            self.case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
-        message.setStandardButtons(QMessageBox.Ok)
-        message.exec_()
+    def set_statute_and_offense(self, key):
+        """:key: is the string that is passed by the function each time the field
+        is changed on the view."""
+        field = None
+        if self.freeform_entry_checkBox.isChecked():
+            return None
+        if self.sender() == self.statute_choice_box:
+            field = 'statute'
+        elif self.sender() == self.offense_choice_box:
+            field = 'offense'
+        query = QSqlQuery(database_offenses)
+        query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
+        query.prepare(query_string)
+        query.bindValue(":key", key)
+        query.bindValue(field, field)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if field == 'offense':
+                if offense == key:
+                    self.statute_choice_box.setCurrentText(statute)
+            elif field == 'statute':
+                if statute == key:
+                    self.offense_choice_box.setCurrentText(offense)
+            self.degree_choice_box.setCurrentText(degree)
+            query.finish()
+            break
+
+    def set_plea_and_findings_process(self):
+        self.charges_gridLayout.set_all_plea_and_findings(self)
 
     @logger.catch
     def set_fra_in_file(self, current_text):
@@ -296,36 +311,41 @@ class CriminalPleaDialog(BaseDialog):
                 query.finish()
                 return offense_type
 
+
+
+    # Move to Charges Grid Widget Class (?)
     @logger.catch
-    def set_statute_and_offense(self, key):
-        """:key: is the string that is passed by the function each time the field
-        is changed on the view."""
-        field = None
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        if self.sender() == self.statute_choice_box:
-            field = 'statute'
-        elif self.sender() == self.offense_choice_box:
-            field = 'offense'
-        query = QSqlQuery(database_offenses)
-        query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
-        query.prepare(query_string)
-        query.bindValue(":key", key)
-        query.bindValue(field, field)
-        query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if field == 'offense':
-                if offense == key:
-                    self.statute_choice_box.setCurrentText(statute)
-            elif field == 'statute':
-                if statute == key:
-                    self.offense_choice_box.setCurrentText(offense)
-            self.degree_choice_box.setCurrentText(degree)
-            query.finish()
-            break
+    def delete_charge(self):
+        """Deletes the offense from the case_information.charges list. Then
+        decrements the total charges by one so that other functions using the
+        total charges for indexing are correct."""
+        index = self.delete_button_list.index(self.sender())
+        del self.case_information.charges_list[index]
+        del self.delete_button_list[index]
+        self.charges_gridLayout.delete_charge_from_grid()
+        self.statute_choice_box.setFocus()
+
+    # CostsAndFines Class
+    @logger.catch
+    def show_costs_and_fines(self, _bool):
+        """The _bool is the toggle from the clicked() of the button pressed. No
+        action is taken with respect to it."""
+        self.update_case_information()
+        message = QMessageBox()
+        message.setIcon(QMessageBox.Information)
+        message.setWindowTitle("Total Costs and Fines")
+        # noinspection PyUnresolvedReferences
+        message.setInformativeText("Costs: $" + str(self.case_information.court_costs.amount) +
+                                   "\nFines: $" + str(self.case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
+                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
+                                   "may be assessed as a result of prior actions in case. ")
+        total_fines_and_costs = \
+            (self.case_information.court_costs.amount + self.case_information.total_fines) - \
+            self.case_information.total_fines_suspended
+        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
+        message.setStandardButtons(QMessageBox.Ok)
+        message.exec_()
 
 
 class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
