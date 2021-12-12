@@ -58,7 +58,7 @@ def dialog(app, qtbot):
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
-    dialog.windowTitle() == "Additional Conditions"
+    assert dialog.windowTitle() == "Additional Conditions"
 
 
 def test_license_suspension_conditions_checked(dialog, qtbot):
@@ -72,7 +72,6 @@ def test_license_suspension_conditions_unchecked(dialog, qtbot):
     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.license_suspension_frame.isEnabled() == False
-
 
 
 def test_community_service_conditions_checked(dialog, qtbot):
