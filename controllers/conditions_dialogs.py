@@ -15,9 +15,9 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.case_information.charges_list  # Show charges on banner
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(self, parent)
-        self.case_information = main_dialog.case_information
+        self.case_information = main_dialog.entry_case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
@@ -138,9 +138,9 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.case_information.charges_list  # Show charges on banner
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(self, parent)
-        self.case_information = main_dialog.case_information
+        self.case_information = main_dialog.entry_case_information
         self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
         self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
         self.vehicle_seizure = main_dialog.vehicle_seizure_checkBox.isChecked()

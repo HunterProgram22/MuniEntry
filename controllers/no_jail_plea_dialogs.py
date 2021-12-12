@@ -24,16 +24,16 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.add_conditions_dict = {
-            self.license_suspension_checkBox: self.case_information.license_suspension.ordered,
-            self.community_service_checkBox: self.case_information.community_service.ordered,
-            self.other_conditions_checkBox: self.case_information.other_conditions.ordered,
+            self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
+            self.community_service_checkBox: self.entry_case_information.community_service.ordered,
+            self.other_conditions_checkBox: self.entry_case_information.other_conditions.ordered,
         }
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     @logger.catch
-    def load_arraignment_data(self):
-        super().load_arraignment_data()
+    def load_cms_data_to_view(self):
+        super().load_cms_data_to_view()
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
         if self.case.fra_in_file in fra_value_dict:
             self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
@@ -75,7 +75,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
         7 fine-suspended. Columns start at 1 because 0 is labels."""
         column = 1
-        for index, charge in enumerate(self.case_information.charges_list):
+        for index, charge in enumerate(self.entry_case_information.charges_list):
             while self.charges_gridLayout.itemAtPosition(3, column) is None:
                 column += 1
             charge.plea = self.charges_gridLayout.itemAtPosition(
@@ -102,11 +102,11 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def start_amend_offense_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The
-        case_information is passed to the dialog class in order to populate
+        entry_case_information is passed to the dialog class in order to populate
         the case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
-        AmendOffenseDialog(self, self.case_information, button_index).exec()
+        AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
 
     @logger.catch
     def start_add_conditions_dialog(self):

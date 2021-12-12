@@ -225,22 +225,22 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
 
 def test_fra_in_file_and_court(app, dialog):
     dialog.fra_in_file_box.setCurrentText("Yes")
-    assert dialog.case_information.fra_in_file == True
+    assert dialog.entry_case_information.fra_in_file == True
     dialog.fra_in_file_box.setCurrentText("No")
-    assert dialog.case_information.fra_in_file == False
+    assert dialog.entry_case_information.fra_in_file == False
     dialog.fra_in_file_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_file == None
+    assert dialog.entry_case_information.fra_in_file == None
     dialog.fra_in_court_box.setCurrentText("Yes")
-    assert dialog.case_information.fra_in_court == True
+    assert dialog.entry_case_information.fra_in_court == True
     dialog.fra_in_court_box.setCurrentText("No")
-    assert dialog.case_information.fra_in_court == False
+    assert dialog.entry_case_information.fra_in_court == False
     dialog.fra_in_court_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_court == None
+    assert dialog.entry_case_information.fra_in_court == None
 
 
 # def test_amend_offense(dialog, qtbot):
 #     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
-#     dialog = start_amendment_dialog(qtbot, dialog.case_information)
+#     dialog = start_amendment_dialog(qtbot, dialog.entry_case_information)
 #     assert dialog.windowTitle() == "Amend Charge"
 
 

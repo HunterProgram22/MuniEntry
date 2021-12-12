@@ -144,8 +144,8 @@ class ChargesGrid(QGridLayout):
         the object."""
         row = 0
         column = self.columnCount() + 1
-        added_charge_index = len(dialog.case_information.charges_list) - 1
-        charge = vars(dialog.case_information.charges_list[added_charge_index])
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), row, column)
         row += 1
         self.addWidget(QLabel(charge['statute']), row, column)

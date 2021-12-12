@@ -27,7 +27,7 @@ def start_no_jail_plea_dialog(qtbot, judicial_officer, case):
 
 def start_amend_offense_dialog(qtbot, dialog):
     button_index = 0  # Set to 0 for first charge in list for texting
-    dialog = AmendOffenseDialog(dialog, dialog.case_information, button_index)
+    dialog = AmendOffenseDialog(dialog, dialog.entry_case_information, button_index)
     qtbot.addWidget(dialog)
     return dialog
 
