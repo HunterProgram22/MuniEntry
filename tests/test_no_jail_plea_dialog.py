@@ -244,10 +244,10 @@ def test_fra_in_file_and_court(app, dialog):
 #     assert dialog.windowTitle() == "Amend Charge"
 
 
-def test_add_conditions(dialog, qtbot):
-    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
-    dialog = start_add_conditions_dialog(qtbot, dialog)
-    assert dialog.windowTitle() == "Additional Conditions"
+# def test_add_conditions(dialog, qtbot):
+#     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
+#     dialog = start_add_conditions_dialog(qtbot, dialog)
+#     assert dialog.windowTitle() == "Additional Conditions"
 
 
 def test_create_entry(app, dialog):

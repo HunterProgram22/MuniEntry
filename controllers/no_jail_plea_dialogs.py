@@ -94,6 +94,29 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
             column += 1
 
     @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.entry_case_information.fra_in_file = False
+        else:
+            self.entry_case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_court = True
+        elif current_text == "No":
+            self.entry_case_information.fra_in_court = False
+        else:
+            self.entry_case_information.fra_in_court = None
+
+    @logger.catch
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""
         total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)

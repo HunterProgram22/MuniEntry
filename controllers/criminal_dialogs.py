@@ -318,29 +318,6 @@ class CriminalPleaDialog(BaseDialog):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
     @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
-
-    @logger.catch
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
         for each charge. It does not show up in the view, but is used for calculating costs."""
