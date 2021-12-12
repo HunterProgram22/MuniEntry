@@ -77,22 +77,6 @@ class BaseDialog(QDialog):
         self.clear_fields_case_Button.pressed.connect(lambda dialog=self: clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(lambda dialog=self: create_entry_process(dialog))
 
-    def set_case_number_and_date(self):
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
-
-    @logger.catch
-    def update_case_information(self):
-        """"Docstring needs updating."""
-        self.set_case_number_and_date()
-        self.set_party_information()
-
-    @logger.catch
-    def set_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-
     @logger.catch
     def close_window(self):
         """Function connected to a button to close the window. Can be connected
