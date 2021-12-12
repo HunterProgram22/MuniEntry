@@ -47,6 +47,37 @@ def close_databases():
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
 
+@logger.catch
+def create_entry_process(dialog):
+    """The order of the create entry process is important to make sure the
+    information is updated before the entry is created."""
+    dialog.update_case_information()
+    if dialog.charges_gridLayout.check_plea_and_findings() is None:
+        return None
+    create_entry(dialog)
+    dialog.close_event()
+
+
+@logger.catch
+def create_entry(dialog):
+    """Loads the proper template and creates the entry."""
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.entry_case_information.get_case_information())
+    docname = set_document_name(dialog)
+    doc.save(SAVE_PATH + docname)
+    os.startfile(SAVE_PATH + docname)
+
+
+@logger.catch
+def clear_case_information_fields(dialog):
+    """Clears the text in the fields in the top case information frame and resets the cursor
+    to the first text entry (defendant_first_name_lineEdit) box."""
+    dialog.defendant_first_name_lineEdit.clear()
+    dialog.defendant_last_name_lineEdit.clear()
+    dialog.case_number_lineEdit.clear()
+    dialog.defendant_first_name_lineEdit.setFocus()
+
+
 class CriminalPleaDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
     dialogs/entries that require entering a plea and finding in a case.
@@ -65,11 +96,11 @@ class CriminalPleaDialog(BaseDialog):
             self.charges_gridLayout.__class__ = ChargesGrid
         except AttributeError:
             pass
-        self.case_information = CriminalCaseInformation(self.judicial_officer)
+        self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []
-        self.load_arraignment_data()
+        self.load_cms_data_to_view()
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
@@ -94,7 +125,7 @@ class CriminalPleaDialog(BaseDialog):
 
     # CMS Loader Functions
     @logger.catch
-    def load_arraignment_data(self):
+    def load_cms_data_to_view(self):
         """Uses the case number selected to get the case object from main and load case data."""
         if self.case.case_number is not None:
             self.case_number_lineEdit.setText(self.case.case_number)
@@ -109,7 +140,7 @@ class CriminalPleaDialog(BaseDialog):
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
-            self.case_information.add_charge_to_list(self.criminal_charge)
+            self.entry_case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_grid()
 
 
@@ -125,8 +156,8 @@ class CriminalPleaDialog(BaseDialog):
     # Criminal CasePartyUpdater Functions
 
     def set_case_number_and_date(self):
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.entry_case_information.case_number = self.case_number_lineEdit.text()
+        self.entry_case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def update_case_information(self):
@@ -138,8 +169,8 @@ class CriminalPleaDialog(BaseDialog):
     @logger.catch
     def set_party_information(self):
         """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        self.entry_case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.entry_case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
 
     # Modify Case Information Functions
@@ -160,7 +191,7 @@ class CriminalPleaDialog(BaseDialog):
         TODO: Rename and refactor out magic numbers."""
         column = 1
         row = 3
-        for index, charge in enumerate(self.case_information.charges_list):
+        for index, charge in enumerate(self.entry_case_information.charges_list):
             while self.charges_gridLayout.itemAtPosition(row, column) is None:
                 column += 1
             if isinstance(self.charges_gridLayout.itemAtPosition(
@@ -173,9 +204,9 @@ class CriminalPleaDialog(BaseDialog):
     @logger.catch
     def update_costs_and_fines_information(self):
         """Updates the costs and fines from the GUI(view) and saves it to the model."""
-        self.case_information.court_costs.ordered = self.court_costs_box.currentText()
-        self.case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.case_information.court_costs.balance_due_date = \
+        self.entry_case_information.court_costs.ordered = self.court_costs_box.currentText()
+        self.entry_case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.entry_case_information.court_costs.balance_due_date = \
             self.balance_due_date.date().toString("MMMM dd, yyyy")
 
     @logger.catch
@@ -185,30 +216,30 @@ class CriminalPleaDialog(BaseDialog):
         fines_suspended box. The loop stops when a case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
         not used but is required to unpack enumerate()."""
-        self.case_information.court_costs.amount = 0
+        self.entry_case_information.court_costs.amount = 0
         if self.court_costs_box.currentText() == "Yes":
-            for _index, charge in enumerate(self.case_information.charges_list):
-                if self.case_information.court_costs.amount == 124:
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
+                if self.entry_case_information.court_costs.amount == 124:
                     break
                 if charge.type == "Moving Traffic":
-                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 124)
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 124)
                 elif charge.type == "Criminal":
-                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 114)
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 114)
                 elif charge.type == "Non-moving Traffic":
-                    self.case_information.court_costs.amount = max(self.case_information.court_costs.amount, 95)
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 95)
         total_fines = 0
         try:
-            for _index, charge in enumerate(self.case_information.charges_list):
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
                 if charge.fines_amount == '':
                     charge.fines_amount = 0
                 total_fines = total_fines + int(charge.fines_amount)
-            self.case_information.total_fines = total_fines
+            self.entry_case_information.total_fines = total_fines
             total_fines_suspended = 0
-            for _index, charge in enumerate(self.case_information.charges_list):
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
                 if charge.fines_suspended == '':
                     charge.fines_suspended = 0
                 total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
-            self.case_information.total_fines_suspended = total_fines_suspended
+            self.entry_case_information.total_fines_suspended = total_fines_suspended
         except TypeError:
             print("A type error was allowed to pass - this is because of deleted charge.")
 
@@ -236,7 +267,7 @@ class CriminalPleaDialog(BaseDialog):
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         self.criminal_charge.type = self.set_offense_type()
-        self.case_information.add_charge_to_list(self.criminal_charge)
+        self.entry_case_information.add_charge_to_list(self.criminal_charge)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
@@ -291,23 +322,23 @@ class CriminalPleaDialog(BaseDialog):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in the complaint of file."""
         if current_text == "Yes":
-            self.case_information.fra_in_file = True
+            self.entry_case_information.fra_in_file = True
             self.fra_in_court_box.setCurrentText("No")
         elif current_text == "No":
-            self.case_information.fra_in_file = False
+            self.entry_case_information.fra_in_file = False
         else:
-            self.case_information.fra_in_file = None
+            self.entry_case_information.fra_in_file = None
 
     @logger.catch
     def set_fra_in_court(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in court."""
         if current_text == "Yes":
-            self.case_information.fra_in_court = True
+            self.entry_case_information.fra_in_court = True
         elif current_text == "No":
-            self.case_information.fra_in_court = False
+            self.entry_case_information.fra_in_court = False
         else:
-            self.case_information.fra_in_court = None
+            self.entry_case_information.fra_in_court = None
 
     @logger.catch
     def set_offense_type(self):
@@ -340,11 +371,11 @@ class CriminalPleaDialog(BaseDialog):
     # Move to Charges Grid Widget Class (?)
     @logger.catch
     def delete_charge(self):
-        """Deletes the offense from the case_information.charges list. Then
+        """Deletes the offense from the entry_case_information.charges list. Then
         decrements the total charges by one so that other functions using the
         total charges for indexing are correct."""
         index = self.delete_button_list.index(self.sender())
-        del self.case_information.charges_list[index]
+        del self.entry_case_information.charges_list[index]
         del self.delete_button_list[index]
         self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
@@ -359,14 +390,14 @@ class CriminalPleaDialog(BaseDialog):
         message.setIcon(QMessageBox.Information)
         message.setWindowTitle("Total Costs and Fines")
         # noinspection PyUnresolvedReferences
-        message.setInformativeText("Costs: $" + str(self.case_information.court_costs.amount) +
-                                   "\nFines: $" + str(self.case_information.total_fines) +
-                                   "\nFines Suspended: $" + str(self.case_information.total_fines_suspended) +
+        message.setInformativeText("Costs: $" + str(self.entry_case_information.court_costs.amount) +
+                                   "\nFines: $" + str(self.entry_case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
                                    "\n\n*Does not include possible bond forfeiture or other costs \n that " +
                                    "may be assessed as a result of prior actions in case. ")
         total_fines_and_costs = \
-            (self.case_information.court_costs.amount + self.case_information.total_fines) - \
-            self.case_information.total_fines_suspended
+            (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
+            self.entry_case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
@@ -423,7 +454,7 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     @logger.catch
     def amend_offense(self):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
-        object then points the case_information object to the AmendOffenseDetails
+        object then points the entry_case_information object to the AmendOffenseDetails
         object."""
         self.amend_offense_details.original_charge = self.original_charge_box.currentText()
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
@@ -446,32 +477,3 @@ else:
     database_offenses = create_database_connections()
 
 
-@logger.catch
-def create_entry_process(dialog):
-    """The order of the create entry process is important to make sure the
-    information is updated before the entry is created."""
-    dialog.update_case_information()
-    if dialog.charges_gridLayout.check_plea_and_findings() is None:
-        return None
-    create_entry(dialog)
-    dialog.close_event()
-
-
-@logger.catch
-def create_entry(dialog):
-    """Loads the proper template and creates the entry."""
-    doc = DocxTemplate(dialog.template.template_path)
-    doc.render(dialog.case_information.get_case_information())
-    docname = set_document_name(dialog)
-    doc.save(SAVE_PATH + docname)
-    os.startfile(SAVE_PATH + docname)
-
-
-@logger.catch
-def clear_case_information_fields(dialog):
-    """Clears the text in the fields in the top case information frame and resets the cursor
-    to the first text entry (defendant_first_name_lineEdit) box."""
-    dialog.defendant_first_name_lineEdit.clear()
-    dialog.defendant_last_name_lineEdit.clear()
-    dialog.case_number_lineEdit.clear()
-    dialog.defendant_first_name_lineEdit.setFocus()

@@ -7,7 +7,7 @@ from loguru import logger
 def set_document_name(dialog):
     """Sets document name based on the case number and name of the template
     must include '.docx' to make it a Word document."""
-    return dialog.case_information.case_number + "_" + dialog.template.template_name + ".docx"
+    return dialog.entry_case_information.case_number + "_" + dialog.template.template_name + ".docx"
 
 
 @logger.catch

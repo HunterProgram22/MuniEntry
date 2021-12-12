@@ -40,7 +40,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     def update_case_information(self):
         super().update_case_information()
         self.add_dispositions_and_fines()
-        self.case_information.sentencing_date = (
+        self.entry_case_information.sentencing_date = (
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
 
@@ -55,8 +55,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         refactored."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
-        added_charge_index = len(self.case_information.charges_list) - 1
-        charge = vars(self.case_information.charges_list[added_charge_index])
+        added_charge_index = len(self.entry_case_information.charges_list) - 1
+        charge = vars(self.entry_case_information.charges_list[added_charge_index])
         for value in charge.values():
             if value is not None:
                 if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
