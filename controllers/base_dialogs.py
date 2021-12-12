@@ -8,6 +8,18 @@ from PyQt5 import QtGui
 from controllers.helper_functions import create_entry
 
 
+@logger.catch
+def create_entry_process(dialog):
+    """The order of functions that are called when the create_entry_Button is pressed()
+    on a criminal dialog. The order is important to make sure the information is
+    updated before the entry is created."""
+    dialog.update_case_information()
+    if dialog.charges_gridLayout.check_plea_and_findings() is None:
+        return None
+    create_entry(dialog)
+    dialog.close_event()
+
+
 class CasePartyUpdater:
     """A base class containing all base methods for updating case number, date and parties."""
     @logger.catch
@@ -44,6 +56,7 @@ class DialogCleanUp:
 
 
 class SlotFunctions:
+
     @logger.catch
     def clear_case_information_fields(self):
         """Clears the text in the fields in the top case information frame and resets the cursor
@@ -52,17 +65,6 @@ class SlotFunctions:
         self.defendant_last_name_lineEdit.clear()
         self.case_number_lineEdit.clear()
         self.defendant_first_name_lineEdit.setFocus()
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of functions that are called when the create_entry_Button is pressed()
-        on a criminal dialog. The order is important to make sure the information is
-        updated before the entry is created."""
-        self.update_case_information()
-        if self.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        create_entry(self)
-        self.close_event()
 
 
 class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp, SlotFunctions):
@@ -94,7 +96,11 @@ class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp, SlotFunctions):
     @logger.catch
     def connect_signals_to_slots(self):
         """This method includes buttons common to all dialogs. Buttons that are
-        specific to only a certain dialog are added in the subclassed version of the method."""
+        specific to only a certain dialog are added in the subclassed version of the method.
+
+        The create entry process is connected with a lambda function because it needs the dialog to be
+        passed as an argument (dialog = self) and if it is connected without lambda it would be called on
+        dialog creation instead of upon button pressed."""
         self.cancel_Button.pressed.connect(self.close_event)
         self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        self.create_entry_Button.pressed.connect(lambda self=self: create_entry_process(self))
