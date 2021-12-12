@@ -168,7 +168,7 @@ font-weight: bold;</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0" colspan="3">
-        <widget class="QFrame" name="frame_2">
+        <widget class="QFrame" name="case_name_Frame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
