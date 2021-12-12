@@ -13,8 +13,8 @@ sys.path.insert(0, parent_dir)
 import MuniEntry_app
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AmendOffenseDialog,
 )
+from controllers.conditions_dialogs import AmendOffenseDialog
 from settings import create_arraignments_database_connection
 
 arraignments_database = create_arraignments_database_connection()
