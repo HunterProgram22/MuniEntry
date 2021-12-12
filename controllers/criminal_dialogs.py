@@ -82,6 +82,7 @@ class CriminalPleaDialog(BaseDialog):
             pass
 
 
+
     # CMS Loader Functions
     @logger.catch
     def load_arraignment_data(self):
@@ -109,14 +110,6 @@ class CriminalPleaDialog(BaseDialog):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
         super().close_event()
-
-    def set_statute_and_offense_choice_boxes(self):
-        """This method is set in CriminalPleaDialog class but called in subclasses because
-        NotGuiltyBondDialog doesn't currently have statute and offense choice boxes."""
-        self.statute_choice_box.addItems(create_statute_list())
-        self.offense_choice_box.addItems(create_offense_list())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
 
 
 
@@ -310,6 +303,14 @@ class CriminalPleaDialog(BaseDialog):
             if statute == key:
                 query.finish()
                 return offense_type
+
+    def set_statute_and_offense_choice_boxes(self):
+        """This method is set in CriminalPleaDialog class but called in subclasses because
+        NotGuiltyBondDialog doesn't currently have statute and offense choice boxes."""
+        self.statute_choice_box.addItems(create_statute_list())
+        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
 
 
 
