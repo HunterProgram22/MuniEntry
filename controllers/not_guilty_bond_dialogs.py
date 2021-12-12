@@ -1,4 +1,5 @@
 """The controller module for the LEAP plea dialog."""
+from PyQt5.QtWidgets import QMessageBox
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 
