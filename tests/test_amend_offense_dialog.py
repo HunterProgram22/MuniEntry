@@ -62,13 +62,19 @@ def test_case_information_dialog(qtbot, dialog):
 
 def test_amend_offense_granted(qtbot, dialog):
     QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
-    dialog = start_amend_offense_dialog(qtbot, dialog)
-    dialog.motion_decision_box.setCurrentText("Granted")
-    assert dialog.motion_decision_box.currentText() == "Granted"
+    dialog_amend = start_amend_offense_dialog(qtbot, dialog)
+    dialog_amend.motion_decision_box.setCurrentText("Granted")
+    assert dialog_amend.motion_decision_box.currentText() == "Granted"
+    QtBot.mouseClick(dialog_amend.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.guilty_all_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
 
 
 def test_amend_offense_denied(qtbot, dialog):
     QtBot.mouseClick(dialog.charges_gridLayout.itemAtPosition(8, 2).widget(), QtCore.Qt.LeftButton)
-    dialog = start_amend_offense_dialog(qtbot, dialog)
-    dialog.motion_decision_box.setCurrentText("Denied")
-    assert dialog.motion_decision_box.currentText() == "Denied"
+    dialog_amend = start_amend_offense_dialog(qtbot, dialog)
+    dialog_amend.motion_decision_box.setCurrentText("Denied")
+    assert dialog_amend.motion_decision_box.currentText() == "Denied"
+    QtBot.mouseClick(dialog_amend.amend_offense_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.no_contest_all_Button, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
