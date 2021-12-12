@@ -45,6 +45,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def modify_view(self):
         """Sets the balance due date in the view to today."""
+        super().modify_view()
         self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
     @logger.catch

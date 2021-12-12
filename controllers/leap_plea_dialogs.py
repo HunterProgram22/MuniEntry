@@ -26,6 +26,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def modify_view(self):
         """Sets the sentencing date."""
+        super().modify_view()
         self.set_sentencing_date("120 days")
 
     @logger.catch

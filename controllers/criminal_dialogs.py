@@ -54,6 +54,8 @@ class CriminalPleaDialog(BaseDialog):
     The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
+
+    # INIT Functions
     def __init__(self, judicial_officer, case=None, parent=None):
         open_databases()
         super().__init__(parent)
@@ -65,14 +67,13 @@ class CriminalPleaDialog(BaseDialog):
             pass
         self.case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
-        self.set_statute_and_offense_choice_boxes()
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.delete_button_list = []
         self.amend_button_list = []
         self.load_arraignment_data()
 
     def modify_view(self):
-        pass
+        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        self.set_statute_and_offense_choice_boxes()
 
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
