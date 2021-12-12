@@ -114,12 +114,23 @@ class CriminalPleaDialog(BaseDialog):
 
 
     # Criminal CasePartyUpdater Functions
+
+    def set_case_number_and_date(self):
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
     def update_case_information(self):
-        """REMOVE / MOVE this down because additional case information is not in all dialogs. Already done in refactor
-        branch."""
-        super().update_case_information()
+        """"Docstring needs updating."""
+        self.set_case_number_and_date()
+        self.set_party_information()
         self.add_additional_case_information()
 
+    @logger.catch
+    def set_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
 
     # Modify Case Information Functions
