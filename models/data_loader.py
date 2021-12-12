@@ -25,7 +25,7 @@ class CaseSQLRetriever(ABC):
 
 
 class CriminalCaseSQLRetriever(CaseSQLRetriever):
-    """Gets case data from a database and loads it into a criminal case object."""
+    """Gets cms_case data from a database and loads it into a criminal cms_case object."""
     def __init__(self, case_number, database):
         self.case_number = case_number
         self.database = database
@@ -36,7 +36,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return CriminalCaseInformation()
 
     def get_case_data(self):
-        """Query database based on case number to return the data to load for the
+        """Query database based on cms_case number to return the data to load for the
         dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
         key = self.case_number

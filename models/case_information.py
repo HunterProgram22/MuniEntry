@@ -7,7 +7,7 @@ from models.party_types import Defendant
 @dataclass
 class CaseLoadData:
     """This object is used to store data from the arraignments database that is loaded. The data can
-    then be passed to the specific dialog selected and will be transferred to case information."""
+    then be passed to the specific dialog selected and will be transferred to cms_case information."""
     case_number: str = None
     defendant_last_name: str = None
     defendant_first_name: str = None
@@ -18,7 +18,7 @@ class CaseLoadData:
 @dataclass
 class CriminalCharge:
     """Class for keeping track of all information that is specific to each
-    individual charge in a case.
+    individual charge in a cms_case.
     TODO: Perhaps switch fine/jail to int/float?"""
     offense: str = None
     statute: str = None
@@ -98,7 +98,7 @@ class AmendOffenseDetails:
 @dataclass
 class CommunityService:
     """Class for keeping track of all community service terms that are tied to
-    a specific case."""
+    a specific cms_case."""
     ordered: bool = False
     hours_of_service: int = 0
     days_to_complete_service: int = 0
@@ -120,7 +120,7 @@ class VehicleSeizure:
 @dataclass
 class LicenseSuspension:
     """Class for keeping track of the license suspension terms that are tied to
-    a specific case."""
+    a specific cms_case."""
     ordered: bool = False
     license_type: str = None
     suspended_date: str = None
@@ -131,7 +131,7 @@ class LicenseSuspension:
 @dataclass
 class OtherConditions:
     """Class for keeping track of other conditions that are tied to
-    a specific case. This condition is a freeform text entry box in the UI."""
+    a specific cms_case. This condition is a freeform text entry box in the UI."""
     ordered: bool = False
     terms: str = None
 
@@ -148,7 +148,7 @@ class CourtCosts:
 
 @dataclass
 class CriminalCaseInformation:
-    """This object stores all the information for a case both at inception and
+    """This object stores all the information for a cms_case both at inception and
     as it is populated through the application.
     TODO: Should also still refactor amend_offense_details to object of dataclass."""
     judicial_officer: object = None
@@ -178,6 +178,6 @@ class CriminalCaseInformation:
         self.charges_list.append(charge)
 
     def get_case_information(self):
-        """Returns a dictionary with all of case information required
+        """Returns a dictionary with all of cms_case information required
         to populate an entry."""
         return asdict(self)

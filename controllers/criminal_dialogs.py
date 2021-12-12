@@ -70,7 +70,7 @@ def create_entry(dialog):
 
 @logger.catch
 def clear_case_information_fields(dialog):
-    """Clears the text in the fields in the top case information frame and resets the cursor
+    """Clears the text in the fields in the top cms_case information frame and resets the cursor
     to the first text entry (defendant_first_name_lineEdit) box."""
     dialog.defendant_first_name_lineEdit.clear()
     dialog.defendant_last_name_lineEdit.clear()
@@ -80,18 +80,18 @@ def clear_case_information_fields(dialog):
 
 class CriminalPleaDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
-    dialogs/entries that require entering a plea and finding in a case.
+    dialogs/entries that require entering a plea and finding in a cms_case.
 
     The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
 
     # INIT Functions
-    def __init__(self, judicial_officer, case=None, parent=None):
+    def __init__(self, judicial_officer, cms_case=None, parent=None):
         open_databases()
         super().__init__(parent)
         self.judicial_officer = judicial_officer
-        self.case = case
+        self.cms_case = cms_case
         try:
             self.charges_gridLayout.__class__ = ChargesGrid
         except AttributeError:
@@ -126,17 +126,17 @@ class CriminalPleaDialog(BaseDialog):
     # CMS Loader Functions
     @logger.catch
     def load_cms_data_to_view(self):
-        """Uses the case number selected to get the case object from main and load case data."""
-        if self.case.case_number is not None:
-            self.case_number_lineEdit.setText(self.case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.case.defendant.first_name)
-            self.defendant_last_name_lineEdit.setText(self.case.defendant.last_name)
+        """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
+        if self.cms_case.case_number is not None:
+            self.case_number_lineEdit.setText(self.cms_case.case_number)
+            self.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
+            self.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
             self.add_caseloaddata_to_case_information()
 
     def add_caseloaddata_to_case_information(self):
-        """Loads the data from the case object that is created from the sql table.
+        """Loads the data from the cms_case object that is created from the sql table.
         self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
-        for _index, charge in enumerate(self.case.charges_list):
+        for _index, charge in enumerate(self.cms_case.charges_list):
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
                 self.criminal_charge.degree) = charge
@@ -211,9 +211,9 @@ class CriminalPleaDialog(BaseDialog):
 
     @logger.catch
     def calculate_costs_and_fines(self):
-        """Calculates costs and fines based on the case type (moving, non-moving, criminal) and
+        """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
         then adds it to any fines that are in the fines_amount box and subtracts fines in the
-        fines_suspended box. The loop stops when a case of the highest fine is found because
+        fines_suspended box. The loop stops when a cms_case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
         not used but is required to unpack enumerate()."""
         self.entry_case_information.court_costs.amount = 0
@@ -342,7 +342,7 @@ class CriminalPleaDialog(BaseDialog):
 
     @logger.catch
     def set_offense_type(self):
-        """This calls the database_statutes and behind the scenes sets the appropriate case type
+        """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
         for each charge. It does not show up in the view, but is used for calculating costs."""
         key = self.statute_choice_box.currentText()
         if self.freeform_entry_checkBox.isChecked():
@@ -394,7 +394,7 @@ class CriminalPleaDialog(BaseDialog):
                                    "\nFines: $" + str(self.entry_case_information.total_fines) +
                                    "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
                                    "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in case. ")
+                                   "may be assessed as a result of prior actions in cms_case. ")
         total_fines_and_costs = \
             (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
             self.entry_case_information.total_fines_suspended
@@ -405,7 +405,7 @@ class CriminalPleaDialog(BaseDialog):
 
 class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
-    The case information is passed in order to populate the case information banner. The
+    The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index, parent=None):
