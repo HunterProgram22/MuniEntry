@@ -1,6 +1,7 @@
 """The controller module for the no jail plea dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a database."""
+from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
 from PyQt5 import QtCore
@@ -139,6 +140,69 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
         NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddConditionsDialog(self).exec()
+
+    @logger.catch
+    def update_costs_and_fines_information(self):
+        """Updates the costs and fines from the GUI(view) and saves it to the model."""
+        self.entry_case_information.court_costs.ordered = self.court_costs_box.currentText()
+        self.entry_case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
+        self.entry_case_information.court_costs.balance_due_date = \
+            self.balance_due_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
+    def calculate_costs_and_fines(self):
+        """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
+        then adds it to any fines that are in the fines_amount box and subtracts fines in the
+        fines_suspended box. The loop stops when a cms_case of the highest fine is found because
+        court costs are always for the highest charge. The _index is underscored because it is
+        not used but is required to unpack enumerate()."""
+        self.entry_case_information.court_costs.amount = 0
+        if self.court_costs_box.currentText() == "Yes":
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
+                if self.entry_case_information.court_costs.amount == 124:
+                    break
+                if charge.type == "Moving Traffic":
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 124)
+                elif charge.type == "Criminal":
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 114)
+                elif charge.type == "Non-moving Traffic":
+                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 95)
+        total_fines = 0
+        try:
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
+                if charge.fines_amount == '':
+                    charge.fines_amount = 0
+                total_fines = total_fines + int(charge.fines_amount)
+            self.entry_case_information.total_fines = total_fines
+            total_fines_suspended = 0
+            for _index, charge in enumerate(self.entry_case_information.charges_list):
+                if charge.fines_suspended == '':
+                    charge.fines_suspended = 0
+                total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+            self.entry_case_information.total_fines_suspended = total_fines_suspended
+        except TypeError:
+            print("A type error was allowed to pass - this is because of deleted charge.")
+
+    @logger.catch
+    def show_costs_and_fines(self, _bool):
+        """The _bool is the toggle from the clicked() of the button pressed. No
+        action is taken with respect to it."""
+        self.update_case_information()
+        message = QMessageBox()
+        message.setIcon(QMessageBox.Information)
+        message.setWindowTitle("Total Costs and Fines")
+        # noinspection PyUnresolvedReferences
+        message.setInformativeText("Costs: $" + str(self.entry_case_information.court_costs.amount) +
+                                   "\nFines: $" + str(self.entry_case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
+                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
+                                   "may be assessed as a result of prior actions in cms_case. ")
+        total_fines_and_costs = \
+            (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
+            self.entry_case_information.total_fines_suspended
+        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
+        message.setStandardButtons(QMessageBox.Ok)
+        message.exec_()
 
 
 if __name__ == "__main__":

@@ -3,7 +3,7 @@ from controllers.base_dialogs import BaseDialog
 from loguru import logger
 
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QMessageBox
 
 from views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
 from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
