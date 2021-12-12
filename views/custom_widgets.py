@@ -190,7 +190,7 @@ class ChargesGrid(QGridLayout):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
         fields have a plea and finding you will get the warning until they are filled in.
 
-        MOVE: Should this be in CriminalPleaDialog or a decorator or standalone function???"""
+        MOVE: Should this be in CriminalBaseDialog or a decorator or standalone function???"""
         row_plea, row_finding = self.set_plea_and_finding_rows()
         column = 2
         loop_counter = 0

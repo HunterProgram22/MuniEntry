@@ -14,12 +14,12 @@ from controllers.criminal_dialogs import (
     AmendOffenseDialog,
 )
 from controllers.conditions_dialogs import AddConditionsDialog
-from .criminal_dialogs import CriminalPleaDialog
+from controllers.base_dialogs import CriminalBaseDialog
 from settings import PAY_DATE_DICT
 
 
-class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
-    """The dialog inherits from the CriminalPleaDialog (controller) and the
+class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
+    """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):

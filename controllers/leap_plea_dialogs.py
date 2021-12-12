@@ -1,5 +1,5 @@
 """The controller module for the LEAP plea dialog."""
-from controllers.base_dialogs import BaseDialog
+from controllers.base_dialogs import BaseDialog, CriminalBaseDialog
 from loguru import logger
 
 from PyQt5.QtCore import QDate
@@ -10,11 +10,10 @@ from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
 from views.custom_widgets import PleaComboBox
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
-from controllers.criminal_dialogs import CriminalPleaDialog
 from settings import LEAP_COMPLETE_DATE_DICT
 
 
-class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
+class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
@@ -74,8 +73,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
-class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
-    """The dialog inherits from the CriminalPleaDialog(controller) and the
+class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
+    """The dialog inherits from the CriminalBaseDialog(controller) and the
     Ui_LeapPleaShortDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
