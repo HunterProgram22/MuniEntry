@@ -16,9 +16,8 @@ import MuniEntry_app
 from models.case_information import CaseLoadData
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AmendOffenseDialog,
 )
-from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
 from settings import create_arraignments_database_connection
 
 TODAY = date.today()
