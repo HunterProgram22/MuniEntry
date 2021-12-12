@@ -40,42 +40,7 @@ def clear_case_information_fields(dialog):
     dialog.defendant_first_name_lineEdit.setFocus()
 
 
-class CasePartyUpdater:
-    """A base class containing all base methods for updating case number, date and parties."""
-    @logger.catch
-    def update_case_information(self):
-        """"Docstring needs updating."""
-        self.set_case_number_and_date()
-        self.set_party_information()
-
-    def set_case_number_and_date(self):
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
-
-    @logger.catch
-    def set_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-
-
-class DialogCleanUp:
-    """A base class containing the base cleanup methods for when a dialog is completed and closed."""
-    @logger.catch
-    def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        self.close_window()
-
-    @logger.catch
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window. This can also be called
-        at the end of the close_event process to close the dialog."""
-        self.close()
-
-
-class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp):
+class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
@@ -111,3 +76,32 @@ class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp):
         self.cancel_Button.pressed.connect(self.close_event)
         self.clear_fields_case_Button.pressed.connect(lambda dialog=self: clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(lambda dialog=self: create_entry_process(dialog))
+
+    def set_case_number_and_date(self):
+        self.case_information.case_number = self.case_number_lineEdit.text()
+        self.case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    @logger.catch
+    def update_case_information(self):
+        """"Docstring needs updating."""
+        self.set_case_number_and_date()
+        self.set_party_information()
+
+    @logger.catch
+    def set_party_information(self):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
+        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+
+    @logger.catch
+    def close_window(self):
+        """Function connected to a button to close the window. Can be connected
+        to any button press/click/release to close a window. This can also be called
+        at the end of the close_event process to close the dialog."""
+        self.close()
+
+    @logger.catch
+    def close_event(self):
+        """Place any cleanup items (i.e. close_databases) here that should be
+        called when the entry is created and the dialog closed."""
+        self.close_window()
