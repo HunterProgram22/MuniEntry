@@ -120,6 +120,9 @@ class CriminalPleaDialog(BaseDialog):
         super().update_case_information()
         self.add_additional_case_information()
 
+
+
+    # Modify Case Information Functions
     def add_additional_case_information(self):
         self.add_dispositions_and_fines()
         self.update_costs_and_fines_information()
