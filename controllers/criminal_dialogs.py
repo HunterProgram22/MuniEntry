@@ -1,5 +1,9 @@
 """The module that contains all controller classes that are common to criminal
 cases (criminal includes traffic). """
+import os
+
+from controllers.helper_functions import set_document_name
+from docxtpl import DocxTemplate
 from loguru import logger
 
 from PyQt5 import QtCore
@@ -18,7 +22,7 @@ from views.custom_widgets import (
 )
 from controllers.base_dialogs import BaseDialog
 from resources.db.create_data_lists import create_offense_list, create_statute_list
-from settings import CHARGES_DATABASE
+from settings import CHARGES_DATABASE, SAVE_PATH
 
 
 @logger.catch
@@ -52,7 +56,9 @@ class CriminalPleaDialog(BaseDialog):
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, case=None, parent=None):
         open_databases()
-        super().__init__(judicial_officer, case, parent)
+        super().__init__(parent)
+        self.judicial_officer = judicial_officer
+        self.case = case
         try:
             self.charges_gridLayout.__class__ = ChargesGrid
         except AttributeError:
@@ -72,6 +78,8 @@ class CriminalPleaDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
         super().connect_signals_to_slots()
+        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: clear_case_information_fields(dialog))
+        self.create_entry_Button.pressed.connect(lambda dialog=self: create_entry_process(dialog))
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
@@ -435,3 +443,34 @@ if __name__ == "__main__":
 else:
     print("BCD ran when imported")
     database_offenses = create_database_connections()
+
+
+@logger.catch
+def create_entry_process(dialog):
+    """The order of the create entry process is important to make sure the
+    information is updated before the entry is created."""
+    dialog.update_case_information()
+    if dialog.charges_gridLayout.check_plea_and_findings() is None:
+        return None
+    create_entry(dialog)
+    dialog.close_event()
+
+
+@logger.catch
+def create_entry(dialog):
+    """Loads the proper template and creates the entry."""
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.case_information.get_case_information())
+    docname = set_document_name(dialog)
+    doc.save(SAVE_PATH + docname)
+    os.startfile(SAVE_PATH + docname)
+
+
+@logger.catch
+def clear_case_information_fields(dialog):
+    """Clears the text in the fields in the top case information frame and resets the cursor
+    to the first text entry (defendant_first_name_lineEdit) box."""
+    dialog.defendant_first_name_lineEdit.clear()
+    dialog.defendant_last_name_lineEdit.clear()
+    dialog.case_number_lineEdit.clear()
+    dialog.defendant_first_name_lineEdit.setFocus()
