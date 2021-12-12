@@ -1,17 +1,16 @@
 """The controller module for the LEAP plea dialog."""
 from PyQt5.QtWidgets import QMessageBox
-from controllers.base_dialogs import BaseDialog
+from controllers.base_dialogs import BaseDialog, CriminalBaseDialog
 from loguru import logger
 
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import FTABondConditions
-from controllers.criminal_dialogs import CriminalPleaDialog
 from controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 
 
-class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
-    """The dialog inherits from the CriminalPleaDialog (controller) and the
+class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
+    """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NotGuiltyBondDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
