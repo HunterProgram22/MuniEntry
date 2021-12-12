@@ -33,7 +33,7 @@ def create_entry(dialog):
 @logger.catch
 def clear_case_information_fields(dialog):
     """Clears the text in the fields in the top case information frame and resets the cursor
-    to the first text entry box."""
+    to the first text entry (defendant_first_name_lineEdit) box."""
     dialog.defendant_first_name_lineEdit.clear()
     dialog.defendant_last_name_lineEdit.clear()
     dialog.case_number_lineEdit.clear()
@@ -95,10 +95,9 @@ class BaseDialog(QDialog, CasePartyUpdater, DialogCleanUp):
 
     @logger.catch
     def modify_view(self):
-        """The modify view method updates the view that is created on init with
-        self.setupUI. Place items in this method that can't be added
-        directly in QtDesigner (or are more easily added later) so that they
-        don't need to be changed in the view file each time pyuic5 is run."""
+        """The modify view method updates the view that is created on init with self.setupUI.
+        Place items in this method that can't be added directly in QtDesigner (or are more easily added later)
+        so that they don't need to be changed in the view file each time pyuic5 is run."""
         pass
 
     @logger.catch

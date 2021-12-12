@@ -3,8 +3,6 @@ from datetime import date, timedelta
 
 from loguru import logger
 
-# from views.custom_widgets import RequiredBox
-
 
 def set_document_name(dialog):
     """Sets document name based on the case number and name of the template
