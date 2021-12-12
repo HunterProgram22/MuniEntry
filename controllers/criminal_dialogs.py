@@ -131,9 +131,9 @@ class CriminalPleaDialog(BaseDialog):
             self.case_number_lineEdit.setText(self.cms_case.case_number)
             self.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
             self.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
-            self.add_caseloaddata_to_case_information()
+            self.add_cms_criminal_charges_to_entry_case_information()
 
-    def add_caseloaddata_to_case_information(self):
+    def add_cms_criminal_charges_to_entry_case_information(self):
         """Loads the data from the cms_case object that is created from the sql table.
         self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
         for _index, charge in enumerate(self.cms_case.charges_list):
