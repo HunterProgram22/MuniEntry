@@ -91,8 +91,8 @@ class Window(QMainWindow, Ui_MainWindow):
             key.pressed.connect(self.start_dialog_from_entry_button)
 
     def load_arraignment_case_list(self):
-        """Loads the case numbers of all the cases that are in the arraignments database. This
-        does not load the case data for each case."""
+        """Loads the cms_case numbers of all the cases that are in the arraignments database. This
+        does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(create_cases_list())
 
     @logger.catch

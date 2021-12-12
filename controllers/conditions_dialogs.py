@@ -71,7 +71,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         Add Conditions screen.
 
         TODO: Creating a new instance of the special conditions here to avoid data being persistent
-        and carrying over to a future case. This requires resetting ordered to true even though it
+        and carrying over to a future cms_case. This requires resetting ordered to true even though it
         is set to true by the add_conditions_dict. Fix is probably to not set a default
         instance of the class in the dataclass.
         """
@@ -178,7 +178,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         Add Special Conditions screen.
 
         TODO: Creating a new instance of the special conditions here to avoid data being persistent
-        and carrying over to a future case. This requires resetting ordered to true even though it
+        and carrying over to a future cms_case. This requires resetting ordered to true even though it
         is set to true by the add_special_conditions_dict. Fix is probably to not set a default
         instance of the class in the dataclass."""
         if self.domestic_violence is True:

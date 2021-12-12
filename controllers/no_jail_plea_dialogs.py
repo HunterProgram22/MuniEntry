@@ -35,8 +35,8 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     def load_cms_data_to_view(self):
         super().load_cms_data_to_view()
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
-        if self.case.fra_in_file in fra_value_dict:
-            self.fra_in_file_box.setCurrentText(fra_value_dict[self.case.fra_in_file])
+        if self.cms_case.fra_in_file in fra_value_dict:
+            self.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
             self.fra_in_file_box.setCurrentText("N/A")
         self.set_fra_in_file(self.fra_in_file_box.currentText())
@@ -103,7 +103,7 @@ class NoJailPleaDialog(CriminalPleaDialog, Ui_NoJailPleaDialog):
     def start_amend_offense_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The
         entry_case_information is passed to the dialog class in order to populate
-        the case information banner. The _bool is from clicked and not used."""
+        the cms_case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
         AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
