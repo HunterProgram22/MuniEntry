@@ -14,6 +14,15 @@ from settings import CHARGES_DATABASE, SAVE_PATH
 from views.custom_widgets import ChargesGrid, PleaComboBox
 
 
+@logger.catch
+def create_entry(dialog):
+    """Loads the proper template and creates the entry."""
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.entry_case_information.get_case_information())
+    docname = set_document_name(dialog)
+    doc.save(SAVE_PATH + docname)
+    os.startfile(SAVE_PATH + docname)
+
 class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
@@ -44,6 +53,27 @@ class BaseDialog(QDialog):
         passed as an argument (dialog = self) and if it is connected without lambda it would be called on
         dialog creation instead of upon button pressed."""
         self.cancel_Button.pressed.connect(self.close_event)
+
+    @logger.catch
+    def create_entry_process(self):
+        """The order of the create entry process is important to make sure the
+        information is updated before the entry is created."""
+        self.update_case_information()
+        if self.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        create_entry(self)
+        self.close_event()
+
+
+
+    @logger.catch
+    def clear_case_information_fields(self):
+        """Clears the text in the fields in the top cms_case information frame and resets the cursor
+        to the first text entry (defendant_first_name_lineEdit) box."""
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
 
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
@@ -89,8 +119,8 @@ class CriminalBaseDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
         super().connect_signals_to_slots()
-        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: clear_case_information_fields(dialog))
-        self.create_entry_Button.pressed.connect(lambda dialog=self: create_entry_process(dialog))
+        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
+        self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
@@ -317,35 +347,6 @@ def close_databases():
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
 
-@logger.catch
-def create_entry_process(dialog):
-    """The order of the create entry process is important to make sure the
-    information is updated before the entry is created."""
-    dialog.update_case_information()
-    if dialog.charges_gridLayout.check_plea_and_findings() is None:
-        return None
-    create_entry(dialog)
-    dialog.close_event()
-
-
-@logger.catch
-def create_entry(dialog):
-    """Loads the proper template and creates the entry."""
-    doc = DocxTemplate(dialog.template.template_path)
-    doc.render(dialog.entry_case_information.get_case_information())
-    docname = set_document_name(dialog)
-    doc.save(SAVE_PATH + docname)
-    os.startfile(SAVE_PATH + docname)
-
-
-@logger.catch
-def clear_case_information_fields(dialog):
-    """Clears the text in the fields in the top cms_case information frame and resets the cursor
-    to the first text entry (defendant_first_name_lineEdit) box."""
-    dialog.defendant_first_name_lineEdit.clear()
-    dialog.defendant_last_name_lineEdit.clear()
-    dialog.case_number_lineEdit.clear()
-    dialog.defendant_first_name_lineEdit.setFocus()
 
 if __name__ == "__main__":
     print("BCD ran directly")
