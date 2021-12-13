@@ -114,6 +114,8 @@ class CriminalPleaDialog(BaseDialog):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
     def update_case_information(self):
+        """REMOVE / MOVE this down because additional case information is not in all dialogs. Already done in refactor
+        branch."""
         super().update_case_information()
         self.add_additional_case_information()
 
