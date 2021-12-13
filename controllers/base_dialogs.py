@@ -105,26 +105,6 @@ class CriminalBaseDialog(BaseDialog):
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
 
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of the create entry process is important to make sure the
-        information is updated before the entry is created."""
-        self.update_case_information()
-        if self.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        create_entry(self)
-        self.close_event()
-
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top cms_case information frame and resets the cursor
-        to the first text entry (defendant_first_name_lineEdit) box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
     # CMS Loader Functions
     @logger.catch
     def load_cms_data_to_view(self):
@@ -152,6 +132,15 @@ class CriminalBaseDialog(BaseDialog):
         super().close_event()
 
     # Criminal CasePartyUpdater Functions
+    @logger.catch
+    def clear_case_information_fields(self):
+        """Clears the text in the fields in the top cms_case information frame and resets the cursor
+        to the first text entry (defendant_first_name_lineEdit) box."""
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
+
     def set_case_number_and_date(self):
         self.entry_case_information.case_number = self.case_number_lineEdit.text()
         self.entry_case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
@@ -217,6 +206,16 @@ class CriminalBaseDialog(BaseDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
+
+    @logger.catch
+    def create_entry_process(self):
+        """The order of the create entry process is important to make sure the
+        information is updated before the entry is created."""
+        self.update_case_information()
+        if self.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        create_entry(self)
+        self.close_event()
 
     def clear_charge_fields(self):
         """Clears the fields that are used for adding a charge. The
