@@ -131,31 +131,11 @@ class CriminalBaseDialog(BaseDialog):
         close_databases()
         super().close_event()
 
-    # Criminal CasePartyUpdater Functions
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top cms_case information frame and resets the cursor
-        to the first text entry (defendant_first_name_lineEdit) box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
-    def set_case_number_and_date(self):
-        self.entry_case_information.case_number = self.case_number_lineEdit.text()
-        self.entry_case_information.plea_trial_date = self.plea_trial_date.date().toString("MMMM dd, yyyy")
-
+    # Criminal CasePartyUpdater Functions - REFACTORED and WORKING
     @logger.catch
     def update_case_information(self):
         """"Docstring needs updating."""
-        self.set_case_number_and_date()
-        self.set_party_information()
-
-    @logger.catch
-    def set_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.entry_case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.entry_case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
+        return CasePartyUpdater(self)
 
     # Modify Case Information Functions
     @logger.catch
@@ -180,6 +160,15 @@ class CriminalBaseDialog(BaseDialog):
             column += 1
 
     # Slot Functions
+    @logger.catch
+    def clear_case_information_fields(self):
+        """Clears the text in the fields in the top cms_case information frame and resets the cursor
+        to the first text entry (defendant_first_name_lineEdit) box."""
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
+
     @logger.catch
     def add_charge_process(self, _bool):
         """The order of functions that are called when the add_charge_Button is
@@ -318,6 +307,27 @@ def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
+
+
+class CasePartyUpdater:
+    """Class responsible for updating case number, date and party information. Top frame
+    on primary dialogs."""
+    def __init__(self, dialog):
+        self.case_number = dialog.case_number_lineEdit.text()
+        self.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.defendant_first_name = dialog.defendant_first_name_lineEdit.text()
+        self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
+        self.set_case_number_and_date(dialog)
+        self.set_party_information(dialog)
+
+    def set_case_number_and_date(self, dialog):
+        dialog.entry_case_information.case_number = self.case_number
+        dialog.entry_case_information.plea_trial_date = self.plea_trial_date
+
+    def set_party_information(self, dialog):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        dialog.entry_case_information.defendant.first_name = self.defendant_first_name
+        dialog.entry_case_information.defendant.last_name = self.defendant_last_name
 
 
 if __name__ == "__main__":

@@ -62,8 +62,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def update_case_information(self):
         """"Docstring needs updating."""
-        self.set_case_number_and_date()
-        self.set_party_information()
+        super().update_case_information()
         self.add_additional_case_information()
 
     @logger.catch
