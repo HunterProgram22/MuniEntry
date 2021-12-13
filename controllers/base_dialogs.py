@@ -176,12 +176,12 @@ class CriminalBaseDialog(BaseDialog):
         updated before the charge is added and the data cleared from the fields.
 
         The _bool is passed as an argument through clicked() but not used."""
-        self.add_charge_to_case_information()
+        self.add_charge_to_entry_case_information()
         self.add_charge_to_grid()
         self.clear_charge_fields()
 
     @logger.catch
-    def add_charge_to_case_information(self):
+    def add_charge_to_entry_case_information(self):
         """The offense, statute and degree are added to the view by the method
         add_charge_to_view, not this method. This method is triggered on
         clicked() of the Add Charge button."""
