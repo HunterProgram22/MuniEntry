@@ -23,6 +23,7 @@ def create_entry(dialog):
     doc.save(SAVE_PATH + docname)
     os.startfile(SAVE_PATH + docname)
 
+
 class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
@@ -73,7 +74,6 @@ class CriminalBaseDialog(BaseDialog):
     The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
-
     # INIT Functions
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         open_databases()
@@ -119,8 +119,6 @@ class CriminalBaseDialog(BaseDialog):
         create_entry(self)
         self.close_event()
 
-
-
     @logger.catch
     def clear_case_information_fields(self):
         """Clears the text in the fields in the top cms_case information frame and resets the cursor
@@ -150,15 +148,11 @@ class CriminalBaseDialog(BaseDialog):
             self.entry_case_information.add_charge_to_list(self.criminal_charge)
             self.add_charge_to_grid()
 
-
-
     # Criminal DialogCleanUp Functions
     def close_event(self):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
         super().close_event()
-
-
 
     # Criminal CasePartyUpdater Functions
     def set_case_number_and_date(self):
@@ -176,7 +170,6 @@ class CriminalBaseDialog(BaseDialog):
         """Updates the party information from the GUI(view) and saves it to the model."""
         self.entry_case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
         self.entry_case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-
 
     # Modify Case Information Functions
     @logger.catch
@@ -199,8 +192,6 @@ class CriminalBaseDialog(BaseDialog):
                               row, column).widget().currentText()
                 column += 1
             column += 1
-
-
 
     # Slot Functions
     @logger.catch
@@ -236,8 +227,6 @@ class CriminalBaseDialog(BaseDialog):
         method because those boxes are editable."""
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
-
-
 
     # Setter Functions
     @logger.catch
@@ -300,8 +289,6 @@ class CriminalBaseDialog(BaseDialog):
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
 
-
-
     # Move to Charges Grid Widget Class (?)
     @logger.catch
     def delete_charge(self):
@@ -335,7 +322,6 @@ def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
-
 
 
 if __name__ == "__main__":
