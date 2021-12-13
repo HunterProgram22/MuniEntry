@@ -59,6 +59,13 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
+    def update_case_information(self):
+        """"Docstring needs updating."""
+        self.set_case_number_and_date()
+        self.set_party_information()
+        self.add_additional_case_information()
+
+    @logger.catch
     def check_add_conditions(self):
         """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
         because of a dictionary being used. Refactor back away from dictionary?"""
@@ -200,6 +207,12 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
+
+    def add_additional_case_information(self):
+        self.add_dispositions_and_fines()
+        self.update_costs_and_fines_information()
+        self.check_add_conditions()
+        self.calculate_costs_and_fines()
 
 
 if __name__ == "__main__":

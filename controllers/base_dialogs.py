@@ -170,7 +170,6 @@ class CriminalBaseDialog(BaseDialog):
         """"Docstring needs updating."""
         self.set_case_number_and_date()
         self.set_party_information()
-        self.add_additional_case_information()
 
     @logger.catch
     def set_party_information(self):
@@ -179,14 +178,7 @@ class CriminalBaseDialog(BaseDialog):
         self.entry_case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
 
 
-
     # Modify Case Information Functions
-    def add_additional_case_information(self):
-        self.add_dispositions_and_fines()
-        self.update_costs_and_fines_information()
-        self.check_add_conditions()
-        self.calculate_costs_and_fines()
-
     @logger.catch
     def add_dispositions_and_fines(self):
         """Row 3 - plea when no allied checkbox added. Column starts at 1
