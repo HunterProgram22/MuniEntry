@@ -16,9 +16,8 @@ import MuniEntry_app
 from models.case_information import CaseLoadData
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AmendOffenseDialog,
 )
-from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
 from settings import create_arraignments_database_connection
 
 TODAY = date.today()
@@ -78,10 +77,9 @@ def app(qtbot):
 
 @pytest.fixture
 def dialog(app, qtbot):
-    case = CaseLoadData()
     QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
     QtBot.mouseClick(app.NoJailPleaButton, QtCore.Qt.LeftButton)
-    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, case)
+    dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, app.case_to_load)
     return dialog
 
 
@@ -97,7 +95,6 @@ def test_case_information_dialog(app, dialog):
     assert dialog.case_number_lineEdit.text() == "21TRC1234"
     assert dialog.defendant_first_name_lineEdit.text() == "John"
     assert dialog.defendant_last_name_lineEdit.text() == "Smith"
-    # assert dialog.operator_license_number_lineEdit.text() == "TF180780"
 
 
 def test_offense_to_statute(app, dialog):
@@ -227,29 +224,29 @@ def test_add_two_delete_one_add_one_offense(app, dialog):
 
 def test_fra_in_file_and_court(app, dialog):
     dialog.fra_in_file_box.setCurrentText("Yes")
-    assert dialog.case_information.fra_in_file == True
+    assert dialog.entry_case_information.fra_in_file == True
     dialog.fra_in_file_box.setCurrentText("No")
-    assert dialog.case_information.fra_in_file == False
+    assert dialog.entry_case_information.fra_in_file == False
     dialog.fra_in_file_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_file == None
+    assert dialog.entry_case_information.fra_in_file == None
     dialog.fra_in_court_box.setCurrentText("Yes")
-    assert dialog.case_information.fra_in_court == True
+    assert dialog.entry_case_information.fra_in_court == True
     dialog.fra_in_court_box.setCurrentText("No")
-    assert dialog.case_information.fra_in_court == False
+    assert dialog.entry_case_information.fra_in_court == False
     dialog.fra_in_court_box.setCurrentText("N/A")
-    assert dialog.case_information.fra_in_court == None
+    assert dialog.entry_case_information.fra_in_court == None
 
 
 # def test_amend_offense(dialog, qtbot):
 #     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
-#     dialog = start_amendment_dialog(qtbot, dialog.case_information)
+#     dialog = start_amendment_dialog(qtbot, dialog.entry_case_information)
 #     assert dialog.windowTitle() == "Amend Charge"
 
 
-def test_add_conditions(dialog, qtbot):
-    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
-    dialog = start_add_conditions_dialog(qtbot, dialog)
-    assert dialog.windowTitle() == "Additional Conditions"
+# def test_add_conditions(dialog, qtbot):
+#     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
+#     dialog = start_add_conditions_dialog(qtbot, dialog)
+#     assert dialog.windowTitle() == "Additional Conditions"
 
 
 def test_create_entry(app, dialog):

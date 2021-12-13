@@ -14,9 +14,8 @@ import MuniEntry_app
 from models.case_information import CaseLoadData
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
-    AmendOffenseDialog,
 )
-from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
 from settings import create_arraignments_database_connection
 
 arraignments_database = create_arraignments_database_connection()
@@ -58,30 +57,43 @@ def dialog(app, qtbot):
 def test_add_conditions(dialog, qtbot):
     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
-    dialog.windowTitle() == "Additional Conditions"
+    assert dialog.windowTitle() == "Additional Conditions"
 
 
 def test_license_suspension_conditions_checked(dialog, qtbot):
     QtBot.mouseClick(dialog.license_suspension_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.license_suspension_frame.isEnabled() == True
-    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_license_suspension_conditions_unchecked(dialog, qtbot):
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.license_suspension_frame.isEnabled() == False
-    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_community_service_conditions_checked(dialog, qtbot):
     QtBot.mouseClick(dialog.community_service_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.community_service_frame.isEnabled() == True
-    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
 
 
 def test_community_service_conditions_unchecked(dialog, qtbot):
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
     dialog = start_add_conditions_dialog(qtbot, dialog)
     assert dialog.community_service_frame.isEnabled() == False
+
+
+def test_other_conditions_checked(dialog, qtbot):
+    QtBot.mouseClick(dialog.other_conditions_checkBox, QtCore.Qt.LeftButton)
     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
+    dialog = start_add_conditions_dialog(qtbot, dialog)
+    assert dialog.other_conditions_frame.isEnabled() == True
+
+
+def test_other_conditions_unchecked(dialog, qtbot):
+    QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
+    dialog = start_add_conditions_dialog(qtbot, dialog)
+    assert dialog.other_conditions_frame.isEnabled() == False
