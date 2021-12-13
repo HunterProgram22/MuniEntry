@@ -108,22 +108,7 @@ class CriminalBaseDialog(BaseDialog):
     # CMS Loader Functions
     @logger.catch
     def load_cms_data_to_view(self):
-        """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
-        if self.cms_case.case_number is not None:
-            self.case_number_lineEdit.setText(self.cms_case.case_number)
-            self.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
-            self.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
-            self.add_cms_criminal_charges_to_entry_case_information()
-
-    def add_cms_criminal_charges_to_entry_case_information(self):
-        """Loads the data from the cms_case object that is created from the sql table.
-        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
-        for _index, charge in enumerate(self.cms_case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute,
-                self.criminal_charge.degree) = charge
-            self.entry_case_information.add_charge_to_list(self.criminal_charge)
-            self.add_charge_to_grid()
+        return CMSLoader(self)
 
     # Criminal DialogCleanUp Functions
     def close_event(self):
@@ -328,6 +313,32 @@ class CasePartyUpdater:
         """Updates the party information from the GUI(view) and saves it to the model."""
         dialog.entry_case_information.defendant.first_name = self.defendant_first_name
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
+
+
+class CMSLoader:
+    """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
+    def __init__(self, dialog):
+        self.cms_case = dialog.cms_case
+        self.load_cms_data(dialog)
+
+    def load_cms_data(self, dialog):
+        if self.cms_case.case_number is not None:
+            dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+            dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
+            dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
+            self.add_cms_criminal_charges_to_entry_case_information(dialog)
+        else:
+            return None
+
+    def add_cms_criminal_charges_to_entry_case_information(self, dialog):
+        """Loads the data from the cms_case object that is created from the sql table.
+        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
+        for _index, charge in enumerate(self.cms_case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute,
+             self.criminal_charge.degree) = charge
+            dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+            dialog.add_charge_to_grid()
 
 
 if __name__ == "__main__":
