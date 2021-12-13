@@ -104,10 +104,7 @@ class CriminalBaseDialog(BaseDialog):
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        try:
-            self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        except AttributeError:
-            pass
+
 
     @logger.catch
     def create_entry_process(self):

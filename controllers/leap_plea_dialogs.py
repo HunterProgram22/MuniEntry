@@ -33,6 +33,7 @@ class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
         """The method connects additional signals to slots. That are not
         included in the BaseDialog."""
         super().connect_signals_to_slots()
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.time_to_complete_box.currentTextChanged.connect(self.set_sentencing_date)
 
     @logger.catch
@@ -81,6 +82,13 @@ class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
+        super().connect_signals_to_slots()
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(
