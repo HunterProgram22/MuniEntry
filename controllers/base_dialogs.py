@@ -54,27 +54,6 @@ class BaseDialog(QDialog):
         dialog creation instead of upon button pressed."""
         self.cancel_Button.pressed.connect(self.close_event)
 
-    @logger.catch
-    def create_entry_process(self):
-        """The order of the create entry process is important to make sure the
-        information is updated before the entry is created."""
-        self.update_case_information()
-        if self.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        create_entry(self)
-        self.close_event()
-
-
-
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top cms_case information frame and resets the cursor
-        to the first text entry (defendant_first_name_lineEdit) box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
-
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
@@ -130,7 +109,26 @@ class CriminalBaseDialog(BaseDialog):
         except AttributeError:
             pass
 
+    @logger.catch
+    def create_entry_process(self):
+        """The order of the create entry process is important to make sure the
+        information is updated before the entry is created."""
+        self.update_case_information()
+        if self.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        create_entry(self)
+        self.close_event()
 
+
+
+    @logger.catch
+    def clear_case_information_fields(self):
+        """Clears the text in the fields in the top cms_case information frame and resets the cursor
+        to the first text entry (defendant_first_name_lineEdit) box."""
+        self.defendant_first_name_lineEdit.clear()
+        self.defendant_last_name_lineEdit.clear()
+        self.case_number_lineEdit.clear()
+        self.defendant_first_name_lineEdit.setFocus()
 
     # CMS Loader Functions
     @logger.catch
