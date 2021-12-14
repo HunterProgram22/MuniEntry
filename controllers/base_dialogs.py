@@ -67,8 +67,55 @@ class BaseDialog(QDialog):
         self.close()
 
 
+class CasePartyUpdater:
+    """Class responsible for updating case number, date and party information. Top frame
+    on primary dialogs."""
+    def __init__(self, dialog):
+        self.case_number = dialog.case_number_lineEdit.text()
+        self.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.defendant_first_name = dialog.defendant_first_name_lineEdit.text()
+        self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
+        self.set_case_number_and_date(dialog)
+        self.set_party_information(dialog)
+
+    def set_case_number_and_date(self, dialog):
+        dialog.entry_case_information.case_number = self.case_number
+        dialog.entry_case_information.plea_trial_date = self.plea_trial_date
+
+    def set_party_information(self, dialog):
+        """Updates the party information from the GUI(view) and saves it to the model."""
+        dialog.entry_case_information.defendant.first_name = self.defendant_first_name
+        dialog.entry_case_information.defendant.last_name = self.defendant_last_name
+
+
+class CMSLoader:
+    """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
+    def __init__(self, dialog):
+        self.cms_case = dialog.cms_case
+        self.load_cms_data(dialog)
+
+    def load_cms_data(self, dialog):
+        if self.cms_case.case_number is not None:
+            dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+            dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
+            dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
+            self.add_cms_criminal_charges_to_entry_case_information(dialog)
+        else:
+            return None
+
+    def add_cms_criminal_charges_to_entry_case_information(self, dialog):
+        """Loads the data from the cms_case object that is created from the sql table.
+        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
+        for _index, charge in enumerate(self.cms_case.charges_list):
+            self.criminal_charge = CriminalCharge()
+            (self.criminal_charge.offense, self.criminal_charge.statute,
+             self.criminal_charge.degree) = charge
+            dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+            dialog.add_charge_to_grid()
+
+
 class CriminalSlotFunctions:
-    """Class """
+    """Class for common criminal functions that are connected to slots/buttons in a dialog."""
     @classmethod
     @logger.catch
     def clear_case_information_fields(cls, dialog):
@@ -89,6 +136,26 @@ class CriminalSlotFunctions:
             return None
         create_entry(dialog)
         dialog.close_event()
+
+    @classmethod
+    def clear_charge_fields(cls, dialog):
+        """Clears the fields that are used for adding a charge. The
+        statute_choice_box and offense_choice_box use the clearEditText
+        method because those boxes are editable."""
+        dialog.statute_choice_box.clearEditText()
+        dialog.offense_choice_box.clearEditText()
+
+    @classmethod
+    @logger.catch
+    def add_charge_process(cls, dialog):
+        """The order of functions that are called when the add_charge_Button is
+        clicked(). The order is important to make sure the information is
+        updated before the charge is added and the data cleared from the fields.
+
+        The _bool is passed as an argument through clicked() but not used."""
+        dialog.add_charge_to_entry_case_information()
+        dialog.add_charge_to_grid()
+        CriminalSlotFunctions.clear_charge_fields(dialog)
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -122,10 +189,14 @@ class CriminalBaseDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
         super().connect_signals_to_slots()
-        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
-        self.create_entry_Button.pressed.connect(lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
-        self.add_charge_Button.clicked.connect(self.add_charge_process)
-        self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
+        self.clear_fields_case_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
+        self.create_entry_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
+        self.add_charge_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
+        self.clear_fields_charge_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.clear_charge_fields(dialog))
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
 
@@ -169,18 +240,6 @@ class CriminalBaseDialog(BaseDialog):
             column += 1
 
     # Slot Functions
-
-    @logger.catch
-    def add_charge_process(self, _bool):
-        """The order of functions that are called when the add_charge_Button is
-        clicked(). The order is important to make sure the information is
-        updated before the charge is added and the data cleared from the fields.
-
-        The _bool is passed as an argument through clicked() but not used."""
-        self.add_charge_to_entry_case_information()
-        self.add_charge_to_grid()
-        self.clear_charge_fields()
-
     @logger.catch
     def add_charge_to_entry_case_information(self):
         """The offense, statute and degree are added to the view by the method
@@ -197,12 +256,7 @@ class CriminalBaseDialog(BaseDialog):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
 
-    def clear_charge_fields(self):
-        """Clears the fields that are used for adding a charge. The
-        statute_choice_box and offense_choice_box use the clearEditText
-        method because those boxes are editable."""
-        self.statute_choice_box.clearEditText()
-        self.offense_choice_box.clearEditText()
+
 
     # Setter Functions
     @logger.catch
@@ -297,53 +351,6 @@ def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
-
-
-class CasePartyUpdater:
-    """Class responsible for updating case number, date and party information. Top frame
-    on primary dialogs."""
-    def __init__(self, dialog):
-        self.case_number = dialog.case_number_lineEdit.text()
-        self.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
-        self.defendant_first_name = dialog.defendant_first_name_lineEdit.text()
-        self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
-        self.set_case_number_and_date(dialog)
-        self.set_party_information(dialog)
-
-    def set_case_number_and_date(self, dialog):
-        dialog.entry_case_information.case_number = self.case_number
-        dialog.entry_case_information.plea_trial_date = self.plea_trial_date
-
-    def set_party_information(self, dialog):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        dialog.entry_case_information.defendant.first_name = self.defendant_first_name
-        dialog.entry_case_information.defendant.last_name = self.defendant_last_name
-
-
-class CMSLoader:
-    """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
-    def __init__(self, dialog):
-        self.cms_case = dialog.cms_case
-        self.load_cms_data(dialog)
-
-    def load_cms_data(self, dialog):
-        if self.cms_case.case_number is not None:
-            dialog.case_number_lineEdit.setText(self.cms_case.case_number)
-            dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
-            dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
-            self.add_cms_criminal_charges_to_entry_case_information(dialog)
-        else:
-            return None
-
-    def add_cms_criminal_charges_to_entry_case_information(self, dialog):
-        """Loads the data from the cms_case object that is created from the sql table.
-        self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
-        for _index, charge in enumerate(self.cms_case.charges_list):
-            self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute,
-             self.criminal_charge.degree) = charge
-            dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
-            dialog.add_charge_to_grid()
 
 
 if __name__ == "__main__":
