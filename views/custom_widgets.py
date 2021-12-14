@@ -160,13 +160,13 @@ class ChargesGrid(QGridLayout):
         if add_delete_button == True:
             self.add_delete_button_to_grid(dialog, row, column)
             row += 1
-        return row, column
+        return row, column, charge
 
     def add_charge_finding_and_fines_to_grid(self, dialog):
-        row, column = self.add_charge_only_to_grid(dialog)
+        row, column, charge = self.add_charge_only_to_grid(dialog)
         self.addWidget(FindingComboBox(), row, column)
         row += 1
-        self.addWidget(FineLineEdit(dialog.criminal_charge.offense), row, column)
+        self.addWidget(FineLineEdit(charge['offense']), row, column)
         row += 1
         self.addWidget(FineSuspendedLineEdit(), row, column)
         row += 1
