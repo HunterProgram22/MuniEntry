@@ -67,6 +67,18 @@ class BaseDialog(QDialog):
         self.close()
 
 
+class SlotFunctions:
+    @classmethod
+    @logger.catch
+    def clear_case_information_fields(cls, dialog):
+        """Clears the text in the fields in the top cms_case information frame and resets the cursor
+        to the first text entry (defendant_first_name_lineEdit) box."""
+        dialog.defendant_first_name_lineEdit.clear()
+        dialog.defendant_last_name_lineEdit.clear()
+        dialog.case_number_lineEdit.clear()
+        dialog.defendant_first_name_lineEdit.setFocus()
+
+
 class CriminalBaseDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
     dialogs/entries that require entering a plea and finding in a cms_case.
@@ -98,7 +110,7 @@ class CriminalBaseDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
         super().connect_signals_to_slots()
-        self.clear_fields_case_Button.pressed.connect(self.clear_case_information_fields)
+        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: SlotFunctions.clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(self.create_entry_process)
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
@@ -145,14 +157,6 @@ class CriminalBaseDialog(BaseDialog):
             column += 1
 
     # Slot Functions
-    @logger.catch
-    def clear_case_information_fields(self):
-        """Clears the text in the fields in the top cms_case information frame and resets the cursor
-        to the first text entry (defendant_first_name_lineEdit) box."""
-        self.defendant_first_name_lineEdit.clear()
-        self.defendant_last_name_lineEdit.clear()
-        self.case_number_lineEdit.clear()
-        self.defendant_first_name_lineEdit.setFocus()
 
     @logger.catch
     def add_charge_process(self, _bool):
