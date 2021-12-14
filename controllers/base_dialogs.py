@@ -67,7 +67,8 @@ class BaseDialog(QDialog):
         self.close()
 
 
-class SlotFunctions:
+class CriminalSlotFunctions:
+    """Class """
     @classmethod
     @logger.catch
     def clear_case_information_fields(cls, dialog):
@@ -77,6 +78,17 @@ class SlotFunctions:
         dialog.defendant_last_name_lineEdit.clear()
         dialog.case_number_lineEdit.clear()
         dialog.defendant_first_name_lineEdit.setFocus()
+
+    @classmethod
+    @logger.catch
+    def create_entry_process(cls, dialog):
+        """The order of the create entry process is important to make sure the
+        information is updated before the entry is created."""
+        dialog.update_case_information()
+        if dialog.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        create_entry(dialog)
+        dialog.close_event()
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -110,8 +122,8 @@ class CriminalBaseDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
         super().connect_signals_to_slots()
-        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: SlotFunctions.clear_case_information_fields(dialog))
-        self.create_entry_Button.pressed.connect(self.create_entry_process)
+        self.clear_fields_case_Button.pressed.connect(lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
+        self.create_entry_Button.pressed.connect(lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
         self.add_charge_Button.clicked.connect(self.add_charge_process)
         self.clear_fields_charge_Button.pressed.connect(self.clear_charge_fields)
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
@@ -184,16 +196,6 @@ class CriminalBaseDialog(BaseDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
-
-    @logger.catch
-    def create_entry_process(self):
-        """The order of the create entry process is important to make sure the
-        information is updated before the entry is created."""
-        self.update_case_information()
-        if self.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        create_entry(self)
-        self.close_event()
 
     def clear_charge_fields(self):
         """Clears the fields that are used for adding a charge. The
