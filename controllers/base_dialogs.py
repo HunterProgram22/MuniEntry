@@ -27,6 +27,7 @@ def create_database_connections():
 def open_databases():
     database_offenses.open()
 
+
 def close_databases():
     """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
