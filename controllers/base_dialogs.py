@@ -15,6 +15,25 @@ from views.custom_widgets import ChargesGrid, PleaComboBox
 
 
 @logger.catch
+def create_database_connections():
+    """The databases for the application are created upon import of the module, which is done
+    on application startup. The connections to the databases are created, but the opening and
+    closing of the databases is handled by the appropriate class dialog."""
+    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
+    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
+    return offense_database_connection
+
+
+def open_databases():
+    database_offenses.open()
+
+def close_databases():
+    """Closes any databases that were opened at the start of the dialog."""
+    database_offenses.close()
+    database_offenses.removeDatabase(CHARGES_DATABASE)
+
+
+@logger.catch
 def create_entry(dialog):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
@@ -185,6 +204,12 @@ class CriminalBaseDialog(BaseDialog):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.set_statute_and_offense_choice_boxes()
 
+    def set_statute_and_offense_choice_boxes(self):
+        self.statute_choice_box.addItems(create_statute_list())
+        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
+
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected."""
@@ -311,12 +336,7 @@ class CriminalBaseDialog(BaseDialog):
                 query.finish()
                 return offense_type
 
-    def set_statute_and_offense_choice_boxes(self):
-        """REFACTOR to two methods?"""
-        self.statute_choice_box.addItems(create_statute_list())
-        self.offense_choice_box.addItems(create_offense_list())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
+
 
     # Move to Charges Grid Widget Class (?)
     @logger.catch
@@ -329,28 +349,6 @@ class CriminalBaseDialog(BaseDialog):
         del self.delete_button_list[index]
         self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
-
-
-@logger.catch
-def create_database_connections():
-    """The databases for the application are created upon import of the module, which is done
-    on application startup. The connections to the databases are created, but the opening and
-    closing of the databases is handled by the appropriate class dialog."""
-    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
-    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection
-
-
-@logger.catch
-def open_databases():
-    database_offenses.open()
-
-
-@logger.catch
-def close_databases():
-    """Closes any databases that were opened at the start of the dialog."""
-    database_offenses.close()
-    database_offenses.removeDatabase(CHARGES_DATABASE)
 
 
 if __name__ == "__main__":

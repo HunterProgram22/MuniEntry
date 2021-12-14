@@ -19,7 +19,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(self, parent)
+        super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
