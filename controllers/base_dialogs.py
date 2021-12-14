@@ -105,7 +105,7 @@ class CriminalBaseDialog(BaseDialog):
         self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
         self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
 
-    # CMS Loader Functions
+    # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
     def load_cms_data_to_view(self):
         return CMSLoader(self)
@@ -252,8 +252,7 @@ class CriminalBaseDialog(BaseDialog):
                 return offense_type
 
     def set_statute_and_offense_choice_boxes(self):
-        """This method is set in CriminalBaseDialog class but called in subclasses because
-        NotGuiltyBondDialog doesn't currently have statute and offense choice boxes."""
+        """REFACTOR to two methods?"""
         self.statute_choice_box.addItems(create_statute_list())
         self.offense_choice_box.addItems(create_offense_list())
         self.statute_choice_box.setCurrentText("")
