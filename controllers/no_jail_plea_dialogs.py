@@ -76,7 +76,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
                 self.add_conditions_dict[key] = False
 
     @logger.catch
-    def add_plea_to_entry_case_information(self):
+    def add_plea_findings_and_fines_to_entry_case_information(self):
         """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
         7 fine-suspended. Columns start at 1 because 0 is labels."""
         column = 1
@@ -209,7 +209,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         message.exec_()
 
     def add_additional_case_information(self):
-        self.add_plea_to_entry_case_information()
+        self.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.check_add_conditions()
         self.calculate_costs_and_fines()
