@@ -39,7 +39,7 @@ class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def update_case_information(self):
         super().update_case_information()
-        self.add_dispositions_and_fines()
+        self.add_plea_to_entry_case_information()
         self.entry_case_information.sentencing_date = (
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
@@ -98,7 +98,7 @@ class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
     @logger.catch
     def update_case_information(self):
         super().update_case_information()
-        self.add_dispositions_and_fines()
+        self.add_plea_to_entry_case_information()
 
 
 if __name__ == "__main__":
