@@ -68,11 +68,7 @@ class BaseDialog(QDialog):
 
     def connect_signals_to_slots(self):
         """This method includes buttons common to all dialogs. Buttons that are
-        specific to only a certain dialog are added in the subclassed version of the method.
-
-        The create entry process is connected with a lambda function because it needs the dialog to be
-        passed as an argument (dialog = self) and if it is connected without lambda it would be called on
-        dialog creation instead of upon button pressed."""
+        specific to only a certain dialog are added in the subclassed version of the method."""
         self.cancel_Button.pressed.connect(self.close_event)
 
     def close_event(self):
@@ -159,9 +155,8 @@ class CriminalSlotFunctions:
 
     @classmethod
     def clear_charge_fields(cls, dialog):
-        """Clears the fields that are used for adding a charge. The
-        statute_choice_box and offense_choice_box use the clearEditText
-        method because those boxes are editable."""
+        """Clears the fields that are used for adding a charge. The statute_choice_box and
+        offense_choice_box use the clearEditText method because those boxes are editable."""
         dialog.statute_choice_box.clearEditText()
         dialog.offense_choice_box.clearEditText()
 
@@ -170,12 +165,42 @@ class CriminalSlotFunctions:
     def add_charge_process(cls, dialog):
         """The order of functions that are called when the add_charge_Button is
         clicked(). The order is important to make sure the information is
-        updated before the charge is added and the data cleared from the fields.
-
-        The _bool is passed as an argument through clicked() but not used."""
+        updated before the charge is added and the data cleared from the fields."""
         dialog.add_charge_to_entry_case_information()
         dialog.add_charge_to_grid()
         CriminalSlotFunctions.clear_charge_fields(dialog)
+
+    @classmethod
+    @logger.catch
+    def set_statute_and_offense(cls, key, dialog):
+        """:key: is the string that is passed by the function each time the field
+        is changed on the view."""
+        field = None
+        if dialog.freeform_entry_checkBox.isChecked():
+            return None
+        if dialog.sender() == dialog.statute_choice_box:
+            field = 'statute'
+        elif dialog.sender() == dialog.offense_choice_box:
+            field = 'offense'
+        query = QSqlQuery(database_offenses)
+        query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
+        query.prepare(query_string)
+        query.bindValue(":key", key)
+        query.bindValue(field, field)
+        query.exec()
+        while query.next():
+            offense = query.value(1)
+            statute = query.value(2)
+            degree = query.value(3)
+            if field == 'offense':
+                if offense == key:
+                    dialog.statute_choice_box.setCurrentText(statute)
+            elif field == 'statute':
+                if statute == key:
+                    dialog.offense_choice_box.setCurrentText(offense)
+            dialog.degree_choice_box.setCurrentText(degree)
+            query.finish()
+            break
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -213,7 +238,9 @@ class CriminalBaseDialog(BaseDialog):
 
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
-        and slots to be connected."""
+        and slots to be connected. The lambda function is used because it needs the dialog to be
+        passed as an argument (dialog = self) and if it is connected without lambda it would be called on
+        dialog creation instead of upon button pressed."""
         super().connect_signals_to_slots()
         self.clear_fields_case_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
@@ -223,8 +250,10 @@ class CriminalBaseDialog(BaseDialog):
             lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
         self.clear_fields_charge_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.clear_charge_fields(dialog))
-        self.statute_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
-        self.offense_choice_box.currentTextChanged.connect(self.set_statute_and_offense)
+        self.statute_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.offense_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
 
     # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
@@ -282,40 +311,7 @@ class CriminalBaseDialog(BaseDialog):
         self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
 
-
-
     # Setter Functions
-    @logger.catch
-    def set_statute_and_offense(self, key):
-        """:key: is the string that is passed by the function each time the field
-        is changed on the view."""
-        field = None
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        if self.sender() == self.statute_choice_box:
-            field = 'statute'
-        elif self.sender() == self.offense_choice_box:
-            field = 'offense'
-        query = QSqlQuery(database_offenses)
-        query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
-        query.prepare(query_string)
-        query.bindValue(":key", key)
-        query.bindValue(field, field)
-        query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if field == 'offense':
-                if offense == key:
-                    self.statute_choice_box.setCurrentText(statute)
-            elif field == 'statute':
-                if statute == key:
-                    self.offense_choice_box.setCurrentText(offense)
-            self.degree_choice_box.setCurrentText(degree)
-            query.finish()
-            break
-
     def set_plea_and_findings_process(self):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
