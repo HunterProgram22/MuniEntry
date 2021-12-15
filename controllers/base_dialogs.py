@@ -203,6 +203,29 @@ class CriminalSlotFunctions:
             break
 
 
+class AddPlea:
+    """Row 3 - plea when no allied checkbox added. Column starts at 1
+    because column 0 is labels. The grid adds an empty column every time a
+    charge is added, could increment by 2, but by incrementing by 1 and
+    checking for None it ensures it will catch any weird add/delete.
+    This method only adds the plea and is used in LEAP short and long and
+    Not Guilty. No Jail Plea overrides this to include findings and fines.
+    TODO: Rename and refactor out magic numbers.
+    REFACTOR to CLASS and call class in subclass for dialog."""
+    def __init__(self, dialog):
+        self.dialog = dialog
+        column = 1
+        row = 3
+        for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
+            while self.dialog.charges_gridLayout.itemAtPosition(row, column) is None:
+                column += 1
+            if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
+                    row, column).widget(), PleaComboBox):
+                charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
+                    row, column).widget().currentText()
+                column += 1
+            column += 1
+
 class CriminalBaseDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
     dialogs/entries that require entering a plea and finding in a cms_case.
@@ -271,29 +294,10 @@ class CriminalBaseDialog(BaseDialog):
         """"Docstring needs updating."""
         return CasePartyUpdater(self)
 
-    # Modify Case Information Functions
+    # Modify Entry Case Information Functions
     @logger.catch
     def add_plea_to_entry_case_information(self):
-        """Row 3 - plea when no allied checkbox added. Column starts at 1
-        because column 0 is labels. The grid adds an empty column every time a
-        charge is added, could increment by 2, but by incrementing by 1 and
-        checking for None it ensures it will catch any weird add/delete.
-        This method only adds the plea and is used in LEAP short and long and
-        Not Guilty. No Jail Plea overrides this to include findings and fines.
-        TODO: Rename and refactor out magic numbers.
-
-        REFACTOR to CLASS and call class in subclass for dialog."""
-        column = 1
-        row = 3
-        for index, charge in enumerate(self.entry_case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(row, column) is None:
-                column += 1
-            if isinstance(self.charges_gridLayout.itemAtPosition(
-                          row, column).widget(), PleaComboBox):
-                charge.plea = self.charges_gridLayout.itemAtPosition(
-                              row, column).widget().currentText()
-                column += 1
-            column += 1
+        return AddPlea(self)
 
     # Slot Functions
     @logger.catch
