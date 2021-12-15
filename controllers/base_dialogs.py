@@ -146,7 +146,6 @@ class CMS_FRALoader(CMSLoader):
         dialog.set_fra_in_court(dialog.fra_in_court_box.currentText())
 
 
-
 class CriminalSlotFunctions:
     """Class for common criminal functions that are connected to slots/buttons in a dialog."""
     @classmethod
