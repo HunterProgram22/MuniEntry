@@ -57,7 +57,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def update_not_guilty_conditions(self):
         self.entry_case_information.appearance_reason = self.appearance_reason_box.currentText()
-        self.add_dispositions_and_fines()
+        self.add_plea_to_entry_case_information()
 
     @logger.catch
     def update_bond_conditions(self):

@@ -210,7 +210,6 @@ class CriminalBaseDialog(BaseDialog):
     The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
-    # INIT Functions
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         open_databases()
         super().__init__(parent)
@@ -274,7 +273,7 @@ class CriminalBaseDialog(BaseDialog):
 
     # Modify Case Information Functions
     @logger.catch
-    def add_dispositions_and_fines(self):
+    def add_plea_to_entry_case_information(self):
         """Row 3 - plea when no allied checkbox added. Column starts at 1
         because column 0 is labels. The grid adds an empty column every time a
         charge is added, could increment by 2, but by incrementing by 1 and
@@ -332,8 +331,6 @@ class CriminalBaseDialog(BaseDialog):
             if statute == key:
                 query.finish()
                 return offense_type
-
-
 
     # Move to Charges Grid Widget Class (?)
     @logger.catch
