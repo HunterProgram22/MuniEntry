@@ -1,5 +1,7 @@
 APPLICATION TODO LIST for version 0.4.0
-* Bug exists for FRA - if fra_in_file is "No" and fra_in_court is "N/A" nothing shows in entry. 
+* Bug exists for FRA - if fra_in_file is "No" and fra_in_court is "N/A" nothing shows in entry.
+This is because of logic in template. Either add warning that fra_in_court needs to be updated,
+or set up template to allow N/A option. 
 
 GENERAL PERIODIC CLEANUP
 * Move general methods to helper functions

@@ -10,6 +10,7 @@ from PyQt5.QtCore import QDate
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
+from controllers.base_dialogs import CMS_FRALoader
 from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
 from controllers.base_dialogs import CriminalBaseDialog
 from settings import PAY_DATE_DICT
@@ -56,14 +57,15 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
 
     @logger.catch
     def load_cms_data_to_view(self):
-        super().load_cms_data_to_view()
-        fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
-        if self.cms_case.fra_in_file in fra_value_dict:
-            self.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
-        else:
-            self.fra_in_file_box.setCurrentText("N/A")
-        self.set_fra_in_file(self.fra_in_file_box.currentText())
-        self.set_fra_in_court(self.fra_in_court_box.currentText())
+        return CMS_FRALoader(self)
+        # super().load_cms_data_to_view()
+        # fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
+        # if self.cms_case.fra_in_file in fra_value_dict:
+        #     self.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
+        # else:
+        #     self.fra_in_file_box.setCurrentText("N/A")
+        # self.set_fra_in_file(self.fra_in_file_box.currentText())
+        # self.set_fra_in_court(self.fra_in_court_box.currentText())
 
     @logger.catch
     def modify_view(self):

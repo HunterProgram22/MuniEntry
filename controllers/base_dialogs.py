@@ -131,6 +131,22 @@ class CMSLoader:
             dialog.add_charge_to_grid()
 
 
+class CMS_FRALoader(CMSLoader):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.add_fra_data(dialog)
+
+    def add_fra_data(self, dialog):
+        fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
+        if self.cms_case.fra_in_file in fra_value_dict:
+            dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
+        else:
+            dialog.fra_in_file_box.setCurrentText("N/A")
+        dialog.set_fra_in_file(dialog.fra_in_file_box.currentText())
+        dialog.set_fra_in_court(dialog.fra_in_court_box.currentText())
+
+
+
 class CriminalSlotFunctions:
     """Class for common criminal functions that are connected to slots/buttons in a dialog."""
     @classmethod
@@ -296,7 +312,7 @@ class CriminalBaseDialog(BaseDialog):
         """"Docstring needs updating."""
         return CasePartyUpdater(self)
 
-    # Modify Entry Case Information Functions
+    # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
         return AddPlea(self)

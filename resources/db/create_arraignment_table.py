@@ -47,9 +47,9 @@ def return_data_from_excel(excel_file):
 
 def main():
     if os.path.exists(PATH + "\\resources\db\\arraignments.sqlite"):
-      os.remove(PATH + "\\resources\db\\arraignments.sqlite")
+        os.remove(PATH + "\\resources\db\\arraignments.sqlite")
     else:
-      print("The file does not exist")
+        print("The file does not exist")
     con = QSqlDatabase.addDatabase("QSQLITE")
     con.setDatabaseName(PATH + "\\resources\db\\arraignments.sqlite")
 
@@ -110,4 +110,5 @@ def main():
 if __name__ == "__main__":
     print("Create arraignments table ran directly")
 else:
+    main()
     print("Create arraignments table ran when imported")
