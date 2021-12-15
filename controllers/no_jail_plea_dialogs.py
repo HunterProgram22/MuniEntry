@@ -15,6 +15,31 @@ from controllers.base_dialogs import CriminalBaseDialog
 from settings import PAY_DATE_DICT
 
 
+class AddPleaFindingsFines:
+    """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
+    7 fine-suspended. Columns start at 1 because 0 is labels."""
+    def __init__(self, dialog):
+        self.dialog = dialog
+        column = 1
+        for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
+            while self.dialog.charges_gridLayout.itemAtPosition(3, column) is None:
+                column += 1
+            charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
+                4, column).widget().currentText()
+            charge.finding = self.dialog.charges_gridLayout.itemAtPosition(
+                5, column).widget().currentText()
+            charge.fines_amount = self.dialog.charges_gridLayout.itemAtPosition(
+                6, column).widget().text()
+            if self.dialog.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
+                charge.fines_suspended = "0"
+            else:
+                charge.fines_suspended = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        7, column).widget().text()
+                )
+            column += 1
+
+
 class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
@@ -77,26 +102,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
-        """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
-        7 fine-suspended. Columns start at 1 because 0 is labels."""
-        column = 1
-        for index, charge in enumerate(self.entry_case_information.charges_list):
-            while self.charges_gridLayout.itemAtPosition(3, column) is None:
-                column += 1
-            charge.plea = self.charges_gridLayout.itemAtPosition(
-                4, column).widget().currentText()
-            charge.finding = self.charges_gridLayout.itemAtPosition(
-                5, column).widget().currentText()
-            charge.fines_amount = self.charges_gridLayout.itemAtPosition(
-                6, column).widget().text()
-            if self.charges_gridLayout.itemAtPosition(7, column).widget().text() == "":
-                charge.fines_suspended = "0"
-            else:
-                charge.fines_suspended = (
-                    self.charges_gridLayout.itemAtPosition(
-                        7, column).widget().text()
-                )
-            column += 1
+        return AddPleaFindingsFines(self)
 
     @logger.catch
     def set_fra_in_file(self, current_text):
