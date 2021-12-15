@@ -166,24 +166,25 @@ class CriminalSlotFunctions:
         dialog.update_case_information()
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
             return None
-        if dialog.fra_in_file_box.currentText() == "No":
-            if dialog.fra_in_court_box.currentText() == "N/A":
-                message = QMessageBox()
-                message.setIcon(QMessageBox.Warning)
-                message.setWindowTitle("Warning")
-                message.setText("The information provided currently "
-                                "indicates insurance was not shown/in the file. "
-                                "There is no information on whether "
-                                "defendant showed proof of insurance "
-                                "in court. \n\nDo you wish to create an entry "
-                                "without indicating whether insurance was "
-                                "shown in court?")
-                message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-                return_value = message.exec()
-                if return_value == QMessageBox.Yes:
-                    pass
-                if return_value == QMessageBox.No:
-                    return None
+        if hasattr(dialog, 'fra_in_file_box'):
+            if dialog.fra_in_file_box.currentText() == "No":
+                if dialog.fra_in_court_box.currentText() == "N/A":
+                    message = QMessageBox()
+                    message.setIcon(QMessageBox.Warning)
+                    message.setWindowTitle("Warning")
+                    message.setText("The information provided currently "
+                                    "indicates insurance was not shown/in the file. "
+                                    "There is no information on whether "
+                                    "defendant showed proof of insurance "
+                                    "in court. \n\nDo you wish to create an entry "
+                                    "without indicating whether insurance was "
+                                    "shown in court?")
+                    message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                    return_value = message.exec()
+                    if return_value == QMessageBox.Yes:
+                        pass
+                    if return_value == QMessageBox.No:
+                        return None
         create_entry(dialog)
         dialog.close_event()
 
@@ -347,9 +348,7 @@ class CriminalBaseDialog(BaseDialog):
         self.criminal_charge.type = self.set_offense_type()
         self.entry_case_information.add_charge_to_list(self.criminal_charge)
 
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
-        self.statute_choice_box.setFocus()
+
 
     # Setter Functions
     def set_plea_and_findings_process(self):
