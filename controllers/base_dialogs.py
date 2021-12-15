@@ -280,7 +280,9 @@ class CriminalBaseDialog(BaseDialog):
         checking for None it ensures it will catch any weird add/delete.
         This method only adds the plea and is used in LEAP short and long and
         Not Guilty. No Jail Plea overrides this to include findings and fines.
-        TODO: Rename and refactor out magic numbers."""
+        TODO: Rename and refactor out magic numbers.
+
+        REFACTOR to CLASS and call class in subclass for dialog."""
         column = 1
         row = 3
         for index, charge in enumerate(self.entry_case_information.charges_list):
