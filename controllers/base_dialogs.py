@@ -3,7 +3,7 @@ import os
 
 from PyQt5 import QtCore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5 import QtGui
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
@@ -167,6 +167,24 @@ class CriminalSlotFunctions:
         dialog.update_case_information()
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
             return None
+        if dialog.fra_in_file_box.currentText() == "No":
+            if dialog.fra_in_court_box.currentText() == "N/A":
+                message = QMessageBox()
+                message.setIcon(QMessageBox.Warning)
+                message.setWindowTitle("Warning")
+                message.setText("The information provided currently "
+                                "indicates insurance was not shown/in the file. "
+                                "There is no information on whether "
+                                "defendant showed proof of insurance "
+                                "in court. \n\nDo you wish to create an entry "
+                                "without indicating whether insurance was "
+                                "shown in court?")
+                message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                return_value = message.exec()
+                if return_value == QMessageBox.Yes:
+                    pass
+                if return_value == QMessageBox.No:
+                    return None
         create_entry(dialog)
         dialog.close_event()
 
