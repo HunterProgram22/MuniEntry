@@ -108,6 +108,7 @@ class CMSLoader:
     """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
     def __init__(self, dialog):
         self.cms_case = dialog.cms_case
+        self.criminal_charge = None
         self.load_cms_data(dialog)
 
     def load_cms_data(self, dialog):
@@ -225,6 +226,7 @@ class AddPlea:
                     row, column).widget().currentText()
                 column += 1
             column += 1
+
 
 class CriminalBaseDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
