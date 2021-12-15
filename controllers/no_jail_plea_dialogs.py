@@ -92,6 +92,10 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         super().update_case_information()
         self.add_additional_case_information()
 
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
+        self.statute_choice_box.setFocus()
+
     @logger.catch
     def check_add_conditions(self):
         """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
