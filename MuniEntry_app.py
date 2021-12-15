@@ -100,7 +100,7 @@ class Window(QMainWindow, Ui_MainWindow):
         """ Launches the dialog that is connected to each button."""
         if self.judicial_officer is None:
             message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
+            message.setIcon(QMessageBox.Critical)
             message.setWindowTitle("Required")
             message.setText("You must select a judicial officer.")
             message.setStandardButtons(QMessageBox.Ok)
