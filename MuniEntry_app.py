@@ -6,7 +6,7 @@ The main application entry point.
 The main window contains options for selecting the judicial officer and templates.
 """
 import sys
-
+from multiprocessing import Process, freeze_support
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
@@ -122,6 +122,7 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments database is created each time the
     application is loaded after any existing prior version is deleted."""
+    from resources.db import create_arraignment_table
     app = QApplication(sys.argv)
     arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
@@ -130,5 +131,7 @@ def main():
 
 
 if __name__ == "__main__":
-    from resources.db import create_arraignment_table
-    main()
+    freeze_support()
+    Process(target=main).start()
+
+    # main()
