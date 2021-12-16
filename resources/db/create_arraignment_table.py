@@ -105,6 +105,9 @@ def main():
         insertDataQuery.addBindValue(degree)
         insertDataQuery.addBindValue(fra_in_file)
         insertDataQuery.exec()
+
+    con.close()
+    con.removeDatabase("QSQLITE")
     return None
 
 if __name__ == "__main__":

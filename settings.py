@@ -6,6 +6,7 @@ from loguru import logger
 from PyQt5.QtSql import QSqlDatabase
 
 PATH = str(pathlib.Path().absolute())
+
 TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
@@ -28,8 +29,12 @@ LEAP_COMPLETE_DATE_DICT = {
 @logger.catch
 def create_arraignments_database_connection():
     """Opens a connection to the database and returns that connection to the arraignments_database."""
+    # try:
     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    # except PermissionError:
+    #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
+    #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
     return arraignments_database_connection
 
 # -*- mode: python ; coding: utf-8 -*-
@@ -37,7 +42,7 @@ def create_arraignments_database_connection():
 #
 # block_cipher = None
 #
-#
+# #
 # a = Analysis(['MuniEntry_app.py'],
 #              pathex=[],
 #              binaries=[],
@@ -85,4 +90,4 @@ def create_arraignments_database_connection():
 #                upx=True,
 #                upx_exclude=[],
 #                name='MuniEntry_app')
-
+#
