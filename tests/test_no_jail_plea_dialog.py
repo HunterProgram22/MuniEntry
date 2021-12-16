@@ -2,8 +2,7 @@ import pytest
 import os
 import sys
 import inspect
-from time import sleep
-from datetime import date, timedelta
+from datetime import date
 
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
@@ -13,7 +12,6 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from models.case_information import CaseLoadData
 from controllers.no_jail_plea_dialogs import (
     NoJailPleaDialog,
 )
@@ -98,8 +96,6 @@ def test_case_information_dialog(app, dialog):
 
 
 def test_offense_to_statute(app, dialog):
-    """This test is failing but actual functionality in app works -
-    issue is with tab and autocomplete"""
     dialog.offense_choice_box.setCurrentText("Driving Under Suspension")
     assert dialog.statute_choice_box.currentText() == "4510.11"
     assert dialog.degree_choice_box.currentText() == "M1"
