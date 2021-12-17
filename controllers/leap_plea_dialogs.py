@@ -1,5 +1,5 @@
 """The controller module for the LEAP plea dialog."""
-from controllers.base_dialogs import BaseDialog, CriminalBaseDialog
+from controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
 
 from PyQt5.QtCore import QDate
