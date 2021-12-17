@@ -10,9 +10,8 @@ from PyQt5.QtCore import QDate
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
-from controllers.base_dialogs import CMS_FRALoader
+from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
-from controllers.base_dialogs import CriminalBaseDialog
 from settings import PAY_DATE_DICT
 
 
