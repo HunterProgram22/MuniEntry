@@ -46,7 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, arraignments_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
-        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
+        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
         self.case_to_load = None
