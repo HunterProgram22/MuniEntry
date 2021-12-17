@@ -6,6 +6,7 @@ The main application entry point.
 The main window contains options for selecting the judicial officer and templates.
 """
 import sys
+import pathlib
 from multiprocessing import Process, freeze_support
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
@@ -24,6 +25,7 @@ from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.juror_payment_dialogs import JurorPaymentDialog
 from settings import create_arraignments_database_connection
 
+PATH = str(pathlib.Path().absolute())
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
