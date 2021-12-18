@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
-from controllers.base_dialogs import BaseDialog
+from controllers.base_dialogs import BaseDialog, CriminalBaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, VehicleSeizure, \
@@ -142,7 +142,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(self, parent)
+        super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
         self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
         self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
