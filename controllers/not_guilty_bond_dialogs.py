@@ -76,6 +76,10 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
             self.specialized_docket_checkBox.isChecked()
         self.entry_case_information.fta_bond_conditions.specialized_docket_type = \
             self.specialized_docket_type_box.currentText()
+        self.entry_case_information.fta_bond_conditions.monitoring = \
+            self.monitoring_checkBox.isChecked()
+        self.entry_case_information.fta_bond_conditions.monitoring_type = \
+            self.monitoring_type_box.currentText()
 
     @logger.catch
     def check_add_special_conditions(self):
