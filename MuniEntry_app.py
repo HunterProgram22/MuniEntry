@@ -5,6 +5,7 @@ The main application entry point.
 
 The main window contains options for selecting the judicial officer and templates.
 """
+import multiprocessing
 import sys
 import pathlib
 from multiprocessing import Process, freeze_support
@@ -133,7 +134,7 @@ def main():
 
 
 if __name__ == "__main__":
-    freeze_support()
-    Process(target=main).start()
-
-    # main()
+    # __spec__ = None # Used to get Python Debugger to work - may have other ramifications(?)
+    multiprocessing.freeze_support()
+    # Process(target=main).start()
+    main()
