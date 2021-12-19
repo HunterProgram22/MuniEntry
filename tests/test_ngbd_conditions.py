@@ -1,22 +1,13 @@
 import pytest
-import os
-import sys
-import inspect
-from datetime import date
 
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
-
-current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parent_dir = os.path.dirname(current_dir)
-sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 from settings import create_arraignments_database_connection
 
-TODAY = date.today()
 arraignments_database = create_arraignments_database_connection()
 
 """Functions for Testing"""
