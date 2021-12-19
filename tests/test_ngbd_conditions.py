@@ -8,8 +8,6 @@ from settings import create_arraignments_database_connection
 
 arraignments_database = create_arraignments_database_connection()
 
-"""Functions for Testing"""
-
 
 @pytest.fixture
 def app(qtbot):
@@ -34,9 +32,7 @@ def check_special_conditions(app):
     mouse_click(app.add_special_conditions_Button)
 
 
-"""TESTING"""
-
-
+# TESTS
 def test_not_guilty_bond_dialog_with_arraignment_case(app):
     assert app.windowTitle() == "Not Guilty Bond Case Information"
 
