@@ -1,9 +1,7 @@
 import pytest
 
-from pytestqt.plugin import QtBot
-from PyQt5 import QtCore
-
 import MuniEntry_app
+from helper_functions import mouse_click, enter_data
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 from settings import create_arraignments_database_connection
@@ -12,11 +10,6 @@ arraignments_database = create_arraignments_database_connection()
 
 """Functions for Testing"""
 
-def enter_data(field, data: str):
-    return QtBot.keyClicks(field, data)
-
-def mouse_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
 
 @pytest.fixture
 def app(qtbot):
@@ -31,7 +24,7 @@ def app(qtbot):
 
 
 @pytest.fixture
-def conditions(app):
+def check_special_conditions(app):
     mouse_click(app.domestic_violence_checkBox)
     mouse_click(app.admin_license_suspension_checkBox)
     mouse_click(app.custodial_supervision_checkBox)
@@ -39,6 +32,7 @@ def conditions(app):
     mouse_click(app.no_contact_checkBox)
     mouse_click(app.other_conditions_checkBox)
     mouse_click(app.add_special_conditions_Button)
+
 
 """TESTING"""
 
@@ -64,7 +58,7 @@ def test_not_guilty_bond_conditions_all(app):
     assert app.entry_case_information.fta_bond_conditions.specialized_docket_type == "OVI Docket"
 
 
-def test_not_guilty_bond_special_conditions_checkboxes_all(app, conditions, qtbot):
+def test_not_guilty_bond_special_conditions_checkboxes_all(app, check_special_conditions, qtbot):
     app = AddSpecialBondConditionsDialog(app)
     qtbot.addWidget(app)
     assert app.admin_license_suspension_frame.isEnabled() == True
@@ -75,7 +69,7 @@ def test_not_guilty_bond_special_conditions_checkboxes_all(app, conditions, qtbo
     assert app.custodial_supervision_frame.isEnabled() == True
 
 
-def test_not_guilty_bond_special_conditions_data(app, conditions, qtbot):
+def test_not_guilty_bond_special_conditions_data(app, check_special_conditions, qtbot):
     app_conditions = AddSpecialBondConditionsDialog(app)
     qtbot.addWidget(app_conditions)
     enter_data(app_conditions.admin_license_suspension_objection_box, 'Yes')
