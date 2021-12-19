@@ -22,6 +22,9 @@ arraignments_database = create_arraignments_database_connection()
 """Functions for Testing"""
 
 
+def mouse_click(button):
+    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
+
 @pytest.fixture
 def app(qtbot):
     app = MuniEntry_app.Window(arraignments_database)
@@ -34,6 +37,16 @@ def app(qtbot):
     return app
 
 
+@pytest.fixture
+def conditions(app):
+    QtBot.mouseClick(app.domestic_violence_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.admin_license_suspension_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.custodial_supervision_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.vehicle_seizure_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.no_contact_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.other_conditions_checkBox, QtCore.Qt.LeftButton)
+    QtBot.mouseClick(app.add_special_conditions_Button, QtCore.Qt.LeftButton)
+
 """TESTING"""
 
 
@@ -42,34 +55,39 @@ def test_not_guilty_bond_dialog_with_arraignment_case(app):
 
 
 def test_not_guilty_bond_conditions_all(app):
-    QtBot.mouseClick(app.alcohol_test_kiosk_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.alcohol_drugs_assessment_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.no_alcohol_drugs_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.monitoring_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.specialized_docket_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.not_guilty_all_Button, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.create_entry_Button, QtCore.Qt.LeftButton)
+    mouse_click(app.alcohol_test_kiosk_checkBox)
+    mouse_click(app.alcohol_drugs_assessment_checkBox)
+    mouse_click(app.no_alcohol_drugs_checkBox)
+    mouse_click(app.monitoring_checkBox)
+    mouse_click(app.specialized_docket_checkBox)
+    mouse_click(app.not_guilty_all_Button)
+    mouse_click(app.create_entry_Button)
     assert app.entry_case_information.fta_bond_conditions.alcohol_test_kiosk == True
     assert app.entry_case_information.fta_bond_conditions.alcohol_drugs_assessment == True
     assert app.entry_case_information.fta_bond_conditions.no_alcohol_drugs == True
     assert app.entry_case_information.fta_bond_conditions.monitoring == True
     assert app.entry_case_information.fta_bond_conditions.monitoring_type == "GPS Only"
     assert app.entry_case_information.fta_bond_conditions.specialized_docket == True
+    assert app.entry_case_information.fta_bond_conditions.specialized_docket_type == "OVI Docket"
 
 
+def test_not_guilty_bond_special_conditions_checkboxes_all(app, conditions, qtbot):
+    app = AddSpecialBondConditionsDialog(app)
+    qtbot.addWidget(app)
+    assert app.admin_license_suspension_frame.isEnabled() == True
+    assert app.domestic_violence_frame.isEnabled() == True
+    assert app.no_contact_frame.isEnabled() == True
+    assert app.vehicle_seizure_frame.isEnabled() == True
+    assert app.other_conditions_frame.isEnabled() == True
+    assert app.custodial_supervision_frame.isEnabled() == True
 
-# def test_no_jail_plea_dialog_add_all_conditions_check_data(app, qtbot, set_case):
-#     dialog = start_no_jail_plea_dialog(qtbot, app.judicial_officer, app.case_to_load)
-#     QtBot.mouseClick(dialog.license_suspension_checkBox, QtCore.Qt.LeftButton)
-#     QtBot.mouseClick(dialog.community_service_checkBox, QtCore.Qt.LeftButton)
-#     QtBot.mouseClick(dialog.other_conditions_checkBox, QtCore.Qt.LeftButton)
-#     dialog_conditions = start_add_conditions_dialog(qtbot, dialog)
-#     QtBot.keyClicks(dialog_conditions.license_type_box, 'hunting')
-#     QtBot.keyClicks(dialog_conditions.community_service_hours_ordered_box, '30')
-#     QtBot.keyClicks(dialog_conditions.other_conditions_plainTextEdit, 'This is a test!')
-#     QtBot.mouseClick(dialog_conditions.add_conditions_Button, QtCore.Qt.LeftButton)
-#     assert dialog.entry_case_information.community_service.hours_of_service == 30
-#     assert dialog.entry_case_information.license_suspension.license_type == 'hunting'
-#     assert dialog.entry_case_information.other_conditions.terms == 'This is a test!'
-#     QtBot.mouseClick(dialog.guilty_all_Button, QtCore.Qt.LeftButton)
-#     QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
+
+def test_not_guilty_bond_special_conditions_data(app, conditions, qtbot):
+    app_conditions = AddSpecialBondConditionsDialog(app)
+    qtbot.addWidget(app_conditions)
+    QtBot.keyClicks(app_conditions.admin_license_suspension_objection_box, 'Yes')
+    QtBot.keyClicks(app_conditions.admin_license_suspension_disposition_box, 'Denied')
+    QtBot.keyClicks(app_conditions.admin_license_suspension_explanation_box, 'Because I said so!')
+    mouse_click(app_conditions.add_special_conditions_Button)
+    mouse_click(app.not_guilty_all_Button)
+    mouse_click(app.create_entry_Button)
