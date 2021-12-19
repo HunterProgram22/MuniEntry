@@ -21,6 +21,8 @@ arraignments_database = create_arraignments_database_connection()
 
 """Functions for Testing"""
 
+def enter_data(field, data: str):
+    return QtBot.keyClicks(field, data)
 
 def mouse_click(button):
     return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
@@ -29,9 +31,9 @@ def mouse_click(button):
 def app(qtbot):
     app = MuniEntry_app.Window(arraignments_database)
     qtbot.addWidget(app)
-    QtBot.mouseClick(app.bunner_radioButton, QtCore.Qt.LeftButton)
-    QtBot.keyClicks(app.arraignment_cases_box, '21TRD09200')
-    QtBot.mouseClick(app.NotGuiltyBondButton, QtCore.Qt.LeftButton)
+    mouse_click(app.bunner_radioButton)
+    enter_data(app.arraignment_cases_box, '21TRD09200')
+    mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
@@ -39,13 +41,13 @@ def app(qtbot):
 
 @pytest.fixture
 def conditions(app):
-    QtBot.mouseClick(app.domestic_violence_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.admin_license_suspension_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.custodial_supervision_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.vehicle_seizure_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.no_contact_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.other_conditions_checkBox, QtCore.Qt.LeftButton)
-    QtBot.mouseClick(app.add_special_conditions_Button, QtCore.Qt.LeftButton)
+    mouse_click(app.domestic_violence_checkBox)
+    mouse_click(app.admin_license_suspension_checkBox)
+    mouse_click(app.custodial_supervision_checkBox)
+    mouse_click(app.vehicle_seizure_checkBox)
+    mouse_click(app.no_contact_checkBox)
+    mouse_click(app.other_conditions_checkBox)
+    mouse_click(app.add_special_conditions_Button)
 
 """TESTING"""
 
@@ -85,9 +87,9 @@ def test_not_guilty_bond_special_conditions_checkboxes_all(app, conditions, qtbo
 def test_not_guilty_bond_special_conditions_data(app, conditions, qtbot):
     app_conditions = AddSpecialBondConditionsDialog(app)
     qtbot.addWidget(app_conditions)
-    QtBot.keyClicks(app_conditions.admin_license_suspension_objection_box, 'Yes')
-    QtBot.keyClicks(app_conditions.admin_license_suspension_disposition_box, 'Denied')
-    QtBot.keyClicks(app_conditions.admin_license_suspension_explanation_box, 'Because I said so!')
+    enter_data(app_conditions.admin_license_suspension_objection_box, 'Yes')
+    enter_data(app_conditions.admin_license_suspension_disposition_box, 'Denied')
+    enter_data(app_conditions.admin_license_suspension_explanation_box, 'Because I said so!')
     mouse_click(app_conditions.add_special_conditions_Button)
     mouse_click(app.not_guilty_all_Button)
     mouse_click(app.create_entry_Button)
