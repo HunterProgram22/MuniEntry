@@ -6,6 +6,7 @@ from PyQt5 import QtCore
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 
 DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
 
@@ -28,6 +29,7 @@ def mouse_click(button):
 """
 app = main application window
 ngbd = NotGuiltyBondDialog
+njpd = NoJailPleaDialog
 """
 
 
@@ -44,6 +46,14 @@ def app(qtbot):
 def ngbd(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture()
+def njpd(app, qtbot):
+    mouse_click(app.NoJailPleaButton)
+    app = NoJailPleaDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
 
