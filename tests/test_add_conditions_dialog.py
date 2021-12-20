@@ -1,10 +1,7 @@
 import pytest
 from conftest import mouse_click, enter_data
 from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
-from datetime import date, timedelta
 
-
-TODAY = date.today()
 
 def start_add_conditions_dialog(njp_dialog, qtbot):
     mouse_click(njp_dialog.add_conditions_Button)
