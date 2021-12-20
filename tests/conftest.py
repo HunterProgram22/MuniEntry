@@ -51,7 +51,7 @@ def ngb_dialog(app, qtbot):
 
 
 @pytest.fixture()
-def njpd(app, qtbot):
+def njp_dialog(app, qtbot):
     mouse_click(app.NoJailPleaButton)
     app = NoJailPleaDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
