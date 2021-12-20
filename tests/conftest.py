@@ -24,12 +24,24 @@ def enter_data(field, data: str):
 def mouse_click(button):
     return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
 
+
+"""
+app = main application window
+ngbd = NotGuiltyBondDialog
+"""
+
+
 @pytest.fixture
 def app(qtbot):
     app = MuniEntry_app.Window(arraignments_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     enter_data(app.arraignment_cases_box, '21TRD09200')
+    return app
+
+
+@pytest.fixture()
+def ngbd(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
@@ -37,11 +49,11 @@ def app(qtbot):
 
 
 @pytest.fixture
-def check_special_conditions(app):
-    mouse_click(app.domestic_violence_checkBox)
-    mouse_click(app.admin_license_suspension_checkBox)
-    mouse_click(app.custodial_supervision_checkBox)
-    mouse_click(app.vehicle_seizure_checkBox)
-    mouse_click(app.no_contact_checkBox)
-    mouse_click(app.other_conditions_checkBox)
-    mouse_click(app.add_special_conditions_Button)
+def ngbd_check_special_conditions(ngbd):
+    mouse_click(ngbd.domestic_violence_checkBox)
+    mouse_click(ngbd.admin_license_suspension_checkBox)
+    mouse_click(ngbd.custodial_supervision_checkBox)
+    mouse_click(ngbd.vehicle_seizure_checkBox)
+    mouse_click(ngbd.no_contact_checkBox)
+    mouse_click(ngbd.other_conditions_checkBox)
+    mouse_click(ngbd.add_special_conditions_Button)
