@@ -7,18 +7,6 @@ from datetime import date, timedelta
 TODAY = date.today()
 
 
-def start_amendment_dialog(qtbot, case_information):
-    dialog = AmendOffenseDialog(case_information)
-    qtbot.addWidget(dialog)
-    return dialog
-
-
-def start_add_conditions_dialog(qtbot, case_information):
-    dialog = AddConditionsDialog(case_information)
-    qtbot.addWidget(dialog)
-    return dialog
-
-
 def add_offense_speeding_25(njp_dialog_nocase):
     """The numbers in itemAtPosition need to be changed when ui is updated."""
     njp_dialog_nocase.offense_choice_box.setCurrentText("Speeding > 25 mph")
@@ -147,34 +135,24 @@ def test_fines_due_date(njp_dialog):
     njp_dialog.ability_to_pay_box.setCurrentText("within 90 days")
     assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=90)
 
-#
-# def test_fra_in_file_and_court(app, dialog):
-#     dialog.fra_in_file_box.setCurrentText("Yes")
-#     assert dialog.entry_case_information.fra_in_file == True
-#     dialog.fra_in_file_box.setCurrentText("No")
-#     assert dialog.entry_case_information.fra_in_file == False
-#     dialog.fra_in_file_box.setCurrentText("N/A")
-#     assert dialog.entry_case_information.fra_in_file == None
-#     dialog.fra_in_court_box.setCurrentText("Yes")
-#     assert dialog.entry_case_information.fra_in_court == True
-#     dialog.fra_in_court_box.setCurrentText("No")
-#     assert dialog.entry_case_information.fra_in_court == False
-#     dialog.fra_in_court_box.setCurrentText("N/A")
-#     assert dialog.entry_case_information.fra_in_court == None
-#
-#
-# # def test_amend_offense(dialog, qtbot):
-# #     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
-# #     dialog = start_amendment_dialog(qtbot, dialog.entry_case_information)
-# #     assert dialog.windowTitle() == "Amend Charge"
-#
-#
-# # def test_add_conditions(dialog, qtbot):
-# #     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
-# #     dialog = start_add_conditions_dialog(qtbot, dialog)
-# #     assert dialog.windowTitle() == "Additional Conditions"
-#
-#
-# def test_create_entry(app, dialog):
-#     add_offense_speeding_25(dialog)
-#     QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
+
+def test_fra_in_file_and_court(njp_dialog):
+    njp_dialog.fra_in_file_box.setCurrentText("Yes")
+    assert njp_dialog.entry_case_information.fra_in_file == True
+    njp_dialog.fra_in_file_box.setCurrentText("No")
+    assert njp_dialog.entry_case_information.fra_in_file == False
+    njp_dialog.fra_in_file_box.setCurrentText("N/A")
+    assert njp_dialog.entry_case_information.fra_in_file == None
+    njp_dialog.fra_in_court_box.setCurrentText("Yes")
+    assert njp_dialog.entry_case_information.fra_in_court == True
+    njp_dialog.fra_in_court_box.setCurrentText("No")
+    assert njp_dialog.entry_case_information.fra_in_court == False
+    njp_dialog.fra_in_court_box.setCurrentText("N/A")
+    assert njp_dialog.entry_case_information.fra_in_court == None
+
+
+def test_create_entry(njp_dialog):
+    add_offense_speeding_25(njp_dialog)
+    mouse_click(njp_dialog.no_contest_all_Button)
+    mouse_click(njp_dialog.create_entry_Button)
+    assert njp_dialog.entry_case_information is not None

@@ -1,14 +1,23 @@
 import pytest
+import os
+import sys
+import inspect
 from PyQt5.QtSql import QSqlDatabase
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
+current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 
-DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
+# Home Path - Comment out when at work
+# DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
+# Work Path - Comment out when at home
+DB_PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python310\\MuniEntry\\resources\\db\\arraignments.sqlite"
 
 def create_arraignments_database_connection():
     """This is a duplicate version of the function in settings.py. It is used because of issues with Path.
