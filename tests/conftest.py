@@ -43,7 +43,7 @@ def app(qtbot):
 
 
 @pytest.fixture()
-def ngbd(app, qtbot):
+def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
@@ -59,11 +59,11 @@ def njpd(app, qtbot):
 
 
 @pytest.fixture
-def ngbd_check_special_conditions(ngbd):
-    mouse_click(ngbd.domestic_violence_checkBox)
-    mouse_click(ngbd.admin_license_suspension_checkBox)
-    mouse_click(ngbd.custodial_supervision_checkBox)
-    mouse_click(ngbd.vehicle_seizure_checkBox)
-    mouse_click(ngbd.no_contact_checkBox)
-    mouse_click(ngbd.other_conditions_checkBox)
-    mouse_click(ngbd.add_special_conditions_Button)
+def ngbd_check_special_conditions(ngb_dialog):
+    mouse_click(ngb_dialog.domestic_violence_checkBox)
+    mouse_click(ngb_dialog.admin_license_suspension_checkBox)
+    mouse_click(ngb_dialog.custodial_supervision_checkBox)
+    mouse_click(ngb_dialog.vehicle_seizure_checkBox)
+    mouse_click(ngb_dialog.no_contact_checkBox)
+    mouse_click(ngb_dialog.other_conditions_checkBox)
+    mouse_click(ngb_dialog.add_special_conditions_Button)
