@@ -27,145 +27,110 @@ def add_offense_speeding_25_after_delete(njp_dialog_nocase):
 
 
 #TESTS
-"""Two columns are added every time a charge is added with add offense to view.
-The columns with content are evens (0, 2, 4, etc)."""
 
-def test_open_no_jail_plea_dialog(njp_dialog):
-    assert njp_dialog.windowTitle() == "No Jail Plea Case Information"
+def test_case_information_dialog(njp_dialog_nocase, add_case_information):
+    assert njp_dialog_nocase.case_number_lineEdit.text() == "21TRC1234"
+    assert njp_dialog_nocase.defendant_first_name_lineEdit.text() == "John"
+    assert njp_dialog_nocase.defendant_last_name_lineEdit.text() == "Smith"
 
-#
-# def test_case_information_dialog(njp_dialog_nocase, add_case_information):
-#     assert njp_dialog_nocase.case_number_lineEdit.text() == "21TRC1234"
-#     assert njp_dialog_nocase.defendant_first_name_lineEdit.text() == "John"
-#     assert njp_dialog_nocase.defendant_last_name_lineEdit.text() == "Smith"
-#
-#
-# def test_offense_to_statute(njp_dialog):
-#     njp_dialog.offense_choice_box.setCurrentText("Driving Under Suspension")
-#     assert njp_dialog.statute_choice_box.currentText() == "4510.11"
-#     assert njp_dialog.degree_choice_box.currentText() == "M1"
-#     njp_dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
-#     assert njp_dialog.statute_choice_box.currentText() == "4511.21(B)(2)"
-#     assert njp_dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
-#
-#
-# def test_statute_to_offense(njp_dialog_nocase):
-#     njp_dialog_nocase.statute_choice_box.setCurrentText("4511.21(B)(3)")
-#     assert njp_dialog_nocase.offense_choice_box.currentText() == "Speeding > 35 mph"
-#     assert njp_dialog_nocase.degree_choice_box.currentText() == "Minor Misdemeanor"
-#     njp_dialog_nocase.statute_choice_box.setCurrentText("4511.33")
-#     assert njp_dialog_nocase.offense_choice_box.currentText() == "Driving in Marked Lanes"
-#     assert njp_dialog_nocase.degree_choice_box.currentText() == "Minor Misdemeanor"
-#
-#
-# def test_add_offense(njp_dialog_nocase):
-#     add_offense_speeding_25(njp_dialog_nocase)
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
-#
-#
-# def test_add_multiple_offenses(njp_dialog_nocase):
-#     add_offense_speeding_25(njp_dialog_nocase)
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
-#     # Second Charge
-#     njp_dialog_nocase.offense_choice_box.setCurrentText("Driving in Marked Lanes")
-#     mouse_click(njp_dialog_nocase.add_charge_Button)
-#     njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 4).widget().setCurrentText("Guilty")
-#     njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 4).widget().setCurrentText("Guilty")
-#     njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 4).widget().setText("75")
-#     njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 4).widget().setText("0")
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 4).widget().text() == "Driving in Marked Lanes"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 4).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 4).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 4).widget().text() == "75"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 4).widget().text() == "0"
-#
-#
-# def test_add_offense_and_delete_offense(njp_dialog_nocase):
-#     add_offense_speeding_25(njp_dialog_nocase)
-#     mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(9, 2).widget())
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2) == None
-#
-#
-# def test_add_two_delete_one_add_one_offense(njp_dialog_nocase):
-#     add_offense_speeding_25(njp_dialog_nocase)
-#     add_offense_speeding_25(njp_dialog_nocase)
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
-#     # Delete first offense and check
-#     mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(9, 2).widget())
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2) == None
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2) == None
-#     # Add third offense, but two total since one deleted.
-#     add_offense_speeding_25_after_delete(njp_dialog_nocase)
-#     # Third added check
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 6).widget().text() == "Speeding > 25 mph"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 6).widget().currentText() == "Not Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 6).widget().currentText() == "Guilty"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "50"
-#     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 6).widget().text() == "25"
-#
-#
-# @pytest.mark.xfail
-# def test_fines_due_date(njp_dialog):
-#     """Failing because next_tuesday function not accounted for yet."""
-#     njp_dialog.ability_to_pay_box.setCurrentText("forthwith")
-#     assert njp_dialog.balance_due_date.date() == TODAY
-#     njp_dialog.ability_to_pay_box.setCurrentText("within 30 days")
-#     assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=30)
-#     njp_dialog.ability_to_pay_box.setCurrentText("within 60 days")
-#     assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=60)
-#     njp_dialog.ability_to_pay_box.setCurrentText("within 90 days")
-#     assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=90)
-#
-# #
-# # def test_fra_in_file_and_court(app, dialog):
-# #     dialog.fra_in_file_box.setCurrentText("Yes")
-# #     assert dialog.entry_case_information.fra_in_file == True
-# #     dialog.fra_in_file_box.setCurrentText("No")
-# #     assert dialog.entry_case_information.fra_in_file == False
-# #     dialog.fra_in_file_box.setCurrentText("N/A")
-# #     assert dialog.entry_case_information.fra_in_file == None
-# #     dialog.fra_in_court_box.setCurrentText("Yes")
-# #     assert dialog.entry_case_information.fra_in_court == True
-# #     dialog.fra_in_court_box.setCurrentText("No")
-# #     assert dialog.entry_case_information.fra_in_court == False
-# #     dialog.fra_in_court_box.setCurrentText("N/A")
-# #     assert dialog.entry_case_information.fra_in_court == None
-# #
-# #
-# # # def test_amend_offense(dialog, qtbot):
-# # #     QtBot.mouseClick(dialog.amend_offense_Button, QtCore.Qt.LeftButton)
-# # #     dialog = start_amendment_dialog(qtbot, dialog.entry_case_information)
-# # #     assert dialog.windowTitle() == "Amend Charge"
-# #
-# #
-# # # def test_add_conditions(dialog, qtbot):
-# # #     QtBot.mouseClick(dialog.add_conditions_Button, QtCore.Qt.LeftButton)
-# # #     dialog = start_add_conditions_dialog(qtbot, dialog)
-# # #     assert dialog.windowTitle() == "Additional Conditions"
-# #
-# #
-# # def test_create_entry(app, dialog):
-# #     add_offense_speeding_25(dialog)
-# #     QtBot.mouseClick(dialog.create_entry_Button, QtCore.Qt.LeftButton)
+
+def test_offense_to_statute(njp_dialog):
+    njp_dialog.offense_choice_box.setCurrentText("Driving Under Suspension")
+    assert njp_dialog.statute_choice_box.currentText() == "4510.11"
+    assert njp_dialog.degree_choice_box.currentText() == "M1"
+    njp_dialog.offense_choice_box.setCurrentText("Speeding > 25 mph")
+    assert njp_dialog.statute_choice_box.currentText() == "4511.21(B)(2)"
+    assert njp_dialog.degree_choice_box.currentText() == "Minor Misdemeanor"
+
+
+def test_statute_to_offense(njp_dialog_nocase):
+    njp_dialog_nocase.statute_choice_box.setCurrentText("4511.21(B)(3)")
+    assert njp_dialog_nocase.offense_choice_box.currentText() == "Speeding > 35 mph"
+    assert njp_dialog_nocase.degree_choice_box.currentText() == "Minor Misdemeanor"
+    njp_dialog_nocase.statute_choice_box.setCurrentText("4511.33")
+    assert njp_dialog_nocase.offense_choice_box.currentText() == "Driving in Marked Lanes"
+    assert njp_dialog_nocase.degree_choice_box.currentText() == "Minor Misdemeanor"
+
+
+# Add Charge: Two columns are added every time a charge is added with add offense to view.
+# The columns with content are evens (0, 2, 4, etc).
+def test_add_offense(njp_dialog_nocase):
+    add_offense_speeding_25(njp_dialog_nocase)
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
+
+
+def test_add_multiple_offenses(njp_dialog_nocase):
+    add_offense_speeding_25(njp_dialog_nocase)
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
+    # Second Charge
+    njp_dialog_nocase.offense_choice_box.setCurrentText("Driving in Marked Lanes")
+    mouse_click(njp_dialog_nocase.add_charge_Button)
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 4).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 4).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 4).widget().setText("75")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 4).widget().setText("0")
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 4).widget().text() == "Driving in Marked Lanes"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 4).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 4).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 4).widget().text() == "75"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 4).widget().text() == "0"
+
+
+def test_add_offense_and_delete_offense(njp_dialog_nocase):
+    add_offense_speeding_25(njp_dialog_nocase)
+    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(9, 2).widget())
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2) == None
+
+
+def test_add_two_delete_one_add_one_offense(njp_dialog_nocase):
+    add_offense_speeding_25(njp_dialog_nocase)
+    add_offense_speeding_25(njp_dialog_nocase)
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2).widget().text() == "25"
+    # Delete first offense and check
+    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(9, 2).widget())
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 2) == None
+    # Add third offense, but two total since one deleted.
+    add_offense_speeding_25_after_delete(njp_dialog_nocase)
+    # Third added check
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 6).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 6).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 6).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(6, 6).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(7, 6).widget().text() == "25"
+
+
+@pytest.mark.xfail
+def test_fines_due_date(njp_dialog):
+    """Failing because next_tuesday function not accounted for yet."""
+    njp_dialog.ability_to_pay_box.setCurrentText("forthwith")
+    assert njp_dialog.balance_due_date.date() == TODAY
+    njp_dialog.ability_to_pay_box.setCurrentText("within 30 days")
+    assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=30)
+    njp_dialog.ability_to_pay_box.setCurrentText("within 60 days")
+    assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=60)
+    njp_dialog.ability_to_pay_box.setCurrentText("within 90 days")
+    assert njp_dialog.balance_due_date.date() == TODAY + timedelta(days=90)
+
 
 def test_fra_in_file_and_court(njp_dialog):
     njp_dialog.fra_in_file_box.setCurrentText("Yes")

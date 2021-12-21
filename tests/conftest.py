@@ -13,6 +13,7 @@ sys.path.insert(0, parent_dir)
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.no_jail_plea_dialogs import NoJailPleaDialog
+from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work
 # DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
@@ -52,6 +53,29 @@ def app_nocase(qtbot):
     return app
 
 
+@pytest.fixture()
+def ngb_dialog(app, qtbot):
+    mouse_click(app.NotGuiltyBondButton)
+    app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture()
+def leap_long_dialog(app, qtbot):
+    mouse_click(app.LeapPleaLongButton)
+    app = LeapPleaLongDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture()
+def leap_short_dialog(app, qtbot):
+    mouse_click(app.LeapPleaShortButton)
+    app = LeapPleaShortDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
 
 @pytest.fixture()
 def ngb_dialog(app, qtbot):
@@ -59,6 +83,14 @@ def ngb_dialog(app, qtbot):
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
+
+
+@pytest.fixture()
+def ngb_dialog(app_nocase, qtbot):
+    mouse_click(app_nocase.NotGuiltyBondButton)
+    app_nocase = NotGuiltyBondDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
+    qtbot.addWidget(app_nocase)
+    return app_nocase
 
 
 @pytest.fixture()
