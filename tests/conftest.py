@@ -86,7 +86,7 @@ def ngb_dialog(app, qtbot):
 
 
 @pytest.fixture()
-def ngb_dialog(app_nocase, qtbot):
+def ngb_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NotGuiltyBondButton)
     app_nocase = NotGuiltyBondDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
@@ -121,7 +121,7 @@ def ngbd_check_special_conditions(ngb_dialog):
 
 
 @pytest.fixture
-def add_case_information(njp_dialog_nocase):
-    enter_data(njp_dialog_nocase.case_number_lineEdit, "21TRC1234")
-    enter_data(njp_dialog_nocase.defendant_first_name_lineEdit, "John")
-    enter_data(njp_dialog_nocase.defendant_last_name_lineEdit, "Smith")
+def add_case_information(dialog):
+    enter_data(dialog.case_number_lineEdit, "21TRC1234")
+    enter_data(dialog.defendant_first_name_lineEdit, "John")
+    enter_data(dialog.defendant_last_name_lineEdit, "Smith")
