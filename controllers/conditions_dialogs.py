@@ -144,6 +144,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
+        self.domestic_violence_surrender_weapons_dateBox.setDate(QtCore.QDate.currentDate())
         self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
         self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
         self.vehicle_seizure = main_dialog.vehicle_seizure_checkBox.isChecked()
