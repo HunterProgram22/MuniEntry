@@ -1,30 +1,13 @@
 """Helper functions that are used throughout the application."""
-import os
 from datetime import date, timedelta
 
-from docxtpl import DocxTemplate
 from loguru import logger
-
-# from views.custom_widgets import RequiredBox
-
-from settings import SAVE_PATH
-
-
-@logger.catch
-def create_entry(dialog):
-    """The dialog is the controller dialog that is the source of case information."""
-    doc = DocxTemplate(dialog.template.template_path)
-    doc.render(dialog.case_information.get_case_information())
-    docname = set_document_name(dialog)
-    doc.save(SAVE_PATH + docname)
-    os.startfile(SAVE_PATH + docname)
-
 
 
 def set_document_name(dialog):
-    """Sets document name based on the case number and name of the template
+    """Sets document name based on the cms_case number and name of the template
     must include '.docx' to make it a Word document."""
-    return dialog.case_information.case_number + "_" + dialog.template.template_name + ".docx"
+    return dialog.entry_case_information.case_number + "_" + dialog.template.template_name + ".docx"
 
 
 @logger.catch

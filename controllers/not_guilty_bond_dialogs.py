@@ -1,36 +1,37 @@
 """The controller module for the LEAP plea dialog."""
+from PyQt5.QtWidgets import QMessageBox
+from controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
 
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
 from models.case_information import FTABondConditions
-from controllers.criminal_dialogs import CriminalPleaDialog
 from controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 
 
-class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
-    """The dialog inherits from the CriminalPleaDialog (controller) and the
+class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
+    """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NotGuiltyBondDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.add_special_conditions_dict = {
             self.admin_license_suspension_checkBox:
-                self.case_information.admin_license_suspension.ordered,
+                self.entry_case_information.admin_license_suspension.ordered,
             self.domestic_violence_checkBox:
-                self.case_information.domestic_violence_conditions.ordered,
+                self.entry_case_information.domestic_violence_conditions.ordered,
             self.no_contact_checkBox:
-                self.case_information.no_contact.ordered,
+                self.entry_case_information.no_contact.ordered,
             self.custodial_supervision_checkBox:
-                self.case_information.custodial_supervision.ordered,
+                self.entry_case_information.custodial_supervision.ordered,
             self.other_conditions_checkBox:
-                self.case_information.other_conditions.ordered,
+                self.entry_case_information.other_conditions.ordered,
             self.vehicle_seizure_checkBox:
-                self.case_information.vehicle_seizure.ordered,
+                self.entry_case_information.vehicle_seizure.ordered,
         }
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.case_information.fta_bond_conditions = FTABondConditions()
+        self.entry_case_information.fta_bond_conditions = FTABondConditions()
 
     @logger.catch
     def add_charge_to_grid(self):
@@ -40,19 +41,10 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def update_case_information(self):
-        self.update_party_information()
+        super().update_case_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
         self.check_add_special_conditions()
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = \
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -64,31 +56,35 @@ class NotGuiltyBondDialog(CriminalPleaDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def update_not_guilty_conditions(self):
-        self.case_information.appearance_reason = self.appearance_reason_box.currentText()
-        self.add_dispositions_and_fines()
+        self.entry_case_information.appearance_reason = self.appearance_reason_box.currentText()
+        self.add_plea_to_entry_case_information()
 
     @logger.catch
     def update_bond_conditions(self):
         """Updates the bond conditions from the GUI(view) and saves it to the model."""
-        self.case_information.fta_bond_conditions.bond_type = \
+        self.entry_case_information.fta_bond_conditions.bond_type = \
             self.bond_type_box.currentText()
-        self.case_information.fta_bond_conditions.bond_amount = \
+        self.entry_case_information.fta_bond_conditions.bond_amount = \
             self.bond_amount_box.currentText()
-        self.case_information.fta_bond_conditions.no_alcohol_drugs = \
+        self.entry_case_information.fta_bond_conditions.no_alcohol_drugs = \
             self.no_alcohol_drugs_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.alcohol_drugs_assessment = \
+        self.entry_case_information.fta_bond_conditions.alcohol_drugs_assessment = \
             self.alcohol_drugs_assessment_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.alcohol_test_kiosk = \
+        self.entry_case_information.fta_bond_conditions.alcohol_test_kiosk = \
             self.alcohol_test_kiosk_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.specialized_docket = \
+        self.entry_case_information.fta_bond_conditions.specialized_docket = \
             self.specialized_docket_checkBox.isChecked()
-        self.case_information.fta_bond_conditions.specialized_docket_type = \
+        self.entry_case_information.fta_bond_conditions.specialized_docket_type = \
             self.specialized_docket_type_box.currentText()
+        self.entry_case_information.fta_bond_conditions.monitoring = \
+            self.monitoring_checkBox.isChecked()
+        self.entry_case_information.fta_bond_conditions.monitoring_type = \
+            self.monitoring_type_box.currentText()
 
     @logger.catch
     def check_add_special_conditions(self):
         """Checks to see what conditions in the Add Conditions box are checked and then
-        transfers the information from the conditions to case_information model if the
+        transfers the information from the conditions to entry_case_information model if the
         box is checked.
         TODO: Bug that also exists in check_add_conditions in no_jail_plea dialog
         likely exists here."""

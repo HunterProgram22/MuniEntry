@@ -5,8 +5,10 @@ The main application entry point.
 
 The main window contains options for selecting the judicial officer and templates.
 """
+import multiprocessing
 import sys
-
+import pathlib
+from multiprocessing import Process, freeze_support
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
@@ -24,6 +26,7 @@ from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from controllers.juror_payment_dialogs import JurorPaymentDialog
 from settings import create_arraignments_database_connection
 
+PATH = str(pathlib.Path().absolute())
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
@@ -44,9 +47,10 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, arraignments_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
-        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
+        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
         self.connect_menu_signal_slots()
         self.judicial_officer = None
+        self.case_to_load = None
         self.judicial_officer_dict = {
             self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
             self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
@@ -90,8 +94,8 @@ class Window(QMainWindow, Ui_MainWindow):
             key.pressed.connect(self.start_dialog_from_entry_button)
 
     def load_arraignment_case_list(self):
-        """Loads the case numbers of all the cases that are in the arraignments database. This
-        does not load the case data for each case."""
+        """Loads the cms_case numbers of all the cases that are in the arraignments database. This
+        does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(create_cases_list())
 
     @logger.catch
@@ -99,7 +103,7 @@ class Window(QMainWindow, Ui_MainWindow):
         """ Launches the dialog that is connected to each button."""
         if self.judicial_officer is None:
             message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
+            message.setIcon(QMessageBox.Critical)
             message.setWindowTitle("Required")
             message.setText("You must select a judicial officer.")
             message.setStandardButtons(QMessageBox.Ok)
@@ -107,13 +111,13 @@ class Window(QMainWindow, Ui_MainWindow):
         else:
             self.arraignments_database.open()
             if self.arraignment_cases_box.currentText() == "":
-                case_to_load = CriminalCaseInformation()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+                self.case_to_load = CriminalCaseInformation()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
             else:
                 database = self.arraignments_database
                 case_number = self.arraignment_cases_box.currentText()
-                case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, case_to_load)
+                self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
             dialog.exec()
 
 
@@ -121,6 +125,7 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments database is created each time the
     application is loaded after any existing prior version is deleted."""
+    from resources.db import create_arraignment_table
     app = QApplication(sys.argv)
     arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
@@ -129,5 +134,7 @@ def main():
 
 
 if __name__ == "__main__":
-    from resources.db import create_arraignment_table
+    # __spec__ = None # Used to get Python Debugger to work - may have other ramifications(?)
+    multiprocessing.freeze_support()
+    # Process(target=main).start()
     main()

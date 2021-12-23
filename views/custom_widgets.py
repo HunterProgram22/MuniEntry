@@ -144,8 +144,8 @@ class ChargesGrid(QGridLayout):
         the object."""
         row = 0
         column = self.columnCount() + 1
-        added_charge_index = len(dialog.case_information.charges_list) - 1
-        charge = vars(dialog.case_information.charges_list[added_charge_index])
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), row, column)
         row += 1
         self.addWidget(QLabel(charge['statute']), row, column)
@@ -160,13 +160,13 @@ class ChargesGrid(QGridLayout):
         if add_delete_button == True:
             self.add_delete_button_to_grid(dialog, row, column)
             row += 1
-        return row, column
+        return row, column, charge
 
     def add_charge_finding_and_fines_to_grid(self, dialog):
-        row, column = self.add_charge_only_to_grid(dialog)
+        row, column, charge = self.add_charge_only_to_grid(dialog)
         self.addWidget(FindingComboBox(), row, column)
         row += 1
-        self.addWidget(FineLineEdit(dialog.criminal_charge.offense), row, column)
+        self.addWidget(FineLineEdit(charge['offense']), row, column)
         row += 1
         self.addWidget(FineSuspendedLineEdit(), row, column)
         row += 1
@@ -190,7 +190,7 @@ class ChargesGrid(QGridLayout):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
         fields have a plea and finding you will get the warning until they are filled in.
 
-        MOVE: Should this be in CriminalPleaDialog or a decorator or standalone function???"""
+        MOVE: Should this be in CriminalBaseDialog or a decorator or standalone function???"""
         row_plea, row_finding = self.set_plea_and_finding_rows()
         column = 2
         loop_counter = 0

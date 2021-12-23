@@ -171,8 +171,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1156</width>
-           <height>852</height>
+           <width>1152</width>
+           <height>842</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
@@ -810,6 +810,12 @@ font-weight: bold;</string>
   <tabstop>domestic_violence_surrender_weapons_checkBox</tabstop>
   <tabstop>domestic_violence_surrender_weapons_dateBox</tabstop>
   <tabstop>no_contact_name_box</tabstop>
+  <tabstop>vehicle_make_model_box</tabstop>
+  <tabstop>vehicle_license_plate_box</tabstop>
+  <tabstop>tow_to_residence_checkBox</tabstop>
+  <tabstop>motion_to_return_vehicle_checkBox</tabstop>
+  <tabstop>state_opposes_box</tabstop>
+  <tabstop>disposition_motion_to_return_box</tabstop>
   <tabstop>other_conditions_plainTextEdit</tabstop>
   <tabstop>custodial_supervision_supervisor_box</tabstop>
   <tabstop>add_special_conditions_Button</tabstop>

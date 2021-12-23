@@ -7,8 +7,8 @@ class Party(object):
 
 
 class PlaintiffEntity(Party):
-    """A type of party in a case. Generally the State of Ohio in a criminal
-    case."""
+    """A type of party in a cms_case. Generally the State of Ohio in a criminal
+    cms_case."""
     def __init__(self, party_type: 'Entity'):
         super().__init__(party_type)
         self.full_name = party_type.entity_name

@@ -1,19 +1,19 @@
 """The controller module for the LEAP plea dialog."""
+from controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
 
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QMessageBox
 
 from views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
 from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
 from views.custom_widgets import PleaComboBox
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
-from controllers.criminal_dialogs import CriminalPleaDialog
 from settings import LEAP_COMPLETE_DATE_DICT
 
 
-class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
+class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
     """The dialog inherits from the BaseDialog (controller) and the
     Ui_LeapPleaLongDialog (view)."""
     @logger.catch
@@ -25,6 +25,7 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def modify_view(self):
         """Sets the sentencing date."""
+        super().modify_view()
         self.set_sentencing_date("120 days")
 
     @logger.catch
@@ -32,24 +33,16 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         """The method connects additional signals to slots. That are not
         included in the BaseDialog."""
         super().connect_signals_to_slots()
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.time_to_complete_box.currentTextChanged.connect(self.set_sentencing_date)
 
     @logger.catch
     def update_case_information(self):
-        self.update_party_information()
-        self.add_dispositions_and_fines()
-        self.case_information.sentencing_date = (
+        super().update_case_information()
+        self.add_plea_to_entry_case_information()
+        self.entry_case_information.sentencing_date = (
             self.sentencing_date.date().toString("MMMM dd, yyyy")
         )
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = \
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(
@@ -62,8 +55,8 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         refactored."""
         row = 0
         column = self.charges_gridLayout.columnCount() + 1
-        added_charge_index = len(self.case_information.charges_list) - 1
-        charge = vars(self.case_information.charges_list[added_charge_index])
+        added_charge_index = len(self.entry_case_information.charges_list) - 1
+        charge = vars(self.entry_case_information.charges_list[added_charge_index])
         for value in charge.values():
             if value is not None:
                 if value in ["Moving Traffic", "Non-moving Traffic", "Criminal"]:
@@ -81,14 +74,21 @@ class LeapPleaLongDialog(CriminalPleaDialog, Ui_LeapPleaLongDialog):
         self.sentencing_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
-class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
-    """The dialog inherits from the CriminalPleaDialog(controller) and the
+class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
+    """The dialog inherits from the CriminalBaseDialog(controller) and the
     Ui_LeapPleaShortDialog (view)."""
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
+        super().connect_signals_to_slots()
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(
@@ -97,17 +97,8 @@ class LeapPleaShortDialog(CriminalPleaDialog, Ui_LeapPleaShortDialog):
 
     @logger.catch
     def update_case_information(self):
-        self.update_party_information()
-        self.add_dispositions_and_fines()
-
-    @logger.catch
-    def update_party_information(self):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        self.case_information.defendant.first_name = self.defendant_first_name_lineEdit.text()
-        self.case_information.defendant.last_name = self.defendant_last_name_lineEdit.text()
-        self.case_information.case_number = self.case_number_lineEdit.text()
-        self.case_information.plea_trial_date = \
-            self.plea_trial_date.date().toString("MMMM dd, yyyy")
+        super().update_case_information()
+        self.add_plea_to_entry_case_information()
 
 
 if __name__ == "__main__":

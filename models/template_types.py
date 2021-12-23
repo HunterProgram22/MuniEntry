@@ -17,7 +17,7 @@ class Template():
 
 Magistrate_And_Judge_Final_Judgment_Template = Template(
     "Traffic Judgment Entry",
-    "Magistrate_And_Judge_Final_Judgment_Template.docx",
+    "No_Jail_Plea_Final_Judgment_Template.docx",
 )
 
 Leap_Plea_And_Admission_Template = Template(
