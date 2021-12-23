@@ -16,9 +16,9 @@ from controllers.no_jail_plea_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work
-# DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
+DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
 # Work Path - Comment out when at home
-DB_PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python310\\MuniEntry\\resources\\db\\arraignments.sqlite"
+# DB_PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python310\\MuniEntry\\resources\\db\\arraignments.sqlite"
 
 def create_arraignments_database_connection():
     """This is a duplicate version of the function in settings.py. It is used because of issues with Path.
