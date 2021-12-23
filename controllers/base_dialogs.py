@@ -53,7 +53,7 @@ class BaseDialog(QDialog):
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
         super().__init__(parent)
-        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.jpg'))
+        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.ico'))
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
                             QtCore.Qt.WindowMaximizeButtonHint)
         self.setupUi(self)
