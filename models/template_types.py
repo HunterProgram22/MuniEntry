@@ -20,6 +20,11 @@ Magistrate_And_Judge_Final_Judgment_Template = Template(
     "No_Jail_Plea_Final_Judgment_Template.docx",
 )
 
+Jail_CC_Plea_Final_Judgment_Template = Template(
+    "Traffic Judgment Entry",
+    "No_Jail_Plea_Final_Judgment_Template.docx",
+)
+
 Leap_Plea_And_Admission_Template = Template(
     "LEAP Plea Admission Entry",
     "Leap_Plea_Admission_Template.docx",
@@ -48,6 +53,7 @@ Juror_Payment_Template = Template(
 
 TEMPLATE_DICT = {
     "No Jail Plea Dialog": Magistrate_And_Judge_Final_Judgment_Template,
+    "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
     "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
     "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
     "FTA Bond Dialog": FTA_Bond_Template,
