@@ -6,7 +6,6 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5 import QtGui
-from controllers.conditions_dialogs import AddConditionsDialog
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -398,14 +397,6 @@ class CriminalBaseDialog(BaseDialog):
         button_index = self.amend_button_list.index(self.sender())
         AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
 
-    @logger.catch
-    def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
-        self.update_case_information()
-        AddConditionsDialog(self).exec()
 
     @logger.catch
     def set_pay_date(self, days_to_add):

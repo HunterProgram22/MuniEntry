@@ -5,6 +5,8 @@ from conftest import mouse_click, enter_data
 dialog_all_title_list = [
     (pytest.lazy_fixture("njp_dialog"), "No Jail Plea Case Information"),
     (pytest.lazy_fixture("njp_dialog_nocase"), "No Jail Plea Case Information"),
+    (pytest.lazy_fixture("jail_dialog"), "Jail Plea Case Information"),
+    (pytest.lazy_fixture("jail_dialog_nocase"), "Jail Plea Case Information"),
     (pytest.lazy_fixture("ngb_dialog"), "Not Guilty Bond Case Information"),
     (pytest.lazy_fixture("ngb_dialog_nocase"), "Not Guilty Bond Case Information"),
     (pytest.lazy_fixture("leap_long_dialog"), "Leap Plea Case Information"),
@@ -14,23 +16,27 @@ dialog_all_title_list = [
 all_dialogs_nocase_list = [
     (pytest.lazy_fixture("njp_dialog_nocase")),
     (pytest.lazy_fixture("ngb_dialog_nocase")),
+    (pytest.lazy_fixture("jail_dialog_nocase")),
 ]
 
 dialog_all_plea_entry_list = [
     (pytest.lazy_fixture("njp_dialog")),
     (pytest.lazy_fixture("ngb_dialog")),
+    (pytest.lazy_fixture("jail_dialog")),
     (pytest.lazy_fixture("leap_long_dialog")),
     (pytest.lazy_fixture("leap_short_dialog")),
 ]
 
 dialog_guilty_plea_entry_list = [
     (pytest.lazy_fixture("njp_dialog")),
+    (pytest.lazy_fixture("jail_dialog")),
     (pytest.lazy_fixture("leap_long_dialog")),
     (pytest.lazy_fixture("leap_short_dialog")),
 ]
 
 dialog_no_contest_plea_entry_list = [
     (pytest.lazy_fixture("njp_dialog")),
+    (pytest.lazy_fixture("jail_dialog")),
 ]
 
 

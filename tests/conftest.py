@@ -12,7 +12,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from controllers.sentencing_dialogs import NoJailPleaDialog
+from controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work
@@ -105,6 +105,22 @@ def njp_dialog(app, qtbot):
 def njp_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NoJailPleaButton)
     app_nocase = NoJailPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
+    qtbot.addWidget(app_nocase)
+    return app_nocase
+
+
+@pytest.fixture()
+def jail_dialog(app, qtbot):
+    mouse_click(app.JailCCButton)
+    app = JailCCPleaDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture()
+def jail_dialog_nocase(app_nocase, qtbot):
+    mouse_click(app_nocase.JailCCButton)
+    app_nocase = JailCCPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
     return app_nocase
 
