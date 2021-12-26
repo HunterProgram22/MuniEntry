@@ -33,6 +33,15 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         super().connect_signals_to_slots()
         self.connect_plea_signals_and_slots()
 
+    def connect_plea_signals_and_slots(self):
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
+        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
+        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
+        self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
+        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
+
     @logger.catch
     def update_case_information(self):
         """"Docstring needs updating."""
@@ -120,6 +129,30 @@ class CriminalSentencingDialog(CriminalBaseDialog):
                 self.add_conditions_dict[key] = True
             else:
                 self.add_conditions_dict[key] = False
+
+    @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.entry_case_information.fra_in_file = False
+        else:
+            self.entry_case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_court = True
+        elif current_text == "No":
+            self.entry_case_information.fra_in_court = False
+        else:
+            self.entry_case_information.fra_in_court = None
+
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):

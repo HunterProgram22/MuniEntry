@@ -6,6 +6,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5 import QtGui
+from controllers.conditions_dialogs import AddConditionsDialog
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -317,15 +318,6 @@ class CriminalBaseDialog(BaseDialog):
         self.offense_choice_box.currentTextChanged.connect(
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
 
-    def connect_plea_signals_and_slots(self):
-        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
-        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
-        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
-        self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
-
     # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
     def load_cms_data_to_view(self):
@@ -340,6 +332,7 @@ class CriminalBaseDialog(BaseDialog):
     # Criminal CasePartyUpdater Functions - REFACTORED and WORKING
     @logger.catch
     def update_case_information(self):
+        """TODO: This needs to be fixed it might update case information with blanks."""
         """"Docstring needs updating."""
         return CasePartyUpdater(self)
 
@@ -413,29 +406,6 @@ class CriminalBaseDialog(BaseDialog):
         NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddConditionsDialog(self).exec()
-
-    @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
 
     @logger.catch
     def set_pay_date(self, days_to_add):
