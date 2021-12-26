@@ -2,6 +2,7 @@
 import os
 
 from PyQt5 import QtCore
+from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from PyQt5 import QtGui
@@ -13,6 +14,8 @@ from resources.db.create_data_lists import create_statute_list, create_offense_l
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from views.custom_widgets import ChargesGrid, PleaComboBox
+from settings import PAY_DATE_DICT
+from controllers.helper_functions import set_future_date
 
 
 @logger.catch
