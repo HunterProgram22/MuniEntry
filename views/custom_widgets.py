@@ -269,6 +269,25 @@ class ChargesGrid(QGridLayout):
                 column += 1
 
 
+class LeapPleaGrid(ChargesGrid):
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_plea = 3
+    row_delete_button = 4
+
+    @logger.catch
+    def add_charge_only_to_grid(self, dialog):
+        column = self.columnCount() + 1
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
+        self.addWidget(QLabel(charge['offense']), LeapPleaGrid.row_offense, column)
+        self.addWidget(QLabel(charge['statute']), LeapPleaGrid.row_statute, column)
+        self.addWidget(QLabel(charge['degree']), LeapPleaGrid.row_degree, column)
+        self.addWidget(PleaComboBox(), LeapPleaGrid.row_plea, column)
+        self.add_delete_button_to_grid(dialog, LeapPleaGrid.row_delete_button, column)
+
+
 class NoJailChargesGrid(ChargesGrid):
     row_offense = 0
     row_statute = 1

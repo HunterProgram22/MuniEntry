@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QLabel, QMessageBox
 
 from views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
 from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
-from views.custom_widgets import PleaComboBox
+from views.custom_widgets import PleaComboBox, LeapPleaGrid
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
 from settings import LEAP_COMPLETE_DATE_DICT
@@ -19,8 +19,10 @@ class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.charges_gridLayout.__class__ = LeapPleaGrid
         self.dialog_name = "Leap Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_cms_data_to_view()
 
     @logger.catch
     def modify_view(self):
@@ -45,8 +47,7 @@ class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
         )
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(
-            self, add_allied_box=False, add_delete_button=True)
+        self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -80,8 +81,10 @@ class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.charges_gridLayout.__class__ = LeapPleaGrid
         self.dialog_name = "Leap Precourt Completion Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_cms_data_to_view()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -91,8 +94,7 @@ class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
         self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(
-            self, add_allied_box=False, add_delete_button=True)
+        self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
