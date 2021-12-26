@@ -170,11 +170,11 @@ class ChargesGrid(QGridLayout):
         column = self.columnCount() + 1
         added_charge_index = len(dialog.entry_case_information.charges_list) - 1
         charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), row, column)
+        self.addWidget(QLabel(charge['offense']), self.row_offense, column)
         row += 1
-        self.addWidget(QLabel(charge['statute']), row, column)
+        self.addWidget(QLabel(charge['statute']), self.row_statute, column)
         row += 1
-        self.addWidget(QLabel(charge['degree']), row, column)
+        self.addWidget(QLabel(charge['degree']), self.row_degree, column)
         row += 1
         if add_allied_box == True:
             self.addWidget(AlliedCheckbox(), row, column)
