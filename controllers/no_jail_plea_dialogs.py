@@ -8,7 +8,7 @@ from PyQt5 import QtCore
 
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
-from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
+from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader, CriminalSentencingDialog
 
 
 class AddPleaFindingsFines:
@@ -36,12 +36,12 @@ class AddPleaFindingsFines:
             column += 1
 
 
-class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
+class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer, cms_case=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
         self.add_conditions_dict = {
             self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
             self.community_service_checkBox: self.entry_case_information.community_service.ordered,
@@ -50,28 +50,28 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    @logger.catch
-    def load_cms_data_to_view(self):
-        return CMS_FRALoader(self)
-
-    @logger.catch
-    def modify_view(self):
-        """Sets the balance due date in the view to today."""
-        super().modify_view()
-        self.balance_due_date.setDate(QtCore.QDate.currentDate())
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.connect_plea_signals_and_slots()
-
-    @logger.catch
-    def update_case_information(self):
-        """"Docstring needs updating."""
-        super().update_case_information()
-        self.add_additional_case_information()
+    # @logger.catch
+    # def load_cms_data_to_view(self):
+    #     return CMS_FRALoader(self)
+    #
+    # @logger.catch
+    # def modify_view(self):
+    #     """Sets the balance due date in the view to today."""
+    #     super().modify_view()
+    #     self.balance_due_date.setDate(QtCore.QDate.currentDate())
+    #
+    # @logger.catch
+    # def connect_signals_to_slots(self):
+    #     """The method connects additional signals to slots. That are not
+    #     included in the BaseDialog."""
+    #     super().connect_signals_to_slots()
+    #     self.connect_plea_signals_and_slots()
+    #
+    # @logger.catch
+    # def update_case_information(self):
+    #     """"Docstring needs updating."""
+    #     super().update_case_information()
+    #     self.add_additional_case_information()
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.no_jail_add_charge_finding_and_fines_to_grid(self)

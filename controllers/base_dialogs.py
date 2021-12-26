@@ -499,6 +499,37 @@ class CriminalBaseDialog(BaseDialog):
         message.exec_()
 
 
+class CriminalSentencingDialog(CriminalBaseDialog):
+    """Subclass for common methods to Sentencing."""
+    def __init__(self, judicial_officer, cms_case=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
+        self.judicial_officer = judicial_officer
+        self.cms_case = cms_case
+
+    @logger.catch
+    def load_cms_data_to_view(self):
+        return CMS_FRALoader(self)
+
+    @logger.catch
+    def modify_view(self):
+        """Sets the balance due date in the view to today."""
+        super().modify_view()
+        self.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
+        super().connect_signals_to_slots()
+        self.connect_plea_signals_and_slots()
+
+    @logger.catch
+    def update_case_information(self):
+        """"Docstring needs updating."""
+        super().update_case_information()
+        self.add_additional_case_information()
+
+
 class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The cms_case information is passed in order to populate the cms_case information banner. The
