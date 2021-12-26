@@ -5,8 +5,8 @@ from conftest import mouse_click, enter_data
 dialog_all_title_list = [
     (pytest.lazy_fixture("njp_dialog"), "No Jail Plea Case Information"),
     (pytest.lazy_fixture("njp_dialog_nocase"), "No Jail Plea Case Information"),
-    (pytest.lazy_fixture("jail_dialog"), "Jail Plea Case Information"),
-    (pytest.lazy_fixture("jail_dialog_nocase"), "Jail Plea Case Information"),
+    (pytest.lazy_fixture("jail_dialog"), "Jail Community Control Plea Case Information"),
+    (pytest.lazy_fixture("jail_dialog_nocase"), "Jail Community Control Plea Case Information"),
     (pytest.lazy_fixture("ngb_dialog"), "Not Guilty Bond Case Information"),
     (pytest.lazy_fixture("ngb_dialog_nocase"), "Not Guilty Bond Case Information"),
     (pytest.lazy_fixture("leap_long_dialog"), "Leap Plea Case Information"),

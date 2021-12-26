@@ -53,7 +53,7 @@ def app_nocase(qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
@@ -61,7 +61,7 @@ def ngb_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def leap_long_dialog(app, qtbot):
     mouse_click(app.LeapPleaLongButton)
     app = LeapPleaLongDialog(app.judicial_officer, app.case_to_load)
@@ -69,7 +69,7 @@ def leap_long_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def leap_short_dialog(app, qtbot):
     mouse_click(app.LeapPleaShortButton)
     app = LeapPleaShortDialog(app.judicial_officer, app.case_to_load)
@@ -77,7 +77,7 @@ def leap_short_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
@@ -85,7 +85,7 @@ def ngb_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NotGuiltyBondButton)
     app_nocase = NotGuiltyBondDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
@@ -93,7 +93,7 @@ def ngb_dialog_nocase(app_nocase, qtbot):
     return app_nocase
 
 
-@pytest.fixture()
+@pytest.fixture
 def njp_dialog(app, qtbot):
     mouse_click(app.NoJailPleaButton)
     app = NoJailPleaDialog(app.judicial_officer, app.case_to_load)
@@ -101,7 +101,7 @@ def njp_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def njp_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NoJailPleaButton)
     app_nocase = NoJailPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
@@ -109,7 +109,7 @@ def njp_dialog_nocase(app_nocase, qtbot):
     return app_nocase
 
 
-@pytest.fixture()
+@pytest.fixture
 def jail_dialog(app, qtbot):
     mouse_click(app.JailCCButton)
     app = JailCCPleaDialog(app.judicial_officer, app.case_to_load)
@@ -117,7 +117,7 @@ def jail_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def jail_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.JailCCButton)
     app_nocase = JailCCPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
