@@ -2,6 +2,7 @@
 from PyQt5.QtWidgets import QMessageBox
 from controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
+from views.custom_widgets import NotGuiltyPleaGrid
 
 from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from models.template_types import TEMPLATE_DICT
@@ -15,6 +16,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
+        self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
         self.add_special_conditions_dict = {
             self.admin_license_suspension_checkBox:
                 self.entry_case_information.admin_license_suspension.ordered,
@@ -32,11 +34,11 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_bond_conditions = FTABondConditions()
+        self.load_cms_data_to_view()
 
     @logger.catch
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(
-            self, add_allied_box=False, add_delete_button=True)
+        self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
