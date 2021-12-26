@@ -1,10 +1,11 @@
 from PyQt5 import QtCore
-from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
+
 from loguru import logger
 
 from models.template_types import TEMPLATE_DICT
 from views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
