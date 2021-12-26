@@ -22,7 +22,7 @@ Magistrate_And_Judge_Final_Judgment_Template = Template(
 
 Jail_CC_Plea_Final_Judgment_Template = Template(
     "Traffic Judgment Entry",
-    "No_Jail_Plea_Final_Judgment_Template.docx",
+    "Jail_Plea_Final_Judgment_Template.docx",
 )
 
 Leap_Plea_And_Admission_Template = Template(
