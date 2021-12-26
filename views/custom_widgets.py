@@ -162,7 +162,7 @@ class ChargesGrid(QGridLayout):
             row += 1
         return row, column, charge
 
-    def add_charge_finding_and_fines_to_grid(self, dialog):
+    def no_jail_add_charge_finding_and_fines_to_grid(self, dialog):
         row, column, charge = self.add_charge_only_to_grid(dialog)
         self.addWidget(FindingComboBox(), row, column)
         row += 1

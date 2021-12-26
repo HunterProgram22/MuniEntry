@@ -19,7 +19,8 @@ from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
 from views.main_window_ui import Ui_MainWindow
-from controllers.no_jail_plea_dialogs import NoJailPleaDialog, JailCCPleaDialog
+from controllers.no_jail_plea_dialogs import NoJailPleaDialog
+from controllers.jail_cc_plea_dialog import JailCCPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog

@@ -8,7 +8,6 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
-from views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
 from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
@@ -86,7 +85,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         self.add_additional_case_information()
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_finding_and_fines_to_grid(self)
+        self.charges_gridLayout.no_jail_add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -218,14 +217,6 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         self.update_costs_and_fines_information()
         self.check_add_conditions()
         self.calculate_costs_and_fines()
-
-
-class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
-    @logger.catch
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
-        self.dialog_name = 'Jail CC Plea Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
 
 
 if __name__ == "__main__":
