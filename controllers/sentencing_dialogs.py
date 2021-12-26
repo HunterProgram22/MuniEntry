@@ -106,6 +106,15 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
 
+    @logger.catch
+    def check_add_conditions(self):
+        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
+        because of a dictionary being used. Refactor back away from dictionary?"""
+        for key, value in self.add_conditions_dict.items():
+            if key.isChecked():
+                self.add_conditions_dict[key] = True
+            else:
+                self.add_conditions_dict[key] = False
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
@@ -128,16 +137,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return AddPleaFindingsFinesJail(self)
 
-    @logger.catch
-    def check_add_conditions(self):
-        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
-        because of a dictionary being used. Refactor back away from dictionary?"""
-        for key, value in self.add_conditions_dict.items():
-            if key.isChecked():
-                self.add_conditions_dict[key] = True
-            else:
-                self.add_conditions_dict[key] = False
-
 
 class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
@@ -156,16 +155,6 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.no_jail_add_charge_finding_and_fines_to_grid(self)
         self.statute_choice_box.setFocus()
-
-    @logger.catch
-    def check_add_conditions(self):
-        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
-        because of a dictionary being used. Refactor back away from dictionary?"""
-        for key, value in self.add_conditions_dict.items():
-            if key.isChecked():
-                self.add_conditions_dict[key] = True
-            else:
-                self.add_conditions_dict[key] = False
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
@@ -232,5 +221,3 @@ class AddPleaFindingsFinesJail:
 
 if __name__ == "__main__":
     print("Sentencing Dialogs ran directly")
-
-
