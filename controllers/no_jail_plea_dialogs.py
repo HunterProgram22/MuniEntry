@@ -1,7 +1,7 @@
 """The controller module for the no jail plea dialog - it is not limited
 to minor misdemeanors, but does not contain functions to account for jail time.
 Loads all charges - including non-minor-misdemeanors from a database."""
-from PyQt5.QtWidgets import QMessageBox
+
 from loguru import logger
 
 from PyQt5 import QtCore
@@ -9,7 +9,6 @@ from PyQt5 import QtCore
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
-
 
 
 class AddPleaFindingsFines:
@@ -92,7 +91,6 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return AddPleaFindingsFines(self)
 
-
     @logger.catch
     def update_costs_and_fines_information(self):
         """Updates the costs and fines from the GUI(view) and saves it to the model."""
@@ -100,7 +98,6 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         self.entry_case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
         self.entry_case_information.court_costs.balance_due_date = \
             self.balance_due_date.date().toString("MMMM dd, yyyy")
-
 
     def add_additional_case_information(self):
         self.add_plea_findings_and_fines_to_entry_case_information()
