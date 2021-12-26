@@ -1,4 +1,5 @@
 from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMessageBox
 
 from loguru import logger
 
@@ -65,11 +66,14 @@ class CriminalSentencingDialog(CriminalBaseDialog):
                 if self.entry_case_information.court_costs.amount == 124:
                     break
                 if charge.type == "Moving Traffic":
-                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 124)
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 124)
                 elif charge.type == "Criminal":
-                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 114)
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 114)
                 elif charge.type == "Non-moving Traffic":
-                    self.entry_case_information.court_costs.amount = max(self.entry_case_information.court_costs.amount, 95)
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 95)
         total_fines = 0
         try:
             for _index, charge in enumerate(self.entry_case_information.charges_list):
