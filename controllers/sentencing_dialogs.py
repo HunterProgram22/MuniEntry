@@ -217,10 +217,16 @@ class AddPleaFindingsFinesJail:
                     self.dialog.charges_gridLayout.itemAtPosition(
                         7, self.column).widget().text()
                 )
-            charge.jail_days = self.dialog.charges_gridLayout.itemAtPosition(
-                8, self.column).widget().text()
-            charge.jail_days_suspended = self.dialog.charges_gridLayout.itemAtPosition(
-                9, self.column).widget().text()
+            if self.dialog.charges_gridLayout.itemAtPosition(8, self.column).widget().text() == "":
+                charge.jail_days = "None"
+            else:
+                charge.jail_days = self.dialog.charges_gridLayout.itemAtPosition(
+                    8, self.column).widget().text()
+            if self.dialog.charges_gridLayout.itemAtPosition(9, self.column).widget().text() == "":
+                charge.jail_days_suspended = "None"
+            else:
+                charge.jail_days_suspended = self.dialog.charges_gridLayout.itemAtPosition(
+                    9, self.column).widget().text()
             self.column += 1
 
 
