@@ -14,3 +14,10 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.jail_add_charge_finding_fines_and_jail_to_grid(self)
         self.statute_choice_box.setFocus()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
+        super().connect_signals_to_slots()
+        self.connect_plea_signals_and_slots()
