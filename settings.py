@@ -51,7 +51,7 @@ def create_arraignments_database_connection():
 #                     ('./resources/db/Arraignments.xlsx', './resources/db'),
 #                     ('./resources/db/Charges.xlsx', './resources/db'),
 #                     ('./resources/Templates/Not_Guilty_Bond_Template.docx', './resources/Templates'),
-#                     ('./resources/Templates/Magistrate_And_Judge_Final_Judgment_Template.docx', './resources/Templates'),
+#                     ('./resources/Templates/No_Jail_Plea_Final_Judgment_Template.docx', './resources/Templates'),
 #                     ('./resources/Templates/Leap_Plea_Admission_Template.docx', './resources/Templates'),
 #                     ('./resources/Templates/Leap_Plea_Precourt_Completion_Template.docx', './resources/Templates'),
 #                     ('./resources/Saved/holder.txt', './resources/Saved'),

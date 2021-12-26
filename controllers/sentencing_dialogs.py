@@ -154,7 +154,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             self.entry_case_information.fra_in_court = None
 
 
-
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, parent=None):
