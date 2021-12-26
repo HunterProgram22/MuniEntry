@@ -75,6 +75,30 @@ class FineSuspendedLineEdit(QLineEdit):
         self.setObjectName("fines_suspended")
 
 
+class JailLineEdit(QLineEdit):
+    def __init__(self, offense=None, parent=None):
+        super(QLineEdit, self).__init__(parent)
+        self.set_up_widget(offense)
+
+    def set_up_widget(self, offense):
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setObjectName("jaild_days")
+
+
+class JailSuspendedLineEdit(QLineEdit):
+    def __init__(self, parent=None):
+        super(QLineEdit, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setObjectName("jail_days_suspended")
+
+
 class DeleteButton(QPushButton):
     def __init__(self, parent=None):
         super(QPushButton, self).__init__(parent)
@@ -169,6 +193,22 @@ class ChargesGrid(QGridLayout):
         self.addWidget(FineLineEdit(charge['offense']), row, column)
         row += 1
         self.addWidget(FineSuspendedLineEdit(), row, column)
+        row += 1
+        self.add_amend_button_to_grid(dialog, row, column)
+        row += 1
+        self.add_delete_button_to_grid(dialog, row, column)
+
+    def jail_add_charge_finding_fines_and_jail_to_grid(self, dialog):
+        row, column, charge = self.add_charge_only_to_grid(dialog)
+        self.addWidget(FindingComboBox(), row, column)
+        row += 1
+        self.addWidget(FineLineEdit(charge['offense']), row, column)
+        row += 1
+        self.addWidget(FineSuspendedLineEdit(), row, column)
+        row += 1
+        self.addWidget(JailLineEdit(charge['offense']), row, column)
+        row += 1
+        self.addWidget(JailSuspendedLineEdit(), row, column)
         row += 1
         self.add_amend_button_to_grid(dialog, row, column)
         row += 1
