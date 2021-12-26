@@ -83,52 +83,12 @@ class AddPleaFindingsFinesJail:
             self.column += 1
 
 
-
-class JailChargesGrid(QGridLayout):
+class ChargesGrid(QGridLayout):
     def __init__(self, parent=None):
-        super(QGridLayout, self).__init__(parent)
+        super().__init__(parent)
         self.row_offense = 0
         self.row_statute = 1
         self.row_degree = 2
-        self.row_allied_box = 3
-        self.row_plea = 4
-        self.row_finding = 5
-        self.row_fine = 6
-        self.row_fine_suspended = 7
-        self.row_jail_days = 8
-        self.row_jail_days_suspended = 9
-        self.row_amend_button = 10
-        self.row_delete_button = 11
-
-    @logger.catch
-    def add_charge_only_to_grid(self, dialog):
-        """Adds the charge that was added through add_charge method to the
-        view/GUI. The first row=0 because of python zero-based indexing. The
-        column is set at one more than the current number of columns because
-        it is the column to which the charge will be added.
-
-        :added_charge_index: - The added charge index is one less than the
-        total charges in charges_list because of zero-based indexing. Thus, if
-        there is one charge, the index of the charge to be added to the
-        charge_dict from the charges_list is 0.
-
-        The python builtin vars function returns the __dict__ attribute of
-        the object."""
-        column = self.columnCount() + 1
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), self.row_offense, column)
-        self.addWidget(QLabel(charge['statute']), self.row_statute, column)
-        self.addWidget(QLabel(charge['degree']), self.row_degree, column)
-        self.addWidget(AlliedCheckbox(), self.row_allied_box, column)
-        self.addWidget(PleaComboBox(), self.row_plea, column)
-        self.addWidget(FindingComboBox(), self.row_finding, column)
-        self.addWidget(FineLineEdit(charge['offense']), self.row_fine, column)
-        self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
-        self.addWidget(JailLineEdit(charge['offense']), self.row_jail_days, column)
-        self.addWidget(JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
-        self.add_amend_button_to_grid(dialog, self.row_amend_button, column)
-        self.add_delete_button_to_grid(dialog, self.row_delete_button, column)
 
     def add_delete_button_to_grid(self, dialog, row, column):
         delete_button = DeleteButton()
@@ -242,3 +202,63 @@ class JailChargesGrid(QGridLayout):
                     self.itemAtPosition(6, column).widget().setFocus()
                     break
                 column += 1
+
+
+class NoJailChargesGrid(ChargesGrid):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.row_allied_box = 3
+        self.row_plea = 4
+        self.row_finding = 5
+        self.row_fine = 6
+        self.row_fine_suspended = 7
+        self.row_amend_button = 8
+        self.row_delete_button = 9
+
+    @logger.catch
+    def add_charge_only_to_grid(self, dialog):
+        column = self.columnCount() + 1
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
+        self.addWidget(QLabel(charge['offense']), self.row_offense, column)
+        self.addWidget(QLabel(charge['statute']), self.row_statute, column)
+        self.addWidget(QLabel(charge['degree']), self.row_degree, column)
+        self.addWidget(AlliedCheckbox(), self.row_allied_box, column)
+        self.addWidget(PleaComboBox(), self.row_plea, column)
+        self.addWidget(FindingComboBox(), self.row_finding, column)
+        self.addWidget(FineLineEdit(charge['offense']), self.row_fine, column)
+        self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.add_amend_button_to_grid(dialog, self.row_amend_button, column)
+        self.add_delete_button_to_grid(dialog, self.row_delete_button, column)
+
+
+class JailChargesGrid(ChargesGrid):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.row_allied_box = 3
+        self.row_plea = 4
+        self.row_finding = 5
+        self.row_fine = 6
+        self.row_fine_suspended = 7
+        self.row_jail_days = 8
+        self.row_jail_days_suspended = 9
+        self.row_amend_button = 10
+        self.row_delete_button = 11
+
+    @logger.catch
+    def add_charge_only_to_grid(self, dialog):
+        column = self.columnCount() + 1
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
+        self.addWidget(QLabel(charge['offense']), self.row_offense, column)
+        self.addWidget(QLabel(charge['statute']), self.row_statute, column)
+        self.addWidget(QLabel(charge['degree']), self.row_degree, column)
+        self.addWidget(AlliedCheckbox(), self.row_allied_box, column)
+        self.addWidget(PleaComboBox(), self.row_plea, column)
+        self.addWidget(FindingComboBox(), self.row_finding, column)
+        self.addWidget(FineLineEdit(charge['offense']), self.row_fine, column)
+        self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.addWidget(JailLineEdit(charge['offense']), self.row_jail_days, column)
+        self.addWidget(JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
+        self.add_amend_button_to_grid(dialog, self.row_amend_button, column)
+        self.add_delete_button_to_grid(dialog, self.row_delete_button, column)

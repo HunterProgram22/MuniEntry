@@ -278,15 +278,15 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        try:
-            self.charges_gridLayout.__class__ = ChargesGrid
-        except AttributeError:
-            pass
+        # try:
+        #     self.charges_gridLayout.__class__ = ChargesGrid
+        # except AttributeError:
+        #     pass
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []
-        self.load_cms_data_to_view()
+        # self.load_cms_data_to_view()
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())

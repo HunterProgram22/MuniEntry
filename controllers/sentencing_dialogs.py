@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from controllers.conditions_dialogs import AddConditionsDialog
+from views.custom_widgets import JailChargesGrid, NoJailChargesGrid
 
 from loguru import logger
 
@@ -169,6 +170,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         super().__init__(judicial_officer, cms_case, parent)
+        self.charges_gridLayout.__class__ = JailChargesGrid
         self.add_conditions_dict = {
             self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
             self.community_service_checkBox: self.entry_case_information.community_service.ordered,
@@ -176,9 +178,10 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         }
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_cms_data_to_view()
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.jail_add_charge_finding_fines_and_jail_to_grid(self)
+        self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
@@ -192,16 +195,19 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         super().__init__(judicial_officer, cms_case, parent)
+        self.charges_gridLayout.__class__ = NoJailChargesGrid
         self.add_conditions_dict = {
             self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
             self.community_service_checkBox: self.entry_case_information.community_service.ordered,
             self.other_conditions_checkBox: self.entry_case_information.other_conditions.ordered,
         }
+
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_cms_data_to_view()
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.no_jail_add_charge_finding_and_fines_to_grid(self)
+        self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
     @logger.catch
