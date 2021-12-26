@@ -10,8 +10,8 @@ from PyQt5.QtCore import QDate
 from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from models.template_types import TEMPLATE_DICT
 from controllers.helper_functions import set_future_date
-from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
-from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
+from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader, AmendOffenseDialog
+from controllers.conditions_dialogs import AddConditionsDialog
 from settings import PAY_DATE_DICT
 
 
@@ -70,6 +70,9 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         """The method connects additional signals to slots. That are not
         included in the BaseDialog."""
         super().connect_signals_to_slots()
+        self.connect_plea_signals_and_slots()
+
+    def connect_plea_signals_and_slots(self):
         self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
         self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
@@ -131,14 +134,7 @@ class NoJailPleaDialog(CriminalBaseDialog, Ui_NoJailPleaDialog):
         total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
         self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
-    @logger.catch
-    def start_amend_offense_dialog(self, _bool):
-        """Opens the amend offense dialog as a modal window. The
-        entry_case_information is passed to the dialog class in order to populate
-        the cms_case information banner. The _bool is from clicked and not used."""
-        self.update_case_information()
-        button_index = self.amend_button_list.index(self.sender())
-        AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
+
 
     @logger.catch
     def start_add_conditions_dialog(self):

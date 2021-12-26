@@ -2,7 +2,8 @@ import pytest
 from PyQt5.QtCore import QTimer
 from conftest import mouse_click, enter_data
 from controllers import No
-from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
+from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.base_dialogs import AmendOffenseDialog
 from datetime import date, timedelta
 
 

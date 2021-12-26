@@ -3,7 +3,8 @@ import os
 import sys
 import pytest
 from conftest import mouse_click, enter_data
-from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
+from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.base_dialogs import AmendOffenseDialog
 from datetime import date, timedelta
 
 
