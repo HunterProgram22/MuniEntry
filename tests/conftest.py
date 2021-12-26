@@ -12,7 +12,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from controllers.no_jail_plea_dialogs import NoJailPleaDialog
+from controllers.sentencing_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work

@@ -19,12 +19,10 @@ from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
 from views.main_window_ui import Ui_MainWindow
-from controllers.no_jail_plea_dialogs import NoJailPleaDialog
-from controllers.jail_cc_plea_dialog import JailCCPleaDialog
+from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from controllers.juror_payment_dialogs import JurorPaymentDialog
 from settings import create_arraignments_database_connection
 
 PATH = str(pathlib.Path().absolute())
@@ -66,7 +64,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.LeapPleaShortButton: LeapPleaShortDialog,
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
-            self.JurorPaymentButton: JurorPaymentDialog,
         }
         self.load_judicial_officers()
         self.connect_entry_buttons()
