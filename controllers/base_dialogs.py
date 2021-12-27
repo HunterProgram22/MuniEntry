@@ -170,25 +170,25 @@ class CriminalSlotFunctions:
         dialog.update_case_information()
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
             return None
-        if hasattr(dialog, 'fra_in_file_box'):
-            if dialog.fra_in_file_box.currentText() == "No":
-                if dialog.fra_in_court_box.currentText() == "N/A":
-                    message = QMessageBox()
-                    message.setIcon(QMessageBox.Warning)
-                    message.setWindowTitle("Warning")
-                    message.setText("The information provided currently "
-                                    "indicates insurance was not shown/in the file. "
-                                    "There is no information on whether "
-                                    "defendant showed proof of insurance "
-                                    "in court. \n\nDo you wish to create an entry "
-                                    "without indicating whether insurance was "
-                                    "shown in court?")
-                    message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-                    return_value = message.exec()
-                    if return_value == QMessageBox.Yes:
-                        pass
-                    if return_value == QMessageBox.No:
-                        return None
+        if (
+            hasattr(dialog, 'fra_in_file_box')
+            and dialog.fra_in_file_box.currentText() == "No"
+            and dialog.fra_in_court_box.currentText() == "N/A"
+        ):
+            message = QMessageBox()
+            message.setIcon(QMessageBox.Warning)
+            message.setWindowTitle("Warning")
+            message.setText("The information provided currently "
+                            "indicates insurance was not shown/in the file. "
+                            "There is no information on whether "
+                            "defendant showed proof of insurance "
+                            "in court. \n\nDo you wish to create an entry "
+                            "without indicating whether insurance was "
+                            "shown in court?")
+            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            return_value = message.exec()
+            if return_value == QMessageBox.No:
+                return None
         create_entry(dialog)
         dialog.close_event()
 
@@ -255,7 +255,7 @@ class AddPlea:
         self.dialog = dialog
         column = 1
         row = 3
-        for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
+        for charge in self.dialog.entry_case_information.charges_list:
             while self.dialog.charges_gridLayout.itemAtPosition(row, column) is None:
                 column += 1
             if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
@@ -397,7 +397,6 @@ class CriminalBaseDialog(BaseDialog):
         button_index = self.amend_button_list.index(self.sender())
         AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
 
-
     @logger.catch
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""
@@ -465,10 +464,11 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         amended_charge = self.current_offense + " - AMENDED"
         self.case_information.charges_list[self.button_index].offense = amended_charge
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-            if self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None:
-                if self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.current_offense:
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
+            if (
+                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
+            ):
+                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
 
 
@@ -477,5 +477,3 @@ if __name__ == "__main__":
 else:
     print("BCD ran when imported")
     database_offenses = create_database_connections()
-
-
