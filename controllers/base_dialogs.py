@@ -127,7 +127,7 @@ class CMSLoader:
     def add_cms_criminal_charges_to_entry_case_information(self, dialog):
         """Loads the data from the cms_case object that is created from the sql table.
         self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
-        for _index, charge in enumerate(self.cms_case.charges_list):
+        for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
              self.criminal_charge.degree) = charge
