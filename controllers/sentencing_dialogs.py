@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
-from controllers.conditions_dialogs import AddConditionsDialog
+from controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
 from views.custom_widgets import JailChargesGrid, NoJailChargesGrid
 
 from loguru import logger
@@ -186,6 +186,15 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return AddPleaFindingsFinesJail(self)
+
+    @logger.catch
+    def start_add_conditions_dialog(self):
+        """Opens the add conditions dialog as a modal window. It passes the
+        instance of the NoJailPleaDialog class (self) as an argument
+        so that the AddConditionsDialog can access all data from the
+        NoJailPleaDialog when working in the AddConditionsDialog."""
+        self.update_case_information()
+        AddCommunityControlDialog(self).exec()
 
 
 class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):

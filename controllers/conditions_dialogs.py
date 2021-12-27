@@ -5,6 +5,7 @@ from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, VehicleSeizure
+from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 
@@ -41,8 +42,6 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         file. Gets the total number of charges from the charges in charges_list then
         loops through the charges_list and adds parts of each charge to the
         view."""
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint)
         column = self.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)
@@ -273,4 +272,31 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             if charge is not None:
                 self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                column += 1
+
+
+class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
+    """The AddConditionsDialog is created when the addConditionsButton is clicked on
+    the NoJailPleaDialog. The conditions that are available to enter information
+    for are based on the checkboxes that are checked on the NJPD screen."""
+    @logger.catch
+    def __init__(self, main_dialog, parent=None):
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
+        super().__init__(parent)
+        self.case_information = main_dialog.entry_case_information
+        self.community_service = main_dialog.community_service_checkBox.isChecked()
+
+    @logger.catch
+    def modify_view(self):
+        """Modifies the view of AddConditionsDialog that is created by the UI
+        file. Gets the total number of charges from the charges in charges_list then
+        loops through the charges_list and adds parts of each charge to the
+        view."""
+        column = self.charges_gridLayout.columnCount() + 1
+        for _index, charge in enumerate(self.charges_list):
+            charge = vars(charge)
+            if charge is not None:
+                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
