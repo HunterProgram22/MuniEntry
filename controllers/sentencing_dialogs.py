@@ -155,7 +155,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         else:
             self.entry_case_information.fra_in_court = None
 
-
     @logger.catch
     def start_add_conditions_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
