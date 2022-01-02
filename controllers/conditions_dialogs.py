@@ -9,37 +9,24 @@ from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 
-CHECKBOX_LIST = [
-    "other_conditions_checkBox",
-    "license_suspension_checkBox",
-    "community_service_checkBox",
-    "domestic_violence_checkBox",
-    "admin_license_suspension_checkBox",
-    "vehicle_seizure_checkBox",
-    "no_contact_checkBox",
-    "custodial_supervision_checkBox",
-    "community_control_checkBox",
-]
-FRAME_LIST = [
-    "other_conditions_frame",
-    "license_suspension_frame",
-    "community_service_frame",
-    "domestic_violence_frame",
-    "admin_license_suspension_frame",
-    "vehicle_seizure_frame",
-    "no_contact_frame",
-    "custodial_supervision_frame",
-    "community_control_frame",
-]
 
+CONDITIONS = [
+    ("other_conditions_checkBox", "other_conditions_frame"),
+    ("license_suspension_checkBox", "license_suspension_frame"),
+    ("community_service_checkBox", "community_service_frame"),
+    ("admin_license_suspension_checkBox", "admin_license_suspension_frame"),
+    ("domestic_violence_checkBox", "domestic_violence_frame"),
+    ("vehicle_seizure_checkBox", "vehicle_seizure_frame"),
+    ("no_contact_checkBox", "no_contact_frame"),
+    ("custodial_supervision_checkBox", "custodial_supervision_frame"),
+    ("community_control_checkBox", "community_control_frame"),
+]
 
 def enable_condition_frames(dialog, main_dialog):
-    """TODO: this is too dependent on the proper order of the lists because it uses the
-    index of CHECKBOX LIST to select from FRAME LIST. Refactor!"""
-    for index, item in enumerate(CHECKBOX_LIST):
-        if hasattr(main_dialog, item):
-            if getattr(main_dialog, item).isChecked():
-                getattr(dialog, FRAME_LIST[index]).setEnabled(True)
+    for index, item in enumerate(CONDITIONS):
+        if hasattr(main_dialog, item[0]):
+            if getattr(main_dialog, item[0]).isChecked():
+                getattr(dialog, item[1]).setEnabled(True)
 
 
 class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
