@@ -284,14 +284,15 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
+        self.community_control = main_dialog.community_control_checkBox.isChecked()
+        self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
         self.community_service = main_dialog.community_service_checkBox.isChecked()
+        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
+        self.enable_condition_frames()
+
 
     @logger.catch
     def modify_view(self):
-        """Modifies the view of AddConditionsDialog that is created by the UI
-        file. Gets the total number of charges from the charges in charges_list then
-        loops through the charges_list and adds parts of each charge to the
-        view."""
         column = self.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)

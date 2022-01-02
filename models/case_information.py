@@ -106,6 +106,13 @@ class CommunityService:
 
 
 @dataclass
+class CommunityControl:
+    ordered: bool = False
+    type_of_control: str = "basic"
+    term_of_control: str = None
+
+
+@dataclass
 class VehicleSeizure:
     """Class for vehicle seizure terms in special bond conditions."""
     ordered: bool = False
@@ -164,6 +171,7 @@ class CriminalCaseInformation:
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
+    community_control: object = CommunityControl()
     no_contact: object = NoContact()
     custodial_supervision: object = CustodialSupervision()
     fta_bond_conditions: object = FTABondConditions()

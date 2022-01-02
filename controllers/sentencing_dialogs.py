@@ -171,6 +171,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         super().__init__(judicial_officer, cms_case, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
         self.add_conditions_dict = {
+            self.community_control_checkBox: self.entry_case_information.community_control.ordered,
             self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
             self.community_service_checkBox: self.entry_case_information.community_service.ordered,
             self.other_conditions_checkBox: self.entry_case_information.other_conditions.ordered,

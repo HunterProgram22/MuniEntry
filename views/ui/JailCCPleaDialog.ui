@@ -832,7 +832,7 @@ font-weight: bold;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
           <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="community_control_checkBox">
             <property name="text">
              <string>Community Control</string>
             </property>
@@ -858,7 +858,7 @@ font-weight: bold;</string>
              <bool>true</bool>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
              <string>Other</string>
@@ -1020,6 +1020,7 @@ font-weight: bold;</string>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
+  <tabstop>community_control_checkBox</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>add_conditions_Button</tabstop>
