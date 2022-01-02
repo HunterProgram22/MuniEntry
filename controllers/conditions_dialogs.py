@@ -9,6 +9,38 @@ from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 
+CHECKBOX_LIST = [
+    "other_conditions_checkBox",
+    "license_suspension_checkBox",
+    "community_service_checkBox",
+    "domestic_violence_checkBox",
+    "admin_license_suspension_checkBox",
+    "vehicle_seizure_checkBox",
+    "no_contact_checkBox",
+    "custodial_supervision_checkBox",
+    "community_control_checkBox",
+]
+FRAME_LIST = [
+    "other_conditions_frame",
+    "license_suspension_frame",
+    "community_service_frame",
+    "domestic_violence_frame",
+    "admin_license_suspension_frame",
+    "vehicle_seizure_frame",
+    "no_contact_frame",
+    "custodial_supervision_frame",
+    "community_control_frame",
+]
+
+
+def enable_condition_frames(dialog, main_dialog):
+    """TODO: this is too dependent on the proper order of the lists because it uses the
+    index of CHECKBOX LIST to select from FRAME LIST. Refactor!"""
+    for index, item in enumerate(CHECKBOX_LIST):
+        if hasattr(main_dialog, item):
+            if getattr(main_dialog, item).isChecked():
+                getattr(dialog, FRAME_LIST[index]).setEnabled(True)
+
 
 class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     """The AddConditionsDialog is created when the addConditionsButton is clicked on
@@ -19,11 +51,10 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
-        self.community_service = main_dialog.community_service_checkBox.isChecked()
-        self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.enable_condition_frames()
+        self.community_service = True if main_dialog.community_service_checkBox.isChecked() else False
+        self.license_suspension = True if main_dialog.license_suspension_checkBox.isChecked() else False
+        self.other_conditions = True if main_dialog.other_conditions_checkBox.isChecked() else False
+        enable_condition_frames(self, main_dialog)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -50,19 +81,6 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
                 self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
-
-    @logger.catch
-    def enable_condition_frames(self):
-        """Enables the frames on the AddConditionsDialog dialog if the condition is checked
-        on the NoJailPleaDialog screen."""
-        if self.other_conditions is True:
-            self.other_conditions_frame.setEnabled(True)
-        if self.license_suspension is True:
-            self.license_suspension_frame.setEnabled(True)
-            self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
-        if self.community_service is True:
-            self.community_service_frame.setEnabled(True)
-            self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
     def add_conditions(self):
@@ -147,7 +165,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.no_contact = main_dialog.no_contact_checkBox.isChecked()
         self.custodial_supervision = main_dialog.custodial_supervision_checkBox.isChecked()
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.enable_condition_frames()
+        enable_condition_frames(self, main_dialog)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -156,21 +174,6 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_special_conditions_Button.pressed.connect(self.add_special_conditions)
         self.add_special_conditions_Button.released.connect(self.close_window)
-
-    @logger.catch
-    def enable_condition_frames(self):
-        if self.domestic_violence is True:
-            self.domestic_violence_frame.setEnabled(True)
-        if self.admin_license_suspension is True:
-            self.admin_license_suspension_frame.setEnabled(True)
-        if self.vehicle_seizure is True:
-            self.vehicle_seizure_frame.setEnabled(True)
-        if self.no_contact is True:
-            self.no_contact_frame.setEnabled(True)
-        if self.custodial_supervision is True:
-            self.custodial_supervision_frame.setEnabled(True)
-        if self.other_conditions is True:
-            self.other_conditions_frame.setEnabled(True)
 
     @logger.catch
     def add_special_conditions(self):
@@ -288,7 +291,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
         self.community_service = main_dialog.community_service_checkBox.isChecked()
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.enable_condition_frames()
+        enable_condition_frames(self, main_dialog)
 
 
     @logger.catch
