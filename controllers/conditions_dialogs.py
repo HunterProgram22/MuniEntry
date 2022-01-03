@@ -33,6 +33,7 @@ def enable_condition_frames(dialog, main_dialog):
 
 class ConditionsDialog(BaseDialog):
     def __init__(self, main_dialog, parent=None):
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
         self.community_service = True if main_dialog.community_service_checkBox.isChecked() else False
@@ -145,7 +146,6 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
     for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
 
@@ -156,7 +156,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     for are based on the checkboxes that are checked on the JCPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
