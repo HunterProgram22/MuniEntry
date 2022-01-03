@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QLabel
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
-    DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, VehicleSeizure
+    DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
+    CommunityControl, VehicleSeizure
 from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -266,9 +267,9 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
 
 class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
-    """The AddConditionsDialog is created when the addConditionsButton is clicked on
-    the NoJailPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the NJPD screen."""
+    """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
+    the JailCCPleaDialog. The conditions that are available to enter information
+    for are based on the checkboxes that are checked on the JCPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
@@ -280,7 +281,6 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         enable_condition_frames(self, main_dialog)
 
-
     @logger.catch
     def modify_view(self):
         column = self.charges_gridLayout.columnCount() + 1
@@ -291,3 +291,47 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
                 self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        there are no fields to clear or create_entry_button to press."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.set_community_service_date
+        )
+
+    @logger.catch
+    def add_conditions(self):
+        """The method is connected to the pressed() signal of add_conditions_Button on the
+        Add Conditions screen.
+
+        TODO: Creating a new instance of the special conditions here to avoid data being persistent
+        and carrying over to a future cms_case. This requires resetting ordered to true even though it
+        is set to true by the add_conditions_dict. Fix is probably to not set a default
+        instance of the class in the dataclass.
+        """
+        if self.community_control is True:
+            self.case_information.community_control = CommunityControl()
+            self.add_community_control_terms()
+        if self.community_service is True:
+            self.case_information.community_service = CommunityService()
+            self.add_community_service_terms()
+        if self.license_suspension is True:
+            self.case_information.license_suspension = LicenseSuspension()
+            self.add_license_suspension_details()
+        if self.other_conditions is True:
+            self.case_information.other_conditions = OtherConditions()
+            self.add_other_condition_details()
+
+    @logger.catch
+    def set_community_service_date(self, _index):
+        """Sets the community_service_date_to_complete_box based on the number
+        of days chosen in the community_service_date_to_complete_box. The _index is passed from the
+        signal but not used."""
+        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(
+            QDate.currentDate().addDays(days_to_complete)
+        )
