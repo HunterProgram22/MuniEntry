@@ -23,6 +23,7 @@ CONDITIONS = [
     ("community_control_checkBox", "community_control_frame"),
 ]
 
+
 def enable_condition_frames(dialog, main_dialog):
     for index, item in enumerate(CONDITIONS):
         if hasattr(main_dialog, item[0]):
@@ -52,6 +53,8 @@ class ConditionsDialog(BaseDialog):
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
                 self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
+        self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
+        self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
     def add_conditions(self):
