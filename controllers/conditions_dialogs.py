@@ -30,30 +30,13 @@ def enable_condition_frames(dialog, main_dialog):
                 getattr(dialog, item[1]).setEnabled(True)
 
 
-class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
-    """The AddConditionsDialog is created when the addConditionsButton is clicked on
-    the NoJailPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the NJPD screen."""
-    @logger.catch
+class ConditionsDialog(BaseDialog):
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
         self.community_service = True if main_dialog.community_service_checkBox.isChecked() else False
         self.license_suspension = True if main_dialog.license_suspension_checkBox.isChecked() else False
         self.other_conditions = True if main_dialog.other_conditions_checkBox.isChecked() else False
-        enable_condition_frames(self, main_dialog)
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """This method overrides the base_dialog connect_signals_to_slots entirely because
-        there are no fields to clear or create_entry_button to press."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_community_service_date
-        )
 
     @logger.catch
     def modify_view(self):
@@ -80,6 +63,9 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         is set to true by the add_conditions_dict. Fix is probably to not set a default
         instance of the class in the dataclass.
         """
+        if self.community_control is True:
+            self.case_information.community_control = CommunityControl()
+            self.add_community_control_terms()
         if self.community_service is True:
             self.case_information.community_service = CommunityService()
             self.add_community_service_terms()
@@ -89,6 +75,17 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         if self.other_conditions is True:
             self.case_information.other_conditions = OtherConditions()
             self.add_other_condition_details()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        there are no fields to clear or create_entry_button to press."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.set_community_service_date
+        )
 
     @logger.catch
     def add_community_service_terms(self):
@@ -137,6 +134,29 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         self.community_service_date_to_complete_box.setDate(
             QDate.currentDate().addDays(days_to_complete)
         )
+
+
+class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
+    """The AddConditionsDialog is created when the addConditionsButton is clicked on
+    the NoJailPleaDialog. The conditions that are available to enter information
+    for are based on the checkboxes that are checked on the NJPD screen."""
+    @logger.catch
+    def __init__(self, main_dialog, parent=None):
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
+        super().__init__(main_dialog, parent)
+        enable_condition_frames(self, main_dialog)
+
+
+class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
+    """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
+    the JailCCPleaDialog. The conditions that are available to enter information
+    for are based on the checkboxes that are checked on the JCPD screen."""
+    @logger.catch
+    def __init__(self, main_dialog, parent=None):
+        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
+        super().__init__(main_dialog, parent)
+        self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
+        enable_condition_frames(self, main_dialog)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
@@ -263,80 +283,4 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             if charge is not None:
                 self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
                 self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                column += 1
-
-
-class ConditionsDialog(BaseDialog):
-    def __init__(self, main_dialog, parent=None):
-        super().__init__(parent)
-        self.case_information = main_dialog.entry_case_information
-        self.community_service = main_dialog.community_service_checkBox.isChecked()
-        self.license_suspension = main_dialog.license_suspension_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
-        self.community_control = main_dialog.community_control_checkBox.isChecked()
-
-    @logger.catch
-    def add_conditions(self):
-        """The method is connected to the pressed() signal of add_conditions_Button on the
-        Add Conditions screen.
-
-        TODO: Creating a new instance of the special conditions here to avoid data being persistent
-        and carrying over to a future cms_case. This requires resetting ordered to true even though it
-        is set to true by the add_conditions_dict. Fix is probably to not set a default
-        instance of the class in the dataclass.
-        """
-        if self.community_control is True:
-            self.case_information.community_control = CommunityControl()
-            self.add_community_control_terms()
-        if self.community_service is True:
-            self.case_information.community_service = CommunityService()
-            self.add_community_service_terms()
-        if self.license_suspension is True:
-            self.case_information.license_suspension = LicenseSuspension()
-            self.add_license_suspension_details()
-        if self.other_conditions is True:
-            self.case_information.other_conditions = OtherConditions()
-            self.add_other_condition_details()
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """This method overrides the base_dialog connect_signals_to_slots entirely because
-        there are no fields to clear or create_entry_button to press."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_community_service_date
-        )
-
-    @logger.catch
-    def set_community_service_date(self, _index):
-        """Sets the community_service_date_to_complete_box based on the number
-        of days chosen in the community_service_date_to_complete_box. The _index is passed from the
-        signal but not used."""
-        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_to_complete)
-        )
-
-
-class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
-    """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
-    the JailCCPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the JCPD screen."""
-    @logger.catch
-    def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(main_dialog, parent)
-        enable_condition_frames(self, main_dialog)
-
-    @logger.catch
-    def modify_view(self):
-        column = self.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
