@@ -130,6 +130,17 @@ class ConditionsDialog(BaseDialog):
         self.case_information.other_conditions.ordered = True
 
     @logger.catch
+    def add_community_control_terms(self):
+        """The method adds the data entered to the CommunityControl object
+        that is created when the dialog is initialized.
+        SEE COMMENT in add_conditions about need to rest value to true."""
+        self.case_information.community_control.type_of_control = \
+            self.community_control_type_of_control_box.currentText()
+        self.case_information.community_control.term_of_control= \
+            self.community_control_term_of_control_box.currentText()
+        self.case_information.community_control.ordered = True
+
+    @logger.catch
     def set_community_service_date(self, _index):
         """Sets the community_service_date_to_complete_box based on the number
         of days chosen in the community_service_date_to_complete_box. The _index is passed from the
@@ -159,6 +170,8 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
+
+
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):

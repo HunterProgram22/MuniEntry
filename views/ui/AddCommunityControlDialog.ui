@@ -161,7 +161,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-128</y>
+        <y>0</y>
         <width>1060</width>
         <height>946</height>
        </rect>
@@ -522,7 +522,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="1" colspan="2">
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="community_control_type_of_control_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -661,7 +661,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="6">
-           <widget class="QComboBox" name="comboBox_2">
+           <widget class="QComboBox" name="community_control_term_of_control_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
