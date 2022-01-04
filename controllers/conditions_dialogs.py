@@ -133,11 +133,20 @@ class ConditionsDialog(BaseDialog):
     def add_community_control_terms(self):
         """The method adds the data entered to the CommunityControl object
         that is created when the dialog is initialized.
-        SEE COMMENT in add_conditions about need to rest value to true."""
+        SEE COMMENT in add_conditions about need to rest value to true.
+        TODO: Refactor this with getattr and setatt and list/tuple?"""
         self.case_information.community_control.type_of_control = \
             self.community_control_type_of_control_box.currentText()
         self.case_information.community_control.term_of_control= \
             self.community_control_term_of_control_box.currentText()
+        self.case_information.community_control.not_within_500_feet_ordered = \
+            self.community_control_not_within_500_feet_checkBox.isChecked()
+        self.case_information.community_control.not_within_500_feet_person = \
+            self.community_control_not_within_500_feet_person_box.text()
+        self.case_information.community_control.no_contact_with_ordered = \
+            self.community_control_no_contact_checkBox.isChecked()
+        self.case_information.community_control.no_contact_with_person = \
+            self.community_control_no_contact_with_box.text()
         self.case_information.community_control.ordered = True
 
     @logger.catch

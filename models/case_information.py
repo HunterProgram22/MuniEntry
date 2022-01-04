@@ -110,6 +110,10 @@ class CommunityControl:
     ordered: bool = False
     type_of_control: str = "basic"
     term_of_control: str = None
+    not_within_500_feet_ordered: bool = False
+    not_within_500_feet_person: str = None
+    no_contact_with_ordered: bool = False
+    no_contact_with_person: str = None
 
 
 @dataclass

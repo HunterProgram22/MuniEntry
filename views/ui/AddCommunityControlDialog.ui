@@ -399,7 +399,7 @@ font-weight: bold;</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="3" column="2" colspan="3">
-           <widget class="QLineEdit" name="lineEdit_5">
+           <widget class="QLineEdit" name="community_control_not_within_500_feet_person_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -476,14 +476,14 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="3" column="0">
-           <widget class="QCheckBox" name="checkBox_9">
+           <widget class="QCheckBox" name="community_control_not_within_500_feet_checkBox">
             <property name="text">
              <string>Not come within 500 feet of:</string>
             </property>
            </widget>
           </item>
           <item row="1" column="4" colspan="2">
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="test">
             <property name="text">
              <string>Term of Control:</string>
             </property>
@@ -605,7 +605,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QCheckBox" name="checkBox_8">
+           <widget class="QCheckBox" name="community_control_no_contact_checkBox">
             <property name="text">
              <string>No Contact with: </string>
             </property>
@@ -640,7 +640,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="4" column="2" colspan="3">
-           <widget class="QLineEdit" name="lineEdit_4">
+           <widget class="QLineEdit" name="community_control_no_contact_with_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
