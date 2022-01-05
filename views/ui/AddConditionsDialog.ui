@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>980</width>
-        <height>796</height>
+        <width>978</width>
+        <height>792</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
@@ -401,17 +401,23 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Hours:</string>
+          <item row="0" column="0" colspan="6">
+           <widget class="QLabel" name="label_26">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QSpinBox" name="community_service_hours_ordered_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -481,24 +487,52 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="6">
-           <widget class="QLabel" name="label_26">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_15">
             <property name="text">
-             <string>Community Service</string>
+             <string>Hours:</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="community_service_hours_ordered_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);
+</string>
             </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string/>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>25</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>50</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>100</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>500</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

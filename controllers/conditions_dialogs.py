@@ -67,9 +67,6 @@ class ConditionsDialog(BaseDialog):
         is set to true by the add_conditions_dict. Fix is probably to not set a default
         instance of the class in the dataclass.
         """
-        if self.community_control is True:
-            self.case_information.community_control = CommunityControl()
-            self.add_community_control_terms()
         if self.community_service is True:
             self.case_information.community_service = CommunityService()
             self.add_community_service_terms()
@@ -93,15 +90,12 @@ class ConditionsDialog(BaseDialog):
 
     @logger.catch
     def add_community_service_terms(self):
-        """The method adds the data entered to the CommunityService object
-        that is created when the dialog is initialized.
-        SEE COMMENT in add_conditions about need to rest value to true."""
-        self.case_information.community_service.hours_of_service = \
-            self.community_service_hours_ordered_box.value()
-        self.case_information.community_service.days_to_complete_service = \
-            self.community_service_days_to_complete_box.currentText()
-        self.case_information.community_service.due_date_for_service = \
-            self.community_service_date_to_complete_box.date().toString("MMMM dd, yyyy")
+        community_service_terms_list = [
+            ("hours_of_service", "community_service_hours_ordered_box"),
+            ("days_to_complete_service", "community_service_days_to_complete_box"),
+            ("due_date_for_service", "community_service_date_to_complete_box"),
+        ]
+        self.widget_type_check_set(self.case_information.community_service, community_service_terms_list)
         self.case_information.community_service.ordered = True
 
     @logger.catch
@@ -112,7 +106,6 @@ class ConditionsDialog(BaseDialog):
             ("suspension_term", "term_of_suspension_box"),
             ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
         ]
-
         self.widget_type_check_set(self.case_information.license_suspension, license_suspension_terms_list)
         self.case_information.license_suspension.ordered = True
 
@@ -152,13 +145,10 @@ class ConditionsDialog(BaseDialog):
 
     @logger.catch
     def set_community_service_date(self, _index):
-        """Sets the community_service_date_to_complete_box based on the number
-        of days chosen in the community_service_date_to_complete_box. The _index is passed from the
-        signal but not used."""
+        """Sets the community_service_date_to_complete_box based on the number of days chosen in the
+        community_service_date_to_complete_box. The _index is passed from the signal but not used."""
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_to_complete)
-        )
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
@@ -180,6 +170,14 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
+
+    @logger.catch
+    def add_conditions(self):
+        """The method calls the base method and then adds community control specific conditions to add."""
+        super().add_conditions()
+        if self.community_control is True:
+            self.case_information.community_control = CommunityControl()
+            self.add_community_control_terms()
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
