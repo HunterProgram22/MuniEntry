@@ -114,9 +114,7 @@ class ConditionsDialog(BaseDialog):
         other_conditions_terms_list = [
             ("terms", "other_conditions_textEdit"),
         ]
-        print("Other Conditions add ran")
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
-        print(self.case_information.other_conditions.terms)
         self.case_information.other_conditions.ordered = True
 
     @logger.catch
