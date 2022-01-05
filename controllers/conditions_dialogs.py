@@ -234,9 +234,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_other_condition_terms(self):
-        """The method allows for adding other conditions based on free form text
-        entry.
-        TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
+        """TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
         other_conditions_terms_list = [
             ("terms", "other_conditions_textEdit"),
         ]
