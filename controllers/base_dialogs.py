@@ -4,7 +4,7 @@ import os
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
 from PyQt5 import QtGui
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
@@ -85,6 +85,21 @@ class BaseDialog(QDialog):
         to any button press/click/release to close a window. This can also be called
         at the end of the close_event process to close the dialog."""
         self.close()
+
+    def widget_type_check_set(self, terms_object, terms_list):
+        """Function that loops through a list of fields and transfers the data in the field
+        to the appropriate object."""
+        for item in terms_list:
+            if isinstance(getattr(self, item[1]), QComboBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
+            elif isinstance(getattr(self, item[1]), QCheckBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
+            elif isinstance(getattr(self, item[1]), QLineEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).text())
+            elif isinstance(getattr(self, item[1]), QTextEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
+            elif isinstance(getattr(self, item[1]), QDateEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
 
 
 class CasePartyUpdater:

@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
+from PyQt5.QtWidgets import QLabel
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
@@ -112,9 +112,11 @@ class ConditionsDialog(BaseDialog):
     @logger.catch
     def add_other_condition_details(self):
         other_conditions_terms_list = [
-            ("terms", "other_conditions_plainTextEdit"),
+            ("terms", "other_conditions_textEdit"),
         ]
+        print("Other Conditions add ran")
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
+        print(self.case_information.other_conditions.terms)
         self.case_information.other_conditions.ordered = True
 
     @logger.catch
@@ -129,19 +131,6 @@ class ConditionsDialog(BaseDialog):
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
-
-    def widget_type_check_set(self, terms_object, terms_list):
-        for item in terms_list:
-            if isinstance(getattr(self, item[1]), QComboBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
-            elif isinstance(getattr(self, item[1]), QCheckBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
-            elif isinstance(getattr(self, item[1]), QLineEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).text())
-            elif isinstance(getattr(self, item[1]), QTextEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
-            elif isinstance(getattr(self, item[1]), QDateEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
 
     @logger.catch
     def set_community_service_date(self, _index):
