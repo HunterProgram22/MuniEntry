@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'views/ui/AddSpecialBondConditionsDialog.ui'
+# Form implementation generated from reading ui file 'views\ui\AddSpecialBondConditionsDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -78,7 +78,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1152, 842))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1152, 940))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_11.setObjectName("gridLayout_11")
@@ -335,16 +335,6 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.other_conditions_frame.setObjectName("other_conditions_frame")
         self.gridLayout_3 = QtWidgets.QGridLayout(self.other_conditions_frame)
         self.gridLayout_3.setObjectName("gridLayout_3")
-        self.other_conditions_plainTextEdit = QtWidgets.QPlainTextEdit(self.other_conditions_frame)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.other_conditions_plainTextEdit.sizePolicy().hasHeightForWidth())
-        self.other_conditions_plainTextEdit.setSizePolicy(sizePolicy)
-        self.other_conditions_plainTextEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.other_conditions_plainTextEdit.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustToContentsOnFirstShow)
-        self.other_conditions_plainTextEdit.setObjectName("other_conditions_plainTextEdit")
-        self.gridLayout_3.addWidget(self.other_conditions_plainTextEdit, 1, 0, 1, 1)
         self.label_28 = QtWidgets.QLabel(self.other_conditions_frame)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -357,8 +347,10 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_28.setAlignment(QtCore.Qt.AlignCenter)
         self.label_28.setObjectName("label_28")
         self.gridLayout_3.addWidget(self.label_28, 0, 0, 1, 1)
+        self.other_conditions_textEdit = QtWidgets.QTextEdit(self.other_conditions_frame)
+        self.other_conditions_textEdit.setObjectName("other_conditions_textEdit")
+        self.gridLayout_3.addWidget(self.other_conditions_textEdit, 1, 0, 1, 1)
         self.gridLayout_3.setRowStretch(0, 1)
-        self.gridLayout_3.setRowStretch(1, 1)
         self.gridLayout_11.addWidget(self.other_conditions_frame, 5, 0, 1, 1)
         self.frame_7 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.frame_7.setStyleSheet("background-color: rgb(230, 230, 230);")
@@ -431,8 +423,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         AddSpecialBondConditionsDialog.setTabOrder(self.tow_to_residence_checkBox, self.motion_to_return_vehicle_checkBox)
         AddSpecialBondConditionsDialog.setTabOrder(self.motion_to_return_vehicle_checkBox, self.state_opposes_box)
         AddSpecialBondConditionsDialog.setTabOrder(self.state_opposes_box, self.disposition_motion_to_return_box)
-        AddSpecialBondConditionsDialog.setTabOrder(self.disposition_motion_to_return_box, self.other_conditions_plainTextEdit)
-        AddSpecialBondConditionsDialog.setTabOrder(self.other_conditions_plainTextEdit, self.custodial_supervision_supervisor_box)
+        AddSpecialBondConditionsDialog.setTabOrder(self.disposition_motion_to_return_box, self.custodial_supervision_supervisor_box)
         AddSpecialBondConditionsDialog.setTabOrder(self.custodial_supervision_supervisor_box, self.add_special_conditions_Button)
         AddSpecialBondConditionsDialog.setTabOrder(self.add_special_conditions_Button, self.scrollArea)
 

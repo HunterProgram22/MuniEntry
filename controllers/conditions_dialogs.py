@@ -221,28 +221,27 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_vehicle_seizure_terms(self):
-        self.case_information.vehicle_seizure.ordered = self.vehicle_seizure
-        self.case_information.vehicle_seizure.vehicle_make_model = \
-            self.vehicle_make_model_box.text()
-        self.case_information.vehicle_seizure.vehicle_license_plate = \
-            self.vehicle_license_plate_box.text()
-        self.case_information.vehicle_seizure.tow_to_residence = \
-            self.tow_to_residence_checkBox.isChecked()
-        self.case_information.vehicle_seizure.motion_to_return_vehicle = \
-            self.motion_to_return_vehicle_checkBox.isChecked()
-        self.case_information.vehicle_seizure.state_opposes = \
-            self.state_opposes_box.currentText()
-        self.case_information.vehicle_seizure.disposition_motion_to_return = \
-            self.disposition_motion_to_return_box.currentText()
+        vehicle_seizure_terms_list = [
+            ("vehicle_make_model", "vehicle_make_model_box"),
+            ("vehicle_license_plate", "vehicle_license_plate_box"),
+            ("tow_to_residence", "tow_to_residence_checkBox"),
+            ("motion_to_return_vehicle", "motion_to_return_vehicle_checkBox"),
+            ("state_opposes", "state_opposes_box"),
+            ("disposition_motion_to_return", "disposition_motion_to_return_box"),
+        ]
+        self.widget_type_check_set(self.case_information.vehicle_seizure, vehicle_seizure_terms_list)
+        self.case_information.vehicle_seizure.ordered = True
 
     @logger.catch
     def add_other_condition_terms(self):
         """The method allows for adding other conditions based on free form text
         entry.
         TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
-        self.case_information.other_conditions.ordered = self.other_conditions
-        self.case_information.other_conditions.terms = \
-            self.other_conditions_plainTextEdit.toPlainText()
+        other_conditions_terms_list = [
+            ("terms", "other_conditions_textEdit"),
+        ]
+        self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
+        self.case_information.other_conditions.ordered = True
 
     @logger.catch
     def add_custodial_supervision_terms(self):
