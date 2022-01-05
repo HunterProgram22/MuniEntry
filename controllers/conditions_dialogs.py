@@ -245,39 +245,41 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_custodial_supervision_terms(self):
-        self.case_information.custodial_supervision.ordered = self.custodial_supervision
-        self.case_information.custodial_supervision.supervisor = \
-            self.custodial_supervision_supervisor_box.text()
+        custodial_supervision_terms_list = [
+            ("supervisor", "custodial_supervision_supervisor_box"),
+        ]
+        self.widget_type_check_set(self.case_information.custodial_supervision, custodial_supervision_terms_list)
+        self.case_information.custodial_supervision.ordered = True
 
     @logger.catch
     def add_domestic_violence_terms(self):
-        self.case_information.domestic_violence_conditions.ordered = self.domestic_violence
-        self.case_information.domestic_violence_conditions.vacate_residence = \
-            self.domestic_violence_vacate_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.residence_address = \
-            self.domestic_violence_residence_box.text()
-        self.case_information.domestic_violence_conditions.exclusive_possession_to = \
-            self.domestic_violence_exclusive_possession_to_box.text()
-        self.case_information.domestic_violence_conditions.surrender_weapons = \
-            self.domestic_violence_surrender_weapons_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.surrender_weapons_date = \
-            self.domestic_violence_surrender_weapons_dateBox.date().toString("MMMM dd, yyyy")
+        domestic_violence_terms_list = [
+            ("vacate_residence", "domestic_violence_vacate_checkBox"),
+            ("residence_address", "domestic_violence_residence_box"),
+            ("exclusive_possession_to", "domestic_violence_exclusive_possession_to_box"),
+            ("surrender_weapons", "domestic_violence_surrender_weapons_checkBox"),
+            ("surrender_weapons_date", "domestic_violence_surrender_weapons_dateBox"),
+        ]
+        self.widget_type_check_set(self.case_information.domestic_violence_conditions, domestic_violence_terms_list)
+        self.case_information.domestic_violence_conditions.ordered = True
 
     @logger.catch
     def add_no_contact_terms(self):
-        self.case_information.no_contact.ordered = self.no_contact
-        self.case_information.no_contact.name = self.no_contact_name_box.text()
+        no_contact_terms_list = [
+            ("name", "no_contact_name_box"),
+        ]
+        self.widget_type_check_set(self.case_information.no_contact, no_contact_terms_list)
+        self.case_information.no_contact.ordered = True
 
     @logger.catch
     def add_admin_license_suspension_terms(self):
-        self.case_information.admin_license_suspension.ordered = \
-            self.admin_license_suspension
-        self.case_information.admin_license_suspension.objection = \
-            self.admin_license_suspension_objection_box.currentText()
-        self.case_information.admin_license_suspension.disposition = \
-            self.admin_license_suspension_disposition_box.currentText()
-        self.case_information.admin_license_suspension.explanation = \
-            self.admin_license_suspension_explanation_box.text()
+        admin_license_terms_list = [
+            ("objection", "admin_license_suspension_objection_box"),
+            ("disposition", "admin_license_suspension_disposition_box"),
+            ("explanation", "admin_license_suspension_explanation_box"),
+        ]
+        self.widget_type_check_set(self.case_information.admin_license_suspension, admin_license_terms_list)
+        self.case_information.admin_license_suspension.ordered = True
 
     @logger.catch
     def modify_view(self):
