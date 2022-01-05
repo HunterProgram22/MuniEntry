@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
@@ -135,18 +135,21 @@ class ConditionsDialog(BaseDialog):
         that is created when the dialog is initialized.
         SEE COMMENT in add_conditions about need to rest value to true.
         TODO: Refactor this with getattr and setatt and list/tuple?"""
-        self.case_information.community_control.type_of_control = \
-            self.community_control_type_of_control_box.currentText()
-        self.case_information.community_control.term_of_control = \
-            self.community_control_term_of_control_box.currentText()
-        self.case_information.community_control.not_within_500_feet_ordered = \
-            self.community_control_not_within_500_feet_checkBox.isChecked()
-        self.case_information.community_control.not_within_500_feet_person = \
-            self.community_control_not_within_500_feet_person_box.text()
-        self.case_information.community_control.no_contact_with_ordered = \
-            self.community_control_no_contact_checkBox.isChecked()
-        self.case_information.community_control.no_contact_with_person = \
-            self.community_control_no_contact_with_box.text()
+        community_control_terms = [
+            ("type_of_control", "community_control_type_of_control_box"),
+            ("term_of_control", "community_control_term_of_control_box"),
+            ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
+            ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
+            ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
+            ("no_contact_with_person", "community_control_no_contact_with_box"),
+        ]
+        for index, item in enumerate(community_control_terms):
+            if isinstance(getattr(self, item[1]), QComboBox):
+                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).currentText())
+            elif isinstance(getattr(self, item[1]), QCheckBox):
+                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).isChecked())
+            elif isinstance(getattr(self, item[1]), QLineEdit):
+                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).text())
         self.case_information.community_control.ordered = True
 
     @logger.catch
