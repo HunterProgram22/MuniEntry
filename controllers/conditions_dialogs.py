@@ -137,7 +137,7 @@ class ConditionsDialog(BaseDialog):
         TODO: Refactor this with getattr and setatt and list/tuple?"""
         self.case_information.community_control.type_of_control = \
             self.community_control_type_of_control_box.currentText()
-        self.case_information.community_control.term_of_control= \
+        self.case_information.community_control.term_of_control = \
             self.community_control_term_of_control_box.currentText()
         self.case_information.community_control.not_within_500_feet_ordered = \
             self.community_control_not_within_500_feet_checkBox.isChecked()
@@ -179,8 +179,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
-
-
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
