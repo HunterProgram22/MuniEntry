@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit
+from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
@@ -106,35 +106,26 @@ class ConditionsDialog(BaseDialog):
 
     @logger.catch
     def add_license_suspension_details(self):
-        """The method adds the data entered to the LicenseSuspension object
-        that is created when the dialog is initialized."""
-        self.case_information.license_suspension.license_type = \
-            self.license_type_box.currentText()
-        self.case_information.license_suspension.suspended_date = \
-            self.license_suspension_date_box.date().toString("MMMM dd, yyyy")
-        self.case_information.license_suspension.suspension_term = \
-            self.term_of_suspension_box.currentText()
-        if self.remedial_driving_class_checkBox.isChecked():
-            self.case_information.license_suspension.remedial_driving_class_required = True
-        else:
-            self.case_information.license_suspension.remedial_driving_class_required = False
+        license_suspension_terms_list = [
+            ("license_type", "license_type_box"),
+            ("suspended_date", "license_suspension_date_box"),
+            ("suspension_term", "term_of_suspension_box"),
+            ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
+        ]
+
+        self.widget_type_check_set(self.case_information.license_suspension, license_suspension_terms_list)
         self.case_information.license_suspension.ordered = True
 
     @logger.catch
     def add_other_condition_details(self):
-        """The method allows for adding other conditions based on free form text
-        entry."""
-        self.case_information.other_conditions.terms = (
-            self.other_conditions_plainTextEdit.toPlainText()
-        )
+        other_conditions_terms_list = [
+            ("terms", "other_conditions_plainTextEdit"),
+        ]
+        self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
         self.case_information.other_conditions.ordered = True
 
     @logger.catch
     def add_community_control_terms(self):
-        """The method adds the data entered to the CommunityControl object
-        that is created when the dialog is initialized.
-        SEE COMMENT in add_conditions about need to rest value to true.
-        TODO: Refactor this with getattr and setatt and list/tuple?"""
         community_control_terms_list = [
             ("type_of_control", "community_control_type_of_control_box"),
             ("term_of_control", "community_control_term_of_control_box"),
@@ -154,6 +145,10 @@ class ConditionsDialog(BaseDialog):
                 setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
             elif isinstance(getattr(self, item[1]), QLineEdit):
                 setattr(terms_object, item[0], getattr(self, item[1]).text())
+            elif isinstance(getattr(self, item[1]), QTextEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
+            elif isinstance(getattr(self, item[1]), QDateEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
 
     @logger.catch
     def set_community_service_date(self, _index):
