@@ -135,7 +135,7 @@ class ConditionsDialog(BaseDialog):
         that is created when the dialog is initialized.
         SEE COMMENT in add_conditions about need to rest value to true.
         TODO: Refactor this with getattr and setatt and list/tuple?"""
-        community_control_terms = [
+        community_control_terms_list = [
             ("type_of_control", "community_control_type_of_control_box"),
             ("term_of_control", "community_control_term_of_control_box"),
             ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
@@ -143,14 +143,17 @@ class ConditionsDialog(BaseDialog):
             ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
             ("no_contact_with_person", "community_control_no_contact_with_box"),
         ]
-        for index, item in enumerate(community_control_terms):
-            if isinstance(getattr(self, item[1]), QComboBox):
-                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).currentText())
-            elif isinstance(getattr(self, item[1]), QCheckBox):
-                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).isChecked())
-            elif isinstance(getattr(self, item[1]), QLineEdit):
-                setattr(self.case_information.community_control, item[0], getattr(self, item[1]).text())
+        self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
+
+    def widget_type_check_set(self, terms_object, terms_list):
+        for item in terms_list:
+            if isinstance(getattr(self, item[1]), QComboBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
+            elif isinstance(getattr(self, item[1]), QCheckBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
+            elif isinstance(getattr(self, item[1]), QLineEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).text())
 
     @logger.catch
     def set_community_service_date(self, _index):
