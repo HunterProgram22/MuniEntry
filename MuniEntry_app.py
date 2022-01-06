@@ -9,9 +9,11 @@ import multiprocessing
 import sys
 import pathlib
 from multiprocessing import Process, freeze_support
-from loguru import logger
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
+from PyQt5.QtGui import QPixmap
+from loguru import logger
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSplashScreen
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import QtGui
 
 from resources.db.create_data_lists import create_cases_list
@@ -126,6 +128,9 @@ def main():
     application is loaded after any existing prior version is deleted."""
     from resources.db import create_arraignment_table
     app = QApplication(sys.argv)
+    splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
+    splash.show()
+    QTimer.singleShot(5000, splash.close)
     arraignments_database = create_arraignments_database_connection()
     win = Window(arraignments_database)
     win.show()
