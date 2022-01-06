@@ -126,6 +126,10 @@ class ConditionsDialog(BaseDialog):
             ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
             ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
             ("no_contact_with_person", "community_control_no_contact_with_box"),
+            ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+            ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
+            ("house_arrest", "house_arrest_checkBox"),
+            ("house_arrest_time", "house_arrest_time_box"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True

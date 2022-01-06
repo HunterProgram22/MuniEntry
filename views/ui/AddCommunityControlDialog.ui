@@ -413,7 +413,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="5" column="4">
-           <widget class="QComboBox" name="comboBox_3">
+           <widget class="QComboBox" name="alcohol_monitoring_time_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -448,7 +448,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="5" column="0" colspan="3">
-           <widget class="QCheckBox" name="checkBox_10">
+           <widget class="QCheckBox" name="alcohol_monitoring_checkBox">
             <property name="text">
              <string>Submit to continuous alcohol monitoring for:</string>
             </property>
@@ -469,7 +469,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="checkBox_11">
+           <widget class="QCheckBox" name="house_arrest_checkBox">
             <property name="text">
              <string>Submit to electronic house arrest for:</string>
             </property>
@@ -544,7 +544,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="6" column="4">
-           <widget class="QComboBox" name="comboBox_4">
+           <widget class="QComboBox" name="house_arrest_time_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -959,6 +959,39 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>community_control_type_of_control_box</tabstop>
+  <tabstop>community_control_term_of_control_box</tabstop>
+  <tabstop>community_control_not_within_500_feet_checkBox</tabstop>
+  <tabstop>community_control_not_within_500_feet_person_box</tabstop>
+  <tabstop>community_control_no_contact_checkBox</tabstop>
+  <tabstop>community_control_no_contact_with_box</tabstop>
+  <tabstop>alcohol_monitoring_checkBox</tabstop>
+  <tabstop>alcohol_monitoring_time_box</tabstop>
+  <tabstop>house_arrest_checkBox</tabstop>
+  <tabstop>house_arrest_time_box</tabstop>
+  <tabstop>checkBox_12</tabstop>
+  <tabstop>checkBox_6</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+  <tabstop>checkBox_7</tabstop>
+  <tabstop>lineEdit_3</tabstop>
+  <tabstop>checkBox_3</tabstop>
+  <tabstop>checkBox_5</tabstop>
+  <tabstop>checkBox_2</tabstop>
+  <tabstop>checkBox_4</tabstop>
+  <tabstop>checkBox</tabstop>
+  <tabstop>license_type_box</tabstop>
+  <tabstop>license_suspension_date_box</tabstop>
+  <tabstop>term_of_suspension_box</tabstop>
+  <tabstop>remedial_driving_class_checkBox</tabstop>
+  <tabstop>community_service_hours_ordered_box</tabstop>
+  <tabstop>community_service_days_to_complete_box</tabstop>
+  <tabstop>community_service_date_to_complete_box</tabstop>
+  <tabstop>other_conditions_textEdit</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>

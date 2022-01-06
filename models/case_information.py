@@ -114,6 +114,10 @@ class CommunityControl:
     not_within_500_feet_person: str = None
     no_contact_with_ordered: bool = False
     no_contact_with_person: str = None
+    alcohol_monitoring: bool = False
+    alcohol_monitoring_time: str = None
+    house_arrest: bool = False
+    house_arrest_time: str = None
 
 
 @dataclass
