@@ -118,6 +118,17 @@ class CommunityControl:
     alcohol_monitoring_time: str = None
     house_arrest: bool = False
     house_arrest_time: str = None
+    interlock_vehicles_only: bool = False
+    pay_restitution: bool = False
+    pay_restitution_to: str = None
+    pay_restitution_amount: str = None
+    antitheft_program: bool = False
+    anger_management_program: bool = False
+    alcohol_evaluation: bool = False
+    domestic_violence_program: bool = False
+    driver_intervention_program: bool = False
+    mental_health_evaluation: bool = False
+
 
 
 @dataclass

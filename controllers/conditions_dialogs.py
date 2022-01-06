@@ -130,6 +130,16 @@ class ConditionsDialog(BaseDialog):
             ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
             ("house_arrest", "house_arrest_checkBox"),
             ("house_arrest_time", "house_arrest_time_box"),
+            ("interlock_vehicles_only", "interlock_vehicles_checkBox"),
+            ("pay_restitution", "pay_restitution_checkBox"),
+            ("pay_restitution_to", "pay_restitution_to_box"),
+            ("pay_restitution_amount", "pay_restitution_amount_box"),
+            ("antitheft_program", "antitheft_checkBox"),
+            ("anger_management_program", "anger_management_checkBox"),
+            ("alcohol_evaluation", "alcohol_evaluation_checkBox"),
+            ("domestic_violence_program", "domestic_violence_program_checkBox"),
+            ("driver_intervention_program", "driver_intervention_program_checkBox"),
+            ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
