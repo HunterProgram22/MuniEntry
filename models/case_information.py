@@ -128,6 +128,10 @@ class CommunityControl:
     domestic_violence_program: bool = False
     driver_intervention_program: bool = False
     mental_health_evaluation: bool = False
+    other_community_control: bool = False
+    other_community_control_conditions: str = None
+    community_control_community_service: bool = False
+    community_control_community_service_hours: str = None
 
 
 

@@ -140,6 +140,10 @@ class ConditionsDialog(BaseDialog):
             ("domestic_violence_program", "domestic_violence_program_checkBox"),
             ("driver_intervention_program", "driver_intervention_program_checkBox"),
             ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
+            ("other_community_control", "other_community_control_checkBox"),
+            ("other_community_control_conditions", "other_community_control_conditions_box"),
+            ("community_control_community_service", "community_control_community_service_checkBox"),
+            ("community_control_community_service_hours", "community_control_community_service_hours_box"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
