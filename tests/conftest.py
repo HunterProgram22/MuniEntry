@@ -137,7 +137,13 @@ def ngbd_check_special_conditions(ngb_dialog):
 
 
 @pytest.fixture
-def add_case_information(njp_dialog_nocase):
+def njp_add_case_information(njp_dialog_nocase):
     enter_data(njp_dialog_nocase.case_number_lineEdit, "21TRC1234")
     enter_data(njp_dialog_nocase.defendant_first_name_lineEdit, "John")
     enter_data(njp_dialog_nocase.defendant_last_name_lineEdit, "Smith")
+
+@pytest.fixture
+def ngb_add_case_information(ngb_dialog_nocase):
+    enter_data(ngb_dialog_nocase.case_number_lineEdit, "21TRC1234")
+    enter_data(ngb_dialog_nocase.defendant_first_name_lineEdit, "John")
+    enter_data(ngb_dialog_nocase.defendant_last_name_lineEdit, "Smith")
