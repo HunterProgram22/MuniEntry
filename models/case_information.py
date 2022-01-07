@@ -132,6 +132,10 @@ class CommunityControl:
     other_community_control_conditions: str = None
     community_control_community_service: bool = False
     community_control_community_service_hours: str = None
+    gps_exclusion: bool = False
+    gps_exclusion_radius: str = None
+    gps_exclusion_location: str = None
+    daily_reporting: bool = False
 
 
 

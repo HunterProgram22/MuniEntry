@@ -144,6 +144,10 @@ class ConditionsDialog(BaseDialog):
             ("other_community_control_conditions", "other_community_control_conditions_box"),
             ("community_control_community_service", "community_control_community_service_checkBox"),
             ("community_control_community_service_hours", "community_control_community_service_hours_box"),
+            ("gps_exclusion", "gps_exclusion_checkBox"),
+            ("gps_exclusion_radius", "gps_exclusion_radius_box"),
+            ("gps_exclusion_location", "gps_exclusion_location_box"),
+            ("daily_reporting", "daily_reporting_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
