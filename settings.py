@@ -11,7 +11,8 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
-CASES_DATABASE = DB_PATH + "\\arraignments.sqlite"
+ARRAIGNMENTS_DATABASE = DB_PATH + "\\arraignments.sqlite"
+SLATED_DATABASE = DB_PATH + "\\slated.sqlite"
 
 PAY_DATE_DICT = {
     "forthwith": 0,
@@ -30,12 +31,23 @@ LEAP_COMPLETE_DATE_DICT = {
 def create_arraignments_database_connection():
     """Opens a connection to the database and returns that connection to the arraignments_database."""
     # try:
-    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
-    arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "arraignments")
+    arraignments_database_connection.setDatabaseName(ARRAIGNMENTS_DATABASE)
     # except PermissionError:
     #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
     #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
     return arraignments_database_connection
+
+@logger.catch
+def create_slated_database_connection():
+    """Opens a connection to the database and returns that connection to the arraignments_database."""
+    # try:
+    slated_database_connection = QSqlDatabase.addDatabase("QSQLITE", "slated")
+    slated_database_connection.setDatabaseName(SLATED_DATABASE)
+    # except PermissionError:
+    #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
+    #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    return slated_database_connection
 
 # -*- mode: python ; coding: utf-8 -*-
 # SPEC File Settings

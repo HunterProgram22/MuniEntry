@@ -22,7 +22,7 @@ def return_data_from_excel(excel_file):
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
     row_count = worksheet.max_row + 1
-    for row in range(2,row_count):
+    for row in range(2, row_count):
         case_number = worksheet.cell(row=row, column=1)
         defendant_last_name = worksheet.cell(row=row, column=3)
         defendant_first_name = worksheet.cell(row=row, column=4)
@@ -46,12 +46,12 @@ def return_data_from_excel(excel_file):
     return data
 
 def main():
-    if os.path.exists(PATH + "\\resources\db\\arraignments.sqlite"):
-        os.remove(PATH + "\\resources\db\\arraignments.sqlite")
+    if os.path.exists(PATH + "\\resources\\db\\arraignments.sqlite"):
+        os.remove(PATH + "\\resources\\db\\arraignments.sqlite")
     else:
         print("The file does not exist")
     con = QSqlDatabase.addDatabase("QSQLITE")
-    con.setDatabaseName(PATH + "\\resources\db\\arraignments.sqlite")
+    con.setDatabaseName(PATH + "\\resources\\db\\arraignments.sqlite")
 
     if not con.open():
         print("Unable to connect to database")

@@ -16,7 +16,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSpl
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_cases_list
+from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
@@ -26,6 +26,7 @@ from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialo
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from settings import create_arraignments_database_connection
+from settings import create_slated_database_connection
 
 PATH = str(pathlib.Path().absolute())
 
@@ -45,7 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignments_database, parent=None):
+    def __init__(self, arraignments_database, slated_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
@@ -69,8 +70,9 @@ class Window(QMainWindow, Ui_MainWindow):
         }
         self.load_judicial_officers()
         self.connect_entry_buttons()
-        self.load_arraignment_case_list()
+        self.load_case_lists()
         self.arraignments_database = arraignments_database
+        self.slated_database = slated_database
 
     def connect_menu_signal_slots(self):
         """This is for connecting top level MainWindow menu options to slots/functions."""
@@ -114,10 +116,11 @@ class Window(QMainWindow, Ui_MainWindow):
         for key in self.dialog_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
 
-    def load_arraignment_case_list(self):
-        """Loads the cms_case numbers of all the cases that are in the arraignments database. This
+    def load_case_lists(self):
+        """Loads the cms_case numbers of all the cases that are in the arraignments and slated databases. This
         does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(create_cases_list())
+        self.arraignment_cases_box.addItems(create_arraignment_cases_list())
+        self.slated_cases_box.addItems(create_slated_cases_list())
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -146,13 +149,15 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments database is created each time the
     application is loaded after any existing prior version is deleted."""
-    from resources.db import create_arraignment_table
+    
+    from resources.db import create_arraignment_table, create_slated_table
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
     splash.show()
-    QTimer.singleShot(5000, splash.close)
+    QTimer.singleShot(2000, splash.close)
     arraignments_database = create_arraignments_database_connection()
-    win = Window(arraignments_database)
+    slated_database = create_slated_database_connection()
+    win = Window(arraignments_database, slated_database)
     win.show()
     sys.exit(app.exec())
 
