@@ -75,6 +75,26 @@ class Window(QMainWindow, Ui_MainWindow):
     def connect_menu_signal_slots(self):
         """This is for connecting top level MainWindow menu options to slots/functions."""
         self.menu_file_exit.triggered.connect(self.close)
+        self.arraignments_radioButton.toggled.connect(lambda: self.btnstate(self.arraignments_radioButton))
+        self.slated_radioButton.toggled.connect(lambda: self.btnstate(self.slated_radioButton))
+        self.final_pretrial_radioButton.toggled.connect(lambda: self.btnstate(self.final_pretrial_radioButton))
+
+    def btnstate(self, button):
+        if button.text() == "Arraignments":
+            if button.isChecked():
+                self.arraignment_cases_box.setEnabled(True)
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setEnabled(False)
+        if button.text() == "Slated":
+            if button.isChecked():
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setEnabled(True)
+                self.final_pretrial_cases_box.setEnabled(False)
+        if button.text() == "Final Pre-trials":
+            if button.isChecked():
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setEnabled(True)
 
     def load_judicial_officers(self):
         """Loads judicial officers and connects the radio button for each judicial officer to the
