@@ -46,7 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignments_database, slated_database, parent=None):
+    def __init__(self, arraignment_database, slated_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
@@ -68,11 +68,11 @@ class Window(QMainWindow, Ui_MainWindow):
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
-        self.arraignments_database = arraignments_database
+        self.arraignment_database = arraignment_database
         self.slated_database = slated_database
         self.final_pretrial_database = None
         self.daily_case_list_buttons = {
-            self.arraignments_radioButton: self.arraignments_database,
+            self.arraignments_radioButton: self.arraignment_database,
             self.slated_radioButton: self.slated_database,
             self.final_pretrial_radioButton: self.final_pretrial_database,
         }
@@ -150,17 +150,41 @@ class Window(QMainWindow, Ui_MainWindow):
             message.setStandardButtons(QMessageBox.Ok)
             message.exec()
         else:
-            # database = self.case_list_to_load
-            # database.open()
-            self.arraignments_database.open()
-            if self.arraignment_cases_box.currentText() == "":
-                self.case_to_load = CriminalCaseInformation()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            else:
-                database = self.arraignments_database
-                case_number = self.arraignment_cases_box.currentText()
-                self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            database = self.case_list_to_load
+            database_list = [
+                (self.arraignment_database, self.arraignment_cases_box),
+                (self.slated_database, self.slated_cases_box),
+                (self.final_pretrial_database, self.final_pretrial_cases_box),
+            ]
+            for item in database_list:
+                if database is item[0]:
+                    database.open()
+                    if item[1].currentText() == "":
+                        self.case_to_load = CriminalCaseInformation()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    else:
+                        case_number = item[1].currentText()
+                        self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            # if database is self.arraignment_database:
+            #     database.open()
+            #     if self.arraignment_cases_box.currentText() == "":
+            #         self.case_to_load = CriminalCaseInformation()
+            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            #     else:
+            #         case_number = self.arraignment_cases_box.currentText()
+            #         self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            # elif database is self.slated_database:
+            #     database.open()
+            #     if self.slated_cases_box.currentText() == "":
+            #         self.case_to_load = CriminalCaseInformation()
+            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            #     else:
+            #         case_number = self.slated_cases_box.currentText()
+            #         self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+
             dialog.exec()
 
 
@@ -174,9 +198,9 @@ def main():
     splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
     splash.show()
     QTimer.singleShot(2000, splash.close)
-    arraignments_database = create_arraignments_database_connection()
+    arraignment_database = create_arraignments_database_connection()
     slated_database = create_slated_database_connection()
-    win = Window(arraignments_database, slated_database)
+    win = Window(arraignment_database, slated_database)
     win.show()
     sys.exit(app.exec())
 
