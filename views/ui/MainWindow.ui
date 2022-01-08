@@ -35,17 +35,37 @@ selection-color: rgb(0, 0, 0);
 font-weight: bold;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="1">
+   <layout class="QGridLayout" name="gridLayout" rowstretch="0">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Judicial</string>
+        <string>Crim/Traffic</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
+        <item row="2" column="0" colspan="3">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>DAILY CASE LISTS</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QRadioButton" name="kudela_radioButton">
+          <property name="text">
+           <string>Magistrate Kudela</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label">
           <property name="font">
@@ -92,6 +112,16 @@ font-weight: bold;</string>
           </attribute>
          </widget>
         </item>
+        <item row="4" column="1">
+         <widget class="QComboBox" name="slated_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
         <item row="3" column="2">
          <widget class="QRadioButton" name="final_pretrial_radioButton">
           <property name="text">
@@ -112,8 +142,8 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QComboBox" name="slated_cases_box">
+        <item row="4" column="2">
+         <widget class="QComboBox" name="final_pretrial_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -122,13 +152,19 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
-         <widget class="QComboBox" name="final_pretrial_cases_box">
-          <property name="enabled">
-           <bool>false</bool>
+        <item row="6" column="2">
+         <widget class="QPushButton" name="NotGuiltyBondButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Not Guilty / Bond</string>
           </property>
          </widget>
         </item>
@@ -181,22 +217,6 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="2">
-         <widget class="QPushButton" name="NotGuiltyBondButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>Not Guilty / Bond</string>
-          </property>
-         </widget>
-        </item>
         <item row="7" column="0">
          <widget class="QPushButton" name="JailCCButton">
           <property name="minimumSize">
@@ -245,111 +265,6 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="font">
-           <font>
-            <family>Palatino Linotype</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>true</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>Civil Entries</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="0">
-         <widget class="QPushButton" name="FinalJudgmentEntryButton_11">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="1">
-         <widget class="QPushButton" name="FinalJudgmentEntryButton_12">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="9" column="2">
-         <widget class="QPushButton" name="MinorMisdemeanorTrafficButton_3">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
-         <widget class="QPushButton" name="FinalJudgmentEntryButton_13">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="1">
-         <widget class="QPushButton" name="FinalJudgmentEntryButton_14">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="2">
-         <widget class="QPushButton" name="FinalJudgmentEntryButton_15">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Entry</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="hemmeter_radioButton">
-          <property name="text">
-           <string>Judge Hemmeter</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
         <item row="0" column="1">
          <widget class="QRadioButton" name="bunner_radioButton">
           <property name="text">
@@ -370,23 +285,115 @@ font-weight: bold;</string>
           </attribute>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QRadioButton" name="kudela_radioButton">
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="hemmeter_radioButton">
           <property name="text">
-           <string>Magistrate Kudela</string>
+           <string>Judge Hemmeter</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup</string>
           </attribute>
          </widget>
         </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>DAILY CASE LISTS</string>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Civil</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_4">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_4">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
           </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
+          <property name="text">
+           <string>Civil Entries</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QPushButton" name="FinalJudgmentEntryButton_11">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="FinalJudgmentEntryButton_12">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QPushButton" name="MinorMisdemeanorTrafficButton_3">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QPushButton" name="FinalJudgmentEntryButton_13">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QPushButton" name="FinalJudgmentEntryButton_14">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="2">
+         <widget class="QPushButton" name="FinalJudgmentEntryButton_15">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Entry</string>
           </property>
          </widget>
         </item>
@@ -423,7 +430,7 @@ font-weight: bold;</string>
         <item row="0" column="3">
          <widget class="QRadioButton" name="radioButton">
           <property name="text">
-           <string>Assignment Commissioner Datillo</string>
+           <string>Assignment Commissioner Dattilo</string>
           </property>
          </widget>
         </item>
@@ -438,13 +445,6 @@ font-weight: bold;</string>
          <widget class="QRadioButton" name="radioButton_2">
           <property name="text">
            <string>Jury Commissioner Travis</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1" colspan="2">
-         <widget class="QRadioButton" name="radioButton_5">
-          <property name="text">
-           <string>No Signature</string>
           </property>
          </widget>
         </item>
@@ -521,6 +521,13 @@ font-weight: bold;</string>
          <widget class="QPushButton" name="pushButton_3">
           <property name="text">
            <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioButton_5">
+          <property name="text">
+           <string>No Signature</string>
           </property>
          </widget>
         </item>
@@ -626,7 +633,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
