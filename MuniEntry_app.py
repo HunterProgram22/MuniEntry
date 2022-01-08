@@ -68,11 +68,19 @@ class Window(QMainWindow, Ui_MainWindow):
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
+        self.arraignments_database = arraignments_database
+        self.slated_database = slated_database
+        self.final_pretrial_database = None
+        self.daily_case_list_buttons = {
+            self.arraignments_radioButton: self.arraignments_database,
+            self.slated_radioButton: self.slated_database,
+            self.final_pretrial_radioButton: self.final_pretrial_database,
+        }
+        self.connect_daily_case_list_buttons()
         self.load_judicial_officers()
         self.connect_entry_buttons()
         self.load_case_lists()
-        self.arraignments_database = arraignments_database
-        self.slated_database = slated_database
+
 
     def connect_menu_signal_slots(self):
         """This is for connecting top level MainWindow menu options to slots/functions."""
@@ -111,6 +119,15 @@ class Window(QMainWindow, Ui_MainWindow):
             if key.isChecked():
                 self.judicial_officer = value
 
+    def connect_daily_case_list_buttons(self):
+        for key in self.daily_case_list_buttons:
+            key.clicked.connect(self.set_case_list)
+
+    def set_case_list(self):
+        for key, value in self.daily_case_list_buttons.items():
+            if key.isChecked():
+                self.case_list_to_load = value
+
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
         for key in self.dialog_dict:
@@ -133,6 +150,8 @@ class Window(QMainWindow, Ui_MainWindow):
             message.setStandardButtons(QMessageBox.Ok)
             message.exec()
         else:
+            # database = self.case_list_to_load
+            # database.open()
             self.arraignments_database.open()
             if self.arraignment_cases_box.currentText() == "":
                 self.case_to_load = CriminalCaseInformation()
@@ -149,7 +168,7 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments database is created each time the
     application is loaded after any existing prior version is deleted."""
-    
+
     from resources.db import create_arraignment_table, create_slated_table
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
