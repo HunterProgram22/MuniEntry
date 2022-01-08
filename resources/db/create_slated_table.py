@@ -108,6 +108,7 @@ def main():
 
     con.close()
     con.removeDatabase("QSQLITE")
+    QSqlDatabase.removeDatabase(QSqlDatabase.database().connectionName())
     return None
 
 if __name__ == "__main__":
