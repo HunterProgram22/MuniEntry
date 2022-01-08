@@ -11,6 +11,7 @@ import pathlib
 from multiprocessing import Process, freeze_support
 
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtSql import QSqlDatabase
 from loguru import logger
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSplashScreen
 from PyQt5.QtCore import QTimer, Qt
@@ -189,6 +190,7 @@ def main():
     slated_database = create_slated_database_connection()
     win = Window(arraignment_database, slated_database)
     win.show()
+    print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
 
 

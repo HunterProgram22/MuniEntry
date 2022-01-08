@@ -14,7 +14,9 @@ PATH = str(pathlib.Path().absolute())
 """This path is from the MuniEntry level of the program because it uses Path at the level of the module
 into which it is imported."""
 EXCEL_FILE = PATH + "\\resources\\db\\Slated.xlsx"
-
+# SLATED_FILE = PATH + "\\resources\\db\\Slated.xlsx"
+# ARRAIGNMENT_FILE = PATH + "\\resources\\db\\Arraignments.xlsx"
+# FINAL_PRETRIAL_FILE = PATH + "\\resources\\db\\Final_Pretrials.xlsx"
 
 @logger.catch
 def return_data_from_excel(excel_file):
@@ -50,7 +52,7 @@ def main():
         os.remove(PATH + "\\resources\\db\\slated.sqlite")
     else:
         print("The file does not exist")
-    con = QSqlDatabase.addDatabase("QSQLITE")
+    con = QSqlDatabase.addDatabase("QSQLITE", "slated_table")
     con.setDatabaseName(PATH + "\\resources\\db\\slated.sqlite")
 
     if not con.open():
@@ -58,7 +60,7 @@ def main():
         sys.exit(1)
 
     # Create a query and execute it right away using .exec()
-    createTableQuery = QSqlQuery()
+    createTableQuery = QSqlQuery(con)
     createTableQuery.exec(
         """
         CREATE TABLE cases (
@@ -73,7 +75,7 @@ def main():
         )
         """
     )
-    insertDataQuery = QSqlQuery()
+    insertDataQuery = QSqlQuery(con)
     # Do not add comma to last value inserted
     insertDataQuery.prepare(
         """
@@ -89,9 +91,6 @@ def main():
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """
     )
-    # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
-    # https://python-forum.io/thread-11659.html
-    # Create two tables one for alpha sort and one for num sort - definitely a better way to do this
     data_from_table = return_data_from_excel(EXCEL_FILE)
     # print(data_from_table)
 
@@ -108,7 +107,6 @@ def main():
 
     con.close()
     con.removeDatabase("QSQLITE")
-    QSqlDatabase.removeDatabase(QSqlDatabase.database().connectionName())
     return None
 
 if __name__ == "__main__":

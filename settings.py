@@ -29,24 +29,14 @@ LEAP_COMPLETE_DATE_DICT = {
 
 @logger.catch
 def create_arraignments_database_connection():
-    """Opens a connection to the database and returns that connection to the arraignments_database."""
-    # try:
-    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "arraignments")
-    arraignments_database_connection.setDatabaseName(ARRAIGNMENTS_DATABASE)
-    # except PermissionError:
-    #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
-    #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    """Opens a connection to the database."""
+    arraignments_database_connection = QSqlDatabase.database("arraignments_table", open=True)
     return arraignments_database_connection
 
 @logger.catch
 def create_slated_database_connection():
-    """Opens a connection to the database and returns that connection to the arraignments_database."""
-    # try:
-    slated_database_connection = QSqlDatabase.addDatabase("QSQLITE", "slated")
-    slated_database_connection.setDatabaseName(SLATED_DATABASE)
-    # except PermissionError:
-    #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
-    #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    """Opens a connection to the database."""
+    slated_database_connection = QSqlDatabase.database("slated_table", open=True)
     return slated_database_connection
 
 # -*- mode: python ; coding: utf-8 -*-

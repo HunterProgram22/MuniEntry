@@ -50,15 +50,16 @@ def main():
         os.remove(PATH + "\\resources\\db\\arraignments.sqlite")
     else:
         print("The file does not exist")
-    con = QSqlDatabase.addDatabase("QSQLITE")
+    con = QSqlDatabase.addDatabase("QSQLITE", "arraignments_table")
     con.setDatabaseName(PATH + "\\resources\\db\\arraignments.sqlite")
+
 
     if not con.open():
         print("Unable to connect to database")
         sys.exit(1)
 
     # Create a query and execute it right away using .exec()
-    createTableQuery = QSqlQuery()
+    createTableQuery = QSqlQuery(con)
     createTableQuery.exec(
         """
         CREATE TABLE cases (
@@ -73,7 +74,7 @@ def main():
         )
         """
     )
-    insertDataQuery = QSqlQuery()
+    insertDataQuery = QSqlQuery(con)
     # Do not add comma to last value inserted
     insertDataQuery.prepare(
         """
@@ -91,9 +92,7 @@ def main():
     )
     # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
     # https://python-forum.io/thread-11659.html
-    # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
     data_from_table = return_data_from_excel(EXCEL_FILE)
-    # print(data_from_table)
 
     # Use .addBindValue() to insert data
     for case_number, defendant_last_name, defendant_first_name, offense, statute, degree, fra_in_file in data_from_table:
@@ -108,7 +107,6 @@ def main():
 
     con.close()
     con.removeDatabase("QSQLITE")
-    QSqlDatabase.removeDatabase(QSqlDatabase.database().connectionName())
     return None
 
 if __name__ == "__main__":
