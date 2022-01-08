@@ -45,6 +45,7 @@ def return_data_from_excel(excel_file):
         data.append(case)
     return data
 
+
 def main():
     if os.path.exists(PATH + "\\resources\\db\\arraignments.sqlite"):
         os.remove(PATH + "\\resources\\db\\arraignments.sqlite")
@@ -52,7 +53,6 @@ def main():
         print("The file does not exist")
     con = QSqlDatabase.addDatabase("QSQLITE", "arraignments_table")
     con.setDatabaseName(PATH + "\\resources\\db\\arraignments.sqlite")
-
 
     if not con.open():
         print("Unable to connect to database")
