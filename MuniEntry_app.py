@@ -93,16 +93,22 @@ class Window(QMainWindow, Ui_MainWindow):
         if button.text() == "Arraignments":
             if button.isChecked():
                 self.arraignment_cases_box.setEnabled(True)
+                self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
         if button.text() == "Slated":
             if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
                 self.arraignment_cases_box.setEnabled(False)
                 self.slated_cases_box.setEnabled(True)
+                self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
         if button.text() == "Final Pre-trials":
             if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
                 self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setEnabled(True)
 
@@ -166,25 +172,6 @@ class Window(QMainWindow, Ui_MainWindow):
                         case_number = item[1].currentText()
                         self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
                         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            # if database is self.arraignment_database:
-            #     database.open()
-            #     if self.arraignment_cases_box.currentText() == "":
-            #         self.case_to_load = CriminalCaseInformation()
-            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            #     else:
-            #         case_number = self.arraignment_cases_box.currentText()
-            #         self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            # elif database is self.slated_database:
-            #     database.open()
-            #     if self.slated_cases_box.currentText() == "":
-            #         self.case_to_load = CriminalCaseInformation()
-            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            #     else:
-            #         case_number = self.slated_cases_box.currentText()
-            #         self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-            #         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-
             dialog.exec()
 
 

@@ -58,7 +58,6 @@ def main():
         sys.exit(1)
 
     # Create a query and execute it right away using .exec()
-    print("SLated is running!!!!!")
     createTableQuery = QSqlQuery()
     createTableQuery.exec(
         """
