@@ -186,6 +186,7 @@ def main():
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
     splash.show()
+    print("Loading")
     QTimer.singleShot(2000, splash.close)
     arraignment_database = create_arraignments_database_connection()
     slated_database = create_slated_database_connection()
