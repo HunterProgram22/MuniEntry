@@ -478,6 +478,7 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.case_information.amend_offense_details = self.amend_offense_details
         amended_charge = self.current_offense + " - AMENDED"
         self.case_information.charges_list[self.button_index].offense = amended_charge
+        self.case_information.amended_charges_list.append(self.amend_offense_details.amended_charge)
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
             if (
                 self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
