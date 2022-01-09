@@ -13,7 +13,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import ChargesGrid, PleaComboBox
+from views.custom_widgets import PleaComboBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -495,4 +495,3 @@ if __name__ == "__main__":
 else:
     print("BCD ran when imported")
     database_offenses = create_database_connections()
-
