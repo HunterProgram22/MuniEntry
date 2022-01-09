@@ -432,7 +432,6 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.current_offense = self.case_information.charges_list[self.button_index].offense
         super().__init__(parent)
         self.set_case_information_banner()
-        self.connect_signals_to_slots()
 
     @logger.catch
     def modify_view(self):
@@ -476,15 +475,18 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
-        amended_charge = self.current_offense + " - AMENDED"
-        self.case_information.charges_list[self.button_index].offense = amended_charge
-        self.case_information.amended_charges_list.append(self.amend_offense_details.amended_charge)
-        for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-            if (
-                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
-            ):
-                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
+        if self.motion_decision_box.currentText() == "Granted":
+            amended_charge = self.current_offense + " - AMENDED"
+            self.case_information.charges_list[self.button_index].offense = amended_charge
+            self.case_information.amended_charges_list.append(
+                (self.original_charge_box.currentText(), self.amended_charge_box.currentText())
+            )
+            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
+                if (
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
+                ):
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
 
 
