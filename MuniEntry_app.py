@@ -17,7 +17,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSpl
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list
+from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list, \
+    create_final_pretrial_cases_list
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
@@ -26,7 +27,7 @@ from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import create_arraignments_database_connection
+from settings import create_arraignments_database_connection, create_final_pretrial_database_connection
 from settings import create_slated_database_connection
 
 PATH = str(pathlib.Path().absolute())
@@ -47,7 +48,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignment_database, slated_database, parent=None):
+    def __init__(self, arraignment_database, slated_database, final_pretrial_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
@@ -71,7 +72,7 @@ class Window(QMainWindow, Ui_MainWindow):
         }
         self.arraignment_database = arraignment_database
         self.slated_database = slated_database
-        self.final_pretrial_database = None
+        self.final_pretrial_database = final_pretrial_database
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: self.arraignment_database,
             self.slated_radioButton: self.slated_database,
@@ -81,7 +82,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.load_judicial_officers()
         self.connect_entry_buttons()
         self.load_case_lists()
-
 
     def connect_menu_signal_slots(self):
         """This is for connecting top level MainWindow menu options to slots/functions."""
@@ -141,10 +141,11 @@ class Window(QMainWindow, Ui_MainWindow):
             key.pressed.connect(self.start_dialog_from_entry_button)
 
     def load_case_lists(self):
-        """Loads the cms_case numbers of all the cases that are in the arraignments and slated databases. This
+        """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(create_arraignment_cases_list())
         self.slated_cases_box.addItems(create_slated_cases_list())
+        self.final_pretrial_cases_box.addItems(create_final_pretrial_cases_list())
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -188,7 +189,8 @@ def main():
     QTimer.singleShot(2000, splash.close)
     arraignment_database = create_arraignments_database_connection()
     slated_database = create_slated_database_connection()
-    win = Window(arraignment_database, slated_database)
+    final_pretrial_database = create_final_pretrial_database_connection()
+    win = Window(arraignment_database, slated_database, final_pretrial_database)
     win.show()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())

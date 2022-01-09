@@ -39,6 +39,12 @@ def create_slated_database_connection():
     slated_database_connection = QSqlDatabase.database("slated_table", open=True)
     return slated_database_connection
 
+@logger.catch
+def create_final_pretrial_database_connection():
+    """Opens a connection to the database."""
+    final_pretrial_database_connection = QSqlDatabase.database("final_pretrials_table", open=True)
+    return final_pretrial_database_connection
+
 # -*- mode: python ; coding: utf-8 -*-
 # SPEC File Settings
 #

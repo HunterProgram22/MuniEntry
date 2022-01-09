@@ -56,3 +56,17 @@ def create_slated_cases_list():
     conn.close()
     clean_cases_list.insert(0, None)
     return clean_cases_list
+
+def create_final_pretrial_cases_list():
+    conn = sqlite3.connect(DB_PATH + "final_pretrials.sqlite")
+    cursor = conn.cursor()
+    cursor.execute("SELECT DISTINCT case_number FROM cases")
+    cases_list = cursor.fetchall()
+    clean_cases_list = []
+    for i in cases_list:
+        clean_cases_list.append(i[0])
+    clean_cases_list.sort()
+    conn.close()
+    clean_cases_list.insert(0, None)
+    return clean_cases_list
+
