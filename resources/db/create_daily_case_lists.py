@@ -46,7 +46,14 @@ def return_data_from_excel(excel_file):
 
 def main():
     """database_list contains tuples for the items to create each database for the daily case
-    lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name)."""
+    lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name).
+
+    The try execept block in the for items in database_list loop is to account for multiple users accessing the
+    application at the same time. It creates a backup database with the information from the excel files that have
+    the case information. This is done so that charges aren't duplicated because right now there is a PermissionError
+    when the application is open if a second instance of the application is opened because it can't access the sqlite
+    db files. TODO: Look into just creating a second connection without having to create a backup copy of the
+    database."""
     database_list = [
         ("Slated.xlsx", "slated.sqlite", "slated_table"),
         ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
@@ -54,11 +61,18 @@ def main():
     ]
     for items in database_list:
         if os.path.exists(DB_PATH + items[1]):
-            os.remove(DB_PATH + items[1])
+            try:
+                os.remove(DB_PATH + items[1])
+                con = QSqlDatabase.addDatabase("QSQLITE", items[2])
+                con.setDatabaseName(DB_PATH + items[1])
+            except PermissionError:
+                os.remove(DB_PATH + "backup_" + items[1])
+                con = QSqlDatabase.addDatabase("QSQLITE", "backup_" + items[2])
+                con.setDatabaseName(DB_PATH + "backup_" + items[1])
         else:
             print("The file does not exist")
-        con = QSqlDatabase.addDatabase("QSQLITE", items[2])
-        con.setDatabaseName(DB_PATH + items[1])
+            con = QSqlDatabase.addDatabase("QSQLITE", items[2])
+            con.setDatabaseName(DB_PATH + items[1])
         if not con.open():
             print("Unable to connect to database")
             sys.exit(1)

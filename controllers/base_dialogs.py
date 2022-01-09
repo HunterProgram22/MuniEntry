@@ -44,8 +44,12 @@ def create_entry(dialog):
     doc = DocxTemplate(dialog.template.template_path)
     doc.render(dialog.entry_case_information.get_case_information())
     docname = set_document_name(dialog)
-    doc.save(SAVE_PATH + docname)
-    os.startfile(SAVE_PATH + docname)
+    try:
+        doc.save(SAVE_PATH + docname)
+        os.startfile(SAVE_PATH + docname)
+    except PermissionError:
+        doc.save(SAVE_PATH + "second_user_copy" + docname)
+        os.startfile(SAVE_PATH + "second_user_copy" + docname)
 
 
 class BaseDialog(QDialog):
