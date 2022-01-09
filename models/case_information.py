@@ -33,6 +33,14 @@ class CriminalCharge:
 
 
 @dataclass
+class AmendOffenseDetails:
+    """TODO: This should be refactored to a pure function most likely."""
+    original_charge: str = None
+    amended_charge: str = None
+    motion_disposition: str = "granted"
+
+
+@dataclass
 class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
@@ -88,14 +96,6 @@ class CustodialSupervision:
 
 
 @dataclass
-class AmendOffenseDetails:
-    """TODO: This should be refactored to a pure function most likely."""
-    original_charge: str = None
-    amended_charge: str = None
-    motion_disposition: str = "granted"
-
-
-@dataclass
 class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific cms_case."""
@@ -136,7 +136,6 @@ class CommunityControl:
     gps_exclusion_radius: str = None
     gps_exclusion_location: str = None
     daily_reporting: bool = False
-
 
 
 @dataclass
