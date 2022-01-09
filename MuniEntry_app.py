@@ -178,10 +178,10 @@ class Window(QMainWindow, Ui_MainWindow):
 
 @logger.catch
 def main():
-    """The main loop of the application. The arraignments/slated databases are created each time the
+    """The main loop of the application. The arraignments/slated/final_pretrial databases are created each time the
     application is loaded after any existing prior version is deleted."""
-    # TODO: There should be a better way create tables instead of importing
-    from resources.db import create_arraignment_table, create_slated_table
+    # TODO: There should be a better way create daily_case_lists instead of importing
+    from resources.db import create_daily_case_lists
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
     splash.show()
