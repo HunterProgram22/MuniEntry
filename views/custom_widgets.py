@@ -231,23 +231,17 @@ class ChargesGrid(QGridLayout):
         for row in range(self.rowCount()):
             for column in range(self.columnCount()):
                 if self.itemAtPosition(row, column) is not None:
-                    if isinstance(self.itemAtPosition(
-                            row, column).widget(), PleaComboBox):
-                        self.itemAtPosition(
-                            row, column).widget().setCurrentText(plea)
-                        if isinstance(self.itemAtPosition(
-                                row, column).widget(), AlliedCheckbox):
-                            if self.itemAtPosition(
-                                    row-1, column).widget().isChecked():
-                                self.itemAtPosition(
-                                    row+1, column).widget().setCurrentText("Guilty - Allied Offense")
-                        else:
-                            try:
-                                if self.itemAtPosition(row+1, column) is not None:
-                                    self.itemAtPosition(
-                                        row+1, column).widget().setCurrentText("Guilty")
-                            except AttributeError:
-                                pass
+                    if isinstance(self.itemAtPosition(row, column).widget(), PleaComboBox):
+                        self.itemAtPosition(row, column).widget().setCurrentText(plea)
+                        if isinstance(self.itemAtPosition(row-1, column).widget(), AlliedCheckbox):
+                            if self.itemAtPosition(row-1, column).widget().isChecked():
+                                self.itemAtPosition(row+1, column).widget().setCurrentText("Guilty - Allied Offense")
+                            else:
+                                try:
+                                    if self.itemAtPosition(row+1, column) is not None:
+                                        self.itemAtPosition(row+1, column).widget().setCurrentText("Guilty")
+                                except AttributeError:
+                                    pass
                     column += 1
                 else:
                     column += 1
