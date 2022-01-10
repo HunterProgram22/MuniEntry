@@ -194,7 +194,7 @@ class CriminalCaseInformation:
     fra_in_court: bool = None
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
-    amend_offense_details: object = AmendOffenseDetails()
+    amend_offense_details: object = None
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()

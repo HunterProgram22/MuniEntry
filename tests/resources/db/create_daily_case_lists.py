@@ -20,14 +20,14 @@ def return_data_from_excel(excel_file):
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
     row_count = worksheet.max_row + 1
-    for row in range(2,row_count):
+    for row in range(2, row_count):
         case_number = worksheet.cell(row=row, column=1)
         defendant_last_name = worksheet.cell(row=row, column=3)
         defendant_first_name = worksheet.cell(row=row, column=4)
         offense = worksheet.cell(row=row, column=5)
         statute = worksheet.cell(row=row, column=6)
         degree = worksheet.cell(row=row, column=7)
-        if worksheet.cell(row=row, column=8).value == None:
+        if worksheet.cell(row=row, column=8).value is None:
             worksheet.cell(row=row, column=8).value = "U"
             fra_in_file = worksheet.cell(row=row, column=8)
         else:
@@ -43,9 +43,17 @@ def return_data_from_excel(excel_file):
         data.append(case)
     return data
 
+
 def main():
     """database_list contains tuples for the items to create each database for the daily case
-    lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name)."""
+    lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name).
+
+    The try execept block in the for items in database_list loop is to account for multiple users accessing the
+    application at the same time. It creates a backup database with the information from the excel files that have
+    the case information. This is done so that charges aren't duplicated because right now there is a PermissionError
+    when the application is open if a second instance of the application is opened because it can't access the sqlite
+    db files. TODO: Look into just creating a second connection without having to create a backup copy of the
+    database."""
     database_list = [
         ("Slated.xlsx", "slated.sqlite", "slated_table"),
         ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
@@ -53,17 +61,24 @@ def main():
     ]
     for items in database_list:
         if os.path.exists(DB_PATH + items[1]):
-            os.remove(DB_PATH + items[1])
+            try:
+                os.remove(DB_PATH + items[1])
+                con = QSqlDatabase.addDatabase("QSQLITE", items[2])
+                con.setDatabaseName(DB_PATH + items[1])
+            except PermissionError:
+                os.remove(DB_PATH + "backup_" + items[1])
+                con = QSqlDatabase.addDatabase("QSQLITE", "backup_" + items[2])
+                con.setDatabaseName(DB_PATH + "backup_" + items[1])
         else:
             print("The file does not exist")
-        con = QSqlDatabase.addDatabase("QSQLITE", items[2])
-        con.setDatabaseName(DB_PATH + items[1])
+            con = QSqlDatabase.addDatabase("QSQLITE", items[2])
+            con.setDatabaseName(DB_PATH + items[1])
         if not con.open():
             print("Unable to connect to database")
             sys.exit(1)
         # Create a query and execute it right away using .exec()
-        createTableQuery = QSqlQuery(con)
-        createTableQuery.exec(
+        create_table_query = QSqlQuery(con)
+        create_table_query.exec(
             """
             CREATE TABLE cases (
                 id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
@@ -77,9 +92,9 @@ def main():
             )
             """
         )
-        insertDataQuery = QSqlQuery(con)
+        insert_data_query = QSqlQuery(con)
         # Do not add comma to last value inserted
-        insertDataQuery.prepare(
+        insert_data_query.prepare(
             """
             INSERT INTO cases (
                 case_number,
@@ -95,18 +110,20 @@ def main():
         )
         data_from_table = return_data_from_excel(DB_PATH + items[0])
         # Use .addBindValue() to insert data
-        for case_number, defendant_last_name, defendant_first_name, offense, statute, degree, fra_in_file in data_from_table:
-            insertDataQuery.addBindValue(case_number)
-            insertDataQuery.addBindValue(defendant_last_name)
-            insertDataQuery.addBindValue(defendant_first_name)
-            insertDataQuery.addBindValue(offense)
-            insertDataQuery.addBindValue(statute)
-            insertDataQuery.addBindValue(degree)
-            insertDataQuery.addBindValue(fra_in_file)
-            insertDataQuery.exec()
+        for case_number, defendant_last_name, defendant_first_name, offense, \
+                statute, degree, fra_in_file in data_from_table:
+            insert_data_query.addBindValue(case_number)
+            insert_data_query.addBindValue(defendant_last_name)
+            insert_data_query.addBindValue(defendant_first_name)
+            insert_data_query.addBindValue(offense)
+            insert_data_query.addBindValue(statute)
+            insert_data_query.addBindValue(degree)
+            insert_data_query.addBindValue(fra_in_file)
+            insert_data_query.exec()
         con.close()
         con.removeDatabase("QSQLITE")
     return None
+
 
 if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
