@@ -13,15 +13,18 @@ from controllers.sentencing_dialogs import NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import create_arraignments_database_connection
+from settings import create_arraignments_database_connection, create_slated_database_connection, \
+    create_final_pretrial_database_connection
 
 arraignments_database = create_arraignments_database_connection()
+slated_database = create_slated_database_connection()
+final_pretrial_database = create_final_pretrial_database_connection()
 
 """Functions for Testing"""
 
 @pytest.fixture
 def app(qtbot):
-    test_MuniEntry_app = MuniEntry_app.Window(arraignments_database)
+    test_MuniEntry_app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
     qtbot.addWidget(test_MuniEntry_app)
     return test_MuniEntry_app
 

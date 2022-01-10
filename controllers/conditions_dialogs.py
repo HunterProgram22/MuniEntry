@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
+from PyQt5.QtWidgets import QLabel
 from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
@@ -112,7 +112,7 @@ class ConditionsDialog(BaseDialog):
     @logger.catch
     def add_other_condition_details(self):
         other_conditions_terms_list = [
-            ("terms", "other_conditions_plainTextEdit"),
+            ("terms", "other_conditions_textEdit"),
         ]
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
         self.case_information.other_conditions.ordered = True
@@ -126,22 +126,31 @@ class ConditionsDialog(BaseDialog):
             ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
             ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
             ("no_contact_with_person", "community_control_no_contact_with_box"),
+            ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+            ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
+            ("house_arrest", "house_arrest_checkBox"),
+            ("house_arrest_time", "house_arrest_time_box"),
+            ("interlock_vehicles_only", "interlock_vehicles_checkBox"),
+            ("pay_restitution", "pay_restitution_checkBox"),
+            ("pay_restitution_to", "pay_restitution_to_box"),
+            ("pay_restitution_amount", "pay_restitution_amount_box"),
+            ("antitheft_program", "antitheft_checkBox"),
+            ("anger_management_program", "anger_management_checkBox"),
+            ("alcohol_evaluation", "alcohol_evaluation_checkBox"),
+            ("domestic_violence_program", "domestic_violence_program_checkBox"),
+            ("driver_intervention_program", "driver_intervention_program_checkBox"),
+            ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
+            ("other_community_control", "other_community_control_checkBox"),
+            ("other_community_control_conditions", "other_community_control_conditions_box"),
+            ("community_control_community_service", "community_control_community_service_checkBox"),
+            ("community_control_community_service_hours", "community_control_community_service_hours_box"),
+            ("gps_exclusion", "gps_exclusion_checkBox"),
+            ("gps_exclusion_radius", "gps_exclusion_radius_box"),
+            ("gps_exclusion_location", "gps_exclusion_location_box"),
+            ("daily_reporting", "daily_reporting_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
         self.case_information.community_control.ordered = True
-
-    def widget_type_check_set(self, terms_object, terms_list):
-        for item in terms_list:
-            if isinstance(getattr(self, item[1]), QComboBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
-            elif isinstance(getattr(self, item[1]), QCheckBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
-            elif isinstance(getattr(self, item[1]), QLineEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).text())
-            elif isinstance(getattr(self, item[1]), QTextEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
-            elif isinstance(getattr(self, item[1]), QDateEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
 
     @logger.catch
     def set_community_service_date(self, _index):
@@ -234,64 +243,63 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def add_vehicle_seizure_terms(self):
-        self.case_information.vehicle_seizure.ordered = self.vehicle_seizure
-        self.case_information.vehicle_seizure.vehicle_make_model = \
-            self.vehicle_make_model_box.text()
-        self.case_information.vehicle_seizure.vehicle_license_plate = \
-            self.vehicle_license_plate_box.text()
-        self.case_information.vehicle_seizure.tow_to_residence = \
-            self.tow_to_residence_checkBox.isChecked()
-        self.case_information.vehicle_seizure.motion_to_return_vehicle = \
-            self.motion_to_return_vehicle_checkBox.isChecked()
-        self.case_information.vehicle_seizure.state_opposes = \
-            self.state_opposes_box.currentText()
-        self.case_information.vehicle_seizure.disposition_motion_to_return = \
-            self.disposition_motion_to_return_box.currentText()
+        vehicle_seizure_terms_list = [
+            ("vehicle_make_model", "vehicle_make_model_box"),
+            ("vehicle_license_plate", "vehicle_license_plate_box"),
+            ("tow_to_residence", "tow_to_residence_checkBox"),
+            ("motion_to_return_vehicle", "motion_to_return_vehicle_checkBox"),
+            ("state_opposes", "state_opposes_box"),
+            ("disposition_motion_to_return", "disposition_motion_to_return_box"),
+        ]
+        self.widget_type_check_set(self.case_information.vehicle_seizure, vehicle_seizure_terms_list)
+        self.case_information.vehicle_seizure.ordered = True
 
     @logger.catch
     def add_other_condition_terms(self):
-        """The method allows for adding other conditions based on free form text
-        entry.
-        TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
-        self.case_information.other_conditions.ordered = self.other_conditions
-        self.case_information.other_conditions.terms = \
-            self.other_conditions_plainTextEdit.toPlainText()
+        """TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
+        other_conditions_terms_list = [
+            ("terms", "other_conditions_textEdit"),
+        ]
+        self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
+        self.case_information.other_conditions.ordered = True
 
     @logger.catch
     def add_custodial_supervision_terms(self):
-        self.case_information.custodial_supervision.ordered = self.custodial_supervision
-        self.case_information.custodial_supervision.supervisor = \
-            self.custodial_supervision_supervisor_box.text()
+        custodial_supervision_terms_list = [
+            ("supervisor", "custodial_supervision_supervisor_box"),
+        ]
+        self.widget_type_check_set(self.case_information.custodial_supervision, custodial_supervision_terms_list)
+        self.case_information.custodial_supervision.ordered = True
 
     @logger.catch
     def add_domestic_violence_terms(self):
-        self.case_information.domestic_violence_conditions.ordered = self.domestic_violence
-        self.case_information.domestic_violence_conditions.vacate_residence = \
-            self.domestic_violence_vacate_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.residence_address = \
-            self.domestic_violence_residence_box.text()
-        self.case_information.domestic_violence_conditions.exclusive_possession_to = \
-            self.domestic_violence_exclusive_possession_to_box.text()
-        self.case_information.domestic_violence_conditions.surrender_weapons = \
-            self.domestic_violence_surrender_weapons_checkBox.isChecked()
-        self.case_information.domestic_violence_conditions.surrender_weapons_date = \
-            self.domestic_violence_surrender_weapons_dateBox.date().toString("MMMM dd, yyyy")
+        domestic_violence_terms_list = [
+            ("vacate_residence", "domestic_violence_vacate_checkBox"),
+            ("residence_address", "domestic_violence_residence_box"),
+            ("exclusive_possession_to", "domestic_violence_exclusive_possession_to_box"),
+            ("surrender_weapons", "domestic_violence_surrender_weapons_checkBox"),
+            ("surrender_weapons_date", "domestic_violence_surrender_weapons_dateBox"),
+        ]
+        self.widget_type_check_set(self.case_information.domestic_violence_conditions, domestic_violence_terms_list)
+        self.case_information.domestic_violence_conditions.ordered = True
 
     @logger.catch
     def add_no_contact_terms(self):
-        self.case_information.no_contact.ordered = self.no_contact
-        self.case_information.no_contact.name = self.no_contact_name_box.text()
+        no_contact_terms_list = [
+            ("name", "no_contact_name_box"),
+        ]
+        self.widget_type_check_set(self.case_information.no_contact, no_contact_terms_list)
+        self.case_information.no_contact.ordered = True
 
     @logger.catch
     def add_admin_license_suspension_terms(self):
-        self.case_information.admin_license_suspension.ordered = \
-            self.admin_license_suspension
-        self.case_information.admin_license_suspension.objection = \
-            self.admin_license_suspension_objection_box.currentText()
-        self.case_information.admin_license_suspension.disposition = \
-            self.admin_license_suspension_disposition_box.currentText()
-        self.case_information.admin_license_suspension.explanation = \
-            self.admin_license_suspension_explanation_box.text()
+        admin_license_terms_list = [
+            ("objection", "admin_license_suspension_objection_box"),
+            ("disposition", "admin_license_suspension_disposition_box"),
+            ("explanation", "admin_license_suspension_explanation_box"),
+        ]
+        self.widget_type_check_set(self.case_information.admin_license_suspension, admin_license_terms_list)
+        self.case_information.admin_license_suspension.ordered = True
 
     @logger.catch
     def modify_view(self):

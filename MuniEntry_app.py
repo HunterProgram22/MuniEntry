@@ -9,12 +9,16 @@ import multiprocessing
 import sys
 import pathlib
 from multiprocessing import Process, freeze_support
-from loguru import logger
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtSql import QSqlDatabase
+from loguru import logger
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSplashScreen
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_cases_list
+from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list, \
+    create_final_pretrial_cases_list
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
@@ -23,7 +27,8 @@ from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import create_arraignments_database_connection
+from settings import create_arraignments_database_connection, create_final_pretrial_database_connection
+from settings import create_slated_database_connection
 
 PATH = str(pathlib.Path().absolute())
 
@@ -43,7 +48,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignments_database, parent=None):
+    def __init__(self, arraignment_database, slated_database, final_pretrial_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
@@ -65,14 +70,48 @@ class Window(QMainWindow, Ui_MainWindow):
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
+        self.arraignment_database = arraignment_database
+        self.slated_database = slated_database
+        self.final_pretrial_database = final_pretrial_database
+        self.daily_case_list_buttons = {
+            self.arraignments_radioButton: self.arraignment_database,
+            self.slated_radioButton: self.slated_database,
+            self.final_pretrial_radioButton: self.final_pretrial_database,
+        }
+        self.connect_daily_case_list_buttons()
         self.load_judicial_officers()
         self.connect_entry_buttons()
-        self.load_arraignment_case_list()
-        self.arraignments_database = arraignments_database
+        self.load_case_lists()
 
     def connect_menu_signal_slots(self):
         """This is for connecting top level MainWindow menu options to slots/functions."""
         self.menu_file_exit.triggered.connect(self.close)
+        self.arraignments_radioButton.toggled.connect(lambda: self.btnstate(self.arraignments_radioButton))
+        self.slated_radioButton.toggled.connect(lambda: self.btnstate(self.slated_radioButton))
+        self.final_pretrial_radioButton.toggled.connect(lambda: self.btnstate(self.final_pretrial_radioButton))
+
+    def btnstate(self, button):
+        if button.text() == "Arraignments":
+            if button.isChecked():
+                self.arraignment_cases_box.setEnabled(True)
+                self.slated_cases_box.setCurrentText("")
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setCurrentText("")
+                self.final_pretrial_cases_box.setEnabled(False)
+        if button.text() == "Slated":
+            if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setEnabled(True)
+                self.final_pretrial_cases_box.setCurrentText("")
+                self.final_pretrial_cases_box.setEnabled(False)
+        if button.text() == "Final Pre-trials":
+            if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setCurrentText("")
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setEnabled(True)
 
     def load_judicial_officers(self):
         """Loads judicial officers and connects the radio button for each judicial officer to the
@@ -87,15 +126,26 @@ class Window(QMainWindow, Ui_MainWindow):
             if key.isChecked():
                 self.judicial_officer = value
 
+    def connect_daily_case_list_buttons(self):
+        for key in self.daily_case_list_buttons:
+            key.clicked.connect(self.set_case_list)
+
+    def set_case_list(self):
+        for key, value in self.daily_case_list_buttons.items():
+            if key.isChecked():
+                self.case_list_to_load = value
+
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
         for key in self.dialog_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
 
-    def load_arraignment_case_list(self):
-        """Loads the cms_case numbers of all the cases that are in the arraignments database. This
+    def load_case_lists(self):
+        """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(create_cases_list())
+        self.arraignment_cases_box.addItems(create_arraignment_cases_list())
+        self.slated_cases_box.addItems(create_slated_cases_list())
+        self.final_pretrial_cases_box.addItems(create_final_pretrial_cases_list())
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -108,27 +158,42 @@ class Window(QMainWindow, Ui_MainWindow):
             message.setStandardButtons(QMessageBox.Ok)
             message.exec()
         else:
-            self.arraignments_database.open()
-            if self.arraignment_cases_box.currentText() == "":
-                self.case_to_load = CriminalCaseInformation()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            else:
-                database = self.arraignments_database
-                case_number = self.arraignment_cases_box.currentText()
-                self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-                dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+            database = self.case_list_to_load
+            database_list = [
+                (self.arraignment_database, self.arraignment_cases_box),
+                (self.slated_database, self.slated_cases_box),
+                (self.final_pretrial_database, self.final_pretrial_cases_box),
+            ]
+            for item in database_list:
+                if database is item[0]:
+                    database.open()
+                    if item[1].currentText() == "":
+                        self.case_to_load = CriminalCaseInformation()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    else:
+                        case_number = item[1].currentText()
+                        self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
             dialog.exec()
 
 
 @logger.catch
 def main():
-    """The main loop of the application. The arraignments database is created each time the
+    """The main loop of the application. The arraignments/slated/final_pretrial databases are created each time the
     application is loaded after any existing prior version is deleted."""
-    from resources.db import create_arraignment_table
+    # TODO: There should be a better way create daily_case_lists instead of importing
+    from resources.db import create_daily_case_lists
     app = QApplication(sys.argv)
-    arraignments_database = create_arraignments_database_connection()
-    win = Window(arraignments_database)
+    splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
+    splash.show()
+    print("Loading")
+    QTimer.singleShot(2000, splash.close)
+    arraignment_database = create_arraignments_database_connection()
+    slated_database = create_slated_database_connection()
+    final_pretrial_database = create_final_pretrial_database_connection()
+    win = Window(arraignment_database, slated_database, final_pretrial_database)
     win.show()
+    print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
 
 

@@ -31,7 +31,7 @@ def add_offense_speeding_25_after_delete(njp_dialog_nocase):
 
 #TESTS
 
-def test_case_information_dialog(njp_dialog_nocase, add_case_information):
+def test_case_information_dialog(njp_dialog_nocase, njp_add_case_information):
     assert njp_dialog_nocase.case_number_lineEdit.text() == "21TRC1234"
     assert njp_dialog_nocase.defendant_first_name_lineEdit.text() == "John"
     assert njp_dialog_nocase.defendant_last_name_lineEdit.text() == "Smith"
@@ -59,8 +59,8 @@ def test_statute_to_offense(njp_dialog_nocase):
 # The columns with content are evens (0, 2, 4, etc).
 def test_add_offense(njp_dialog_nocase, qtbot):
     add_offense_speeding_25(njp_dialog_nocase)
-    dialog = NoJailPleaDialog()
-    qtbot.addWidget(dialog)
+    # dialog = NoJailPleaDialog()
+    # qtbot.addWidget(dialog)
     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(0, 2).widget().text() == "Speeding > 25 mph"
     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(4, 2).widget().currentText() == "Not Guilty"
     assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(5, 2).widget().currentText() == "Guilty"

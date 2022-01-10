@@ -27,7 +27,12 @@ def create_arraignments_database_connection():
     arraignments_database_connection.setDatabaseName(DB_PATH)
     return arraignments_database_connection
 
+from settings import create_arraignments_database_connection, create_slated_database_connection, \
+    create_final_pretrial_database_connection
+
 arraignments_database = create_arraignments_database_connection()
+slated_database = create_slated_database_connection()
+final_pretrial_database = create_final_pretrial_database_connection()
 
 def enter_data(field, data: str):
     return QtBot.keyClicks(field, data)
@@ -38,7 +43,7 @@ def mouse_click(button):
 
 @pytest.fixture
 def app(qtbot):
-    app = MuniEntry_app.Window(arraignments_database)
+    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     enter_data(app.arraignment_cases_box, '21TRD09200')
@@ -47,7 +52,7 @@ def app(qtbot):
 
 @pytest.fixture
 def app_nocase(qtbot):
-    app = MuniEntry_app.Window(arraignments_database)
+    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     return app
@@ -137,7 +142,13 @@ def ngbd_check_special_conditions(ngb_dialog):
 
 
 @pytest.fixture
-def add_case_information(njp_dialog_nocase):
+def njp_add_case_information(njp_dialog_nocase):
     enter_data(njp_dialog_nocase.case_number_lineEdit, "21TRC1234")
     enter_data(njp_dialog_nocase.defendant_first_name_lineEdit, "John")
     enter_data(njp_dialog_nocase.defendant_last_name_lineEdit, "Smith")
+
+@pytest.fixture
+def ngb_add_case_information(ngb_dialog_nocase):
+    enter_data(ngb_dialog_nocase.case_number_lineEdit, "21TRC1234")
+    enter_data(ngb_dialog_nocase.defendant_first_name_lineEdit, "John")
+    enter_data(ngb_dialog_nocase.defendant_last_name_lineEdit, "Smith")

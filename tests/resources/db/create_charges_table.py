@@ -94,3 +94,4 @@ for offense, statute, degree, type in data_from_table:
     insertDataQuery.addBindValue(degree)
     insertDataQuery.addBindValue(type)
     insertDataQuery.exec()
+

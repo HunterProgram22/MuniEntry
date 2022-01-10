@@ -4,7 +4,7 @@ import os
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
 from PyQt5 import QtGui
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
@@ -13,7 +13,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import ChargesGrid, PleaComboBox
+from views.custom_widgets import PleaComboBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -44,8 +44,12 @@ def create_entry(dialog):
     doc = DocxTemplate(dialog.template.template_path)
     doc.render(dialog.entry_case_information.get_case_information())
     docname = set_document_name(dialog)
-    doc.save(SAVE_PATH + docname)
-    os.startfile(SAVE_PATH + docname)
+    try:
+        doc.save(SAVE_PATH + docname)
+        os.startfile(SAVE_PATH + docname)
+    except PermissionError:
+        doc.save(SAVE_PATH + "second_user_copy" + docname)
+        os.startfile(SAVE_PATH + "second_user_copy" + docname)
 
 
 class BaseDialog(QDialog):
@@ -85,6 +89,21 @@ class BaseDialog(QDialog):
         to any button press/click/release to close a window. This can also be called
         at the end of the close_event process to close the dialog."""
         self.close()
+
+    def widget_type_check_set(self, terms_object, terms_list):
+        """Function that loops through a list of fields and transfers the data in the field
+        to the appropriate object."""
+        for item in terms_list:
+            if isinstance(getattr(self, item[1]), QComboBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
+            elif isinstance(getattr(self, item[1]), QCheckBox):
+                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
+            elif isinstance(getattr(self, item[1]), QLineEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).text())
+            elif isinstance(getattr(self, item[1]), QTextEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
+            elif isinstance(getattr(self, item[1]), QDateEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
 
 
 class CasePartyUpdater:
@@ -417,7 +436,6 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.current_offense = self.case_information.charges_list[self.button_index].offense
         super().__init__(parent)
         self.set_case_information_banner()
-        self.connect_signals_to_slots()
 
     @logger.catch
     def modify_view(self):
@@ -461,14 +479,18 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
-        amended_charge = self.current_offense + " - AMENDED"
-        self.case_information.charges_list[self.button_index].offense = amended_charge
-        for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-            if (
-                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
-            ):
-                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
+        if self.motion_decision_box.currentText() == "Granted":
+            amended_charge = self.current_offense + " - AMENDED"
+            self.case_information.charges_list[self.button_index].offense = amended_charge
+            self.case_information.amended_charges_list.append(
+                (self.original_charge_box.currentText(), self.amended_charge_box.currentText())
+            )
+            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
+                if (
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
+                ):
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()
 
 
