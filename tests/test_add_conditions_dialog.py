@@ -1,6 +1,5 @@
-import pytest
-from conftest import mouse_click, enter_data
-from controllers.conditions_dialogs import AddConditionsDialog, AmendOffenseDialog
+from conftest import mouse_click
+from controllers.conditions_dialogs import AddConditionsDialog
 
 
 def start_add_conditions_dialog(njp_dialog, qtbot):

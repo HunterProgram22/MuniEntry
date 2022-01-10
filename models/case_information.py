@@ -33,6 +33,14 @@ class CriminalCharge:
 
 
 @dataclass
+class AmendOffenseDetails:
+    """TODO: This should be refactored to a pure function most likely."""
+    original_charge: str = None
+    amended_charge: str = None
+    motion_disposition: str = "granted"
+
+
+@dataclass
 class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
@@ -88,14 +96,6 @@ class CustodialSupervision:
 
 
 @dataclass
-class AmendOffenseDetails:
-    """TODO: This should be refactored to a pure function most likely."""
-    original_charge: str = None
-    amended_charge: str = None
-    motion_disposition: str = "granted"
-
-
-@dataclass
 class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific cms_case."""
@@ -103,6 +103,39 @@ class CommunityService:
     hours_of_service: int = 0
     days_to_complete_service: int = 0
     due_date_for_service: str = None
+
+
+@dataclass
+class CommunityControl:
+    ordered: bool = False
+    type_of_control: str = "basic"
+    term_of_control: str = None
+    not_within_500_feet_ordered: bool = False
+    not_within_500_feet_person: str = None
+    no_contact_with_ordered: bool = False
+    no_contact_with_person: str = None
+    alcohol_monitoring: bool = False
+    alcohol_monitoring_time: str = None
+    house_arrest: bool = False
+    house_arrest_time: str = None
+    interlock_vehicles_only: bool = False
+    pay_restitution: bool = False
+    pay_restitution_to: str = None
+    pay_restitution_amount: str = None
+    antitheft_program: bool = False
+    anger_management_program: bool = False
+    alcohol_evaluation: bool = False
+    domestic_violence_program: bool = False
+    driver_intervention_program: bool = False
+    mental_health_evaluation: bool = False
+    other_community_control: bool = False
+    other_community_control_conditions: str = None
+    community_control_community_service: bool = False
+    community_control_community_service_hours: str = None
+    gps_exclusion: bool = False
+    gps_exclusion_radius: str = None
+    gps_exclusion_location: str = None
+    daily_reporting: bool = False
 
 
 @dataclass
@@ -160,10 +193,12 @@ class CriminalCaseInformation:
     fra_in_file: bool = None
     fra_in_court: bool = None
     charges_list: list = field(default_factory=list)
-    amend_offense_details: str = None
+    amended_charges_list: list = field(default_factory=list)
+    amend_offense_details: object = None
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
+    community_control: object = CommunityControl()
     no_contact: object = NoContact()
     custodial_supervision: object = CustodialSupervision()
     fta_bond_conditions: object = FTABondConditions()

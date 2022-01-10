@@ -172,7 +172,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>1152</width>
-           <height>842</height>
+           <height>940</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
@@ -652,23 +652,7 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,1">
-             <item row="1" column="0">
-              <widget class="QPlainTextEdit" name="other_conditions_plainTextEdit">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
-               </property>
-              </widget>
-             </item>
+            <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0">
              <item row="0" column="0">
               <widget class="QLabel" name="label_28">
                <property name="font">
@@ -688,6 +672,9 @@ font-weight: bold;</string>
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QTextEdit" name="other_conditions_textEdit"/>
              </item>
             </layout>
            </widget>
@@ -816,7 +803,6 @@ font-weight: bold;</string>
   <tabstop>motion_to_return_vehicle_checkBox</tabstop>
   <tabstop>state_opposes_box</tabstop>
   <tabstop>disposition_motion_to_return_box</tabstop>
-  <tabstop>other_conditions_plainTextEdit</tabstop>
   <tabstop>custodial_supervision_supervisor_box</tabstop>
   <tabstop>add_special_conditions_Button</tabstop>
   <tabstop>scrollArea</tabstop>

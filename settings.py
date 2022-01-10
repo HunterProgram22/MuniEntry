@@ -11,7 +11,8 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\resources\\db\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
-CASES_DATABASE = DB_PATH + "\\arraignments.sqlite"
+ARRAIGNMENTS_DATABASE = DB_PATH + "\\arraignments.sqlite"
+SLATED_DATABASE = DB_PATH + "\\slated.sqlite"
 
 PAY_DATE_DICT = {
     "forthwith": 0,
@@ -28,14 +29,33 @@ LEAP_COMPLETE_DATE_DICT = {
 
 @logger.catch
 def create_arraignments_database_connection():
-    """Opens a connection to the database and returns that connection to the arraignments_database."""
-    # try:
-    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
-    arraignments_database_connection.setDatabaseName(CASES_DATABASE)
-    # except PermissionError:
-    #     arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases_second")
-    #     arraignments_database_connection.setDatabaseName(CASES_DATABASE)
+    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
+    the application at the same time. TODO: better way to handle this must exist."""
+    if 'backup_arraignments_table' in QSqlDatabase.connectionNames():
+        arraignments_database_connection = QSqlDatabase.database("backup_arraignments_table", open=True)
+    else:
+        arraignments_database_connection = QSqlDatabase.database("arraignments_table", open=True)
     return arraignments_database_connection
+
+@logger.catch
+def create_slated_database_connection():
+    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
+    the application at the same time. TODO: better way to handle this must exist."""
+    if 'backup_slated_table' in QSqlDatabase.connectionNames():
+        slated_database_connection = QSqlDatabase.database("backup_slated_table", open=True)
+    else:
+        slated_database_connection = QSqlDatabase.database("slated_table", open=True)
+    return slated_database_connection
+
+@logger.catch
+def create_final_pretrial_database_connection():
+    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
+    the application at the same time. TODO: better way to handle this must exist."""
+    if 'backup_final_pretrial_table' in QSqlDatabase.connectionNames():
+        final_pretrial_database_connection = QSqlDatabase.database("backup_final_pretrials_table", open=True)
+    else:
+        final_pretrial_database_connection = QSqlDatabase.database("final_pretrials_table", open=True)
+    return final_pretrial_database_connection
 
 # -*- mode: python ; coding: utf-8 -*-
 # SPEC File Settings
@@ -51,7 +71,7 @@ def create_arraignments_database_connection():
 #                     ('./resources/db/Arraignments.xlsx', './resources/db'),
 #                     ('./resources/db/Charges.xlsx', './resources/db'),
 #                     ('./resources/Templates/Not_Guilty_Bond_Template.docx', './resources/Templates'),
-#                     ('./resources/Templates/Magistrate_And_Judge_Final_Judgment_Template.docx', './resources/Templates'),
+#                     ('./resources/Templates/No_Jail_Plea_Final_Judgment_Template.docx', './resources/Templates'),
 #                     ('./resources/Templates/Leap_Plea_Admission_Template.docx', './resources/Templates'),
 #                     ('./resources/Templates/Leap_Plea_Precourt_Completion_Template.docx', './resources/Templates'),
 #                     ('./resources/Saved/holder.txt', './resources/Saved'),

@@ -12,7 +12,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from controllers.no_jail_plea_dialogs import NoJailPleaDialog
+from controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work
@@ -27,7 +27,12 @@ def create_arraignments_database_connection():
     arraignments_database_connection.setDatabaseName(DB_PATH)
     return arraignments_database_connection
 
+from settings import create_arraignments_database_connection, create_slated_database_connection, \
+    create_final_pretrial_database_connection
+
 arraignments_database = create_arraignments_database_connection()
+slated_database = create_slated_database_connection()
+final_pretrial_database = create_final_pretrial_database_connection()
 
 def enter_data(field, data: str):
     return QtBot.keyClicks(field, data)
@@ -38,7 +43,7 @@ def mouse_click(button):
 
 @pytest.fixture
 def app(qtbot):
-    app = MuniEntry_app.Window(arraignments_database)
+    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     enter_data(app.arraignment_cases_box, '21TRD09200')
@@ -47,13 +52,13 @@ def app(qtbot):
 
 @pytest.fixture
 def app_nocase(qtbot):
-    app = MuniEntry_app.Window(arraignments_database)
+    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
@@ -61,7 +66,7 @@ def ngb_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def leap_long_dialog(app, qtbot):
     mouse_click(app.LeapPleaLongButton)
     app = LeapPleaLongDialog(app.judicial_officer, app.case_to_load)
@@ -69,7 +74,7 @@ def leap_long_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def leap_short_dialog(app, qtbot):
     mouse_click(app.LeapPleaShortButton)
     app = LeapPleaShortDialog(app.judicial_officer, app.case_to_load)
@@ -77,7 +82,7 @@ def leap_short_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
@@ -85,7 +90,7 @@ def ngb_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NotGuiltyBondButton)
     app_nocase = NotGuiltyBondDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
@@ -93,7 +98,7 @@ def ngb_dialog_nocase(app_nocase, qtbot):
     return app_nocase
 
 
-@pytest.fixture()
+@pytest.fixture
 def njp_dialog(app, qtbot):
     mouse_click(app.NoJailPleaButton)
     app = NoJailPleaDialog(app.judicial_officer, app.case_to_load)
@@ -101,10 +106,26 @@ def njp_dialog(app, qtbot):
     return app
 
 
-@pytest.fixture()
+@pytest.fixture
 def njp_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NoJailPleaButton)
     app_nocase = NoJailPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
+    qtbot.addWidget(app_nocase)
+    return app_nocase
+
+
+@pytest.fixture
+def jail_dialog(app, qtbot):
+    mouse_click(app.JailCCButton)
+    app = JailCCPleaDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture
+def jail_dialog_nocase(app_nocase, qtbot):
+    mouse_click(app_nocase.JailCCButton)
+    app_nocase = JailCCPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
     return app_nocase
 
@@ -121,7 +142,13 @@ def ngbd_check_special_conditions(ngb_dialog):
 
 
 @pytest.fixture
-def add_case_information(dialog):
-    enter_data(dialog.case_number_lineEdit, "21TRC1234")
-    enter_data(dialog.defendant_first_name_lineEdit, "John")
-    enter_data(dialog.defendant_last_name_lineEdit, "Smith")
+def njp_add_case_information(njp_dialog_nocase):
+    enter_data(njp_dialog_nocase.case_number_lineEdit, "21TRC1234")
+    enter_data(njp_dialog_nocase.defendant_first_name_lineEdit, "John")
+    enter_data(njp_dialog_nocase.defendant_last_name_lineEdit, "Smith")
+
+@pytest.fixture
+def ngb_add_case_information(ngb_dialog_nocase):
+    enter_data(ngb_dialog_nocase.case_number_lineEdit, "21TRC1234")
+    enter_data(ngb_dialog_nocase.defendant_first_name_lineEdit, "John")
+    enter_data(ngb_dialog_nocase.defendant_last_name_lineEdit, "Smith")
