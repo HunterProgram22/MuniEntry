@@ -92,7 +92,8 @@ class BaseDialog(QDialog):
 
     def widget_type_check_set(self, terms_object, terms_list):
         """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate object."""
+        to the appropriate object. Format of terms_list is a list of tuples (item[0] = model data,
+        item[1] = view field)"""
         for item in terms_list:
             if isinstance(getattr(self, item[1]), QComboBox):
                 setattr(terms_object, item[0], getattr(self, item[1]).currentText())
@@ -297,15 +298,11 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        # try:
-        #     self.charges_gridLayout.__class__ = ChargesGrid
-        # except AttributeError:
-        #     pass
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []
-        # self.load_cms_data_to_view()
+
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
@@ -406,7 +403,6 @@ class CriminalBaseDialog(BaseDialog):
         self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
 
-    # Moving Methods from Other Dialogs to Here for Refactoring Inherit now Composition Later
     @logger.catch
     def start_amend_offense_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The
