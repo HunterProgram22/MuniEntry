@@ -162,6 +162,17 @@ class LicenseSuspension:
 
 
 @dataclass
+class JailTerms:
+    """Class for keeping track of jail terms."""
+    ordered: bool = False
+    report_type: str = None
+    report_date: str = None
+    jail_time_credit: str = None
+    jail_term_type: str = None
+    dip_ordered: bool = False
+
+
+@dataclass
 class OtherConditions:
     """Class for keeping track of other conditions that are tied to
     a specific cms_case. This condition is a freeform text entry box in the UI."""
@@ -199,6 +210,7 @@ class CriminalCaseInformation:
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
     community_control: object = CommunityControl()
+    jail_terms: object = JailTerms()
     no_contact: object = NoContact()
     custodial_supervision: object = CustodialSupervision()
     fta_bond_conditions: object = FTABondConditions()

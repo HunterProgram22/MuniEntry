@@ -5,7 +5,7 @@ from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
-    CommunityControl, VehicleSeizure
+    CommunityControl, VehicleSeizure, JailTerms
 from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -21,6 +21,7 @@ CONDITIONS = [
     ("no_contact_checkBox", "no_contact_frame"),
     ("custodial_supervision_checkBox", "custodial_supervision_frame"),
     ("community_control_checkBox", "community_control_frame"),
+    ("jail_checkBox", "jail_commitment_frame"),
 ]
 
 
@@ -97,6 +98,18 @@ class ConditionsDialog(BaseDialog):
         ]
         self.widget_type_check_set(self.case_information.community_service, community_service_terms_list)
         self.case_information.community_service.ordered = True
+
+    @logger.catch
+    def add_jail_commitment_terms(self):
+        jail_commitment_terms_list = [
+            ("report_type", "report_type_box"),
+            ("report_date", "report_date_box"),
+            ("jail_time_credit", "jail_time_credit_box"),
+            ("jail_term_type", "jail_term_type_box"),
+            ("dip_ordered", "dip_checkBox"),
+        ]
+        self.widget_type_check_set(self.case_information.jail_terms, jail_commitment_terms_list)
+        self.case_information.jail_terms.ordered = True
 
     @logger.catch
     def add_license_suspension_details(self):
@@ -178,6 +191,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
+        self.jail_terms = True if main_dialog.jail_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
@@ -187,6 +201,9 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         if self.community_control is True:
             self.case_information.community_control = CommunityControl()
             self.add_community_control_terms()
+        if self.jail_terms is True:
+            self.case_information.jail_terms = JailTerms()
+            self.add_jail_commitment_terms()
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
