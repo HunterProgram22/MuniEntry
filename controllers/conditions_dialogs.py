@@ -30,6 +30,10 @@ def enable_condition_frames(dialog, main_dialog):
         if hasattr(main_dialog, item[0]):
             if getattr(main_dialog, item[0]).isChecked():
                 getattr(dialog, item[1]).setEnabled(True)
+            else:
+                frame = getattr(dialog, item[1])
+                frame.setParent(None)
+                frame.deleteLater()
 
 
 class ConditionsDialog(BaseDialog):
