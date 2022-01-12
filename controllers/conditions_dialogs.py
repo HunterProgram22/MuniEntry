@@ -21,6 +21,7 @@ CONDITIONS = [
     ("no_contact_checkBox", "no_contact_frame"),
     ("custodial_supervision_checkBox", "custodial_supervision_frame"),
     ("community_control_checkBox", "community_control_frame"),
+    ("jail_checkBox", "jail_commitment_frame"),
 ]
 
 
