@@ -174,6 +174,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
             self.community_control_checkBox: self.entry_case_information.community_control.ordered,
             self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
             self.community_service_checkBox: self.entry_case_information.community_service.ordered,
+            self.jail_checkBox: self.entry_case_information.jail_terms.ordered,
             self.other_conditions_checkBox: self.entry_case_information.other_conditions.ordered,
         }
         self.dialog_name = 'Jail CC Plea Dialog'
