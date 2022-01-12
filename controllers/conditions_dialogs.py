@@ -195,6 +195,11 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
+    def modify_view(self):
+        super().modify_view()
+        self.report_date_box.setDate(QtCore.QDate.currentDate())
+
+    @logger.catch
     def add_conditions(self):
         """The method calls the base method and then adds community control specific conditions to add."""
         super().add_conditions()
