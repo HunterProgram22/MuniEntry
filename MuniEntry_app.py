@@ -158,23 +158,33 @@ class Window(QMainWindow, Ui_MainWindow):
             message.setStandardButtons(QMessageBox.Ok)
             message.exec()
         else:
-            database = self.case_list_to_load
             database_list = [
                 (self.arraignment_database, self.arraignment_cases_box),
                 (self.slated_database, self.slated_cases_box),
                 (self.final_pretrial_database, self.final_pretrial_cases_box),
             ]
-            for item in database_list:
-                if database is item[0]:
-                    database.open()
-                    if item[1].currentText() == "":
-                        self.case_to_load = CriminalCaseInformation()
-                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-                    else:
-                        case_number = item[1].currentText()
-                        self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
-                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-            dialog.exec()
+
+            if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
+                database = self.case_list_to_load
+                for item in database_list:
+                    if database is item[0]:
+                        database.open()
+                        if item[1].currentText() == "":
+                            self.case_to_load = CriminalCaseInformation()
+                            dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                        else:
+                            case_number = item[1].currentText()
+                            self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                            dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                dialog.exec()
+            else:
+                message = QMessageBox()
+                message.setIcon(QMessageBox.Critical)
+                message.setWindowTitle("Required")
+                message.setText("You must select a case list to load. If loading blank template choose any case "
+                                "list and leave dropdown menu blank.")
+                message.setStandardButtons(QMessageBox.Ok)
+                message.exec()
 
 
 @logger.catch
