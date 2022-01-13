@@ -25,11 +25,15 @@ CONDITIONS = [
 ]
 
 
-def enable_condition_frames(dialog, main_dialog):
+def enable_condition_frames(conditions_dialog, main_dialog):
     for index, item in enumerate(CONDITIONS):
         if hasattr(main_dialog, item[0]):
             if getattr(main_dialog, item[0]).isChecked():
-                getattr(dialog, item[1]).setEnabled(True)
+                getattr(conditions_dialog, item[1]).setEnabled(True)
+            else:
+                frame = getattr(conditions_dialog, item[1])
+                frame.setParent(None)
+                frame.deleteLater()
 
 
 class ConditionsDialog(BaseDialog):
