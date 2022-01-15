@@ -234,6 +234,10 @@ class AddPleaFindingsFines:
         for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
             while self.dialog.charges_gridLayout.itemAtPosition(3, self.column) is None:
                 self.column += 1
+            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
+                1, self.column).widget().text()
+            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
+                2, self.column).widget().currentText()
             charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
                 4, self.column).widget().currentText()
             charge.finding = self.dialog.charges_gridLayout.itemAtPosition(
@@ -257,6 +261,10 @@ class AddPleaFindingsFinesJail:
         for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
             while self.dialog.charges_gridLayout.itemAtPosition(3, self.column) is None:
                 self.column += 1
+            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
+                1, self.column).widget().text()
+            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
+                2, self.column).widget().currentText()
             charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
                 4, self.column).widget().currentText()
             charge.finding = self.dialog.charges_gridLayout.itemAtPosition(

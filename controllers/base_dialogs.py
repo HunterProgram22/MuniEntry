@@ -268,22 +268,26 @@ class AddPlea:
     charge is added, could increment by 2, but by incrementing by 1 and
     checking for None it ensures it will catch any weird add/delete.
     This method only adds the plea and is used in LEAP short and long and
-    Not Guilty. No Jail Plea overrides this to include findings and fines.
+    Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
     TODO: Rename and refactor out magic numbers.
     REFACTOR to CLASS and call class in subclass for dialog."""
     def __init__(self, dialog):
         self.dialog = dialog
-        column = 1
-        row = 3
+        self.column = 1
+        self.row = 3
         for charge in self.dialog.entry_case_information.charges_list:
-            while self.dialog.charges_gridLayout.itemAtPosition(row, column) is None:
-                column += 1
+            while self.dialog.charges_gridLayout.itemAtPosition(self.row, self.column) is None:
+                self.column += 1
+            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
+                1, self.column).widget().text()
+            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
+                2, self.column).widget().currentText()
             if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget(), PleaComboBox):
+                    self.row, self.column).widget(), PleaComboBox):
                 charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget().currentText()
-                column += 1
-            column += 1
+                    self.row, self.column).widget().currentText()
+                self.column += 1
+            self.column += 1
 
 
 class CriminalBaseDialog(BaseDialog):

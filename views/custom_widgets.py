@@ -4,6 +4,42 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEd
 
 from loguru import logger
 
+
+class StatuteLineEdit(QLineEdit):
+    def __init__(self, statute=None, parent=None):
+        super(QLineEdit, self).__init__(parent)
+        self.set_up_widget(statute)
+
+    def set_up_widget(self, statute):
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setObjectName("statute_lineEdit")
+        self.setText(statute)
+
+
+class DegreeComboBox(QComboBox):
+    def __init__(self, degree, parent=None):
+        super(QComboBox, self).__init__(parent)
+        self.set_up_widget(degree)
+
+    def set_up_widget(self, degree):
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setEditable(True)
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setObjectName("degree_choice_box")
+        self.addItem("")
+        self.addItem("M1")
+        self.addItem("M2")
+        self.addItem("M3")
+        self.addItem("M4")
+        self.addItem("MM")
+        self.addItem("UCM")
+        self.setCurrentText(degree)
+
+
 class PleaComboBox(QComboBox):
     def __init__(self, parent=None):
         super(QComboBox, self).__init__(parent)
@@ -84,7 +120,7 @@ class JailLineEdit(QLineEdit):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setObjectName("jaild_days")
+        self.setObjectName("jail_days")
 
 
 class JailSuspendedLineEdit(QLineEdit):
@@ -276,14 +312,14 @@ class LeapPleaGrid(ChargesGrid):
         added_charge_index = len(dialog.entry_case_information.charges_list) - 1
         charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), LeapPleaGrid.row_offense, column)
-        self.addWidget(QLabel(charge['statute']), LeapPleaGrid.row_statute, column)
-        self.addWidget(QLabel(charge['degree']), LeapPleaGrid.row_degree, column)
+        self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
         self.addWidget(PleaComboBox(), LeapPleaGrid.row_plea, column)
         self.add_delete_button_to_grid(dialog, LeapPleaGrid.row_delete_button, column)
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
-    """TODO: This is identical to LeapPleaGrid - rename and use single class?"""
+    """This grid keeps the statute and degree as labels that are not editable."""
     row_offense = 0
     row_statute = 1
     row_degree = 2
@@ -323,8 +359,8 @@ class NoJailChargesGrid(ChargesGrid):
         added_charge_index = len(dialog.entry_case_information.charges_list) - 1
         charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), NoJailChargesGrid.row_offense, column)
-        self.addWidget(QLabel(charge['statute']), NoJailChargesGrid.row_statute, column)
-        self.addWidget(QLabel(charge['degree']), NoJailChargesGrid.row_degree, column)
+        self.addWidget(StatuteLineEdit(charge['statute']), NoJailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge['degree']), NoJailChargesGrid.row_degree, column)
         self.addWidget(AlliedCheckbox(), NoJailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
@@ -357,8 +393,8 @@ class JailChargesGrid(ChargesGrid):
         added_charge_index = len(dialog.entry_case_information.charges_list) - 1
         charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), JailChargesGrid.row_offense, column)
-        self.addWidget(QLabel(charge['statute']), JailChargesGrid.row_statute, column)
-        self.addWidget(QLabel(charge['degree']), JailChargesGrid.row_degree, column)
+        self.addWidget(StatuteLineEdit(charge['statute']), JailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge['degree']), JailChargesGrid.row_degree, column)
         self.addWidget(AlliedCheckbox(), JailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(), JailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), JailChargesGrid.row_finding, column)
