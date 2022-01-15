@@ -214,6 +214,45 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.case_information.jail_terms = JailTerms()
             self.add_jail_commitment_terms()
 
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        there are no fields to clear or create_entry_button to press."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.set_community_service_date
+        )
+        self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled_2)
+
+    def set_field_enabled(self):
+        if self.gps_exclusion_checkBox.isChecked():
+            self.gps_exclusion_radius_box.setHidden(False)
+            self.gps_exclusion_radius_box.setEnabled(True)
+            self.gps_exclusion_location_box.setHidden(False)
+            self.gps_exclusion_location_box.setEnabled(True)
+            self.scrollAreaWidgetContents.adjustSize()
+            return None
+        else:
+            self.gps_exclusion_radius_box.setHidden(True)
+            self.gps_exclusion_radius_box.setDisabled(True)
+            self.gps_exclusion_location_box.setHidden(True)
+            self.gps_exclusion_location_box.setDisabled(True)
+            self.scrollAreaWidgetContents.adjustSize()
+            return None
+
+    def set_field_enabled_2(self):
+        if self.community_control_not_within_500_feet_checkBox.isChecked():
+            self.community_control_not_within_500_feet_person_box.setHidden(False)
+            self.scrollAreaWidgetContents.adjustSize()
+            return None
+        else:
+            self.community_control_not_within_500_feet_person_box.setHidden(True)
+            self.scrollAreaWidgetContents.adjustSize()
+            return None
+
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""

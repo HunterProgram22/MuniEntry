@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1196</width>
+    <width>1257</width>
     <height>940</height>
    </rect>
   </property>
@@ -168,7 +168,7 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1153</width>
+        <width>1214</width>
         <height>1538</height>
        </rect>
       </property>
@@ -909,6 +909,29 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="13" column="6">
+           <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Drug/Alcohol Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
           <item row="14" column="6">
            <widget class="QCheckBox" name="interlock_vehicles_checkBox">
             <property name="text">
@@ -972,7 +995,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="editable">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -1285,6 +1308,16 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="24" column="8">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+           </widget>
+          </item>
           <item row="6" column="0">
            <widget class="QCheckBox" name="community_control_not_within_500_feet_checkBox">
             <property name="text">
@@ -1451,29 +1484,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="13" column="6">
-           <widget class="QLabel" name="label_8">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Drug/Alcohol Conditions</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </item>
@@ -1516,5 +1526,6 @@ font-weight: bold;</string>
   <slot>delete_offense_from_view()</slot>
   <slot>add_conditions()</slot>
   <slot>set_service_date()</slot>
+  <slot>set_field_enabled()</slot>
  </slots>
 </ui>

@@ -453,7 +453,7 @@ class Ui_AddCommunityControlDialog(object):
         self.gps_exclusion_radius_box = QtWidgets.QComboBox(self.community_control_frame)
         self.gps_exclusion_radius_box.setMinimumSize(QtCore.QSize(150, 0))
         self.gps_exclusion_radius_box.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.gps_exclusion_radius_box.setEditable(True)
+        self.gps_exclusion_radius_box.setEditable(False)
         self.gps_exclusion_radius_box.setObjectName("gps_exclusion_radius_box")
         self.gps_exclusion_radius_box.addItem("")
         self.gps_exclusion_radius_box.addItem("")
@@ -688,6 +688,7 @@ class Ui_AddCommunityControlDialog(object):
         self.gridLayout_7.addWidget(self.scrollArea, 1, 0, 1, 1)
 
         self.retranslateUi(AddCommunityControlDialog)
+        self.gps_exclusion_checkBox.toggled['bool'].connect(AddCommunityControlDialog.set_field_enabled) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(AddCommunityControlDialog)
         AddCommunityControlDialog.setTabOrder(self.license_type_box, self.term_of_suspension_box)
         AddCommunityControlDialog.setTabOrder(self.term_of_suspension_box, self.license_suspension_date_box)
