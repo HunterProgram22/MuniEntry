@@ -202,6 +202,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def modify_view(self):
         super().modify_view()
         self.report_date_box.setDate(QtCore.QDate.currentDate())
+        self.hide_boxes()
 
     @logger.catch
     def add_conditions(self):
@@ -225,33 +226,56 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.set_community_service_date
         )
         self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
-        self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled_2)
+        self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_no_contact_checkBox.toggled.connect(self.set_field_enabled)
+        self.house_arrest_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_community_service_checkBox.toggled.connect(self.set_field_enabled)
+        self.other_community_control_checkBox.toggled.connect(self.set_field_enabled)
+        self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
+        self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
 
     def set_field_enabled(self):
-        if self.gps_exclusion_checkBox.isChecked():
-            self.gps_exclusion_radius_box.setHidden(False)
-            self.gps_exclusion_radius_box.setEnabled(True)
-            self.gps_exclusion_location_box.setHidden(False)
-            self.gps_exclusion_location_box.setEnabled(True)
-            self.scrollAreaWidgetContents.adjustSize()
-            return None
-        else:
-            self.gps_exclusion_radius_box.setHidden(True)
-            self.gps_exclusion_radius_box.setDisabled(True)
-            self.gps_exclusion_location_box.setHidden(True)
-            self.gps_exclusion_location_box.setDisabled(True)
-            self.scrollAreaWidgetContents.adjustSize()
-            return None
+        condition_checkbox_list = [
+            ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
+            ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
+            ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
+            ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
+            ("house_arrest_checkBox", "house_arrest_time_box"),
+            ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
+            ("other_community_control_checkBox", "other_community_control_conditions_box"),
+            ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
+            ("pay_restitution_checkBox", "pay_restitution_to_box"),
+            ("pay_restitution_checkBox", "pay_restitution_amount_box"),
+        ]
+        for index, item in enumerate(condition_checkbox_list):
+            if hasattr(self, item[0]):
+                if getattr(self, item[0]).isChecked():
+                    getattr(self, item[1]).setEnabled(True)
+                    getattr(self, item[1]).setHidden(False)
+                else:
+                    getattr(self, item[1]).setEnabled(False)
+                    getattr(self, item[1]).setHidden(True)
 
-    def set_field_enabled_2(self):
-        if self.community_control_not_within_500_feet_checkBox.isChecked():
-            self.community_control_not_within_500_feet_person_box.setHidden(False)
-            self.scrollAreaWidgetContents.adjustSize()
-            return None
-        else:
-            self.community_control_not_within_500_feet_person_box.setHidden(True)
-            self.scrollAreaWidgetContents.adjustSize()
-            return None
+                    # frame = getattr(conditions_dialog, item[1])
+                    # frame.setParent(None)
+                    # frame.deleteLater()
+    def hide_boxes(self):
+        condition_checkbox_list = [
+            ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
+            ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
+            ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
+            ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
+            ("house_arrest_checkBox", "house_arrest_time_box"),
+            ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
+            ("other_community_control_checkBox", "other_community_control_conditions_box"),
+            ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
+            ("pay_restitution_checkBox", "pay_restitution_to_box"),
+            ("pay_restitution_checkBox", "pay_restitution_amount_box"),
+        ]
+        for index, item in enumerate(condition_checkbox_list):
+            if hasattr(self, item[0]):
+                getattr(self, item[1]).setEnabled(False)
+                getattr(self, item[1]).setHidden(True)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
