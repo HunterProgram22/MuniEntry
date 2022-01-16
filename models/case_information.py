@@ -181,6 +181,20 @@ class OtherConditions:
 
 
 @dataclass
+class Diversion:
+    """Dataclass for tracking diversion programs."""
+    ordered: bool = False
+    marijuana_diversion: bool = False
+    theft_diversion: bool = False
+    program_name: str = None
+
+    def get_program_name(self):
+        if self.marijuana_diversion is True:
+            return "Marijuana Diversion Program"
+        if self.theft_diversion is True:
+            return "Theft Diversion Program"
+
+@dataclass
 class CourtCosts:
     """Class for data related to court costs. The ability to pay and balance due date apply in entries to
     fines as well."""
@@ -209,6 +223,7 @@ class CriminalCaseInformation:
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
+    diversion: object = Diversion()
     community_control: object = CommunityControl()
     jail_terms: object = JailTerms()
     no_contact: object = NoContact()

@@ -5,7 +5,7 @@ from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
-    CommunityControl, VehicleSeizure, JailTerms
+    CommunityControl, VehicleSeizure, JailTerms, Diversion
 from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -22,6 +22,7 @@ CONDITIONS = [
     ("custodial_supervision_checkBox", "custodial_supervision_frame"),
     ("community_control_checkBox", "community_control_frame"),
     ("jail_checkBox", "jail_commitment_frame"),
+    ("diversion_checkBox", "diversion_frame"),
 ]
 
 
@@ -135,6 +136,16 @@ class ConditionsDialog(BaseDialog):
         self.case_information.other_conditions.ordered = True
 
     @logger.catch
+    def add_diversion_details(self):
+        diversion_terms_list = [
+            ("marijuana_diversion", "marijuana_diversion_checkBox"),
+            ("theft_diversion", "theft_diversion_checkBox"),
+        ]
+        self.widget_type_check_set(self.case_information.diversion, diversion_terms_list)
+        self.case_information.diversion.ordered = True
+        self.case_information.diversion.program_name = self.case_information.diversion.get_program_name()
+
+    @logger.catch
     def add_community_control_terms(self):
         community_control_terms_list = [
             ("type_of_control", "community_control_type_of_control_box"),
@@ -209,6 +220,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         self.jail_terms = True if main_dialog.jail_checkBox.isChecked() else False
+        self.diversion = True if main_dialog.diversion_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
@@ -227,6 +239,9 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         if self.jail_terms is True:
             self.case_information.jail_terms = JailTerms()
             self.add_jail_commitment_terms()
+        if self.diversion is True:
+            self.case_information.diversion = Diversion()
+            self.add_diversion_details()
 
     @logger.catch
     def connect_signals_to_slots(self):
