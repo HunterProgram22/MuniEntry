@@ -191,6 +191,19 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
     the JailCCPleaDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the JCPD screen."""
+    condition_checkbox_list = [
+        ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
+        ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
+        ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
+        ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
+        ("house_arrest_checkBox", "house_arrest_time_box"),
+        ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
+        ("other_community_control_checkBox", "other_community_control_conditions_box"),
+        ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
+        ("pay_restitution_checkBox", "pay_restitution_to_box"),
+        ("pay_restitution_checkBox", "pay_restitution_amount_box"),
+    ]
+
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
@@ -235,19 +248,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
 
     def set_field_enabled(self):
-        condition_checkbox_list = [
-            ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
-            ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
-            ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
-            ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
-            ("house_arrest_checkBox", "house_arrest_time_box"),
-            ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
-            ("other_community_control_checkBox", "other_community_control_conditions_box"),
-            ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
-            ("pay_restitution_checkBox", "pay_restitution_to_box"),
-            ("pay_restitution_checkBox", "pay_restitution_amount_box"),
-        ]
-        for index, item in enumerate(condition_checkbox_list):
+        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
             if hasattr(self, item[0]):
                 if getattr(self, item[0]).isChecked():
                     getattr(self, item[1]).setEnabled(True)
@@ -256,23 +257,8 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
                     getattr(self, item[1]).setEnabled(False)
                     getattr(self, item[1]).setHidden(True)
 
-                    # frame = getattr(conditions_dialog, item[1])
-                    # frame.setParent(None)
-                    # frame.deleteLater()
     def hide_boxes(self):
-        condition_checkbox_list = [
-            ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
-            ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
-            ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
-            ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
-            ("house_arrest_checkBox", "house_arrest_time_box"),
-            ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
-            ("other_community_control_checkBox", "other_community_control_conditions_box"),
-            ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
-            ("pay_restitution_checkBox", "pay_restitution_to_box"),
-            ("pay_restitution_checkBox", "pay_restitution_amount_box"),
-        ]
-        for index, item in enumerate(condition_checkbox_list):
+        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
             if hasattr(self, item[0]):
                 getattr(self, item[1]).setEnabled(False)
                 getattr(self, item[1]).setHidden(True)

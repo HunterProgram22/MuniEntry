@@ -17,7 +17,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -632,7 +632,7 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Jail Commitment</string>
+             <string>JAIL COMMITMENT</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -852,40 +852,10 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="17" column="6">
-           <widget class="Line" name="line_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
           <item row="6" column="6">
            <widget class="QCheckBox" name="anger_management_checkBox">
             <property name="text">
              <string>Complete Anger Management Class</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Drug/Alcohol Conditions</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -1011,7 +981,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="placeholderText">
-             <string>Location</string>
+             <string>GPS Exclusion Location</string>
             </property>
            </widget>
           </item>
@@ -1019,43 +989,6 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="other_community_control_checkBox">
             <property name="text">
              <string>Other Community Control Conditions:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="6">
-           <widget class="QLabel" name="label_6">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Treatment/Education </string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="6">
-           <widget class="Line" name="line_19">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="8">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
@@ -1197,13 +1130,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="17" column="0">
-           <widget class="Line" name="line_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
           <item row="16" column="6">
            <widget class="QLineEdit" name="pay_restitution_amount_box">
             <property name="styleSheet">
@@ -1267,38 +1193,14 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="13" column="6">
-           <widget class="QLabel" name="label_4">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Restitution</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="Line" name="line_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
           <item row="14" column="1">
            <widget class="QComboBox" name="alcohol_monitoring_time_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -1329,6 +1231,12 @@ font-weight: bold;</string>
           </item>
           <item row="19" column="1">
            <widget class="QComboBox" name="community_control_community_service_hours_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -1365,7 +1273,7 @@ font-weight: bold;</string>
           <item row="15" column="0">
            <widget class="QCheckBox" name="interlock_vehicles_checkBox">
             <property name="text">
-             <string>Only operate vehicles with certified  ignition interlock</string>
+             <string>Only operate vehicles with certified ignition interlock</string>
             </property>
            </widget>
           </item>
@@ -1373,52 +1281,6 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="community_control_community_service_checkBox">
             <property name="text">
              <string>Community Service required</string>
-            </property>
-           </widget>
-          </item>
-          <item row="18" column="6">
-           <widget class="QLabel" name="label_12">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Other Community Control Conditions</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="18" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(190, 195, 255);</string>
-            </property>
-            <property name="text">
-             <string>Community Service</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -1497,6 +1359,156 @@ font-weight: bold;</string>
               <string>6 months</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="13" column="0" colspan="5">
+           <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Drug/Alcohol Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0" colspan="5">
+           <widget class="QLabel" name="cs_label">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="6" colspan="3">
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Other Community Control Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="6" colspan="3">
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Restitution</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6" colspan="3">
+           <widget class="QLabel" name="label_6">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Treatment/Education </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0" colspan="5">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="0" colspan="5">
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="9">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="6" colspan="3">
+           <widget class="Line" name="line_19">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="17" column="6" colspan="3">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
            </widget>
           </item>
          </layout>
