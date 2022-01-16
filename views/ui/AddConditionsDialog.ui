@@ -163,7 +163,7 @@ font-weight: bold;</string>
         <x>0</x>
         <y>0</y>
         <width>978</width>
-        <height>792</height>
+        <height>820</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
@@ -619,17 +619,6 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_5"/>
     </widget>
    </item>
   </layout>
