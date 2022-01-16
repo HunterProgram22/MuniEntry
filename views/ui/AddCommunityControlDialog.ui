@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1189</width>
     <height>800</height>
    </rect>
   </property>
@@ -167,8 +167,8 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>1139</width>
+        <y>-880</y>
+        <width>1146</width>
         <height>1658</height>
        </rect>
       </property>
