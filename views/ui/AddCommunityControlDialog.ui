@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-880</y>
+        <y>0</y>
         <width>1146</width>
         <height>1658</height>
        </rect>
@@ -1426,6 +1426,12 @@ font-weight: bold;</string>
        </item>
        <item row="0" column="0" colspan="3">
         <widget class="QFrame" name="case_banner_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>110</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Palatino Linotype</family>

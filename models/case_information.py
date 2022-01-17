@@ -217,6 +217,8 @@ class CriminalCaseInformation:
     defendant: object = Defendant()
     fra_in_file: bool = None
     fra_in_court: bool = None
+    days_in_jail: str = None
+    apply_jtc: str = None
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None

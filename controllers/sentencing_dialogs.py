@@ -64,6 +64,7 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
+
     @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
@@ -184,6 +185,15 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
+
+    def add_additional_case_information(self):
+        """This adds jail time credit to the base method."""
+        super().add_additional_case_information()
+        self.update_jail_time_credit()
+
+    def update_jail_time_credit(self):
+        self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
+        self.entry_case_information.apply_jtc = self.jail_time_credit_apply_box.currentText()
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):

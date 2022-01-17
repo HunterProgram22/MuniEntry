@@ -263,11 +263,13 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
 
     def set_field_enabled(self):
+        """TODO: This method could be refactored to be more efficient and better at setting focus."""
         for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
             if hasattr(self, item[0]):
                 if getattr(self, item[0]).isChecked():
                     getattr(self, item[1]).setEnabled(True)
                     getattr(self, item[1]).setHidden(False)
+                    getattr(self, item[1]).setFocus(True)
                 else:
                     getattr(self, item[1]).setEnabled(False)
                     getattr(self, item[1]).setHidden(True)
