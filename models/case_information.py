@@ -169,7 +169,10 @@ class JailTerms:
     report_date: str = None
     jail_time_credit: str = None
     jail_term_type: str = None
+    jail_sentence_execution_type: str = None
     dip_ordered: bool = False
+    companion_cases_exist: bool = False
+    companion_case_numbers: str = None
 
 
 @dataclass
