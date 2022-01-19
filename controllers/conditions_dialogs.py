@@ -9,6 +9,7 @@ from models.case_information import CommunityService, LicenseSuspension, OtherCo
 from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
+from controllers.helper_functions import set_future_date
 
 
 CONDITIONS = [
@@ -226,7 +227,11 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def modify_view(self):
         super().modify_view()
-        self.report_date_box.setDate(QtCore.QDate.currentDate())
+        self.report_date_box.setDate(QDate.currentDate())
+        diversion_pay_days_to_add = set_future_date(90, None, 1)
+        self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
+        jail_report_days_to_add = set_future_date(90, None, 4)
+        self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
         self.hide_boxes()
 
     @logger.catch
