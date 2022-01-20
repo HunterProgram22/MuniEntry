@@ -167,7 +167,7 @@ class JailTerms:
     ordered: bool = False
     report_type: str = None
     report_date: str = None
-    jail_time_credit: str = None
+    jail_report_days_notes: str = None
     jail_term_type: str = None
     jail_sentence_execution_type: str = None
     dip_ordered: bool = False
@@ -211,7 +211,10 @@ class CourtCosts:
 class CriminalCaseInformation:
     """This object stores all the information for a cms_case both at inception and
     as it is populated through the application.
-    TODO: Should also still refactor amend_offense_details to object of dataclass."""
+    TODO: Should also still refactor amend_offense_details to object of dataclass.
+    :days_in_jail: - this is jail time credit but it is not part of jail committment because
+    it can be applied to fines if no jail days imposed.
+    """
     judicial_officer: object = None
     case_number: str = None
     plea_trial_date: str = None
