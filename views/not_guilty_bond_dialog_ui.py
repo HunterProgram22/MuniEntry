@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'views/ui/NotGuiltyBondDialog.ui'
+# Form implementation generated from reading ui file 'views\ui\NotGuiltyBondDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -15,8 +15,8 @@ class Ui_NotGuiltyBondDialog(object):
     def setupUi(self, NotGuiltyBondDialog):
         NotGuiltyBondDialog.setObjectName("NotGuiltyBondDialog")
         NotGuiltyBondDialog.setWindowModality(QtCore.Qt.NonModal)
-        NotGuiltyBondDialog.resize(1081, 864)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Preferred)
+        NotGuiltyBondDialog.resize(1081, 789)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(NotGuiltyBondDialog.sizePolicy().hasHeightForWidth())
@@ -80,7 +80,7 @@ class Ui_NotGuiltyBondDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1037, 820))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1041, 749))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_9.setObjectName("gridLayout_9")
