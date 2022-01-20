@@ -269,8 +269,7 @@ class AddPlea:
     checking for None it ensures it will catch any weird add/delete.
     This method only adds the plea and is used in LEAP short and long and
     Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
-    TODO: Rename and refactor out magic numbers.
-    REFACTOR to CLASS and call class in subclass for dialog."""
+    TODO: Rename and refactor out magic numbers. REFACTOR to CLASS and call class in subclass for dialog."""
     def __init__(self, dialog):
         self.dialog = dialog
         self.column = 1

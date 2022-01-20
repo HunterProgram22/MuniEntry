@@ -332,8 +332,8 @@ class NotGuiltyPleaGrid(ChargesGrid):
         added_charge_index = len(dialog.entry_case_information.charges_list) - 1
         charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
         self.addWidget(QLabel(charge['offense']), NotGuiltyPleaGrid.row_offense, column)
-        self.addWidget(QLabel(charge['statute']), NotGuiltyPleaGrid.row_statute, column)
-        self.addWidget(QLabel(charge['degree']), NotGuiltyPleaGrid.row_degree, column)
+        self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
         self.addWidget(PleaComboBox(), NotGuiltyPleaGrid.row_plea, column)
         self.add_delete_button_to_grid(dialog, NotGuiltyPleaGrid.row_delete_button, column)
 
