@@ -10,11 +10,11 @@
     <x>0</x>
     <y>0</y>
     <width>1081</width>
-    <height>864</height>
+    <height>789</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1037</width>
-           <height>820</height>
+           <width>1041</width>
+           <height>749</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" columnstretch="2,1">

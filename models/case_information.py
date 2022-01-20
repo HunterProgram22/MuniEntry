@@ -162,12 +162,40 @@ class LicenseSuspension:
 
 
 @dataclass
+class JailTerms:
+    """Class for keeping track of jail terms."""
+    ordered: bool = False
+    report_type: str = None
+    report_date: str = None
+    jail_report_days_notes: str = None
+    jail_term_type: str = None
+    jail_sentence_execution_type: str = None
+    dip_ordered: bool = False
+    companion_cases_exist: bool = False
+    companion_case_numbers: str = None
+
+
+@dataclass
 class OtherConditions:
     """Class for keeping track of other conditions that are tied to
     a specific cms_case. This condition is a freeform text entry box in the UI."""
     ordered: bool = False
     terms: str = None
 
+
+@dataclass
+class Diversion:
+    """Dataclass for tracking diversion programs."""
+    ordered: bool = False
+    marijuana_diversion: bool = False
+    theft_diversion: bool = False
+    program_name: str = None
+
+    def get_program_name(self):
+        if self.marijuana_diversion is True:
+            return "Marijuana Diversion Program"
+        if self.theft_diversion is True:
+            return "Theft Diversion Program"
 
 @dataclass
 class CourtCosts:
@@ -183,7 +211,10 @@ class CourtCosts:
 class CriminalCaseInformation:
     """This object stores all the information for a cms_case both at inception and
     as it is populated through the application.
-    TODO: Should also still refactor amend_offense_details to object of dataclass."""
+    TODO: Should also still refactor amend_offense_details to object of dataclass.
+    :days_in_jail: - this is jail time credit but it is not part of jail committment because
+    it can be applied to fines if no jail days imposed.
+    """
     judicial_officer: object = None
     case_number: str = None
     plea_trial_date: str = None
@@ -192,13 +223,17 @@ class CriminalCaseInformation:
     defendant: object = Defendant()
     fra_in_file: bool = None
     fra_in_court: bool = None
+    days_in_jail: str = None
+    apply_jtc: str = None
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
     total_fines: int = 0
     total_fines_suspended: int = 0
     court_costs: object = CourtCosts()
+    diversion: object = Diversion()
     community_control: object = CommunityControl()
+    jail_terms: object = JailTerms()
     no_contact: object = NoContact()
     custodial_supervision: object = CustodialSupervision()
     fta_bond_conditions: object = FTABondConditions()

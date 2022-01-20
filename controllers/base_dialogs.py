@@ -92,7 +92,8 @@ class BaseDialog(QDialog):
 
     def widget_type_check_set(self, terms_object, terms_list):
         """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate object."""
+        to the appropriate object. Format of terms_list is a list of tuples (item[0] = model data,
+        item[1] = view field)"""
         for item in terms_list:
             if isinstance(getattr(self, item[1]), QComboBox):
                 setattr(terms_object, item[0], getattr(self, item[1]).currentText())
@@ -267,22 +268,25 @@ class AddPlea:
     charge is added, could increment by 2, but by incrementing by 1 and
     checking for None it ensures it will catch any weird add/delete.
     This method only adds the plea and is used in LEAP short and long and
-    Not Guilty. No Jail Plea overrides this to include findings and fines.
-    TODO: Rename and refactor out magic numbers.
-    REFACTOR to CLASS and call class in subclass for dialog."""
+    Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
+    TODO: Rename and refactor out magic numbers. REFACTOR to CLASS and call class in subclass for dialog."""
     def __init__(self, dialog):
         self.dialog = dialog
-        column = 1
-        row = 3
+        self.column = 1
+        self.row = 3
         for charge in self.dialog.entry_case_information.charges_list:
-            while self.dialog.charges_gridLayout.itemAtPosition(row, column) is None:
-                column += 1
+            while self.dialog.charges_gridLayout.itemAtPosition(self.row, self.column) is None:
+                self.column += 1
+            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
+                1, self.column).widget().text()
+            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
+                2, self.column).widget().currentText()
             if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget(), PleaComboBox):
+                    self.row, self.column).widget(), PleaComboBox):
                 charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget().currentText()
-                column += 1
-            column += 1
+                    self.row, self.column).widget().currentText()
+                self.column += 1
+            self.column += 1
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -297,15 +301,11 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        # try:
-        #     self.charges_gridLayout.__class__ = ChargesGrid
-        # except AttributeError:
-        #     pass
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []
-        # self.load_cms_data_to_view()
+
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
@@ -406,7 +406,6 @@ class CriminalBaseDialog(BaseDialog):
         self.charges_gridLayout.delete_charge_from_grid()
         self.statute_choice_box.setFocus()
 
-    # Moving Methods from Other Dialogs to Here for Refactoring Inherit now Composition Later
     @logger.catch
     def start_amend_offense_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The

@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>891</width>
-        <height>775</height>
+        <width>889</width>
+        <height>773</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4">
@@ -794,7 +794,7 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="3" column="1" rowspan="2" colspan="2">
+       <item row="3" column="1" rowspan="2">
         <widget class="QFrame" name="frame_6">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -817,20 +817,6 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="license_suspension_checkBox">
-            <property name="text">
-             <string>License Suspension</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="community_service_checkBox">
-            <property name="text">
-             <string>Community Service</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_24">
             <property name="font">
@@ -851,6 +837,20 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="license_suspension_checkBox">
+            <property name="text">
+             <string>License Suspension</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="community_service_checkBox">
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QCheckBox" name="other_conditions_checkBox">
             <property name="enabled">
@@ -864,10 +864,23 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="4" column="0">
+           <widget class="QPushButton" name="add_conditions_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(62, 146, 255)</string>
+            </property>
+            <property name="text">
+             <string>Add Conditions</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
-       <item row="4" column="0" rowspan="2">
+       <item row="4" column="0">
         <widget class="QFrame" name="frame_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -949,20 +962,7 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QPushButton" name="add_conditions_Button">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(62, 146, 255)</string>
-         </property>
-         <property name="text">
-          <string>Add Conditions</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
+       <item row="4" column="2">
         <widget class="QPushButton" name="create_entry_Button">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(0, 255, 0);</string>
@@ -995,8 +995,6 @@ font-weight: bold;</string>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
-  <tabstop>create_entry_Button</tabstop>
   <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>

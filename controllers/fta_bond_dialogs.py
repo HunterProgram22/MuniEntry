@@ -39,13 +39,16 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
     @logger.catch
     def update_bond_conditions(self):
         """Updates the bond conditions from the GUI(view) and saves it to the model."""
-        self.fta_bond_conditions.bond_type = self.bond_type_box.currentText()
-        self.fta_bond_conditions.bond_amount = self.bond_amount_box.currentText()
-        self.fta_bond_conditions.no_contact = self.no_contact_checkBox.isChecked()
-        self.fta_bond_conditions.no_alcohol_drugs = self.no_alcohol_drugs_checkBox.isChecked()
-        self.fta_bond_conditions.alcohol_drugs_assessment = self.alcohol_drugs_assessment_checkBox.isChecked()
-        self.fta_bond_conditions.alcohol_test_kiosk = self.alcohol_test_kiosk_checkBox.isChecked()
-        self.fta_bond_conditions.specialized_docket = self.specialized_docket_checkBox.isChecked()
-        self.fta_bond_conditions.specialized_docket_type = self.specialized_docket_type_box.currentText()
-        self.fta_bond_conditions.monitoring = self.monitoring_checkBox.isChecked()
-        self.fta_bond_conditions.monitoring_type = self.monitoring_type_box.currentText()
+        bond_conditions_list = [
+            ("bond_type", "bond_type_box"),
+            ("bond_amount", "bond_amount_box"),
+            ("no_contact", "no_contact_checkBox"),
+            ("no_alcohol_drug", "no_alcohol_drugs_checkBox"),
+            ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
+            ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+            ("specialized_docket", "specialized_docket_checkBox"),
+            ("monitoring", "monitoring_checkBox"),
+            ("monitoring_type", "monitoring_type_box"),
+        ]
+        self.widget_type_check_set(self.fta_bond_conditions, bond_conditions_list)
+        

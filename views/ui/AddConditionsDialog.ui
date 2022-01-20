@@ -163,12 +163,18 @@ font-weight: bold;</string>
         <x>0</x>
         <y>0</y>
         <width>978</width>
-        <height>792</height>
+        <height>820</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_6">
        <item row="0" column="0" colspan="2">
-        <widget class="QFrame" name="frame_2">
+        <widget class="QFrame" name="case_banner_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>110</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Palatino Linotype</family>
@@ -254,6 +260,12 @@ font-weight: bold;</string>
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>115</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(240, 240, 240);</string>
          </property>
@@ -266,7 +278,10 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
           <item row="0" column="0" colspan="4">
            <widget class="QLabel" name="label_24">
             <property name="sizePolicy">
@@ -274,6 +289,12 @@ font-weight: bold;</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>25</height>
+             </size>
             </property>
             <property name="font">
              <font>
@@ -388,6 +409,18 @@ font-weight: bold;</string>
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>300</height>
+          </size>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(240, 240, 240);</string>
          </property>
@@ -401,6 +434,9 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
           <item row="0" column="0" colspan="6">
            <widget class="QLabel" name="label_26">
             <property name="font">
@@ -607,17 +643,6 @@ font-weight: bold;</string>
        </item>
       </layout>
      </widget>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_5"/>
     </widget>
    </item>
   </layout>

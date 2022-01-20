@@ -5,10 +5,11 @@ from controllers.base_dialogs import BaseDialog
 from loguru import logger
 from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
-    CommunityControl, VehicleSeizure
+    CommunityControl, VehicleSeizure, JailTerms, Diversion
 from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
+from controllers.helper_functions import set_future_date
 
 
 CONDITIONS = [
@@ -21,14 +22,20 @@ CONDITIONS = [
     ("no_contact_checkBox", "no_contact_frame"),
     ("custodial_supervision_checkBox", "custodial_supervision_frame"),
     ("community_control_checkBox", "community_control_frame"),
+    ("jail_checkBox", "jail_commitment_frame"),
+    ("diversion_checkBox", "diversion_frame"),
 ]
 
 
-def enable_condition_frames(dialog, main_dialog):
+def enable_condition_frames(conditions_dialog, main_dialog):
     for index, item in enumerate(CONDITIONS):
         if hasattr(main_dialog, item[0]):
             if getattr(main_dialog, item[0]).isChecked():
-                getattr(dialog, item[1]).setEnabled(True)
+                getattr(conditions_dialog, item[1]).setEnabled(True)
+            else:
+                frame = getattr(conditions_dialog, item[1])
+                frame.setParent(None)
+                frame.deleteLater()
 
 
 class ConditionsDialog(BaseDialog):
@@ -99,6 +106,21 @@ class ConditionsDialog(BaseDialog):
         self.case_information.community_service.ordered = True
 
     @logger.catch
+    def add_jail_commitment_terms(self):
+        jail_commitment_terms_list = [
+            ("report_type", "report_type_box"),
+            ("report_date", "report_date_box"),
+            ("jail_term_type", "jail_term_type_box"),
+            ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
+            ("jail_report_days_notes", "jail_report_days_notes_box"),
+            ("dip_ordered", "dip_checkBox"),
+            ("companion_case_numbers", "companion_cases_box"),
+            ("companion_cases_exist", "companion_cases_checkBox"),
+        ]
+        self.widget_type_check_set(self.case_information.jail_terms, jail_commitment_terms_list)
+        self.case_information.jail_terms.ordered = True
+
+    @logger.catch
     def add_license_suspension_details(self):
         license_suspension_terms_list = [
             ("license_type", "license_type_box"),
@@ -116,6 +138,16 @@ class ConditionsDialog(BaseDialog):
         ]
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
         self.case_information.other_conditions.ordered = True
+
+    @logger.catch
+    def add_diversion_details(self):
+        diversion_terms_list = [
+            ("marijuana_diversion", "marijuana_diversion_checkBox"),
+            ("theft_diversion", "theft_diversion_checkBox"),
+        ]
+        self.widget_type_check_set(self.case_information.diversion, diversion_terms_list)
+        self.case_information.diversion.ordered = True
+        self.case_information.diversion.program_name = self.case_information.diversion.get_program_name()
 
     @logger.catch
     def add_community_control_terms(self):
@@ -174,11 +206,36 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
     the JailCCPleaDialog. The conditions that are available to enter information
     for are based on the checkboxes that are checked on the JCPD screen."""
+    condition_checkbox_list = [
+        ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
+        ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
+        ("community_control_not_within_500_feet_checkBox", "community_control_not_within_500_feet_person_box"),
+        ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
+        ("house_arrest_checkBox", "house_arrest_time_box"),
+        ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
+        ("other_community_control_checkBox", "other_community_control_conditions_box"),
+        ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
+        ("pay_restitution_checkBox", "pay_restitution_to_box"),
+        ("pay_restitution_checkBox", "pay_restitution_amount_box"),
+    ]
+
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
+        self.jail_terms = True if main_dialog.jail_checkBox.isChecked() else False
+        self.diversion = True if main_dialog.diversion_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
+
+    @logger.catch
+    def modify_view(self):
+        super().modify_view()
+        self.report_date_box.setDate(QDate.currentDate())
+        diversion_pay_days_to_add = set_future_date(90, None, 1)
+        self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
+        jail_report_days_to_add = set_future_date(90, None, 4)
+        self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
+        self.hide_boxes()
 
     @logger.catch
     def add_conditions(self):
@@ -187,6 +244,49 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         if self.community_control is True:
             self.case_information.community_control = CommunityControl()
             self.add_community_control_terms()
+        if self.jail_terms is True:
+            self.case_information.jail_terms = JailTerms()
+            self.add_jail_commitment_terms()
+        if self.diversion is True:
+            self.case_information.diversion = Diversion()
+            self.add_diversion_details()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        there are no fields to clear or create_entry_button to press."""
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.set_community_service_date
+        )
+        self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_no_contact_checkBox.toggled.connect(self.set_field_enabled)
+        self.house_arrest_checkBox.toggled.connect(self.set_field_enabled)
+        self.community_control_community_service_checkBox.toggled.connect(self.set_field_enabled)
+        self.other_community_control_checkBox.toggled.connect(self.set_field_enabled)
+        self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
+        self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
+
+    def set_field_enabled(self):
+        """TODO: This method could be refactored to be more efficient and better at setting focus."""
+        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
+            if hasattr(self, item[0]):
+                if getattr(self, item[0]).isChecked():
+                    getattr(self, item[1]).setEnabled(True)
+                    getattr(self, item[1]).setHidden(False)
+                    getattr(self, item[1]).setFocus(True)
+                else:
+                    getattr(self, item[1]).setEnabled(False)
+                    getattr(self, item[1]).setHidden(True)
+
+    def hide_boxes(self):
+        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
+            if hasattr(self, item[0]):
+                getattr(self, item[1]).setEnabled(False)
+                getattr(self, item[1]).setHidden(True)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
