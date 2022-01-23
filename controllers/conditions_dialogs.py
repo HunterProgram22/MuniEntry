@@ -217,8 +217,8 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("community_control_community_service_checkBox", "community_control_community_service_hours_box"),
         ("other_community_control_checkBox", "other_community_control_conditions_box"),
         ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
-        ("pay_restitution_checkBox", "pay_restitution_to_box"),
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
+        ("pay_restitution_checkBox", "pay_restitution_to_box"),
     ]
 
     @logger.catch
