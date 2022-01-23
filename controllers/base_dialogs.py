@@ -1,5 +1,7 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 import os
+import time
+from win32com import client
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -37,6 +39,13 @@ def close_databases():
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
+def print_document(docname):
+    word = client.Dispatch("Word.Application")
+    word.Documents.Open(SAVE_PATH + docname)
+    word.ActiveDocument.PrintOut()
+    time.sleep(1)
+    word.ActiveDocument.Close()
+    word.Quit()
 
 @logger.catch
 def create_entry(dialog):
@@ -46,6 +55,7 @@ def create_entry(dialog):
     docname = set_document_name(dialog)
     try:
         doc.save(SAVE_PATH + docname)
+        print_document(docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
         doc.save(SAVE_PATH + "second_user_copy" + docname)
