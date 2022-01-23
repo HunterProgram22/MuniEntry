@@ -144,6 +144,8 @@ class ConditionsDialog(BaseDialog):
         diversion_terms_list = [
             ("marijuana_diversion", "marijuana_diversion_checkBox"),
             ("theft_diversion", "theft_diversion_checkBox"),
+            ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+            ("diversion_jail_report_date", "diversion_jail_report_date_box"),
         ]
         self.widget_type_check_set(self.case_information.diversion, diversion_terms_list)
         self.case_information.diversion.ordered = True

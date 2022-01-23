@@ -190,6 +190,8 @@ class Diversion:
     marijuana_diversion: bool = False
     theft_diversion: bool = False
     program_name: str = None
+    diversion_fine_pay_date: str = None
+    diversion_jail_report_date: str = None
 
     def get_program_name(self):
         if self.marijuana_diversion is True:
