@@ -271,6 +271,15 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.other_community_control_checkBox.toggled.connect(self.set_field_enabled)
         self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
+        self.report_type_box.currentTextChanged.connect(self.set_report_date)
+
+    def set_report_date(self):
+        if self.report_type_box.currentText() == "date set by Office of Community Control":
+            self.report_date_box.setDisabled(True)
+            self.report_date_box.setHidden(True)
+        else:
+            self.report_date_box.setEnabled(True)
+            self.report_date_box.setHidden(False)
 
     def set_field_enabled(self):
         """TODO: This method could be refactored to be more efficient and better at setting focus."""
