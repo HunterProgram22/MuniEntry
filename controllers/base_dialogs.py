@@ -15,7 +15,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import PleaComboBox
+from views.custom_widgets import PleaComboBox, WarningBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -39,6 +39,7 @@ def close_databases():
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
+
 def print_document(docname):
     word = client.Dispatch("Word.Application")
     word.Documents.Open(SAVE_PATH + docname)
@@ -46,6 +47,7 @@ def print_document(docname):
     time.sleep(1)
     word.ActiveDocument.Close()
     word.Quit()
+
 
 @logger.catch
 def print_entry(dialog):
@@ -61,6 +63,7 @@ def print_entry(dialog):
     except PermissionError:
         doc.save(SAVE_PATH + "second_user_copy" + docname)
         os.startfile(SAVE_PATH + "second_user_copy" + docname)
+
 
 @logger.catch
 def create_entry(dialog):
@@ -219,17 +222,13 @@ class CriminalSlotFunctions:
             and dialog.fra_in_file_box.currentText() == "No"
             and dialog.fra_in_court_box.currentText() == "N/A"
         ):
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Warning")
-            message.setText("The information provided currently "
-                            "indicates insurance was not shown/in the file. "
-                            "There is no information on whether "
-                            "defendant showed proof of insurance "
-                            "in court. \n\nDo you wish to create an entry "
-                            "without indicating whether insurance was "
-                            "shown in court?")
-            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            message = WarningBox("The information provided currently "
+                                 "indicates insurance was not shown in the file. "
+                                 "There is no information on whether "
+                                 "defendant showed proof of insurance "
+                                 "in court. \n\nDo you wish to create an entry "
+                                 "without indicating whether insurance was "
+                                 "shown in court?")
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
@@ -250,17 +249,13 @@ class CriminalSlotFunctions:
             and dialog.fra_in_file_box.currentText() == "No"
             and dialog.fra_in_court_box.currentText() == "N/A"
         ):
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Warning")
-            message.setText("The information provided currently "
-                            "indicates insurance was not shown/in the file. "
-                            "There is no information on whether "
-                            "defendant showed proof of insurance "
-                            "in court. \n\nDo you wish to create an entry "
-                            "without indicating whether insurance was "
-                            "shown in court?")
-            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            message = WarningBox("The information provided currently "
+                                 "indicates insurance was not shown in the file. "
+                                 "There is no information on whether "
+                                 "defendant showed proof of insurance "
+                                 "in court. \n\nDo you wish to create an entry "
+                                 "without indicating whether insurance was "
+                                 "shown in court?")
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
@@ -360,7 +355,6 @@ class CriminalBaseDialog(BaseDialog):
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []
-
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
@@ -544,7 +538,8 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
             for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
                 if (
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                    and self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().text() == self.current_offense
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(
+                        0, columns).widget().text() == self.current_offense
                 ):
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
         self.close_event()

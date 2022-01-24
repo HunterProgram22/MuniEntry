@@ -1,9 +1,13 @@
+import pathlib
+
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QGridLayout
+from PyQt5 import QtGui
 
 from loguru import logger
 
+PATH = str(pathlib.Path().absolute())
 
 class StatuteLineEdit(QLineEdit):
     def __init__(self, statute=None, parent=None):
@@ -177,11 +181,26 @@ class RequiredBox(QMessageBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setIcon(QMessageBox.Warning)
+        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
+        self.setIcon(QMessageBox.Critical)
         self.setWindowTitle("Required")
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Ok)
-        self.exec()
+
+
+class WarningBox(QMessageBox):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
+        self.setIcon(QMessageBox.Warning)
+        self.setWindowTitle("Warning")
+        self.setText(self.message)
+        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
 
 
 class ChargesGrid(QGridLayout):
@@ -214,10 +233,12 @@ class ChargesGrid(QGridLayout):
         while loop_counter < self.columnCount():
             try:
                 if self.itemAtPosition(row_plea, column).widget().currentText() == "":
-                    RequiredBox("You must enter a plea.")
+                    message = RequiredBox("You must enter a plea.")
+                    message.exec()
                     return None
                 if self.itemAtPosition(row_finding, column).widget().currentText() == "":
-                    RequiredBox("You must enter a finding.")
+                    message = RequiredBox("You must enter a finding.")
+                    message.exec()
                     return None
             except AttributeError:
                 pass
@@ -404,7 +425,6 @@ class JailChargesGrid(ChargesGrid):
         self.addWidget(JailSuspendedLineEdit(), JailChargesGrid.row_jail_days_suspended, column)
         self.add_amend_button_to_grid(dialog, JailChargesGrid.row_amend_button, column)
         self.add_delete_button_to_grid(dialog, JailChargesGrid.row_delete_button, column)
-
 
 
 def main():

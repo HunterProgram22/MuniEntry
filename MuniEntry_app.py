@@ -22,6 +22,7 @@ from resources.db.create_data_lists import create_arraignment_cases_list, create
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
+from views.custom_widgets import RequiredBox
 from views.main_window_ui import Ui_MainWindow
 from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -151,11 +152,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def start_dialog_from_entry_button(self):
         """ Launches the dialog that is connected to each button."""
         if self.judicial_officer is None:
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Critical)
-            message.setWindowTitle("Required")
-            message.setText("You must select a judicial officer.")
-            message.setStandardButtons(QMessageBox.Ok)
+            message = RequiredBox("You must select a judicial officer.")
             message.exec()
         else:
             database_list = [
@@ -178,12 +175,8 @@ class Window(QMainWindow, Ui_MainWindow):
                             dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                 dialog.exec()
             else:
-                message = QMessageBox()
-                message.setIcon(QMessageBox.Critical)
-                message.setWindowTitle("Required")
-                message.setText("You must select a case list to load. If loading blank template choose any case "
-                                "list and leave dropdown menu blank.")
-                message.setStandardButtons(QMessageBox.Ok)
+                message = RequiredBox("You must select a case list to load. If loading a "
+                        "blank template choose any case list and leave dropdown menu blank.")
                 message.exec()
 
 
