@@ -177,11 +177,11 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>883</width>
-           <height>722</height>
+           <width>879</width>
+           <height>718</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,2,2,4,2">
+         <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0" colspan="2">
            <widget class="QFrame" name="frame_2">
             <property name="styleSheet">
@@ -520,6 +520,88 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
           </item>
+          <item row="4" column="0" rowspan="2">
+           <widget class="QFrame" name="frame_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QFormLayout" name="formLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>Time to Complete LEAP:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="time_to_complete_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>120 days</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>forthwith</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Sentencing Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateEdit" name="sentencing_date">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QPushButton" name="print_entry_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 255, 0);</string>
+            </property>
+            <property name="text">
+             <string>Print and Open Entry</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPushButton" name="create_entry_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(160, 160, 160);</string>
+            </property>
+            <property name="text">
+             <string>Open Entry</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0" colspan="2">
            <widget class="QFrame" name="frame_6">
             <property name="styleSheet">
@@ -624,75 +706,6 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
             </layout>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QFrame" name="frame_5">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Time to Complete LEAP:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="time_to_complete_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>120 days</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>forthwith</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="text">
-                <string>Sentencing Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QDateEdit" name="sentencing_date">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QPushButton" name="create_entry_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 255, 0);</string>
-            </property>
-            <property name="text">
-             <string>Create Entry</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
            </widget>
           </item>
          </layout>

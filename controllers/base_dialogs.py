@@ -1,5 +1,7 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 import os
+import time
+from win32com import client
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -37,6 +39,28 @@ def close_databases():
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
+def print_document(docname):
+    word = client.Dispatch("Word.Application")
+    word.Documents.Open(SAVE_PATH + docname)
+    word.ActiveDocument.PrintOut()
+    time.sleep(1)
+    word.ActiveDocument.Close()
+    word.Quit()
+
+@logger.catch
+def print_entry(dialog):
+    """Loads the proper template and creates the entry.
+    TODO: This is duplicative of create_entry need to refactor."""
+    doc = DocxTemplate(dialog.template.template_path)
+    doc.render(dialog.entry_case_information.get_case_information())
+    docname = set_document_name(dialog)
+    try:
+        doc.save(SAVE_PATH + docname)
+        print_document(docname)
+        os.startfile(SAVE_PATH + docname)
+    except PermissionError:
+        doc.save(SAVE_PATH + "second_user_copy" + docname)
+        os.startfile(SAVE_PATH + "second_user_copy" + docname)
 
 @logger.catch
 def create_entry(dialog):
@@ -213,6 +237,37 @@ class CriminalSlotFunctions:
         dialog.close_event()
 
     @classmethod
+    @logger.catch
+    def print_entry_process(cls, dialog):
+        """The order of the create entry process is important to make sure the
+        information is updated before the entry is created.
+        TODO: This is duplicate of create_entry_process need to refactor."""
+        dialog.update_case_information()
+        if dialog.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        if (
+            hasattr(dialog, 'fra_in_file_box')
+            and dialog.fra_in_file_box.currentText() == "No"
+            and dialog.fra_in_court_box.currentText() == "N/A"
+        ):
+            message = QMessageBox()
+            message.setIcon(QMessageBox.Warning)
+            message.setWindowTitle("Warning")
+            message.setText("The information provided currently "
+                            "indicates insurance was not shown/in the file. "
+                            "There is no information on whether "
+                            "defendant showed proof of insurance "
+                            "in court. \n\nDo you wish to create an entry "
+                            "without indicating whether insurance was "
+                            "shown in court?")
+            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+            return_value = message.exec()
+            if return_value == QMessageBox.No:
+                return None
+        print_entry(dialog)
+        dialog.close_event()
+
+    @classmethod
     def clear_charge_fields(cls, dialog):
         """Clears the fields that are used for adding a charge. The statute_choice_box and
         offense_choice_box use the clearEditText method because those boxes are editable."""
@@ -268,22 +323,25 @@ class AddPlea:
     charge is added, could increment by 2, but by incrementing by 1 and
     checking for None it ensures it will catch any weird add/delete.
     This method only adds the plea and is used in LEAP short and long and
-    Not Guilty. No Jail Plea overrides this to include findings and fines.
-    TODO: Rename and refactor out magic numbers.
-    REFACTOR to CLASS and call class in subclass for dialog."""
+    Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
+    TODO: Rename and refactor out magic numbers. REFACTOR to CLASS and call class in subclass for dialog."""
     def __init__(self, dialog):
         self.dialog = dialog
-        column = 1
-        row = 3
+        self.column = 1
+        self.row = 3
         for charge in self.dialog.entry_case_information.charges_list:
-            while self.dialog.charges_gridLayout.itemAtPosition(row, column) is None:
-                column += 1
+            while self.dialog.charges_gridLayout.itemAtPosition(self.row, self.column) is None:
+                self.column += 1
+            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
+                1, self.column).widget().text()
+            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
+                2, self.column).widget().currentText()
             if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget(), PleaComboBox):
+                    self.row, self.column).widget(), PleaComboBox):
                 charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    row, column).widget().currentText()
-                column += 1
-            column += 1
+                    self.row, self.column).widget().currentText()
+                self.column += 1
+            self.column += 1
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -324,6 +382,8 @@ class CriminalBaseDialog(BaseDialog):
             lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
+        self.print_entry_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
         self.add_charge_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
         self.clear_fields_charge_Button.pressed.connect(

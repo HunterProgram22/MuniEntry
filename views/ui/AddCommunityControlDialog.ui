@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1214</width>
-    <height>940</height>
+    <width>1063</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -155,7 +155,7 @@ font-weight: bold;</string>
    <item row="1" column="0">
     <widget class="QScrollArea" name="scrollArea">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-215</y>
-        <width>1171</width>
-        <height>1133</height>
+        <y>0</y>
+        <width>1053</width>
+        <height>1574</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -178,8 +178,34 @@ font-weight: bold;</string>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QGridLayout" name="gridLayout_8">
-       <item row="1" column="0" colspan="3">
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="8" column="0">
+        <widget class="QPushButton" name="cancel_Button">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(160, 160, 160);</string>
+         </property>
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="2">
+        <widget class="QPushButton" name="add_conditions_Button">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(62, 146, 255)</string>
+         </property>
+         <property name="text">
+          <string>Add Conditions</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0" colspan="3">
         <widget class="QFrame" name="community_control_frame">
          <property name="enabled">
           <bool>false</bool>
@@ -191,270 +217,11 @@ font-weight: bold;</string>
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Sunken</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
-          <item row="7" column="5" colspan="2">
-           <widget class="QCheckBox" name="driver_intervention_program_checkBox">
-            <property name="text">
-             <string>Complete Driver Intervention Program </string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3">
-           <widget class="QLabel" name="label_4">
-            <property name="text">
-             <string>to</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="4">
-           <widget class="QLineEdit" name="pay_restitution_to_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="placeholderText">
-             <string>Person/Entity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1" colspan="4">
-           <widget class="QLineEdit" name="other_community_control_conditions_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QCheckBox" name="other_community_control_checkBox">
-            <property name="text">
-             <string>Other Community Control Conditions:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="5">
-           <widget class="QCheckBox" name="mental_health_evaluation_checkBox">
-            <property name="text">
-             <string>Complete Mental Health Evaluation</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2" colspan="3">
-           <widget class="QComboBox" name="alcohol_monitoring_time_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>15 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>30 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>45 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>60 days</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="2" colspan="3">
-           <widget class="QComboBox" name="house_arrest_time_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>15 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>1 month</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>2 months</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>3 months</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>6 months</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QCheckBox" name="alcohol_monitoring_checkBox">
-            <property name="text">
-             <string>Submit to continuous alcohol monitoring for:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="5">
-           <widget class="QCheckBox" name="interlock_vehicles_checkBox">
-            <property name="text">
-             <string>Only operate vehicles with certified  ignition interlock</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="2" colspan="3">
-           <widget class="QComboBox" name="community_control_community_service_hours_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>25 hours</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>50 hours</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>100 hours</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>200 hours</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>500 hours</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Type of Control:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="community_control_no_contact_checkBox">
-            <property name="text">
-             <string>No Contact with: </string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="pay_restitution_checkBox">
-            <property name="text">
-             <string>Pay Restitution of                                    $</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="5" colspan="2">
-           <widget class="QCheckBox" name="alcohol_evaluation_checkBox">
-            <property name="text">
-             <string>Complete Alcohol/Drug Dependency Evaluation </string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1" colspan="2">
-           <widget class="QLineEdit" name="pay_restitution_amount_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="placeholderText">
-             <string>Amount</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="5" colspan="2">
-           <widget class="QCheckBox" name="domestic_violence_program_checkBox">
-            <property name="text">
-             <string>Complete Domestic Violence Offender Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="7">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="5" colspan="2">
-           <widget class="QCheckBox" name="antitheft_checkBox">
-            <property name="text">
-             <string>Complete Anti-theft/Shoplifting Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="5" colspan="2">
-           <widget class="QCheckBox" name="anger_management_checkBox">
-            <property name="text">
-             <string>Complete Anger Management Class</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="2">
-           <widget class="QCheckBox" name="house_arrest_checkBox">
-            <property name="text">
-             <string>Submit to electronic house arrest for:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="7">
-           <widget class="QLabel" name="label_25">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>100</height>
-             </size>
-            </property>
+          <item row="4" column="0" colspan="5">
+           <widget class="QLabel" name="label_7">
             <property name="font">
              <font>
               <family>Palatino Linotype</family>
@@ -465,36 +232,101 @@ font-weight: bold;</string>
               <underline>true</underline>
              </font>
             </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
             <property name="text">
-             <string>Community Control Terms</string>
+             <string>Restrictions on Movement</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="community_control_not_within_500_feet_checkBox">
-            <property name="text">
-             <string>Not come within 500 feet of:</string>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="gps_exclusion_location_box">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>GPS Exclusion Location</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="community_control_community_service_checkBox">
+          <item row="19" column="6">
+           <widget class="QCheckBox" name="other_community_control_checkBox">
             <property name="text">
-             <string>Community Service required</string>
+             <string>Other Community Control Conditions:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="4">
+          <item row="27" column="5">
+           <widget class="Line" name="line_14">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="community_control_not_within_500_feet_person_box">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Person(s) Name(s)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="22" column="5" rowspan="3">
+           <widget class="Line" name="line_9">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="6">
            <widget class="QLabel" name="test">
             <property name="text">
              <string>Term of Control:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="5">
+          <item row="21" column="5">
+           <widget class="Line" name="line_20">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="5">
+           <widget class="Line" name="line_21">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="6">
            <widget class="QComboBox" name="community_control_term_of_control_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -529,31 +361,81 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QCheckBox" name="gps_exclusion_checkBox">
-            <property name="maximumSize">
-             <size>
-              <width>300</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Submit to GPS Exclusion Zone</string>
+          <item row="10" column="5" rowspan="11">
+           <widget class="Line" name="line_8">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
-          <item row="12" column="5">
-           <widget class="QCheckBox" name="daily_reporting_checkBox">
+          <item row="16" column="6">
+           <widget class="QLineEdit" name="pay_restitution_amount_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Restitution Amount</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="community_control_not_within_500_feet_checkBox">
             <property name="text">
-             <string>Report daily to Office of Community Control</string>
+             <string>Not come within 500 feet of:</string>
             </property>
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QComboBox" name="gps_exclusion_radius_box">
+           <widget class="QLineEdit" name="community_control_no_contact_with_box">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>150</width>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>No Contact Person(s) Name(s)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="6">
+           <widget class="QLineEdit" name="pay_restitution_to_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Restitution to Person/Entity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="6">
+           <widget class="QCheckBox" name="pay_restitution_checkBox">
+            <property name="text">
+             <string>Pay Restitution </string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="community_control_no_contact_checkBox">
+            <property name="text">
+             <string>No Contact with: </string>
+            </property>
+           </widget>
+          </item>
+          <item row="14" column="1">
+           <widget class="QComboBox" name="alcohol_monitoring_time_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
               <height>0</height>
              </size>
             </property>
@@ -565,9 +447,231 @@ font-weight: bold;</string>
             </property>
             <item>
              <property name="text">
-              <string/>
+              <string>15 days</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>30 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>60 days</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="17" column="6" colspan="3">
+           <widget class="Line" name="line_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="9">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="6" colspan="3">
+           <widget class="Line" name="line_19">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0" colspan="5">
+           <widget class="QLabel" name="cs_label">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="6" colspan="3">
+           <widget class="QLabel" name="label_12">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Other Community Control Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0" colspan="5">
+           <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Drug/Alcohol Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="6" colspan="3">
+           <widget class="QLabel" name="label_6">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Treatment/Education </string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="6" colspan="3">
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(190, 195, 255);</string>
+            </property>
+            <property name="text">
+             <string>Restitution</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="1">
+           <widget class="QComboBox" name="community_control_community_service_hours_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>25 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>50 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>100 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>200 hours</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>500 hours</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="19" column="0">
+           <widget class="QCheckBox" name="community_control_community_service_checkBox">
+            <property name="text">
+             <string>Community Service required</string>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="0">
+           <widget class="QCheckBox" name="interlock_vehicles_checkBox">
+            <property name="text">
+             <string>Only operate vehicles with certified ignition interlock</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QComboBox" name="gps_exclusion_radius_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>false</bool>
+            </property>
             <item>
              <property name="text">
               <string>1 mile</string>
@@ -590,17 +694,184 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="7" column="2" colspan="3">
-           <widget class="QLineEdit" name="gps_exclusion_location_box">
+          <item row="8" column="1">
+           <widget class="QComboBox" name="house_arrest_time_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-            <property name="placeholderText">
-             <string>Location/Person</string>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>15 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>1 month</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>2 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>3 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>6 months</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="11" column="0" colspan="5">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" colspan="3">
+          <item row="17" column="0" colspan="5">
+           <widget class="Line" name="line_4">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="gps_exclusion_checkBox">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Submit to GPS Exclusion Zone</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Type of Control:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="8">
+           <widget class="QLabel" name="label_25">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>COMMUNITY CONTROL</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="house_arrest_checkBox">
+            <property name="text">
+             <string>Submit to electronic house arrest for:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="6">
+           <widget class="QCheckBox" name="domestic_violence_program_checkBox">
+            <property name="text">
+             <string>Complete Domestic Violence Offender Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="6">
+           <widget class="QCheckBox" name="anger_management_checkBox">
+            <property name="text">
+             <string>Complete Anger Management Class</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="6">
+           <widget class="QCheckBox" name="mental_health_evaluation_checkBox">
+            <property name="text">
+             <string>Complete Mental Health Evaluation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="6">
+           <widget class="QCheckBox" name="alcohol_evaluation_checkBox">
+            <property name="text">
+             <string>Complete Alcohol/Drug Dependency Evaluation </string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="6">
+           <widget class="QCheckBox" name="driver_intervention_program_checkBox">
+            <property name="text">
+             <string>Complete Driver Intervention Program </string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="5">
+           <widget class="Line" name="line_10">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="25" column="5">
+           <widget class="Line" name="line_12">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="6">
+           <widget class="QCheckBox" name="antitheft_checkBox">
+            <property name="text">
+             <string>Complete Anti-theft/Shoplifting Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="daily_reporting_checkBox">
+            <property name="text">
+             <string>Report daily to Office of Community Control</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
            <widget class="QComboBox" name="community_control_type_of_control_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -622,68 +893,34 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="3" column="1" colspan="4">
-           <widget class="QLineEdit" name="community_control_not_within_500_feet_person_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1" colspan="4">
-           <widget class="QLineEdit" name="community_control_no_contact_with_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="3">
-        <widget class="QFrame" name="other_conditions_frame">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_9">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>100</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
+          <item row="14" column="0">
+           <widget class="QCheckBox" name="alcohol_monitoring_checkBox">
             <property name="text">
-             <string>Other Conditions</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <string>Submit to continuous alcohol monitoring for:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QTextEdit" name="other_conditions_textEdit">
+          <item row="20" column="6">
+           <widget class="QLineEdit" name="other_community_control_conditions_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Other Community Control Conditions Imposed</string>
+            </property>
+           </widget>
+          </item>
+          <item row="26" column="5">
+           <widget class="Line" name="line_13">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="5" rowspan="4">
+           <widget class="Line" name="line_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
@@ -691,7 +928,7 @@ font-weight: bold;</string>
         </widget>
        </item>
        <item row="5" column="0" colspan="3">
-        <widget class="QFrame" name="community_service_frame">
+        <widget class="QFrame" name="license_suspension_frame">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -707,16 +944,102 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="text">
-             <string>Hours:</string>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="2" column="1">
+           <widget class="QComboBox" name="term_of_suspension_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>6 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>18 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24 months</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDateEdit" name="license_suspension_date_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="7">
-           <widget class="QLabel" name="label_26">
+          <item row="2" column="2" colspan="2">
+           <widget class="QCheckBox" name="remedial_driving_class_checkBox">
+            <property name="text">
+             <string>Remedial driving class required for OL return</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="license_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>driving</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>hunting</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>concealed carry</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>Term of suspension:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>License suspended from:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>License type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
+           <widget class="QLabel" name="label_24">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
@@ -734,116 +1057,10 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Community Service</string>
+             <string>LICENSE SUSPENSION</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="community_service_hours_ordered_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>25</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>50</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>100</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>200</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>500</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>Days to Complete:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QComboBox" name="community_service_days_to_complete_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>30</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>60</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>90</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>120</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>150</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>180</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QLabel" name="label_22">
-            <property name="text">
-             <string>Date to Complete:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QDateEdit" name="community_service_date_to_complete_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -851,7 +1068,13 @@ font-weight: bold;</string>
         </widget>
        </item>
        <item row="0" column="0" colspan="3">
-        <widget class="QFrame" name="frame_2">
+        <widget class="QFrame" name="case_banner_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>110</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Palatino Linotype</family>
@@ -932,8 +1155,8 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="4" column="0" colspan="3">
-        <widget class="QFrame" name="license_suspension_frame">
+       <item row="6" column="0" colspan="3">
+        <widget class="QFrame" name="community_service_frame">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -949,9 +1172,56 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="1" column="3">
-           <widget class="QDateEdit" name="license_suspension_date_box">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0" colspan="7">
+           <widget class="QLabel" name="label_26">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>COMMUNITY SERVICE</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Days to Complete:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="text">
+             <string>Hours:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>Date to Complete:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="5">
+           <widget class="QDateEdit" name="community_service_date_to_complete_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -960,78 +1230,146 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="term_of_suspension_box">
+          <item row="1" column="3">
+           <widget class="QComboBox" name="community_service_days_to_complete_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>6 months</string>
+              <string>0</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>12 months</string>
+              <string>30</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>18 months</string>
+              <string>60</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>24 months</string>
+              <string>90</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item row="2" column="2" colspan="2">
-           <widget class="QCheckBox" name="remedial_driving_class_checkBox">
-            <property name="text">
-             <string>Remedial driving class required for OL return</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>License suspended from:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_21">
-            <property name="text">
-             <string>Term of suspension:</string>
-            </property>
+            <item>
+             <property name="text">
+              <string>120</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>150</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>180</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="license_type_box">
+           <widget class="QComboBox" name="community_service_hours_ordered_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
             <item>
              <property name="text">
-              <string>driving</string>
+              <string/>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>hunting</string>
+              <string>25</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>concealed carry</string>
+              <string>50</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>100</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>200</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>500</string>
              </property>
             </item>
            </widget>
           </item>
-          <item row="0" column="0" colspan="4">
-           <widget class="QLabel" name="label_24">
+         </layout>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QFrame" name="diversion_frame">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="3" column="3">
+           <widget class="QDateEdit" name="diversion_jail_report_date_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="theft_diversion_checkBox">
+            <property name="text">
+             <string>Theft Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Jail Report Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Fine Pay Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QDateEdit" name="diversion_fine_pay_date_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="4">
+           <widget class="QLabel" name="label_30">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
               <horstretch>0</horstretch>
@@ -1055,7 +1393,65 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>License Suspension</string>
+             <string>DIVERSION</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="marijuana_diversion_checkBox">
+            <property name="text">
+             <string>Marijuana Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" rowspan="2">
+           <widget class="Line" name="line_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="3">
+        <widget class="QFrame" name="other_conditions_frame">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_9">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>OTHER CONDITIONS</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -1063,16 +1459,16 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>License type:</string>
+           <widget class="QTextEdit" name="other_conditions_textEdit">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="3" column="0" colspan="3">
+       <item row="2" column="0" colspan="3">
         <widget class="QFrame" name="jail_commitment_frame">
          <property name="enabled">
           <bool>false</bool>
@@ -1089,15 +1485,8 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_6" columnstretch="2,2,2,2">
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Report Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+         <layout class="QGridLayout" name="gridLayout_6" columnstretch="2,0,0,0">
+          <item row="2" column="1">
            <widget class="QComboBox" name="report_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1115,61 +1504,6 @@ font-weight: bold;</string>
             <item>
              <property name="text">
               <string>date set by Office of Community Control</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QDateEdit" name="report_date_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Report Type:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_3">
-            <property name="text">
-             <string>Jail Time Credit:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="jail_time_credit_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>Jail Term Days to be served:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QComboBox" name="jail_term_type_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>consecutively</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>concurrently</string>
              </property>
             </item>
            </widget>
@@ -1199,14 +1533,125 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Jail Commitment</string>
+             <string>JAIL COMMITMENT</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
+          <item row="10" column="1">
+           <widget class="QLineEdit" name="companion_cases_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Companion Case Nos.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Report Type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Type of Sentence Execution:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="jail_sentence_execution_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>consecutive days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>intermittent days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>weekends (Friday evening to Monday morning)</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="1">
+           <widget class="QComboBox" name="jail_term_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>concurrently</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>consecutively</string>
+             </property>
+            </item>
+           </widget>
+          </item>
           <item row="3" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Report Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QDateEdit" name="report_date_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="2">
+           <widget class="Line" name="line_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>Jail Term Days to be served:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="companion_cases_checkBox">
+            <property name="text">
+             <string>Companion Cases (Check only if applicable)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="jail_report_days_notes_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Jail report days if not consecutive</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
            <widget class="QCheckBox" name="dip_checkBox">
             <property name="text">
              <string>DIP Program in Lieu of 3 days Jail Time</string>
@@ -1216,32 +1661,6 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QPushButton" name="add_conditions_Button">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(62, 146, 255)</string>
-         </property>
-         <property name="text">
-          <string>Add Conditions</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="cancel_Button">
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(160, 160, 160);</string>
-         </property>
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
     </widget>
@@ -1249,42 +1668,49 @@ font-weight: bold;</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>theft_diversion_checkBox</tabstop>
   <tabstop>community_control_type_of_control_box</tabstop>
   <tabstop>community_control_term_of_control_box</tabstop>
+  <tabstop>daily_reporting_checkBox</tabstop>
   <tabstop>community_control_not_within_500_feet_checkBox</tabstop>
   <tabstop>community_control_not_within_500_feet_person_box</tabstop>
   <tabstop>community_control_no_contact_checkBox</tabstop>
   <tabstop>community_control_no_contact_with_box</tabstop>
-  <tabstop>alcohol_monitoring_checkBox</tabstop>
-  <tabstop>alcohol_monitoring_time_box</tabstop>
   <tabstop>house_arrest_checkBox</tabstop>
   <tabstop>house_arrest_time_box</tabstop>
   <tabstop>gps_exclusion_checkBox</tabstop>
   <tabstop>gps_exclusion_radius_box</tabstop>
   <tabstop>gps_exclusion_location_box</tabstop>
+  <tabstop>alcohol_monitoring_checkBox</tabstop>
+  <tabstop>alcohol_monitoring_time_box</tabstop>
+  <tabstop>interlock_vehicles_checkBox</tabstop>
   <tabstop>community_control_community_service_checkBox</tabstop>
   <tabstop>community_control_community_service_hours_box</tabstop>
-  <tabstop>pay_restitution_checkBox</tabstop>
-  <tabstop>pay_restitution_amount_box</tabstop>
-  <tabstop>pay_restitution_to_box</tabstop>
-  <tabstop>other_community_control_checkBox</tabstop>
-  <tabstop>other_community_control_conditions_box</tabstop>
   <tabstop>antitheft_checkBox</tabstop>
   <tabstop>anger_management_checkBox</tabstop>
   <tabstop>alcohol_evaluation_checkBox</tabstop>
   <tabstop>domestic_violence_program_checkBox</tabstop>
   <tabstop>driver_intervention_program_checkBox</tabstop>
   <tabstop>mental_health_evaluation_checkBox</tabstop>
-  <tabstop>interlock_vehicles_checkBox</tabstop>
-  <tabstop>daily_reporting_checkBox</tabstop>
+  <tabstop>pay_restitution_checkBox</tabstop>
+  <tabstop>pay_restitution_to_box</tabstop>
+  <tabstop>pay_restitution_amount_box</tabstop>
+  <tabstop>other_community_control_checkBox</tabstop>
+  <tabstop>other_community_control_conditions_box</tabstop>
+  <tabstop>report_type_box</tabstop>
+  <tabstop>report_date_box</tabstop>
+  <tabstop>jail_sentence_execution_type_box</tabstop>
+  <tabstop>jail_term_type_box</tabstop>
+  <tabstop>companion_cases_box</tabstop>
   <tabstop>license_type_box</tabstop>
-  <tabstop>term_of_suspension_box</tabstop>
   <tabstop>license_suspension_date_box</tabstop>
+  <tabstop>term_of_suspension_box</tabstop>
   <tabstop>remedial_driving_class_checkBox</tabstop>
   <tabstop>community_service_hours_ordered_box</tabstop>
   <tabstop>community_service_days_to_complete_box</tabstop>
   <tabstop>community_service_date_to_complete_box</tabstop>
   <tabstop>other_conditions_textEdit</tabstop>
+  <tabstop>scrollArea</tabstop>
   <tabstop>add_conditions_Button</tabstop>
  </tabstops>
  <resources/>
@@ -1309,5 +1735,6 @@ font-weight: bold;</string>
   <slot>delete_offense_from_view()</slot>
   <slot>add_conditions()</slot>
   <slot>set_service_date()</slot>
+  <slot>set_field_enabled()</slot>
  </slots>
 </ui>
