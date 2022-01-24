@@ -15,7 +15,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import PleaComboBox
+from views.custom_widgets import PleaComboBox, WarningBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -219,17 +219,13 @@ class CriminalSlotFunctions:
             and dialog.fra_in_file_box.currentText() == "No"
             and dialog.fra_in_court_box.currentText() == "N/A"
         ):
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Warning")
-            message.setText("The information provided currently "
-                            "indicates insurance was not shown/in the file. "
+            message = WarningBox("The information provided currently "
+                            "indicates insurance was not shown in the file. "
                             "There is no information on whether "
                             "defendant showed proof of insurance "
                             "in court. \n\nDo you wish to create an entry "
                             "without indicating whether insurance was "
                             "shown in court?")
-            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
@@ -250,17 +246,13 @@ class CriminalSlotFunctions:
             and dialog.fra_in_file_box.currentText() == "No"
             and dialog.fra_in_court_box.currentText() == "N/A"
         ):
-            message = QMessageBox()
-            message.setIcon(QMessageBox.Warning)
-            message.setWindowTitle("Warning")
-            message.setText("The information provided currently "
-                            "indicates insurance was not shown/in the file. "
+            message = WarningBox("The information provided currently "
+                            "indicates insurance was not shown in the file. "
                             "There is no information on whether "
                             "defendant showed proof of insurance "
                             "in court. \n\nDo you wish to create an entry "
                             "without indicating whether insurance was "
                             "shown in court?")
-            message.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
