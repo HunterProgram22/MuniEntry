@@ -427,7 +427,6 @@ class JailChargesGrid(ChargesGrid):
         self.add_delete_button_to_grid(dialog, JailChargesGrid.row_delete_button, column)
 
 
-
 def main():
     pass
 
