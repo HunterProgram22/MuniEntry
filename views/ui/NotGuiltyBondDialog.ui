@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1081</width>
-    <height>789</height>
+    <width>1108</width>
+    <height>855</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1041</width>
-           <height>749</height>
+           <width>1043</width>
+           <height>819</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" columnstretch="2,1">
@@ -880,7 +880,7 @@ font-weight: bold;</string>
           <item row="5" column="0">
            <widget class="QFrame" name="frame_2">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(119, 180, 255);
+             <string notr="true">background-color: rgb(240, 240, 240);
 border-color: rgb(0, 0, 0);</string>
             </property>
             <property name="frameShape">
@@ -893,6 +893,20 @@ border-color: rgb(0, 0, 0);</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,1">
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="vehicle_seizure_checkBox">
+               <property name="text">
+                <string>Vehicle Seizure / Immobilization</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="admin_license_suspension_checkBox">
+               <property name="text">
+                <string>Administrative License Suspension</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_10">
                <property name="font">
@@ -920,17 +934,10 @@ border-color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="vehicle_seizure_checkBox">
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="custodial_supervision_checkBox">
                <property name="text">
-                <string>Vehicle Seizure / Immobilization</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="admin_license_suspension_checkBox">
-               <property name="text">
-                <string>Administrative License Suspension</string>
+                <string>Custodial Supervision</string>
                </property>
               </widget>
              </item>
@@ -947,13 +954,6 @@ border-color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="custodial_supervision_checkBox">
-               <property name="text">
-                <string>Custodial Supervision</string>
-               </property>
-              </widget>
-             </item>
              <item row="3" column="1">
               <widget class="QCheckBox" name="other_conditions_checkBox">
                <property name="sizePolicy">
@@ -967,13 +967,27 @@ border-color: rgb(0, 0, 0);</string>
                </property>
               </widget>
              </item>
+             <item row="4" column="1">
+              <widget class="QPushButton" name="add_special_conditions_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(62, 146, 255)</string>
+               </property>
+               <property name="text">
+                <string>Add Special Conditions</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
           <item row="5" column="1">
            <widget class="QFrame" name="frame_8">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
+             <string notr="true">
+background-color: rgb(255, 255, 127);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -985,10 +999,10 @@ border-color: rgb(0, 0, 0);</string>
              <item row="1" column="0">
               <widget class="QPushButton" name="create_entry_Button">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);</string>
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
                </property>
                <property name="text">
-                <string>Create Entry</string>
+                <string>Open Entry</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
@@ -996,15 +1010,12 @@ border-color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="0" column="0">
-              <widget class="QPushButton" name="add_special_conditions_Button">
+              <widget class="QPushButton" name="print_entry_Button">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(62, 146, 255)</string>
+                <string notr="true">background-color: rgb(0, 255, 0);</string>
                </property>
                <property name="text">
-                <string>Add Special Conditions</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
+                <string>Print and Open Entry</string>
                </property>
               </widget>
              </item>
