@@ -34,11 +34,12 @@ def create_statute_list():
 def create_arraignment_cases_list():
     conn = sqlite3.connect(DB_PATH + "arraignments.sqlite")
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT case_number FROM cases")
+    cursor.execute("SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM cases")
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:
-        clean_cases_list.append(i[0])
+        name = i[0] + " - " + i[2]
+        clean_cases_list.append(name)
     clean_cases_list.sort()
     conn.close()
     clean_cases_list.insert(0, None)
@@ -47,11 +48,12 @@ def create_arraignment_cases_list():
 def create_slated_cases_list():
     conn = sqlite3.connect(DB_PATH + "slated.sqlite")
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT case_number FROM cases")
+    cursor.execute("SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM cases")
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:
-        clean_cases_list.append(i[0])
+        name = i[0] + " - " + i[2]
+        clean_cases_list.append(name)
     clean_cases_list.sort()
     conn.close()
     clean_cases_list.insert(0, None)
@@ -60,11 +62,12 @@ def create_slated_cases_list():
 def create_final_pretrial_cases_list():
     conn = sqlite3.connect(DB_PATH + "final_pretrials.sqlite")
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT case_number FROM cases")
+    cursor.execute("SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM cases")
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:
-        clean_cases_list.append(i[0])
+        name = i[0] + " - " + i[2]
+        clean_cases_list.append(name)
     clean_cases_list.sort()
     conn.close()
     clean_cases_list.insert(0, None)
