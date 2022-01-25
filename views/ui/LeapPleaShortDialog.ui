@@ -177,11 +177,21 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>956</width>
-           <height>748</height>
+           <width>960</width>
+           <height>752</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,2,2,4,1,0">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,2,2,4,1,0,0,0">
+          <item row="7" column="0">
+           <widget class="QPushButton" name="close_dialog_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 0, 0);</string>
+            </property>
+            <property name="text">
+             <string>Close Dialog</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
            <widget class="QFrame" name="frame_6">
             <property name="styleSheet">
@@ -194,6 +204,19 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <item row="1" column="0">
+              <widget class="QPushButton" name="guilty_all_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Guilty All</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0">
               <layout class="QGridLayout" name="charges_gridLayout">
                <item row="1" column="0">
@@ -272,8 +295,83 @@ font-weight: bold;</string>
                </item>
               </layout>
              </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="guilty_all_Button">
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QFrame" name="frame_3">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="minimumSize">
+                <size>
+                 <width>141</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Def. First Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="3">
+              <widget class="QDateEdit" name="plea_trial_date">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="minimumDate">
+                <date>
+                 <year>2021</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="date">
+                <date>
+                 <year>2021</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <widget class="QPushButton" name="cancel_Button">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -281,7 +379,69 @@ font-weight: bold;</string>
                 <string notr="true">background-color: rgb(160, 160, 160);</string>
                </property>
                <property name="text">
-                <string>Guilty All</string>
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="minimumSize">
+                <size>
+                 <width>141</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Def. Last Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_3">
+               <property name="minimumSize">
+                <size>
+                 <width>131</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Case Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="case_number_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="clear_fields_case_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Clear Fields</string>
                </property>
               </widget>
              </item>
@@ -450,19 +610,6 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QPushButton" name="create_entry_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(160, 160, 160);</string>
-            </property>
-            <property name="text">
-             <string>Create Entry</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QFrame" name="frame_2">
             <property name="styleSheet">
@@ -492,163 +639,26 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QFrame" name="frame_3">
+          <item row="5" column="0">
+           <widget class="QPushButton" name="print_entry_Button">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
+             <string notr="true">background-color: rgb(160, 160, 160);</string>
             </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+            <property name="text">
+             <string>Print and Open Entry</string>
             </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="minimumSize">
-                <size>
-                 <width>141</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Def. First Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="3">
-              <widget class="QDateEdit" name="plea_trial_date">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="minimumDate">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-               <property name="date">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>141</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Def. Last Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="label_3">
-               <property name="minimumSize">
-                <size>
-                 <width>131</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Case Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QLineEdit" name="case_number_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4">
-              <widget class="QPushButton" name="clear_fields_case_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Clear Fields</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QPushButton" name="print_entry_Button">
+           <widget class="QPushButton" name="create_entry_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(0, 255, 0);</string>
             </property>
             <property name="text">
-             <string>Print and Open Entry</string>
+             <string>Open Entry</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -668,7 +678,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>statute_choice_box</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>add_charge_Button</tabstop>
-  <tabstop>create_entry_Button</tabstop>
   <tabstop>scrollArea</tabstop>
   <tabstop>textBrowser</tabstop>
  </tabstops>

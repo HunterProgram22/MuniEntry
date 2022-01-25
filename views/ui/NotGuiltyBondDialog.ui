@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1043</width>
-           <height>819</height>
+           <width>1068</width>
+           <height>815</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" columnstretch="2,1">
@@ -996,26 +996,36 @@ background-color: rgb(255, 255, 127);</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_10">
+             <item row="3" column="0">
+              <widget class="QPushButton" name="close_dialog_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 0, 0);</string>
+               </property>
+               <property name="text">
+                <string>Close Dialog</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0">
-              <widget class="QPushButton" name="create_entry_Button">
+              <widget class="QPushButton" name="print_entry_Button">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Print and Open Entry</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="create_entry_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 255, 0);</string>
                </property>
                <property name="text">
                 <string>Open Entry</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="print_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);</string>
-               </property>
-               <property name="text">
-                <string>Print and Open Entry</string>
                </property>
               </widget>
              </item>

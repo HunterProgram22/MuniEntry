@@ -146,7 +146,10 @@ class CasePartyUpdater:
         self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
-        self.set_defense_counsel_information(dialog)
+        try:
+            self.set_defense_counsel_information(dialog)
+        except AttributeError:
+            pass
 
     def set_case_number_and_date(self, dialog):
         dialog.entry_case_information.case_number = self.case_number
