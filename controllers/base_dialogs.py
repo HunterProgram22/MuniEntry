@@ -15,7 +15,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import PleaComboBox, WarningBox
+from views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -61,8 +61,9 @@ def print_entry(dialog):
         print_document(docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
-        doc.save(SAVE_PATH + "second_user_copy" + docname)
-        os.startfile(SAVE_PATH + "second_user_copy" + docname)
+        message = RequiredBox("An entry for this case is already open in Word."
+                              " You must close the Word document first.")
+        message.exec()
 
 
 @logger.catch
@@ -75,8 +76,9 @@ def create_entry(dialog):
         doc.save(SAVE_PATH + docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
-        doc.save(SAVE_PATH + "second_user_copy" + docname)
-        os.startfile(SAVE_PATH + "second_user_copy" + docname)
+        message = RequiredBox("An entry for this case is already open in Word."
+                              " You must close the Word document first.")
+        message.exec()
 
 
 class BaseDialog(QDialog):

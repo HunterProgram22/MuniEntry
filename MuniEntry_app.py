@@ -160,7 +160,6 @@ class Window(QMainWindow, Ui_MainWindow):
                 (self.slated_database, self.slated_cases_box),
                 (self.final_pretrial_database, self.final_pretrial_cases_box),
             ]
-
             if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
                 database = self.case_list_to_load
                 for item in database_list:
