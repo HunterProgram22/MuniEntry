@@ -239,6 +239,10 @@ class CriminalSlotFunctions:
             if return_value == QMessageBox.No:
                 return None
         create_entry(dialog)
+
+    @classmethod
+    @logger.catch
+    def close_dialog(cls, dialog):
         dialog.close_event()
 
     @classmethod
@@ -266,7 +270,6 @@ class CriminalSlotFunctions:
             if return_value == QMessageBox.No:
                 return None
         print_entry(dialog)
-        dialog.close_event()
 
     @classmethod
     def clear_charge_fields(cls, dialog):
@@ -382,8 +385,15 @@ class CriminalBaseDialog(BaseDialog):
             lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
-        self.print_entry_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
+        try:
+            """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
+            eventually."""
+            self.print_entry_Button.pressed.connect(
+                lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
+        except AttributeError:
+            pass
+        self.close_dialog_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
         self.add_charge_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
         self.clear_fields_charge_Button.pressed.connect(
