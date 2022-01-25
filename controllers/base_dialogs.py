@@ -15,7 +15,7 @@ from models.case_information import CriminalCaseInformation, CriminalCharge, Ame
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import PleaComboBox, WarningBox
+from views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
@@ -61,8 +61,9 @@ def print_entry(dialog):
         print_document(docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
-        doc.save(SAVE_PATH + "second_user_copy" + docname)
-        os.startfile(SAVE_PATH + "second_user_copy" + docname)
+        message = RequiredBox("An entry for this case is already open in Word."
+                              " You must close the Word document first.")
+        message.exec()
 
 
 @logger.catch
@@ -75,8 +76,9 @@ def create_entry(dialog):
         doc.save(SAVE_PATH + docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
-        doc.save(SAVE_PATH + "second_user_copy" + docname)
-        os.startfile(SAVE_PATH + "second_user_copy" + docname)
+        message = RequiredBox("An entry for this case is already open in Word."
+                              " You must close the Word document first.")
+        message.exec()
 
 
 class BaseDialog(QDialog):
@@ -144,6 +146,7 @@ class CasePartyUpdater:
         self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
+        self.set_defense_counsel_information(dialog)
 
     def set_case_number_and_date(self, dialog):
         dialog.entry_case_information.case_number = self.case_number
@@ -153,6 +156,11 @@ class CasePartyUpdater:
         """Updates the party information from the GUI(view) and saves it to the model."""
         dialog.entry_case_information.defendant.first_name = self.defendant_first_name
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
+
+    def set_defense_counsel_information(self, dialog):
+        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name.text()
+        dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
+        dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
 
 class CMSLoader:
@@ -233,6 +241,10 @@ class CriminalSlotFunctions:
             if return_value == QMessageBox.No:
                 return None
         create_entry(dialog)
+
+    @classmethod
+    @logger.catch
+    def close_dialog(cls, dialog):
         dialog.close_event()
 
     @classmethod
@@ -260,7 +272,6 @@ class CriminalSlotFunctions:
             if return_value == QMessageBox.No:
                 return None
         print_entry(dialog)
-        dialog.close_event()
 
     @classmethod
     def clear_charge_fields(cls, dialog):
@@ -376,8 +387,15 @@ class CriminalBaseDialog(BaseDialog):
             lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
         self.create_entry_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
-        self.print_entry_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
+        try:
+            """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
+            eventually."""
+            self.print_entry_Button.pressed.connect(
+                lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
+        except AttributeError:
+            pass
+        self.close_dialog_Button.pressed.connect(
+            lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
         self.add_charge_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
         self.clear_fields_charge_Button.pressed.connect(
