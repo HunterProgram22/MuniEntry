@@ -214,7 +214,7 @@ class CriminalCaseInformation:
     """This object stores all the information for a cms_case both at inception and
     as it is populated through the application.
     TODO: Should also still refactor amend_offense_details to object of dataclass.
-    :days_in_jail: - this is jail time credit but it is not part of jail committment because
+    :days_in_jail: - this is jail time credit but it is not part of jail commitment because
     it can be applied to fines if no jail days imposed.
     """
     judicial_officer: object = None
@@ -223,6 +223,9 @@ class CriminalCaseInformation:
     appearance_reason: str = None
     sentencing_date: str = None
     defendant: object = Defendant()
+    defense_counsel: str = None
+    defense_counsel_type: str = None
+    defense_counsel_waived: bool = False
     fra_in_file: bool = None
     fra_in_court: bool = None
     days_in_jail: str = None

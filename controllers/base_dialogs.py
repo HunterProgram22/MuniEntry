@@ -144,6 +144,7 @@ class CasePartyUpdater:
         self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
+        self.set_defense_counsel_information(dialog)
 
     def set_case_number_and_date(self, dialog):
         dialog.entry_case_information.case_number = self.case_number
@@ -153,6 +154,11 @@ class CasePartyUpdater:
         """Updates the party information from the GUI(view) and saves it to the model."""
         dialog.entry_case_information.defendant.first_name = self.defendant_first_name
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
+
+    def set_defense_counsel_information(self, dialog):
+        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name.text()
+        dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
+        dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
 
 class CMSLoader:
