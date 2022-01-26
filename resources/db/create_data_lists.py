@@ -1,7 +1,6 @@
 import pathlib
 import sqlite3
 
-
 PATH = str(pathlib.Path().absolute())
 DB_PATH = PATH + "\\resources\\db\\"
 

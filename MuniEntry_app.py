@@ -19,7 +19,8 @@ from PyQt5 import QtGui
 
 from resources.db.create_data_lists import create_daily_cases_list
 from models.party_types import JudicialOfficer
-from models.data_loader import CriminalCaseSQLRetriever
+from models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
+    create_arraignments_database_connection, create_final_pretrial_database_connection
 from models.case_information import CriminalCaseInformation
 from views.custom_widgets import RequiredBox
 from views.main_window_ui import Ui_MainWindow
@@ -27,8 +28,6 @@ from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import create_arraignments_database_connection, create_final_pretrial_database_connection
-from settings import create_slated_database_connection
 
 PATH = str(pathlib.Path().absolute())
 
