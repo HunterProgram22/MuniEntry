@@ -8,7 +8,7 @@ from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
+from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
@@ -110,6 +110,8 @@ class BaseDialog(QDialog):
                 setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
             elif isinstance(getattr(self, item[1]), QDateEdit):
                 setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
+            elif isinstance(getattr(self, item[1]), QTimeEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).time().toString("hh:mm A"))
 
 
 class CasePartyUpdater:

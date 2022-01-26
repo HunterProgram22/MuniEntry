@@ -167,6 +167,7 @@ class JailTerms:
     ordered: bool = False
     report_type: str = None
     report_date: str = None
+    report_time: str = None
     jail_report_days_notes: str = None
     jail_term_type: str = None
     jail_sentence_execution_type: str = None

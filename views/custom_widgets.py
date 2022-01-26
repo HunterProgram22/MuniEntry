@@ -78,7 +78,7 @@ class FindingComboBox(QComboBox):
         self.addItem("")
         self.addItem("Guilty")
         self.addItem("Not Guilty")
-        self.addItem("Dismissed")
+        self.addItem("Lesser Included")
         self.addItem("Guilty - Allied Offense")
         self.addItem("Not Guilty - Allied Offense")
 

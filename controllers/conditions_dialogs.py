@@ -110,6 +110,7 @@ class ConditionsDialog(BaseDialog):
         jail_commitment_terms_list = [
             ("report_type", "report_type_box"),
             ("report_date", "report_date_box"),
+            ("report_time", "report_time_box"),
             ("jail_term_type", "jail_term_type_box"),
             ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
             ("jail_report_days_notes", "jail_report_days_notes_box"),
