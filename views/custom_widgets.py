@@ -89,8 +89,9 @@ class DegreeComboBox(QComboBox):
 
 
 class PleaComboBox(QComboBox):
-    def __init__(self, parent=None):
+    def __init__(self, column, parent=None):
         super(QComboBox, self).__init__(parent)
+        self.column = column
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -105,6 +106,8 @@ class PleaComboBox(QComboBox):
         self.addItem("No Contest")
         self.addItem("Not Guilty")
         self.addItem("Dismissed")
+        # self.currentTextChanged.connect(
+        #   lambda plea, column=self.column: ChargesGrid.update_if_dismissed(plea, column))
 
 
 class FindingComboBox(QComboBox):
@@ -246,7 +249,6 @@ class WarningBox(QMessageBox):
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
-
 class ChargesGrid(QGridLayout):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -379,7 +381,7 @@ class LeapPleaGrid(ChargesGrid):
         self.addWidget(QLabel(charge['offense']), LeapPleaGrid.row_offense, column)
         self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
-        self.addWidget(PleaComboBox(), LeapPleaGrid.row_plea, column)
+        self.addWidget(PleaComboBox(column), LeapPleaGrid.row_plea, column)
         self.add_delete_button_to_grid(dialog, LeapPleaGrid.row_delete_button, column)
 
 
@@ -399,7 +401,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
         self.addWidget(QLabel(charge['offense']), NotGuiltyPleaGrid.row_offense, column)
         self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
-        self.addWidget(PleaComboBox(), NotGuiltyPleaGrid.row_plea, column)
+        self.addWidget(PleaComboBox(column), NotGuiltyPleaGrid.row_plea, column)
         self.add_delete_button_to_grid(dialog, NotGuiltyPleaGrid.row_delete_button, column)
 
 
@@ -427,7 +429,7 @@ class NoJailChargesGrid(ChargesGrid):
         self.addWidget(StatuteLineEdit(charge['statute']), NoJailChargesGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), NoJailChargesGrid.row_degree, column)
         self.addWidget(AlliedCheckbox(), NoJailChargesGrid.row_allied_box, column)
-        self.addWidget(PleaComboBox(), NoJailChargesGrid.row_plea, column)
+        self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
         self.addWidget(FineLineEdit(charge['offense']), NoJailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), NoJailChargesGrid.row_fine_suspended, column)
@@ -461,7 +463,7 @@ class JailChargesGrid(ChargesGrid):
         self.addWidget(StatuteLineEdit(charge['statute']), JailChargesGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), JailChargesGrid.row_degree, column)
         self.addWidget(AlliedCheckbox(), JailChargesGrid.row_allied_box, column)
-        self.addWidget(PleaComboBox(), JailChargesGrid.row_plea, column)
+        self.addWidget(PleaComboBox(column), JailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), JailChargesGrid.row_finding, column)
         self.addWidget(FineLineEdit(charge['offense']), JailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), JailChargesGrid.row_fine_suspended, column)
