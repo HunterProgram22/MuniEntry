@@ -17,8 +17,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSpl
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list, \
-    create_final_pretrial_cases_list
+from resources.db.create_data_lists import create_daily_cases_list
 from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever
 from models.case_information import CriminalCaseInformation
@@ -144,9 +143,9 @@ class Window(QMainWindow, Ui_MainWindow):
     def load_case_lists(self):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(create_arraignment_cases_list())
-        self.slated_cases_box.addItems(create_slated_cases_list())
-        self.final_pretrial_cases_box.addItems(create_final_pretrial_cases_list())
+        self.arraignment_cases_box.addItems(create_daily_cases_list("arraignments.sqlite"))
+        self.slated_cases_box.addItems(create_daily_cases_list("slated.sqlite"))
+        self.final_pretrial_cases_box.addItems(create_daily_cases_list("final_pretrials.sqlite"))
 
     @logger.catch
     def start_dialog_from_entry_button(self):
