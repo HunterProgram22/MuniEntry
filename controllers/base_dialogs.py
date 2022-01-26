@@ -161,7 +161,7 @@ class CasePartyUpdater:
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
 
     def set_defense_counsel_information(self, dialog):
-        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name.text()
+        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.text()
         dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
         dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
