@@ -13,8 +13,8 @@ from multiprocessing import Process, freeze_support
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSql import QSqlDatabase
 from loguru import logger
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSplashScreen
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSplashScreen
+from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui
 
 from resources.db.create_data_lists import create_daily_cases_list
@@ -177,7 +177,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "
-                        "blank template choose any case list and leave dropdown menu blank.")
+                                      "blank template choose any case list and leave dropdown menu blank.")
                 message.exec()
 
 
