@@ -22,7 +22,7 @@ from models.party_types import JudicialOfficer
 from models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
     create_arraignments_database_connection, create_final_pretrial_database_connection
 from models.case_information import CriminalCaseInformation
-from views.custom_widgets import RequiredBox
+from views.custom_widgets import RequiredBox, ExtendedComboBox
 from views.main_window_ui import Ui_MainWindow
 from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
@@ -52,6 +52,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
         self.connect_signals_to_slots()
+        self.arraignment_cases_box.__class__ = ExtendedComboBox
+        self.slated_cases_box.__class__ = ExtendedComboBox
+        self.final_pretrial_cases_box.__class__ = ExtendedComboBox
         self.judicial_officer = None
         self.case_to_load = None
         self.judicial_officer_dict = {
@@ -92,6 +95,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if button.text() == "Arraignments":
             if button.isChecked():
                 self.arraignment_cases_box.setEnabled(True)
+                self.arraignment_cases_box.setFocus()
                 self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setCurrentText("")
@@ -101,6 +105,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.arraignment_cases_box.setCurrentText("")
                 self.arraignment_cases_box.setEnabled(False)
                 self.slated_cases_box.setEnabled(True)
+                self.slated_cases_box.setFocus()
                 self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
         if button.text() == "Final Pre-trials":
@@ -110,6 +115,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setEnabled(True)
+                self.final_pretrial_cases_box.setFocus()
 
     def load_judicial_officers(self):
         """Loads judicial officers and connects the radio button for each judicial officer to the
