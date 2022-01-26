@@ -4,6 +4,7 @@ from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
 
 from models.case_information import CriminalCaseInformation
+from settings import CHARGES_DATABASE
 
 
 class CaseSQLRetriever(ABC):
@@ -104,3 +105,13 @@ def create_final_pretrial_database_connection():
     else:
         final_pretrial_database_connection = QSqlDatabase.database("final_pretrials_table", open=True)
     return final_pretrial_database_connection
+
+
+@logger.catch
+def create_database_connections():
+    """The databases for the application are created upon import of the module, which is done
+    on application startup. The connections to the databases are created, but the opening and
+    closing of the databases is handled by the appropriate class dialog."""
+    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
+    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
+    return offense_database_connection
