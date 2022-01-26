@@ -52,7 +52,7 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
-        self.connect_menu_signal_slots()
+        self.connect_signals_to_slots()
         self.judicial_officer = None
         self.case_to_load = None
         self.judicial_officer_dict = {
@@ -83,8 +83,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connect_entry_buttons()
         self.load_case_lists()
 
-    def connect_menu_signal_slots(self):
-        """This is for connecting top level MainWindow menu options to slots/functions."""
+    def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
         self.arraignments_radioButton.toggled.connect(lambda: self.btnstate(self.arraignments_radioButton))
         self.slated_radioButton.toggled.connect(lambda: self.btnstate(self.slated_radioButton))
