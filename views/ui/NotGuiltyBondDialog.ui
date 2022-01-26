@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1068</width>
-           <height>815</height>
+           <width>1043</width>
+           <height>819</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" columnstretch="2,1">
@@ -999,7 +999,7 @@ background-color: rgb(255, 255, 127);</string>
              <item row="3" column="0">
               <widget class="QPushButton" name="close_dialog_Button">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 0, 0);</string>
+                <string notr="true">background-color: rgb(170, 58, 63);</string>
                </property>
                <property name="text">
                 <string>Close Dialog</string>

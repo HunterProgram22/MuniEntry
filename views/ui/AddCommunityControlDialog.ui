@@ -168,8 +168,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1053</width>
-        <height>1574</height>
+        <width>1137</width>
+        <height>1691</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1540,7 +1540,7 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
+          <item row="11" column="1">
            <widget class="QLineEdit" name="companion_cases_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1557,14 +1557,31 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="10" column="1">
+           <widget class="QComboBox" name="jail_term_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>concurrently</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>consecutively</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
              <string>Type of Sentence Execution:</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="1">
            <widget class="QComboBox" name="jail_sentence_execution_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1586,30 +1603,6 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="9" column="1">
-           <widget class="QComboBox" name="jail_term_type_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>concurrently</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>consecutively</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_20">
-            <property name="text">
-             <string>Report Date:</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="1">
            <widget class="QDateEdit" name="report_date_box">
             <property name="styleSheet">
@@ -1620,28 +1613,21 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="2">
+          <item row="8" column="0" colspan="2">
            <widget class="Line" name="line_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_23">
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_20">
             <property name="text">
-             <string>Jail Term Days to be served:</string>
+             <string>Report Date:</string>
             </property>
            </widget>
           </item>
-          <item row="10" column="0">
-           <widget class="QCheckBox" name="companion_cases_checkBox">
-            <property name="text">
-             <string>Companion Cases (Check only if applicable)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
+          <item row="7" column="1">
            <widget class="QLineEdit" name="jail_report_days_notes_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1651,10 +1637,48 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="dip_checkBox">
             <property name="text">
              <string>DIP Program in Lieu of 3 days Jail Time</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_23">
+            <property name="text">
+             <string>Jail Term Days to be served:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QCheckBox" name="companion_cases_checkBox">
+            <property name="text">
+             <string>Companion Cases (Check only if applicable)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Report Time:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QTimeEdit" name="report_time_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="dateTime">
+             <datetime>
+              <hour>8</hour>
+              <minute>30</minute>
+              <second>0</second>
+              <year>2000</year>
+              <month>1</month>
+              <day>1</day>
+             </datetime>
             </property>
            </widget>
           </item>

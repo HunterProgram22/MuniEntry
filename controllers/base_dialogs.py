@@ -1,12 +1,14 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 import os
 import time
+
+from models.data_loader import create_database_connections
 from win32com import client
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
-from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit
+from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 from controllers.helper_functions import set_document_name
 from docxtpl import DocxTemplate
@@ -20,22 +22,11 @@ from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
 
-@logger.catch
-def create_database_connections():
-    """The databases for the application are created upon import of the module, which is done
-    on application startup. The connections to the databases are created, but the opening and
-    closing of the databases is handled by the appropriate class dialog."""
-    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
-    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection
-
-
 def open_databases():
     database_offenses.open()
 
 
 def close_databases():
-    """Closes any databases that were opened at the start of the dialog."""
     database_offenses.close()
     database_offenses.removeDatabase(CHARGES_DATABASE)
 
@@ -50,30 +41,15 @@ def print_document(docname):
 
 
 @logger.catch
-def print_entry(dialog):
-    """Loads the proper template and creates the entry.
-    TODO: This is duplicative of create_entry need to refactor."""
-    doc = DocxTemplate(dialog.template.template_path)
-    doc.render(dialog.entry_case_information.get_case_information())
-    docname = set_document_name(dialog)
-    try:
-        doc.save(SAVE_PATH + docname)
-        print_document(docname)
-        os.startfile(SAVE_PATH + docname)
-    except PermissionError:
-        message = RequiredBox("An entry for this case is already open in Word."
-                              " You must close the Word document first.")
-        message.exec()
-
-
-@logger.catch
-def create_entry(dialog):
+def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
     doc.render(dialog.entry_case_information.get_case_information())
     docname = set_document_name(dialog)
     try:
         doc.save(SAVE_PATH + docname)
+        if print_doc is True:
+            print_document(docname)
         os.startfile(SAVE_PATH + docname)
     except PermissionError:
         message = RequiredBox("An entry for this case is already open in Word."
@@ -134,6 +110,8 @@ class BaseDialog(QDialog):
                 setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
             elif isinstance(getattr(self, item[1]), QDateEdit):
                 setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
+            elif isinstance(getattr(self, item[1]), QTimeEdit):
+                setattr(terms_object, item[0], getattr(self, item[1]).time().toString("hh:mm A"))
 
 
 class CasePartyUpdater:
@@ -161,7 +139,7 @@ class CasePartyUpdater:
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
 
     def set_defense_counsel_information(self, dialog):
-        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name.text()
+        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.text()
         dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
         dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
@@ -223,8 +201,18 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
-        """The order of the create entry process is important to make sure the
-        information is updated before the entry is created."""
+        cls.update_info_and_perform_checks(dialog)
+        create_entry(dialog)
+
+    @classmethod
+    @logger.catch
+    def print_entry_process(cls, dialog):
+        cls.update_info_and_perform_checks(dialog)
+        create_entry(dialog, print_doc=True)
+
+    @classmethod
+    @logger.catch
+    def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
             return None
@@ -243,38 +231,11 @@ class CriminalSlotFunctions:
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
-        create_entry(dialog)
 
     @classmethod
     @logger.catch
     def close_dialog(cls, dialog):
         dialog.close_event()
-
-    @classmethod
-    @logger.catch
-    def print_entry_process(cls, dialog):
-        """The order of the create entry process is important to make sure the
-        information is updated before the entry is created.
-        TODO: This is duplicate of create_entry_process need to refactor."""
-        dialog.update_case_information()
-        if dialog.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        if (
-            hasattr(dialog, 'fra_in_file_box')
-            and dialog.fra_in_file_box.currentText() == "No"
-            and dialog.fra_in_court_box.currentText() == "N/A"
-        ):
-            message = WarningBox("The information provided currently "
-                                 "indicates insurance was not shown in the file. "
-                                 "There is no information on whether "
-                                 "defendant showed proof of insurance "
-                                 "in court. \n\nDo you wish to create an entry "
-                                 "without indicating whether insurance was "
-                                 "shown in court?")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                return None
-        print_entry(dialog)
 
     @classmethod
     def clear_charge_fields(cls, dialog):

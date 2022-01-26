@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.7.0-beta</string>
+   <string>MuniEntry - ver 0.7.0</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -90,6 +90,9 @@ font-weight: bold;</string>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
           </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item row="5" column="0">
@@ -99,6 +102,9 @@ font-weight: bold;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -145,6 +151,9 @@ font-weight: bold;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -546,7 +555,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>29</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -636,7 +645,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

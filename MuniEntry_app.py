@@ -13,23 +13,21 @@ from multiprocessing import Process, freeze_support
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSql import QSqlDatabase
 from loguru import logger
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSplashScreen
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtWidgets import QApplication, QMainWindow, QSplashScreen
+from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_arraignment_cases_list, create_slated_cases_list, \
-    create_final_pretrial_cases_list
+from resources.db.create_data_lists import create_daily_cases_list
 from models.party_types import JudicialOfficer
-from models.data_loader import CriminalCaseSQLRetriever
+from models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
+    create_arraignments_database_connection, create_final_pretrial_database_connection
 from models.case_information import CriminalCaseInformation
-from views.custom_widgets import RequiredBox
+from views.custom_widgets import RequiredBox, ExtendedComboBox
 from views.main_window_ui import Ui_MainWindow
 from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
 from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from controllers.fta_bond_dialogs import FTABondDialog
 from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import create_arraignments_database_connection, create_final_pretrial_database_connection
-from settings import create_slated_database_connection
 
 PATH = str(pathlib.Path().absolute())
 
@@ -53,7 +51,10 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
-        self.connect_menu_signal_slots()
+        self.connect_signals_to_slots()
+        self.arraignment_cases_box.__class__ = ExtendedComboBox
+        self.slated_cases_box.__class__ = ExtendedComboBox
+        self.final_pretrial_cases_box.__class__ = ExtendedComboBox
         self.judicial_officer = None
         self.case_to_load = None
         self.judicial_officer_dict = {
@@ -84,8 +85,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.connect_entry_buttons()
         self.load_case_lists()
 
-    def connect_menu_signal_slots(self):
-        """This is for connecting top level MainWindow menu options to slots/functions."""
+    def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
         self.arraignments_radioButton.toggled.connect(lambda: self.btnstate(self.arraignments_radioButton))
         self.slated_radioButton.toggled.connect(lambda: self.btnstate(self.slated_radioButton))
@@ -95,6 +95,7 @@ class Window(QMainWindow, Ui_MainWindow):
         if button.text() == "Arraignments":
             if button.isChecked():
                 self.arraignment_cases_box.setEnabled(True)
+                self.arraignment_cases_box.setFocus()
                 self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setCurrentText("")
@@ -104,6 +105,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.arraignment_cases_box.setCurrentText("")
                 self.arraignment_cases_box.setEnabled(False)
                 self.slated_cases_box.setEnabled(True)
+                self.slated_cases_box.setFocus()
                 self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
         if button.text() == "Final Pre-trials":
@@ -113,6 +115,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.slated_cases_box.setCurrentText("")
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setEnabled(True)
+                self.final_pretrial_cases_box.setFocus()
 
     def load_judicial_officers(self):
         """Loads judicial officers and connects the radio button for each judicial officer to the
@@ -144,9 +147,9 @@ class Window(QMainWindow, Ui_MainWindow):
     def load_case_lists(self):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(create_arraignment_cases_list())
-        self.slated_cases_box.addItems(create_slated_cases_list())
-        self.final_pretrial_cases_box.addItems(create_final_pretrial_cases_list())
+        self.arraignment_cases_box.addItems(create_daily_cases_list("arraignments.sqlite"))
+        self.slated_cases_box.addItems(create_daily_cases_list("slated.sqlite"))
+        self.final_pretrial_cases_box.addItems(create_daily_cases_list("final_pretrials.sqlite"))
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -169,13 +172,16 @@ class Window(QMainWindow, Ui_MainWindow):
                             self.case_to_load = CriminalCaseInformation()
                             dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                         else:
-                            case_number = item[1].currentText()
-                            self.case_to_load = CriminalCaseSQLRetriever(case_number, database).load_case()
+                            """The case_number splits the selected case to extract the case number, then
+                            it takes the returned list and puts the case number (index 1 of the case number list)
+                            into the CriminalCaseSqlRetriever."""
+                            case_number = item[1].currentText().split("- ")
+                            self.case_to_load = CriminalCaseSQLRetriever(case_number[1], database).load_case()
                             dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                 dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "
-                        "blank template choose any case list and leave dropdown menu blank.")
+                                      "blank template choose any case list and leave dropdown menu blank.")
                 message.exec()
 
 

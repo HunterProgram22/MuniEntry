@@ -27,8 +27,9 @@ def create_arraignments_database_connection():
     arraignments_database_connection.setDatabaseName(DB_PATH)
     return arraignments_database_connection
 
-from settings import create_arraignments_database_connection, create_slated_database_connection, \
-    create_final_pretrial_database_connection
+
+from models.data_loader import create_slated_database_connection, create_arraignments_database_connection
+from resources.db.create_data_lists import create_final_pretrial_database_connection
 
 arraignments_database = create_arraignments_database_connection()
 slated_database = create_slated_database_connection()
