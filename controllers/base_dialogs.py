@@ -40,10 +40,17 @@ def print_document(docname):
     word.Quit()
 
 
+def extract_data(case_data):
+    print(case_data.get('charges_list'))
+    print(case_data.get('judicial_officer').last_name)
+
+
 @logger.catch
 def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
+    # case_data = dialog.entry_case_information.get_case_information()
+    # extract_data(case_data)
     doc.render(dialog.entry_case_information.get_case_information())
     docname = set_document_name(dialog)
     try:
