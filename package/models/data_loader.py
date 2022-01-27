@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
 
-from models.case_information import CriminalCaseInformation
+from package.models.case_information import CriminalCaseInformation
 from settings import CHARGES_DATABASE
 
 

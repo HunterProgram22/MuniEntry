@@ -8,7 +8,6 @@ The main window contains options for selecting the judicial officer and template
 import multiprocessing
 import sys
 import pathlib
-from multiprocessing import Process, freeze_support
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSql import QSqlDatabase
@@ -17,19 +16,19 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QSplashScreen
 from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui
 
-from resources.db.create_data_lists import create_daily_cases_list
-from models.party_types import JudicialOfficer
-from models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
+from db.create_data_lists import create_daily_cases_list
+from package.models.party_types import JudicialOfficer
+from package.models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
     create_arraignments_database_connection, create_final_pretrial_database_connection
-from models.case_information import CriminalCaseInformation
-from views.custom_widgets import RequiredBox, ExtendedComboBox
-from views.main_window_ui import Ui_MainWindow
-from controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
-from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
-from controllers.fta_bond_dialogs import FTABondDialog
-from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from package.models.case_information import CriminalCaseInformation
+from package.views.custom_widgets import RequiredBox, ExtendedComboBox
+from package.views.main_window_ui import Ui_MainWindow
+from package.controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaDialog
+from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
+from package.controllers.fta_bond_dialogs import FTABondDialog
+from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from settings import ICON_PATH
 
-PATH = str(pathlib.Path().absolute())
 
 logger.add("./resources/logs/Error_log_{time}.log")
 
@@ -50,7 +49,7 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self, arraignment_database, slated_database, final_pretrial_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
-        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.connect_signals_to_slots()
         self.arraignment_cases_box.__class__ = ExtendedComboBox
         self.slated_cases_box.__class__ = ExtendedComboBox
@@ -189,10 +188,9 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments/slated/final_pretrial databases are created each time the
     application is loaded after any existing prior version is deleted."""
-    # TODO: There should be a better way create daily_case_lists instead of importing
-    from resources.db import create_daily_case_lists
+    from db import create_daily_case_lists # This import exists to run the scripts in create_daily_case_lists
     app = QApplication(sys.argv)
-    splash = QSplashScreen(QPixmap(PATH + '/resources/icons/gavel.png'))
+    splash = QSplashScreen(QPixmap(ICON_PATH + 'gavel.png'))
     splash.show()
     print("Loading")
     QTimer.singleShot(2000, splash.close)

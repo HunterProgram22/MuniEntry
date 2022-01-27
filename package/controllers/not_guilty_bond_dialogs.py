@@ -1,13 +1,12 @@
 """The controller module for the LEAP plea dialog."""
-from PyQt5.QtWidgets import QMessageBox
-from controllers.base_dialogs import CriminalBaseDialog
+from package.controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
-from views.custom_widgets import NotGuiltyPleaGrid
+from package.views.custom_widgets import NotGuiltyPleaGrid
 
-from views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
-from models.template_types import TEMPLATE_DICT
-from models.case_information import FTABondConditions
-from controllers.conditions_dialogs import AddSpecialBondConditionsDialog
+from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.models.template_types import TEMPLATE_DICT
+from package.models.case_information import FTABondConditions
+from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):

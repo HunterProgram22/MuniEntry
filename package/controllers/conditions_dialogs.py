@@ -1,15 +1,15 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
-from controllers.base_dialogs import BaseDialog
+from package.controllers.base_dialogs import BaseDialog
 from loguru import logger
-from models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
+from package.models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
     DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
     CommunityControl, VehicleSeizure, JailTerms, Diversion
-from views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
-from views.add_conditions_dialog_ui import Ui_AddConditionsDialog
-from views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
-from controllers.helper_functions import set_future_date
+from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
+from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
+from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
+from package.controllers.helper_functions import set_future_date
 
 
 CONDITIONS = [

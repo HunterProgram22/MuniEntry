@@ -1,8 +1,6 @@
 import pathlib
 import sqlite3
-
-PATH = str(pathlib.Path().absolute())
-DB_PATH = PATH + "\\resources\\db\\"
+from settings import DB_PATH
 
 
 def create_offense_list():

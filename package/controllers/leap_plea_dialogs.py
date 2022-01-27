@@ -1,15 +1,15 @@
 """The controller module for the LEAP plea dialog."""
-from controllers.base_dialogs import CriminalBaseDialog
+from package.controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
 
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QMessageBox
+from PyQt5.QtWidgets import QLabel
 
-from views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
-from views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
-from views.custom_widgets import PleaComboBox, LeapPleaGrid
-from models.template_types import TEMPLATE_DICT
-from controllers.helper_functions import set_future_date
+from package.views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
+from package.views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
+from package.views.custom_widgets import PleaComboBox, LeapPleaGrid
+from package.models.template_types import TEMPLATE_DICT
+from package.controllers.helper_functions import set_future_date
 from settings import LEAP_COMPLETE_DATE_DICT
 
 

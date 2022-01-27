@@ -11,9 +11,9 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
-from controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
+from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
+from package.controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 # Home Path - Comment out when at work
 DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
@@ -28,7 +28,7 @@ def create_arraignments_database_connection():
     return arraignments_database_connection
 
 
-from models.data_loader import create_slated_database_connection, create_arraignments_database_connection
+from package.models.data_loader import create_slated_database_connection, create_arraignments_database_connection
 from resources.db.create_data_lists import create_final_pretrial_database_connection
 
 arraignments_database = create_arraignments_database_connection()

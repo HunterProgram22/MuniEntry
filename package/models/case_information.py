@@ -1,7 +1,7 @@
 """Module containing all data structures for everything at the moment."""
 from dataclasses import dataclass, field, asdict
 
-from models.party_types import Defendant
+from package.models.party_types import Defendant
 
 
 @dataclass

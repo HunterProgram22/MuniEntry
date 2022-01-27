@@ -7,7 +7,7 @@ from PyQt5 import QtGui
 
 from loguru import logger
 
-PATH = str(pathlib.Path().absolute())
+from settings import ICON_PATH
 
 
 class ExtendedComboBox(QComboBox):
@@ -228,7 +228,7 @@ class RequiredBox(QMessageBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Critical)
         self.setWindowTitle("Required")
         self.setText(self.message)
@@ -242,7 +242,7 @@ class WarningBox(QMessageBox):
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setWindowIcon(QtGui.QIcon(PATH + '/resources/icons/gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Warning)
         self.setWindowTitle("Warning")
         self.setText(self.message)

@@ -12,14 +12,14 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
-from controllers.helper_functions import set_document_name, set_future_date
-from models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
-from models.data_loader import create_database_connections
-from models.data_saver import extract_data
-from resources.db.create_data_lists import create_statute_list, create_offense_list
+from package.controllers.helper_functions import set_document_name, set_future_date
+from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
+from package.models.data_loader import create_database_connections
+from package.models.data_saver import extract_data
+from db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
-from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
+from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
+from package.views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
 
 

@@ -1,5 +1,5 @@
 from conftest import mouse_click
-from controllers.conditions_dialogs import AddCommunityControlDialog
+from package.controllers import AddCommunityControlDialog
 
 
 def start_add_conditions_dialog(jail_dialog, qtbot):

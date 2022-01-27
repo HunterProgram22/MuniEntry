@@ -1,14 +1,14 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
-from controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
-from views.custom_widgets import JailChargesGrid, NoJailChargesGrid
+from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
+from package.views.custom_widgets import JailChargesGrid, NoJailChargesGrid
 
 from loguru import logger
 
-from models.template_types import TEMPLATE_DICT
-from views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-from views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
-from controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
+from package.models.template_types import TEMPLATE_DICT
+from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
+from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):

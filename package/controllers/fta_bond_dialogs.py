@@ -1,12 +1,10 @@
 """The controller module for the LEAP plea dialog."""
 from loguru import logger
 
-from PyQt5.QtCore import QDate
-
-from views.fta_bond_dialog_ui import Ui_FTABondDialog
-from models.template_types import TEMPLATE_DICT
-from models.case_information import CriminalCaseInformation, FTABondConditions
-from controllers.base_dialogs import BaseDialog
+from package.views.fta_bond_dialog_ui import Ui_FTABondDialog
+from package.models.template_types import TEMPLATE_DICT
+from package.models.case_information import CriminalCaseInformation, FTABondConditions
+from package.controllers.base_dialogs import BaseDialog
 
 
 class FTABondDialog(BaseDialog, Ui_FTABondDialog):

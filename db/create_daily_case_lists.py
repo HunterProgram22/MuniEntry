@@ -8,10 +8,8 @@ from openpyxl import load_workbook
 
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-"""This path is from the MuniEntry level of the program because it uses Path at the level of the module
-into which it is imported."""
-PATH = str(pathlib.Path().absolute())
-DB_PATH = PATH + "\\resources\\db\\"
+from settings import DB_PATH
+
 
 
 @logger.catch

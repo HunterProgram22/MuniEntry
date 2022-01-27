@@ -2,8 +2,7 @@ import pathlib
 
 from openpyxl import load_workbook
 
-PATH = str(pathlib.Path().absolute())
-DB_PATH = PATH + "\\resources\\db\\"
+from settings import DB_PATH
 
 
 def extract_data(case_data):
