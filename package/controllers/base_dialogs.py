@@ -205,14 +205,16 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
-        cls.update_info_and_perform_checks(dialog)
-        create_entry(dialog)
+        update_return = cls.update_info_and_perform_checks(dialog)
+        if update_return is not None:
+            create_entry(dialog)
 
     @classmethod
     @logger.catch
     def print_entry_process(cls, dialog):
-        cls.update_info_and_perform_checks(dialog)
-        create_entry(dialog, print_doc=True)
+        update_return = cls.update_info_and_perform_checks(dialog)
+        if update_return is not None:
+            create_entry(dialog, print_doc=True)
 
     @classmethod
     @logger.catch
@@ -235,6 +237,7 @@ class CriminalSlotFunctions:
             return_value = message.exec()
             if return_value == QMessageBox.No:
                 return None
+        return "Pass"
 
     @classmethod
     @logger.catch

@@ -282,8 +282,13 @@ class ChargesGrid(QGridLayout):
                     message = RequiredBox("You must enter a plea.")
                     message.exec()
                     return None
-                if self.itemAtPosition(row_finding, column).widget().currentText() == "":
-                    message = RequiredBox("You must enter a finding.")
+                elif self.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
+                    column += 2
+                    loop_counter += 1
+                    continue
+                elif self.itemAtPosition(row_finding, column).widget().currentText() == "":
+                    offense = self.itemAtPosition(0, column).widget().text()
+                    message = RequiredBox(f"You must enter a finding for {offense}.")
                     message.exec()
                     return None
             except AttributeError:
