@@ -1,9 +1,11 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 import os
 import time
-
+import pathlib
 from models.data_loader import create_database_connections
 from win32com import client
+from openpyxl import load_workbook
+
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -21,6 +23,8 @@ from views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
 from controllers.helper_functions import set_future_date
 
+PATH = str(pathlib.Path().absolute())
+DB_PATH = PATH + "\\resources\\db\\"
 
 def open_databases():
     database_offenses.open()
@@ -41,16 +45,26 @@ def print_document(docname):
 
 
 def extract_data(case_data):
-    print(case_data.get('charges_list'))
-    print(case_data.get('judicial_officer').last_name)
+    wb_name = "Case_Data.xlsx"
+    print(DB_PATH + wb_name)
+    wb_name = DB_PATH + wb_name
+    wb = load_workbook(wb_name)
+    print(wb)
+    page = wb.active
+    judicial_officer = case_data.get('judicial_officer').last_name
+    print(judicial_officer)
+    page.cell(row=2, column=2).value = judicial_officer
+    wb.save(filename=wb_name)
+    #print(case_data.get('charges_list'))
+
 
 
 @logger.catch
 def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
-    # case_data = dialog.entry_case_information.get_case_information()
-    # extract_data(case_data)
+    case_data = dialog.entry_case_information.get_case_information()
+    extract_data(case_data)
     doc.render(dialog.entry_case_information.get_case_information())
     docname = set_document_name(dialog)
     try:
