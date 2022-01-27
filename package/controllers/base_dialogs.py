@@ -70,7 +70,7 @@ class BaseDialog(QDialog):
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
         super().__init__(parent)
-        self.setWindowIcon(QtGui.QIcon('./resources/icons/gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
                             QtCore.Qt.WindowMaximizeButtonHint)
         self.setupUi(self)
@@ -220,6 +220,18 @@ class CriminalSlotFunctions:
     @logger.catch
     def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
+        if (dialog.defense_counsel_name_box.text() == ""
+            and not dialog.defense_counsel_waived_checkBox.isChecked()
+        ):
+            message = WarningBox("There is no attorney listed. Did "
+                                 "the Defendant waive his right to counsel?"
+                                 " If you select 'No' you must enter a name "
+                                 "for Def. Counsel.")
+            return_value = message.exec()
+            if return_value == QMessageBox.Yes:
+                dialog.defense_counsel_waived_checkBox.setChecked(True)
+            elif return_value == QMessageBox.No:
+                return None
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
             return None
         if (
