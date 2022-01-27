@@ -1,30 +1,28 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
 import os
 import time
-import pathlib
-from models.data_loader import create_database_connections
-from win32com import client
-from openpyxl import load_workbook
 
+from docxtpl import DocxTemplate
+from loguru import logger
+from win32com import client
 
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
-from controllers.helper_functions import set_document_name
-from docxtpl import DocxTemplate
-from loguru import logger
+
+from controllers.helper_functions import set_document_name, set_future_date
 from models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
+from models.data_loader import create_database_connections
+from models.data_saver import extract_data
 from resources.db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
-from controllers.helper_functions import set_future_date
 
-PATH = str(pathlib.Path().absolute())
-DB_PATH = PATH + "\\resources\\db\\"
+
 
 def open_databases():
     database_offenses.open()
@@ -44,28 +42,13 @@ def print_document(docname):
     word.Quit()
 
 
-def extract_data(case_data):
-    wb_name = "Case_Data.xlsx"
-    print(DB_PATH + wb_name)
-    wb_name = DB_PATH + wb_name
-    wb = load_workbook(wb_name)
-    print(wb)
-    page = wb.active
-    judicial_officer = case_data.get('judicial_officer').last_name
-    print(judicial_officer)
-    page.cell(row=2, column=2).value = judicial_officer
-    wb.save(filename=wb_name)
-    #print(case_data.get('charges_list'))
-
-
-
 @logger.catch
 def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
     case_data = dialog.entry_case_information.get_case_information()
     extract_data(case_data)
-    doc.render(dialog.entry_case_information.get_case_information())
+    doc.render(case_data)
     docname = set_document_name(dialog)
     try:
         doc.save(SAVE_PATH + docname)
