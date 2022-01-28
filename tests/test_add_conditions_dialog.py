@@ -1,5 +1,5 @@
 from conftest import mouse_click
-from controllers.conditions_dialogs import AddConditionsDialog
+from package.controllers import AddConditionsDialog
 
 
 def start_add_conditions_dialog(njp_dialog, qtbot):

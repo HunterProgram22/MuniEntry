@@ -9,11 +9,11 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from controllers.sentencing_dialogs import NoJailPleaDialog
-from controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
-from controllers.fta_bond_dialogs import FTABondDialog
-from controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from models.data_loader import create_slated_database_connection, create_arraignments_database_connection
+from package.controllers.sentencing_dialogs import NoJailPleaDialog
+from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
+from package.controllers.fta_bond_dialogs import FTABondDialog
+from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
+from package.models.data_loader import create_slated_database_connection, create_arraignments_database_connection
 from resources.db.create_data_lists import create_final_pretrial_database_connection
 
 arraignments_database = create_arraignments_database_connection()

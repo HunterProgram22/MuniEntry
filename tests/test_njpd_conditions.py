@@ -1,5 +1,5 @@
 from conftest import mouse_click, enter_data
-from controllers.conditions_dialogs import AddConditionsDialog
+from package.controllers import AddConditionsDialog
 
 
 # TESTS
