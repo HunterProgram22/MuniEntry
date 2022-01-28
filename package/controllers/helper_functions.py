@@ -60,6 +60,7 @@ class InfoChecker(object):
             return_value = message.exec()
             if return_value == QMessageBox.Yes:
                 dialog.defense_counsel_waived_checkBox.setChecked(True)
+                return "Pass"
             elif return_value == QMessageBox.No:
                 return None
         else:

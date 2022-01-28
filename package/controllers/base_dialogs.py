@@ -227,6 +227,7 @@ class CriminalSlotFunctions:
             return None
         if InfoChecker.check_insurance(dialog) is None:
             return None
+        dialog.update_case_information()
         return "Pass"
 
     @classmethod

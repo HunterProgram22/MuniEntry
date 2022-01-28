@@ -27,5 +27,8 @@ def extract_data(case_data):
         page.cell(row=max+index, column=9, value=charge.get('fines_suspended'))
         page.cell(row=max+index, column=10, value=charge.get('jail_days'))
         page.cell(row=max+index, column=11, value=charge.get('jail_days_suspended'))
-    wb.save(filename=wb_name)
+    try:
+        wb.save(filename=wb_name)
+    except PermissionError:
+        pass
 
