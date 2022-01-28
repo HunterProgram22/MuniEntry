@@ -15,7 +15,6 @@ def extract_data(case_data):
     charges_list = case_data.get('charges_list')
     max = page.max_row
     max = max + 1
-    print(max)
     for index, charge in enumerate(charges_list):
         page.cell(row=max+index, column=1, value=case_number)
         page.cell(row=max+index, column=2, value=judicial_officer)
@@ -25,5 +24,8 @@ def extract_data(case_data):
         page.cell(row=max+index, column=6, value=charge.get('plea'))
         page.cell(row=max+index, column=7, value=charge.get('finding'))
         page.cell(row=max+index, column=8, value=charge.get('fines_amount'))
-        page.cell(row=max + index, column=9, value=charge.get('fines_suspended'))
+        page.cell(row=max+index, column=9, value=charge.get('fines_suspended'))
+        page.cell(row=max+index, column=10, value=charge.get('jail_days'))
+        page.cell(row=max+index, column=11, value=charge.get('jail_days_suspended'))
     wb.save(filename=wb_name)
+

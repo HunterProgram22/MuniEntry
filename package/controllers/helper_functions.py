@@ -55,7 +55,7 @@ class InfoChecker(object):
         ):
             message = WarningBox("There is no attorney listed. Did "
                                  "the Defendant waive his right to counsel?"
-                                 " If you select 'No' you must enter a name "
+                                 "\n\nIf you select 'No' you must enter a name "
                                  "for Def. Counsel.")
             return_value = message.exec()
             if return_value == QMessageBox.Yes:
@@ -81,13 +81,13 @@ class InfoChecker(object):
         ):
             message = WarningBox("The information provided currently "
                                  "indicates insurance was not shown in the file. "
-                                 "There is no information on whether "
-                                 "defendant showed proof of insurance "
-                                 "in court. \n\nDo you wish to create an entry "
-                                 "without indicating whether insurance was "
-                                 "shown in court?")
+                                 "\n\nDid the defendant show proof of insurance in court?")
             return_value = message.exec()
             if return_value == QMessageBox.No:
-                return None
+                dialog.fra_in_court_box.setCurrentText("No")
+                return "Pass"
+            elif return_value == QMessageBox.Yes:
+                dialog.fra_in_court_box.setCurrentText("Yes")
+                return "Pass"
         else:
             return "Pass"
