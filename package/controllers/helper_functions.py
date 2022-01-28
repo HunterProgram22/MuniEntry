@@ -1,7 +1,10 @@
 """Helper functions that are used throughout the application."""
 from datetime import date, timedelta
 
+from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
+
+from MuniEntry.package.views.custom_widgets import WarningBox
 
 
 def set_document_name(dialog):
@@ -39,3 +42,52 @@ def set_future_date(days_to_add, days_to_add_dict, next_day):
     future_date = next_court_day(future_date, next_day)
     total_days_to_add = (future_date - today).days
     return total_days_to_add
+
+class InfoChecker(object):
+    """Class that checks dialog to make sure the appropriate information is entered."""
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    @classmethod
+    def check_defense_counsel(cls, dialog):
+        if (dialog.defense_counsel_name_box.text() == ""
+            and not dialog.defense_counsel_waived_checkBox.isChecked()
+        ):
+            message = WarningBox("There is no attorney listed. Did "
+                                 "the Defendant waive his right to counsel?"
+                                 " If you select 'No' you must enter a name "
+                                 "for Def. Counsel.")
+            return_value = message.exec()
+            if return_value == QMessageBox.Yes:
+                dialog.defense_counsel_waived_checkBox.setChecked(True)
+            elif return_value == QMessageBox.No:
+                return None
+        else:
+            return "Pass"
+
+    @classmethod
+    def check_plea_and_findings(cls, dialog):
+        if dialog.charges_gridLayout.check_plea_and_findings() is None:
+            return None
+        else:
+            return "Pass"
+
+    @classmethod
+    def check_insurance(cls, dialog):
+        if (
+            hasattr(dialog, 'fra_in_file_box')
+            and dialog.fra_in_file_box.currentText() == "No"
+            and dialog.fra_in_court_box.currentText() == "N/A"
+        ):
+            message = WarningBox("The information provided currently "
+                                 "indicates insurance was not shown in the file. "
+                                 "There is no information on whether "
+                                 "defendant showed proof of insurance "
+                                 "in court. \n\nDo you wish to create an entry "
+                                 "without indicating whether insurance was "
+                                 "shown in court?")
+            return_value = message.exec()
+            if return_value == QMessageBox.No:
+                return None
+        else:
+            return "Pass"

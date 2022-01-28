@@ -22,6 +22,7 @@ from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from package.views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
 from settings import PAY_DATE_DICT
 
+from MuniEntry.package.controllers.helper_functions import InfoChecker
 
 
 def open_databases():
@@ -220,35 +221,12 @@ class CriminalSlotFunctions:
     @logger.catch
     def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
-        if (dialog.defense_counsel_name_box.text() == ""
-            and not dialog.defense_counsel_waived_checkBox.isChecked()
-        ):
-            message = WarningBox("There is no attorney listed. Did "
-                                 "the Defendant waive his right to counsel?"
-                                 " If you select 'No' you must enter a name "
-                                 "for Def. Counsel.")
-            return_value = message.exec()
-            if return_value == QMessageBox.Yes:
-                dialog.defense_counsel_waived_checkBox.setChecked(True)
-            elif return_value == QMessageBox.No:
-                return None
-        if dialog.charges_gridLayout.check_plea_and_findings() is None:
+        if InfoChecker.check_defense_counsel(dialog) is None:
             return None
-        if (
-            hasattr(dialog, 'fra_in_file_box')
-            and dialog.fra_in_file_box.currentText() == "No"
-            and dialog.fra_in_court_box.currentText() == "N/A"
-        ):
-            message = WarningBox("The information provided currently "
-                                 "indicates insurance was not shown in the file. "
-                                 "There is no information on whether "
-                                 "defendant showed proof of insurance "
-                                 "in court. \n\nDo you wish to create an entry "
-                                 "without indicating whether insurance was "
-                                 "shown in court?")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                return None
+        if InfoChecker.check_plea_and_findings(dialog) is None:
+            return None
+        if InfoChecker.check_insurance(dialog) is None:
+            return None
         return "Pass"
 
     @classmethod
