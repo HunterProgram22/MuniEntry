@@ -217,6 +217,17 @@ class AlliedCheckbox(QCheckBox):
         self.setFocusPolicy(QtCore.Qt.NoFocus)
 
 
+class DismissedCheckbox(QCheckBox):
+    def __init__(self, parent=None):
+        super(QCheckBox, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setText("Offense Dismissed")
+        self.setObjectName("dismissed_checkBox")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
+
+
 class RequiredBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)

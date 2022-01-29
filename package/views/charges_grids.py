@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import QGridLayout, QLabel
 from loguru import logger
 from package.views.custom_widgets import DeleteButton, AmendButton, PleaComboBox, AlliedCheckbox, FineLineEdit, \
-    StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit
+    StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit, \
+    DismissedCheckbox
 
 
 class ChargesGrid(QGridLayout):
@@ -140,13 +141,14 @@ class NoJailChargesGrid(ChargesGrid):
     row_offense = 0
     row_statute = 1
     row_degree = 2
-    row_allied_box = 3
-    row_plea = 4
-    row_finding = 5
-    row_fine = 6
-    row_fine_suspended = 7
-    row_amend_button = 8
-    row_delete_button = 9
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
+    row_amend_button = 9
+    row_delete_button = 10
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -159,6 +161,7 @@ class NoJailChargesGrid(ChargesGrid):
         self.addWidget(QLabel(charge['offense']), NoJailChargesGrid.row_offense, column)
         self.addWidget(StatuteLineEdit(charge['statute']), NoJailChargesGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), NoJailChargesGrid.row_degree, column)
+        self.addWidget(DismissedCheckbox(), NoJailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(), NoJailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)

@@ -241,36 +241,46 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
-        return AddPleaFindingsFines(self)
+        return NoJailPleaFindingFines.add(self) # self is the dialog
 
 
-class AddPleaFindingsFines:
-    """Row 3 - allied checkbox, Row 4 - plea, 5 - finding, 6 - fine,
-    7 fine-suspended. Columns start at 1 because 0 is labels."""
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.column = 1
-        for index, charge in enumerate(self.dialog.entry_case_information.charges_list):
-            while self.dialog.charges_gridLayout.itemAtPosition(3, self.column) is None:
-                self.column += 1
-            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
-                1, self.column).widget().text()
-            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
-                2, self.column).widget().currentText()
-            charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                4, self.column).widget().currentText()
-            charge.finding = self.dialog.charges_gridLayout.itemAtPosition(
-                5, self.column).widget().currentText()
-            charge.fines_amount = self.dialog.charges_gridLayout.itemAtPosition(
-                6, self.column).widget().text()
-            if self.dialog.charges_gridLayout.itemAtPosition(7, self.column).widget().text() == "":
+class NoJailPleaFindingFines:
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
+    row_amend_button = 9
+    row_delete_button = 10
+
+    @classmethod
+    def add(cls, dialog):
+        column = 1
+        for index, charge in enumerate(dialog.entry_case_information.charges_list):
+            while dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, column) is None:
+                column += 1
+            charge.statute = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_statute, column).widget().text()
+            charge.degree = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_degree, column).widget().currentText()
+            charge.plea = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_plea, column).widget().currentText()
+            charge.finding = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_finding, column).widget().currentText()
+            charge.fines_amount = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_fine, column).widget().text()
+            if dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, column).widget().text() == "":
                 charge.fines_suspended = "0"
             else:
                 charge.fines_suspended = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        7, self.column).widget().text()
+                    dialog.charges_gridLayout.itemAtPosition(
+                        NoJailPleaFindingFines.row_fine_suspended, column).widget().text()
                 )
-            self.column += 1
+            column += 1
 
 
 class AddPleaFindingsFinesJail:
