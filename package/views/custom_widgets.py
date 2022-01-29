@@ -268,35 +268,6 @@ class ChargesGrid(QGridLayout):
         amend_button.clicked.connect(dialog.start_amend_offense_dialog)
         self.addWidget(amend_button, row, column)
 
-    def check_plea_and_findings(self):
-        """Shows warning if no plea or findings are entered. Checks one at a time so unless all
-        fields have a plea and finding you will get the warning until they are filled in.
-
-        MOVE: Should this be in CriminalBaseDialog or a decorator or standalone function???"""
-        row_plea, row_finding = self.set_plea_and_finding_rows()
-        column = 2
-        loop_counter = 0
-        while loop_counter < self.columnCount():
-            try:
-                offense = self.itemAtPosition(0, column).widget().text()
-                if self.itemAtPosition(row_plea, column).widget().currentText() == "":
-                    message = RequiredBox(f"You must enter a plea for {offense}.")
-                    message.exec()
-                    return None
-                elif self.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
-                    column += 2
-                    loop_counter += 1
-                    continue
-                elif self.itemAtPosition(row_finding, column).widget().currentText() == "":
-                    message = RequiredBox(f"You must enter a finding for {offense}.")
-                    message.exec()
-                    return None
-            except AttributeError:
-                pass
-            column += 2
-            loop_counter += 1
-        return "Pass"
-
     def set_plea_and_finding_rows(self):
         """The initial values of row_plea and row_finding are the common rows for plea and findings.
         They are set to allow this method to return both values even if there is no finding row
