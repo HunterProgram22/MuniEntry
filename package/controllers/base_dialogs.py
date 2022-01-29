@@ -206,27 +206,27 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
-        update_return = cls.update_info_and_perform_checks(dialog)
-        if update_return is not None:
+        info_checks = cls.update_info_and_perform_checks(dialog)
+        if info_checks == "Pass":
             create_entry(dialog)
 
     @classmethod
     @logger.catch
     def print_entry_process(cls, dialog):
-        update_return = cls.update_info_and_perform_checks(dialog)
-        if update_return is not None:
+        info_checks = cls.update_info_and_perform_checks(dialog)
+        if info_checks == "Pass":
             create_entry(dialog, print_doc=True)
 
     @classmethod
     @logger.catch
     def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
-        if InfoChecker.check_defense_counsel(dialog) is None:
-            return None
-        if InfoChecker.check_plea_and_findings(dialog) is None:
-            return None
-        if InfoChecker.check_insurance(dialog) is None:
-            return None
+        if InfoChecker.check_defense_counsel(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_plea_and_findings(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_insurance(dialog) == "Fail":
+            return "Fail"
         dialog.update_case_information()
         return "Pass"
 

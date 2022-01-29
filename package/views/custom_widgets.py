@@ -278,8 +278,9 @@ class ChargesGrid(QGridLayout):
         loop_counter = 0
         while loop_counter < self.columnCount():
             try:
+                offense = self.itemAtPosition(0, column).widget().text()
                 if self.itemAtPosition(row_plea, column).widget().currentText() == "":
-                    message = RequiredBox("You must enter a plea.")
+                    message = RequiredBox(f"You must enter a plea for {offense}.")
                     message.exec()
                     return None
                 elif self.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
@@ -287,7 +288,6 @@ class ChargesGrid(QGridLayout):
                     loop_counter += 1
                     continue
                 elif self.itemAtPosition(row_finding, column).widget().currentText() == "":
-                    offense = self.itemAtPosition(0, column).widget().text()
                     message = RequiredBox(f"You must enter a finding for {offense}.")
                     message.exec()
                     return None

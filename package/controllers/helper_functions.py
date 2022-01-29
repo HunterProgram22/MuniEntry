@@ -62,14 +62,14 @@ class InfoChecker(object):
                 dialog.defense_counsel_waived_checkBox.setChecked(True)
                 return "Pass"
             elif return_value == QMessageBox.No:
-                return None
+                return "Fail"
         else:
             return "Pass"
 
     @classmethod
     def check_plea_and_findings(cls, dialog):
         if dialog.charges_gridLayout.check_plea_and_findings() is None:
-            return None
+            return "Fail"
         else:
             return "Pass"
 
