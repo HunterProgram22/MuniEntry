@@ -231,21 +231,35 @@ class DismissedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):
+        """TODO: the try except block is to account for the Leap Dialogs. Fix."""
         if self.isChecked():
-            self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("Dismissed")
-            self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(True)
-            self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(True)
-            self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(True)
-            self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(True)
-            self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(True)
-
+            try:
+                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("Dismissed")
+            except AttributeError:
+                self.dialog.charges_gridLayout.itemAtPosition(4, self.column_index).widget().setCurrentText("Dismissed")
+                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setHidden(True)
+            try:
+                self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(True)
+            except AttributeError:
+                pass
         else:
-            self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("")
-            self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(False)
-            self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(False)
-            self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(False)
-            self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(False)
-            self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(False)
+            try:
+                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("")
+            except AttributeError:
+                self.dialog.charges_gridLayout.itemAtPosition(4, self.column_index).widget().setCurrentText("")
+                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setHidden(False)
+            try:
+                self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(False)
+            except AttributeError:
+                pass
 
 
 class RequiredBox(QMessageBox):

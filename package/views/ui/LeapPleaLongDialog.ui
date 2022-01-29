@@ -178,7 +178,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>858</width>
-           <height>738</height>
+           <height>765</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
@@ -524,6 +524,22 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="plea_label_1">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Plea:</string>
+                 </property>
+                </widget>
+               </item>
                <item row="2" column="0">
                 <widget class="QLabel" name="label_21">
                  <property name="font">
@@ -537,22 +553,6 @@ font-weight: bold;</string>
                  </property>
                  <property name="text">
                   <string>Degree:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="plea_label_1">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Plea:</string>
                  </property>
                 </widget>
                </item>
@@ -575,10 +575,17 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Dismissed:</string>
                  </property>
                 </widget>
                </item>

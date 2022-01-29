@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'views\ui\LeapPleaShortDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\LeapPleaShortDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -131,7 +131,7 @@ class Ui_LeapPleaShortDialog(object):
         font.setWeight(75)
         self.plea_label_1.setFont(font)
         self.plea_label_1.setObjectName("plea_label_1")
-        self.charges_gridLayout.addWidget(self.plea_label_1, 3, 0, 1, 1)
+        self.charges_gridLayout.addWidget(self.plea_label_1, 4, 0, 1, 1)
         self.offense_label_1 = QtWidgets.QLabel(self.frame_6)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -146,7 +146,10 @@ class Ui_LeapPleaShortDialog(object):
         self.label_4 = QtWidgets.QLabel(self.frame_6)
         self.label_4.setText("")
         self.label_4.setObjectName("label_4")
-        self.charges_gridLayout.addWidget(self.label_4, 4, 0, 1, 1)
+        self.charges_gridLayout.addWidget(self.label_4, 5, 0, 1, 1)
+        self.label_5 = QtWidgets.QLabel(self.frame_6)
+        self.label_5.setObjectName("label_5")
+        self.charges_gridLayout.addWidget(self.label_5, 3, 0, 1, 1)
         self.gridLayout_3.addLayout(self.charges_gridLayout, 0, 0, 1, 1)
         self.gridLayout_5.addWidget(self.frame_6, 3, 0, 1, 1)
         self.frame_3 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
@@ -319,6 +322,7 @@ class Ui_LeapPleaShortDialog(object):
         self.label_21.setText(_translate("LeapPleaShortDialog", "Degree:"))
         self.plea_label_1.setText(_translate("LeapPleaShortDialog", "Plea:"))
         self.offense_label_1.setText(_translate("LeapPleaShortDialog", "Offense:"))
+        self.label_5.setText(_translate("LeapPleaShortDialog", "Dismissed:"))
         self.label.setText(_translate("LeapPleaShortDialog", "Def. First Name:"))
         self.label_26.setText(_translate("LeapPleaShortDialog", "Date:"))
         self.cancel_Button.setText(_translate("LeapPleaShortDialog", "Cancel"))

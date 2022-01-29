@@ -251,7 +251,7 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+               <item row="4" column="0">
                 <widget class="QLabel" name="plea_label_1">
                  <property name="font">
                   <font>
@@ -286,10 +286,17 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
                   <string/>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Dismissed:</string>
                  </property>
                 </widget>
                </item>
