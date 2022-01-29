@@ -9,7 +9,7 @@ from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
+from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
 from package.controllers.helper_functions import set_document_name, set_future_date
@@ -19,7 +19,7 @@ from package.models.data_saver import extract_data
 from db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from package.views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
+from package.views.custom_widgets import PleaComboBox, RequiredBox
 from settings import PAY_DATE_DICT
 
 from MuniEntry.package.controllers.helper_functions import InfoChecker
