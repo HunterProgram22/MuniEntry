@@ -218,14 +218,34 @@ class AlliedCheckbox(QCheckBox):
 
 
 class DismissedCheckbox(QCheckBox):
-    def __init__(self, parent=None):
+    def __init__(self, column_index, dialog, parent=None):
         super(QCheckBox, self).__init__(parent)
+        self.dialog = dialog
+        self.column_index = column_index
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setText("Offense Dismissed")
         self.setObjectName("dismissed_checkBox")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.toggled.connect(self.set_to_dismissed)
+
+    def set_to_dismissed(self):
+        if self.isChecked():
+            self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("Dismissed")
+            self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(True)
+            self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(True)
+            self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(True)
+            self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(True)
+            self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(True)
+
+        else:
+            self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("")
+            self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(False)
+            self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(False)
+            self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(False)
+            self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(False)
+            self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(False)
 
 
 class RequiredBox(QMessageBox):

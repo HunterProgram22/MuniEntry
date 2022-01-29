@@ -161,7 +161,7 @@ class NoJailChargesGrid(ChargesGrid):
         self.addWidget(QLabel(charge['offense']), NoJailChargesGrid.row_offense, column)
         self.addWidget(StatuteLineEdit(charge['statute']), NoJailChargesGrid.row_statute, column)
         self.addWidget(DegreeComboBox(charge['degree']), NoJailChargesGrid.row_degree, column)
-        self.addWidget(DismissedCheckbox(), NoJailChargesGrid.row_dismissed_box, column)
+        self.addWidget(DismissedCheckbox(column, dialog), NoJailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(), NoJailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
