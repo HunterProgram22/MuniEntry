@@ -49,12 +49,7 @@ class ChargesGrid(QGridLayout):
                 layout_item.widget().deleteLater()
                 self.removeItem(layout_item)
 
-    @logger.catch
-    def set_all_plea_and_findings(self, dialog):
-        """Sets the plea and findings boxes for all charges currently
-        in the charges_gridLayout.
-        TODO: Row-1 = should be allied-checkbox and row+1 = should be finding choice box.
-        This can be refactored better."""
+    def create_button_dict(self, dialog):
         button_dict = {}
         if hasattr(dialog, "guilty_all_Button"):
             button_dict[dialog.guilty_all_Button] = "Guilty"
@@ -62,6 +57,15 @@ class ChargesGrid(QGridLayout):
             button_dict[dialog.no_contest_all_Button] = "No Contest"
         if hasattr(dialog, "not_guilty_all_Button"):
             button_dict[dialog.not_guilty_all_Button] = "Not Guilty"
+        return button_dict
+
+    @logger.catch
+    def set_all_plea_and_findings(self, dialog):
+        """Sets the plea and findings boxes for all charges currently
+        in the charges_gridLayout.
+        TODO: Row-1 = should be allied-checkbox and row+1 = should be finding choice box.
+        This can be refactored better."""
+        button_dict = self.create_button_dict(dialog)
         plea = button_dict.get(self.sender())
         for row in range(self.rowCount()):
             for column in range(self.columnCount()):
