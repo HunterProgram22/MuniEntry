@@ -7,7 +7,8 @@ from PyQt5.QtWidgets import QLabel
 
 from package.views.leap_plea_short_dialog_ui import Ui_LeapPleaShortDialog
 from package.views.leap_plea_long_dialog_ui import Ui_LeapPleaLongDialog
-from package.views.custom_widgets import PleaComboBox, LeapPleaGrid
+from package.views.custom_widgets import PleaComboBox
+from package.views.charges_grids import LeapPleaGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.helper_functions import set_future_date
 from settings import LEAP_COMPLETE_DATE_DICT

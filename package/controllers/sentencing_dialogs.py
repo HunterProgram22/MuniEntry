@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QMessageBox
 from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
-from package.views.custom_widgets import JailChargesGrid, NoJailChargesGrid
+from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 
 from loguru import logger
 

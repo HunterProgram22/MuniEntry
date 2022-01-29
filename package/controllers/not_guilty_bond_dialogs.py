@@ -1,7 +1,7 @@
 """The controller module for the LEAP plea dialog."""
 from package.controllers.base_dialogs import CriminalBaseDialog
 from loguru import logger
-from package.views.custom_widgets import NotGuiltyPleaGrid
+from package.views.charges_grids import NotGuiltyPleaGrid
 
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.models.template_types import TEMPLATE_DICT
