@@ -102,7 +102,10 @@ class LeapPleaGrid(ChargesGrid):
         plea = button_dict.get(self.sender())
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(LeapPleaGrid.row_offense, column) is not None:
-                self.itemAtPosition(LeapPleaGrid.row_plea, column).widget().setCurrentText(plea)
+                if self.itemAtPosition(LeapPleaGrid.row_dismissed_box, column).widget().isChecked():
+                    continue
+                else:
+                    self.itemAtPosition(LeapPleaGrid.row_plea, column).widget().setCurrentText(plea)
 
 
 class NotGuiltyPleaGrid(ChargesGrid):

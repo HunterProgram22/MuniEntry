@@ -19,7 +19,7 @@ from package.models.data_saver import extract_data
 from db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from package.views.custom_widgets import PleaComboBox, RequiredBox
+from package.views.custom_widgets import RequiredBox
 from settings import PAY_DATE_DICT
 
 from MuniEntry.package.controllers.helper_functions import InfoChecker
@@ -286,30 +286,8 @@ class CriminalSlotFunctions:
 
 
 class AddPlea:
-    """Row 3 - plea when no allied checkbox added. Column starts at 1
-    because column 0 is labels. The grid adds an empty column every time a
-    charge is added, could increment by 2, but by incrementing by 1 and
-    checking for None it ensures it will catch any weird add/delete.
-    This method only adds the plea and is used in LEAP short and long and
-    Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
-    TODO: Rename and refactor out magic numbers. REFACTOR to CLASS and call class in subclass for dialog."""
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.column = 1
-        self.row = 3
-        for charge in self.dialog.entry_case_information.charges_list:
-            while self.dialog.charges_gridLayout.itemAtPosition(self.row, self.column) is None:
-                self.column += 1
-            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
-                1, self.column).widget().text()
-            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
-                2, self.column).widget().currentText()
-            if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
-                    self.row, self.column).widget(), PleaComboBox):
-                charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.row, self.column).widget().currentText()
-                self.column += 1
-            self.column += 1
+    """This class is specifically implemented for each main dialog with a more specific name."""
+    pass
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -388,6 +366,7 @@ class CriminalBaseDialog(BaseDialog):
     # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
+        """TODO: This can probably be refactored to the speficif main dialogs as it is just a pass through."""
         return AddPlea(self)
 
     # Slot Functions

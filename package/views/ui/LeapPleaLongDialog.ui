@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>923</width>
-    <height>762</height>
+    <width>985</width>
+    <height>823</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,13 +177,19 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>858</width>
-           <height>765</height>
+           <width>920</width>
+           <height>796</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_6">
+         <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,1,1,2,2">
           <item row="1" column="0" colspan="2">
-           <widget class="QFrame" name="frame_3">
+           <widget class="QFrame" name="case_name_Frame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
             </property>
@@ -196,12 +202,6 @@ font-weight: bold;</string>
             <layout class="QGridLayout" name="gridLayout">
              <item row="0" column="0">
               <widget class="QLabel" name="label">
-               <property name="minimumSize">
-                <size>
-                 <width>141</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="text">
                 <string>Def. First Name:</string>
                </property>
@@ -269,12 +269,6 @@ font-weight: bold;</string>
              </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_2">
-               <property name="minimumSize">
-                <size>
-                 <width>141</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="text">
                 <string>Def. Last Name:</string>
                </property>
@@ -292,12 +286,6 @@ font-weight: bold;</string>
              </item>
              <item row="1" column="2">
               <widget class="QLabel" name="label_3">
-               <property name="minimumSize">
-                <size>
-                 <width>131</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="text">
                 <string>Case Number:</string>
                </property>
@@ -326,6 +314,44 @@ font-weight: bold;</string>
                </property>
                <property name="text">
                 <string>Clear Fields</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Def. Counsel:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="defense_counsel_name_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QComboBox" name="defense_counsel_type_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Public Defender</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Private</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
+               <property name="text">
+                <string>Defendant waived right to counsel</string>
                </property>
               </widget>
              </item>
@@ -494,7 +520,137 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" rowspan="2" colspan="2">
+          <item row="4" column="0">
+           <widget class="QFrame" name="frame_5">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QFormLayout" name="formLayout">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>Time to Complete LEAP:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="time_to_complete_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>120 days</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>forthwith</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Sentencing Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QDateEdit" name="sentencing_date">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QFrame" name="frame_7">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="1" column="0" colspan="2">
+              <widget class="QPushButton" name="print_entry_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Print and Open Entry</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
+              <widget class="QPushButton" name="create_entry_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 255, 0);</string>
+               </property>
+               <property name="text">
+                <string>Open Entry</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="2">
+              <widget class="QPushButton" name="close_dialog_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(170, 58, 63);</string>
+               </property>
+               <property name="text">
+                <string>Close Dialog</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QFrame" name="frame_2">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QTextBrowser" name="textBrowser">
+               <property name="html">
+                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Palatino Linotype'; font-size:10pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;INSTRUCTIONS: &lt;/span&gt;&lt;span style=&quot; font-size:11pt; font-weight:400;&quot;&gt;Must have completed LEAP eligibility checklist and LEAP Participation agreement that is signed by Defendant, LEAP Coordinator and Prosecutor. Defendant must plead guilty to all charges. May enter program even if Prosecutor doesn't agree to dismiss companion charges, but Defendant must understand and be made aware that companion charges will not be dismissed and that he will be sentenced separately on companion charge(s) at completion of LEAP Program.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
            <widget class="QFrame" name="frame_6">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
@@ -607,136 +763,6 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QFrame" name="frame_5">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <layout class="QFormLayout" name="formLayout">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Time to Complete LEAP:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="time_to_complete_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>120 days</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>forthwith</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_19">
-               <property name="text">
-                <string>Sentencing Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QDateEdit" name="sentencing_date">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QFrame" name="frame_7">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="1" column="0" colspan="2">
-              <widget class="QPushButton" name="print_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Print and Open Entry</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QPushButton" name="create_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);</string>
-               </property>
-               <property name="text">
-                <string>Open Entry</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" colspan="2">
-              <widget class="QPushButton" name="close_dialog_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(170, 58, 63);</string>
-               </property>
-               <property name="text">
-                <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QFrame" name="frame_2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QTextBrowser" name="textBrowser">
-               <property name="html">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Palatino Linotype'; font-size:10pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;INSTRUCTIONS: &lt;/span&gt;&lt;span style=&quot; font-size:11pt; font-weight:400;&quot;&gt;Must have completed LEAP eligibility checklist and LEAP Participation agreement that is signed by Defendant, LEAP Coordinator and Prosecutor. Defendant must plead guilty to all charges. May enter program even if Prosecutor doesn't agree to dismiss companion charges, but Defendant must understand and be made aware that companion charges will not be dismissed and that he will be sentenced separately on companion charge(s) at completion of LEAP Program.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -747,9 +773,6 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <tabstops>
-  <tabstop>defendant_first_name_lineEdit</tabstop>
-  <tabstop>defendant_last_name_lineEdit</tabstop>
-  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>statute_choice_box</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>add_charge_Button</tabstop>

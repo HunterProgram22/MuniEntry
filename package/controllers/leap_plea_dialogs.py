@@ -70,6 +70,10 @@ class LeapPleaLongDialog(CriminalBaseDialog, Ui_LeapPleaLongDialog):
         self.add_delete_button_to_view(row, column)
 
     @logger.catch
+    def add_plea_to_entry_case_information(self):
+        return LeapAddPlea.add(self) # self is the dialog
+
+    @logger.catch
     def set_sentencing_date(self, days_to_add):
         "Sets the sentencing date to the Monday (0) after the days added."""
         total_days_to_add = set_future_date(days_to_add, LEAP_COMPLETE_DATE_DICT, 0)
@@ -99,9 +103,35 @@ class LeapPleaShortDialog(CriminalBaseDialog, Ui_LeapPleaShortDialog):
         self.statute_choice_box.setFocus()
 
     @logger.catch
+    def add_plea_to_entry_case_information(self):
+        return LeapAddPlea.add(self) # self is the dialog
+
+    @logger.catch
     def update_case_information(self):
         super().update_case_information()
         self.add_plea_to_entry_case_information()
+
+
+class LeapAddPlea:
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_dismissed_box = 3
+    row_plea = 4
+
+    @classmethod
+    def add(cls, dialog):
+        column = 1
+        for index, charge in enumerate(dialog.entry_case_information.charges_list):
+            while dialog.charges_gridLayout.itemAtPosition(LeapAddPlea.row_offense, column) is None:
+                column += 1
+            charge.statute = dialog.charges_gridLayout.itemAtPosition(
+                LeapAddPlea.row_statute, column).widget().text()
+            charge.degree = dialog.charges_gridLayout.itemAtPosition(
+                LeapAddPlea.row_degree, column).widget().currentText()
+            charge.plea = dialog.charges_gridLayout.itemAtPosition(
+                LeapAddPlea.row_plea, column).widget().currentText()
+            column += 1
 
 
 if __name__ == "__main__":
