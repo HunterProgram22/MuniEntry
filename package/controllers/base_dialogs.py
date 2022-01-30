@@ -366,7 +366,7 @@ class CriminalBaseDialog(BaseDialog):
     # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
-        """TODO: This can probably be refactored to the speficif main dialogs as it is just a pass through."""
+        """TODO: This can probably be refactored to the specific main dialogs as it is just a pass through."""
         return AddPlea(self)
 
     # Slot Functions
