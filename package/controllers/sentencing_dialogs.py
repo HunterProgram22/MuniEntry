@@ -286,19 +286,23 @@ class NoJailPleaFindingFines:
                 charge.finding = dialog.charges_gridLayout.itemAtPosition(
                     NoJailPleaFindingFines.row_finding, column).widget().currentText()
                 if dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, column).widget().text() == "":
-                    charge.fines_amount = "0"
+                    charge.fines_amount = 0
+                    charge.fines_amount = f"$ {charge.fines_amount}"
                 else:
                     charge.fines_amount = (
                         dialog.charges_gridLayout.itemAtPosition(
                             NoJailPleaFindingFines.row_fine, column).widget().text()
-                )
+                    )
+                    charge.fines_amount = f"$ {charge.fines_amount}"
                 if dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, column).widget().text() == "":
-                    charge.fines_suspended = "0"
+                    charge.fines_suspended = 0
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
                 else:
                     charge.fines_suspended = (
                         dialog.charges_gridLayout.itemAtPosition(
                             NoJailPleaFindingFines.row_fine_suspended, column).widget().text()
-                )
+                    )
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
             column += 1
 
 
@@ -341,19 +345,23 @@ class JailAddPleaFindingsFinesJail:
                     JailAddPleaFindingsFinesJail.row_finding, column).widget().currentText()
                 if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_fine,
                                                             column).widget().text() == "":
-                    charge.fines_amount = "0"
+                    charge.fines_amount = 0
+                    charge.fines_amount = f"$ {charge.fines_amount}"
                 else:
                     charge.fines_amount = (
                         dialog.charges_gridLayout.itemAtPosition(
                             JailAddPleaFindingsFinesJail.row_fine, column).widget().text()
                     )
+                    charge.fines_amount = f"$ {charge.fines_amount}"
                 if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_fine_suspended, column).widget().text() == "":
-                    charge.fines_suspended = "0"
+                    charge.fines_suspended = 0
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
                 else:
                     charge.fines_suspended = (
                         dialog.charges_gridLayout.itemAtPosition(
                             JailAddPleaFindingsFinesJail.row_fine_suspended, column).widget().text()
                     )
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
                 if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_jail_days, column).widget().text() == "":
                     charge.jail_days = "None"
                 else:
