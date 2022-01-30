@@ -489,7 +489,7 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
         if self.motion_decision_box.currentText() == "Granted":
-            amended_charge = self.current_offense + " - AMENDED"
+            amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
             self.case_information.charges_list[self.button_index].offense = amended_charge
             self.case_information.amended_charges_list.append(
                 (self.original_charge_box.currentText(), self.amended_charge_box.currentText())
