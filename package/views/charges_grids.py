@@ -109,7 +109,6 @@ class LeapPleaGrid(ChargesGrid):
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
-    """This grid keeps the statute and degree as labels that are not editable."""
     row_plea = 3
     row_delete_button = 4
 
@@ -123,6 +122,14 @@ class NotGuiltyPleaGrid(ChargesGrid):
         self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
         self.addWidget(PleaComboBox(column), NotGuiltyPleaGrid.row_plea, column)
         self.add_delete_button_to_grid(dialog, NotGuiltyPleaGrid.row_delete_button, column)
+
+    @logger.catch
+    def set_all_plea_and_findings(self, dialog):
+        button_dict = self.create_button_dict(dialog)
+        plea = button_dict.get(self.sender())
+        for column in range(1, self.columnCount()):
+            if self.itemAtPosition(NotGuiltyPleaGrid.row_offense, column) is not None:
+                self.itemAtPosition(NotGuiltyPleaGrid.row_plea, column).widget().setCurrentText(plea)
 
 
 class NoJailChargesGrid(ChargesGrid):
