@@ -1000,6 +1000,11 @@ font-weight: bold;</string>
             </item>
             <item>
              <property name="text">
+              <string>Waived</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
               <string>No</string>
              </property>
             </item>
