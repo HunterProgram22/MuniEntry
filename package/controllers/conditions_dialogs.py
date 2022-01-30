@@ -145,6 +145,8 @@ class ConditionsDialog(BaseDialog):
         diversion_terms_list = [
             ("marijuana_diversion", "marijuana_diversion_checkBox"),
             ("theft_diversion", "theft_diversion_checkBox"),
+            ("other_diversion", "other_diversion_checkBox"),
+            ("jail_imposed", "diversion_jail_imposed_checkBox"),
             ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
             ("diversion_jail_report_date", "diversion_jail_report_date_box"),
         ]
@@ -220,6 +222,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
         ("pay_restitution_checkBox", "pay_restitution_to_box"),
+        ("diversion_jail_imposed_checkBox", "diversion_jail_report_date_box"),
     ]
 
     @logger.catch
@@ -273,6 +276,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
         self.report_type_box.currentTextChanged.connect(self.set_report_date)
+        self.diversion_jail_imposed_checkBox.toggled.connect(self.set_field_enabled)
 
     def set_report_date(self):
         if self.report_type_box.currentText() == "date set by Office of Community Control":

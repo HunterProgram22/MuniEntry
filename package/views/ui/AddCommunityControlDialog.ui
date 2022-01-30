@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1242</width>
+    <width>1183</width>
     <height>765</height>
    </rect>
   </property>
@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1001</y>
-        <width>1199</width>
-        <height>1744</height>
+        <y>0</y>
+        <width>1140</width>
+        <height>1777</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -197,17 +197,38 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
-          <item row="3" column="3">
-           <widget class="QDateEdit" name="diversion_jail_report_date_box">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="marijuana_diversion_checkBox">
+            <property name="text">
+             <string>Marijuana Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" rowspan="3">
+           <widget class="Line" name="line_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_17">
+            <property name="text">
+             <string>Fine Pay Date:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDateEdit" name="diversion_fine_pay_date_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="theft_diversion_checkBox">
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="diversion_jail_imposed_checkBox">
             <property name="text">
-             <string>Theft Diversion Program</string>
+             <string>Jail Time Imposed</string>
             </property>
            </widget>
           </item>
@@ -218,21 +239,28 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>Fine Pay Date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="3">
-           <widget class="QDateEdit" name="diversion_fine_pay_date_box">
+          <item row="3" column="3">
+           <widget class="QDateEdit" name="diversion_jail_report_date_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="4">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="theft_diversion_checkBox">
+            <property name="text">
+             <string>Theft Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="other_diversion_checkBox">
+            <property name="text">
+             <string>Other Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
            <widget class="QLabel" name="label_30">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -261,20 +289,6 @@ font-weight: bold;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="marijuana_diversion_checkBox">
-            <property name="text">
-             <string>Marijuana Diversion Program</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1" rowspan="2">
-           <widget class="Line" name="line_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>
@@ -1702,7 +1716,6 @@ font-weight: bold;</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>theft_diversion_checkBox</tabstop>
   <tabstop>community_control_type_of_control_box</tabstop>
   <tabstop>community_control_term_of_control_box</tabstop>
   <tabstop>daily_reporting_checkBox</tabstop>
