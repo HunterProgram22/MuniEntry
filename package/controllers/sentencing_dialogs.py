@@ -6,6 +6,7 @@ from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from loguru import logger
 
 from package.models.template_types import TEMPLATE_DICT
+from package.views.custom_widgets import InfoBox
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
@@ -80,7 +81,10 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         then adds it to any fines that are in the fines_amount box and subtracts fines in the
         fines_suspended box. The loop stops when a cms_case of the highest fine is found because
         court costs are always for the highest charge. The _index is underscored because it is
-        not used but is required to unpack enumerate()."""
+        not used but is required to unpack enumerate().
+
+        TODO: This needs to be refactored and fixed - code in the AddPlea functions for each dialog have code
+        that exists just to deal with this function setting the charge fines/fines_suspended to 0."""
         self.entry_case_information.court_costs.amount = 0
         if self.court_costs_box.currentText() == "Yes":
             for _index, charge in enumerate(self.entry_case_information.charges_list):
@@ -100,13 +104,19 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             for _index, charge in enumerate(self.entry_case_information.charges_list):
                 if charge.fines_amount == '':
                     charge.fines_amount = 0
-                total_fines = total_fines + int(charge.fines_amount)
+                try:
+                    total_fines = total_fines + int(charge.fines_amount)
+                except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
+                    pass
             self.entry_case_information.total_fines = total_fines
             total_fines_suspended = 0
             for _index, charge in enumerate(self.entry_case_information.charges_list):
                 if charge.fines_suspended == '':
                     charge.fines_suspended = 0
-                total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+                try:
+                    total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+                except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
+                    pass
             self.entry_case_information.total_fines_suspended = total_fines_suspended
         except TypeError:
             print("A type error was allowed to pass - this is because of deleted charge.")
@@ -116,20 +126,18 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         """The _bool is the toggle from the clicked() of the button pressed. No
         action is taken with respect to it."""
         self.update_case_information()
-        message = QMessageBox()
-        message.setIcon(QMessageBox.Information)
+        message = InfoBox()
         message.setWindowTitle("Total Costs and Fines")
         # noinspection PyUnresolvedReferences
         message.setInformativeText("Costs: $" + str(self.entry_case_information.court_costs.amount) +
                                    "\nFines: $" + str(self.entry_case_information.total_fines) +
                                    "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
                                    "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in cms_case. ")
+                                   "may be assessed as a result of prior actions in the case. ")
         total_fines_and_costs = \
             (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
             self.entry_case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
-        message.setStandardButtons(QMessageBox.Ok)
         message.exec_()
 
     @logger.catch

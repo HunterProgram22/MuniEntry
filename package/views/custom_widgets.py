@@ -276,6 +276,17 @@ class RequiredBox(QMessageBox):
         self.setStandardButtons(QMessageBox.Ok)
 
 
+class InfoBox(QMessageBox):
+    def __init__(self, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Information)
+        self.setStandardButtons(QMessageBox.Ok)
+
+
 class WarningBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)
