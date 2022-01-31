@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
-from MuniEntry.package.views.custom_widgets import WarningBox
+from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox
 
 
 def set_document_name(dialog):
@@ -43,16 +43,15 @@ def set_future_date(days_to_add, days_to_add_dict, next_day):
     total_days_to_add = (future_date - today).days
     return total_days_to_add
 
-class InfoChecker(object):
-    """Class that checks dialog to make sure the appropriate information is entered."""
-    def __init__(self, dialog):
-        self.dialog = dialog
 
+class InfoChecker(object):
+    """Class that checks dialog to make sure the appropriate information is entered.
+    Methods are class methods because this is a factory method to perform checks and
+    no object is instantiated."""
     @classmethod
     def check_defense_counsel(cls, dialog):
         if (dialog.defense_counsel_name_box.text() == ""
-            and not dialog.defense_counsel_waived_checkBox.isChecked()
-        ):
+                and not dialog.defense_counsel_waived_checkBox.isChecked()):
             message = WarningBox("There is no attorney listed. Did "
                                  "the Defendant waive his right to counsel?"
                                  "\n\nIf you select 'No' you must enter a name "
@@ -62,16 +61,37 @@ class InfoChecker(object):
                 dialog.defense_counsel_waived_checkBox.setChecked(True)
                 return "Pass"
             elif return_value == QMessageBox.No:
-                return None
+                return "Fail"
         else:
             return "Pass"
 
     @classmethod
     def check_plea_and_findings(cls, dialog):
-        if dialog.charges_gridLayout.check_plea_and_findings() is None:
-            return None
-        else:
-            return "Pass"
+        """Shows warning if no plea or findings are entered. Checks one at a time so unless all
+        fields have a plea and finding you will get the warning until they are filled in."""
+        row_plea, row_finding = dialog.charges_gridLayout.set_plea_and_finding_rows()
+        column = 2
+        loop_counter = 0
+        while loop_counter < dialog.charges_gridLayout.columnCount():
+            try:
+                offense = dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
+                if dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
+                    message = RequiredBox(f"You must enter a plea for {offense}.")
+                    message.exec()
+                    return "Fail"
+                elif dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
+                    column += 2
+                    loop_counter += 1
+                    continue
+                elif dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
+                    message = RequiredBox(f"You must enter a finding for {offense}.")
+                    message.exec()
+                    return "Fail"
+            except AttributeError:
+                pass
+            column += 2
+            loop_counter += 1
+        return "Pass"
 
     @classmethod
     def check_insurance(cls, dialog):

@@ -189,6 +189,8 @@ class Diversion:
     ordered: bool = False
     marijuana_diversion: bool = False
     theft_diversion: bool = False
+    other_diversion: bool = False
+    jail_imposed: bool = False
     program_name: str = None
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
@@ -198,6 +200,8 @@ class Diversion:
             return "Marijuana Diversion Program"
         if self.theft_diversion is True:
             return "Theft Diversion Program"
+        if self.other_diversion is True:
+            return "Other Diversion Program"
 
 @dataclass
 class CourtCosts:

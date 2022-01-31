@@ -166,95 +166,7 @@ font-weight: bold;</string>
         <height>820</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0" colspan="2">
-        <widget class="QFrame" name="case_banner_frame">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>110</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Palatino Linotype</family>
-           <pointsize>11</pointsize>
-           <weight>75</weight>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>2</number>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <layout class="QGridLayout" name="charges_gridLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="offense_label_1">
-              <property name="font">
-               <font>
-                <family>Palatino Linotype</family>
-                <pointsize>11</pointsize>
-                <weight>75</weight>
-                <italic>false</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Offense:</string>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_14">
-              <property name="font">
-               <font>
-                <family>Palatino Linotype</family>
-                <pointsize>11</pointsize>
-                <weight>75</weight>
-                <italic>false</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Finding:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_19">
-              <property name="font">
-               <font>
-                <family>Palatino Linotype</family>
-                <pointsize>11</pointsize>
-                <weight>75</weight>
-                <italic>false</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="text">
-               <string>Statute:</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </item>
+      <layout class="QGridLayout" name="gridLayout_5">
        <item row="1" column="0" colspan="2">
         <widget class="QFrame" name="license_suspension_frame">
          <property name="enabled">
@@ -574,6 +486,130 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
+       <item row="4" column="0" colspan="2">
+        <widget class="QFrame" name="filler_frame">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="cancel_Button">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(160, 160, 160);</string>
+         </property>
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="add_conditions_Button">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(62, 146, 255)</string>
+         </property>
+         <property name="text">
+          <string>Add Conditions</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="2">
+        <widget class="QFrame" name="case_banner_frame">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>110</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Palatino Linotype</family>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="charges_gridLayout">
+            <item row="0" column="0">
+             <widget class="QLabel" name="offense_label_1">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Offense:</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_14">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Finding:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_19">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Statute:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="3" column="0" colspan="2">
         <widget class="QFrame" name="other_conditions_frame">
          <property name="enabled">
@@ -613,32 +649,6 @@ font-weight: bold;</string>
            <widget class="QTextEdit" name="other_conditions_textEdit"/>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="cancel_Button">
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(160, 160, 160);</string>
-         </property>
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QPushButton" name="add_conditions_Button">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(62, 146, 255)</string>
-         </property>
-         <property name="text">
-          <string>Add Conditions</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
         </widget>
        </item>
       </layout>

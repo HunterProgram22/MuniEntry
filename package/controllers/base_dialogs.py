@@ -9,7 +9,7 @@ from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QMessageBox, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
+from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
 from package.controllers.helper_functions import set_document_name, set_future_date
@@ -19,7 +19,7 @@ from package.models.data_saver import extract_data
 from db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from package.views.custom_widgets import PleaComboBox, WarningBox, RequiredBox
+from package.views.custom_widgets import RequiredBox
 from settings import PAY_DATE_DICT
 
 from MuniEntry.package.controllers.helper_functions import InfoChecker
@@ -206,27 +206,27 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
-        update_return = cls.update_info_and_perform_checks(dialog)
-        if update_return is not None:
+        info_checks = cls.update_info_and_perform_checks(dialog)
+        if info_checks == "Pass":
             create_entry(dialog)
 
     @classmethod
     @logger.catch
     def print_entry_process(cls, dialog):
-        update_return = cls.update_info_and_perform_checks(dialog)
-        if update_return is not None:
+        info_checks = cls.update_info_and_perform_checks(dialog)
+        if info_checks == "Pass":
             create_entry(dialog, print_doc=True)
 
     @classmethod
     @logger.catch
     def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
-        if InfoChecker.check_defense_counsel(dialog) is None:
-            return None
-        if InfoChecker.check_plea_and_findings(dialog) is None:
-            return None
-        if InfoChecker.check_insurance(dialog) is None:
-            return None
+        if InfoChecker.check_defense_counsel(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_plea_and_findings(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_insurance(dialog) == "Fail":
+            return "Fail"
         dialog.update_case_information()
         return "Pass"
 
@@ -286,30 +286,8 @@ class CriminalSlotFunctions:
 
 
 class AddPlea:
-    """Row 3 - plea when no allied checkbox added. Column starts at 1
-    because column 0 is labels. The grid adds an empty column every time a
-    charge is added, could increment by 2, but by incrementing by 1 and
-    checking for None it ensures it will catch any weird add/delete.
-    This method only adds the plea and is used in LEAP short and long and
-    Not Guilty. No Jail Plea and Jail CC Plea overrides this to include findings and fines.
-    TODO: Rename and refactor out magic numbers. REFACTOR to CLASS and call class in subclass for dialog."""
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.column = 1
-        self.row = 3
-        for charge in self.dialog.entry_case_information.charges_list:
-            while self.dialog.charges_gridLayout.itemAtPosition(self.row, self.column) is None:
-                self.column += 1
-            charge.statute = self.dialog.charges_gridLayout.itemAtPosition(
-                1, self.column).widget().text()
-            charge.degree = self.dialog.charges_gridLayout.itemAtPosition(
-                2, self.column).widget().currentText()
-            if isinstance(self.dialog.charges_gridLayout.itemAtPosition(
-                    self.row, self.column).widget(), PleaComboBox):
-                charge.plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.row, self.column).widget().currentText()
-                self.column += 1
-            self.column += 1
+    """This class is specifically implemented for each main dialog with a more specific name."""
+    pass
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -388,6 +366,7 @@ class CriminalBaseDialog(BaseDialog):
     # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
+        """TODO: This can probably be refactored to the specific main dialogs as it is just a pass through."""
         return AddPlea(self)
 
     # Slot Functions
@@ -510,7 +489,7 @@ class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.case_information.amend_offense_details = self.amend_offense_details
         if self.motion_decision_box.currentText() == "Granted":
-            amended_charge = self.current_offense + " - AMENDED"
+            amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
             self.case_information.charges_list[self.button_index].offense = amended_charge
             self.case_information.amended_charges_list.append(
                 (self.original_charge_box.currentText(), self.amended_charge_box.currentText())
