@@ -244,6 +244,8 @@ class DismissedCheckbox(QCheckBox):
                 self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(True)
                 self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(True)
                 self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(11, self.column_index).widget().setHidden(True)
+                self.dialog.charges_gridLayout.itemAtPosition(12, self.column_index).widget().setHidden(True)
             except AttributeError:
                 pass
         else:
@@ -258,6 +260,8 @@ class DismissedCheckbox(QCheckBox):
                 self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(False)
                 self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(False)
                 self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(11, self.column_index).widget().setHidden(False)
+                self.dialog.charges_gridLayout.itemAtPosition(12, self.column_index).widget().setHidden(False)
             except AttributeError:
                 pass
 
