@@ -65,23 +65,84 @@ def main():
         ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
         ("Final_Pretrials.xlsx", "final_pretrials.sqlite", "final_pretrials_table"),
     ]
+
     for items in database_list:
-        if os.path.exists(DB_PATH + items[1]):
+
+        database_name = f"{DB_PATH}{items[1]}"
+        database_connection_name = f"{items[2]}"
+
+        if os.path.exists(database_name):
             try:
-                os.remove(DB_PATH + items[1])
-                con = QSqlDatabase.addDatabase("QSQLITE", items[2])
-                con.setDatabaseName(DB_PATH + items[1])
+                os.remove(database_name)
+
+                con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                con.setDatabaseName(database_name)
+
             except PermissionError:
-                os.remove(DB_PATH + "backup_" + items[1])
-                con = QSqlDatabase.addDatabase("QSQLITE", "backup_" + items[2])
-                con.setDatabaseName(DB_PATH + "backup_" + items[1])
+
+                database_name = f"{DB_PATH}backup_{items[1]}"
+                database_connection_name = f"backup_{items[2]}"
+
+                if os.path.exists(database_name):
+                    try:
+                        os.remove(database_name)
+
+                        con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                        con.setDatabaseName(database_name)
+
+                    except PermissionError:
+
+                        database_name = f"{DB_PATH}backup_2{items[1]}"
+                        database_connection_name = f"backup_2{items[2]}"
+
+                        if os.path.exists(database_name):
+                            try:
+                                os.remove(database_name)
+
+                                con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                                con.setDatabaseName(database_name)
+
+                            except PermissionError:
+                                print("Max connections exceeded. Must close application instance.")
+                                input("Press Enter when an instance has beeen closed to continue loading.")
+
+                                database_name = f"{DB_PATH}backup_3{items[1]}"
+                                database_connection_name = f"backup_3{items[2]}"
+
+                                if os.path.exists(database_name):
+                                    try:
+                                        os.remove(database_name)
+
+                                        con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                                        con.setDatabaseName(database_name)
+                                    except PermissionError:
+                                        sys.exit(1)
+
+                                else:
+                                    print("The file does not exist")
+                                    con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                                    con.setDatabaseName(database_name)
+                        else:
+                            print("The file does not exist")
+                            con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                            con.setDatabaseName(database_name)
+
+
+                else:
+                    print("The file does not exist")
+                    con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+                    con.setDatabaseName(database_name)
+
         else:
             print("The file does not exist")
-            con = QSqlDatabase.addDatabase("QSQLITE", items[2])
-            con.setDatabaseName(DB_PATH + items[1])
+            con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
+            con.setDatabaseName(database_name)
+
+        # Check if connection exists, exit if it doesn't
         if not con.open():
             print("Unable to connect to database")
             sys.exit(1)
+
         # Create a query and execute it right away using .exec()
         create_table_query = QSqlQuery(con)
         create_table_query.exec(
@@ -114,6 +175,7 @@ def main():
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """
         )
+
         data_from_table = return_data_from_excel(DB_PATH + items[0])
         # Use .addBindValue() to insert data
         for case_number, defendant_last_name, defendant_first_name, offense, \
