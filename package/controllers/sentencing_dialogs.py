@@ -44,15 +44,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
         self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
-        self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
-
-    def set_defense_counsel(self):
-        if self.defense_counsel_waived_checkBox.isChecked():
-            self.defense_counsel_name_box.setEnabled(False)
-            self.defense_counsel_type_box.setEnabled(False)
-        else:
-            self.defense_counsel_name_box.setEnabled(True)
-            self.defense_counsel_type_box.setEnabled(True)
 
     @logger.catch
     def update_case_information(self):

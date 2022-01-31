@@ -344,6 +344,15 @@ class CriminalBaseDialog(BaseDialog):
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
         self.offense_choice_box.currentTextChanged.connect(
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
+
+    def set_defense_counsel(self):
+        if self.defense_counsel_waived_checkBox.isChecked():
+            self.defense_counsel_name_box.setEnabled(False)
+            self.defense_counsel_type_box.setEnabled(False)
+        else:
+            self.defense_counsel_name_box.setEnabled(True)
+            self.defense_counsel_type_box.setEnabled(True)
 
     # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
