@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1043</width>
-           <height>850</height>
+           <width>1068</width>
+           <height>815</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9">
@@ -1068,9 +1068,35 @@ background-color: rgb(255, 255, 127);</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>defendant_first_name_lineEdit</tabstop>
+  <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
+  <tabstop>defense_counsel_type_box</tabstop>
+  <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>statute_choice_box</tabstop>
   <tabstop>offense_choice_box</tabstop>
   <tabstop>add_charge_Button</tabstop>
+  <tabstop>appearance_reason_box</tabstop>
+  <tabstop>bond_type_box</tabstop>
+  <tabstop>bond_amount_box</tabstop>
+  <tabstop>alcohol_test_kiosk_checkBox</tabstop>
+  <tabstop>alcohol_drugs_assessment_checkBox</tabstop>
+  <tabstop>no_alcohol_drugs_checkBox</tabstop>
+  <tabstop>monitoring_checkBox</tabstop>
+  <tabstop>monitoring_type_box</tabstop>
+  <tabstop>specialized_docket_checkBox</tabstop>
+  <tabstop>specialized_docket_type_box</tabstop>
+  <tabstop>domestic_violence_checkBox</tabstop>
+  <tabstop>admin_license_suspension_checkBox</tabstop>
+  <tabstop>custodial_supervision_checkBox</tabstop>
+  <tabstop>vehicle_seizure_checkBox</tabstop>
+  <tabstop>no_contact_checkBox</tabstop>
+  <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>add_special_conditions_Button</tabstop>
+  <tabstop>create_entry_Button</tabstop>
+  <tabstop>print_entry_Button</tabstop>
+  <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

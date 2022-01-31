@@ -80,7 +80,7 @@ class Ui_LeapPleaLongDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 920, 796))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 945, 783))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_6 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_6.setObjectName("gridLayout_6")
@@ -354,12 +354,20 @@ class Ui_LeapPleaLongDialog(object):
 
         self.retranslateUi(LeapPleaLongDialog)
         QtCore.QMetaObject.connectSlotsByName(LeapPleaLongDialog)
+        LeapPleaLongDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
+        LeapPleaLongDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
+        LeapPleaLongDialog.setTabOrder(self.case_number_lineEdit, self.defense_counsel_name_box)
+        LeapPleaLongDialog.setTabOrder(self.defense_counsel_name_box, self.defense_counsel_type_box)
+        LeapPleaLongDialog.setTabOrder(self.defense_counsel_type_box, self.defense_counsel_waived_checkBox)
+        LeapPleaLongDialog.setTabOrder(self.defense_counsel_waived_checkBox, self.statute_choice_box)
         LeapPleaLongDialog.setTabOrder(self.statute_choice_box, self.offense_choice_box)
         LeapPleaLongDialog.setTabOrder(self.offense_choice_box, self.add_charge_Button)
         LeapPleaLongDialog.setTabOrder(self.add_charge_Button, self.time_to_complete_box)
         LeapPleaLongDialog.setTabOrder(self.time_to_complete_box, self.sentencing_date)
-        LeapPleaLongDialog.setTabOrder(self.sentencing_date, self.textBrowser)
-        LeapPleaLongDialog.setTabOrder(self.textBrowser, self.scrollArea)
+        LeapPleaLongDialog.setTabOrder(self.sentencing_date, self.create_entry_Button)
+        LeapPleaLongDialog.setTabOrder(self.create_entry_Button, self.print_entry_Button)
+        LeapPleaLongDialog.setTabOrder(self.print_entry_Button, self.textBrowser)
+        LeapPleaLongDialog.setTabOrder(self.textBrowser, self.close_dialog_Button)
 
     def retranslateUi(self, LeapPleaLongDialog):
         _translate = QtCore.QCoreApplication.translate

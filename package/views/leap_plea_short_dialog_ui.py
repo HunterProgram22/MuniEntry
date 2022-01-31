@@ -80,7 +80,7 @@ class Ui_LeapPleaShortDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 935, 774))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 960, 752))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_5.setObjectName("gridLayout_5")
@@ -321,10 +321,17 @@ class Ui_LeapPleaShortDialog(object):
 
         self.retranslateUi(LeapPleaShortDialog)
         QtCore.QMetaObject.connectSlotsByName(LeapPleaShortDialog)
+        LeapPleaShortDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
+        LeapPleaShortDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
+        LeapPleaShortDialog.setTabOrder(self.case_number_lineEdit, self.defense_counsel_name_box)
+        LeapPleaShortDialog.setTabOrder(self.defense_counsel_name_box, self.defense_counsel_type_box)
+        LeapPleaShortDialog.setTabOrder(self.defense_counsel_type_box, self.defense_counsel_waived_checkBox)
+        LeapPleaShortDialog.setTabOrder(self.defense_counsel_waived_checkBox, self.statute_choice_box)
         LeapPleaShortDialog.setTabOrder(self.statute_choice_box, self.offense_choice_box)
         LeapPleaShortDialog.setTabOrder(self.offense_choice_box, self.add_charge_Button)
-        LeapPleaShortDialog.setTabOrder(self.add_charge_Button, self.scrollArea)
-        LeapPleaShortDialog.setTabOrder(self.scrollArea, self.textBrowser)
+        LeapPleaShortDialog.setTabOrder(self.add_charge_Button, self.create_entry_Button)
+        LeapPleaShortDialog.setTabOrder(self.create_entry_Button, self.print_entry_Button)
+        LeapPleaShortDialog.setTabOrder(self.print_entry_Button, self.close_dialog_Button)
 
     def retranslateUi(self, LeapPleaShortDialog):
         _translate = QtCore.QCoreApplication.translate
