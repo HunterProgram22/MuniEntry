@@ -9,6 +9,14 @@ class ChargesGrid(QGridLayout):
     row_offense = 0
     row_statute = 1
     row_degree = 2
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
+    row_amend_button = 9
+    row_delete_button = 10
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -69,12 +77,9 @@ class ChargesGrid(QGridLayout):
         for different dialogs this could end up changing, however, the check
         for the delete button may resolve this issue."""
         for column in range(1, self.columnCount()):
-            if self.itemAtPosition(4, column) is not None:
-                if isinstance(self.itemAtPosition(4, column).widget(), DeleteButton):
-                    return None
-                elif isinstance(self.itemAtPosition(
-                        6, column).widget(), FineLineEdit):
-                    self.itemAtPosition(6, column).widget().setFocus()
+            if self.itemAtPosition(ChargesGrid.row_fine, column) is not None:
+                if isinstance(self.itemAtPosition(ChargesGrid.row_fine, column).widget(), FineLineEdit):
+                    self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
                     break
                 column += 1
 

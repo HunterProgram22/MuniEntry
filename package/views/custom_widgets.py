@@ -59,6 +59,7 @@ class StatuteLineEdit(QLineEdit):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("statute_lineEdit")
+        self.setFocusPolicy(QtCore.Qt.NoFocus)
         self.setText(statute)
 
 
