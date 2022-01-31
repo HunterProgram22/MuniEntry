@@ -231,7 +231,7 @@ class DismissedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):
-        """TODO: the try except block is to account for the Leap Dialogs. Fix."""
+        """TODO: the try except block is to account for the Leap Dialogs and NoJail not having same # rows. Fix."""
         if self.isChecked():
             try:
                 self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("Dismissed")
