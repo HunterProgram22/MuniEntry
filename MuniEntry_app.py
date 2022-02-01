@@ -166,6 +166,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     if item[1].currentText() == "":
                         self.case_to_load = CriminalCaseInformation()
                         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                        break
                     else:
                         """The case_number splits the selected case to extract the case number, then
                         it takes the returned list and puts the case number (index 1 of the case number list)
@@ -174,6 +175,7 @@ class Window(QMainWindow, Ui_MainWindow):
                         self.case_to_load = \
                             CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
                         dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                        break
                 dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "

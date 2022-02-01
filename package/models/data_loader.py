@@ -54,7 +54,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query.bindValue(key, key)
         query.exec()
         self.load_data_into_case(query)
-        print(self.case)
         query.finish()
 
     def load_data_into_case(self, query):

@@ -153,7 +153,6 @@ class CMSLoader:
     """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
     def __init__(self, dialog):
         print(dialog)
-        print(dialog.cms_case)
         self.cms_case = dialog.cms_case
         self.criminal_charge = None
         self.load_cms_data(dialog)

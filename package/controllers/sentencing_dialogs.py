@@ -21,6 +21,7 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
     @logger.catch
     def load_cms_data_to_view(self):
+        print(f"Crim sent {self}")
         return CMS_FRALoader(self)
 
     @logger.catch
