@@ -32,7 +32,7 @@ def create_statute_list():
 def create_daily_cases_list(database):
     conn = sqlite3.connect(DB_PATH + database)
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM cases")
+    cursor.execute("SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM arraignments")
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:

@@ -46,7 +46,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignment_database, slated_database, final_pretrial_database, parent=None):
+    def __init__(self, arraignment_database, slated_database=None, final_pretrial_database=None, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
@@ -147,8 +147,8 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(create_daily_cases_list("arraignments.sqlite"))
-        self.slated_cases_box.addItems(create_daily_cases_list("slated.sqlite"))
-        self.final_pretrial_cases_box.addItems(create_daily_cases_list("final_pretrials.sqlite"))
+        # self.slated_cases_box.addItems(create_daily_cases_list("slated.sqlite"))
+        # self.final_pretrial_cases_box.addItems(create_daily_cases_list("final_pretrials.sqlite"))
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -175,7 +175,10 @@ class Window(QMainWindow, Ui_MainWindow):
                             it takes the returned list and puts the case number (index 1 of the case number list)
                             into the CriminalCaseSqlRetriever."""
                             case_number = item[1].currentText().split("- ")
+                            print(case_number[1])
+                            print(database)
                             self.case_to_load = CriminalCaseSQLRetriever(case_number[1], database).load_case()
+                            print(self.case_to_load)
                             dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                 dialog.exec()
             else:
@@ -195,9 +198,9 @@ def main():
     print("Loading")
     QTimer.singleShot(2000, splash.close)
     arraignment_database = create_arraignments_database_connection()
-    slated_database = create_slated_database_connection()
-    final_pretrial_database = create_final_pretrial_database_connection()
-    win = Window(arraignment_database, slated_database, final_pretrial_database)
+    # slated_database = create_slated_database_connection()
+    # final_pretrial_database = create_final_pretrial_database_connection()
+    win = Window(arraignment_database)
     win.show()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
