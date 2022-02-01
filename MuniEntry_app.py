@@ -18,8 +18,7 @@ from PyQt5 import QtGui
 
 from db.create_data_lists import create_daily_cases_list
 from package.models.party_types import JudicialOfficer
-from package.models.data_loader import CriminalCaseSQLRetriever, create_slated_database_connection, \
-    create_arraignments_database_connection, create_final_pretrial_database_connection
+from package.models.data_loader import CriminalCaseSQLRetriever, create_daily_case_list_database_connection
 from package.models.case_information import CriminalCaseInformation
 from package.views.custom_widgets import RequiredBox, ExtendedComboBox
 from package.views.main_window_ui import Ui_MainWindow
@@ -46,7 +45,7 @@ class Window(QMainWindow, Ui_MainWindow):
     key:value pair needs to be added to dialog_dict (key: buttonName, value:
     dialogObject)."""
 
-    def __init__(self, arraignment_database, slated_database=None, final_pretrial_database=None, parent=None):
+    def __init__(self, daily_case_list_database, parent=None):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
@@ -71,13 +70,11 @@ class Window(QMainWindow, Ui_MainWindow):
             self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
-        self.arraignment_database = arraignment_database
-        self.slated_database = slated_database
-        self.final_pretrial_database = final_pretrial_database
+        self.daily_case_list_database = daily_case_list_database
         self.daily_case_list_buttons = {
-            self.arraignments_radioButton: self.arraignment_database,
-            self.slated_radioButton: self.slated_database,
-            self.final_pretrial_radioButton: self.final_pretrial_database,
+            self.arraignments_radioButton: "arraignments",
+            self.slated_radioButton: "slated",
+            self.final_pretrial_radioButton:"final_pretrial",
         }
         self.connect_daily_case_list_buttons()
         self.load_judicial_officers()
@@ -131,12 +128,12 @@ class Window(QMainWindow, Ui_MainWindow):
 
     def connect_daily_case_list_buttons(self):
         for key in self.daily_case_list_buttons:
-            key.clicked.connect(self.set_case_list)
+            key.clicked.connect(self.set_case_list_table)
 
-    def set_case_list(self):
-        for key, value in self.daily_case_list_buttons.items():
-            if key.isChecked():
-                self.case_list_to_load = value
+    def set_case_list_table(self):
+        for button, table in self.daily_case_list_buttons.items():
+            if button.isChecked():
+                return table
 
     def connect_entry_buttons(self):
         """Connects the starting dialog that will be launched upon button press."""
@@ -146,9 +143,9 @@ class Window(QMainWindow, Ui_MainWindow):
     def load_case_lists(self):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
         does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(create_daily_cases_list("arraignments.sqlite"))
-        # self.slated_cases_box.addItems(create_daily_cases_list("slated.sqlite"))
-        # self.final_pretrial_cases_box.addItems(create_daily_cases_list("final_pretrials.sqlite"))
+        self.arraignment_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "arraignments"))
+        self.slated_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","slated"))
+        self.final_pretrial_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","final_pretrials"))
 
     @logger.catch
     def start_dialog_from_entry_button(self):
@@ -157,26 +154,26 @@ class Window(QMainWindow, Ui_MainWindow):
             message = RequiredBox("You must select a judicial officer.")
             message.exec()
         else:
-            database_list = [
-                (self.arraignment_database, self.arraignment_cases_box),
-                (self.slated_database, self.slated_cases_box),
-                (self.final_pretrial_database, self.final_pretrial_cases_box),
+            database_table_list = [
+                ("arraignments", self.arraignment_cases_box),
+                ("slated", self.slated_cases_box),
+                ("final_pretrial", self.final_pretrial_cases_box),
             ]
             if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
-                database = self.case_list_to_load
-                for item in database_list:
-                    if database is item[0]:
-                        database.open()
-                        if item[1].currentText() == "":
-                            self.case_to_load = CriminalCaseInformation()
-                            dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-                        else:
-                            """The case_number splits the selected case to extract the case number, then
-                            it takes the returned list and puts the case number (index 1 of the case number list)
-                            into the CriminalCaseSqlRetriever."""
-                            case_number = item[1].currentText().split("- ")
-                            self.case_to_load = CriminalCaseSQLRetriever(case_number[1], database).load_case()
-                            dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                self.daily_case_list_database.open()
+                case_table = self.set_case_list_table()
+                for item in database_table_list:
+                    if item[1].currentText() == "":
+                        self.case_to_load = CriminalCaseInformation()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    else:
+                        """The case_number splits the selected case to extract the case number, then
+                        it takes the returned list and puts the case number (index 1 of the case number list)
+                        into the CriminalCaseSqlRetriever."""
+                        case_number = item[1].currentText().split("- ")
+                        self.case_to_load = \
+                            CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
+                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                 dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "
@@ -194,10 +191,8 @@ def main():
     splash.show()
     print("Loading")
     QTimer.singleShot(2000, splash.close)
-    arraignment_database = create_arraignments_database_connection()
-    # slated_database = create_slated_database_connection()
-    # final_pretrial_database = create_final_pretrial_database_connection()
-    win = Window(arraignment_database)
+    daily_case_list_database = create_daily_case_list_database_connection()
+    win = Window(daily_case_list_database)
     win.show()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())

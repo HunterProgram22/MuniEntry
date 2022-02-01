@@ -9,6 +9,11 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from settings import DB_PATH
 
+DATABASE_TABLE_LIST = [
+    ("Arraignments.xlsx", "arraignments"),
+    ("Slated.xlsx", "slated"),
+    ("Final_Pretrials.xlsx", "final_pretrials"),
+]
 
 @logger.catch
 def return_data_from_excel(excel_file):
@@ -48,9 +53,9 @@ def return_data_from_excel(excel_file):
     return data
 
 
-def create_table_sql_string():
-    return """
-      CREATE TABLE arraignments (
+def create_table_sql_string(table):
+    return f"""
+      CREATE TABLE {table} (
           id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
           case_number VARCHAR(20) NOT NULL,
           defendant_last_name VARCHAR(50) NOT NULL,
@@ -61,6 +66,7 @@ def create_table_sql_string():
           fra_in_file VARCHAR(5) NOT NULL
       )
       """
+
 
 def insert_table_sql_string(table):
     return f"""
@@ -76,10 +82,12 @@ def insert_table_sql_string(table):
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """
 
+
 def delete_table_data_sql_string(table):
     return f"""
         DELETE FROM {table};
         """
+
 
 def create_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
@@ -95,7 +103,9 @@ def create_db_connection():
             sys.exit(1)
         else:
             create_table_query = QSqlQuery(con1)
-            create_table_query.exec(create_table_sql_string())
+            for item in DATABASE_TABLE_LIST:
+                table = item[1]
+                create_table_query.exec(create_table_sql_string(table))
     if not con1.open():
         print("Unable to connect to database")
         sys.exit(1)
@@ -104,15 +114,11 @@ def create_db_connection():
 
 def main():
     con1 = create_db_connection()
-    database_list = [
-        ("Arraignments.xlsx", "arraignments"),
-        ("Slated.xlsx", "slated"),
-        ("Final_Pretrials.xlsx", "final_pretrials"),
-    ]
+
     # excel_report = "Arraignments.xlsx"
     # table = "arraignments"
 
-    for item in database_list:
+    for item in DATABASE_TABLE_LIST:
         excel_report = item[0]
         table = item[1]
 

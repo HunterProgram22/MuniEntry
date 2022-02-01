@@ -28,8 +28,9 @@ class CaseSQLRetriever(ABC):
 
 class CriminalCaseSQLRetriever(CaseSQLRetriever):
     """Gets cms_case data from a database and loads it into a criminal cms_case object."""
-    def __init__(self, case_number, database):
+    def __init__(self, case_number, case_table, database):
         self.case_number = case_number
+        self.case_table = case_table
         self.database = database
         self.case = self.set_case_type()
         self.get_case_data()
@@ -45,13 +46,15 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query = QSqlQuery(self.database)
         query_string = f"""
             SELECT *
-            FROM arraignments
+            FROM {self.case_table}
             WHERE case_number = '{key}'
             """
+        print(query_string)
         query.prepare(query_string)
         query.bindValue(key, key)
         query.exec()
         self.load_data_into_case(query)
+        print(self.case)
         query.finish()
 
     def load_data_into_case(self, query):
@@ -75,41 +78,9 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 
 @logger.catch
-def create_slated_database_connection():
-    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
-    the application at the same time. TODO: better way to handle this must exist."""
-    if 'backup_slated_table' in QSqlDatabase.connectionNames():
-        slated_database_connection = QSqlDatabase.database("backup_slated_table", open=True)
-    elif 'backup_2slated_table' in QSqlDatabase.connectionNames():
-        slated_database_connection = QSqlDatabase.database("backup_2slated_table", open=True)
-    elif 'backup_3slated_table' in QSqlDatabase.connectionNames():
-        slated_database_connection = QSqlDatabase.database("backup_3slated_table", open=True)
-    else:
-        slated_database_connection = QSqlDatabase.database("slated_table", open=True)
-    return slated_database_connection
-
-
-@logger.catch
-def create_arraignments_database_connection():
-    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
-    the application at the same time. TODO: better way to handle this must exist."""
-    arraignments_database_connection = QSqlDatabase.database("con1", open=True)
-    return arraignments_database_connection
-
-
-@logger.catch
-def create_final_pretrial_database_connection():
-    """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
-    the application at the same time. TODO: better way to handle this must exist."""
-    if 'backup_final_pretrials_table' in QSqlDatabase.connectionNames():
-        final_pretrial_database_connection = QSqlDatabase.database("backup_final_pretrials_table", open=True)
-    elif 'backup_2final_pretrials_table' in QSqlDatabase.connectionNames():
-        final_pretrial_database_connection = QSqlDatabase.database("backup_2final_pretrials_table", open=True)
-    elif 'backup_3final_pretrials_table' in QSqlDatabase.connectionNames():
-        final_pretrial_database_connection = QSqlDatabase.database("backup_3final_pretrials_table", open=True)
-    else:
-        final_pretrial_database_connection = QSqlDatabase.database("final_pretrials_table", open=True)
-    return final_pretrial_database_connection
+def create_daily_case_list_database_connection():
+    daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
+    return daily_case_list_database_connection
 
 
 @logger.catch
