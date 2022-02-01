@@ -45,7 +45,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query = QSqlQuery(self.database)
         query_string = f"""
             SELECT *
-            FROM cases
+            FROM arraignments
             WHERE case_number = '{key}'
             """
         query.prepare(query_string)
@@ -93,14 +93,7 @@ def create_slated_database_connection():
 def create_arraignments_database_connection():
     """Opens a connection to the database. Allows for a backup connection to be created if multiple users are accessing
     the application at the same time. TODO: better way to handle this must exist."""
-    if 'backup_arraignments_table' in QSqlDatabase.connectionNames():
-        arraignments_database_connection = QSqlDatabase.database("backup_arraignments_table", open=True)
-    elif 'backup_2arraignments_table' in QSqlDatabase.connectionNames():
-        arraignments_database_connection = QSqlDatabase.database("backup_2arraignments_table", open=True)
-    elif 'backup_3arraignments_table' in QSqlDatabase.connectionNames():
-        arraignments_database_connection = QSqlDatabase.database("backup_3arraignments_table", open=True)
-    else:
-        arraignments_database_connection = QSqlDatabase.database("arraignments_table", open=True)
+    arraignments_database_connection = QSqlDatabase.database("con1", open=True)
     return arraignments_database_connection
 
 

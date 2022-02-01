@@ -60,136 +60,84 @@ def main():
     when the application is open if a second instance of the application is opened because it can't access the sqlite
     db files. TODO: Look into just creating a second connection without having to create a backup copy of the
     database."""
-    database_list = [
-        ("Slated.xlsx", "slated.sqlite", "slated_table"),
-        ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
-        ("Final_Pretrials.xlsx", "final_pretrials.sqlite", "final_pretrials_table"),
-    ]
 
-    for items in database_list:
+    # database_list = [
+    #     ("Slated.xlsx", "slated.sqlite", "slated_table"),
+    #     ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
+    #     ("Final_Pretrials.xlsx", "final_pretrials.sqlite", "final_pretrials_table"),
+    # ]
 
-        database_name = f"{DB_PATH}{items[1]}"
-        database_connection_name = f"{items[2]}"
-
-        if os.path.exists(database_name):
-            try:
-                os.remove(database_name)
-
-                con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                con.setDatabaseName(database_name)
-
-            except PermissionError:
-
-                database_name = f"{DB_PATH}backup_{items[1]}"
-                database_connection_name = f"backup_{items[2]}"
-
-                if os.path.exists(database_name):
-                    try:
-                        os.remove(database_name)
-
-                        con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                        con.setDatabaseName(database_name)
-
-                    except PermissionError:
-
-                        database_name = f"{DB_PATH}backup_2{items[1]}"
-                        database_connection_name = f"backup_2{items[2]}"
-
-                        if os.path.exists(database_name):
-                            try:
-                                os.remove(database_name)
-
-                                con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                                con.setDatabaseName(database_name)
-
-                            except PermissionError:
-                                print("Max connections exceeded. Must close application instance.")
-                                input("Press Enter when an instance has beeen closed to continue loading.")
-
-                                database_name = f"{DB_PATH}backup_3{items[1]}"
-                                database_connection_name = f"backup_3{items[2]}"
-
-                                if os.path.exists(database_name):
-                                    try:
-                                        os.remove(database_name)
-
-                                        con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                                        con.setDatabaseName(database_name)
-                                    except PermissionError:
-                                        sys.exit(1)
-
-                                else:
-                                    print("The file does not exist")
-                                    con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                                    con.setDatabaseName(database_name)
-                        else:
-                            print("The file does not exist")
-                            con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                            con.setDatabaseName(database_name)
-
-
-                else:
-                    print("The file does not exist")
-                    con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-                    con.setDatabaseName(database_name)
-
-        else:
-            print("The file does not exist")
-            con = QSqlDatabase.addDatabase("QSQLITE", database_connection_name)
-            con.setDatabaseName(database_name)
-
-        # Check if connection exists, exit if it doesn't
-        if not con.open():
+    database_name = f"{DB_PATH}arraignments.sqlite"
+    if os.path.exists(database_name):
+        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
+        con1.setDatabaseName(database_name)
+    else:
+        print("The file does not exist")
+        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
+        con1.setDatabaseName(database_name)
+        if not con1.open():
             print("Unable to connect to database")
             sys.exit(1)
-
-        # Create a query and execute it right away using .exec()
-        create_table_query = QSqlQuery(con)
-        create_table_query.exec(
-            """
-            CREATE TABLE cases (
-                id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-                case_number VARCHAR(20) NOT NULL,
-                defendant_last_name VARCHAR(50) NOT NULL,
-                defendant_first_name VARCHAR(50) NOT NULL,
-                offense VARCHAR(80) NOT NULL,
-                statute VARCHAR(50) NOT NULL,
-                degree VARCHAR(10) NOT NULL,
-                fra_in_file VARCHAR(5) NOT NULL
+        else:
+            create_table_query = QSqlQuery(con1)
+            create_table_query.exec(
+                """
+                CREATE TABLE arraignments (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+                    case_number VARCHAR(20) NOT NULL,
+                    defendant_last_name VARCHAR(50) NOT NULL,
+                    defendant_first_name VARCHAR(50) NOT NULL,
+                    offense VARCHAR(80) NOT NULL,
+                    statute VARCHAR(50) NOT NULL,
+                    degree VARCHAR(10) NOT NULL,
+                    fra_in_file VARCHAR(5) NOT NULL
+                )
+                """
             )
-            """
-        )
-        insert_data_query = QSqlQuery(con)
-        # Do not add comma to last value inserted
-        insert_data_query.prepare(
-            """
-            INSERT INTO cases (
-                case_number,
-                defendant_last_name,
-                defendant_first_name,
-                offense,
-                statute,
-                degree,
-                fra_in_file
-            )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            """
-        )
 
-        data_from_table = return_data_from_excel(DB_PATH + items[0])
-        # Use .addBindValue() to insert data
-        for case_number, defendant_last_name, defendant_first_name, offense, \
-                statute, degree, fra_in_file in data_from_table:
-            insert_data_query.addBindValue(case_number)
-            insert_data_query.addBindValue(defendant_last_name)
-            insert_data_query.addBindValue(defendant_first_name)
-            insert_data_query.addBindValue(offense)
-            insert_data_query.addBindValue(statute)
-            insert_data_query.addBindValue(degree)
-            insert_data_query.addBindValue(fra_in_file)
-            insert_data_query.exec()
-        con.close()
-        con.removeDatabase("QSQLITE")
+    if not con1.open():
+        print("Unable to connect to database")
+        sys.exit(1)
+
+    delete_old_data_query = QSqlQuery(con1)
+    delete_old_data_query.prepare(
+        """
+        DELETE FROM arraignments;
+        """
+    )
+    delete_old_data_query.exec()
+
+    insert_data_query = QSqlQuery(con1)
+    # Do not add comma to last value inserted
+    insert_data_query.prepare(
+        """
+        INSERT INTO arraignments (
+            case_number,
+            defendant_last_name,
+            defendant_first_name,
+            offense,
+            statute,
+            degree,
+            fra_in_file
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """
+    )
+
+    data_from_table = return_data_from_excel(f"{DB_PATH}Arraignments.xlsx")
+    # Use .addBindValue() to insert data
+    for case_number, defendant_last_name, defendant_first_name, offense, \
+            statute, degree, fra_in_file in data_from_table:
+        insert_data_query.addBindValue(case_number)
+        insert_data_query.addBindValue(defendant_last_name)
+        insert_data_query.addBindValue(defendant_first_name)
+        insert_data_query.addBindValue(offense)
+        insert_data_query.addBindValue(statute)
+        insert_data_query.addBindValue(degree)
+        insert_data_query.addBindValue(fra_in_file)
+        insert_data_query.exec()
+    con1.close()
+    con1.removeDatabase("QSQLITE")
     return None
 
 
