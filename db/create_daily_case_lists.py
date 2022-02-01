@@ -50,6 +50,35 @@ def return_data_from_excel(excel_file):
     return data
 
 
+def create_table_sql_string():
+    return """
+      CREATE TABLE arraignments (
+          id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+          case_number VARCHAR(20) NOT NULL,
+          defendant_last_name VARCHAR(50) NOT NULL,
+          defendant_first_name VARCHAR(50) NOT NULL,
+          offense VARCHAR(80) NOT NULL,
+          statute VARCHAR(50) NOT NULL,
+          degree VARCHAR(10) NOT NULL,
+          fra_in_file VARCHAR(5) NOT NULL
+      )
+      """
+
+def insert_table_sql_string():
+    return """
+        INSERT INTO arraignments(
+            case_number,
+            defendant_last_name,
+            defendant_first_name,
+            offense,
+            statute,
+            degree,
+            fra_in_file
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """
+
+
 def main():
     """database_list contains tuples for the items to create each database for the daily case
     lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name).
@@ -83,20 +112,7 @@ def main():
             sys.exit(1)
         else:
             create_table_query = QSqlQuery(con1)
-            create_table_query.exec(
-                """
-                CREATE TABLE arraignments (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-                    case_number VARCHAR(20) NOT NULL,
-                    defendant_last_name VARCHAR(50) NOT NULL,
-                    defendant_first_name VARCHAR(50) NOT NULL,
-                    offense VARCHAR(80) NOT NULL,
-                    statute VARCHAR(50) NOT NULL,
-                    degree VARCHAR(10) NOT NULL,
-                    fra_in_file VARCHAR(5) NOT NULL
-                )
-                """
-            )
+            create_table_query.exec(create_table_sql_string())
 
     if not con1.open():
         print("Unable to connect to database")
@@ -113,22 +129,10 @@ def main():
 
     insert_data_query = QSqlQuery(con1)
     # Do not add comma to last value inserted
-    insert_data_query.prepare(
-        """
-        INSERT INTO arraignments(
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        """
-    )
-    # insert_data_query.bindValue(database_table, database_table)
+    insert_data_query.prepare(insert_table_sql_string())
 
+
+    # insert_data_query.bindValue(database_table, database_table)
     data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
     # Use .addBindValue() to insert data
     for case_number, defendant_last_name, defendant_first_name, offense, \
