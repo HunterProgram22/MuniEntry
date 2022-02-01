@@ -2,14 +2,12 @@
 import sys
 import os
 import pathlib
+
 from loguru import logger
-
 from openpyxl import load_workbook
-
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from settings import DB_PATH
-
 
 
 @logger.catch
@@ -64,9 +62,9 @@ def create_table_sql_string():
       )
       """
 
-def insert_table_sql_string():
-    return """
-        INSERT INTO arraignments(
+def insert_table_sql_string(table):
+    return f"""
+        INSERT INTO {table}(
             case_number,
             defendant_last_name,
             defendant_first_name,
@@ -78,28 +76,13 @@ def insert_table_sql_string():
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """
 
+def delete_table_data_sql_string(table):
+    return f"""
+        DELETE FROM {table};
+        """
 
-def main():
-    """database_list contains tuples for the items to create each database for the daily case
-    lists. Tuple format is (Excel_file_to_load, database_path_name, database_connection_name).
-
-    The try execept block in the for items in database_list loop is to account for multiple users accessing the
-    application at the same time. It creates a backup database with the information from the excel files that have
-    the case information. This is done so that charges aren't duplicated because right now there is a PermissionError
-    when the application is open if a second instance of the application is opened because it can't access the sqlite
-    db files. TODO: Look into just creating a second connection without having to create a backup copy of the
-    database."""
-
-    # database_list = [
-    #     ("Slated.xlsx", "slated.sqlite", "slated_table"),
-    #     ("Arraignments.xlsx", "arraignments.sqlite", "arraignments_table"),
-    #     ("Final_Pretrials.xlsx", "final_pretrials.sqlite", "final_pretrials_table"),
-    # ]
-
-    database_table = "arraignments"
-    database_name = f"{DB_PATH}arraignments.sqlite"
-    excel_report = "Arraignments.xlsx"
-
+def create_db_connection():
+    database_name = f"{DB_PATH}daily_case_lists.sqlite"
     if os.path.exists(database_name):
         con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
         con1.setDatabaseName(database_name)
@@ -113,38 +96,45 @@ def main():
         else:
             create_table_query = QSqlQuery(con1)
             create_table_query.exec(create_table_sql_string())
-
     if not con1.open():
         print("Unable to connect to database")
         sys.exit(1)
-
-    delete_old_data_query = QSqlQuery(con1)
-    delete_old_data_query.prepare(
-        """
-        DELETE FROM arraignments;
-        """
-    )
-    #delete_old_data_query.bindValue(database_table, database_table)
-    delete_old_data_query.exec()
-
-    insert_data_query = QSqlQuery(con1)
-    # Do not add comma to last value inserted
-    insert_data_query.prepare(insert_table_sql_string())
+    return con1
 
 
-    # insert_data_query.bindValue(database_table, database_table)
-    data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
-    # Use .addBindValue() to insert data
-    for case_number, defendant_last_name, defendant_first_name, offense, \
-            statute, degree, fra_in_file in data_from_table:
-        insert_data_query.addBindValue(case_number)
-        insert_data_query.addBindValue(defendant_last_name)
-        insert_data_query.addBindValue(defendant_first_name)
-        insert_data_query.addBindValue(offense)
-        insert_data_query.addBindValue(statute)
-        insert_data_query.addBindValue(degree)
-        insert_data_query.addBindValue(fra_in_file)
-        insert_data_query.exec()
+def main():
+    con1 = create_db_connection()
+    database_list = [
+        ("Arraignments.xlsx", "arraignments"),
+        ("Slated.xlsx", "slated"),
+        ("Final_Pretrials.xlsx", "final_pretrials"),
+    ]
+    # excel_report = "Arraignments.xlsx"
+    # table = "arraignments"
+
+    for item in database_list:
+        excel_report = item[0]
+        table = item[1]
+
+        delete_old_data_query = QSqlQuery(con1)
+        delete_old_data_query.prepare(delete_table_data_sql_string(table))
+        delete_old_data_query.exec()
+
+        insert_data_query = QSqlQuery(con1)
+        insert_data_query.prepare(insert_table_sql_string(table))
+        data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
+        # Do not add comma to last value inserted
+        for case_number, defendant_last_name, defendant_first_name, offense, \
+                statute, degree, fra_in_file in data_from_table:
+            insert_data_query.addBindValue(case_number)
+            insert_data_query.addBindValue(defendant_last_name)
+            insert_data_query.addBindValue(defendant_first_name)
+            insert_data_query.addBindValue(offense)
+            insert_data_query.addBindValue(statute)
+            insert_data_query.addBindValue(degree)
+            insert_data_query.addBindValue(fra_in_file)
+            insert_data_query.exec()
+
     con1.close()
     con1.removeDatabase("QSQLITE")
     return None
