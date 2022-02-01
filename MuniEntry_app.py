@@ -175,10 +175,7 @@ class Window(QMainWindow, Ui_MainWindow):
                             it takes the returned list and puts the case number (index 1 of the case number list)
                             into the CriminalCaseSqlRetriever."""
                             case_number = item[1].currentText().split("- ")
-                            print(case_number[1])
-                            print(database)
                             self.case_to_load = CriminalCaseSQLRetriever(case_number[1], database).load_case()
-                            print(self.case_to_load)
                             dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
                 dialog.exec()
             else:

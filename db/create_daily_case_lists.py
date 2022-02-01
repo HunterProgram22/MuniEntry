@@ -67,7 +67,10 @@ def main():
     #     ("Final_Pretrials.xlsx", "final_pretrials.sqlite", "final_pretrials_table"),
     # ]
 
+    database_table = "arraignments"
     database_name = f"{DB_PATH}arraignments.sqlite"
+    excel_report = "Arraignments.xlsx"
+
     if os.path.exists(database_name):
         con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
         con1.setDatabaseName(database_name)
@@ -105,13 +108,14 @@ def main():
         DELETE FROM arraignments;
         """
     )
+    #delete_old_data_query.bindValue(database_table, database_table)
     delete_old_data_query.exec()
 
     insert_data_query = QSqlQuery(con1)
     # Do not add comma to last value inserted
     insert_data_query.prepare(
         """
-        INSERT INTO arraignments (
+        INSERT INTO arraignments(
             case_number,
             defendant_last_name,
             defendant_first_name,
@@ -123,8 +127,9 @@ def main():
         VALUES (?, ?, ?, ?, ?, ?, ?)
         """
     )
+    # insert_data_query.bindValue(database_table, database_table)
 
-    data_from_table = return_data_from_excel(f"{DB_PATH}Arraignments.xlsx")
+    data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
     # Use .addBindValue() to insert data
     for case_number, defendant_last_name, defendant_first_name, offense, \
             statute, degree, fra_in_file in data_from_table:
