@@ -282,9 +282,13 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         if self.report_type_box.currentText() == "date set by Office of Community Control":
             self.report_date_box.setDisabled(True)
             self.report_date_box.setHidden(True)
+            self.report_time_box.setDisabled(True)
+            self.report_time_box.setHidden(True)
         else:
             self.report_date_box.setEnabled(True)
             self.report_date_box.setHidden(False)
+            self.report_time_box.setEnabled(True)
+            self.report_time_box.setHidden(False)
 
     def set_field_enabled(self):
         """TODO: This method could be refactored to be more efficient and better at setting focus."""
