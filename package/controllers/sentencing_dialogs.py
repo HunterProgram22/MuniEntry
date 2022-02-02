@@ -63,7 +63,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.check_add_conditions()
         self.calculate_costs_and_fines()
 
-
     @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
