@@ -1,10 +1,8 @@
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QMessageBox
-from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
-from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
-
 from loguru import logger
 
+from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
+from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
@@ -21,7 +19,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
     @logger.catch
     def load_cms_data_to_view(self):
-        print(f"Crim sent {self}")
         return CMS_FRALoader(self)
 
     @logger.catch

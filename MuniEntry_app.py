@@ -74,7 +74,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",
             self.slated_radioButton: "slated",
-            self.final_pretrial_radioButton:"final_pretrial",
+            self.final_pretrial_radioButton:"final_pretrials",
         }
         self.connect_daily_case_list_buttons()
         self.load_judicial_officers()
@@ -154,31 +154,30 @@ class Window(QMainWindow, Ui_MainWindow):
             message = RequiredBox("You must select a judicial officer.")
             message.exec()
         else:
-            database_table_dict= {
-                "arraignments", self.arraignment_cases_box,
-                "slated", self.slated_cases_box,
-                "final_pretrial", self.final_pretrial_cases_box,
+            database_table_dict = {
+                "arraignments": self.arraignment_cases_box,
+                "slated": self.slated_cases_box,
+                "final_pretrials": self.final_pretrial_cases_box,
             }
             if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
                 self.daily_case_list_database.open()
                 case_table = self.set_case_list_table() # Set based on the radio button that is checked for the arr/slate/final
                 # THIS is where the current issue is located - right now loops three times. Need to match up the button selected
                 # to the table.
-                print(case_table)
-                print(item[0])
-                if case_table == item[0]:
-                    if item[1].currentText() == "":
-                        self.case_to_load = CriminalCaseInformation()
-                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-                    else:
-                        """The case_number splits the selected case to extract the case number, then
-                        it takes the returned list and puts the case number (index 1 of the case number list)
-                        into the CriminalCaseSqlRetriever."""
-                        case_number = item[1].currentText().split("- ")
-                        self.case_to_load = \
-                            CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
-                        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
-                dialog.exec()
+                selected_case_list = database_table_dict.get(case_table)
+                if selected_case_list.currentText() == "":
+                    self.case_to_load = CriminalCaseInformation()
+                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    dialog.exec()
+                else:
+                    """The case_number splits the selected case to extract the case number, then
+                    it takes the returned list and puts the case number (index 1 of the case number list)
+                    into the CriminalCaseSqlRetriever."""
+                    case_number = selected_case_list.currentText().split("- ")
+                    self.case_to_load = \
+                        CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
+                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "
                                       "blank template choose any case list and leave dropdown menu blank.")

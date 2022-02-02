@@ -49,7 +49,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             FROM {self.case_table}
             WHERE case_number = '{key}'
             """
-        print(query_string)
         query.prepare(query_string)
         query.bindValue(key, key)
         query.exec()
