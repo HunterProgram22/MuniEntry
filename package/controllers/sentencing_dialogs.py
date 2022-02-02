@@ -61,6 +61,7 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.check_add_conditions()
+        self.update_jail_time_credit()
         self.calculate_costs_and_fines()
 
     @logger.catch
@@ -191,11 +192,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
 
-    def add_additional_case_information(self):
-        """This adds jail time credit to the base method."""
-        super().add_additional_case_information()
-        self.update_jail_time_credit()
-
     def update_jail_time_credit(self):
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
         self.entry_case_information.apply_jtc = self.jail_time_credit_apply_box.currentText()
@@ -230,10 +226,32 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
+        self.set_fines_credit_for_jail_field()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog or CriminalSentencingDialog."""
+        super().connect_signals_to_slots()
+        self.credit_for_jail_checkBox.toggled.connect(self.set_fines_credit_for_jail_field)
+
+    def set_fines_credit_for_jail_field(self):
+        if self.credit_for_jail_checkBox.isChecked():
+            self.jail_time_credit_box.setEnabled(True)
+            self.jail_time_credit_box.setHidden(False)
+            self.days_in_jail_label.setHidden(False)
+        else:
+            self.jail_time_credit_box.setEnabled(False)
+            self.jail_time_credit_box.setHidden(True)
+            self.days_in_jail_label.setHidden(True)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.statute_choice_box.setFocus()
+
+    def update_jail_time_credit(self):
+        self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
+        self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):

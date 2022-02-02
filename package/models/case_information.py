@@ -232,6 +232,7 @@ class CriminalCaseInformation:
     defense_counsel_waived: bool = False
     fra_in_file: bool = None
     fra_in_court: bool = None
+    fines_and_costs_jail_credit: bool = False
     days_in_jail: str = None
     apply_jtc: str = None
     charges_list: list = field(default_factory=list)
