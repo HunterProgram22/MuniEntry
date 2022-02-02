@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1006</width>
-        <height>714</height>
+        <width>1000</width>
+        <height>787</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0,0,0,0">
@@ -328,7 +328,7 @@ font-weight: bold;</string>
             </item>
             <item>
              <property name="text">
-              <string>Private</string>
+              <string>Private Counsel</string>
              </property>
             </item>
            </widget>
