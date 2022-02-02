@@ -9,8 +9,6 @@ SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\db\\"
 ICON_PATH = PATH + "\\icons\\"
 CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
-ARRAIGNMENTS_DATABASE = DB_PATH + "\\arraignments.sqlite"
-SLATED_DATABASE = DB_PATH + "\\slated.sqlite"
 
 PAY_DATE_DICT = {
     "forthwith": 0,
