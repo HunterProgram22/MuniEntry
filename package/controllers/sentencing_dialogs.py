@@ -133,19 +133,15 @@ class CriminalSentencingDialog(CriminalBaseDialog):
     def check_add_conditions(self):
         """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
         because of a dictionary being used. Refactor back away from dictionary?"""
-        for items in self.add_conditions_list:
+        for items in self.additional_conditions_list:
             if items[0].isChecked():
-                items[1] = True
-            else:
-                items[1] = False
-
-        # for key, value in self.add_conditions_dict.items():
-        #     if key.isChecked():
-        #         self.add_conditions_dict[key] = True
-        #         print(value)
-        #     else:
-        #         self.add_conditions_dict[key] = False
-        #         print(value)
+                print("Checked ran")
+                self.entry_case_information.license_suspension.ordered = True
+                # setattr(self.entry_case_information, items[1], True)
+            elif items[0].isChecked() == False:
+                print("UNchecked ran")
+                self.entry_case_information.license_suspension.ordered = False
+                #setattr(self.entry_case_information, items[1], False)
 
     @logger.catch
     def set_fra_in_file(self, current_text):
@@ -225,10 +221,10 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         super().__init__(judicial_officer, cms_case, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
-        self.add_conditions_list = [
-            (self.license_suspension_checkBox, self.entry_case_information.license_suspension.ordered),
-            (self.community_service_checkBox, self.entry_case_information.community_service.ordered),
-            (self.other_conditions_checkBox, self.entry_case_information.other_conditions.ordered),
+        self.additional_conditions_list = [
+            (self.license_suspension_checkBox, "license_suspension.ordered"),
+            # (self.community_service_checkBox, "community_service.ordered"),
+            # (self.other_conditions_checkBox, "other_conditions.ordered"),
         ]
 
         self.dialog_name = 'No Jail Plea Dialog'

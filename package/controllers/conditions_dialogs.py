@@ -43,9 +43,7 @@ class ConditionsDialog(BaseDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
-        self.community_service = True if main_dialog.community_service_checkBox.isChecked() else False
-        self.license_suspension = True if main_dialog.license_suspension_checkBox.isChecked() else False
-        self.other_conditions = True if main_dialog.other_conditions_checkBox.isChecked() else False
+        self.main_dialog = main_dialog
 
     @logger.catch
     def modify_view(self):
@@ -68,21 +66,22 @@ class ConditionsDialog(BaseDialog):
     def add_conditions(self):
         """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen.
-
         TODO: Creating a new instance of the special conditions here to avoid data being persistent
         and carrying over to a future cms_case. This requires resetting ordered to true even though it
         is set to true by the add_conditions_dict. Fix is probably to not set a default
         instance of the class in the dataclass.
         """
-        if self.community_service is True:
-            self.case_information.community_service = CommunityService()
-            self.add_community_service_terms()
-        if self.license_suspension is True:
+        # self.community_service = True if main_dialog.community_service_checkBox.isChecked() else False
+        # self.other_conditions = True if main_dialog.other_conditions_checkBox.isChecked() else False
+        # if self.community_service is True:
+        #     self.case_information.community_service = CommunityService()
+        #     self.add_community_service_terms()
+        if self.main_dialog.license_suspension_checkBox.isChecked():
             self.case_information.license_suspension = LicenseSuspension()
             self.add_license_suspension_details()
-        if self.other_conditions is True:
-            self.case_information.other_conditions = OtherConditions()
-            self.add_other_condition_details()
+        # if self.other_conditions is True:
+        #     self.case_information.other_conditions = OtherConditions()
+        #     self.add_other_condition_details()
 
     @logger.catch
     def connect_signals_to_slots(self):
