@@ -92,7 +92,6 @@ class ConditionsDialog(BaseDialog):
             ("due_date_for_service", "community_service_date_to_complete_box"),
         ]
         self.widget_type_check_set(self.case_information.community_service, community_service_terms_list)
-        self.case_information.community_service.ordered = True
 
     @logger.catch
     def add_jail_commitment_terms(self):
@@ -108,7 +107,6 @@ class ConditionsDialog(BaseDialog):
             ("companion_cases_exist", "companion_cases_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.jail_terms, jail_commitment_terms_list)
-        self.case_information.jail_terms.ordered = True
 
     @logger.catch
     def add_license_suspension_details(self):
@@ -119,7 +117,6 @@ class ConditionsDialog(BaseDialog):
             ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.license_suspension, license_suspension_terms_list)
-        # self.case_information.license_suspension.ordered = True
 
     @logger.catch
     def add_other_condition_details(self):
@@ -127,7 +124,6 @@ class ConditionsDialog(BaseDialog):
             ("terms", "other_conditions_textEdit"),
         ]
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
-        self.case_information.other_conditions.ordered = True
 
     @logger.catch
     def add_diversion_details(self):
@@ -140,7 +136,6 @@ class ConditionsDialog(BaseDialog):
             ("diversion_jail_report_date", "diversion_jail_report_date_box"),
         ]
         self.widget_type_check_set(self.case_information.diversion, diversion_terms_list)
-        self.case_information.diversion.ordered = True
         self.case_information.diversion.program_name = self.case_information.diversion.get_program_name()
 
     @logger.catch
@@ -176,7 +171,6 @@ class ConditionsDialog(BaseDialog):
             ("daily_reporting", "daily_reporting_checkBox"),
         ]
         self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
-        self.case_information.community_control.ordered = True
 
     @logger.catch
     def set_community_service_date(self, _index):
@@ -236,14 +230,11 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def add_conditions(self):
         """The method calls the base method and then adds community control specific conditions to add."""
         super().add_conditions()
-        if self.community_control is True:
-            self.case_information.community_control = CommunityControl()
+        if self.main_dialog.community_control_checkBox.isChecked():
             self.add_community_control_terms()
-        if self.jail_terms is True:
-            self.case_information.jail_terms = JailTerms()
+        if self.main_dialog.jail_checkBox.isChecked():
             self.add_jail_commitment_terms()
-        if self.diversion is True:
-            self.case_information.diversion = Diversion()
+        if self.main_dialog.diversion_checkBox.isChecked():
             self.add_diversion_details()
 
     @logger.catch

@@ -32,6 +32,9 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         """The method connects additional signals to slots. That are not
         included in the BaseDialog."""
         super().connect_signals_to_slots()
+        self.license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.community_service_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.connect_plea_signals_and_slots()
 
     def connect_plea_signals_and_slots(self):
@@ -66,6 +69,16 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.check_add_conditions()
         self.update_jail_time_credit()
         self.calculate_costs_and_fines()
+
+    def conditions_checkbox_toggle(self):
+        if self.sender().isChecked():
+            for items in self.additional_conditions_list:
+                if items[0] == self.sender().objectName():
+                    setattr(items[1], "ordered", True)
+        else:
+            for items in self.additional_conditions_list:
+                if items[0] == self.sender().objectName():
+                    setattr(items[1], "ordered", False)
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -170,16 +183,22 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, parent=None):
         super().__init__(judicial_officer, cms_case, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
-        self.add_conditions_dict = {
-            self.community_control_checkBox: self.entry_case_information.community_control.ordered,
-            self.license_suspension_checkBox: self.entry_case_information.license_suspension.ordered,
-            self.community_service_checkBox: self.entry_case_information.community_service.ordered,
-            self.jail_checkBox: self.entry_case_information.jail_terms.ordered,
-            self.other_conditions_checkBox: self.entry_case_information.other_conditions.ordered,
-        }
+        self.additional_conditions_list = [
+            ("community_control_checkBox", self.entry_case_information.community_control),
+            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
+            ("community_service_checkBox", self.entry_case_information.community_service),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ("jail_checkBox", self.entry_case_information.jail_terms),
+            ("diversion_checkBox", self.entry_case_information.diversion),
+        ]
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
+
+    def connect_signals_to_slots(self):
+        super().connect_signals_to_slots()
+        self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
