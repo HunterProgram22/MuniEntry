@@ -66,7 +66,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         with None for details. TODO: Add warning box."""
         self.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information()
-        self.check_add_conditions()
         self.update_jail_time_credit()
         self.calculate_costs_and_fines()
 
