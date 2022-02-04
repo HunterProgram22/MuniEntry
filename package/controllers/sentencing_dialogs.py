@@ -130,20 +130,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         message.exec_()
 
     @logger.catch
-    def check_add_conditions(self):
-        """TODO: Bug exists where if you uncheck boxes after adding conditions they are still added. This is probably
-        because of a dictionary being used. Refactor back away from dictionary?"""
-        for items in self.additional_conditions_list:
-            if items[0].isChecked():
-                print("Checked ran")
-                self.entry_case_information.license_suspension.ordered = True
-                # setattr(self.entry_case_information, items[1], True)
-            elif items[0].isChecked() == False:
-                print("UNchecked ran")
-                self.entry_case_information.license_suspension.ordered = False
-                #setattr(self.entry_case_information, items[1], False)
-
-    @logger.catch
     def set_fra_in_file(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in the complaint of file."""
@@ -174,6 +160,25 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddConditionsDialog(self).exec()
+
+    @logger.catch
+    def check_add_conditions(self):
+        """The self.additional_conditions_list is an attribute of the main dialog (NoJail or JailCC).
+        The main issue is there are multiple instances of the license_suspension, need to make sure just one
+        and then change it based on checkbox status."""
+        for item in self.additional_conditions_list:
+            condition_checkbox = item[0]
+            print(condition_checkbox)
+            condition = item[1]
+            if condition_checkbox.isChecked():
+                print("Checked ran")
+                #self.entry_case_information.license_suspension.ordered = True
+                setattr(condition, "ordered", True)
+            elif condition_checkbox.isChecked() == False:
+                print("UNchecked ran")
+                self.entry_case_information.license_suspension.ordered = False
+                print(condition)
+                # setattr(condition, "ordered", False)
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
@@ -222,7 +227,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, cms_case, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         self.additional_conditions_list = [
-            (self.license_suspension_checkBox, "license_suspension.ordered"),
+            (self.license_suspension_checkBox, self.entry_case_information.license_suspension),
             # (self.community_service_checkBox, "community_service.ordered"),
             # (self.other_conditions_checkBox, "other_conditions.ordered"),
         ]
