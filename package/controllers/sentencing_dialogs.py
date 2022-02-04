@@ -58,6 +58,9 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             self.balance_due_date.date().toString("MMMM dd, yyyy")
 
     def add_additional_case_information(self):
+        """The additional conditions are set by the toggling of the Additional Conditions checkbox.
+        If the box is checked, but Additional Conditions is not pressed, then conditions will appear
+        with None for details. TODO: Add warning box."""
         self.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.check_add_conditions()
@@ -161,25 +164,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.update_case_information()
         AddConditionsDialog(self).exec()
 
-    @logger.catch
-    def check_add_conditions(self):
-        """The self.additional_conditions_list is an attribute of the main dialog (NoJail or JailCC).
-        The main issue is there are multiple instances of the license_suspension, need to make sure just one
-        and then change it based on checkbox status."""
-        for item in self.additional_conditions_list:
-            condition_checkbox = item[0]
-            print(condition_checkbox)
-            condition = item[1]
-            if condition_checkbox.isChecked():
-                print("Checked ran")
-                #self.entry_case_information.license_suspension.ordered = True
-                setattr(condition, "ordered", True)
-            elif condition_checkbox.isChecked() == False:
-                print("UNchecked ran")
-                self.entry_case_information.license_suspension.ordered = False
-                print(condition)
-                # setattr(condition, "ordered", False)
-
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
@@ -227,11 +211,10 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         super().__init__(judicial_officer, cms_case, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         self.additional_conditions_list = [
-            (self.license_suspension_checkBox, self.entry_case_information.license_suspension),
-            # (self.community_service_checkBox, "community_service.ordered"),
-            # (self.other_conditions_checkBox, "other_conditions.ordered"),
+            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
+            ("community_service_checkBox", self.entry_case_information.community_service),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
         ]
-
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
