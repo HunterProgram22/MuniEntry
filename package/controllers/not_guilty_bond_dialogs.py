@@ -38,7 +38,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.statute_choice_box.setFocus()
+        self.defense_counsel_name_box.setFocus()
 
     @logger.catch
     def add_plea_to_entry_case_information(self):

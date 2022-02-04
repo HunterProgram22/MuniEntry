@@ -202,7 +202,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.statute_choice_box.setFocus()
+        self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
@@ -258,7 +258,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.statute_choice_box.setFocus()
+        self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
         self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
