@@ -35,6 +35,7 @@ def app(qtbot):
     app = MuniEntry_app.Window(daily_case_list_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
+    mouse_click(app.arraignments_radioButton)
     enter_data(app.arraignment_cases_box, '21TRD09200')
     return app
 
@@ -43,6 +44,7 @@ def app(qtbot):
 def app_nocase(qtbot):
     app = MuniEntry_app.Window(daily_case_list_database)
     qtbot.addWidget(app)
+    mouse_click(app.arraignments_radioButton)
     mouse_click(app.bunner_radioButton)
     return app
 
