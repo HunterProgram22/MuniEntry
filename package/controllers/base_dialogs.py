@@ -5,22 +5,18 @@ import time
 from docxtpl import DocxTemplate
 from loguru import logger
 from win32com import client
-
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
-from package.controllers.helper_functions import set_document_name, set_future_date
-from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from db.databases import create_database_connections, extract_data, create_offense_list, create_statute_list
-from settings import CHARGES_DATABASE, SAVE_PATH
+from package.controllers.helper_functions import set_document_name, set_future_date, InfoChecker
+from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
-from settings import PAY_DATE_DICT
-
-from MuniEntry.package.controllers.helper_functions import InfoChecker
+from settings import PAY_DATE_DICT, CHARGES_DATABASE, SAVE_PATH
 
 
 def open_databases():
