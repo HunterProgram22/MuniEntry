@@ -19,7 +19,7 @@ from package.models.data_saver import extract_data
 from db.create_data_lists import create_statute_list, create_offense_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
-from package.views.custom_widgets import RequiredBox
+from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT
 
 from MuniEntry.package.controllers.helper_functions import InfoChecker
@@ -144,7 +144,7 @@ class CasePartyUpdater:
         dialog.entry_case_information.defendant.last_name = self.defendant_last_name
 
     def set_defense_counsel_information(self, dialog):
-        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.text()
+        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.currentText()
         dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
         dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
@@ -303,6 +303,8 @@ class CriminalBaseDialog(BaseDialog):
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
+        self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
+        self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
         self.delete_button_list = []
         self.amend_button_list = []

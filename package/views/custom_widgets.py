@@ -6,6 +6,13 @@ from PyQt5 import QtGui
 from settings import ICON_PATH
 
 
+ATTORNEY_LIST = [
+    "",
+    "Garrett Smith",
+    "Jeff Ulrich",
+    "Chris Junga",
+]
+
 class ExtendedComboBox(QComboBox):
     def __init__(self, parent=None):
         """Code is from the user Joachim Bonfert 8/2/21 answer at https://stackoverflow.com/questions/4827207/
@@ -47,6 +54,15 @@ class ExtendedComboBox(QComboBox):
         self.completer.setCompletionColumn(column)
         self.pFilterModel.setFilterKeyColumn(column)
         super(ExtendedComboBox, self).setModelColumn(column)
+
+
+class DefenseCounselComboBox(QComboBox):
+    def __init__(self, parent=None):
+        super(QComboBox, self).__init__(parent)
+
+    def load_attorneys(self):
+        for attorney in ATTORNEY_LIST:
+            self.addItem(attorney)
 
 
 class StatuteLineEdit(QLineEdit):

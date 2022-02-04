@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1043</width>
-    <height>741</height>
+    <height>809</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1023</width>
-        <height>721</height>
+        <width>1021</width>
+        <height>787</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,1,1">
@@ -777,13 +777,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="defense_counsel_name_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
           <item row="3" column="2">
            <widget class="QComboBox" name="defense_counsel_type_box">
             <property name="styleSheet">
@@ -805,6 +798,16 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
             <property name="text">
              <string>Defendant waived right to counsel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="defense_counsel_name_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1149,14 +1152,16 @@ font-weight: bold;</string>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
+  <tabstop>credit_for_jail_checkBox</tabstop>
+  <tabstop>jail_time_credit_box</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>print_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
   <tabstop>scrollArea</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

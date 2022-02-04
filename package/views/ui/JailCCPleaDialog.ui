@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>888</width>
-    <height>805</height>
+    <height>884</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -679,13 +679,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="defense_counsel_name_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="2">
            <widget class="QComboBox" name="defense_counsel_type_box">
             <property name="styleSheet">
@@ -707,6 +700,16 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
             <property name="text">
              <string>Defendant waived right to counsel</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="defense_counsel_name_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1204,11 +1207,11 @@ font-weight: bold;</string>
   <tabstop>diversion_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
   <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
   <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>

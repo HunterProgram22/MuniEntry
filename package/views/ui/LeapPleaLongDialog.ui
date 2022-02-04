@@ -324,13 +324,6 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="defense_counsel_name_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="2">
               <widget class="QComboBox" name="defense_counsel_type_box">
                <property name="styleSheet">
@@ -352,6 +345,16 @@ font-weight: bold;</string>
               <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
                <property name="text">
                 <string>Defendant waived right to counsel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="defense_counsel_name_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -776,7 +779,6 @@ p, li { white-space: pre-wrap; }
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
-  <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>defense_counsel_type_box</tabstop>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>statute_choice_box</tabstop>
