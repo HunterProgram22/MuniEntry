@@ -16,9 +16,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QSplashScreen
 from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui
 
-from db.create_data_lists import create_daily_cases_list
 from package.models.party_types import JudicialOfficer
-from package.models.data_loader import CriminalCaseSQLRetriever, create_daily_case_list_database_connection
+from db.databases import CriminalCaseSQLRetriever, create_daily_case_list_database_connection, create_daily_cases_list
 from package.models.case_information import CriminalCaseInformation
 from package.views.custom_widgets import RequiredBox, ExtendedComboBox
 from package.views.main_window_ui import Ui_MainWindow
@@ -188,7 +187,7 @@ class Window(QMainWindow, Ui_MainWindow):
 def main():
     """The main loop of the application. The arraignments/slated/final_pretrial databases are created each time the
     application is loaded after any existing prior version is deleted."""
-    from db import create_daily_case_lists # This import exists to run the scripts in create_daily_case_lists
+    # from db.databases import create_daily_cases_lists # This import exists to run the scripts in create_daily_case_lists
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(ICON_PATH + 'gavel.png'))
     splash.show()

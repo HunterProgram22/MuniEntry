@@ -14,9 +14,7 @@ from PyQt5 import QtGui
 
 from package.controllers.helper_functions import set_document_name, set_future_date
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
-from package.models.data_loader import create_database_connections
-from package.models.data_saver import extract_data
-from db.create_data_lists import create_statute_list, create_offense_list
+from db.databases import create_database_connections, extract_data, create_offense_list, create_statute_list
 from settings import CHARGES_DATABASE, SAVE_PATH
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
