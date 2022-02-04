@@ -3,6 +3,7 @@ import os
 import sys
 import inspect
 from PyQt5.QtSql import QSqlDatabase
+from db.databases import create_daily_case_list_db_connection
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
@@ -10,30 +11,17 @@ current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfra
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
+
 import MuniEntry_app
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
 from package.controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
-# Home Path - Comment out when at work
-DB_PATH = "C:\\Users\\Justin Kudela\\AppData\\Local\\Programs\\Python\\Python39\\MuniEntry\\resources\\db\\arraignments.sqlite"
-# Work Path - Comment out when at home
-# DB_PATH = "C:\\Users\\jkudela\\AppData\\Local\\Programs\\Python\\Python310\\MuniEntry\\resources\\db\\arraignments.sqlite"
+def open_daily_case_list_db_connection():
+    daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
+    return daily_case_list_database_connection
 
-def create_arraignments_database_connection():
-    """This is a duplicate version of the function in settings.py. It is used because of issues with Path.
-    Opens a connection to the database and returns that connection to the arraignments_database."""
-    arraignments_database_connection = QSqlDatabase.addDatabase("QSQLITE", "cases")
-    arraignments_database_connection.setDatabaseName(DB_PATH)
-    return arraignments_database_connection
-
-
-from package.models.data_loader import create_slated_database_connection, create_arraignments_database_connection
-from resources.db.create_data_lists import create_final_pretrial_database_connection
-
-arraignments_database = create_arraignments_database_connection()
-slated_database = create_slated_database_connection()
-final_pretrial_database = create_final_pretrial_database_connection()
+daily_case_list_database = open_daily_case_list_db_connection()
 
 def enter_data(field, data: str):
     return QtBot.keyClicks(field, data)
@@ -44,7 +32,7 @@ def mouse_click(button):
 
 @pytest.fixture
 def app(qtbot):
-    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
+    app = MuniEntry_app.Window(daily_case_list_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     enter_data(app.arraignment_cases_box, '21TRD09200')
@@ -53,7 +41,7 @@ def app(qtbot):
 
 @pytest.fixture
 def app_nocase(qtbot):
-    app = MuniEntry_app.Window(arraignments_database, slated_database, final_pretrial_database)
+    app = MuniEntry_app.Window(daily_case_list_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     return app

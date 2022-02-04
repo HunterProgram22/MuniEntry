@@ -157,8 +157,6 @@ class Window(QMainWindow, Ui_MainWindow):
             if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
                 self.daily_case_list_database.open()
                 case_table = self.set_case_list_table() # Set based on the radio button that is checked for the arr/slate/final
-                # THIS is where the current issue is located - right now loops three times. Need to match up the button selected
-                # to the table.
                 selected_case_list = database_table_dict.get(case_table)
                 if selected_case_list.currentText() == "":
                     self.case_to_load = CriminalCaseInformation()

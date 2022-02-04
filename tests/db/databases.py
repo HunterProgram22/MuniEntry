@@ -92,6 +92,7 @@ def open_daily_case_list_db_connection():
 @logger.catch
 def create_daily_case_list_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
+    print(database_name)
     if os.path.exists(database_name):
         con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
         con1.setDatabaseName(database_name)
