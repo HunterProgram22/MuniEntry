@@ -199,6 +199,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         super().connect_signals_to_slots()
         self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.diversion_checkBox.toggled.connect(self.conditions_checkbox_toggle)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
