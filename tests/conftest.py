@@ -36,7 +36,7 @@ def app(qtbot):
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     mouse_click(app.arraignments_radioButton)
-    enter_data(app.arraignment_cases_box, '21TRD09200')
+    enter_data(app.arraignment_cases_box, 'ROWEDDA - 21TRD09200')
     return app
 
 
