@@ -7,7 +7,6 @@ The main window contains options for selecting the judicial officer and template
 """
 import multiprocessing
 import sys
-import pathlib
 
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSql import QSqlDatabase
@@ -32,10 +31,7 @@ logger.add("./resources/logs/Error_log_{time}.log")
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    """The MainWindow of the application from which the judicial officer and template for creating
-    an entry is selected.
-
-    :judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
+    """:judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
     officer is added to the view then add new judicial officer to dict (key:
     self.lastname_radioButton, value: "Lastname").The button will be connected to the slot for
     self.judicial_officer by the function connect_judicial_officer_buttons.
@@ -185,9 +181,6 @@ class Window(QMainWindow, Ui_MainWindow):
 
 @logger.catch
 def main():
-    """The main loop of the application. The arraignments/slated/final_pretrial databases are created each time the
-    application is loaded after any existing prior version is deleted."""
-    # from db.databases import create_daily_cases_lists # This import exists to run the scripts in create_daily_case_lists
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(ICON_PATH + 'gavel.png'))
     splash.show()
