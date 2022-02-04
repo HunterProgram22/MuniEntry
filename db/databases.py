@@ -84,17 +84,38 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return self.case
 
 
-@logger.catch
-def create_daily_case_list_database_connection():
+def open_daily_case_list_db_connection():
     daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
     return daily_case_list_database_connection
 
 
-@logger.catch
+def create_daily_case_list_db_connection():
+    database_name = f"{DB_PATH}daily_case_lists.sqlite"
+    if os.path.exists(database_name):
+        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
+        con1.setDatabaseName(database_name)
+    else:
+        print("The file does not exist")
+        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
+        con1.setDatabaseName(database_name)
+        if not con1.open():
+            print("Unable to connect to database")
+            sys.exit(1)
+        else:
+            create_table_query = QSqlQuery(con1)
+            for item in DATABASE_TABLE_LIST:
+                table = item[1]
+                create_table_query.exec(create_table_sql_string(table))
+    if not con1.open():
+        print("Unable to connect to database")
+        sys.exit(1)
+    return con1
+
+
 def create_database_connections():
     """The databases for the application are created upon import of the module, which is done
-    on application startup. The connections to the databases are created, but the opening and
-    closing of the databases is handled by the appropriate class dialog."""
+    on application startup when base_dialog is imported into main. The connections to the databases
+    are created, but opening and closing is handled with init or close functions in controller dialogs."""
     offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
     offense_database_connection.setDatabaseName(CHARGES_DATABASE)
     return offense_database_connection
@@ -243,31 +264,8 @@ def delete_table_data_sql_string(table):
         """
 
 
-def create_db_connection():
-    database_name = f"{DB_PATH}daily_case_lists.sqlite"
-    if os.path.exists(database_name):
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
-    else:
-        print("The file does not exist")
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
-        if not con1.open():
-            print("Unable to connect to database")
-            sys.exit(1)
-        else:
-            create_table_query = QSqlQuery(con1)
-            for item in DATABASE_TABLE_LIST:
-                table = item[1]
-                create_table_query.exec(create_table_sql_string(table))
-    if not con1.open():
-        print("Unable to connect to database")
-        sys.exit(1)
-    return con1
-
-
 def main():
-    con1 = create_db_connection()
+    con1 = create_daily_case_list_db_connection()
 
     for item in DATABASE_TABLE_LIST:
         excel_report = item[0]

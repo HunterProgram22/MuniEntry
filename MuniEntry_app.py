@@ -16,7 +16,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5 import QtGui
 
 from package.models.party_types import JudicialOfficer
-from db.databases import CriminalCaseSQLRetriever, create_daily_case_list_database_connection, create_daily_cases_list
+from db.databases import CriminalCaseSQLRetriever, open_daily_case_list_db_connection, create_daily_cases_list
 from package.models.case_information import CriminalCaseInformation
 from package.views.custom_widgets import RequiredBox, ExtendedComboBox
 from package.views.main_window_ui import Ui_MainWindow
@@ -186,7 +186,7 @@ def main():
     splash.show()
     print("Loading")
     QTimer.singleShot(2000, splash.close)
-    daily_case_list_database = create_daily_case_list_database_connection()
+    daily_case_list_database = open_daily_case_list_db_connection()
     win = Window(daily_case_list_database)
     win.show()
     print(QSqlDatabase.connectionNames())
