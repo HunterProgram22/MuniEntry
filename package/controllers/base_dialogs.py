@@ -514,3 +514,4 @@ if __name__ == "__main__":
 else:
     print("BCD ran when imported")
     database_offenses = create_database_connections()
+    open_databases()

@@ -117,7 +117,7 @@ def create_database_connections():
     """The databases for the application are created upon import of the module, which is done
     on application startup when base_dialog is imported into main. The connections to the databases
     are created, but opening and closing is handled with init or close functions in controller dialogs."""
-    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
+    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "con_offenses")
     offense_database_connection.setDatabaseName(CHARGES_DATABASE)
     return offense_database_connection
 
@@ -151,7 +151,7 @@ def extract_data(case_data):
 
 
 def create_offense_list():
-    conn = sqlite3.connect(DB_PATH + "charges.sqlite")
+    conn = sqlite3.connect(CHARGES_DATABASE)
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT offense, statute FROM charges")
     offense_list = cursor.fetchall()
@@ -164,7 +164,7 @@ def create_offense_list():
 
 
 def create_statute_list():
-    conn = sqlite3.connect(DB_PATH + "charges.sqlite")
+    conn = sqlite3.connect(CHARGES_DATABASE)
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT offense, statute FROM charges")
     statute_list = cursor.fetchall()
@@ -299,5 +299,6 @@ def main():
 if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
 else:
+    from db import create_charges_table
     main()
     print("Imported Daily Case List Tables")
