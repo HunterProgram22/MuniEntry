@@ -48,8 +48,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return CriminalCaseInformation()
 
     def get_case_data(self):
-        """Query database based on cms_case number to return the data to load for the
-        dialog.
+        """Query database based on cms_case number to return the data to load for the dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
         key = self.case_number
         query = QSqlQuery(self.database)
@@ -65,7 +64,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query.finish()
 
     def load_data_into_case(self, query):
-        """TODO: Can Refactor more."""
         case_number = None
         while query.next():
             if case_number is None:
