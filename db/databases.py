@@ -111,13 +111,12 @@ def create_daily_case_list_db_connection():
     return con1
 
 
-def create_database_connections():
+def open_charges_db_connection():
     """The databases for the application are created upon import of the module, which is done
     on application startup when base_dialog is imported into main. The connections to the databases
     are created, but opening and closing is handled with init or close functions in controller dialogs."""
-    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "con_offenses")
-    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection
+    charges_database_connection = QSqlDatabase.database("con_offenses", open=True)
+    return charges_database_connection
 
 
 def extract_data(case_data):

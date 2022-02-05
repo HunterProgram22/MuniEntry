@@ -81,6 +81,8 @@ def main():
         insertDataQuery.addBindValue(type)
         insertDataQuery.exec()
 
+    con_offenses.close()
+    con_offenses.removeDatabase("QSQLITE")
     return None
 
 

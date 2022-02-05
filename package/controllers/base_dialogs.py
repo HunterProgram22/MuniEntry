@@ -11,7 +11,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
-from db.databases import create_database_connections, extract_data, create_offense_list, create_statute_list
+from db.databases import open_charges_db_connection, extract_data, create_offense_list, create_statute_list
 from package.controllers.helper_functions import set_document_name, set_future_date, InfoChecker
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
@@ -19,13 +19,9 @@ from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, CHARGES_DATABASE, SAVE_PATH
 
 
-def open_databases():
-    database_offenses.open()
-
-
 def close_databases():
-    database_offenses.close()
-    database_offenses.removeDatabase(CHARGES_DATABASE)
+    charges_database.close()
+    charges_database.removeDatabase("QSQLITE")
 
 
 def print_document(docname):
@@ -250,7 +246,7 @@ class CriminalSlotFunctions:
             field = 'statute'
         elif dialog.sender() == dialog.offense_choice_box:
             field = 'offense'
-        query = QSqlQuery(database_offenses)
+        query = QSqlQuery(charges_database)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
         query.prepare(query_string)
         query.bindValue(":key", key)
@@ -284,7 +280,7 @@ class CriminalBaseDialog(BaseDialog):
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, cms_case=None, parent=None):
-        open_databases()
+        #open_databases()
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
@@ -392,7 +388,7 @@ class CriminalBaseDialog(BaseDialog):
         key = self.statute_choice_box.currentText()
         if self.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(database_offenses)
+        query = QSqlQuery(charges_database)
         query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
         query.bindValue(":key", key)
         query.exec()
@@ -507,5 +503,4 @@ if __name__ == "__main__":
     print("BCD ran directly")
 else:
     print("BCD ran when imported")
-    database_offenses = create_database_connections()
-    open_databases()
+    charges_database = open_charges_db_connection()
