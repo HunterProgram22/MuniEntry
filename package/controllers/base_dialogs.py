@@ -117,22 +117,17 @@ class CasePartyUpdater:
     """Class responsible for updating case number, date and party information. Top frame
     on primary dialogs."""
     def __init__(self, dialog):
-        #self.case_number = dialog.case_number_lineEdit.text()
-        self.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
-        self.defendant_first_name = dialog.defendant_first_name_lineEdit.text()
-        self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
         self.set_defense_counsel_information(dialog)
 
     def set_case_number_and_date(self, dialog):
         dialog.entry_case_information.case_number = dialog.case_number_lineEdit.text()
-        dialog.entry_case_information.plea_trial_date = self.plea_trial_date
+        dialog.entry_case_information.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     def set_party_information(self, dialog):
-        """Updates the party information from the GUI(view) and saves it to the model."""
-        dialog.entry_case_information.defendant.first_name = self.defendant_first_name
-        dialog.entry_case_information.defendant.last_name = self.defendant_last_name
+        dialog.entry_case_information.defendant.first_name = dialog.defendant_first_name_lineEdit.text()
+        dialog.entry_case_information.defendant.last_name = dialog.defendant_last_name_lineEdit.text()
 
     def set_defense_counsel_information(self, dialog):
         dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.currentText()
@@ -358,17 +353,19 @@ class CriminalBaseDialog(BaseDialog):
         close_databases()
         super().close_event()
 
-    # Criminal CasePartyUpdater Functions - REFACTORED and WORKING
     @logger.catch
     def update_case_information(self):
-        """TODO: This needs to be fixed it might update case information with blanks."""
-        """"Docstring needs updating."""
+        """Calls the class responsible for updating party and counsel information and plea date. The
+        'self' that is passed is the dialog. It loads the information in those fields into the CriminalCaseInformation
+        model attributes. PyCharm highlights potential error because that attributes are part of the
+        CriminalCaseInformation model which is passed as self.entry_case_information."""
         return CasePartyUpdater(self)
 
     # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
-        """TODO: This can probably be refactored to the specific main dialogs as it is just a pass through."""
+        """This method is never used directly. AddPlea is a pass-through for this case dialog. In the specific dialogs
+        it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
         return AddPlea(self)
 
     # Slot Functions
