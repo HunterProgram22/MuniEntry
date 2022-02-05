@@ -3,7 +3,6 @@ import os
 import sys
 import inspect
 from PyQt5.QtSql import QSqlDatabase
-from db.databases import create_daily_case_list_db_connection
 from pytestqt.plugin import QtBot
 from PyQt5 import QtCore
 
