@@ -17,8 +17,9 @@ from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaD
 from package.controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
+    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
     return daily_case_list_database_connection
+
 
 daily_case_list_database = open_daily_case_list_db_connection()
 
