@@ -16,7 +16,7 @@ from package.controllers.helper_functions import set_document_name, set_future_d
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
-from settings import PAY_DATE_DICT, CHARGES_DATABASE, SAVE_PATH
+from settings import PAY_DATE_DICT, SAVE_PATH
 
 
 def close_databases():
@@ -280,7 +280,7 @@ class CriminalBaseDialog(BaseDialog):
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, cms_case=None, parent=None):
-        #open_databases()
+        # open_databases()
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
