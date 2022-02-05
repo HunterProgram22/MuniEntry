@@ -271,7 +271,8 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.report_time_box.setHidden(False)
 
     def set_field_enabled(self):
-        """TODO: This method could be refactored to be more efficient and better at setting focus."""
+        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
+        any additional fields that are required for that condition."""
         for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
             if hasattr(self, item[0]):
                 if getattr(self, item[0]).isChecked():
