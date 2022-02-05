@@ -33,15 +33,15 @@ def main():
       os.remove(CHARGES_DATABASE)
     else:
       print("The file does not exist")
-    con_offenses = QSqlDatabase.addDatabase("QSQLITE", "con_offenses")
-    con_offenses.setDatabaseName(CHARGES_DATABASE)
+    con_charges = QSqlDatabase.addDatabase("QSQLITE", "con_charges")
+    con_charges.setDatabaseName(CHARGES_DATABASE)
 
-    if not con_offenses.open():
+    if not con_charges.open():
         print("Unable to connect to database")
         sys.exit(1)
 
     # Create a query and execute it right away using .exec()
-    createTableQuery = QSqlQuery(con_offenses)
+    createTableQuery = QSqlQuery(con_charges)
     createTableQuery.exec(
         """
         CREATE TABLE charges (
@@ -54,7 +54,7 @@ def main():
         """
     )
 
-    insertDataQuery = QSqlQuery(con_offenses)
+    insertDataQuery = QSqlQuery(con_charges)
     insertDataQuery.prepare(
         """
         INSERT INTO charges (
@@ -81,8 +81,8 @@ def main():
         insertDataQuery.addBindValue(type)
         insertDataQuery.exec()
 
-    con_offenses.close()
-    con_offenses.removeDatabase("QSQLITE")
+    con_charges.close()
+    con_charges.removeDatabase("QSQLITE")
     return None
 
 

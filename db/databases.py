@@ -83,7 +83,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
+    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
     return daily_case_list_database_connection
 
 
@@ -91,31 +91,31 @@ def open_daily_case_list_db_connection():
 def create_daily_case_list_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
     if os.path.exists(database_name):
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
+        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
+        con_daily_case_lists.setDatabaseName(database_name)
     else:
         print("The file does not exist")
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
-        if not con1.open():
+        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
+        con_daily_case_lists.setDatabaseName(database_name)
+        if not con_daily_case_lists.open():
             print("Unable to connect to database")
             sys.exit(1)
         else:
-            create_table_query = QSqlQuery(con1)
+            create_table_query = QSqlQuery(con_daily_case_lists)
             for item in DATABASE_TABLE_LIST:
                 table = item[1]
                 create_table_query.exec(create_table_sql_string(table))
-    if not con1.open():
+    if not con_daily_case_lists.open():
         print("Unable to connect to database")
         sys.exit(1)
-    return con1
+    return con_daily_case_lists
 
 
 def open_charges_db_connection():
     """The databases for the application are created upon import of the module, which is done
     on application startup when base_dialog is imported into main. The connections to the databases
     are created, but opening and closing is handled with init or close functions in controller dialogs."""
-    charges_database_connection = QSqlDatabase.database("con_offenses", open=True)
+    charges_database_connection = QSqlDatabase.database("con_charges", open=True)
     return charges_database_connection
 
 
@@ -263,17 +263,17 @@ def delete_table_data_sql_string(table):
 
 
 def main():
-    con1 = create_daily_case_list_db_connection()
+    con_daily_case_lists = create_daily_case_list_db_connection()
 
     for item in DATABASE_TABLE_LIST:
         excel_report = item[0]
         table = item[1]
 
-        delete_old_data_query = QSqlQuery(con1)
+        delete_old_data_query = QSqlQuery(con_daily_case_lists)
         delete_old_data_query.prepare(delete_table_data_sql_string(table))
         delete_old_data_query.exec()
 
-        insert_data_query = QSqlQuery(con1)
+        insert_data_query = QSqlQuery(con_daily_case_lists)
         insert_data_query.prepare(insert_table_sql_string(table))
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
@@ -288,8 +288,8 @@ def main():
             insert_data_query.addBindValue(fra_in_file)
             insert_data_query.exec()
 
-    con1.close()
-    con1.removeDatabase("QSQLITE")
+    con_daily_case_lists.close()
+    con_daily_case_lists.removeDatabase("QSQLITE")
     return None
 
 
