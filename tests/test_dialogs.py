@@ -47,13 +47,16 @@ def test_dialog_window_title(test_input, expected):
 
 @pytest.mark.parametrize("test_input", dialog_guilty_plea_entry_list)
 def test_dialog_guilty_create_entry(test_input):
+    mouse_click(test_input.defense_counsel_waived_checkBox)
     mouse_click(test_input.guilty_all_Button)
     mouse_click(test_input.create_entry_Button)
+    mouse_click(test_input.close_dialog_Button)
     assert test_input.entry_case_information.case_number == '21TRD09200'
 
 
 @pytest.mark.parametrize("test_input", dialog_no_contest_plea_entry_list)
 def test_dialog_no_contest_create_entry(test_input):
+    mouse_click(test_input.defense_counsel_waived_checkBox)
     mouse_click(test_input.no_contest_all_Button)
     mouse_click(test_input.create_entry_Button)
     assert test_input.entry_case_information.case_number == '21TRD09200'
