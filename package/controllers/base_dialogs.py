@@ -117,19 +117,16 @@ class CasePartyUpdater:
     """Class responsible for updating case number, date and party information. Top frame
     on primary dialogs."""
     def __init__(self, dialog):
-        self.case_number = dialog.case_number_lineEdit.text()
+        #self.case_number = dialog.case_number_lineEdit.text()
         self.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
         self.defendant_first_name = dialog.defendant_first_name_lineEdit.text()
         self.defendant_last_name = dialog.defendant_last_name_lineEdit.text()
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
-        try:
-            self.set_defense_counsel_information(dialog)
-        except AttributeError:
-            pass
+        self.set_defense_counsel_information(dialog)
 
     def set_case_number_and_date(self, dialog):
-        dialog.entry_case_information.case_number = self.case_number
+        dialog.entry_case_information.case_number = dialog.case_number_lineEdit.text()
         dialog.entry_case_information.plea_trial_date = self.plea_trial_date
 
     def set_party_information(self, dialog):

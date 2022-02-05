@@ -8,8 +8,8 @@ TEMPLATE_PATH = PATH + "\\resources\\templates\\"
 SAVE_PATH = PATH + "\\resources\\saved\\"
 DB_PATH = PATH + "\\db\\"
 ICON_PATH = PATH + "\\icons\\"
-CHARGES_DATABASE = DB_PATH + "\\charges.sqlite"
-CHARGES_TABLE = DB_PATH + "\\Charges.xlsx"
+CHARGES_DATABASE = DB_PATH + "charges.sqlite"
+CHARGES_TABLE = DB_PATH + "Charges.xlsx"
 
 
 PAY_DATE_DICT = {

@@ -8,6 +8,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from settings import CHARGES_TABLE, CHARGES_DATABASE
 
+print(CHARGES_DATABASE)
 
 @logger.catch
 def return_data_from_excel(excel_file):
