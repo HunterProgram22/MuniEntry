@@ -196,17 +196,7 @@ class CriminalBaseDialog(BaseDialog):
         return AddPlea(self)
 
     # Slot Functions
-    @logger.catch
-    def add_charge_to_entry_case_information(self):
-        """The offense, statute and degree are added to the view by the method
-        add_charge_to_view, not this method. This method is triggered on
-        clicked() of the Add Charge button."""
-        self.criminal_charge = CriminalCharge()
-        self.criminal_charge.offense = self.offense_choice_box.currentText()
-        self.criminal_charge.statute = self.statute_choice_box.currentText()
-        self.criminal_charge.degree = self.degree_choice_box.currentText()
-        self.criminal_charge.type = self.set_offense_type()
-        self.entry_case_information.add_charge_to_list(self.criminal_charge)
+
 
     # Setter Functions
     def set_plea_and_findings_process(self):
@@ -273,6 +263,7 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, parent=None):
         self.main_dialog = main_dialog
+        print(self.main_dialog)
         self.case_information = case_information
         super().__init__(parent)
         self.set_case_information_banner()
@@ -299,8 +290,26 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.offense_choice_box.currentTextChanged.connect(
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
         self.clear_fields_Button.pressed.connect(self.clear_add_charge_fields)
-        self.add_charge_Button.pressed.connect(self.add_charge)
+        self.add_charge_Button.pressed.connect(self.add_charge_process)
         self.cancel_Button.pressed.connect(self.close_event)
+
+    @logger.catch
+    def add_charge_process(self):
+        """The order of functions that are called when the add_charge_Button is
+        clicked(). The order is important to make sure the information is
+        updated before the charge is added and the data cleared from the fields."""
+        self.add_charge_to_entry_case_information()
+        self.main_dialog.add_charge_to_grid()
+
+    @logger.catch
+    def add_charge_to_entry_case_information(self):
+        """TODO: self.criminal_charge_type needs to be fixed to add back in."""
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.degree_choice_box.currentText()
+        # self.criminal_charge.type = self.set_offense_type()
+        self.case_information.add_charge_to_list(self.criminal_charge)
 
     @logger.catch
     def set_case_information_banner(self):
@@ -315,13 +324,13 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.case_number_label.setText(self.case_information.case_number)
 
     @logger.catch
-    def add_charge(self):
-        pass
-
-    @logger.catch
     def clear_add_charge_fields(self):
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
+
+
+
+
 
 
 class CasePartyUpdater:
@@ -436,22 +445,6 @@ class CriminalSlotFunctions:
     def close_dialog(cls, dialog):
         dialog.close_event()
 
-    @classmethod
-    def clear_charge_fields(cls, dialog):
-        """Clears the fields that are used for adding a charge. The statute_choice_box and
-        offense_choice_box use the clearEditText method because those boxes are editable."""
-        dialog.statute_choice_box.clearEditText()
-        dialog.offense_choice_box.clearEditText()
-
-    @classmethod
-    @logger.catch
-    def add_charge_process(cls, dialog):
-        """The order of functions that are called when the add_charge_Button is
-        clicked(). The order is important to make sure the information is
-        updated before the charge is added and the data cleared from the fields."""
-        dialog.add_charge_to_entry_case_information()
-        dialog.add_charge_to_grid()
-        CriminalSlotFunctions.clear_charge_fields(dialog)
 
     @classmethod
     @logger.catch
