@@ -250,11 +250,10 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         if self.credit_for_jail_checkBox.isChecked():
             self.jail_time_credit_box.setEnabled(True)
             self.jail_time_credit_box.setHidden(False)
-            self.days_in_jail_label.setHidden(False)
+            self.jail_time_credit_box.setFocus()
         else:
             self.jail_time_credit_box.setEnabled(False)
             self.jail_time_credit_box.setHidden(True)
-            self.days_in_jail_label.setHidden(True)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)

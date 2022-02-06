@@ -282,8 +282,7 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """This method overrides the base_dialog method to connect signals and
-        slots specific to the amend_offense dialog."""
+        """TODO: The statute/offense connections can probably be moved to this dialog directly."""
         self.statute_choice_box.currentTextChanged.connect(
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
         self.offense_choice_box.currentTextChanged.connect(
