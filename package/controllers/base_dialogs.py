@@ -4,6 +4,7 @@ import time
 
 from docxtpl import DocxTemplate
 from loguru import logger
+from package.views.add_offense_dialog_ui import Ui_AddOffenseDialog
 from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -266,10 +267,59 @@ class CriminalBaseDialog(BaseDialog):
         AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
 
     @logger.catch
+    def start_add_offense_dialog(self, _bool):
+        """Opens the amend offense dialog as a modal window. The
+        entry_case_information is passed to the dialog class in order to populate
+        the cms_case information banner. The _bool is from clicked and not used."""
+        AddOffenseDialog(self, self.entry_case_information).exec()
+
+    @logger.catch
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""
         total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
         self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
+
+
+class AddOffenseDialog(BaseDialog, Ui_AddOffenseDialog):
+    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
+    The cms_case information is passed in order to populate the cms_case information banner. The
+    button_index is to determine which charge the amend_button is amending."""
+    @logger.catch
+    def __init__(self, main_dialog, case_information, parent=None):
+        self.main_dialog = main_dialog
+        self.case_information = case_information
+        super().__init__(parent)
+        self.set_case_information_banner()
+
+    @logger.catch
+    def modify_view(self):
+        """The modify view sets the original charge based on the item in the main dialog
+        for which amend button was pressed."""
+        pass
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog method to connect signals and
+        slots specific to the amend_offense dialog."""
+        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
+        self.add_offense_Button.pressed.connect(self.add_offense)
+        self.cancel_Button.pressed.connect(self.close_event)
+
+    @logger.catch
+    def set_case_information_banner(self):
+        """Sets the banner on a view of the interface. It modifies label
+        widgets on the view to text that was entered."""
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.case_information.defendant.first_name,
+                defendant_last_name=self.case_information.defendant.last_name
+            )
+        )
+        self.case_number_label.setText(self.case_information.case_number)
+
+    @logger.catch
+    def add_offense(self):
+        pass
 
 
 class CasePartyUpdater:
@@ -296,7 +346,6 @@ class CasePartyUpdater:
 
     def set_appearance_reason(self, dialog):
         dialog.entry_case_information.appearance_reason = dialog.appearance_reason_box.currentText()
-
 
 
 class CMSLoader:
