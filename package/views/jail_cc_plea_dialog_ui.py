@@ -636,7 +636,7 @@ class Ui_JailCCPleaDialog(object):
         self.appearance_reason_box.setItemText(1, _translate("JailCCPleaDialog", "change of plea"))
         self.appearance_reason_box.setItemText(2, _translate("JailCCPleaDialog", "trial to court"))
         self.appearance_reason_box.setItemText(3, _translate("JailCCPleaDialog", "jury trial"))
-        self.appearance_reason_box.setItemText(4, _translate("JailCCPleaDialog", "LEAP Sentencing"))
+        self.appearance_reason_box.setItemText(4, _translate("JailCCPleaDialog", "LEAP sentencing"))
         self.label_21.setText(_translate("JailCCPleaDialog", "FRA shown in complaint/file:"))
         self.fra_in_file_box.setItemText(0, _translate("JailCCPleaDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("JailCCPleaDialog", "Yes"))
