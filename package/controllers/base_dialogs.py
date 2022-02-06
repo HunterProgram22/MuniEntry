@@ -256,6 +256,7 @@ class CriminalBaseDialog(BaseDialog):
         """Opens the amend offense dialog as a modal window. The
         entry_case_information is passed to the dialog class in order to populate
         the cms_case information banner. The _bool is from clicked and not used."""
+        self.update_case_information()
         AddChargeDialog(self, self.entry_case_information).exec()
 
     @logger.catch
@@ -297,9 +298,9 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
         self.offense_choice_box.currentTextChanged.connect(
             lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
-        # self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
-        # self.add_offense_Button.pressed.connect(self.add_offense)
-        # self.cancel_Button.pressed.connect(self.close_event)
+        self.clear_fields_Button.pressed.connect(self.clear_add_charge_fields)
+        self.add_charge_Button.pressed.connect(self.add_charge)
+        self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
     def set_case_information_banner(self):
@@ -314,8 +315,13 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.case_number_label.setText(self.case_information.case_number)
 
     @logger.catch
-    def add_offense(self):
+    def add_charge(self):
         pass
+
+    @logger.catch
+    def clear_add_charge_fields(self):
+        self.statute_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
 
 
 class CasePartyUpdater:
