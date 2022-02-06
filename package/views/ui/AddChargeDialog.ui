@@ -38,7 +38,64 @@
    <string notr="true">background-color: rgb(25, 49, 91);
 font: 75 11pt &quot;Palatino Linotype&quot;;</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="1,3,0">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0,2,1">
+   <item row="2" column="0">
+    <widget class="QFrame" name="frame">
+     <property name="font">
+      <font>
+       <family>Palatino Linotype</family>
+       <pointsize>11</pointsize>
+       <weight>75</weight>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="cancel_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QPushButton" name="add_charge_Button">
+        <property name="font">
+         <font>
+          <family>Palatino Linotype</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(62, 146, 255);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Add Charge</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QFrame" name="case_information_frame">
      <property name="sizePolicy">
@@ -132,7 +189,14 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_3">
+     <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,2,0,0,0">
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_23">
+        <property name="text">
+         <string>Degree:</string>
+        </property>
+       </widget>
+      </item>
       <item row="2" column="0">
        <widget class="QLabel" name="label_15">
         <property name="text">
@@ -228,14 +292,7 @@ font-weight: bold;</string>
         </item>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_23">
-        <property name="text">
-         <string>Degree:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
+      <item row="3" column="2">
        <widget class="QPushButton" name="clear_fields_Button">
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
@@ -248,7 +305,7 @@ font-weight: bold;</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="1" column="2">
        <widget class="QCheckBox" name="freeform_entry_checkBox">
         <property name="font">
          <font>
@@ -268,63 +325,6 @@ font-weight: bold;</string>
         </property>
         <property name="text">
          <string>Enable freeform entry for offense/statute</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="font">
-      <font>
-       <family>Palatino Linotype</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="0" column="0">
-       <widget class="QPushButton" name="cancel_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QPushButton" name="add_charge_Button">
-        <property name="font">
-         <font>
-          <family>Palatino Linotype</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(62, 146, 255);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Add Charge</string>
         </property>
        </widget>
       </item>

@@ -227,7 +227,10 @@ class CriminalBaseDialog(BaseDialog):
         del self.entry_case_information.charges_list[index]
         del self.delete_button_list[index]
         self.charges_gridLayout.delete_charge_from_grid()
-        self.guilty_all_Button.setFocus()
+        try: # This try/except is to account for not guilty button on Not Guilty dialog
+            self.guilty_all_Button.setFocus()
+        except AttributeError:
+            self.not_guilty_all_Button.setFocus()
 
     @logger.catch
     def start_amend_offense_dialog(self, _bool):
