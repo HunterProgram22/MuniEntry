@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>888</width>
-    <height>884</height>
+    <width>1066</width>
+    <height>825</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -162,126 +162,13 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>946</width>
-        <height>878</height>
+        <width>1023</width>
+        <height>821</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0,0">
-       <item row="3" column="1" rowspan="2">
-        <widget class="QFrame" name="frame_6">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);
-font: 75 9pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>2</number>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_5">
-          <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="add_conditions_label">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>9</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>Additional Conditions</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="license_suspension_checkBox">
-            <property name="text">
-             <string>License Suspension</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QCheckBox" name="diversion_checkBox">
-            <property name="text">
-             <string>Diversion</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="community_control_checkBox">
-            <property name="text">
-             <string>Community Control</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QCheckBox" name="other_conditions_checkBox">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="text">
-             <string>Other</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QCheckBox" name="community_service_checkBox">
-            <property name="text">
-             <string>Community Service</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="jail_checkBox">
-            <property name="text">
-             <string>Jail Commitment</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0" colspan="3">
-           <widget class="QPushButton" name="add_conditions_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(62, 146, 255)</string>
-            </property>
-            <property name="text">
-             <string>Add Conditions</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
+      <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,2,0,0">
        <item row="1" column="0" colspan="3">
-        <widget class="QFrame" name="add_charge_frame">
+        <widget class="QFrame" name="frame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -297,163 +184,268 @@ font-weight: bold;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Statute:</string>
-            </property>
-           </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QGridLayout" name="gridLayout_3">
+            <item row="0" column="0" colspan="3">
+             <layout class="QGridLayout" name="charges_gridLayout">
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Fines Suspended:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Finding:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_20">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Degree:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_12">
+                <property name="text">
+                 <string>Jail Days Suspended:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="plea_label_1">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Plea:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Jail Days:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="offense_label_1">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Offense:</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_19">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Statute:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_17">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Fines:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>Allied:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_25">
+                <property name="text">
+                 <string>Dismissed:</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="no_contest_all_Button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>No Contest All</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="guilty_all_Button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>Guilty All</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="add_charge_Button">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(62, 146, 255)</string>
+              </property>
+              <property name="text">
+               <string>Add Charge</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="offense_choice_box">
-            <property name="minimumSize">
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>Degree:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="statute_choice_box">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>300</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::WheelFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_7">
           <item row="1" column="0">
-           <widget class="QLabel" name="label_15">
+           <widget class="QPushButton" name="close_dialog_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(170, 58, 63);</string>
+            </property>
             <property name="text">
-             <string>Offense:</string>
+             <string>Close Dialog</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="4">
-           <widget class="QPushButton" name="clear_fields_charge_Button">
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
+          <item row="0" column="0">
+           <widget class="QPushButton" name="create_entry_Button">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(160, 160, 160);</string>
+             <string notr="true">background-color: rgb(0, 255, 0);</string>
             </property>
             <property name="text">
-             <string>Clear Fields</string>
+             <string>Open Entry</string>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QComboBox" name="degree_choice_box">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>Minor Misdemeanor</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>M1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>M2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>M3</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>M4</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Unclassified Misdemeanor</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QPushButton" name="add_charge_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(160, 160, 160);</string>
-            </property>
-            <property name="text">
-             <string>Add Charge</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="2" colspan="2">
-           <widget class="QCheckBox" name="freeform_entry_checkBox">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>9</pointsize>
-              <weight>9</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">font: 75 9pt &quot;Palatino Linotype&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Enable freeform entry for offense/statute</string>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
          </layout>
         </widget>
        </item>
-       <item row="3" column="2">
-        <widget class="QFrame" name="jail_time_credit_frame">
+       <item row="2" column="0">
+        <widget class="QFrame" name="frame_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);
-font: 75 9pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
@@ -464,72 +456,184 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_13">
+         <layout class="QFormLayout" name="formLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>Days In Jail:</string>
+             <string>Court Costs:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="court_costs_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Yes</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Waived</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>No</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>Time to pay fines/costs:</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QLineEdit" name="jail_time_credit_box">
+           <widget class="QComboBox" name="ability_to_pay_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="2">
-           <widget class="QLabel" name="add_conditions_label_2">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>9</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>Jail Time Credit</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
+            <item>
+             <property name="text">
+              <string>forthwith</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>within 30 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>within 60 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>within 90 days</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="label_16">
+           <widget class="QLabel" name="label_18">
             <property name="text">
-             <string>Apply JTC to:</string>
+             <string>Fines/costs due date:</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="jail_time_credit_apply_box">
+           <widget class="QDateEdit" name="balance_due_date">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QPushButton" name="costs_and_fines_Button">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(160, 160, 160);</string>
+            </property>
+            <property name="text">
+             <string>Show Costs/Fines</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QFrame" name="frame_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QFormLayout" name="formLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>FRA shown in complaint/file:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="fra_in_file_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string/>
+              <string>N/A</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Costs and Fines</string>
+              <string>Yes</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Sentence</string>
+              <string>No</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_22">
+            <property name="text">
+             <string>FRA shown in court:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="fra_in_court_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>N/A</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Yes</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>No</string>
              </property>
             </item>
            </widget>
@@ -755,16 +859,12 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QFrame" name="frame_7">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
+       <item row="2" column="2">
+        <widget class="QFrame" name="jail_time_credit_frame">
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);</string>
+          <string notr="true">background-color: rgb(240, 240, 240);
+font: 75 9pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
@@ -775,61 +875,72 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QFormLayout" name="formLayout_2">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_21">
-            <property name="text">
-             <string>FRA shown in complaint/file:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="fra_in_file_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>N/A</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Yes</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>No</string>
-             </property>
-            </item>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_6">
           <item row="1" column="0">
-           <widget class="QLabel" name="label_22">
+           <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>FRA shown in court:</string>
+             <string>Days In Jail:</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="fra_in_court_box">
+           <widget class="QLineEdit" name="jail_time_credit_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="add_conditions_label_2">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Jail Time Credit</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Apply JTC to:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="jail_time_credit_apply_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>N/A</string>
+              <string/>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Yes</string>
+              <string>Costs and Fines</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>No</string>
+              <string>Sentence</string>
              </property>
             </item>
            </widget>
@@ -837,384 +948,115 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QFrame" name="frame_2">
+       <item row="2" column="1" rowspan="2">
+        <widget class="QFrame" name="frame_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);
+font: 75 9pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+         </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Box</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_7">
-          <item row="1" column="0">
-           <widget class="QPushButton" name="close_dialog_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 58, 63);</string>
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="add_conditions_label">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>9</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
             </property>
             <property name="text">
-             <string>Close Dialog</string>
+             <string>Additional Conditions</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="create_entry_Button">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(0, 255, 0);</string>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="license_suspension_checkBox">
+            <property name="text">
+             <string>License Suspension</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="diversion_checkBox">
+            <property name="text">
+             <string>Diversion</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="community_control_checkBox">
+            <property name="text">
+             <string>Community Control</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QCheckBox" name="other_conditions_checkBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Open Entry</string>
+             <string>Other</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="community_service_checkBox">
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Jail Commitment</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="3">
+           <widget class="QPushButton" name="add_conditions_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(62, 146, 255)</string>
+            </property>
+            <property name="text">
+             <string>Add Conditions</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
             </property>
            </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QFrame" name="frame_5">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>2</number>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Court Costs:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="court_costs_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>Yes</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Waived</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>No</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>Time to pay fines/costs:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="ability_to_pay_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>forthwith</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>within 30 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>within 60 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>within 90 days</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>Fines/costs due date:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QDateEdit" name="balance_due_date">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="3">
-        <widget class="QFrame" name="frame">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(240, 240, 240);</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <item>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0" colspan="3">
-             <layout class="QGridLayout" name="charges_gridLayout">
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_10">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Fines Suspended:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Finding:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_20">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Degree:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Jail Days Suspended:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="plea_label_1">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Plea:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="text">
-                 <string>Jail Days:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="offense_label_1">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Offense:</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_19">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Statute:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_17">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Fines:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_7">
-                <property name="text">
-                 <string>Allied:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_25">
-                <property name="text">
-                 <string>Dismissed:</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="guilty_all_Button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(160, 160, 160);</string>
-              </property>
-              <property name="text">
-               <string>Guilty All</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="no_contest_all_Button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(160, 160, 160);</string>
-              </property>
-              <property name="text">
-               <string>No Contest All</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QPushButton" name="costs_and_fines_Button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(160, 160, 160);</string>
-              </property>
-              <property name="text">
-               <string>Costs/Fines</string>
-              </property>
-              <property name="flat">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </item>
          </layout>
         </widget>
@@ -1232,9 +1074,6 @@ font-weight: bold;</string>
   <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>defense_counsel_type_box</tabstop>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
-  <tabstop>statute_choice_box</tabstop>
-  <tabstop>offense_choice_box</tabstop>
-  <tabstop>add_charge_Button</tabstop>
   <tabstop>court_costs_box</tabstop>
   <tabstop>ability_to_pay_box</tabstop>
   <tabstop>balance_due_date</tabstop>
