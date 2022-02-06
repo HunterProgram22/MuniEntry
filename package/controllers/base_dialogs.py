@@ -230,7 +230,7 @@ class CriminalBaseDialog(BaseDialog):
         del self.entry_case_information.charges_list[index]
         del self.delete_button_list[index]
         self.charges_gridLayout.delete_charge_from_grid()
-        self.statute_choice_box.setFocus()
+        self.guilty_all_Button.setFocus()
 
     @logger.catch
     def start_amend_offense_dialog(self, _bool):
@@ -263,7 +263,6 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, parent=None):
         self.main_dialog = main_dialog
-        print(self.main_dialog)
         self.case_information = case_information
         super().__init__(parent)
         self.set_case_information_banner()
@@ -300,10 +299,12 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         updated before the charge is added and the data cleared from the fields."""
         self.add_charge_to_entry_case_information()
         self.main_dialog.add_charge_to_grid()
+        self.close_event()
 
     @logger.catch
     def add_charge_to_entry_case_information(self):
-        """TODO: self.criminal_charge_type needs to be fixed to add back in."""
+        """TODO: self.criminal_charge_type needs to be fixed to add back in to get costs calculator to work
+        again eventually."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.offense_choice_box.currentText()
         self.criminal_charge.statute = self.statute_choice_box.currentText()
@@ -327,10 +328,6 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     def clear_add_charge_fields(self):
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
-
-
-
-
 
 
 class CasePartyUpdater:
