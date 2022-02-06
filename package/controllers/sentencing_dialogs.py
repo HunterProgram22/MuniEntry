@@ -12,8 +12,8 @@ from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 
 class CriminalSentencingDialog(CriminalBaseDialog):
     """Subclass for common methods to Sentencing."""
-    def __init__(self, judicial_officer, cms_case=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
 
@@ -179,8 +179,8 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
-    def __init__(self, judicial_officer, cms_case=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
         self.additional_conditions_list = [
             ("community_control_checkBox", self.entry_case_information.community_control),
@@ -226,8 +226,8 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
     @logger.catch
-    def __init__(self, judicial_officer, cms_case=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         self.additional_conditions_list = [
             ("license_suspension_checkBox", self.entry_case_information.license_suspension),

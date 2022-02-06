@@ -60,7 +60,7 @@ class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
-    def __init__(self, parent=None):
+    def __init__(self, case_table=None, parent=None):
         """Databases must be opened first in order for them to be accessed
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
@@ -69,6 +69,7 @@ class BaseDialog(QDialog):
         self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
                             QtCore.Qt.WindowMaximizeButtonHint)
         self.setupUi(self)
+        self.case_table = case_table
         self.modify_view()
         self.connect_signals_to_slots()
 
@@ -120,9 +121,9 @@ class CriminalBaseDialog(BaseDialog):
     The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
-    def __init__(self, judicial_officer, cms_case=None, parent=None):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         open_databases() # This only seems necessary for testing as the connection is already opened when run as main.
-        super().__init__(parent)
+        super().__init__(case_table, parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
@@ -135,6 +136,9 @@ class CriminalBaseDialog(BaseDialog):
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
         self.set_statute_and_offense_choice_boxes()
+        if self.case_table == "final_pretrials":
+            self.appearance_reason_box.setCurrentText("change of plea")
+
 
     def set_statute_and_offense_choice_boxes(self):
         self.statute_choice_box.addItems(create_statute_list())
@@ -275,7 +279,7 @@ class CasePartyUpdater:
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
         self.set_defense_counsel_information(dialog)
-        self.set_apperance_reason(dialog)
+        self.set_appearance_reason(dialog)
 
     def set_case_number_and_date(self, dialog):
         dialog.entry_case_information.case_number = dialog.case_number_lineEdit.text()
@@ -290,8 +294,9 @@ class CasePartyUpdater:
         dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
         dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
 
-    def set_apperance_reason(self, dialog):
+    def set_appearance_reason(self, dialog):
         dialog.entry_case_information.appearance_reason = dialog.appearance_reason_box.currentText()
+
 
 
 class CMSLoader:

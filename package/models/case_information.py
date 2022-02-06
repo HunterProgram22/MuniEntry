@@ -43,7 +43,6 @@ class AmendOffenseDetails:
 class FTABondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
-    appearance_reason: str = None
     forfeit_bond: str = None
     issue_warrant: str = None
     forfeit_license: str = None

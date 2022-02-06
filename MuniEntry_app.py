@@ -169,7 +169,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     case_number = selected_case_list.currentText().split("- ")
                     self.case_to_load = \
                         CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
-                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, case_table)
                     dialog.exec()
             else:
                 message = RequiredBox("You must select a case list to load. If loading a "
