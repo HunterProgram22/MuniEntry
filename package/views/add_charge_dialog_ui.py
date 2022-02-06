@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\AddOffenseDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\AddChargeDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -11,28 +11,28 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_AddOffenseDialog(object):
-    def setupUi(self, AddOffenseDialog):
-        AddOffenseDialog.setObjectName("AddOffenseDialog")
-        AddOffenseDialog.resize(1071, 474)
+class Ui_AddChargeDialog(object):
+    def setupUi(self, AddChargeDialog):
+        AddChargeDialog.setObjectName("AddChargeDialog")
+        AddChargeDialog.resize(1071, 474)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(AddOffenseDialog.sizePolicy().hasHeightForWidth())
-        AddOffenseDialog.setSizePolicy(sizePolicy)
-        AddOffenseDialog.setMinimumSize(QtCore.QSize(0, 0))
+        sizePolicy.setHeightForWidth(AddChargeDialog.sizePolicy().hasHeightForWidth())
+        AddChargeDialog.setSizePolicy(sizePolicy)
+        AddChargeDialog.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(9)
-        AddOffenseDialog.setFont(font)
-        AddOffenseDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
+        AddChargeDialog.setFont(font)
+        AddChargeDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
 "font: 75 11pt \"Palatino Linotype\";")
-        self.gridLayout = QtWidgets.QGridLayout(AddOffenseDialog)
+        self.gridLayout = QtWidgets.QGridLayout(AddChargeDialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.case_information_frame = QtWidgets.QFrame(AddOffenseDialog)
+        self.case_information_frame = QtWidgets.QFrame(AddChargeDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -69,7 +69,7 @@ class Ui_AddOffenseDialog(object):
         self.defendant_name_label.setObjectName("defendant_name_label")
         self.gridLayout_2.addWidget(self.defendant_name_label, 1, 0, 1, 1)
         self.gridLayout.addWidget(self.case_information_frame, 0, 0, 1, 1)
-        self.frame_3 = QtWidgets.QFrame(AddOffenseDialog)
+        self.frame_3 = QtWidgets.QFrame(AddChargeDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -138,7 +138,7 @@ class Ui_AddOffenseDialog(object):
         self.freeform_entry_checkBox.setObjectName("freeform_entry_checkBox")
         self.gridLayout_3.addWidget(self.freeform_entry_checkBox, 0, 2, 1, 2)
         self.gridLayout.addWidget(self.frame_3, 1, 0, 1, 1)
-        self.frame = QtWidgets.QFrame(AddOffenseDialog)
+        self.frame = QtWidgets.QFrame(AddChargeDialog)
         self.frame.setStyleSheet("font: 75 11pt \"Palatino Linotype\";")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -161,25 +161,25 @@ class Ui_AddOffenseDialog(object):
         self.amend_offense_Button.setObjectName("amend_offense_Button")
         self.gridLayout.addWidget(self.frame, 2, 0, 1, 1)
 
-        self.retranslateUi(AddOffenseDialog)
-        QtCore.QMetaObject.connectSlotsByName(AddOffenseDialog)
+        self.retranslateUi(AddChargeDialog)
+        QtCore.QMetaObject.connectSlotsByName(AddChargeDialog)
 
-    def retranslateUi(self, AddOffenseDialog):
+    def retranslateUi(self, AddChargeDialog):
         _translate = QtCore.QCoreApplication.translate
-        AddOffenseDialog.setWindowTitle(_translate("AddOffenseDialog", "Add Charge"))
-        self.case_number_label.setText(_translate("AddOffenseDialog", "TextLabel"))
-        self.defendant_name_label.setText(_translate("AddOffenseDialog", "TextLabel"))
-        self.label_15.setText(_translate("AddOffenseDialog", "Offense:"))
-        self.clear_fields_charge_Button.setText(_translate("AddOffenseDialog", "Clear Fields"))
-        self.label_6.setText(_translate("AddOffenseDialog", "Statute:"))
-        self.label_23.setText(_translate("AddOffenseDialog", "Degree:"))
-        self.degree_choice_box.setItemText(0, _translate("AddOffenseDialog", "Minor Misdemeanor"))
-        self.degree_choice_box.setItemText(1, _translate("AddOffenseDialog", "M1"))
-        self.degree_choice_box.setItemText(2, _translate("AddOffenseDialog", "M2"))
-        self.degree_choice_box.setItemText(3, _translate("AddOffenseDialog", "M3"))
-        self.degree_choice_box.setItemText(4, _translate("AddOffenseDialog", "M4"))
-        self.degree_choice_box.setItemText(5, _translate("AddOffenseDialog", "Unclassified Misdemeanor"))
-        self.add_charge_Button.setText(_translate("AddOffenseDialog", "Add Charge"))
-        self.freeform_entry_checkBox.setText(_translate("AddOffenseDialog", "Enable freeform entry for offense/statute"))
-        self.cancel_Button.setText(_translate("AddOffenseDialog", "Cancel"))
-        self.amend_offense_Button.setText(_translate("AddOffenseDialog", "Amend Offense"))
+        AddChargeDialog.setWindowTitle(_translate("AddChargeDialog", "Add Charge"))
+        self.case_number_label.setText(_translate("AddChargeDialog", "TextLabel"))
+        self.defendant_name_label.setText(_translate("AddChargeDialog", "TextLabel"))
+        self.label_15.setText(_translate("AddChargeDialog", "Offense:"))
+        self.clear_fields_charge_Button.setText(_translate("AddChargeDialog", "Clear Fields"))
+        self.label_6.setText(_translate("AddChargeDialog", "Statute:"))
+        self.label_23.setText(_translate("AddChargeDialog", "Degree:"))
+        self.degree_choice_box.setItemText(0, _translate("AddChargeDialog", "Minor Misdemeanor"))
+        self.degree_choice_box.setItemText(1, _translate("AddChargeDialog", "M1"))
+        self.degree_choice_box.setItemText(2, _translate("AddChargeDialog", "M2"))
+        self.degree_choice_box.setItemText(3, _translate("AddChargeDialog", "M3"))
+        self.degree_choice_box.setItemText(4, _translate("AddChargeDialog", "M4"))
+        self.degree_choice_box.setItemText(5, _translate("AddChargeDialog", "Unclassified Misdemeanor"))
+        self.add_charge_Button.setText(_translate("AddChargeDialog", "Add Charge"))
+        self.freeform_entry_checkBox.setText(_translate("AddChargeDialog", "Enable freeform entry for offense/statute"))
+        self.cancel_Button.setText(_translate("AddChargeDialog", "Cancel"))
+        self.amend_offense_Button.setText(_translate("AddChargeDialog", "Amend Offense"))

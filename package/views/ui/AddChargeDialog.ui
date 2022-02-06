@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddOffenseDialog</class>
- <widget class="QDialog" name="AddOffenseDialog">
+ <class>AddChargeDialog</class>
+ <widget class="QDialog" name="AddChargeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

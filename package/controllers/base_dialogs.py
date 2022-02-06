@@ -4,7 +4,6 @@ import time
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from package.views.add_offense_dialog_ui import Ui_AddOffenseDialog
 from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
@@ -15,6 +14,7 @@ from PyQt5 import QtGui
 from db.databases import open_charges_db_connection, extract_data, create_offense_list, create_statute_list
 from package.controllers.helper_functions import set_document_name, set_future_date, InfoChecker
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
+from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, SAVE_PATH
@@ -136,16 +136,8 @@ class CriminalBaseDialog(BaseDialog):
 
     def modify_view(self):
         self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        self.set_statute_and_offense_choice_boxes()
         if self.case_table == "final_pretrials":
             self.appearance_reason_box.setCurrentText("change of plea")
-
-
-    def set_statute_and_offense_choice_boxes(self):
-        self.statute_choice_box.addItems(create_statute_list())
-        self.offense_choice_box.addItems(create_offense_list())
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
 
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
@@ -166,14 +158,7 @@ class CriminalBaseDialog(BaseDialog):
             pass
         self.close_dialog_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
-        self.add_charge_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.add_charge_process(dialog))
-        self.clear_fields_charge_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.clear_charge_fields(dialog))
-        self.statute_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
-        self.offense_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.add_charge_Button.clicked.connect(self.start_add_charge_dialog)
         self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
 
     def set_defense_counsel(self):
@@ -267,11 +252,11 @@ class CriminalBaseDialog(BaseDialog):
         AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
 
     @logger.catch
-    def start_add_offense_dialog(self, _bool):
+    def start_add_charge_dialog(self, _bool):
         """Opens the amend offense dialog as a modal window. The
         entry_case_information is passed to the dialog class in order to populate
         the cms_case information banner. The _bool is from clicked and not used."""
-        AddOffenseDialog(self, self.entry_case_information).exec()
+        AddChargeDialog(self, self.entry_case_information).exec()
 
     @logger.catch
     def set_pay_date(self, days_to_add):
@@ -280,7 +265,7 @@ class CriminalBaseDialog(BaseDialog):
         self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
-class AddOffenseDialog(BaseDialog, Ui_AddOffenseDialog):
+class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
@@ -290,6 +275,7 @@ class AddOffenseDialog(BaseDialog, Ui_AddOffenseDialog):
         self.case_information = case_information
         super().__init__(parent)
         self.set_case_information_banner()
+        self.set_statute_and_offense_choice_boxes()
 
     @logger.catch
     def modify_view(self):
@@ -297,13 +283,23 @@ class AddOffenseDialog(BaseDialog, Ui_AddOffenseDialog):
         for which amend button was pressed."""
         pass
 
+    def set_statute_and_offense_choice_boxes(self):
+        self.statute_choice_box.addItems(create_statute_list())
+        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
+
     @logger.catch
     def connect_signals_to_slots(self):
         """This method overrides the base_dialog method to connect signals and
         slots specific to the amend_offense dialog."""
-        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
-        self.add_offense_Button.pressed.connect(self.add_offense)
-        self.cancel_Button.pressed.connect(self.close_event)
+        self.statute_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.offense_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        # self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
+        # self.add_offense_Button.pressed.connect(self.add_offense)
+        # self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
     def set_case_information_banner(self):
