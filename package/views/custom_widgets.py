@@ -8,9 +8,10 @@ from settings import ICON_PATH
 
 ATTORNEY_LIST = [
     "",
-    "Garrett Smith",
-    "Jeff Ulrich",
     "Chris Junga",
+    "Garrett Smith",
+    "Jeff Uhrich",
+    "Barshaunda Robinson",
 ]
 
 class ExtendedComboBox(QComboBox):
