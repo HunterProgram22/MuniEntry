@@ -979,7 +979,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="5" column="0">
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="impoundment_checkBox">
             <property name="text">
              <string>Immobilize/Impound</string>
             </property>

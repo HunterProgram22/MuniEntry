@@ -24,6 +24,7 @@ CONDITIONS = [
     ("community_control_checkBox", "community_control_frame"),
     ("jail_checkBox", "jail_commitment_frame"),
     ("diversion_checkBox", "diversion_frame"),
+    ("impoundment_checkBox", "impoundment_frame"),
 ]
 
 
