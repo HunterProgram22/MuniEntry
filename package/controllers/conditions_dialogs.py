@@ -266,11 +266,22 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.report_date_box.setHidden(True)
             self.report_time_box.setDisabled(True)
             self.report_time_box.setHidden(True)
+            self.report_date_label.setHidden(True)
+            self.report_time_label.setHidden(True)
+        elif self.report_type_box.currentText() == "forthwith":
+            self.report_date_box.setDisabled(True)
+            self.report_date_box.setHidden(True)
+            self.report_time_box.setDisabled(True)
+            self.report_time_box.setHidden(True)
+            self.report_date_label.setHidden(True)
+            self.report_time_label.setHidden(True)
         else:
             self.report_date_box.setEnabled(True)
             self.report_date_box.setHidden(False)
             self.report_time_box.setEnabled(True)
             self.report_time_box.setHidden(False)
+            self.report_date_label.setHidden(False)
+            self.report_time_label.setHidden(False)
 
     def set_field_enabled(self):
         """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
