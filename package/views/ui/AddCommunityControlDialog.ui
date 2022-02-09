@@ -169,7 +169,7 @@ font-weight: bold;</string>
         <x>0</x>
         <y>-1050</y>
         <width>1140</width>
-        <height>1857</height>
+        <height>1941</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -989,7 +989,7 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="9" column="0">
         <widget class="QFrame" name="filler_frame">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1492,7 +1492,7 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="8" column="0">
         <widget class="QFrame" name="other_conditions_frame">
          <property name="enabled">
           <bool>false</bool>
@@ -1728,7 +1728,7 @@ font-weight: bold;</string>
          </layout>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="10" column="0">
         <widget class="QPushButton" name="add_conditions_Button">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(62, 146, 255)</string>
@@ -1741,7 +1741,7 @@ font-weight: bold;</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="0">
+       <item row="11" column="0">
         <widget class="QPushButton" name="cancel_Button">
          <property name="focusPolicy">
           <enum>Qt::NoFocus</enum>
@@ -1752,6 +1752,51 @@ font-weight: bold;</string>
          <property name="text">
           <string>Cancel</string>
          </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QFrame" name="victim_notification_frame">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(240, 240, 240);</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_29">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>VICTIM NOTIFICATION</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>CheckBox</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
