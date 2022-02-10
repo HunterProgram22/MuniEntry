@@ -28,11 +28,15 @@ def return_data_from_excel(excel_file):
 
 def main():
     # Deletes existing database and creates a new one to ensure all old charges aren't duplicated in
-    # the table.
-    if os.path.exists(CHARGES_DATABASE):
-      os.remove(CHARGES_DATABASE)
-    else:
-      print("The file does not exist")
+    # the table. The try/except exists because if multiple instances open it can't access
+    # the charges DB to remove it, it can only connect to it. 
+    try:
+        if os.path.exists(CHARGES_DATABASE):
+          os.remove(CHARGES_DATABASE)
+        else:
+          print("The file does not exist")
+    except PermissionError:
+        pass
     con_charges = QSqlDatabase.addDatabase("QSQLITE", "con_charges")
     con_charges.setDatabaseName(CHARGES_DATABASE)
 

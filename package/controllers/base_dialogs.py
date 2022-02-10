@@ -20,10 +20,12 @@ from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, SAVE_PATH
 
 
-def open_databases():
-    charges_database.open()
-
-
+# def open_databases():
+#     charges_database.open()
+#     print(charges_database)
+#     print(charges_database.open())
+#
+#
 def close_databases():
     charges_database.close()
     charges_database.removeDatabase("QSQLITE")
@@ -123,7 +125,7 @@ class CriminalBaseDialog(BaseDialog):
     custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
     in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        open_databases() # This only seems necessary for testing as the connection is already opened when run as main.
+        # open_databases() # This only seems necessary for testing as the connection is already opened when run as main.
         super().__init__(case_table, parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
