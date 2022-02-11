@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.9.0</string>
+   <string>MuniEntry - ver 0.9.1</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -645,7 +645,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
