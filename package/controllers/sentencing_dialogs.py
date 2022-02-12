@@ -189,6 +189,8 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
             ("jail_checkBox", self.entry_case_information.jail_terms),
             ("diversion_checkBox", self.entry_case_information.diversion),
+            ("impoundment_checkBox", self.entry_case_information.impoundment),
+            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
         ]
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
@@ -199,6 +201,8 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.diversion_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.impoundment_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.victim_notification_checkBox.toggled.connect(self.conditions_checkbox_toggle)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)

@@ -306,54 +306,6 @@ font-weight: bold;</string>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="0" column="0" colspan="2">
               <layout class="QGridLayout" name="charges_gridLayout">
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_20">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Statute:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="plea_label_1">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Plea:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_21">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Degree:</string>
-                 </property>
-                </widget>
-               </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="offense_label_1">
                  <property name="font">
@@ -387,9 +339,57 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_21">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Degree:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="plea_label_1">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Plea:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_20">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Statute:</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
-             <item row="1" column="0">
+             <item row="2" column="0">
               <widget class="QPushButton" name="add_charge_Button">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(62, 146, 255);
@@ -401,7 +401,7 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="1">
               <widget class="QPushButton" name="guilty_all_Button">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -413,6 +413,19 @@ font-weight: bold;</string>
                </property>
                <property name="text">
                 <string>Guilty All</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="Line" name="line">
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="lineWidth">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
               </widget>
              </item>

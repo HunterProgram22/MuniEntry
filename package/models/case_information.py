@@ -149,6 +149,16 @@ class VehicleSeizure:
 
 
 @dataclass
+class Impoundment:
+    """Class for vehicle impoundment in Jail CC Plea."""
+    ordered: bool = False
+    vehicle_make_model: str = None
+    vehicle_license_plate: str = None
+    impound_time: str = None
+    impound_action: str = None
+
+
+@dataclass
 class LicenseSuspension:
     """Class for keeping track of the license suspension terms that are tied to
     a specific cms_case."""
@@ -200,7 +210,8 @@ class Diversion:
         if self.theft_diversion is True:
             return "Theft Diversion Program"
         if self.other_diversion is True:
-            return "Other Diversion Program"
+            return "Prosecutor Diversion Program"
+
 
 @dataclass
 class CourtCosts:
@@ -210,6 +221,13 @@ class CourtCosts:
     amount: int = 0
     ability_to_pay_time: str = None
     balance_due_date: str = None
+
+
+@dataclass
+class VictimNotification:
+    ordered: bool = False
+    victim_reparation_notice: bool = False
+    victim_prosecutor_notice: bool = False
 
 
 @dataclass
@@ -252,6 +270,8 @@ class CriminalCaseInformation:
     domestic_violence_conditions: object = DomesticViolenceBondConditions()
     admin_license_suspension: object = AdminLicenseSuspensionConditions()
     vehicle_seizure: object = VehicleSeizure()
+    victim_notification: object = VictimNotification()
+    impoundment: object = Impoundment()
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)

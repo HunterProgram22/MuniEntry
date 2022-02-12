@@ -163,7 +163,7 @@ font-weight: bold;</string>
         <x>0</x>
         <y>0</y>
         <width>1023</width>
-        <height>821</height>
+        <height>830</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
@@ -267,6 +267,13 @@ font-weight: bold;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="2">
+           <widget class="QLabel" name="label_26">
+            <property name="text">
+             <string>Date:</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label">
             <property name="text">
@@ -274,10 +281,33 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="2">
-           <widget class="QLabel" name="label_26">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
             <property name="text">
-             <string>Date:</string>
+             <string>Def. Last Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+            <property name="maximumSize">
+             <size>
+              <width>500</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -308,8 +338,8 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="case_number_lineEdit">
             <property name="maximumSize">
              <size>
               <width>500</width>
@@ -318,23 +348,6 @@ font-weight: bold;</string>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="defendant_last_name_lineEdit">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_2">
-            <property name="text">
-             <string>Def. Last Name:</string>
             </property>
            </widget>
           </item>
@@ -368,19 +381,6 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Clear Fields</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLineEdit" name="case_number_lineEdit">
-            <property name="maximumSize">
-             <size>
-              <width>500</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
@@ -425,13 +425,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_27">
-            <property name="text">
-             <string>Appearance Reason:</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="1">
            <widget class="QComboBox" name="appearance_reason_box">
             <property name="styleSheet">
@@ -462,6 +455,13 @@ font-weight: bold;</string>
               <string>LEAP sentencing</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_27">
+            <property name="text">
+             <string>Appearance Reason:</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -645,8 +645,63 @@ font-weight: bold;</string>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <layout class="QGridLayout" name="gridLayout_3">
+            <item row="2" column="1">
+             <widget class="QPushButton" name="no_contest_all_Button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>No Contest All</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QPushButton" name="guilty_all_Button">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>Guilty All</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QPushButton" name="add_charge_Button">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(62, 146, 255)</string>
+              </property>
+              <property name="text">
+               <string>Add Charge</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0" colspan="3">
              <layout class="QGridLayout" name="charges_gridLayout">
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
               <item row="8" column="0">
                <widget class="QLabel" name="label_10">
                 <property name="font">
@@ -660,29 +715,6 @@ font-weight: bold;</string>
                 </property>
                 <property name="text">
                  <string>Fines Suspended:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_14">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Finding:</string>
                 </property>
                </widget>
               </item>
@@ -702,10 +734,19 @@ font-weight: bold;</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_12">
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_14">
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>10</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                 </font>
+                </property>
                 <property name="text">
-                 <string>Jail Days Suspended:</string>
+                 <string>Finding:</string>
                 </property>
                </widget>
               </item>
@@ -725,10 +766,10 @@ font-weight: bold;</string>
                 </property>
                </widget>
               </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_8">
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_12">
                 <property name="text">
-                 <string>Jail Days:</string>
+                 <string>Jail Days Suspended:</string>
                 </property>
                </widget>
               </item>
@@ -767,6 +808,13 @@ font-weight: bold;</string>
                 </property>
                </widget>
               </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>Jail Days:</string>
+                </property>
+               </widget>
+              </item>
               <item row="7" column="0">
                <widget class="QLabel" name="label_17">
                 <property name="font">
@@ -783,17 +831,17 @@ font-weight: bold;</string>
                 </property>
                </widget>
               </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
               <item row="4" column="0">
                <widget class="QLabel" name="label_7">
                 <property name="text">
                  <string>Allied:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -806,51 +854,16 @@ font-weight: bold;</string>
               </item>
              </layout>
             </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="no_contest_all_Button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item row="1" column="0" colspan="3">
+             <widget class="Line" name="line">
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
+              <property name="lineWidth">
+               <number>2</number>
               </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(160, 160, 160);</string>
-              </property>
-              <property name="text">
-               <string>No Contest All</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QPushButton" name="guilty_all_Button">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="focusPolicy">
-               <enum>Qt::NoFocus</enum>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(160, 160, 160);</string>
-              </property>
-              <property name="text">
-               <string>Guilty All</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QPushButton" name="add_charge_Button">
-              <property name="styleSheet">
-               <string notr="true">background-color: rgb(62, 146, 255)</string>
-              </property>
-              <property name="text">
-               <string>Add Charge</string>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
               </property>
              </widget>
             </item>

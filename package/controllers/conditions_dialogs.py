@@ -128,6 +128,14 @@ class ConditionsDialog(BaseDialog):
         self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
 
     @logger.catch
+    def add_victim_notification_details(self):
+        victim_notification_terms_list = [
+            ("victim_reparation_notice", "victim_reparation_checkBox"),
+            ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
+        ]
+        self.widget_type_check_set(self.case_information.other_conditions, victim_notification_terms_list)
+
+    @logger.catch
     def add_diversion_details(self):
         diversion_terms_list = [
             ("marijuana_diversion", "marijuana_diversion_checkBox"),
@@ -216,6 +224,8 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
         self.jail_terms = True if main_dialog.jail_checkBox.isChecked() else False
         self.diversion = True if main_dialog.diversion_checkBox.isChecked() else False
+        self.impoundment = True if main_dialog.impoundment_checkBox.isChecked() else False
+        self.victim_notification = True if main_dialog.victim_notification_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
@@ -238,6 +248,10 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.add_jail_commitment_terms()
         if self.main_dialog.diversion_checkBox.isChecked():
             self.add_diversion_details()
+        if self.main_dialog.impoundment_checkBox.isChecked():
+            self.add_impoundment_details()
+        if self.main_dialog.victim_notification_checkBox.isChecked():
+            self.add_victim_notification_details()
 
     @logger.catch
     def connect_signals_to_slots(self):

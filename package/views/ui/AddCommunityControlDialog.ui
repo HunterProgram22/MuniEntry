@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-116</y>
+        <y>-1181</y>
         <width>1140</width>
-        <height>1941</height>
+        <height>2079</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1697,8 +1697,8 @@ font-weight: bold;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10">
-          <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,0,0,0,0,0,0,0">
+          <item row="0" column="0" colspan="7">
            <widget class="QLabel" name="label_13">
             <property name="font">
              <font>
@@ -1718,11 +1718,95 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>License Plate Number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="vehicle_make_model_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_28">
             <property name="text">
-             <string>TextLabel</string>
+             <string>Vehicle Year/Make/Model:</string>
             </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Immobilize/Impound Time:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="vehicle_license_plate_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="vehicle_impound_time_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string/>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>60 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>90 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>180 days</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_31">
+            <property name="text">
+             <string>Immobilize or Impound Action:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="vehicle_impound_action_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>seize vehicle ID tags and send to BMV</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>immobilize vehicle</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>
@@ -1769,6 +1853,13 @@ font-weight: bold;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="victim_reparation_checkBox">
+            <property name="text">
+             <string>Clerk shall serve notice of right to apply for reparation to victim pursuant to R.C. 2743.51 to 2743.72.</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_29">
             <property name="font">
@@ -1789,10 +1880,10 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="checkBox">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="victim_prosecutor_notification_checkBox">
             <property name="text">
-             <string>CheckBox</string>
+             <string>Clerk shall serve prosecutor who shall notify victim of court proceedings pursuant to R.C. 2930.06.</string>
             </property>
            </widget>
           </item>
