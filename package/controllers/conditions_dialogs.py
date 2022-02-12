@@ -28,6 +28,11 @@ CONDITIONS = [
     ("victim_notification_checkBox", "victim_notification_frame"),
 ]
 
+COMMUNITY_SERVICE_TERMS_LIST = [
+    ("hours_of_service", "community_service_hours_ordered_box"),
+    ("days_to_complete_service", "community_service_days_to_complete_box"),
+    ("due_date_for_service", "community_service_date_to_complete_box"),
+]
 
 def enable_condition_frames(conditions_dialog, main_dialog):
     for index, item in enumerate(CONDITIONS):
@@ -69,7 +74,7 @@ class ConditionsDialog(BaseDialog):
         """The method is connected to the pressed() signal of add_conditions_Button on the
         Add Conditions screen."""
         if self.main_dialog.community_service_checkBox.isChecked():
-            self.add_community_service_terms()
+            self.add_conditions_factory(self.case_information.community_service, COMMUNITY_SERVICE_TERMS_LIST)
         if self.main_dialog.license_suspension_checkBox.isChecked():
             self.add_license_suspension_details()
         if self.main_dialog.other_conditions_checkBox.isChecked():
@@ -85,6 +90,13 @@ class ConditionsDialog(BaseDialog):
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
             self.set_community_service_date
         )
+
+
+    @logger.catch
+    def add_conditions_factory(self, conditions, terms_list):
+        self.widget_type_check_set(conditions, terms_list)
+
+
 
     @logger.catch
     def add_community_service_terms(self):
