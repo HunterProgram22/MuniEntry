@@ -133,7 +133,7 @@ class ConditionsDialog(BaseDialog):
             ("victim_reparation_notice", "victim_reparation_checkBox"),
             ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
         ]
-        self.widget_type_check_set(self.case_information.other_conditions, victim_notification_terms_list)
+        self.widget_type_check_set(self.case_information.victim_notification, victim_notification_terms_list)
 
     @logger.catch
     def add_diversion_details(self):
