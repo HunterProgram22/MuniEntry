@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1181</y>
+        <y>-1164</y>
         <width>1140</width>
         <height>2079</height>
        </rect>
@@ -1799,12 +1799,12 @@ font-weight: bold;</string>
             </property>
             <item>
              <property name="text">
-              <string>seize vehicle ID tags and send to BMV</string>
+              <string>have its vehicle ID tags seized and sent to the BMV</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>immobilize vehicle</string>
+              <string>be immobilized</string>
              </property>
             </item>
            </widget>

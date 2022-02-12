@@ -136,6 +136,16 @@ class ConditionsDialog(BaseDialog):
         self.widget_type_check_set(self.case_information.victim_notification, victim_notification_terms_list)
 
     @logger.catch
+    def add_impoundment_details(self):
+        impoundment_details_list = [
+            ("vehicle_make_model", "vehicle_make_model_box"),
+            ("vehicle_license_plate", "vehicle_license_plate_box"),
+            ("impound_time", "vehicle_impound_time_box"),
+            ("impound_action", "vehicle_impound_action_box"),
+        ]
+        self.widget_type_check_set(self.case_information.impoundment, impoundment_details_list)
+
+    @logger.catch
     def add_diversion_details(self):
         diversion_terms_list = [
             ("marijuana_diversion", "marijuana_diversion_checkBox"),
