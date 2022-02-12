@@ -85,12 +85,6 @@ class ConditionsDialog(BaseDialog):
             self.add_conditions_factory(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
 
     @logger.catch
-    def add_conditions_factory(self, conditions, terms_list):
-        """Using the terms_list for the specific condition, which is an attribute in the model, this method cycles
-        through all the fields in the UI and transfers the data from the field in the view to the model."""
-        self.widget_type_check_set(conditions, terms_list)
-
-    @logger.catch
     def set_community_service_date(self, _index):
         """Sets the community_service_date_to_complete_box based on the number of days chosen in the
         community_service_date_to_complete_box. The _index is passed from the signal but not used."""
@@ -249,77 +243,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
         Add Special Conditions screen."""
         if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.add_domestic_violence_terms()
+            self.add_conditions_factory(self.case_information.domestic_violence_conditions, self.case_information.domestic_violence_conditions.terms_list)
         if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.add_admin_license_suspension_terms()
+            self.add_conditions_factory(self.case_information.admin_license_suspension, self.case_information.admin_license_suspension.terms_list)
         if self.main_dialog.no_contact_checkBox.isChecked():
-            self.add_no_contact_terms()
+            self.add_conditions_factory(self.case_information.no_contact, self.case_information.no_contact.terms_list)
         if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.add_custodial_supervision_terms()
+            self.add_conditions_factory(self.case_information.custodial_supervision, self.case_information.custodial_supervision.terms_list)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.add_other_condition_terms()
+            self.add_conditions_factory(self.case_information.other_conditions,self.case_information.other_conditions.terms_list)
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.add_vehicle_seizure_terms()
-
-    @logger.catch
-    def add_vehicle_seizure_terms(self):
-        vehicle_seizure_terms_list = [
-            ("vehicle_make_model", "vehicle_make_model_box"),
-            ("vehicle_license_plate", "vehicle_license_plate_box"),
-            ("tow_to_residence", "tow_to_residence_checkBox"),
-            ("motion_to_return_vehicle", "motion_to_return_vehicle_checkBox"),
-            ("state_opposes", "state_opposes_box"),
-            ("disposition_motion_to_return", "disposition_motion_to_return_box"),
-        ]
-        self.widget_type_check_set(self.case_information.vehicle_seizure, vehicle_seizure_terms_list)
-        self.case_information.vehicle_seizure.ordered = True
-
-    @logger.catch
-    def add_other_condition_terms(self):
-        """TODO: Refactor into one conditions dialog and rename to match add_conditions version."""
-        other_conditions_terms_list = [
-            ("terms", "other_conditions_textEdit"),
-        ]
-        self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
-        self.case_information.other_conditions.ordered = True
-
-    @logger.catch
-    def add_custodial_supervision_terms(self):
-        custodial_supervision_terms_list = [
-            ("supervisor", "custodial_supervision_supervisor_box"),
-        ]
-        self.widget_type_check_set(self.case_information.custodial_supervision, custodial_supervision_terms_list)
-        self.case_information.custodial_supervision.ordered = True
-
-    @logger.catch
-    def add_domestic_violence_terms(self):
-        domestic_violence_terms_list = [
-            ("vacate_residence", "domestic_violence_vacate_checkBox"),
-            ("residence_address", "domestic_violence_residence_box"),
-            ("exclusive_possession_to", "domestic_violence_exclusive_possession_to_box"),
-            ("surrender_weapons", "domestic_violence_surrender_weapons_checkBox"),
-            ("surrender_weapons_date", "domestic_violence_surrender_weapons_dateBox"),
-        ]
-        self.widget_type_check_set(self.case_information.domestic_violence_conditions, domestic_violence_terms_list)
-        self.case_information.domestic_violence_conditions.ordered = True
-
-    @logger.catch
-    def add_no_contact_terms(self):
-        no_contact_terms_list = [
-            ("name", "no_contact_name_box"),
-        ]
-        self.widget_type_check_set(self.case_information.no_contact, no_contact_terms_list)
-        self.case_information.no_contact.ordered = True
-
-    @logger.catch
-    def add_admin_license_suspension_terms(self):
-        admin_license_terms_list = [
-            ("objection", "admin_license_suspension_objection_box"),
-            ("disposition", "admin_license_suspension_disposition_box"),
-            ("explanation", "admin_license_suspension_explanation_box"),
-        ]
-        self.widget_type_check_set(self.case_information.admin_license_suspension, admin_license_terms_list)
-        self.case_information.admin_license_suspension.ordered = True
+            self.add_conditions_factory(self.case_information.vehicle_seizure, self.case_information.vehicle_seizure.terms_list)
 
     @logger.catch
     def modify_view(self):

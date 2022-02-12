@@ -89,8 +89,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
             for items in self.additional_conditions_list:
                 if items[0] == self.sender().objectName():
                     setattr(items[1], "ordered", False)
-        print(self.entry_case_information.no_contact.ordered)
-        print(f"Admin license is {self.entry_case_information.admin_license_suspension.ordered}")
 
     @logger.catch
     def start_add_special_bond_conditions_dialog(self):

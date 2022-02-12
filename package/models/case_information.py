@@ -69,6 +69,14 @@ class DomesticViolenceBondConditions:
     surrender_weapons: bool = False
     surrender_weapons_date: str = None
 
+    terms_list = [
+        ("vacate_residence", "domestic_violence_vacate_checkBox"),
+        ("residence_address", "domestic_violence_residence_box"),
+        ("exclusive_possession_to", "domestic_violence_exclusive_possession_to_box"),
+        ("surrender_weapons", "domestic_violence_surrender_weapons_checkBox"),
+        ("surrender_weapons_date", "domestic_violence_surrender_weapons_dateBox"),
+    ]
+
 
 @dataclass
 class AdminLicenseSuspensionConditions:
@@ -78,6 +86,12 @@ class AdminLicenseSuspensionConditions:
     disposition: str = None
     explanation: str = None
 
+    terms_list = [
+        ("objection", "admin_license_suspension_objection_box"),
+        ("disposition", "admin_license_suspension_disposition_box"),
+        ("explanation", "admin_license_suspension_explanation_box"),
+    ]
+
 
 @dataclass
 class NoContact:
@@ -85,12 +99,20 @@ class NoContact:
     ordered: bool = False
     name: str = None
 
+    terms_list = [
+        ("name", "no_contact_name_box"),
+    ]
+
 
 @dataclass
 class CustodialSupervision:
     """Custodial Supervision conditions for Special Bond Conditions."""
     ordered: bool = False
     supervisor: str = None
+
+    terms_list = [
+        ("supervisor", "custodial_supervision_supervisor_box"),
+    ]
 
 
 @dataclass
@@ -183,6 +205,15 @@ class VehicleSeizure:
     motion_to_return_vehicle: bool = False
     state_opposes: str = None
     disposition_motion_to_return: str = None
+
+    terms_list = [
+        ("vehicle_make_model", "vehicle_make_model_box"),
+        ("vehicle_license_plate", "vehicle_license_plate_box"),
+        ("tow_to_residence", "tow_to_residence_checkBox"),
+        ("motion_to_return_vehicle", "motion_to_return_vehicle_checkBox"),
+        ("state_opposes", "state_opposes_box"),
+        ("disposition_motion_to_return", "disposition_motion_to_return_box"),
+    ]
 
 
 @dataclass

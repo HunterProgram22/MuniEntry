@@ -45,7 +45,6 @@ def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
     case_data = dialog.entry_case_information.get_case_information()
-    print(case_data)
     extract_data(case_data)
     doc.render(case_data)
     docname = set_document_name(dialog)
@@ -76,6 +75,12 @@ class BaseDialog(QDialog):
         self.case_table = case_table
         self.modify_view()
         self.connect_signals_to_slots()
+
+    @logger.catch
+    def add_conditions_factory(self, conditions, terms_list):
+        """Using the terms_list for the specific condition, which is an attribute in the model, this method cycles
+        through all the fields in the UI and transfers the data from the field in the view to the model."""
+        self.widget_type_check_set(conditions, terms_list)
 
     def modify_view(self):
         """The modify view method updates the view that is created on init with self.setupUI.
