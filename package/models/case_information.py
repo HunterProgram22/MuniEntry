@@ -102,6 +102,12 @@ class CommunityService:
     days_to_complete_service: int = 0
     due_date_for_service: str = None
 
+    terms_list = [
+        ("hours_of_service", "community_service_hours_ordered_box"),
+        ("days_to_complete_service", "community_service_days_to_complete_box"),
+        ("due_date_for_service", "community_service_date_to_complete_box"),
+    ]
+
 
 @dataclass
 class CommunityControl:
@@ -135,6 +141,37 @@ class CommunityControl:
     gps_exclusion_location: str = None
     daily_reporting: bool = False
 
+    terms_list = [
+        ("type_of_control", "community_control_type_of_control_box"),
+        ("term_of_control", "community_control_term_of_control_box"),
+        ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
+        ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
+        ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
+        ("no_contact_with_person", "community_control_no_contact_with_box"),
+        ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+        ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
+        ("house_arrest", "house_arrest_checkBox"),
+        ("house_arrest_time", "house_arrest_time_box"),
+        ("interlock_vehicles_only", "interlock_vehicles_checkBox"),
+        ("pay_restitution", "pay_restitution_checkBox"),
+        ("pay_restitution_to", "pay_restitution_to_box"),
+        ("pay_restitution_amount", "pay_restitution_amount_box"),
+        ("antitheft_program", "antitheft_checkBox"),
+        ("anger_management_program", "anger_management_checkBox"),
+        ("alcohol_evaluation", "alcohol_evaluation_checkBox"),
+        ("domestic_violence_program", "domestic_violence_program_checkBox"),
+        ("driver_intervention_program", "driver_intervention_program_checkBox"),
+        ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
+        ("other_community_control", "other_community_control_checkBox"),
+        ("other_community_control_conditions", "other_community_control_conditions_box"),
+        ("community_control_community_service", "community_control_community_service_checkBox"),
+        ("community_control_community_service_hours", "community_control_community_service_hours_box"),
+        ("gps_exclusion", "gps_exclusion_checkBox"),
+        ("gps_exclusion_radius", "gps_exclusion_radius_box"),
+        ("gps_exclusion_location", "gps_exclusion_location_box"),
+        ("daily_reporting", "daily_reporting_checkBox"),
+    ]
+
 
 @dataclass
 class VehicleSeizure:
@@ -157,6 +194,13 @@ class Impoundment:
     impound_time: str = None
     impound_action: str = None
 
+    terms_list = [
+        ("vehicle_make_model", "vehicle_make_model_box"),
+        ("vehicle_license_plate", "vehicle_license_plate_box"),
+        ("impound_time", "vehicle_impound_time_box"),
+        ("impound_action", "vehicle_impound_action_box"),
+    ]
+
 
 @dataclass
 class LicenseSuspension:
@@ -167,6 +211,13 @@ class LicenseSuspension:
     suspended_date: str = None
     suspension_term: str = None
     remedial_driving_class_required: bool = False
+
+    terms_list = [
+        ("license_type", "license_type_box"),
+        ("suspended_date", "license_suspension_date_box"),
+        ("suspension_term", "term_of_suspension_box"),
+        ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
+    ]
 
 
 @dataclass
@@ -183,6 +234,18 @@ class JailTerms:
     companion_cases_exist: bool = False
     companion_case_numbers: str = None
 
+    terms_list = [
+        ("report_type", "report_type_box"),
+        ("report_date", "report_date_box"),
+        ("report_time", "report_time_box"),
+        ("jail_term_type", "jail_term_type_box"),
+        ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
+        ("jail_report_days_notes", "jail_report_days_notes_box"),
+        ("dip_ordered", "dip_checkBox"),
+        ("companion_case_numbers", "companion_cases_box"),
+        ("companion_cases_exist", "companion_cases_checkBox"),
+    ]
+
 
 @dataclass
 class OtherConditions:
@@ -190,6 +253,10 @@ class OtherConditions:
     a specific cms_case. This condition is a freeform text entry box in the UI."""
     ordered: bool = False
     terms: str = None
+
+    terms_list = [
+        ("terms", "other_conditions_textEdit"),
+    ]
 
 
 @dataclass
@@ -203,16 +270,15 @@ class Diversion:
     program_name: str = "Prosecutor Diversion Program"
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
+    terms_list = [
+        ("marijuana_diversion", "marijuana_diversion_checkBox"),
+        ("theft_diversion", "theft_diversion_checkBox"),
+        ("other_diversion", "other_diversion_checkBox"),
+        ("jail_imposed", "diversion_jail_imposed_checkBox"),
+        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+    ]
 
-    def return_terms_list(self):
-        return [
-            ("marijuana_diversion", "marijuana_diversion_checkBox"),
-            ("theft_diversion", "theft_diversion_checkBox"),
-            ("other_diversion", "other_diversion_checkBox"),
-            ("jail_imposed", "diversion_jail_imposed_checkBox"),
-            ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
-            ("diversion_jail_report_date", "diversion_jail_report_date_box"),
-        ]
 
     def get_program_name(self):
         """TODO: This is going to be removed as are the specific diversion programs in favor of a generic name."""
@@ -239,6 +305,11 @@ class VictimNotification:
     ordered: bool = False
     victim_reparation_notice: bool = False
     victim_prosecutor_notice: bool = False
+
+    terms_list = [
+        ("victim_reparation_notice", "victim_reparation_checkBox"),
+        ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
+    ]
 
 
 @dataclass
