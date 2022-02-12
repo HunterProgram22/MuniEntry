@@ -235,7 +235,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         if self.main_dialog.jail_checkBox.isChecked():
             self.add_conditions_factory(self.case_information.jail_terms, JAIL_COMMITMENT_TERMS_LIST)
         if self.main_dialog.diversion_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.diversion, DIVERSION_TERMS_LIST)
+            self.add_conditions_factory(self.case_information.diversion, self.case_information.diversion.return_terms_list())
         if self.main_dialog.impoundment_checkBox.isChecked():
             self.add_conditions_factory(self.case_information.impoundment, IMPOUNDMENT_TERMS_LIST)
         if self.main_dialog.victim_notification_checkBox.isChecked():

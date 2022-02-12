@@ -204,6 +204,16 @@ class Diversion:
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
 
+    def return_terms_list(self):
+        return [
+            ("marijuana_diversion", "marijuana_diversion_checkBox"),
+            ("theft_diversion", "theft_diversion_checkBox"),
+            ("other_diversion", "other_diversion_checkBox"),
+            ("jail_imposed", "diversion_jail_imposed_checkBox"),
+            ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+            ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+        ]
+
     def get_program_name(self):
         """TODO: This is going to be removed as are the specific diversion programs in favor of a generic name."""
         if self.marijuana_diversion is True:
