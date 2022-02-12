@@ -45,6 +45,7 @@ def create_entry(dialog, print_doc=False):
     """Loads the proper template and creates the entry."""
     doc = DocxTemplate(dialog.template.template_path)
     case_data = dialog.entry_case_information.get_case_information()
+    print(case_data)
     extract_data(case_data)
     doc.render(case_data)
     docname = set_document_name(dialog)

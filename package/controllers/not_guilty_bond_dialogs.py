@@ -16,20 +16,14 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
-        self.add_special_conditions_dict = {
-            self.admin_license_suspension_checkBox:
-                self.entry_case_information.admin_license_suspension.ordered,
-            self.domestic_violence_checkBox:
-                self.entry_case_information.domestic_violence_conditions.ordered,
-            self.no_contact_checkBox:
-                self.entry_case_information.no_contact.ordered,
-            self.custodial_supervision_checkBox:
-                self.entry_case_information.custodial_supervision.ordered,
-            self.other_conditions_checkBox:
-                self.entry_case_information.other_conditions.ordered,
-            self.vehicle_seizure_checkBox:
-                self.entry_case_information.vehicle_seizure.ordered,
-        }
+        self.additional_conditions_list = [
+            ("admin_license_suspension_checkBox", self.entry_case_information.admin_license_suspension),
+            ("domestic_violence_checkBox", self.entry_case_information.domestic_violence_conditions),
+            ("no_contact_checkBox", self.entry_case_information.no_contact),
+            ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ("vehicle_seizure_checkBox", self.entry_case_information.vehicle_seizure),
+        ]
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_bond_conditions = FTABondConditions()
@@ -49,7 +43,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         super().update_case_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
-        self.check_add_special_conditions()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -58,6 +51,13 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         super().connect_signals_to_slots()
         self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
         self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
+        self.admin_license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.domestic_violence_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.no_contact_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.custodial_supervision_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.vehicle_seizure_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+
 
     @logger.catch
     def update_not_guilty_conditions(self):
@@ -80,23 +80,22 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         ]
         self.widget_type_check_set(self.entry_case_information.fta_bond_conditions, bond_conditions_terms_list)
 
-    @logger.catch
-    def check_add_special_conditions(self):
-        """Checks to see what conditions in the Add Conditions box are checked and then
-        transfers the information from the conditions to entry_case_information model if the
-        box is checked.
-        TODO: Bug that also exists in check_add_conditions in no_jail_plea dialog
-        likely exists here."""
-        for key, value in self.add_special_conditions_dict.items():
-            if key.isChecked():
-                self.add_special_conditions_dict[key] = True
-            else:
-                self.add_special_conditions_dict[key] = False
+    def conditions_checkbox_toggle(self):
+        if self.sender().isChecked():
+            for items in self.additional_conditions_list:
+                if items[0] == self.sender().objectName():
+                    setattr(items[1], "ordered", True)
+        else:
+            for items in self.additional_conditions_list:
+                if items[0] == self.sender().objectName():
+                    setattr(items[1], "ordered", False)
+        print(self.entry_case_information.no_contact.ordered)
+        print(f"Admin license is {self.entry_case_information.admin_license_suspension.ordered}")
 
     @logger.catch
     def start_add_special_bond_conditions_dialog(self):
         """Opens special conditions for bond."""
-        self.check_add_special_conditions()
+        self.update_case_information()
         AddSpecialBondConditionsDialog(self).exec()
 
 

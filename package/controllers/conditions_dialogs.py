@@ -3,9 +3,8 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
 from package.controllers.base_dialogs import BaseDialog
 from loguru import logger
-from package.models.case_information import CommunityService, LicenseSuspension, OtherConditions, \
-    DomesticViolenceBondConditions, AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, \
-    CommunityControl, VehicleSeizure, JailTerms, Diversion
+from package.models.case_information import OtherConditions, DomesticViolenceBondConditions, \
+    AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, VehicleSeizure
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -65,17 +64,6 @@ class ConditionsDialog(BaseDialog):
         self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
-    def add_conditions(self):
-        """The method is connected to the pressed() signal of add_conditions_Button on the
-        Add Conditions screen."""
-        if self.main_dialog.community_service_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.community_service, self.case_information.community_service.terms_list)
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.license_suspension, self.case_information.license_suspension.terms_list)
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
-
-    @logger.catch
     def connect_signals_to_slots(self):
         """This method overrides the base_dialog connect_signals_to_slots entirely because
         there are no fields to clear or create_entry_button to press."""
@@ -87,7 +75,19 @@ class ConditionsDialog(BaseDialog):
         )
 
     @logger.catch
+    def add_conditions(self):
+        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
+        if self.main_dialog.community_service_checkBox.isChecked():
+            self.add_conditions_factory(self.case_information.community_service, self.case_information.community_service.terms_list)
+        if self.main_dialog.license_suspension_checkBox.isChecked():
+            self.add_conditions_factory(self.case_information.license_suspension, self.case_information.license_suspension.terms_list)
+        if self.main_dialog.other_conditions_checkBox.isChecked():
+            self.add_conditions_factory(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
+
+    @logger.catch
     def add_conditions_factory(self, conditions, terms_list):
+        """Using the terms_list for the specific condition, which is an attribute in the model, this method cycles
+        through all the fields in the UI and transfers the data from the field in the view to the model."""
         self.widget_type_check_set(conditions, terms_list)
 
     @logger.catch
@@ -232,13 +232,8 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
+        self.main_dialog = main_dialog
         self.domestic_violence_surrender_weapons_dateBox.setDate(QtCore.QDate.currentDate())
-        self.domestic_violence = main_dialog.domestic_violence_checkBox.isChecked()
-        self.admin_license_suspension = main_dialog.admin_license_suspension_checkBox.isChecked()
-        self.vehicle_seizure = main_dialog.vehicle_seizure_checkBox.isChecked()
-        self.no_contact = main_dialog.no_contact_checkBox.isChecked()
-        self.custodial_supervision = main_dialog.custodial_supervision_checkBox.isChecked()
-        self.other_conditions = main_dialog.other_conditions_checkBox.isChecked()
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
@@ -252,29 +247,18 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def add_special_conditions(self):
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
-        Add Special Conditions screen.
-
-        TODO: Creating a new instance of the special conditions here to avoid data being persistent
-        and carrying over to a future cms_case. This requires resetting ordered to true even though it
-        is set to true by the add_special_conditions_dict. Fix is probably to not set a default
-        instance of the class in the dataclass."""
-        if self.domestic_violence is True:
-            self.case_information.domestic_violence_conditions = DomesticViolenceBondConditions()
+        Add Special Conditions screen."""
+        if self.main_dialog.domestic_violence_checkBox.isChecked():
             self.add_domestic_violence_terms()
-        if self.admin_license_suspension is True:
-            self.case_information.admin_license_suspension = AdminLicenseSuspensionConditions()
+        if self.main_dialog.admin_license_suspension_checkBox.isChecked():
             self.add_admin_license_suspension_terms()
-        if self.no_contact is True:
-            self.case_information.no_contact = NoContact()
+        if self.main_dialog.no_contact_checkBox.isChecked():
             self.add_no_contact_terms()
-        if self.custodial_supervision is True:
-            self.case_information.custodial_supervision = CustodialSupervision()
+        if self.main_dialog.custodial_supervision_checkBox.isChecked():
             self.add_custodial_supervision_terms()
-        if self.other_conditions is True:
-            self.case_information.other_conditions = OtherConditions()
+        if self.main_dialog.other_conditions_checkBox.isChecked():
             self.add_other_condition_terms()
-        if self.vehicle_seizure is True:
-            self.case_information.vehicle_seizure = VehicleSeizure()
+        if self.main_dialog.vehicle_seizure_checkBox.isChecked():
             self.add_vehicle_seizure_terms()
 
     @logger.catch
