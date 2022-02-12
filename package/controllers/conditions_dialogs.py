@@ -12,7 +12,7 @@ from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBon
 from package.controllers.helper_functions import set_future_date
 
 
-CONDITIONS = [
+CONDITIONS_FRAMES = [
     ("other_conditions_checkBox", "other_conditions_frame"),
     ("license_suspension_checkBox", "license_suspension_frame"),
     ("community_service_checkBox", "community_service_frame"),
@@ -34,8 +34,83 @@ COMMUNITY_SERVICE_TERMS_LIST = [
     ("due_date_for_service", "community_service_date_to_complete_box"),
 ]
 
+LICENSE_SUSPENSION_TERMS_LIST = [
+    ("license_type", "license_type_box"),
+    ("suspended_date", "license_suspension_date_box"),
+    ("suspension_term", "term_of_suspension_box"),
+    ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
+]
+
+OTHER_CONDITIONS_TERMS_LIST = [
+    ("terms", "other_conditions_textEdit"),
+]
+
+JAIL_COMMITMENT_TERMS_LIST = [
+    ("report_type", "report_type_box"),
+    ("report_date", "report_date_box"),
+    ("report_time", "report_time_box"),
+    ("jail_term_type", "jail_term_type_box"),
+    ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
+    ("jail_report_days_notes", "jail_report_days_notes_box"),
+    ("dip_ordered", "dip_checkBox"),
+    ("companion_case_numbers", "companion_cases_box"),
+    ("companion_cases_exist", "companion_cases_checkBox"),
+]
+
+COMMUNITY_CONTROL_TERMS_LIST = [
+    ("type_of_control", "community_control_type_of_control_box"),
+    ("term_of_control", "community_control_term_of_control_box"),
+    ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
+    ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
+    ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
+    ("no_contact_with_person", "community_control_no_contact_with_box"),
+    ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+    ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
+    ("house_arrest", "house_arrest_checkBox"),
+    ("house_arrest_time", "house_arrest_time_box"),
+    ("interlock_vehicles_only", "interlock_vehicles_checkBox"),
+    ("pay_restitution", "pay_restitution_checkBox"),
+    ("pay_restitution_to", "pay_restitution_to_box"),
+    ("pay_restitution_amount", "pay_restitution_amount_box"),
+    ("antitheft_program", "antitheft_checkBox"),
+    ("anger_management_program", "anger_management_checkBox"),
+    ("alcohol_evaluation", "alcohol_evaluation_checkBox"),
+    ("domestic_violence_program", "domestic_violence_program_checkBox"),
+    ("driver_intervention_program", "driver_intervention_program_checkBox"),
+    ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
+    ("other_community_control", "other_community_control_checkBox"),
+    ("other_community_control_conditions", "other_community_control_conditions_box"),
+    ("community_control_community_service", "community_control_community_service_checkBox"),
+    ("community_control_community_service_hours", "community_control_community_service_hours_box"),
+    ("gps_exclusion", "gps_exclusion_checkBox"),
+    ("gps_exclusion_radius", "gps_exclusion_radius_box"),
+    ("gps_exclusion_location", "gps_exclusion_location_box"),
+    ("daily_reporting", "daily_reporting_checkBox"),
+]
+
+VICTIM_NOTIFICATION_TERMS_LIST = [
+    ("victim_reparation_notice", "victim_reparation_checkBox"),
+    ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
+]
+
+IMPOUNDMENT_TERMS_LIST = [
+    ("vehicle_make_model", "vehicle_make_model_box"),
+    ("vehicle_license_plate", "vehicle_license_plate_box"),
+    ("impound_time", "vehicle_impound_time_box"),
+    ("impound_action", "vehicle_impound_action_box"),
+]
+
+DIVERSION_TERMS_LIST = [
+    ("marijuana_diversion", "marijuana_diversion_checkBox"),
+    ("theft_diversion", "theft_diversion_checkBox"),
+    ("other_diversion", "other_diversion_checkBox"),
+    ("jail_imposed", "diversion_jail_imposed_checkBox"),
+    ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+    ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+]
+
 def enable_condition_frames(conditions_dialog, main_dialog):
-    for index, item in enumerate(CONDITIONS):
+    for index, item in enumerate(CONDITIONS_FRAMES):
         if hasattr(main_dialog, item[0]):
             if getattr(main_dialog, item[0]).isChecked():
                 getattr(conditions_dialog, item[1]).setEnabled(True)
@@ -76,9 +151,9 @@ class ConditionsDialog(BaseDialog):
         if self.main_dialog.community_service_checkBox.isChecked():
             self.add_conditions_factory(self.case_information.community_service, COMMUNITY_SERVICE_TERMS_LIST)
         if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.add_license_suspension_details()
+            self.add_conditions_factory(self.case_information.license_suspension, LICENSE_SUSPENSION_TERMS_LIST)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.add_other_condition_details()
+            self.add_conditions_factory(self.case_information.other_conditions, OTHER_CONDITIONS_TERMS_LIST)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -91,118 +166,9 @@ class ConditionsDialog(BaseDialog):
             self.set_community_service_date
         )
 
-
     @logger.catch
     def add_conditions_factory(self, conditions, terms_list):
         self.widget_type_check_set(conditions, terms_list)
-
-
-
-    @logger.catch
-    def add_community_service_terms(self):
-        community_service_terms_list = [
-            ("hours_of_service", "community_service_hours_ordered_box"),
-            ("days_to_complete_service", "community_service_days_to_complete_box"),
-            ("due_date_for_service", "community_service_date_to_complete_box"),
-        ]
-        self.widget_type_check_set(self.case_information.community_service, community_service_terms_list)
-
-    @logger.catch
-    def add_jail_commitment_terms(self):
-        jail_commitment_terms_list = [
-            ("report_type", "report_type_box"),
-            ("report_date", "report_date_box"),
-            ("report_time", "report_time_box"),
-            ("jail_term_type", "jail_term_type_box"),
-            ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
-            ("jail_report_days_notes", "jail_report_days_notes_box"),
-            ("dip_ordered", "dip_checkBox"),
-            ("companion_case_numbers", "companion_cases_box"),
-            ("companion_cases_exist", "companion_cases_checkBox"),
-        ]
-        self.widget_type_check_set(self.case_information.jail_terms, jail_commitment_terms_list)
-
-    @logger.catch
-    def add_license_suspension_details(self):
-        license_suspension_terms_list = [
-            ("license_type", "license_type_box"),
-            ("suspended_date", "license_suspension_date_box"),
-            ("suspension_term", "term_of_suspension_box"),
-            ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
-        ]
-        self.widget_type_check_set(self.case_information.license_suspension, license_suspension_terms_list)
-
-    @logger.catch
-    def add_other_condition_details(self):
-        other_conditions_terms_list = [
-            ("terms", "other_conditions_textEdit"),
-        ]
-        self.widget_type_check_set(self.case_information.other_conditions, other_conditions_terms_list)
-
-    @logger.catch
-    def add_victim_notification_details(self):
-        victim_notification_terms_list = [
-            ("victim_reparation_notice", "victim_reparation_checkBox"),
-            ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
-        ]
-        self.widget_type_check_set(self.case_information.victim_notification, victim_notification_terms_list)
-
-    @logger.catch
-    def add_impoundment_details(self):
-        impoundment_details_list = [
-            ("vehicle_make_model", "vehicle_make_model_box"),
-            ("vehicle_license_plate", "vehicle_license_plate_box"),
-            ("impound_time", "vehicle_impound_time_box"),
-            ("impound_action", "vehicle_impound_action_box"),
-        ]
-        self.widget_type_check_set(self.case_information.impoundment, impoundment_details_list)
-
-    @logger.catch
-    def add_diversion_details(self):
-        diversion_terms_list = [
-            ("marijuana_diversion", "marijuana_diversion_checkBox"),
-            ("theft_diversion", "theft_diversion_checkBox"),
-            ("other_diversion", "other_diversion_checkBox"),
-            ("jail_imposed", "diversion_jail_imposed_checkBox"),
-            ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
-            ("diversion_jail_report_date", "diversion_jail_report_date_box"),
-        ]
-        self.widget_type_check_set(self.case_information.diversion, diversion_terms_list)
-        self.case_information.diversion.program_name = self.case_information.diversion.get_program_name()
-
-    @logger.catch
-    def add_community_control_terms(self):
-        community_control_terms_list = [
-            ("type_of_control", "community_control_type_of_control_box"),
-            ("term_of_control", "community_control_term_of_control_box"),
-            ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
-            ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
-            ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
-            ("no_contact_with_person", "community_control_no_contact_with_box"),
-            ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
-            ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
-            ("house_arrest", "house_arrest_checkBox"),
-            ("house_arrest_time", "house_arrest_time_box"),
-            ("interlock_vehicles_only", "interlock_vehicles_checkBox"),
-            ("pay_restitution", "pay_restitution_checkBox"),
-            ("pay_restitution_to", "pay_restitution_to_box"),
-            ("pay_restitution_amount", "pay_restitution_amount_box"),
-            ("antitheft_program", "antitheft_checkBox"),
-            ("anger_management_program", "anger_management_checkBox"),
-            ("alcohol_evaluation", "alcohol_evaluation_checkBox"),
-            ("domestic_violence_program", "domestic_violence_program_checkBox"),
-            ("driver_intervention_program", "driver_intervention_program_checkBox"),
-            ("mental_health_evaluation", "mental_health_evaluation_checkBox"),
-            ("other_community_control", "other_community_control_checkBox"),
-            ("other_community_control_conditions", "other_community_control_conditions_box"),
-            ("community_control_community_service", "community_control_community_service_checkBox"),
-            ("community_control_community_service_hours", "community_control_community_service_hours_box"),
-            ("gps_exclusion", "gps_exclusion_checkBox"),
-            ("gps_exclusion_radius", "gps_exclusion_radius_box"),
-            ("gps_exclusion_location", "gps_exclusion_location_box"),
-            ("daily_reporting", "daily_reporting_checkBox"),
-        ]
-        self.widget_type_check_set(self.case_information.community_control, community_control_terms_list)
 
     @logger.catch
     def set_community_service_date(self, _index):
@@ -265,15 +231,15 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         """The method calls the base method and then adds community control specific conditions to add."""
         super().add_conditions()
         if self.main_dialog.community_control_checkBox.isChecked():
-            self.add_community_control_terms()
+            self.add_conditions_factory(self.case_information.community_control, COMMUNITY_CONTROL_TERMS_LIST)
         if self.main_dialog.jail_checkBox.isChecked():
-            self.add_jail_commitment_terms()
+            self.add_conditions_factory(self.case_information.jail_terms, JAIL_COMMITMENT_TERMS_LIST)
         if self.main_dialog.diversion_checkBox.isChecked():
-            self.add_diversion_details()
+            self.add_conditions_factory(self.case_information.diversion, DIVERSION_TERMS_LIST)
         if self.main_dialog.impoundment_checkBox.isChecked():
-            self.add_impoundment_details()
+            self.add_conditions_factory(self.case_information.impoundment, IMPOUNDMENT_TERMS_LIST)
         if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.add_victim_notification_details()
+            self.add_conditions_factory(self.case_information.victim_notification, VICTIM_NOTIFICATION_TERMS_LIST)
 
     @logger.catch
     def connect_signals_to_slots(self):

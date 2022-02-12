@@ -200,11 +200,12 @@ class Diversion:
     theft_diversion: bool = False
     other_diversion: bool = False
     jail_imposed: bool = False
-    program_name: str = None
+    program_name: str = "Prosecutor Diversion Program"
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
 
     def get_program_name(self):
+        """TODO: This is going to be removed as are the specific diversion programs in favor of a generic name."""
         if self.marijuana_diversion is True:
             return "Marijuana Diversion Program"
         if self.theft_diversion is True:
