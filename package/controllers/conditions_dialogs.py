@@ -48,10 +48,10 @@ class ConditionsDialog(BaseDialog):
 
     @logger.catch
     def modify_view(self):
-        """Modifies the view of AddConditionsDialog that is created by the UI
-        file. Gets the total number of charges from the charges in charges_list then
-        loops through the charges_list and adds parts of each charge to the
-        view."""
+        """Overrides the BaseDialog modify_view and modifies the view of AddConditionsDialog
+        that is created by the UI file. Gets the total number of charges from the charges in
+        charges_list then loops through the charges_list and adds parts of each charge to the
+        view. Also sets date fields to 'today.'"""
         column = self.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(self.charges_list):
             charge = vars(charge)
@@ -65,7 +65,7 @@ class ConditionsDialog(BaseDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """This method overrides the base_dialog connect_signals_to_slots entirely because
+        """Overrides the BaseDialog connect_signals_to_slots entirely because
         there are no fields to clear or create_entry_button to press."""
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_conditions_Button.pressed.connect(self.add_conditions)
@@ -105,7 +105,10 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
     the JailCCPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the JCPD screen."""
+    for are based on the checkboxes that are checked on the JCPD screen.
+
+    :conditions_checkbox_list: list of tuples that show or hide fields only when they are
+    necessary for additional data input because the checkbox is checked."""
     condition_checkbox_list = [
         ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
         ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
@@ -123,11 +126,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
-        self.community_control = True if main_dialog.community_control_checkBox.isChecked() else False
-        self.jail_terms = True if main_dialog.jail_checkBox.isChecked() else False
-        self.diversion = True if main_dialog.diversion_checkBox.isChecked() else False
-        self.impoundment = True if main_dialog.impoundment_checkBox.isChecked() else False
-        self.victim_notification = True if main_dialog.victim_notification_checkBox.isChecked() else False
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
@@ -142,7 +140,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
     @logger.catch
     def add_conditions(self):
-        """The method calls the base method and then adds community control specific conditions to add."""
+        """The method calls the base method add_conditions and then adds community control specific conditions."""
         super().add_conditions()
         if self.main_dialog.community_control_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.community_control)
@@ -162,9 +160,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_community_service_date
-        )
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(self.set_community_service_date)
         self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
         self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled)
         self.community_control_no_contact_checkBox.toggled.connect(self.set_field_enabled)
@@ -202,21 +198,24 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def set_field_enabled(self):
         """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
         any additional fields that are required for that condition."""
-        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
-            if hasattr(self, item[0]):
-                if getattr(self, item[0]).isChecked():
-                    getattr(self, item[1]).setEnabled(True)
-                    getattr(self, item[1]).setHidden(False)
-                    getattr(self, item[1]).setFocus(True)
+        for item in AddCommunityControlDialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                if getattr(self, condition_checkbox).isChecked():
+                    getattr(self, condition_field).setEnabled(True)
+                    getattr(self, condition_field).setHidden(False)
+                    getattr(self, condition_field).setFocus(True)
                 else:
-                    getattr(self, item[1]).setEnabled(False)
-                    getattr(self, item[1]).setHidden(True)
+                    getattr(self, condition_field).setEnabled(False)
+                    getattr(self, condition_field).setHidden(True)
 
     def hide_boxes(self):
-        for index, item in enumerate(AddCommunityControlDialog.condition_checkbox_list):
-            if hasattr(self, item[0]):
-                getattr(self, item[1]).setEnabled(False)
-                getattr(self, item[1]).setHidden(True)
+        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
+        for item in AddCommunityControlDialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                getattr(self, condition_field).setEnabled(False)
+                getattr(self, condition_field).setHidden(True)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
@@ -227,8 +226,21 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         super().__init__(parent)
         self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
-        self.domestic_violence_surrender_weapons_dateBox.setDate(QtCore.QDate.currentDate())
         enable_condition_frames(self, main_dialog)
+
+    @logger.catch
+    def modify_view(self):
+        """Modifies the view that is created by the UI file. Gets the total number of charges
+        from the charges in charges_list then loops through the charges_list and adds parts of
+        each charge to the view."""
+        column = self.charges_gridLayout.columnCount() + 1
+        for _index, charge in enumerate(self.charges_list):
+            charge = vars(charge)
+            if charge is not None:
+                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                column += 1
+        self.domestic_violence_surrender_weapons_dateBox.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -254,16 +266,3 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
             self.transfer_field_data_to_model(self.case_information.other_conditions)
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.vehicle_seizure)
-
-    @logger.catch
-    def modify_view(self):
-        """Modifies the view that is created by the UI file. Gets the total number of charges
-        from the charges in charges_list then loops through the charges_list and adds parts of
-        each charge to the view."""
-        column = self.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                column += 1
