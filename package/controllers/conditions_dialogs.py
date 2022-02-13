@@ -148,6 +148,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.transfer_field_data_to_model(self.case_information.jail_terms)
         if self.main_dialog.diversion_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.diversion)
+            self.case_information.diversion.program_name = self.case_information.diversion.get_program_name()
         if self.main_dialog.impoundment_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.impoundment)
         if self.main_dialog.victim_notification_checkBox.isChecked():

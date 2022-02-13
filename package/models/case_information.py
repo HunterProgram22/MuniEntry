@@ -322,7 +322,6 @@ class Diversion:
         ("diversion_jail_report_date", "diversion_jail_report_date_box"),
     ]
 
-
     def get_program_name(self):
         """TODO: This is going to be removed as are the specific diversion programs in favor of a generic name."""
         if self.marijuana_diversion is True:
