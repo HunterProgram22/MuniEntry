@@ -29,11 +29,12 @@ CONDITIONS_FRAMES = [
 
 def enable_condition_frames(conditions_dialog, main_dialog):
     for index, item in enumerate(CONDITIONS_FRAMES):
-        if hasattr(main_dialog, item[0]):
-            if getattr(main_dialog, item[0]).isChecked():
-                getattr(conditions_dialog, item[1]).setEnabled(True)
+        (frame_checkbox, frame) = item
+        if hasattr(main_dialog, frame_checkbox):
+            if getattr(main_dialog, frame_checkbox).isChecked():
+                getattr(conditions_dialog, frame).setEnabled(True)
             else:
-                frame = getattr(conditions_dialog, item[1])
+                frame = getattr(conditions_dialog, frame)
                 frame.setParent(None)
                 frame.deleteLater()
 
