@@ -76,12 +76,6 @@ class BaseDialog(QDialog):
         self.modify_view()
         self.connect_signals_to_slots()
 
-    @logger.catch
-    def add_conditions_factory(self, conditions, terms_list):
-        """Using the terms_list for the specific condition, which is an attribute in the model, this method cycles
-        through all the fields in the UI and transfers the data from the field in the view to the model."""
-        self.widget_type_check_set(conditions, terms_list)
-
     def modify_view(self):
         """The modify view method updates the view that is created on init with self.setupUI.
         Place items in this method that can't be added directly in QtDesigner (or are more easily added later)
@@ -104,23 +98,24 @@ class BaseDialog(QDialog):
         at the end of the close_event process to close the dialog."""
         self.close()
 
-    def widget_type_check_set(self, terms_object, terms_list):
+    def transfer_field_data_to_model(self, terms_object, terms_list):
         """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate object. Format of terms_list is a list of tuples (item[0] = model data,
+        to the appropriate model attribute. Format of terms_list is a list of tuples (item[0] = model data,
         item[1] = view field)"""
         for item in terms_list:
-            if isinstance(getattr(self, item[1]), QComboBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).currentText())
-            elif isinstance(getattr(self, item[1]), QCheckBox):
-                setattr(terms_object, item[0], getattr(self, item[1]).isChecked())
-            elif isinstance(getattr(self, item[1]), QLineEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).text())
-            elif isinstance(getattr(self, item[1]), QTextEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).toPlainText())
-            elif isinstance(getattr(self, item[1]), QDateEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).date().toString("MMMM dd, yyyy"))
-            elif isinstance(getattr(self, item[1]), QTimeEdit):
-                setattr(terms_object, item[0], getattr(self, item[1]).time().toString("hh:mm A"))
+            (model_attribute, view_field) = item
+            if isinstance(getattr(self, view_field), QComboBox):
+                setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
+            elif isinstance(getattr(self, view_field), QCheckBox):
+                setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+            elif isinstance(getattr(self, view_field), QLineEdit):
+                setattr(terms_object, model_attribute, getattr(self, view_field).text())
+            elif isinstance(getattr(self, view_field), QTextEdit):
+                setattr(terms_object, model_attribute, getattr(self, view_field).toPlainText())
+            elif isinstance(getattr(self, view_field), QDateEdit):
+                setattr(terms_object, model_attribute, getattr(self, view_field).date().toString("MMMM dd, yyyy"))
+            elif isinstance(getattr(self, view_field), QTimeEdit):
+                setattr(terms_object, model_attribute, getattr(self, view_field).time().toString("hh:mm A"))
 
 
 class CriminalBaseDialog(BaseDialog):

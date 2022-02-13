@@ -78,7 +78,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
             ("monitoring", "monitoring_checkBox"),
             ("monitoring_type", "monitoring_type_box"),
         ]
-        self.widget_type_check_set(self.entry_case_information.fta_bond_conditions, bond_conditions_terms_list)
+        self.transfer_field_data_to_model(self.entry_case_information.fta_bond_conditions, bond_conditions_terms_list)
 
     def conditions_checkbox_toggle(self):
         if self.sender().isChecked():

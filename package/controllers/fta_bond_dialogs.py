@@ -48,5 +48,5 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
             ("monitoring", "monitoring_checkBox"),
             ("monitoring_type", "monitoring_type_box"),
         ]
-        self.widget_type_check_set(self.fta_bond_conditions, bond_conditions_list)
+        self.transfer_field_data_to_model(self.fta_bond_conditions, bond_conditions_list)
         

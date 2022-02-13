@@ -1,10 +1,9 @@
+from loguru import logger
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
+
 from package.controllers.base_dialogs import BaseDialog
-from loguru import logger
-from package.models.case_information import OtherConditions, DomesticViolenceBondConditions, \
-    AdminLicenseSuspensionConditions, NoContact, CustodialSupervision, VehicleSeizure
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
@@ -78,11 +77,11 @@ class ConditionsDialog(BaseDialog):
     def add_conditions(self):
         """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
         if self.main_dialog.community_service_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.community_service, self.case_information.community_service.terms_list)
+            self.transfer_field_data_to_model(self.case_information.community_service, self.case_information.community_service.terms_list)
         if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.license_suspension, self.case_information.license_suspension.terms_list)
+            self.transfer_field_data_to_model(self.case_information.license_suspension, self.case_information.license_suspension.terms_list)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
 
     @logger.catch
     def set_community_service_date(self, _index):
@@ -145,15 +144,15 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         """The method calls the base method and then adds community control specific conditions to add."""
         super().add_conditions()
         if self.main_dialog.community_control_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.community_control, self.case_information.community_control.terms_list)
+            self.transfer_field_data_to_model(self.case_information.community_control, self.case_information.community_control.terms_list)
         if self.main_dialog.jail_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.jail_terms, self.case_information.jail_terms.terms_list)
+            self.transfer_field_data_to_model(self.case_information.jail_terms, self.case_information.jail_terms.terms_list)
         if self.main_dialog.diversion_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.diversion, self.case_information.diversion.terms_list)
+            self.transfer_field_data_to_model(self.case_information.diversion, self.case_information.diversion.terms_list)
         if self.main_dialog.impoundment_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.impoundment, self.case_information.impoundment.terms_list)
+            self.transfer_field_data_to_model(self.case_information.impoundment, self.case_information.impoundment.terms_list)
         if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.victim_notification, self.case_information.victim_notification.terms_list)
+            self.transfer_field_data_to_model(self.case_information.victim_notification, self.case_information.victim_notification.terms_list)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -243,17 +242,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
         Add Special Conditions screen."""
         if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.domestic_violence_conditions, self.case_information.domestic_violence_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.domestic_violence_conditions, self.case_information.domestic_violence_conditions.terms_list)
         if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.admin_license_suspension, self.case_information.admin_license_suspension.terms_list)
+            self.transfer_field_data_to_model(self.case_information.admin_license_suspension, self.case_information.admin_license_suspension.terms_list)
         if self.main_dialog.no_contact_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.no_contact, self.case_information.no_contact.terms_list)
+            self.transfer_field_data_to_model(self.case_information.no_contact, self.case_information.no_contact.terms_list)
         if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.custodial_supervision, self.case_information.custodial_supervision.terms_list)
+            self.transfer_field_data_to_model(self.case_information.custodial_supervision, self.case_information.custodial_supervision.terms_list)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.other_conditions,self.case_information.other_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.add_conditions_factory(self.case_information.vehicle_seizure, self.case_information.vehicle_seizure.terms_list)
+            self.transfer_field_data_to_model(self.case_information.vehicle_seizure, self.case_information.vehicle_seizure.terms_list)
 
     @logger.catch
     def modify_view(self):
