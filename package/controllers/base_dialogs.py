@@ -394,7 +394,9 @@ class CMS_FRALoader(CMSLoader):
 
     def add_fra_data(self, dialog):
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
-        if self.cms_case.fra_in_file in fra_value_dict:
+        if self.cms_case.case_number[2:5] == "CRB":
+            dialog.fra_in_file_box.setCurrentText("N/A")
+        elif self.cms_case.fra_in_file in fra_value_dict:
             dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
             dialog.fra_in_file_box.setCurrentText("N/A")
