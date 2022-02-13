@@ -2,6 +2,7 @@ import os
 import sqlite3
 import sys
 from abc import ABC, abstractmethod
+import pdb
 
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
@@ -75,7 +76,8 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             offense = query.value(4)
             statute = query.value(5)
             degree = query.value(6)
-            new_charge = (offense, statute, degree)
+            offense_type = query.value(8)
+            new_charge = (offense, statute, degree, offense_type)
             self.case.charges_list.append(new_charge)
 
     def load_case(self):
@@ -213,6 +215,14 @@ def return_data_from_excel(excel_file):
             fra_in_file = worksheet.cell(row=row, column=8)
         else:
             fra_in_file = worksheet.cell(row=row, column=8)
+        if worksheet.cell(row=row, column=9).value is None:
+            worksheet.cell(row=row, column=9).value = "No Data"
+            offense_type = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is False:
+            worksheet.cell(row=row, column=9).value = "No Data"
+            offense_type = worksheet.cell(row=row, column=9)
+        else:
+            offense_type = worksheet.cell(row=row, column=9)
         case = (case_number.value,
                 defendant_last_name.value,
                 defendant_first_name.value,
@@ -220,12 +230,15 @@ def return_data_from_excel(excel_file):
                 statute.value,
                 degree.value,
                 fra_in_file.value,
+                offense_type.value,
                 )
         data.append(case)
     return data
 
 
 def create_table_sql_string(table):
+    """If changes are made to this create_table string then the old table must
+    be deleted."""
     return f"""
       CREATE TABLE {table} (
           id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
@@ -235,7 +248,8 @@ def create_table_sql_string(table):
           offense VARCHAR(80) NOT NULL,
           statute VARCHAR(50) NOT NULL,
           degree VARCHAR(10) NOT NULL,
-          fra_in_file VARCHAR(5) NOT NULL
+          fra_in_file VARCHAR(5) NOT NULL,
+          offense_type VARCHAR(15) NOT NULL
       )
       """
 
@@ -249,9 +263,10 @@ def insert_table_sql_string(table):
             offense,
             statute,
             degree,
-            fra_in_file
+            fra_in_file,
+            offense_type
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
 
 
@@ -278,7 +293,7 @@ def main():
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for case_number, defendant_last_name, defendant_first_name, offense, \
-                statute, degree, fra_in_file in data_from_table:
+                statute, degree, fra_in_file, offense_type in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
             insert_data_query.addBindValue(defendant_first_name)
@@ -286,6 +301,7 @@ def main():
             insert_data_query.addBindValue(statute)
             insert_data_query.addBindValue(degree)
             insert_data_query.addBindValue(fra_in_file)
+            insert_data_query.addBindValue(offense_type)
             insert_data_query.exec()
 
     con_daily_case_lists.close()

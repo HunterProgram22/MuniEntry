@@ -376,7 +376,7 @@ class CMSLoader:
         for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
-             self.criminal_charge.degree) = charge
+             self.criminal_charge.degree, self.criminal_charge.type) = charge
             dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             dialog.add_charge_to_grid()
 

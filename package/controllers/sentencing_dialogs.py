@@ -94,18 +94,17 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             for _index, charge in enumerate(self.entry_case_information.charges_list):
                 if self.entry_case_information.court_costs.amount == 124:
                     break
-                if charge.type == "Moving Traffic":
+                if charge.type == "Moving":
                     self.entry_case_information.court_costs.amount = max(
                         self.entry_case_information.court_costs.amount, 124)
                 elif charge.type == "Criminal":
                     self.entry_case_information.court_costs.amount = max(
                         self.entry_case_information.court_costs.amount, 114)
-                elif charge.type == "Non-moving Traffic":
+                elif charge.type == "Non-moving":
                     self.entry_case_information.court_costs.amount = max(
                         self.entry_case_information.court_costs.amount, 95)
         total_fines = 0
         try:
-            print(self.entry_case_information.charges_list)
             for _index, charge in enumerate(self.entry_case_information.charges_list):
                 local_charge_fines_amount = int(charge.fines_amount[2:])
                 if local_charge_fines_amount == '':
