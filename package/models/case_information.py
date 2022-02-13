@@ -57,7 +57,6 @@ class BondConditions:
     specialized_docket_type: str = None
     monitoring: bool = False
     monitoring_type: str = None
-
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
@@ -80,7 +79,6 @@ class DomesticViolenceBondConditions:
     exclusive_possession_to: str = None
     surrender_weapons: bool = False
     surrender_weapons_date: str = None
-
     terms_list = [
         ("vacate_residence", "domestic_violence_vacate_checkBox"),
         ("residence_address", "domestic_violence_residence_box"),
@@ -97,7 +95,6 @@ class AdminLicenseSuspensionConditions:
     objection: str = None
     disposition: str = None
     explanation: str = None
-
     terms_list = [
         ("objection", "admin_license_suspension_objection_box"),
         ("disposition", "admin_license_suspension_disposition_box"),
@@ -110,7 +107,6 @@ class NoContact:
     """No Contact conditions for Special Bond Conditions."""
     ordered: bool = False
     name: str = None
-
     terms_list = [
         ("name", "no_contact_name_box"),
     ]
@@ -121,7 +117,6 @@ class CustodialSupervision:
     """Custodial Supervision conditions for Special Bond Conditions."""
     ordered: bool = False
     supervisor: str = None
-
     terms_list = [
         ("supervisor", "custodial_supervision_supervisor_box"),
     ]
@@ -135,7 +130,6 @@ class CommunityService:
     hours_of_service: int = 0
     days_to_complete_service: int = 0
     due_date_for_service: str = None
-
     terms_list = [
         ("hours_of_service", "community_service_hours_ordered_box"),
         ("days_to_complete_service", "community_service_days_to_complete_box"),
@@ -174,7 +168,6 @@ class CommunityControl:
     gps_exclusion_radius: str = None
     gps_exclusion_location: str = None
     daily_reporting: bool = False
-
     terms_list = [
         ("type_of_control", "community_control_type_of_control_box"),
         ("term_of_control", "community_control_term_of_control_box"),
@@ -217,7 +210,6 @@ class VehicleSeizure:
     motion_to_return_vehicle: bool = False
     state_opposes: str = None
     disposition_motion_to_return: str = None
-
     terms_list = [
         ("vehicle_make_model", "vehicle_make_model_box"),
         ("vehicle_license_plate", "vehicle_license_plate_box"),
@@ -236,7 +228,6 @@ class Impoundment:
     vehicle_license_plate: str = None
     impound_time: str = None
     impound_action: str = None
-
     terms_list = [
         ("vehicle_make_model", "vehicle_make_model_box"),
         ("vehicle_license_plate", "vehicle_license_plate_box"),
@@ -254,7 +245,6 @@ class LicenseSuspension:
     suspended_date: str = None
     suspension_term: str = None
     remedial_driving_class_required: bool = False
-
     terms_list = [
         ("license_type", "license_type_box"),
         ("suspended_date", "license_suspension_date_box"),
@@ -276,7 +266,6 @@ class JailTerms:
     dip_ordered: bool = False
     companion_cases_exist: bool = False
     companion_case_numbers: str = None
-
     terms_list = [
         ("report_type", "report_type_box"),
         ("report_date", "report_date_box"),
@@ -296,7 +285,6 @@ class OtherConditions:
     a specific cms_case. This condition is a freeform text entry box in the UI."""
     ordered: bool = False
     terms: str = None
-
     terms_list = [
         ("terms", "other_conditions_textEdit"),
     ]
@@ -323,7 +311,6 @@ class Diversion:
     ]
 
     def get_program_name(self):
-        """TODO: This is going to be removed as are the specific diversion programs in favor of a generic name."""
         if self.marijuana_diversion is True:
             return "Marijuana Diversion Program"
         if self.theft_diversion is True:
@@ -347,7 +334,6 @@ class VictimNotification:
     ordered: bool = False
     victim_reparation_notice: bool = False
     victim_prosecutor_notice: bool = False
-
     terms_list = [
         ("victim_reparation_notice", "victim_reparation_checkBox"),
         ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
