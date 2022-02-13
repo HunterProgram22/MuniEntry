@@ -105,20 +105,23 @@ class CriminalSentencingDialog(CriminalBaseDialog):
                         self.entry_case_information.court_costs.amount, 95)
         total_fines = 0
         try:
+            print(self.entry_case_information.charges_list)
             for _index, charge in enumerate(self.entry_case_information.charges_list):
-                if charge.fines_amount == '':
-                    charge.fines_amount = 0
+                local_charge_fines_amount = int(charge.fines_amount[2:])
+                if local_charge_fines_amount == '':
+                    local_charge_fines_amount = 0
                 try:
-                    total_fines = total_fines + int(charge.fines_amount)
+                    total_fines = total_fines + int(local_charge_fines_amount)
                 except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
                     pass
             self.entry_case_information.total_fines = total_fines
             total_fines_suspended = 0
             for _index, charge in enumerate(self.entry_case_information.charges_list):
-                if charge.fines_suspended == '':
-                    charge.fines_suspended = 0
+                local_charge_fines_suspended = int(charge.fines_suspended[2:])
+                if local_charge_fines_suspended == '':
+                    local_charge_fines_suspended = 0
                 try:
-                    total_fines_suspended = total_fines_suspended + int(charge.fines_suspended)
+                    total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
                 except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
                     pass
             self.entry_case_information.total_fines_suspended = total_fines_suspended

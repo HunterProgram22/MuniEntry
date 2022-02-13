@@ -20,12 +20,6 @@ from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, SAVE_PATH
 
 
-# def open_databases():
-#     charges_database.open()
-#     print(charges_database)
-#     print(charges_database.open())
-#
-#
 def close_databases():
     charges_database.close()
     charges_database.removeDatabase("QSQLITE")
