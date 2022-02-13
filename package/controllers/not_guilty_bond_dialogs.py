@@ -5,7 +5,7 @@ from package.views.charges_grids import NotGuiltyPleaGrid
 
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.models.template_types import TEMPLATE_DICT
-from package.models.case_information import FTABondConditions
+from package.models.case_information import BondConditions
 from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 
 
@@ -26,7 +26,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         ]
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.fta_bond_conditions = FTABondConditions()
+        self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
 
     @logger.catch
@@ -79,7 +79,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
             ("monitoring", "monitoring_checkBox"),
             ("monitoring_type", "monitoring_type_box"),
         ]
-        self.transfer_field_data_to_model(self.entry_case_information.fta_bond_conditions, bond_conditions_terms_list)
+        self.transfer_field_data_to_model(self.entry_case_information.bond_conditions, bond_conditions_terms_list)
 
     def conditions_checkbox_toggle(self):
         if self.sender().isChecked():

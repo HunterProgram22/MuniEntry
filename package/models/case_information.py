@@ -40,7 +40,7 @@ class AmendOffenseDetails:
 
 
 @dataclass
-class FTABondConditions:
+class BondConditions:
     """Conditions specific to an FTA Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
     forfeit_bond: str = None
@@ -376,7 +376,7 @@ class CriminalCaseInformation:
     jail_terms: object = JailTerms()
     no_contact: object = NoContact()
     custodial_supervision: object = CustodialSupervision()
-    fta_bond_conditions: object = FTABondConditions()
+    bond_conditions: object = BondConditions()
     community_service: object = CommunityService()
     license_suspension: object = LicenseSuspension()
     other_conditions: object = OtherConditions()

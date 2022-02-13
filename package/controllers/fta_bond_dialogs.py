@@ -3,7 +3,7 @@ from loguru import logger
 
 from package.views.fta_bond_dialog_ui import Ui_FTABondDialog
 from package.models.template_types import TEMPLATE_DICT
-from package.models.case_information import CriminalCaseInformation, FTABondConditions
+from package.models.case_information import CriminalCaseInformation, BondConditions
 from package.controllers.base_dialogs import BaseDialog
 
 
@@ -16,14 +16,14 @@ class FTABondDialog(BaseDialog, Ui_FTABondDialog):
         self.case_information = CriminalCaseInformation(judicial_officer)
         self.dialog_name = "FTA Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.fta_bond_conditions = FTABondConditions()
+        self.fta_bond_conditions = BondConditions()
 
     @logger.catch
     def update_case_information(self):
         self.set_party_information()
         self.update_fta_conditions()
         self.update_bond_conditions()
-        self.case_information.fta_bond_conditions = self.fta_bond_conditions
+        self.case_information.bond_conditions = self.fta_bond_conditions
 
     @logger.catch
     def update_fta_conditions(self):

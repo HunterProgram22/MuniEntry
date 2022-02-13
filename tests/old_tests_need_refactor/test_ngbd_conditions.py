@@ -15,13 +15,13 @@ def test_not_guilty_bond_conditions_all(ngb_dialog):
     mouse_click(ngb_dialog.specialized_docket_checkBox)
     mouse_click(ngb_dialog.not_guilty_all_Button)
     mouse_click(ngb_dialog.create_entry_Button)
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.alcohol_test_kiosk == True
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.alcohol_drugs_assessment == True
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.no_alcohol_drugs == True
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.monitoring == True
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.monitoring_type == "GPS Only"
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.specialized_docket == True
-    assert ngb_dialog.entry_case_information.fta_bond_conditions.specialized_docket_type == "OVI Docket"
+    assert ngb_dialog.entry_case_information.bond_conditions.alcohol_test_kiosk == True
+    assert ngb_dialog.entry_case_information.bond_conditions.alcohol_drugs_assessment == True
+    assert ngb_dialog.entry_case_information.bond_conditions.no_alcohol_drugs == True
+    assert ngb_dialog.entry_case_information.bond_conditions.monitoring == True
+    assert ngb_dialog.entry_case_information.bond_conditions.monitoring_type == "GPS Only"
+    assert ngb_dialog.entry_case_information.bond_conditions.specialized_docket == True
+    assert ngb_dialog.entry_case_information.bond_conditions.specialized_docket_type == "OVI Docket"
 
 
 def test_not_guilty_bond_special_conditions_checkboxes_all(ngb_dialog, ngbd_check_special_conditions, qtbot):
