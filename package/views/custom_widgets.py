@@ -225,14 +225,37 @@ class AmendButton(QPushButton):
 
 
 class AlliedCheckbox(QCheckBox):
-    def __init__(self, parent=None):
+    def __init__(self, column_index, dialog, parent=None):
         super(QCheckBox, self).__init__(parent)
+        self.column_index = column_index
+        self.dialog = dialog
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.toggled.connect(self.set_to_allied)
+
+    def set_to_allied(self):
+        if self.isChecked():
+            try:
+                if self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Guilty":
+                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText("Guilty - Allied Offense")
+                elif self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Not Guilty":
+                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText("Not Guilty - Allied Offense")
+            except AttributeError:
+                pass
+        else:
+            try:
+                if self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Guilty - Allied Offense":
+                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText(
+                        "Guilty")
+                elif self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Not Guilty - Allied Offense":
+                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText(
+                        "Not Guilty")
+            except AttributeError:
+                pass
 
 
 class DismissedCheckbox(QCheckBox):
