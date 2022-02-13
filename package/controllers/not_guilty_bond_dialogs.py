@@ -66,7 +66,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     @logger.catch
     def update_bond_conditions(self):
-        """Updates the bond conditions from the GUI(view) and saves it to the model."""
+        """TODO: Refactor this like other conditions.
+        Updates the bond conditions from the GUI(view) and saves it to the model."""
         bond_conditions_terms_list = [
             ("bond_type", "bond_type_box"),
             ("bond_amount", "bond_amount_box"),
