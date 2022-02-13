@@ -98,10 +98,12 @@ class BaseDialog(QDialog):
         at the end of the close_event process to close the dialog."""
         self.close()
 
-    def transfer_field_data_to_model(self, terms_object, terms_list):
+    def transfer_field_data_to_model(self, terms_object):
         """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate model attribute. Format of terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field)"""
+        to the appropriate model attribute. The function uses the appropriate pyqt method for the field type.
+        Format of item in terms_list is a list of tuples (item[0] = model data,
+        item[1] = view field that contains the data)"""
+        terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
             if isinstance(getattr(self, view_field), QComboBox):

@@ -77,11 +77,11 @@ class ConditionsDialog(BaseDialog):
     def add_conditions(self):
         """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
         if self.main_dialog.community_service_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_service, self.case_information.community_service.terms_list)
+            self.transfer_field_data_to_model(self.case_information.community_service)
         if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.license_suspension, self.case_information.license_suspension.terms_list)
+            self.transfer_field_data_to_model(self.case_information.license_suspension)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.other_condition)
 
     @logger.catch
     def set_community_service_date(self, _index):
@@ -144,15 +144,15 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         """The method calls the base method and then adds community control specific conditions to add."""
         super().add_conditions()
         if self.main_dialog.community_control_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_control, self.case_information.community_control.terms_list)
+            self.transfer_field_data_to_model(self.case_information.community_control)
         if self.main_dialog.jail_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.jail_terms, self.case_information.jail_terms.terms_list)
+            self.transfer_field_data_to_model(self.case_information.jail_terms)
         if self.main_dialog.diversion_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.diversion, self.case_information.diversion.terms_list)
+            self.transfer_field_data_to_model(self.case_information.diversion)
         if self.main_dialog.impoundment_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.impoundment, self.case_information.impoundment.terms_list)
+            self.transfer_field_data_to_model(self.case_information.impoundment)
         if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.victim_notification, self.case_information.victim_notification.terms_list)
+            self.transfer_field_data_to_model(self.case_information.victim_notification)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -242,17 +242,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
         Add Special Conditions screen."""
         if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.domestic_violence_conditions, self.case_information.domestic_violence_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.domestic_violence_conditions)
         if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.admin_license_suspension, self.case_information.admin_license_suspension.terms_list)
+            self.transfer_field_data_to_model(self.case_information.admin_license_suspension)
         if self.main_dialog.no_contact_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.no_contact, self.case_information.no_contact.terms_list)
+            self.transfer_field_data_to_model(self.case_information.no_contact)
         if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.custodial_supervision, self.case_information.custodial_supervision.terms_list)
+            self.transfer_field_data_to_model(self.case_information.custodial_supervision)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions, self.case_information.other_conditions.terms_list)
+            self.transfer_field_data_to_model(self.case_information.other_conditions)
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.vehicle_seizure, self.case_information.vehicle_seizure.terms_list)
+            self.transfer_field_data_to_model(self.case_information.vehicle_seizure)
 
     @logger.catch
     def modify_view(self):

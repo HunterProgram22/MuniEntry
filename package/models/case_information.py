@@ -58,6 +58,18 @@ class BondConditions:
     monitoring: bool = False
     monitoring_type: str = None
 
+    terms_list = [
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
+        ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
+        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("specialized_docket", "specialized_docket_checkBox"),
+        ("specialized_docket_type", "specialized_docket_type_box"),
+        ("monitoring", "monitoring_checkBox"),
+        ("monitoring_type", "monitoring_type_box"),
+    ]
+
 
 @dataclass
 class DomesticViolenceBondConditions:
