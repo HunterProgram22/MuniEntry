@@ -84,6 +84,7 @@ class BaseDialog(QDialog):
     def close_event(self):
         """Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
+        print(self.sender())
         self.close_window()
 
     def close_window(self):
@@ -388,7 +389,9 @@ class CMS_FRALoader(CMSLoader):
 
     def add_fra_data(self, dialog):
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
-        if self.cms_case.case_number[2:5] == "CRB":
+        if self.cms_case.case_number is None:
+            dialog.fra_in_file_box.setCurrentText("N/A")
+        elif self.cms_case.case_number[2:5] == "CRB":
             dialog.fra_in_file_box.setCurrentText("N/A")
         elif self.cms_case.fra_in_file in fra_value_dict:
             dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
