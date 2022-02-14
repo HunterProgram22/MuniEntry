@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1164</y>
+        <y>0</y>
         <width>1140</width>
         <height>2079</height>
        </rect>
@@ -1325,13 +1325,6 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="11" column="0">
-           <widget class="QCheckBox" name="companion_cases_checkBox">
-            <property name="text">
-             <string>Companion Cases (Check only if applicable)</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_10">
             <property name="text">
@@ -1473,13 +1466,20 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="10" column="0">
-           <widget class="QLabel" name="label_23">
+           <widget class="QLabel" name="consecutive_jail_days_label">
             <property name="text">
-             <string>Jail Term Days to be served:</string>
+             <string>Jail Days in this Case to be Served Concurrent / Consecutive w/ Companion Cases:</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="1">
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="companion_cases_checkBox">
+            <property name="text">
+             <string>Companion Cases (Check only if applicable)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
            <widget class="QLineEdit" name="companion_cases_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1697,7 +1697,7 @@ font-weight: bold;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,0,0,0,0,0">
           <item row="0" column="0" colspan="7">
            <widget class="QLabel" name="label_13">
             <property name="font">
@@ -1929,7 +1929,6 @@ font-weight: bold;</string>
   <tabstop>report_date_box</tabstop>
   <tabstop>jail_sentence_execution_type_box</tabstop>
   <tabstop>jail_term_type_box</tabstop>
-  <tabstop>companion_cases_box</tabstop>
   <tabstop>license_type_box</tabstop>
   <tabstop>license_suspension_date_box</tabstop>
   <tabstop>term_of_suspension_box</tabstop>

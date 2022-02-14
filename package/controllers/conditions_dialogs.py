@@ -121,6 +121,10 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
         ("pay_restitution_checkBox", "pay_restitution_to_box"),
         ("diversion_jail_imposed_checkBox", "diversion_jail_report_date_box"),
+        ("companion_cases_checkBox", "companion_cases_box"),
+        ("companion_cases_checkBox", "jail_term_type_box"),
+        ("companion_cases_checkBox", "consecutive_jail_days_label"),
+
     ]
 
     @logger.catch
@@ -137,6 +141,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         jail_report_days_to_add = set_future_date(90, None, 4)
         self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
         self.hide_boxes()
+        self.show_report_days_notes_box()
 
     @logger.catch
     def add_conditions(self):
@@ -171,7 +176,17 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
         self.report_type_box.currentTextChanged.connect(self.set_report_date)
+        self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
         self.diversion_jail_imposed_checkBox.toggled.connect(self.set_field_enabled)
+        self.companion_cases_checkBox.toggled.connect(self.set_field_enabled)
+
+    def show_report_days_notes_box(self):
+        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
+            self.jail_report_days_notes_box.setDisabled(True)
+            self.jail_report_days_notes_box.setHidden(True)
+        else:
+            self.jail_report_days_notes_box.setDisabled(False)
+            self.jail_report_days_notes_box.setHidden(False)
 
     def set_report_date(self):
         if self.report_type_box.currentText() == "date set by Office of Community Control":
