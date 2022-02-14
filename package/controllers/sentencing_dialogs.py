@@ -106,7 +106,10 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         total_fines = 0
         try:
             for _index, charge in enumerate(self.entry_case_information.charges_list):
-                local_charge_fines_amount = int(charge.fines_amount[2:])
+                try:
+                    local_charge_fines_amount = int(charge.fines_amount[2:])
+                except ValueError:
+                    local_charge_fines_amount = 0
                 if local_charge_fines_amount == '':
                     local_charge_fines_amount = 0
                 try:
@@ -116,7 +119,10 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             self.entry_case_information.total_fines = total_fines
             total_fines_suspended = 0
             for _index, charge in enumerate(self.entry_case_information.charges_list):
-                local_charge_fines_suspended = int(charge.fines_suspended[2:])
+                try:
+                    local_charge_fines_suspended = int(charge.fines_suspended[2:])
+                except ValueError:
+                    local_charge_fines_suspended = 0
                 if local_charge_fines_suspended == '':
                     local_charge_fines_suspended = 0
                 try:
