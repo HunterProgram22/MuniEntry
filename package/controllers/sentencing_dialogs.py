@@ -24,7 +24,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         set of empty conditions. TODO: FIX bug look at models."""
         for item in self.additional_conditions_list:
             setattr(item[1], "ordered", False)
-            print(item[1])
 
     @logger.catch
     def load_cms_data_to_view(self):
