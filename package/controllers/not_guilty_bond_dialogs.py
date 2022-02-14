@@ -28,6 +28,15 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
+        self.clear_old_conditions()  # This is to address the bug of old conditions sometimes showing up on later entries
+
+    def clear_old_conditions(self):
+        """This function exists only to set all additional conditions ordered to false to address a bug of data
+        being carried over to future entries. The solution is likely in the models and initing a model with a new
+        set of empty conditions. TODO: FIX bug look at models."""
+        for item in self.additional_conditions_list:
+            setattr(item[1], "ordered", False)
+            print(item[1])
 
     @logger.catch
     def add_charge_to_grid(self):

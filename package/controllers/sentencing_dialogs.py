@@ -17,6 +17,15 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
 
+
+    def clear_old_conditions(self):
+        """This function exists only to set all additional conditions ordered to false to address a bug of data
+        being carried over to future entries. The solution is likely in the models and initing a model with a new
+        set of empty conditions. TODO: FIX bug look at models."""
+        for item in self.additional_conditions_list:
+            setattr(item[1], "ordered", False)
+            print(item[1])
+
     @logger.catch
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
@@ -203,6 +212,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
+        self.clear_old_conditions()  # This is to address the bug of old conditions sometimes showing up on later entries
 
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
@@ -250,6 +260,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
         self.set_fines_credit_for_jail_field()
+        self.clear_old_conditions()  # This is to address the bug of old conditions sometimes showing up on later entries
 
     @logger.catch
     def connect_signals_to_slots(self):

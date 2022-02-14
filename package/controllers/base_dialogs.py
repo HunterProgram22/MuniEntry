@@ -63,8 +63,10 @@ class BaseDialog(QDialog):
         the view to create the UI."""
         super().__init__(parent)
         self.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
-        self.setWindowFlags(self.windowFlags() | QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint)
+        self.setWindowFlags(self.windowFlags() |
+                            QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint |
+                            QtCore.Qt.WindowCloseButtonHint)
         self.setupUi(self)
         self.case_table = case_table
         self.modify_view()
@@ -81,10 +83,17 @@ class BaseDialog(QDialog):
         specific to only a certain dialog are added in the subclassed version of the method."""
         self.cancel_Button.pressed.connect(self.close_event)
 
+    @logger.catch
     def close_event(self):
-        """Place any cleanup items (i.e. close_databases) here that should be
+        """This is a generic close event function tied to certain buttons. Used if you don't want to override the
+        base dialog. TODO: This should be refactored to a single closeEvent method."""
+        self.close_window()
+
+    @logger.catch
+    def closeEvent(self, event):
+        """This is the QDialog base version of the method that is being overriden here.
+        Place any cleanup items (i.e. close_databases) here that should be
         called when the entry is created and the dialog closed."""
-        print(self.sender())
         self.close_window()
 
     def close_window(self):

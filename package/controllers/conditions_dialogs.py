@@ -82,7 +82,7 @@ class ConditionsDialog(BaseDialog):
         if self.main_dialog.license_suspension_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.license_suspension)
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_condition)
+            self.transfer_field_data_to_model(self.case_information.other_conditions)
 
     @logger.catch
     def set_community_service_date(self, _index):
