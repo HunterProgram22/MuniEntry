@@ -24,7 +24,7 @@ from package.controllers.sentencing_dialogs import JailCCPleaDialog, NoJailPleaD
 from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from package.controllers.fta_bond_dialogs import FTABondDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from settings import ICON_PATH
+from settings import ICON_PATH, PATH, SAVE_PATH
 
 
 logger.add("./resources/logs/Error_log_{time}.log")
@@ -187,6 +187,8 @@ def main():
     daily_case_list_database = open_daily_case_list_db_connection()
     win = Window(daily_case_list_database)
     win.show()
+    # print(PATH)
+    # print(SAVE_PATH)
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
 
