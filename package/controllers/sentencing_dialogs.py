@@ -89,23 +89,10 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
         TODO: This needs to be refactored and fixed - code in the AddPlea functions for each dialog have code
         that exists just to deal with this function setting the charge fines/fines_suspended to 0."""
-        self.entry_case_information.court_costs.amount = 0
-        if self.court_costs_box.currentText() == "Yes":
-            for _index, charge in enumerate(self.entry_case_information.charges_list):
-                if self.entry_case_information.court_costs.amount == 124:
-                    break
-                if charge.type == "Moving":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 124)
-                elif charge.type == "Criminal":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 114)
-                elif charge.type == "Non-moving":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 95)
+        self.entry_case_information.court_costs.amount = self.calculate_court_costs()
         total_fines = 0
         try:
-            for _index, charge in enumerate(self.entry_case_information.charges_list):
+            for charge in self.entry_case_information.charges_list:
                 try:
                     local_charge_fines_amount = int(charge.fines_amount[2:])
                 except ValueError:
@@ -132,6 +119,23 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             self.entry_case_information.total_fines_suspended = total_fines_suspended
         except TypeError:
             print("A type error was allowed to pass - this is because of deleted charge.")
+
+    def calculate_court_costs(self):
+        self.entry_case_information.court_costs.amount = 0
+        if self.court_costs_box.currentText() == "Yes":
+            for charge in self.entry_case_information.charges_list:
+                if self.entry_case_information.court_costs.amount == 124:
+                    break
+                if charge.type == "Moving":
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 124)
+                elif charge.type == "Criminal":
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 114)
+                elif charge.type == "Non-moving":
+                    self.entry_case_information.court_costs.amount = max(
+                        self.entry_case_information.court_costs.amount, 95)
+        return self.entry_case_information.court_costs.amount
 
     @logger.catch
     def show_costs_and_fines(self, _bool):
@@ -250,7 +254,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
         self.set_fines_credit_for_jail_field()
-       
+
     @logger.catch
     def connect_signals_to_slots(self):
         """The method connects additional signals to slots. That are not
