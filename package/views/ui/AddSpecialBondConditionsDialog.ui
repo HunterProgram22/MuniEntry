@@ -170,12 +170,337 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
+           <y>-111</y>
            <width>1152</width>
-           <height>940</height>
+           <height>951</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
+          <item row="6" column="1" rowspan="2">
+           <widget class="QFrame" name="frame_7">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(230, 230, 230);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="1" column="0">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="add_special_conditions_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(62, 146, 255)</string>
+               </property>
+               <property name="text">
+                <string>Add Special Bond Conditions</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="5" column="0" colspan="2">
+           <widget class="QFrame" name="vehicle_seizure_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(230, 230, 230);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_8">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Vehicle Year/Make/Model:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="3">
+              <widget class="QLineEdit" name="vehicle_make_model_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4" colspan="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>License Plate Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="6" colspan="2">
+              <widget class="QLineEdit" name="vehicle_license_plate_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0" colspan="4">
+              <widget class="QCheckBox" name="tow_to_residence_checkBox">
+               <property name="text">
+                <string>Permit Tow and Immobilization at Defendant's Residence</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="2">
+              <widget class="QCheckBox" name="motion_to_return_vehicle_checkBox">
+               <property name="text">
+                <string>Motion for return of vehicle Filed.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>The State:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3" colspan="2">
+              <widget class="QComboBox" name="state_opposes_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>objects</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>does not object</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="5" colspan="2">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Motion to Return Disposition:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="7">
+              <widget class="QComboBox" name="disposition_motion_to_return_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Denied</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Granted</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="8">
+              <widget class="QLabel" name="label_27">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Vehicle Seizure / Immobilization</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QFrame" name="no_contact_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(230, 230, 230);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,2">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>No Contact with the Following:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="no_contact_name_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_25">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>No Contact Restrictions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QFrame" name="domestic_violence_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(230, 230, 230);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_2">
+             <item row="0" column="0" colspan="5">
+              <widget class="QLabel" name="label_26">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Domestic Violence Restrictions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Exclusive possesion to:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1" colspan="2">
+              <widget class="QLineEdit" name="domestic_violence_exclusive_possession_to_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QCheckBox" name="domestic_violence_surrender_weapons_checkBox">
+               <property name="text">
+                <string>Surrender deadly weapons no later than:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QDateEdit" name="domestic_violence_surrender_weapons_dateBox">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="domestic_violence_vacate_checkBox">
+               <property name="text">
+                <string>Vacate Residence located at:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="4">
+              <widget class="QLineEdit" name="domestic_violence_residence_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QFrame" name="banner_frame">
             <property name="font">
@@ -354,291 +679,7 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="domestic_violence_frame">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(230, 230, 230);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0" colspan="5">
-              <widget class="QLabel" name="label_26">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Domestic Violence Restrictions</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Exclusive possesion to:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1" colspan="2">
-              <widget class="QLineEdit" name="domestic_violence_exclusive_possession_to_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QCheckBox" name="domestic_violence_surrender_weapons_checkBox">
-               <property name="text">
-                <string>Surrender deadly weapons no later than:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QDateEdit" name="domestic_violence_surrender_weapons_dateBox">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="domestic_violence_vacate_checkBox">
-               <property name="text">
-                <string>Vacate Residence located at:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1" colspan="4">
-              <widget class="QLineEdit" name="domestic_violence_residence_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="3" column="0" colspan="2">
-           <widget class="QFrame" name="no_contact_frame">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(230, 230, 230);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_6" columnstretch="1,2">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="text">
-                <string>No Contact with the Following:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="no_contact_name_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_25">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>No Contact Restrictions</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QFrame" name="vehicle_seizure_frame">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(230, 230, 230);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Vehicle Year/Make/Model:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1" colspan="3">
-              <widget class="QLineEdit" name="vehicle_make_model_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4" colspan="2">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>License Plate Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="6" colspan="2">
-              <widget class="QLineEdit" name="vehicle_license_plate_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0" colspan="4">
-              <widget class="QCheckBox" name="tow_to_residence_checkBox">
-               <property name="text">
-                <string>Permit Tow and Immobilization at Defendant's Residence</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QCheckBox" name="motion_to_return_vehicle_checkBox">
-               <property name="text">
-                <string>Motion for return of vehicle Filed.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>The State:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="3" colspan="2">
-              <widget class="QComboBox" name="state_opposes_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>objects</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>does not object</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="3" column="5" colspan="2">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Motion to Return Disposition:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="7">
-              <widget class="QComboBox" name="disposition_motion_to_return_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Denied</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Granted</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="8">
-              <widget class="QLabel" name="label_27">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Vehicle Seizure / Immobilization</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="5" column="0">
            <widget class="QFrame" name="other_conditions_frame">
             <property name="enabled">
              <bool>false</bool>
@@ -652,7 +693,7 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0">
+            <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1">
              <item row="0" column="0">
               <widget class="QLabel" name="label_28">
                <property name="font">
@@ -679,48 +720,7 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="5" column="1" rowspan="2">
-           <widget class="QFrame" name="frame_7">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(230, 230, 230);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="0" column="0">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="add_special_conditions_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(62, 146, 255)</string>
-               </property>
-               <property name="text">
-                <string>Add Special Bond Conditions</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="6" column="0">
+          <item row="6" column="0" rowspan="2">
            <widget class="QFrame" name="custodial_supervision_frame">
             <property name="enabled">
              <bool>false</bool>
@@ -804,7 +804,6 @@ font-weight: bold;</string>
   <tabstop>state_opposes_box</tabstop>
   <tabstop>disposition_motion_to_return_box</tabstop>
   <tabstop>custodial_supervision_supervisor_box</tabstop>
-  <tabstop>add_special_conditions_Button</tabstop>
   <tabstop>scrollArea</tabstop>
  </tabstops>
  <resources/>
