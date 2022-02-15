@@ -261,7 +261,7 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.tabWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 860, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 860, 27))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -309,7 +309,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.10.0"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.10.1"))
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
         self.arraignments_radioButton.setText(_translate("MainWindow", "Arraignments"))
         self.label.setText(_translate("MainWindow", "JUDICIAL OFFICER:"))
