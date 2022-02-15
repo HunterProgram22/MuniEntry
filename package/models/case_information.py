@@ -353,7 +353,7 @@ class CriminalCaseInformation:
     plea_trial_date: str = None
     appearance_reason: str = None
     sentencing_date: str = None
-    defendant: object = Defendant()
+    defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None
     defense_counsel_type: str = None
     defense_counsel_waived: bool = False
@@ -367,21 +367,21 @@ class CriminalCaseInformation:
     amend_offense_details: object = None
     total_fines: int = 0
     total_fines_suspended: int = 0
-    court_costs: object = CourtCosts()
-    diversion: object = Diversion()
-    community_control: object = CommunityControl()
-    jail_terms: object = JailTerms()
-    no_contact: object = NoContact()
-    custodial_supervision: object = CustodialSupervision()
-    bond_conditions: object = BondConditions()
-    community_service: object = CommunityService()
-    license_suspension: object = LicenseSuspension()
-    other_conditions: object = OtherConditions()
-    domestic_violence_conditions: object = DomesticViolenceBondConditions()
-    admin_license_suspension: object = AdminLicenseSuspensionConditions()
-    vehicle_seizure: object = VehicleSeizure()
-    victim_notification: object = VictimNotification()
-    impoundment: object = Impoundment()
+    court_costs: object = field(default_factory=CourtCosts)
+    diversion: object = field(default_factory=Diversion)
+    community_control: object = field(default_factory=CommunityControl)
+    jail_terms: object = field(default_factory=JailTerms)
+    no_contact: object = field(default_factory=NoContact)
+    custodial_supervision: object = field(default_factory=CustodialSupervision)
+    bond_conditions: object = field(default_factory=BondConditions)
+    community_service: object = field(default_factory=CommunityService)
+    license_suspension: object = field(default_factory=LicenseSuspension)
+    other_conditions: object = field(default_factory=OtherConditions)
+    domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
+    admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
+    vehicle_seizure: object = field(default_factory=VehicleSeizure)
+    victim_notification: object = field(default_factory=VictimNotification)
+    impoundment: object = field(default_factory=Impoundment)
 
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
