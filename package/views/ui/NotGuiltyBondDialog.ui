@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>855</height>
+    <width>988</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1064</width>
-           <height>811</height>
+           <width>931</width>
+           <height>727</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,2,0,1,1">
@@ -821,6 +821,13 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
+               <property name="text">
+                <string> Obtain alcohol/drug assessment. </string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="2">
               <widget class="QComboBox" name="monitoring_type_box">
                <property name="enabled">
@@ -866,17 +873,30 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
-               <property name="text">
-                <string> Obtain alcohol/drug assessment. </string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="QCheckBox" name="specialized_docket_checkBox">
                <property name="text">
                 <string>Screen for Specialized Dockets:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Bond Conditions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -905,26 +925,6 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_7">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Bond Conditions</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
              <item row="3" column="1">
               <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
                <property name="text">
@@ -943,6 +943,13 @@ font-weight: bold;</string>
               <widget class="QCheckBox" name="mental_health_assessment_checkBox">
                <property name="text">
                 <string> Obtain mental health assessment.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="comply_protection_order_checkBox">
+               <property name="text">
+                <string> Comply with Terms of Protection Order</string>
                </property>
               </widget>
              </item>

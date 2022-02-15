@@ -58,6 +58,7 @@ class BondConditions:
     specialized_docket_type: str = None
     monitoring: bool = False
     monitoring_type: str = None
+    comply_protection_order: bool = False
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
@@ -69,6 +70,7 @@ class BondConditions:
         ("specialized_docket_type", "specialized_docket_type_box"),
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
     ]
 
 
