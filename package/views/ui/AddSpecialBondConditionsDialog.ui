@@ -170,53 +170,12 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-302</y>
+           <y>-325</y>
            <width>942</width>
-           <height>990</height>
+           <height>1030</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
-          <item row="8" column="1" rowspan="2">
-           <widget class="QFrame" name="frame_7">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(230, 230, 230);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="1" column="0">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="add_special_conditions_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(62, 146, 255)</string>
-               </property>
-               <property name="text">
-                <string>Add Special Bond Conditions</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
           <item row="5" column="0" colspan="2">
            <widget class="QFrame" name="vehicle_seizure_frame">
             <property name="enabled">
@@ -679,13 +638,10 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="QFrame" name="other_conditions_frame">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
+          <item row="9" column="0" rowspan="2" colspan="2">
+           <widget class="QFrame" name="frame_7">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
+             <string notr="true">background-color: rgb(230, 230, 230);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -693,29 +649,48 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1">
+            <layout class="QGridLayout" name="gridLayout_10" rowstretch="1,0,1">
+             <property name="verticalSpacing">
+              <number>3</number>
+             </property>
              <item row="0" column="0">
-              <widget class="QLabel" name="label_28">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
+              <widget class="QPushButton" name="add_special_conditions_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(62, 146, 255)</string>
                </property>
                <property name="text">
-                <string>Other Conditions</string>
+                <string>Add Special Bond Conditions</string>
                </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
                </property>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QTextEdit" name="other_conditions_textEdit"/>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -784,6 +759,47 @@ font-weight: bold;</string>
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="8" column="0" colspan="2">
+           <widget class="QFrame" name="other_conditions_frame">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_28">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Other Conditions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QTextEdit" name="other_conditions_textEdit"/>
              </item>
             </layout>
            </widget>
