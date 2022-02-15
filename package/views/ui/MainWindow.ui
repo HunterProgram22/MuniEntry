@@ -169,7 +169,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(85, 170, 127);</string>
           </property>
           <property name="text">
-           <string>No Jail Plea</string>
+           <string>Fines Only Plea</string>
           </property>
          </widget>
         </item>
@@ -555,7 +555,7 @@ font-weight: bold;</string>
      <x>0</x>
      <y>0</y>
      <width>860</width>
-     <height>27</height>
+     <height>29</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -645,7 +645,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

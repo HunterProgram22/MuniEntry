@@ -12,6 +12,11 @@ from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialo
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NotGuiltyBondDialog (view)."""
+    condition_checkbox_list = [
+        ("monitoring_checkBox", "monitoring_type_box"),
+        ("specialized_docket_checkBox", "specialized_docket_type_box"),
+    ]
+
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
@@ -28,6 +33,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
+        self.hide_boxes()
 
     @logger.catch
     def add_charge_to_grid(self):
@@ -44,6 +50,29 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
 
+    def hide_boxes(self):
+        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
+        for item in NotGuiltyBondDialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                getattr(self, condition_field).setEnabled(False)
+                getattr(self, condition_field).setHidden(True)
+
+    def set_field_enabled(self):
+        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
+        any additional fields that are required for that condition."""
+        for item in NotGuiltyBondDialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                if getattr(self, condition_checkbox).isChecked():
+                    getattr(self, condition_field).setEnabled(True)
+                    getattr(self, condition_field).setHidden(False)
+                    getattr(self, condition_field).setFocus(True)
+                else:
+                    getattr(self, condition_field).setEnabled(False)
+                    getattr(self, condition_field).setHidden(True)
+
+
     @logger.catch
     def connect_signals_to_slots(self):
         """The method connects additional signals to slots. That are not
@@ -57,6 +86,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.custodial_supervision_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.vehicle_seizure_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.monitoring_checkBox.toggled.connect(self.set_field_enabled)
+        self.specialized_docket_checkBox.toggled.connect(self.set_field_enabled)
 
 
     @logger.catch

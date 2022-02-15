@@ -811,20 +811,13 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
-               <property name="text">
-                <string> Alcohol Kiosk testing.</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QCheckBox" name="monitoring_checkBox">
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Monitoring:</string>
+                <string>Monitoring (GPS/Scram/Smart Start):</string>
                </property>
               </widget>
              </item>
@@ -838,12 +831,12 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>GPS Only</string>
+                 <string>SCRAM Only</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>SCRAM Only</string>
+                 <string>GPS Only</string>
                 </property>
                </item>
                <item>
@@ -883,7 +876,7 @@ font-weight: bold;</string>
              <item row="2" column="1">
               <widget class="QCheckBox" name="specialized_docket_checkBox">
                <property name="text">
-                <string>Screen for:</string>
+                <string>Screen for Specialized Dockets:</string>
                </property>
               </widget>
              </item>
@@ -912,13 +905,6 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
-               <property name="text">
-                <string> No alcohol/drugs of abuse.</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0" colspan="3">
               <widget class="QLabel" name="label_7">
                <property name="font">
@@ -936,6 +922,27 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
+               <property name="text">
+                <string> Alcohol Kiosk testing.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
+               <property name="text">
+                <string> No alcohol/drugs of abuse.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="mental_health_assessment_checkBox">
+               <property name="text">
+                <string> Obtain mental health assessment.</string>
                </property>
               </widget>
              </item>
@@ -960,9 +967,7 @@ font-weight: bold;</string>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>bond_type_box</tabstop>
   <tabstop>bond_amount_box</tabstop>
-  <tabstop>alcohol_test_kiosk_checkBox</tabstop>
   <tabstop>alcohol_drugs_assessment_checkBox</tabstop>
-  <tabstop>no_alcohol_drugs_checkBox</tabstop>
   <tabstop>monitoring_checkBox</tabstop>
   <tabstop>monitoring_type_box</tabstop>
   <tabstop>specialized_docket_checkBox</tabstop>
