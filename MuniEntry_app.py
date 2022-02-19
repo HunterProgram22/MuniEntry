@@ -62,7 +62,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.JailCCButton: JailCCPleaDialog,
             self.LeapPleaLongButton: LeapPleaLongDialog,
             self.LeapPleaShortButton: LeapPleaShortDialog,
-            self.FTABondButton: FTABondDialog,
+            # self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
         self.daily_case_list_database = daily_case_list_database
@@ -160,7 +160,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 selected_case_list = database_table_dict.get(case_table)
                 if selected_case_list.currentText() == "":
                     self.case_to_load = CriminalCaseInformation()
-                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load)
+                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, case_table)
                     dialog.exec()
                 else:
                     """The case_number splits the selected case to extract the case number, then
