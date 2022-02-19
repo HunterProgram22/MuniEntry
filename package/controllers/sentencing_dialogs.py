@@ -221,8 +221,10 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
+        self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
         self.entry_case_information.apply_jtc = self.jail_time_credit_apply_box.currentText()
+        print(self.entry_case_information.currently_in_jail)
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
