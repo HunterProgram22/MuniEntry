@@ -6,13 +6,13 @@ The main application entry point.
 import multiprocessing
 import sys
 
+from loguru import logger
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtSql import QSqlDatabase
-from loguru import logger
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 from PyQt5.QtCore import QTimer
-from main_window import Window
 
+from main_window import Window
 from db.databases import open_daily_case_list_db_connection
 from settings import ICON_PATH
 
