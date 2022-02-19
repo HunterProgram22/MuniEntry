@@ -2,8 +2,6 @@
 Copyright 2021 Justin Kudela
 
 The main application entry point.
-
-The main window contains options for selecting the judicial officer and templates.
 """
 import multiprocessing
 import sys
@@ -31,8 +29,6 @@ def main():
     daily_case_list_database = open_daily_case_list_db_connection()
     win = Window(daily_case_list_database)
     win.show()
-    # print(PATH)
-    # print(SAVE_PATH)
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
 
