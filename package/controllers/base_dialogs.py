@@ -178,12 +178,10 @@ class CriminalBaseDialog(BaseDialog):
             self.defense_counsel_name_box.setEnabled(True)
             self.defense_counsel_type_box.setEnabled(True)
 
-    # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
     def load_cms_data_to_view(self):
         return CMSLoader(self)
 
-    # Criminal DialogCleanUp Functions
     def close_event(self):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
@@ -197,14 +195,12 @@ class CriminalBaseDialog(BaseDialog):
         CriminalCaseInformation model which is passed as self.entry_case_information."""
         return CasePartyUpdater(self)
 
-    # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
         """This method is never used directly. AddPlea is a pass-through for this case dialog. In the specific dialogs
         it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
         return AddPlea(self)
 
-    # Setter Functions
     def set_plea_and_findings_process(self):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
@@ -226,7 +222,6 @@ class CriminalBaseDialog(BaseDialog):
                 query.finish()
                 return offense_type
 
-    # Move to Charges Grid Widget Class (?)
     @logger.catch
     def delete_charge(self):
         """Deletes the offense from the entry_case_information.charges list. Then
