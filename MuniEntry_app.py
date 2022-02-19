@@ -165,7 +165,9 @@ class Window(QMainWindow, Ui_MainWindow):
                 else:
                     """The case_number splits the selected case to extract the case number, then
                     it takes the returned list and puts the case number (index 1 of the case number list)
-                    into the CriminalCaseSqlRetriever."""
+                    into the CriminalCaseSqlRetriever.
+                    TODO: Use regex to identify case number instead of splitting on hyphen to avoid potential bug
+                    with hyphenated names. Hyphenated names should still pass so long as not space after hyphen in name."""
                     case_number = selected_case_list.currentText().split("- ")
                     self.case_to_load = \
                         CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()

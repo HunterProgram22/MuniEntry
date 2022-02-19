@@ -207,6 +207,8 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
+        if self.case_table == 'slated':
+            self.in_jail_box.setCurrentText('Yes')
 
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
@@ -224,7 +226,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
         self.entry_case_information.apply_jtc = self.jail_time_credit_apply_box.currentText()
-        print(self.entry_case_information.currently_in_jail)
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
