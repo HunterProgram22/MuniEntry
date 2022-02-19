@@ -1,37 +1,45 @@
+from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
+
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
-from loguru import logger
+from package.controllers.check_decorators import check_judicial_officer, check_case_list_selected
 from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
-from package.views.custom_widgets import ExtendedComboBox, RequiredBox
+from package.views.custom_widgets import ExtendedComboBox
 from package.views.main_window_ui import Ui_MainWindow
 from settings import ICON_PATH
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    """:judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
-    officer is added to the view then add new judicial officer to dict (key:
-    self.lastname_radioButton, value: "Lastname").The button will be connected to the slot for
-    self.judicial_officer by the function connect_judicial_officer_buttons.
-
-    :dialog_dict: - If a new entry button is added to the view then a new
-    key:value pair needs to be added to dialog_dict (key: buttonName, value:
-    dialogObject)."""
-
     def __init__(self, daily_case_list_database, parent=None):
         super().__init__(parent)
+        self.daily_case_list_database = daily_case_list_database
         self.setupUi(self)  # The self argument that is called is MainWindow
-        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
+        self.create_main_window_dicts()
+        self.set_daily_case_lists_type()
         self.connect_signals_to_slots()
-        self.arraignment_cases_box.__class__ = ExtendedComboBox
-        self.slated_cases_box.__class__ = ExtendedComboBox
-        self.final_pretrial_cases_box.__class__ = ExtendedComboBox
+        self.load_case_lists()
         self.judicial_officer = None
         self.case_to_load = None
+
+    def create_main_window_dicts(self):
+        """
+        Dictionaries linking buttons on MainWindow to different objects.
+
+        :judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
+        officer is added to the view then add new judicial officer to dict (key:
+        self.lastname_radioButton, value: "Lastname").The button will be connected to the slot for
+        self.judicial_officer by the function connect_judicial_officer_buttons.
+
+        :dialog_dict: - If a new entry button is added to the view then a new
+        key:value pair needs to be added to dialog_dict (key: buttonName, value:
+        dialogObject).
+        """
         self.judicial_officer_dict = {
             self.bunner_radioButton: JudicialOfficer("Amanda", "Bunner", "Magistrate"),
             self.pelanda_radioButton: JudicialOfficer("Kevin", "Pelanda", "Magistrate"),
@@ -47,24 +55,37 @@ class Window(QMainWindow, Ui_MainWindow):
             # self.FTABondButton: FTABondDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
-        self.daily_case_list_database = daily_case_list_database
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",
             self.slated_radioButton: "slated",
             self.final_pretrial_radioButton:"final_pretrials",
         }
-        self.connect_daily_case_list_buttons()
-        self.load_judicial_officers()
-        self.connect_entry_buttons()
-        self.load_case_lists()
+        self.database_table_dict = {
+            "arraignments": self.arraignment_cases_box,
+            "slated": self.slated_cases_box,
+            "final_pretrials": self.final_pretrial_cases_box,
+        }
+
+    def set_daily_case_lists_type(self):
+        """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox class allows
+        for auto-completion filtering when typing in the box."""
+        self.arraignment_cases_box.__class__ = ExtendedComboBox
+        self.slated_cases_box.__class__ = ExtendedComboBox
+        self.final_pretrial_cases_box.__class__ = ExtendedComboBox
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
-        self.arraignments_radioButton.toggled.connect(lambda: self.btnstate(self.arraignments_radioButton))
-        self.slated_radioButton.toggled.connect(lambda: self.btnstate(self.slated_radioButton))
-        self.final_pretrial_radioButton.toggled.connect(lambda: self.btnstate(self.final_pretrial_radioButton))
+        self.arraignments_radioButton.toggled.connect(lambda: self.button_state(self.arraignments_radioButton))
+        self.slated_radioButton.toggled.connect(lambda: self.button_state(self.slated_radioButton))
+        self.final_pretrial_radioButton.toggled.connect(lambda: self.button_state(self.final_pretrial_radioButton))
+        for key in self.daily_case_list_buttons:
+            key.clicked.connect(self.set_case_list_table)
+        for key in self.dialog_dict:
+            key.pressed.connect(self.start_dialog_from_entry_button)
+        for key in self.judicial_officer_dict:
+            key.clicked.connect(self.set_judicial_officer)
 
-    def btnstate(self, button):
+    def button_state(self, button):
         if button.text() == "Arraignments":
             if button.isChecked():
                 self.arraignment_cases_box.setEnabled(True)
@@ -90,32 +111,14 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.final_pretrial_cases_box.setEnabled(True)
                 self.final_pretrial_cases_box.setFocus()
 
-    def load_judicial_officers(self):
-        """Loads judicial officers and connects the radio button for each judicial officer to the
-        radio button so that if it is selected when an entry dialog button is pressed to load the
-        dialog, then the judicial officer that is selected will be passed to the dialog."""
-        for key in self.judicial_officer_dict:
-            key.clicked.connect(self.set_judicial_officer)
-
     def set_judicial_officer(self):
-        """Checks the judicial officer radio buttons and then sets the judicial officer."""
+        """Checks the judicial officer radio buttons and then sets the judicial officer to the one that is checked."""
         for key, value in self.judicial_officer_dict.items():
             if key.isChecked():
                 self.judicial_officer = value
 
-    def connect_daily_case_list_buttons(self):
-        for key in self.daily_case_list_buttons:
-            key.clicked.connect(self.set_case_list_table)
-
     def set_case_list_table(self):
-        for button, table in self.daily_case_list_buttons.items():
-            if button.isChecked():
-                return table
-
-    def connect_entry_buttons(self):
-        """Connects the starting dialog that will be launched upon button press."""
-        for key in self.dialog_dict:
-            key.pressed.connect(self.start_dialog_from_entry_button)
+        self.case_table = self.daily_case_list_buttons.get(self.sender())
 
     def load_case_lists(self):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
@@ -125,37 +128,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.final_pretrial_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","final_pretrials"))
 
     @logger.catch
+    @check_judicial_officer
+    @check_case_list_selected
     def start_dialog_from_entry_button(self):
-        """ Launches the dialog that is connected to each button."""
-        if self.judicial_officer is None:
-            message = RequiredBox("You must select a judicial officer.")
-            message.exec()
+        self.daily_case_list_database.open()
+        selected_case_list = self.database_table_dict.get(self.case_table)
+        if selected_case_list.currentText() == "":
+            self.case_to_load = CriminalCaseInformation()
         else:
-            database_table_dict = {
-                "arraignments": self.arraignment_cases_box,
-                "slated": self.slated_cases_box,
-                "final_pretrials": self.final_pretrial_cases_box,
-            }
-            if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
-                self.daily_case_list_database.open()
-                case_table = self.set_case_list_table() # Set based on the radio button that is checked for the arr/slate/final
-                selected_case_list = database_table_dict.get(case_table)
-                if selected_case_list.currentText() == "":
-                    self.case_to_load = CriminalCaseInformation()
-                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, case_table)
-                    dialog.exec()
-                else:
-                    """The case_number splits the selected case to extract the case number, then
-                    it takes the returned list and puts the case number (index 1 of the case number list)
-                    into the CriminalCaseSqlRetriever.
-                    TODO: Use regex to identify case number instead of splitting on hyphen to avoid potential bug
-                    with hyphenated names. Hyphenated names should still pass so long as not space after hyphen in name."""
-                    case_number = selected_case_list.currentText().split("- ")
-                    self.case_to_load = \
-                        CriminalCaseSQLRetriever(case_number[1], case_table, self.daily_case_list_database).load_case()
-                    dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, case_table)
-                    dialog.exec()
-            else:
-                message = RequiredBox("You must select a case list to load. If loading a "
-                                      "blank template choose any case list and leave dropdown menu blank.")
-                message.exec()
+            case_number = selected_case_list.currentText().split("- ")[1]
+            self.case_to_load = \
+                CriminalCaseSQLRetriever(case_number, self.case_table, self.daily_case_list_database).load_case()
+        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, self.case_table)
+        dialog.exec()
