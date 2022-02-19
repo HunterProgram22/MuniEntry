@@ -442,6 +442,8 @@ class CriminalSlotFunctions:
             return "Fail"
         if InfoChecker.check_insurance(dialog) == "Fail":
             return "Fail"
+        if InfoChecker.check_bond_amount(dialog) == "Fail":
+            return "Fail"
         dialog.update_case_information()
         return "Pass"
 

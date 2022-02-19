@@ -112,3 +112,24 @@ class InfoChecker(object):
                 return "Pass"
         else:
             return "Pass"
+
+    @classmethod
+    def check_bond_amount(cls, dialog):
+        if(
+            hasattr(dialog, 'bond_type_box')
+            and dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
+            and dialog.bond_amount_box.currentText() == 'None (OR Bond)'
+        ):
+            message = RequiredBox("A bond type requiring a bond amount was selected, but a bond amount was not selected. Please specify the bond amount.")
+            message.exec()
+            return "Fail"
+        if (
+                hasattr(dialog, 'bond_type_box')
+                and dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
+                and dialog.bond_amount_box.currentText() != 'None (OR Bond)'
+        ):
+            message = RequiredBox(
+                "A Recognizance (OR) Bond was selected but a bond amount other than None(OR Bond) "
+                "was chosen. Please either change bond type to 10% or Cash or Surety, or set bond amount to None (OR Bond).")
+            message.exec()
+            return "Fail"

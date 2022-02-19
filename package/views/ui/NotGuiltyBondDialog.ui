@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>931</width>
-           <height>727</height>
+           <width>929</width>
+           <height>802</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,2,0,1,1">
@@ -732,6 +732,11 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
+                 <string>$1,000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>$1,500</string>
                 </property>
                </item>
@@ -784,7 +789,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string> Bond</string>
+                 <string> Cash or Surety Bond</string>
                 </property>
                </item>
               </widget>
