@@ -273,6 +273,7 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     def __init__(self, main_dialog, case_information, parent=None):
         self.main_dialog = main_dialog
         self.case_information = case_information
+        charges_database.open()
         super().__init__(parent)
         self.set_case_information_banner()
         self.set_statute_and_offense_choice_boxes()
