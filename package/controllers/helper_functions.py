@@ -135,7 +135,7 @@ class InfoChecker(object):
             return "Fail"
 
     @classmethod
-    def check_license_suspension(cls, dialog):
+    def check_additional_conditions_ordered(cls, dialog):
         conditions_list = [
             (dialog.entry_case_information.license_suspension.ordered, dialog.entry_case_information.license_suspension.license_type),
             (dialog.entry_case_information.community_service.ordered, dialog.entry_case_information.community_service.hours_of_service),

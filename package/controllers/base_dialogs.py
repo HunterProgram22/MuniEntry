@@ -446,7 +446,7 @@ class CriminalSlotFunctions:
             return "Fail"
         if InfoChecker.check_bond_amount(dialog) == "Fail":
             return "Fail"
-        if InfoChecker.check_license_suspension(dialog) == "Fail":
+        if InfoChecker.check_additional_conditions_ordered(dialog) == "Fail":
             return "Fail"
         dialog.update_case_information()
         return "Pass"
