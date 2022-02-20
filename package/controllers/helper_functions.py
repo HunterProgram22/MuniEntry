@@ -136,15 +136,19 @@ class InfoChecker(object):
 
     @classmethod
     def check_license_suspension(cls, dialog):
-        if (
-            dialog.entry_case_information.license_suspension.ordered is True
-            and dialog.entry_case_information.license_suspension.license_type is None
-        ):
-            message = RequiredBox("The Additional Condition License Suspension is checked, but "
-                                  "the details of the license suspension have not been entered. "
-                                  "Click the Add Conditions button to add details, or uncheck the "
-                                  "License Suspension box if there is no License Suspension in this case.")
-            message.exec()
-            return "Fail"
-        else:
-            return "Pass"
+        conditions_list = [
+            (dialog.entry_case_information.license_suspension.ordered, dialog.entry_case_information.license_suspension.license_type),
+            (dialog.entry_case_information.community_service.ordered, dialog.entry_case_information.community_service.hours_of_service),
+        ]
+        for condition in conditions_list:
+            if (
+                condition[0] is True
+                and condition[1] is None
+            ):
+                message = RequiredBox("The Additional Condition License Suspension is checked, but "
+                                      "the details of the license suspension have not been entered. "
+                                      "Click the Add Conditions button to add details, or uncheck the "
+                                      "License Suspension box if there is no License Suspension in this case.")
+                message.exec()
+                return "Fail"
+        return "Pass"
