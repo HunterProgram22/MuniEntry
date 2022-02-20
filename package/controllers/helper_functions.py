@@ -143,6 +143,9 @@ class InfoChecker(object):
             (dialog.entry_case_information.community_service.ordered,
              dialog.entry_case_information.community_service.hours_of_service,
              "Community Service"),
+            (dialog.entry_case_information.other_conditions.ordered,
+             dialog.entry_case_information.other_conditions.terms,
+             "Other Conditions"),
         ]
         for condition_item in conditions_list:
             (condition_ordered, main_condition_set, description) = condition_item
