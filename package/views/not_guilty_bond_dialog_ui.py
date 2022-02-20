@@ -515,7 +515,7 @@ class Ui_NotGuiltyBondDialog(object):
         self.bond_amount_box.setItemText(8, _translate("NotGuiltyBondDialog", "$10,000"))
         self.bond_type_box.setItemText(0, _translate("NotGuiltyBondDialog", "Recognizance (OR) Bond"))
         self.bond_type_box.setItemText(1, _translate("NotGuiltyBondDialog", "10% Deposit, Cash or Surety Bond"))
-        self.bond_type_box.setItemText(2, _translate("NotGuiltyBondDialog", " Cash or Surety Bond"))
+        self.bond_type_box.setItemText(2, _translate("NotGuiltyBondDialog", "Cash or Surety Bond"))
         self.label_9.setText(_translate("NotGuiltyBondDialog", "Bond Amount:"))
         self.monitoring_checkBox.setText(_translate("NotGuiltyBondDialog", "Monitoring (GPS/Scram/Smart Start):"))
         self.alcohol_drugs_assessment_checkBox.setText(_translate("NotGuiltyBondDialog", " Obtain alcohol/drug assessment. "))
