@@ -131,8 +131,8 @@ class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific cms_case."""
     ordered: bool = False
-    hours_of_service: int = 0
-    days_to_complete_service: int = 0
+    hours_of_service: str = None
+    days_to_complete_service: str = None
     due_date_for_service: str = None
     terms_list = [
         ("hours_of_service", "community_service_hours_ordered_box"),
