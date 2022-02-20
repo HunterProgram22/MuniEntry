@@ -146,6 +146,18 @@ class InfoChecker(object):
             (dialog.entry_case_information.other_conditions.ordered,
              dialog.entry_case_information.other_conditions.terms,
              "Other Conditions"),
+            (dialog.entry_case_information.community_control.ordered,
+             dialog.entry_case_information.community_control.term_of_control,
+             "Community Control"),
+            (dialog.entry_case_information.impoundment.ordered,
+             dialog.entry_case_information.impoundment.vehicle_make_model,
+             "Immobilize/Impound"),
+            (dialog.entry_case_information.diversion.ordered,
+             dialog.entry_case_information.diversion.program_name,
+             "Diversion"),
+            (dialog.entry_case_information.jail_terms.ordered,
+             dialog.entry_case_information.jail_terms.report_type,
+             "Jail Commitment"),
         ]
         for condition_item in conditions_list:
             (condition_ordered, main_condition_set, description) = condition_item
@@ -155,6 +167,25 @@ class InfoChecker(object):
             ):
                 message = RequiredBox(f"The Additional Condition {description} is checked, but "
                                       f"the details of the {description} have not been entered. "
+                                      f"Click the Add Conditions button to add details, or uncheck the "
+                                      f"{description} box if there is no {description} in this case.")
+                message.exec()
+                return "Fail"
+        bool_conditions_list = [
+            (dialog.entry_case_information.victim_notification.ordered,
+             dialog.entry_case_information.victim_notification.victim_reparation_notice,
+             dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
+             "Victim Notification"),
+        ]
+        for bool_condition_item in bool_conditions_list:
+            (bool_condition_ordered, bool_condition_one, bool_condition_two, description) = bool_condition_item
+            if (
+                bool_condition_ordered is True
+                and bool_condition_one is False
+                and bool_condition_two is False
+            ):
+                message = RequiredBox(f"The Additional Condition {description} is checked, but "
+                                      f"the details of the {description} have not been selected. "
                                       f"Click the Add Conditions button to add details, or uncheck the "
                                       f"{description} box if there is no {description} in this case.")
                 message.exec()

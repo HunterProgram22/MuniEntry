@@ -302,7 +302,7 @@ class Diversion:
     theft_diversion: bool = False
     other_diversion: bool = False
     jail_imposed: bool = False
-    program_name: str = "Prosecutor Diversion Program"
+    program_name: str = None
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
     terms_list = [
