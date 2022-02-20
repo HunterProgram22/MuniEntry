@@ -421,6 +421,8 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
+        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
+        update_info_and_perform_checks method (found in helper_functions.py)."""
         info_checks = cls.update_info_and_perform_checks(dialog)
         if info_checks == "Pass":
             create_entry(dialog)
@@ -443,6 +445,8 @@ class CriminalSlotFunctions:
         if InfoChecker.check_insurance(dialog) == "Fail":
             return "Fail"
         if InfoChecker.check_bond_amount(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_license_suspension(dialog) == "Fail":
             return "Fail"
         dialog.update_case_information()
         return "Pass"

@@ -133,3 +133,18 @@ class InfoChecker(object):
                 "was chosen. Please either change bond type to 10% or Cash or Surety, or set bond amount to None (OR Bond).")
             message.exec()
             return "Fail"
+
+    @classmethod
+    def check_license_suspension(cls, dialog):
+        if (
+            dialog.entry_case_information.license_suspension.ordered is True
+            and dialog.entry_case_information.license_suspension.license_type is None
+        ):
+            message = RequiredBox("The Additional Condition License Suspension is checked, but "
+                                  "the details of the license suspension have not been entered. "
+                                  "Click the Add Conditions button to add details, or uncheck the "
+                                  "License Suspension box if there is no License Suspension in this case.")
+            message.exec()
+            return "Fail"
+        else:
+            return "Pass"
