@@ -514,6 +514,8 @@ class CriminalSlotFunctions:
             return "Fail"
         if InfoChecker.check_additional_conditions_ordered(dialog) == "Fail":
             return "Fail"
+        if InfoChecker.check_jail_days(dialog) == "Fail":
+            return "Fail"
         dialog.update_case_information()
         return "Pass"
 

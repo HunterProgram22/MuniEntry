@@ -27,8 +27,8 @@ class CriminalCharge:
     finding: str = None
     fines_amount: str = None
     fines_suspended: str = None
-    jail_days: str = None
-    jail_days_suspended: str = None
+    jail_days: int = None
+    jail_days_suspended: int = None
 
 
 @dataclass

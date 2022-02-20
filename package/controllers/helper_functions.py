@@ -191,3 +191,34 @@ class InfoChecker(object):
                 message.exec()
                 return "Fail"
         return "Pass"
+
+    @classmethod
+    def check_jail_days(cls, dialog):
+        if dialog.dialog_name == 'Jail CC Plea Dialog':
+            total_jail_days = 0
+            total_jail_days_suspended = 0
+            for charge in dialog.entry_case_information.charges_list:
+                if charge.jail_days == 'None':
+                    charge.jail_days = 0
+                if charge.jail_days_suspended == 'None':
+                    charge.jail_days_suspended = 0
+                total_jail_days += int(charge.jail_days)
+                total_jail_days_suspended += int(charge.jail_days_suspended)
+            if total_jail_days_suspended > total_jail_days:
+                message = RequiredBox(
+                    f"The total number of jail days suspended is {total_jail_days_suspended} which is "
+                    f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
+                message.exec()
+                return "Fail"
+            if (
+                total_jail_days > total_jail_days_suspended
+                and dialog.entry_case_information.jail_terms.ordered is False
+            ):
+                message = RequiredBox(
+                    f"The total jail days imposed of {total_jail_days} is greater than the total "
+                    f"total jail days suspended of {total_jail_days_suspended} and the jail commitment terms "
+                    f"have not been entered. Please check the Jail Commitment box and press Add Conditions to "
+                    f"set the time to report to jail.")
+                message.exec()
+                return "Fail"
+        return "Pass"
