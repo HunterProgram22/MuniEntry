@@ -137,18 +137,23 @@ class InfoChecker(object):
     @classmethod
     def check_additional_conditions_ordered(cls, dialog):
         conditions_list = [
-            (dialog.entry_case_information.license_suspension.ordered, dialog.entry_case_information.license_suspension.license_type),
-            (dialog.entry_case_information.community_service.ordered, dialog.entry_case_information.community_service.hours_of_service),
+            (dialog.entry_case_information.license_suspension.ordered,
+             dialog.entry_case_information.license_suspension.license_type,
+             "License Suspension"),
+            (dialog.entry_case_information.community_service.ordered,
+             dialog.entry_case_information.community_service.hours_of_service,
+             "Community Service"),
         ]
-        for condition in conditions_list:
+        for condition_item in conditions_list:
+            (condition_ordered, main_condition_set, description) = condition_item
             if (
-                condition[0] is True
-                and condition[1] is None
+                condition_ordered is True
+                and main_condition_set is None
             ):
-                message = RequiredBox("The Additional Condition License Suspension is checked, but "
-                                      "the details of the license suspension have not been entered. "
-                                      "Click the Add Conditions button to add details, or uncheck the "
-                                      "License Suspension box if there is no License Suspension in this case.")
+                message = RequiredBox(f"The Additional Condition {description} is checked, but "
+                                      f"the details of the {description} have not been entered. "
+                                      f"Click the Add Conditions button to add details, or uncheck the "
+                                      f"{description} box if there is no {description} in this case.")
                 message.exec()
                 return "Fail"
         return "Pass"
