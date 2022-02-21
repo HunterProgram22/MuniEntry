@@ -217,7 +217,6 @@ class InfoChecker(object):
                     f"have not been entered. Do you want to set the Jail Commitment terms?")
                 return_value = message.exec()
                 if return_value == QMessageBox.No:
-                    # dialog.fra_in_court_box.setCurrentText("No")
                     return "Pass"
                 elif return_value == QMessageBox.Yes:
                     dialog.jail_checkBox.setChecked(True)
