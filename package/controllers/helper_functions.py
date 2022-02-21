@@ -155,9 +155,6 @@ class InfoChecker(object):
             (dialog.entry_case_information.diversion.ordered,
              dialog.entry_case_information.diversion.program_name,
              "Diversion"),
-            (dialog.entry_case_information.jail_terms.ordered,
-             dialog.entry_case_information.jail_terms.report_type,
-             "Jail Commitment"),
         ]
         for condition_item in conditions_list:
             (condition_ordered, main_condition_set, description) = condition_item
@@ -214,11 +211,15 @@ class InfoChecker(object):
                 total_jail_days > total_jail_days_suspended
                 and dialog.entry_case_information.jail_terms.ordered is False
             ):
-                message = RequiredBox(
+                message = WarningBox(
                     f"The total jail days imposed of {total_jail_days} is greater than the total "
                     f"total jail days suspended of {total_jail_days_suspended} and the jail commitment terms "
-                    f"have not been entered. Please check the Jail Commitment box and press Add Conditions to "
-                    f"set the time to report to jail.")
-                message.exec()
-                return "Fail"
+                    f"have not been entered. Do you want to set the Jail Commitment terms?")
+                return_value = message.exec()
+                if return_value == QMessageBox.No:
+                    # dialog.fra_in_court_box.setCurrentText("No")
+                    return "Pass"
+                elif return_value == QMessageBox.Yes:
+                    dialog.jail_checkBox.setChecked(True)
+                    dialog.start_add_conditions_dialog()
         return "Pass"

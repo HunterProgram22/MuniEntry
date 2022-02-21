@@ -72,7 +72,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1120, 833))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1099, 845))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_4.setObjectName("gridLayout_4")
