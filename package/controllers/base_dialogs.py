@@ -178,12 +178,10 @@ class CriminalBaseDialog(BaseDialog):
             self.defense_counsel_name_box.setEnabled(True)
             self.defense_counsel_type_box.setEnabled(True)
 
-    # CMS Loader Functions - REFACTORED and WORKING
     @logger.catch
     def load_cms_data_to_view(self):
         return CMSLoader(self)
 
-    # Criminal DialogCleanUp Functions
     def close_event(self):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
@@ -197,14 +195,12 @@ class CriminalBaseDialog(BaseDialog):
         CriminalCaseInformation model which is passed as self.entry_case_information."""
         return CasePartyUpdater(self)
 
-    # Modify Entry Case Information Functions - REFACTORED and WORKING
     @logger.catch
     def add_plea_to_entry_case_information(self):
         """This method is never used directly. AddPlea is a pass-through for this case dialog. In the specific dialogs
         it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
         return AddPlea(self)
 
-    # Setter Functions
     def set_plea_and_findings_process(self):
         self.charges_gridLayout.set_all_plea_and_findings(self)
 
@@ -226,7 +222,6 @@ class CriminalBaseDialog(BaseDialog):
                 query.finish()
                 return offense_type
 
-    # Move to Charges Grid Widget Class (?)
     @logger.catch
     def delete_charge(self):
         """Deletes the offense from the entry_case_information.charges list. Then
@@ -273,6 +268,7 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     def __init__(self, main_dialog, case_information, parent=None):
         self.main_dialog = main_dialog
         self.case_information = case_information
+        charges_database.open()
         super().__init__(parent)
         self.set_case_information_banner()
         self.set_statute_and_offense_choice_boxes()
@@ -425,6 +421,8 @@ class CriminalSlotFunctions:
     @classmethod
     @logger.catch
     def create_entry_process(cls, dialog):
+        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
+        update_info_and_perform_checks method (found in helper_functions.py)."""
         info_checks = cls.update_info_and_perform_checks(dialog)
         if info_checks == "Pass":
             create_entry(dialog)
@@ -445,6 +443,10 @@ class CriminalSlotFunctions:
         if InfoChecker.check_plea_and_findings(dialog) == "Fail":
             return "Fail"
         if InfoChecker.check_insurance(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_bond_amount(dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_additional_conditions_ordered(dialog) == "Fail":
             return "Fail"
         dialog.update_case_information()
         return "Pass"

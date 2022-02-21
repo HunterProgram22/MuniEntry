@@ -131,8 +131,8 @@ class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific cms_case."""
     ordered: bool = False
-    hours_of_service: int = 0
-    days_to_complete_service: int = 0
+    hours_of_service: str = None
+    days_to_complete_service: str = None
     due_date_for_service: str = None
     terms_list = [
         ("hours_of_service", "community_service_hours_ordered_box"),
@@ -302,7 +302,7 @@ class Diversion:
     theft_diversion: bool = False
     other_diversion: bool = False
     jail_imposed: bool = False
-    program_name: str = "Prosecutor Diversion Program"
+    program_name: str = None
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
     terms_list = [
@@ -364,6 +364,7 @@ class CriminalCaseInformation:
     fra_in_file: bool = None
     fra_in_court: bool = None
     fines_and_costs_jail_credit: bool = False
+    currently_in_jail: str = None
     days_in_jail: str = None
     apply_jtc: str = None
     charges_list: list = field(default_factory=list)

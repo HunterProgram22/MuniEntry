@@ -62,6 +62,7 @@ class ConditionsDialog(BaseDialog):
                 column += 1
         self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
         self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+        self.set_community_service_date()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -85,7 +86,7 @@ class ConditionsDialog(BaseDialog):
             self.transfer_field_data_to_model(self.case_information.other_conditions)
 
     @logger.catch
-    def set_community_service_date(self, _index):
+    def set_community_service_date(self, _index=None):
         """Sets the community_service_date_to_complete_box based on the number of days chosen in the
         community_service_date_to_complete_box. The _index is passed from the signal but not used."""
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())

@@ -1,3 +1,4 @@
+import main_window
 import pytest
 import os
 import sys
@@ -32,7 +33,7 @@ def mouse_click(button):
 
 @pytest.fixture
 def app(qtbot):
-    app = MuniEntry_app.Window(daily_case_list_database)
+    app = main_window.Window(daily_case_list_database)
     qtbot.addWidget(app)
     mouse_click(app.bunner_radioButton)
     mouse_click(app.arraignments_radioButton)
@@ -42,7 +43,7 @@ def app(qtbot):
 
 @pytest.fixture
 def app_nocase(qtbot):
-    app = MuniEntry_app.Window(daily_case_list_database)
+    app = main_window.Window(daily_case_list_database)
     qtbot.addWidget(app)
     mouse_click(app.arraignments_radioButton)
     mouse_click(app.bunner_radioButton)
