@@ -280,6 +280,15 @@ class BaseChargeDialog(BaseDialog):
         for which amend button was pressed."""
         pass
 
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """TODO: The statute/offense connections can probably be moved to this dialog directly."""
+        self.statute_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.offense_choice_box.currentTextChanged.connect(
+            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        self.cancel_Button.pressed.connect(self.close_event)
+
     def set_statute_and_offense_choice_boxes(self):
         self.statute_choice_box.addItems(create_statute_list())
         self.offense_choice_box.addItems(create_offense_list())
@@ -309,14 +318,9 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """TODO: The statute/offense connections can probably be moved to this dialog directly."""
-        self.statute_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
-        self.offense_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        super().connect_signals_to_slots()
         self.clear_fields_Button.pressed.connect(self.clear_add_charge_fields)
         self.add_charge_Button.pressed.connect(self.add_charge_process)
-        self.cancel_Button.pressed.connect(self.close_event)
 
     @logger.catch
     def add_charge_process(self):
@@ -348,6 +352,49 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         super().__init__(main_dialog, case_information, button_index, parent)
+        self.amend_offense_details = AmendOffenseDetails()
+        self.current_offense = self.case_information.charges_list[self.button_index].offense
+        self.original_charge_label.setText(self.current_offense)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """This method overrides the base_dialog method to connect signals and
+        slots specific to the amend_offense dialog."""
+        super().connect_signals_to_slots()
+        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
+        self.amend_charge_Button.pressed.connect(self.amend_offense)
+
+    @logger.catch
+    def clear_amend_charge_fields(self):
+        """Clears the fields in the view."""
+        self.statute_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
+
+    @logger.catch
+    def amend_offense(self):
+        """Adds the data entered for the amended offense to the AmendOffenseDetails
+        object then points the entry_case_information object to the AmendOffenseDetails
+        object."""
+        self.amend_offense_details.original_charge = self.current_offense
+        self.amend_offense_details.amended_charge = self.offense_choice_box.currentText()
+        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+        self.case_information.amend_offense_details = self.amend_offense_details
+        if self.motion_decision_box.currentText() == "Granted":
+            amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
+            self.case_information.charges_list[self.button_index].offense = amended_charge
+            self.case_information.amended_charges_list.append(
+                (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
+            )
+            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
+                if (
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(
+                        0, columns).widget().text() == self.current_offense
+                ):
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
+                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.statute_choice_box.currentText())
+                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.degree_choice_box.currentText())
+        self.close_event()
 
 
 class CasePartyUpdater:

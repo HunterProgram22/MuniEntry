@@ -52,19 +52,19 @@ class Ui_AmendChargeDialog(object):
 "font-weight: bold;")
         self.cancel_Button.setObjectName("cancel_Button")
         self.gridLayout_4.addWidget(self.cancel_Button, 0, 0, 1, 1)
-        self.add_charge_Button = QtWidgets.QPushButton(self.frame)
+        self.amend_charge_Button = QtWidgets.QPushButton(self.frame)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)
-        self.add_charge_Button.setFont(font)
-        self.add_charge_Button.setStyleSheet("background-color: rgb(62, 146, 255);\n"
+        self.amend_charge_Button.setFont(font)
+        self.amend_charge_Button.setStyleSheet("background-color: rgb(62, 146, 255);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
-        self.add_charge_Button.setObjectName("add_charge_Button")
-        self.gridLayout_4.addWidget(self.add_charge_Button, 0, 1, 1, 1)
+        self.amend_charge_Button.setObjectName("amend_charge_Button")
+        self.gridLayout_4.addWidget(self.amend_charge_Button, 0, 1, 1, 1)
         self.gridLayout.addWidget(self.frame, 2, 0, 1, 1)
         self.case_information_frame = QtWidgets.QFrame(AmendChargeDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -213,14 +213,14 @@ class Ui_AmendChargeDialog(object):
         self.retranslateUi(AmendChargeDialog)
         QtCore.QMetaObject.connectSlotsByName(AmendChargeDialog)
         AmendChargeDialog.setTabOrder(self.statute_choice_box, self.offense_choice_box)
-        AmendChargeDialog.setTabOrder(self.offense_choice_box, self.add_charge_Button)
-        AmendChargeDialog.setTabOrder(self.add_charge_Button, self.cancel_Button)
+        AmendChargeDialog.setTabOrder(self.offense_choice_box, self.amend_charge_Button)
+        AmendChargeDialog.setTabOrder(self.amend_charge_Button, self.cancel_Button)
 
     def retranslateUi(self, AmendChargeDialog):
         _translate = QtCore.QCoreApplication.translate
         AmendChargeDialog.setWindowTitle(_translate("AmendChargeDialog", "Amend Charge"))
         self.cancel_Button.setText(_translate("AmendChargeDialog", "Cancel"))
-        self.add_charge_Button.setText(_translate("AmendChargeDialog", "Amend Charge"))
+        self.amend_charge_Button.setText(_translate("AmendChargeDialog", "Amend Charge"))
         self.case_number_label.setText(_translate("AmendChargeDialog", "TextLabel"))
         self.defendant_name_label.setText(_translate("AmendChargeDialog", "TextLabel"))
         self.label_15.setText(_translate("AmendChargeDialog", "Offense:"))
