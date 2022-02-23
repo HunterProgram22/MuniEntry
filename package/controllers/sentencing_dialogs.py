@@ -215,8 +215,16 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.diversion_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.diversion_checkBox.toggled.connect(self.diversion_hide_costs_frame)
         self.impoundment_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.victim_notification_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+
+    def diversion_hide_costs_frame(self):
+        """Sets the fines and costs due date fields to hidden."""
+        if self.costs_frame.isHidden():
+            self.costs_frame.setHidden(False)
+        else:
+            self.costs_frame.setHidden(True)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)

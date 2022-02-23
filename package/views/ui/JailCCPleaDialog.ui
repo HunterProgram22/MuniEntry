@@ -168,7 +168,7 @@ font-weight: bold;</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
        <item row="3" column="0">
-        <widget class="QFrame" name="frame_7">
+        <widget class="QFrame" name="fra_frame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -468,7 +468,7 @@ font-weight: bold;</string>
         </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QFrame" name="frame_5">
+        <widget class="QFrame" name="costs_frame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -1022,15 +1022,8 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0">
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="impoundment_checkBox">
-            <property name="text">
-             <string>Immobilize/Impound</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0" colspan="3">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0">
+          <item row="7" column="0" colspan="3">
            <widget class="QPushButton" name="add_conditions_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(62, 146, 255)</string>
@@ -1043,7 +1036,55 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="0" colspan="3">
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="community_control_checkBox">
+            <property name="text">
+             <string>Community Control</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QCheckBox" name="victim_notification_checkBox">
+            <property name="text">
+             <string>Victim Notification</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="community_service_checkBox">
+            <property name="text">
+             <string>Community Service</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QCheckBox" name="other_conditions_checkBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="text">
+             <string>Other</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="license_suspension_checkBox">
+            <property name="text">
+             <string>License Suspension</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="impoundment_checkBox">
+            <property name="text">
+             <string>Immobilize/Impound</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="3">
            <widget class="QLabel" name="add_conditions_label">
             <property name="maximumSize">
              <size>
@@ -1069,51 +1110,10 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="license_suspension_checkBox">
-            <property name="text">
-             <string>License Suspension</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="community_control_checkBox">
-            <property name="text">
-             <string>Community Control</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="0" column="0">
            <widget class="QCheckBox" name="diversion_checkBox">
             <property name="text">
              <string>Diversion</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QCheckBox" name="community_service_checkBox">
-            <property name="text">
-             <string>Community Service</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QCheckBox" name="victim_notification_checkBox">
-            <property name="text">
-             <string>Victim Notification</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QCheckBox" name="other_conditions_checkBox">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="text">
-             <string>Other</string>
             </property>
            </widget>
           </item>
@@ -1139,7 +1139,6 @@ font-weight: bold;</string>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>community_control_checkBox</tabstop>
-  <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>add_conditions_Button</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
