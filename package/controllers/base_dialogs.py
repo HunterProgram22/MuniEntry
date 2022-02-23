@@ -263,10 +263,7 @@ class CriminalBaseDialog(BaseDialog):
             self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
-class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
-    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
-    The cms_case information is passed in order to populate the cms_case information banner. The
-    button_index is to determine which charge the amend_button is amending."""
+class BaseChargeDialog(BaseDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         self.main_dialog = main_dialog
@@ -288,6 +285,27 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.offense_choice_box.addItems(create_offense_list())
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
+
+    @logger.catch
+    def set_case_information_banner(self):
+        """Sets the banner on a view of the interface. It modifies label
+        widgets on the view to text that was entered."""
+        self.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.case_information.defendant.first_name,
+                defendant_last_name=self.case_information.defendant.last_name
+            )
+        )
+        self.case_number_label.setText(self.case_information.case_number)
+
+
+class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
+    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
+    The cms_case information is passed in order to populate the cms_case information banner. The
+    button_index is to determine which charge the amend_button is amending."""
+    @logger.catch
+    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
+        super().__init__(main_dialog, case_information, button_index, parent)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -321,36 +339,15 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.case_information.add_charge_to_list(self.criminal_charge)
 
     @logger.catch
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-            )
-        )
-        self.case_number_label.setText(self.case_information.case_number)
-
-    @logger.catch
     def clear_add_charge_fields(self):
         self.statute_choice_box.clearEditText()
         self.offense_choice_box.clearEditText()
 
 
-class AmendChargeDialog(AddChargeDialog, Ui_AmendChargeDialog):
-    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
-    The cms_case information is passed in order to populate the cms_case information banner. The
-    button_index is to determine which charge the amend_button is amending."""
+class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index=None, parent=None):
-        self.main_dialog = main_dialog
-        self.case_information = case_information
-        self.button_index = button_index
-        charges_database.open()
-        super().__init__(main_dialog, case_information, button_index)
-        self.set_case_information_banner()
-        self.set_statute_and_offense_choice_boxes()
+        super().__init__(main_dialog, case_information, button_index, parent)
 
 
 class CasePartyUpdater:
