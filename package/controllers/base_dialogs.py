@@ -256,8 +256,11 @@ class CriminalBaseDialog(BaseDialog):
     @logger.catch
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""
-        total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
-        self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
+        if days_to_add == "forthwith":
+            self.balance_due_date.setDate(QDate.currentDate())
+        else:
+            total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
+            self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
 class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
