@@ -233,6 +233,9 @@ font-weight: bold;</string>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>

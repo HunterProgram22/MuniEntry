@@ -249,6 +249,7 @@ class Ui_NoJailPleaDialog(object):
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_18)
         self.balance_due_date = QtWidgets.QDateEdit(self.frame_5)
         self.balance_due_date.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.balance_due_date.setCalendarPopup(True)
         self.balance_due_date.setObjectName("balance_due_date")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.balance_due_date)
         self.credit_for_jail_checkBox = QtWidgets.QCheckBox(self.frame_5)

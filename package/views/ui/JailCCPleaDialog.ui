@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1120</width>
-        <height>833</height>
+        <width>1099</width>
+        <height>845</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
@@ -563,6 +563,9 @@ font-weight: bold;</string>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
@@ -889,14 +892,7 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="text">
-             <string>Currently In Jail:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+          <item row="2" column="1">
            <widget class="QComboBox" name="in_jail_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -918,24 +914,31 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Currently In Jail:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_16">
+            <property name="text">
+             <string>Apply JTC to:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
            <widget class="QLineEdit" name="jail_time_credit_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QLabel" name="label_13">
             <property name="text">
              <string>Days In Jail:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Apply JTC to:</string>
             </property>
            </widget>
           </item>
@@ -958,14 +961,14 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Jail Time Credit</string>
+             <string>Jail Commitment and Jail Time Credit</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="4" column="1">
            <widget class="QComboBox" name="jail_time_credit_apply_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -985,6 +988,13 @@ font-weight: bold;</string>
               <string>Sentence</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Set Jail Commitment Terms</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1013,13 +1023,6 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0">
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="jail_checkBox">
-            <property name="text">
-             <string>Jail Commitment</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="impoundment_checkBox">
             <property name="text">
@@ -1059,7 +1062,7 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Jail Commitment and Additional Conditions</string>
+             <string>Additional Conditions</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -1080,21 +1083,28 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="2">
+          <item row="3" column="0">
            <widget class="QCheckBox" name="diversion_checkBox">
             <property name="text">
              <string>Diversion</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="2" column="2">
            <widget class="QCheckBox" name="community_service_checkBox">
             <property name="text">
              <string>Community Service</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="victim_notification_checkBox">
+            <property name="text">
+             <string>Victim Notification</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
            <widget class="QCheckBox" name="other_conditions_checkBox">
             <property name="enabled">
              <bool>true</bool>
@@ -1104,13 +1114,6 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Other</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QCheckBox" name="victim_notification_checkBox">
-            <property name="text">
-             <string>Victim Notification</string>
             </property>
            </widget>
           </item>
@@ -1136,10 +1139,7 @@ font-weight: bold;</string>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
   <tabstop>community_control_checkBox</tabstop>
-  <tabstop>jail_checkBox</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
-  <tabstop>diversion_checkBox</tabstop>
-  <tabstop>community_service_checkBox</tabstop>
   <tabstop>add_conditions_Button</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
