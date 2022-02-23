@@ -15,7 +15,7 @@ from db.databases import open_charges_db_connection, extract_data, create_offens
 from package.controllers.helper_functions import set_document_name, set_future_date, InfoChecker
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
-from package.views.amend_offense_dialog_ui import Ui_AmendOffenseDialog
+from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, SAVE_PATH
 
@@ -243,7 +243,7 @@ class CriminalBaseDialog(BaseDialog):
         the cms_case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
-        AmendOffenseDialog(self, self.entry_case_information, button_index).exec()
+        AmendChargeDialog(self, self.entry_case_information, button_index).exec()
 
     @logger.catch
     def start_add_charge_dialog(self, _bool):
@@ -268,9 +268,10 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
     The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
-    def __init__(self, main_dialog, case_information, parent=None):
+    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         self.main_dialog = main_dialog
         self.case_information = case_information
+        self.button_index = button_index
         charges_database.open()
         super().__init__(parent)
         self.set_case_information_banner()
@@ -337,76 +338,19 @@ class AddChargeDialog(BaseDialog, Ui_AddChargeDialog):
         self.offense_choice_box.clearEditText()
 
 
-class AmendOffenseDialog(BaseDialog, Ui_AmendOffenseDialog):
+class AmendChargeDialog(AddChargeDialog, Ui_AmendChargeDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
     The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
-    def __init__(self, main_dialog, case_information, button_index, parent=None):
-        self.button_index = button_index
+    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         self.main_dialog = main_dialog
         self.case_information = case_information
-        self.amend_offense_details = AmendOffenseDetails()
-        self.current_offense = self.case_information.charges_list[self.button_index].offense
-        super().__init__(parent)
+        self.button_index = button_index
+        charges_database.open()
+        super().__init__(main_dialog, case_information, button_index)
         self.set_case_information_banner()
-
-    @logger.catch
-    def modify_view(self):
-        """The modify view sets the original charge based on the item in the main dialog
-        for which amend button was pressed."""
-        self.original_charge_box.setCurrentText(self.current_offense)
-        self.amended_charge_box.addItems(create_offense_list())
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """This method overrides the base_dialog method to connect signals and
-        slots specific to the amend_offense dialog."""
-        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
-        self.amend_offense_Button.pressed.connect(self.amend_offense)
-        self.cancel_Button.pressed.connect(self.close_event)
-
-    @logger.catch
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-            )
-        )
-        self.case_number_label.setText(self.case_information.case_number)
-
-    @logger.catch
-    def clear_amend_charge_fields(self):
-        """Clears the fields in the view."""
-        self.original_charge_box.clearEditText()
-        self.amended_charge_box.clearEditText()
-
-    @logger.catch
-    def amend_offense(self):
-        """Adds the data entered for the amended offense to the AmendOffenseDetails
-        object then points the entry_case_information object to the AmendOffenseDetails
-        object."""
-        self.amend_offense_details.original_charge = self.original_charge_box.currentText()
-        self.amend_offense_details.amended_charge = self.amended_charge_box.currentText()
-        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
-        self.case_information.amend_offense_details = self.amend_offense_details
-        if self.motion_decision_box.currentText() == "Granted":
-            amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
-            self.case_information.charges_list[self.button_index].offense = amended_charge
-            self.case_information.amended_charges_list.append(
-                (self.original_charge_box.currentText(), self.amended_charge_box.currentText())
-            )
-            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-                if (
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                    and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.current_offense
-                ):
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
-        self.close_event()
+        self.set_statute_and_offense_choice_boxes()
 
 
 class CasePartyUpdater:
