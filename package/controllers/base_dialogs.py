@@ -117,7 +117,10 @@ class BaseDialog(QDialog):
             elif isinstance(getattr(self, view_field), QLineEdit):
                 setattr(terms_object, model_attribute, getattr(self, view_field).text())
             elif isinstance(getattr(self, view_field), QTextEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).toPlainText())
+                plain_text = getattr(self, view_field).toPlainText()
+                if plain_text[-1] == '.':
+                    plain_text = plain_text[:-1]
+                setattr(terms_object, model_attribute, plain_text)
             elif isinstance(getattr(self, view_field), QDateEdit):
                 setattr(terms_object, model_attribute, getattr(self, view_field).date().toString("MMMM dd, yyyy"))
             elif isinstance(getattr(self, view_field), QTimeEdit):
