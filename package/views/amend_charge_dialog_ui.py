@@ -131,7 +131,7 @@ class Ui_AmendChargeDialog(object):
         self.gridLayout_3.addWidget(self.label_6, 3, 0, 1, 1)
         self.degree_choice_box = QtWidgets.QComboBox(self.frame_3)
         self.degree_choice_box.setEnabled(True)
-        self.degree_choice_box.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.degree_choice_box.setFocusPolicy(QtCore.Qt.TabFocus)
         self.degree_choice_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.degree_choice_box.setObjectName("degree_choice_box")
         self.degree_choice_box.addItem("")
@@ -212,8 +212,10 @@ class Ui_AmendChargeDialog(object):
 
         self.retranslateUi(AmendChargeDialog)
         QtCore.QMetaObject.connectSlotsByName(AmendChargeDialog)
+        AmendChargeDialog.setTabOrder(self.motion_decision_box, self.statute_choice_box)
         AmendChargeDialog.setTabOrder(self.statute_choice_box, self.offense_choice_box)
-        AmendChargeDialog.setTabOrder(self.offense_choice_box, self.amend_charge_Button)
+        AmendChargeDialog.setTabOrder(self.offense_choice_box, self.degree_choice_box)
+        AmendChargeDialog.setTabOrder(self.degree_choice_box, self.amend_charge_Button)
         AmendChargeDialog.setTabOrder(self.amend_charge_Button, self.cancel_Button)
 
     def retranslateUi(self, AmendChargeDialog):

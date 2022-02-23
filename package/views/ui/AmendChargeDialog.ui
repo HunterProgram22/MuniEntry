@@ -210,7 +210,7 @@ font-weight: bold;</string>
          <bool>true</bool>
         </property>
         <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
+         <enum>Qt::TabFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -395,8 +395,10 @@ font-weight: bold;</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>motion_decision_box</tabstop>
   <tabstop>statute_choice_box</tabstop>
   <tabstop>offense_choice_box</tabstop>
+  <tabstop>degree_choice_box</tabstop>
   <tabstop>amend_charge_Button</tabstop>
   <tabstop>cancel_Button</tabstop>
  </tabstops>
