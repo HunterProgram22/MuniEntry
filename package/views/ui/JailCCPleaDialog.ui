@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1099</width>
-        <height>845</height>
+        <width>1120</width>
+        <height>833</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
@@ -961,7 +961,7 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Jail Commitment and Jail Time Credit</string>
+             <string>Jail Time Credit</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
@@ -988,13 +988,6 @@ font-weight: bold;</string>
               <string>Sentence</string>
              </property>
             </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="jail_checkBox">
-            <property name="text">
-             <string>Set Jail Commitment Terms</string>
-            </property>
            </widget>
           </item>
          </layout>
@@ -1029,7 +1022,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(62, 146, 255)</string>
             </property>
             <property name="text">
-             <string>Add Conditions</string>
+             <string>Add Diversion, Jail or  Additional Conditions</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1114,6 +1107,13 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="diversion_checkBox">
             <property name="text">
              <string>Diversion</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Set Jail Reporting Terms</string>
             </property>
            </widget>
           </item>
