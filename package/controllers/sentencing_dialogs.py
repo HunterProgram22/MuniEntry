@@ -238,8 +238,9 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
             self.impoundment_checkBox.setHidden(False)
             self.community_service_checkBox.setHidden(False)
             self.victim_notification_checkBox.setHidden(False)
-            self.other_conditions_checkBox.setHidden(False)
+            # self.other_conditions_checkBox.setHidden(False)
             self.jail_checkBox.setHidden(False)
+            self.jail_time_credit_frame.setHidden(False)
             self.add_conditions_Button.setText("Add Jail Reporting and/or Additional Conditions")
         else:
             self.costs_frame.setHidden(True)
@@ -249,8 +250,9 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
             self.impoundment_checkBox.setHidden(True)
             self.community_service_checkBox.setHidden(True)
             self.victim_notification_checkBox.setHidden(True)
-            self.other_conditions_checkBox.setHidden(True)
+            # self.other_conditions_checkBox.setHidden(True)
             self.jail_checkBox.setHidden(True)
+            self.jail_time_credit_frame.setHidden(True)
             self.add_conditions_Button.setText("Set Diversion Program and Due Dates")
 
     def add_charge_to_grid(self):
