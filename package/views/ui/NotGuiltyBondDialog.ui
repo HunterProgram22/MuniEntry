@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1108</width>
-    <height>855</height>
+    <width>988</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1064</width>
-           <height>811</height>
+           <width>929</width>
+           <height>802</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,2,0,1,1">
@@ -732,6 +732,11 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
+                 <string>$1,000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>$1,500</string>
                 </property>
                </item>
@@ -784,7 +789,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string> Bond</string>
+                 <string>Cash or Surety Bond</string>
                 </property>
                </item>
               </widget>
@@ -811,20 +816,20 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
-               <property name="text">
-                <string> Alcohol Kiosk testing.</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="1">
               <widget class="QCheckBox" name="monitoring_checkBox">
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Monitoring:</string>
+                <string>Monitoring (GPS/Scram/Smart Start):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
+               <property name="text">
+                <string> Obtain alcohol/drug assessment. </string>
                </property>
               </widget>
              </item>
@@ -838,12 +843,12 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>GPS Only</string>
+                 <string>SCRAM Only</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>SCRAM Only</string>
+                 <string>GPS Only</string>
                 </property>
                </item>
                <item>
@@ -873,17 +878,30 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
-               <property name="text">
-                <string> Obtain alcohol/drug assessment. </string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="1">
               <widget class="QCheckBox" name="specialized_docket_checkBox">
                <property name="text">
-                <string>Screen for:</string>
+                <string>Screen for Specialized Dockets:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Bond Conditions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -912,30 +930,31 @@ font-weight: bold;</string>
                </item>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="3" column="1">
+              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
+               <property name="text">
+                <string> Alcohol Kiosk testing.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
               <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
                <property name="text">
                 <string> No alcohol/drugs of abuse.</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_7">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="mental_health_assessment_checkBox">
                <property name="text">
-                <string>Bond Conditions</string>
+                <string> Obtain mental health assessment.</string>
                </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QCheckBox" name="comply_protection_order_checkBox">
+               <property name="text">
+                <string> Comply with Terms of Protection Order</string>
                </property>
               </widget>
              </item>
@@ -960,9 +979,7 @@ font-weight: bold;</string>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>bond_type_box</tabstop>
   <tabstop>bond_amount_box</tabstop>
-  <tabstop>alcohol_test_kiosk_checkBox</tabstop>
   <tabstop>alcohol_drugs_assessment_checkBox</tabstop>
-  <tabstop>no_alcohol_drugs_checkBox</tabstop>
   <tabstop>monitoring_checkBox</tabstop>
   <tabstop>monitoring_type_box</tabstop>
   <tabstop>specialized_docket_checkBox</tabstop>

@@ -8,10 +8,28 @@ from settings import ICON_PATH
 
 ATTORNEY_LIST = [
     "",
+    "Barshaunda Robinson",
+    "Brandon Shroy",
+    "Bryan Bowen",
+    "Chad Heald",
+    "Chad Hemminger",
     "Chris Junga",
+    "Chris Soon",
+    "Darren Meade",
+    "David Johnson",
+    "Edward Itayim",
+    "Eric Brehm",
     "Garrett Smith",
     "Jeff Uhrich",
-    "Barshaunda Robinson",
+    "Jeffrey Burkam",
+    "John Lloyd",
+    "Hillary Santiago-Burgos",
+    "Lois Palau",
+    "Michael Lerner",
+    "Robert Krapenc",
+    "Samuel Shamansky",
+    "Tod Brininger",
+    "S Welt",
 ]
 
 class ExtendedComboBox(QComboBox):
@@ -344,6 +362,20 @@ class WarningBox(QMessageBox):
         self.setWindowTitle("Warning")
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+
+
+class JailWarningBox(QMessageBox):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Warning)
+        self.setWindowTitle("Warning - No Jail Report Date Set")
+        self.setText(self.message)
+        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 
 
 def main():

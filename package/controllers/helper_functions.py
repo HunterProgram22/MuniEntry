@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
-from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox
+from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox
 
 
 def set_document_name(dialog):
@@ -112,3 +112,139 @@ class InfoChecker(object):
                 return "Pass"
         else:
             return "Pass"
+
+    @classmethod
+    def check_bond_amount(cls, dialog):
+        if(
+            hasattr(dialog, 'bond_type_box')
+            and dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
+            and dialog.bond_amount_box.currentText() == 'None (OR Bond)'
+        ):
+            message = RequiredBox("A bond type requiring a bond amount was selected, but a bond amount was not selected. Please specify the bond amount.")
+            message.exec()
+            return "Fail"
+        if (
+                hasattr(dialog, 'bond_type_box')
+                and dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
+                and dialog.bond_amount_box.currentText() != 'None (OR Bond)'
+        ):
+            message = RequiredBox(
+                "A Recognizance (OR) Bond was selected but a bond amount other than None(OR Bond) "
+                "was chosen. Please either change bond type to 10% or Cash or Surety, or set bond amount to None (OR Bond).")
+            message.exec()
+            return "Fail"
+
+    @classmethod
+    def check_additional_conditions_ordered(cls, dialog):
+        conditions_list = [
+            (dialog.entry_case_information.license_suspension.ordered,
+             dialog.entry_case_information.license_suspension.license_type,
+             "License Suspension"),
+            (dialog.entry_case_information.community_service.ordered,
+             dialog.entry_case_information.community_service.hours_of_service,
+             "Community Service"),
+            (dialog.entry_case_information.other_conditions.ordered,
+             dialog.entry_case_information.other_conditions.terms,
+             "Other Conditions"),
+            (dialog.entry_case_information.community_control.ordered,
+             dialog.entry_case_information.community_control.term_of_control,
+             "Community Control"),
+            (dialog.entry_case_information.impoundment.ordered,
+             dialog.entry_case_information.impoundment.vehicle_make_model,
+             "Immobilize/Impound"),
+            (dialog.entry_case_information.diversion.ordered,
+             dialog.entry_case_information.diversion.program_name,
+             "Diversion"),
+        ]
+        for condition_item in conditions_list:
+            (condition_ordered, main_condition_set, description) = condition_item
+            if (
+                condition_ordered is True
+                and main_condition_set is None
+            ):
+                message = RequiredBox(f"The Additional Condition {description} is checked, but "
+                                      f"the details of the {description} have not been entered. "
+                                      f"Click the Add Conditions button to add details, or uncheck the "
+                                      f"{description} box if there is no {description} in this case.")
+                message.exec()
+                return "Fail"
+        bool_conditions_list = [
+            (dialog.entry_case_information.victim_notification.ordered,
+             dialog.entry_case_information.victim_notification.victim_reparation_notice,
+             dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
+             "Victim Notification"),
+        ]
+        for bool_condition_item in bool_conditions_list:
+            (bool_condition_ordered, bool_condition_one, bool_condition_two, description) = bool_condition_item
+            if (
+                bool_condition_ordered is True
+                and bool_condition_one is False
+                and bool_condition_two is False
+            ):
+                message = RequiredBox(f"The Additional Condition {description} is checked, but "
+                                      f"the details of the {description} have not been selected. "
+                                      f"Click the Add Conditions button to add details, or uncheck the "
+                                      f"{description} box if there is no {description} in this case.")
+                message.exec()
+                return "Fail"
+        return "Pass"
+
+    @classmethod
+    def check_jail_days(cls, dialog):
+        if dialog.entry_case_information.diversion.ordered is True:
+            return "Pass"
+        if dialog.entry_case_information.currently_in_jail == 'Yes':
+            return "Pass"
+        if dialog.dialog_name == 'Jail CC Plea Dialog':
+            total_jail_days = 0
+            total_jail_days_suspended = 0
+            if dialog.entry_case_information.days_in_jail == "":
+                total_jail_days_credit = 0
+            else:
+                total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
+            for charge in dialog.entry_case_information.charges_list:
+                try:
+                    if charge.jail_days == 'None':
+                        charge.jail_days = 0
+                except ValueError:
+                    charge.jail_days = 0
+                try:
+                    if charge.jail_days_suspended == 'None':
+                        charge.jail_days_suspended = 0
+                except ValueError:
+                    charge.jail_days_suspended = 0
+                try:
+                    total_jail_days += int(charge.jail_days)
+                except ValueError:
+                    pass
+                try:
+                    total_jail_days_suspended += int(charge.jail_days_suspended)
+                except ValueError:
+                    pass
+            if total_jail_days_suspended > total_jail_days:
+                message = RequiredBox(
+                    f"The total number of jail days suspended is {total_jail_days_suspended} which is "
+                    f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
+                message.exec()
+                return "Fail"
+            if (
+                total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+                and dialog.entry_case_information.jail_terms.ordered is False
+            ):
+                message = JailWarningBox(
+                    f"The total jail days imposed of {total_jail_days} is greater than the total "
+                    f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
+                    f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
+                    f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
+                    f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
+                    f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
+                    f"entry so that you can change the number of jail days imposed/suspended/credited.")
+                return_value = message.exec()
+                if return_value == QMessageBox.No:
+                    return "Pass"
+                elif return_value == QMessageBox.Yes:
+                    dialog.jail_checkBox.setChecked(True)
+                    dialog.start_jail_only_dialog()
+                elif return_value == QMessageBox.Cancel:
+                    return "Fail"
+        return "Pass"

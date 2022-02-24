@@ -383,11 +383,6 @@ font-weight: bold;</string>
             </property>
             <item>
              <property name="text">
-              <string>0</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>30</string>
              </property>
             </item>
@@ -451,11 +446,6 @@ font-weight: bold;</string>
             <property name="editable">
              <bool>true</bool>
             </property>
-            <item>
-             <property name="text">
-              <string/>
-             </property>
-            </item>
             <item>
              <property name="text">
               <string>25</string>

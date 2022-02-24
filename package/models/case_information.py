@@ -27,8 +27,8 @@ class CriminalCharge:
     finding: str = None
     fines_amount: str = None
     fines_suspended: str = None
-    jail_days: str = None
-    jail_days_suspended: str = None
+    jail_days: int = None
+    jail_days_suspended: int = None
 
 
 @dataclass
@@ -52,21 +52,25 @@ class BondConditions:
     no_contact: bool = False
     no_alcohol_drugs: bool = False
     alcohol_drugs_assessment: bool = False
+    mental_health_assessment: bool = False
     alcohol_test_kiosk: bool = False
     specialized_docket: bool = False
     specialized_docket_type: str = None
     monitoring: bool = False
     monitoring_type: str = None
+    comply_protection_order: bool = False
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
         ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
         ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
+        ("mental_health_assessment", "mental_health_assessment_checkBox"),
         ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
         ("specialized_docket", "specialized_docket_checkBox"),
         ("specialized_docket_type", "specialized_docket_type_box"),
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
     ]
 
 
@@ -127,8 +131,8 @@ class CommunityService:
     """Class for keeping track of all community service terms that are tied to
     a specific cms_case."""
     ordered: bool = False
-    hours_of_service: int = 0
-    days_to_complete_service: int = 0
+    hours_of_service: str = None
+    days_to_complete_service: str = None
     due_date_for_service: str = None
     terms_list = [
         ("hours_of_service", "community_service_hours_ordered_box"),
@@ -298,7 +302,7 @@ class Diversion:
     theft_diversion: bool = False
     other_diversion: bool = False
     jail_imposed: bool = False
-    program_name: str = "Prosecutor Diversion Program"
+    program_name: str = None
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
     terms_list = [
@@ -360,6 +364,7 @@ class CriminalCaseInformation:
     fra_in_file: bool = None
     fra_in_court: bool = None
     fines_and_costs_jail_credit: bool = False
+    currently_in_jail: str = None
     days_in_jail: str = None
     apply_jtc: str = None
     charges_list: list = field(default_factory=list)

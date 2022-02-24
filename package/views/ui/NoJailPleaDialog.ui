@@ -496,6 +496,9 @@ font-weight: bold;</string>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="3" column="0">
@@ -855,11 +858,17 @@ font-weight: bold;</string>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="4" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(170, 58, 63);</string>
             </property>
             <property name="text">
              <string>Close Dialog</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -879,6 +888,9 @@ font-weight: bold;</string>
           </item>
           <item row="3" column="0">
            <widget class="QPushButton" name="print_entry_Button">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(160, 160, 160);</string>
             </property>
@@ -894,7 +906,7 @@ font-weight: bold;</string>
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QFrame" name="frame_7">
+        <widget class="QFrame" name="fra_frame">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>

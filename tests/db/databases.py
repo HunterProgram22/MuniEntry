@@ -2,6 +2,7 @@ import os
 import sqlite3
 import sys
 from abc import ABC, abstractmethod
+import pdb
 
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
@@ -48,8 +49,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return CriminalCaseInformation()
 
     def get_case_data(self):
-        """Query database based on cms_case number to return the data to load for the
-        dialog.
+        """Query database based on cms_case number to return the data to load for the dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
         key = self.case_number
         query = QSqlQuery(self.database)
@@ -65,7 +65,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query.finish()
 
     def load_data_into_case(self, query):
-        """TODO: Can Refactor more."""
         case_number = None
         while query.next():
             if case_number is None:
@@ -77,7 +76,8 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             offense = query.value(4)
             statute = query.value(5)
             degree = query.value(6)
-            new_charge = (offense, statute, degree)
+            offense_type = query.value(8)
+            new_charge = (offense, statute, degree, offense_type)
             self.case.charges_list.append(new_charge)
 
     def load_case(self):
@@ -85,42 +85,40 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con1", open=True)
+    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
     return daily_case_list_database_connection
 
 
 @logger.catch
 def create_daily_case_list_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
-    print(database_name)
     if os.path.exists(database_name):
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
+        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
+        con_daily_case_lists.setDatabaseName(database_name)
     else:
         print("The file does not exist")
-        con1 = QSqlDatabase.addDatabase("QSQLITE", "con1")
-        con1.setDatabaseName(database_name)
-        if not con1.open():
+        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
+        con_daily_case_lists.setDatabaseName(database_name)
+        if not con_daily_case_lists.open():
             print("Unable to connect to database")
             sys.exit(1)
         else:
-            create_table_query = QSqlQuery(con1)
+            create_table_query = QSqlQuery(con_daily_case_lists)
             for item in DATABASE_TABLE_LIST:
                 table = item[1]
                 create_table_query.exec(create_table_sql_string(table))
-    if not con1.open():
+    if not con_daily_case_lists.open():
         print("Unable to connect to database")
         sys.exit(1)
-    return con1
+    return con_daily_case_lists
 
 
-def create_database_connections():
+def open_charges_db_connection():
     """The databases for the application are created upon import of the module, which is done
     on application startup when base_dialog is imported into main. The connections to the databases
     are created, but opening and closing is handled with init or close functions in controller dialogs."""
-    offense_database_connection = QSqlDatabase.addDatabase("QSQLITE", "offenses")
-    offense_database_connection.setDatabaseName(CHARGES_DATABASE)
-    return offense_database_connection
+    charges_database_connection = QSqlDatabase.database("con_charges", open=True)
+    return charges_database_connection
 
 
 def extract_data(case_data):
@@ -152,7 +150,7 @@ def extract_data(case_data):
 
 
 def create_offense_list():
-    conn = sqlite3.connect(DB_PATH + "charges.sqlite")
+    conn = sqlite3.connect(CHARGES_DATABASE)
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT offense, statute FROM charges")
     offense_list = cursor.fetchall()
@@ -165,7 +163,7 @@ def create_offense_list():
 
 
 def create_statute_list():
-    conn = sqlite3.connect(DB_PATH + "charges.sqlite")
+    conn = sqlite3.connect(CHARGES_DATABASE)
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT offense, statute FROM charges")
     statute_list = cursor.fetchall()
@@ -217,6 +215,14 @@ def return_data_from_excel(excel_file):
             fra_in_file = worksheet.cell(row=row, column=8)
         else:
             fra_in_file = worksheet.cell(row=row, column=8)
+        if worksheet.cell(row=row, column=9).value is None:
+            worksheet.cell(row=row, column=9).value = "No Data"
+            offense_type = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is False:
+            worksheet.cell(row=row, column=9).value = "No Data"
+            offense_type = worksheet.cell(row=row, column=9)
+        else:
+            offense_type = worksheet.cell(row=row, column=9)
         case = (case_number.value,
                 defendant_last_name.value,
                 defendant_first_name.value,
@@ -224,12 +230,15 @@ def return_data_from_excel(excel_file):
                 statute.value,
                 degree.value,
                 fra_in_file.value,
+                offense_type.value,
                 )
         data.append(case)
     return data
 
 
 def create_table_sql_string(table):
+    """If changes are made to this create_table string then the old table must
+    be deleted."""
     return f"""
       CREATE TABLE {table} (
           id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
@@ -239,7 +248,8 @@ def create_table_sql_string(table):
           offense VARCHAR(80) NOT NULL,
           statute VARCHAR(50) NOT NULL,
           degree VARCHAR(10) NOT NULL,
-          fra_in_file VARCHAR(5) NOT NULL
+          fra_in_file VARCHAR(5) NOT NULL,
+          offense_type VARCHAR(15) NOT NULL
       )
       """
 
@@ -253,9 +263,10 @@ def insert_table_sql_string(table):
             offense,
             statute,
             degree,
-            fra_in_file
+            fra_in_file,
+            offense_type
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
         """
 
 
@@ -267,22 +278,22 @@ def delete_table_data_sql_string(table):
 
 
 def main():
-    con1 = create_daily_case_list_db_connection()
+    con_daily_case_lists = create_daily_case_list_db_connection()
 
     for item in DATABASE_TABLE_LIST:
         excel_report = item[0]
         table = item[1]
 
-        delete_old_data_query = QSqlQuery(con1)
+        delete_old_data_query = QSqlQuery(con_daily_case_lists)
         delete_old_data_query.prepare(delete_table_data_sql_string(table))
         delete_old_data_query.exec()
 
-        insert_data_query = QSqlQuery(con1)
+        insert_data_query = QSqlQuery(con_daily_case_lists)
         insert_data_query.prepare(insert_table_sql_string(table))
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for case_number, defendant_last_name, defendant_first_name, offense, \
-                statute, degree, fra_in_file in data_from_table:
+                statute, degree, fra_in_file, offense_type in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
             insert_data_query.addBindValue(defendant_first_name)
@@ -290,15 +301,17 @@ def main():
             insert_data_query.addBindValue(statute)
             insert_data_query.addBindValue(degree)
             insert_data_query.addBindValue(fra_in_file)
+            insert_data_query.addBindValue(offense_type)
             insert_data_query.exec()
 
-    con1.close()
-    con1.removeDatabase("QSQLITE")
+    con_daily_case_lists.close()
+    con_daily_case_lists.removeDatabase("QSQLITE")
     return None
 
 
 if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
 else:
+    from db import create_charges_table
     main()
     print("Imported Daily Case List Tables")
