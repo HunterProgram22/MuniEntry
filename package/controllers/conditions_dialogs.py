@@ -103,6 +103,88 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
         enable_condition_frames(self, main_dialog)
 
 
+class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
+    jail_condition_checkbox_list = [
+        ("companion_cases_checkBox", "companion_cases_box"),
+        ("companion_cases_checkBox", "jail_term_type_box"),
+        ("companion_cases_checkBox", "consecutive_jail_days_label"),
+    ]
+    @logger.catch
+    def __init__(self, main_dialog, parent=None):
+        super().__init__(main_dialog, parent)
+        self.enable_condition_frames(main_dialog)
+
+    def enable_condition_frames(self, main_dialog):
+        for index, item in enumerate(CONDITIONS_FRAMES):
+            (frame_checkbox, frame) = item
+            if hasattr(main_dialog, frame_checkbox):
+                if frame_checkbox == "jail_checkBox":
+                    getattr(self, frame).setEnabled(True)
+                else:
+                    frame = getattr(self, frame)
+                    frame.setParent(None)
+                    frame.deleteLater()
+
+    @logger.catch
+    def modify_view(self):
+        super().modify_view()
+        self.report_date_box.setDate(QDate.currentDate())
+        self.hide_boxes()
+        self.show_report_days_notes_box()
+
+    def connect_signals_to_slots(self):
+        self.cancel_Button.pressed.connect(self.close_event)
+        self.add_conditions_Button.pressed.connect(self.add_conditions)
+        self.add_conditions_Button.released.connect(self.close_window)
+        self.report_type_box.currentTextChanged.connect(self.set_report_date)
+        self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
+
+    @logger.catch
+    def add_conditions(self):
+        """The method calls the base method add_conditions and then adds community control specific conditions."""
+        if self.main_dialog.jail_checkBox.isChecked():
+            self.transfer_field_data_to_model(self.case_information.jail_terms)
+
+    def hide_boxes(self):
+        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
+        for item in AddJailOnlyDialog.jail_condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                getattr(self, condition_field).setEnabled(False)
+                getattr(self, condition_field).setHidden(True)
+
+    def show_report_days_notes_box(self):
+        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
+            self.jail_report_days_notes_box.setDisabled(True)
+            self.jail_report_days_notes_box.setHidden(True)
+        else:
+            self.jail_report_days_notes_box.setDisabled(False)
+            self.jail_report_days_notes_box.setHidden(False)
+
+    def set_report_date(self):
+        if self.report_type_box.currentText() == "date set by Office of Community Control":
+            self.report_date_box.setDisabled(True)
+            self.report_date_box.setHidden(True)
+            self.report_time_box.setDisabled(True)
+            self.report_time_box.setHidden(True)
+            self.report_date_label.setHidden(True)
+            self.report_time_label.setHidden(True)
+        elif self.report_type_box.currentText() == "forthwith":
+            self.report_date_box.setDisabled(True)
+            self.report_date_box.setHidden(True)
+            self.report_time_box.setDisabled(True)
+            self.report_time_box.setHidden(True)
+            self.report_date_label.setHidden(True)
+            self.report_time_label.setHidden(True)
+        else:
+            self.report_date_box.setEnabled(True)
+            self.report_date_box.setHidden(False)
+            self.report_time_box.setEnabled(True)
+            self.report_time_box.setHidden(False)
+            self.report_date_label.setHidden(False)
+            self.report_time_label.setHidden(False)
+
+
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
     the JailCCPleaDialog. The conditions that are available to enter information
@@ -125,7 +207,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
-
     ]
 
     @logger.catch

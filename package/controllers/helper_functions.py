@@ -194,6 +194,10 @@ class InfoChecker(object):
         if dialog.dialog_name == 'Jail CC Plea Dialog':
             total_jail_days = 0
             total_jail_days_suspended = 0
+            if dialog.entry_case_information.days_in_jail == "":
+                total_jail_days_credit = 0
+            else:
+                total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
             for charge in dialog.entry_case_information.charges_list:
                 if charge.jail_days == 'None':
                     charge.jail_days = 0
@@ -208,17 +212,18 @@ class InfoChecker(object):
                 message.exec()
                 return "Fail"
             if (
-                total_jail_days > total_jail_days_suspended
+                total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
                 and dialog.entry_case_information.jail_terms.ordered is False
             ):
                 message = WarningBox(
                     f"The total jail days imposed of {total_jail_days} is greater than the total "
-                    f"total jail days suspended of {total_jail_days_suspended} and the jail commitment terms "
-                    f"have not been entered. Do you want to set the Jail Commitment terms?")
+                    f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
+                    f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
+                    f"have not been entered. Do you want to set the Jail Reporting Terms?")
                 return_value = message.exec()
                 if return_value == QMessageBox.No:
                     return "Pass"
                 elif return_value == QMessageBox.Yes:
                     dialog.jail_checkBox.setChecked(True)
-                    dialog.start_add_conditions_dialog()
+                    dialog.start_jail_only_dialog()
         return "Pass"
