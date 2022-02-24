@@ -463,7 +463,7 @@ class CMS_FRALoader(CMSLoader):
         if self.cms_case.case_number is None:
             dialog.fra_in_file_box.setCurrentText("N/A")
         elif self.cms_case.case_number[2:5] == "CRB":
-            dialog.fra_in_file_box.setCurrentText("N/A")
+            dialog.fra_frame.setHidden(True)
         elif self.cms_case.fra_in_file in fra_value_dict:
             dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
