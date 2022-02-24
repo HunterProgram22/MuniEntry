@@ -155,17 +155,17 @@ class CriminalBaseDialog(BaseDialog):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected. The lambda function is used because it needs the dialog to be
         passed as an argument (dialog = self) and if it is connected without lambda it would be called on
-        dialog creation instead of upon button pressed."""
+        dialog creation instead of upon button clicked."""
         super().connect_signals_to_slots()
         self.clear_fields_case_Button.pressed.connect(
             lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
-        self.create_entry_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.create_entry_process(dialog))
+        self.create_entry_Button.clicked.connect(
+            lambda _bool, dialog=self: CriminalSlotFunctions.create_entry_process(_bool, dialog))
         try:
             """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
             eventually."""
-            self.print_entry_Button.pressed.connect(
-                lambda dialog=self: CriminalSlotFunctions.print_entry_process(dialog))
+            self.print_entry_Button.clicked.connect(
+                lambda _bool, dialog=self: CriminalSlotFunctions.print_entry_process(_bool, dialog))
         except AttributeError:
             pass
         self.close_dialog_Button.pressed.connect(
@@ -486,7 +486,7 @@ class CriminalSlotFunctions:
 
     @classmethod
     @logger.catch
-    def create_entry_process(cls, dialog):
+    def create_entry_process(cls, _bool, dialog):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
         update_info_and_perform_checks method (found in helper_functions.py)."""
         info_checks = cls.update_info_and_perform_checks(dialog)
@@ -495,7 +495,7 @@ class CriminalSlotFunctions:
 
     @classmethod
     @logger.catch
-    def print_entry_process(cls, dialog):
+    def print_entry_process(cls, _bool, dialog):
         info_checks = cls.update_info_and_perform_checks(dialog)
         if info_checks == "Pass":
             create_entry(dialog, print_doc=True)
