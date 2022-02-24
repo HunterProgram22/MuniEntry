@@ -8,10 +8,28 @@ from settings import ICON_PATH
 
 ATTORNEY_LIST = [
     "",
+    "Barshaunda Robinson",
+    "Brandon Shroy",
+    "Bryan Bowen",
+    "Chad Heald",
+    "Chad Hemminger",
     "Chris Junga",
+    "Chris Soon",
+    "Darren Meade",
+    "David Johnson",
+    "Edward Itayim",
+    "Eric Brehm",
     "Garrett Smith",
     "Jeff Uhrich",
-    "Barshaunda Robinson",
+    "Jeffrey Burkam",
+    "John Lloyd",
+    "Hillary Santiago-Burgos",
+    "Lois Palau",
+    "Michael Lerner",
+    "Robert Krapenc",
+    "Samuel Shamansky",
+    "Tod Brininger",
+    "S Welt",
 ]
 
 class ExtendedComboBox(QComboBox):
