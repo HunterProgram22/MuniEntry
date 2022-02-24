@@ -1,7 +1,7 @@
 from PyQt5 import QtCore
 from loguru import logger
 
-from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog
+from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog, AddJailOnlyDialog
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox
@@ -188,6 +188,15 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.update_case_information()
         AddConditionsDialog(self).exec()
 
+    @logger.catch
+    def start_jail_only_dialog(self):
+        """Opens the add conditions dialog as a modal window. It passes the
+        instance of the NoJailPleaDialog class (self) as an argument
+        so that the AddConditionsDialog can access all data from the
+        NoJailPleaDialog when working in the AddConditionsDialog."""
+        self.update_case_information()
+        AddJailOnlyDialog(self).exec()
+
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
@@ -215,8 +224,36 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.diversion_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        self.diversion_checkBox.toggled.connect(self.diversion_hide_costs_frame)
         self.impoundment_checkBox.toggled.connect(self.conditions_checkbox_toggle)
         self.victim_notification_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+
+    def diversion_hide_costs_frame(self):
+        """Sets the fines and costs due date fields to hidden."""
+        if self.costs_frame.isHidden():
+            self.costs_frame.setHidden(False)
+            self.add_conditions_label.setHidden(False)
+            self.community_control_checkBox.setHidden(False)
+            self.license_suspension_checkBox.setHidden(False)
+            self.impoundment_checkBox.setHidden(False)
+            self.community_service_checkBox.setHidden(False)
+            self.victim_notification_checkBox.setHidden(False)
+            # self.other_conditions_checkBox.setHidden(False)
+            self.jail_checkBox.setHidden(False)
+            self.jail_time_credit_frame.setHidden(False)
+            self.add_conditions_Button.setText("Add Jail Reporting and/or Additional Conditions")
+        else:
+            self.costs_frame.setHidden(True)
+            self.add_conditions_label.setHidden(True)
+            self.community_control_checkBox.setHidden(True)
+            self.license_suspension_checkBox.setHidden(True)
+            self.impoundment_checkBox.setHidden(True)
+            self.community_service_checkBox.setHidden(True)
+            self.victim_notification_checkBox.setHidden(True)
+            # self.other_conditions_checkBox.setHidden(True)
+            self.jail_checkBox.setHidden(True)
+            self.jail_time_credit_frame.setHidden(True)
+            self.add_conditions_Button.setText("Set Diversion Program and Due Dates")
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)

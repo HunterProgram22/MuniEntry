@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1099</y>
+        <y>0</y>
         <width>1140</width>
         <height>2079</height>
        </rect>
@@ -1043,6 +1043,9 @@ font-weight: bold;</string>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="1" column="1" rowspan="3">
@@ -1109,6 +1112,9 @@ font-weight: bold;</string>
            <widget class="QDateEdit" name="diversion_fine_pay_date_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
