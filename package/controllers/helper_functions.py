@@ -203,12 +203,24 @@ class InfoChecker(object):
             else:
                 total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
             for charge in dialog.entry_case_information.charges_list:
-                if charge.jail_days == 'None':
+                try:
+                    if charge.jail_days == 'None':
+                        charge.jail_days = 0
+                except ValueError:
                     charge.jail_days = 0
-                if charge.jail_days_suspended == 'None':
+                try:
+                    if charge.jail_days_suspended == 'None':
+                        charge.jail_days_suspended = 0
+                except ValueError:
                     charge.jail_days_suspended = 0
-                total_jail_days += int(charge.jail_days)
-                total_jail_days_suspended += int(charge.jail_days_suspended)
+                try:
+                    total_jail_days += int(charge.jail_days)
+                except ValueError:
+                    pass
+                try:
+                    total_jail_days_suspended += int(charge.jail_days_suspended)
+                except ValueError:
+                    pass
             if total_jail_days_suspended > total_jail_days:
                 message = RequiredBox(
                     f"The total number of jail days suspended is {total_jail_days_suspended} which is "
