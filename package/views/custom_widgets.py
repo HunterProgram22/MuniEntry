@@ -346,6 +346,20 @@ class WarningBox(QMessageBox):
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
+class JailWarningBox(QMessageBox):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Warning)
+        self.setWindowTitle("Warning - No Jail Report Date Set")
+        self.setText(self.message)
+        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+
 def main():
     pass
 

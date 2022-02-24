@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
-from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox
+from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox
 
 
 def set_document_name(dialog):
@@ -215,15 +215,20 @@ class InfoChecker(object):
                 total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
                 and dialog.entry_case_information.jail_terms.ordered is False
             ):
-                message = WarningBox(
+                message = JailWarningBox(
                     f"The total jail days imposed of {total_jail_days} is greater than the total "
                     f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
                     f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
-                    f"have not been entered. Do you want to set the Jail Reporting Terms?")
+                    f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
+                    f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
+                    f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
+                    f"entry so that you can change the number of jail days imposed/suspended/credited.")
                 return_value = message.exec()
                 if return_value == QMessageBox.No:
                     return "Pass"
                 elif return_value == QMessageBox.Yes:
                     dialog.jail_checkBox.setChecked(True)
                     dialog.start_jail_only_dialog()
+                elif return_value == QMessageBox.Cancel:
+                    return "Fail"
         return "Pass"
