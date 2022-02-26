@@ -136,13 +136,20 @@ class InfoChecker(object):
 
     @classmethod
     def check_additional_conditions_ordered(cls, dialog):
+        """TODO: This should be a method and the conditions_list should be passed based on the dialog so it only
+        loops over the items in that dialog."""
         conditions_list = [
             ("license_suspension", "license_type", "License Suspension"),
             ("community_service", "hours_of_service", "Community Service"),
             ("other_conditions", "terms", "Other Conditions"),
             ("community_control", "term_of_control", "Community Control"),
             ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
+            ("admin_license_suspension", "disposition", "Admin License Suspension"),
+            ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
+            ("no_contact", "name", "No Contact"),
+            ("custodial_supervision", "supervisor", "Custodial Supervision"),
             ("diversion", "program_name", "Diversion"),
+            # Domestic Violence Special Bond Condition needs to be added - but conditions don't work for method
         ]
         for condition_item in conditions_list:
             # Because dialog.entry_case_information is a model with all case conditions there is
