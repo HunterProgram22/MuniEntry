@@ -137,37 +137,32 @@ class InfoChecker(object):
     @classmethod
     def check_additional_conditions_ordered(cls, dialog):
         conditions_list = [
-            (dialog.entry_case_information.license_suspension.ordered,
-             dialog.entry_case_information.license_suspension.license_type,
-             "License Suspension"),
-            (dialog.entry_case_information.community_service.ordered,
-             dialog.entry_case_information.community_service.hours_of_service,
-             "Community Service"),
-            (dialog.entry_case_information.other_conditions.ordered,
-             dialog.entry_case_information.other_conditions.terms,
-             "Other Conditions"),
-            (dialog.entry_case_information.community_control.ordered,
-             dialog.entry_case_information.community_control.term_of_control,
-             "Community Control"),
-            (dialog.entry_case_information.impoundment.ordered,
-             dialog.entry_case_information.impoundment.vehicle_make_model,
-             "Immobilize/Impound"),
-            (dialog.entry_case_information.diversion.ordered,
-             dialog.entry_case_information.diversion.program_name,
-             "Diversion"),
+            ("license_suspension", "license_type", "License Suspension"),
+            ("community_service", "hours_of_service", "Community Service"),
+            ("other_conditions", "terms", "Other Conditions"),
+            ("community_control", "term_of_control", "Community Control"),
+            ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
+            ("diversion", "program_name", "Diversion"),
         ]
         for condition_item in conditions_list:
-            (condition_ordered, main_condition_set, description) = condition_item
+            # Because dialog.entry_case_information is a model with all case conditions there is
+            # apparently no need to check if it has that attribute (hasattr).
+            condition = getattr(dialog.entry_case_information, condition_item[0])
+            condition_ordered = getattr(condition, "ordered")
+            main_condition_set = getattr(condition, condition_item[1])
+            description = condition_item[2]
             if (
                 condition_ordered is True
                 and main_condition_set is None
             ):
                 message = RequiredBox(f"The Additional Condition {description} is checked, but "
-                                      f"the details of the {description} have not been entered. "
+                                      f"the details of the {description} have not been entered.\n\n"
                                       f"Click the Add Conditions button to add details, or uncheck the "
                                       f"{description} box if there is no {description} in this case.")
                 message.exec()
                 return "Fail"
+        """The bond_conditions_list for Victim Notification is used because of two checkboxes as only options, no 
+        ordered option like other conditions. TODO: figure out way to make it part of standard conditions list."""
         bool_conditions_list = [
             (dialog.entry_case_information.victim_notification.ordered,
              dialog.entry_case_information.victim_notification.victim_reparation_notice,
