@@ -197,9 +197,37 @@ class InfoChecker(object):
             return "Pass"
         if dialog.entry_case_information.community_control.driver_intervention_program is True:
             return "Pass"
-        if dialog.entry_case_information.currently_in_jail == 'Yes':
-            return "Pass"
         if dialog.dialog_name == 'Jail CC Plea Dialog':
+            if dialog.entry_case_information.currently_in_jail == 'Yes':
+                if dialog.entry_case_information.days_in_jail == '':
+                    message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
+                                          f"the number of Days In Jail is blank. \n\nPlease enter the number of "
+                                          f"Days In Jail and select whether to apply Jail Time Credit to "
+                                          f"Sentence or Costs and Fines.")
+                    message.exec()
+                    return "Fail"
+                elif dialog.entry_case_information.apply_jtc == '':
+                    message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
+                                          f"the Apply JTC to field is blank. \n\nPlease select whether to "
+                                          f"apply Jail Time Credit to Sentence or Costs and Fines.")
+                    message.exec()
+                    return "Fail"
+            elif dialog.entry_case_information.days_in_jail != '':
+                if dialog.entry_case_information.currently_in_jail == '':
+                    message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
+                                          f"does not indicate whether the Defendant is Currently In Jail. "
+                                          f"\n\nIs the Defendant currently in jail?")
+                    return_value = message.exec()
+                    if return_value == QMessageBox.No:
+                        dialog.in_jail_box.setCurrentText("No")
+                    elif return_value == QMessageBox.Yes:
+                        dialog.in_jail_box.setCurrentText("Yes")
+                if dialog.entry_case_information.apply_jtc == '':
+                    message = RequiredBox(f"The Days in Jail has been provided, but the Apply to JTC field "
+                                          f"is blank. \n\nPlease select whether to apply "
+                                          f"Jail Time Credit to Sentence or Costs and Fines.")
+                    message.exec()
+                    return "Fail"
             total_jail_days = 0
             total_jail_days_suspended = 0
             if dialog.entry_case_information.days_in_jail == "":
@@ -234,6 +262,7 @@ class InfoChecker(object):
             if (
                 total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
                 and dialog.entry_case_information.jail_terms.ordered is False
+                and dialog.entry_case_information.currently_in_jail == 'No'
             ):
                 message = JailWarningBox(
                     f"The total jail days imposed of {total_jail_days} is greater than the total "
@@ -251,4 +280,18 @@ class InfoChecker(object):
                     dialog.start_jail_only_dialog()
                 elif return_value == QMessageBox.Cancel:
                     return "Fail"
+            if (
+                    total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+                    and dialog.entry_case_information.jail_terms.ordered is True
+                    and dialog.entry_case_information.currently_in_jail == 'Yes'
+            ):
+                message = WarningBox(f"The Defendant is currently indicated as being in jail, "
+                                     f"but you set Jail Reporting Terms. \n\nAre you sure you want "
+                                     f"to set Jail Reporting Terms?")
+                return_value = message.exec()
+                if return_value == QMessageBox.No:
+                    dialog.jail_checkBox.setChecked(False)
+                    return "Pass"
+                elif return_value == QMessageBox.Yes:
+                    return "Pass"
         return "Pass"
