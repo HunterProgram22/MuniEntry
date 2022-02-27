@@ -195,6 +195,8 @@ class InfoChecker(object):
     def check_jail_days(cls, dialog):
         if dialog.entry_case_information.diversion.ordered is True:
             return "Pass"
+        if dialog.entry_case_information.community_control.driver_intervention_program is True:
+            return "Pass"
         if dialog.entry_case_information.currently_in_jail == 'Yes':
             return "Pass"
         if dialog.dialog_name == 'Jail CC Plea Dialog':

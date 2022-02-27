@@ -169,7 +169,7 @@ font-weight: bold;</string>
         <x>0</x>
         <y>0</y>
         <width>1140</width>
-        <height>2079</height>
+        <height>2046</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1289,6 +1289,30 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_6" columnstretch="2,0,0,0">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Report Type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QLineEdit" name="jail_report_days_notes_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Jail report days if not consecutive</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="report_date_label">
+            <property name="text">
+             <string>Report Date:</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="1">
            <widget class="QDateEdit" name="report_date_box">
             <property name="styleSheet">
@@ -1321,34 +1345,17 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="text">
-             <string>Report Type:</string>
+          <item row="7" column="0" colspan="2">
+           <widget class="Line" name="line_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="dip_checkBox">
+          <item row="4" column="0">
+           <widget class="QLabel" name="report_time_label">
             <property name="text">
-             <string>DIP Program in Lieu of 3 days Jail Time</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLineEdit" name="jail_report_days_notes_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="placeholderText">
-             <string>Jail report days if not consecutive</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="report_date_label">
-            <property name="text">
-             <string>Report Date:</string>
+             <string>Report Time:</string>
             </property>
            </widget>
           </item>
@@ -1369,33 +1376,24 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="2">
-           <widget class="Line" name="line_5">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="report_time_label">
-            <property name="text">
-             <string>Report Time:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QComboBox" name="jail_term_type_box">
+          <item row="5" column="1">
+           <widget class="QComboBox" name="jail_sentence_execution_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>concurrently</string>
+              <string>consecutive days</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>consecutively</string>
+              <string>intermittent days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>weekends (Friday evening to Monday morning)</string>
              </property>
             </item>
            </widget>
@@ -1432,50 +1430,45 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
-           <widget class="QComboBox" name="jail_sentence_execution_type_box">
+          <item row="9" column="1">
+           <widget class="QComboBox" name="jail_term_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>consecutive days</string>
+              <string>concurrently</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>intermittent days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>weekends (Friday evening to Monday morning)</string>
+              <string>consecutively</string>
              </property>
             </item>
            </widget>
           </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_11">
-            <property name="text">
-             <string>Type of Sentence Execution:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
+          <item row="9" column="0">
            <widget class="QLabel" name="consecutive_jail_days_label">
             <property name="text">
              <string>Jail Days in this Case to be Served Concurrent / Consecutive w/ Companion Cases:</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="8" column="0">
            <widget class="QCheckBox" name="companion_cases_checkBox">
             <property name="text">
              <string>Companion Cases (Check only if applicable)</string>
             </property>
            </widget>
           </item>
-          <item row="9" column="1">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_11">
+            <property name="text">
+             <string>Type of Sentence Execution:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
            <widget class="QLineEdit" name="companion_cases_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
