@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter
+from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, QInputDialog
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -387,11 +387,9 @@ class DataInputBox(QInputDialog):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Question)
-        self.setWindowTitle("Additional Information Required")
-        self.setText(self.message)
-        self.addLineEdit
-        self.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+        layout = QFormLayout()
+        self.box = QLineEdit()
+
 
 
 class JailWarningBox(QMessageBox):
