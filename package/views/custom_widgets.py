@@ -364,6 +364,21 @@ class WarningBox(QMessageBox):
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
+class TwoChoiceQuestionBox(QMessageBox):
+    def __init__(self, message, yes_choice, no_choice, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget(yes_choice, no_choice)
+
+    def set_up_widget(self, yes_choice, no_choice):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Question)
+        self.setWindowTitle("Additional Information Required")
+        self.setText(self.message)
+        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole)
+        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)
+
+
 class JailWarningBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)

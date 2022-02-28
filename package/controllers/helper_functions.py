@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
-from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox
+from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox, TwoChoiceQuestionBox
 
 
 def set_document_name(dialog):
@@ -207,27 +207,44 @@ class InfoChecker(object):
                     message.exec()
                     return "Fail"
                 elif dialog.entry_case_information.apply_jtc == '':
-                    message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
-                                          f"the Apply JTC to field is blank. \n\nPlease select whether to "
-                                          f"apply Jail Time Credit to Sentence or Costs and Fines.")
-                    message.exec()
-                    return "Fail"
+                    message = TwoChoiceQuestionBox(
+                        f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
+                        f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+                        "Sentence",
+                        "Costs and Fines"
+                    )
+                    return_value = message.exec()
+                    print(f"Apply to JTC return value is: {return_value}")
+                    if return_value == QMessageBox.Yes:
+                        dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+                    elif return_value == QMessageBox.Yes:
+                        dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
             elif dialog.entry_case_information.days_in_jail != '':
                 if dialog.entry_case_information.currently_in_jail == '':
                     message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
                                           f"does not indicate whether the Defendant is Currently In Jail. "
                                           f"\n\nIs the Defendant currently in jail?")
                     return_value = message.exec()
+                    print(f"Currently in jail return value is: {return_value}")
                     if return_value == QMessageBox.No:
                         dialog.in_jail_box.setCurrentText("No")
                     elif return_value == QMessageBox.Yes:
                         dialog.in_jail_box.setCurrentText("Yes")
                 if dialog.entry_case_information.apply_jtc == '':
-                    message = RequiredBox(f"The Days in Jail has been provided, but the Apply to JTC field "
-                                          f"is blank. \n\nPlease select whether to apply "
-                                          f"Jail Time Credit to Sentence or Costs and Fines.")
-                    message.exec()
-                    return "Fail"
+                    message = TwoChoiceQuestionBox(
+                        f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
+                        f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+                        "Sentence",
+                        "Costs and Fines"
+                    )
+                    return_value = message.exec() # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
+                    print(f"Apply to JTC return value is: {return_value}")
+                    print(f"QMessageBox.YesRole is {QMessageBox.YesRole}")
+                    print(f"QMessageBox.NoRole is {QMessageBox.NoRole}")
+                    if return_value == 0:
+                        dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+                    elif return_value == 1:
+                        dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
             total_jail_days = 0
             total_jail_days_suspended = 0
             if dialog.entry_case_information.days_in_jail == "":
@@ -253,9 +270,6 @@ class InfoChecker(object):
                     total_jail_days_suspended += int(charge.jail_days_suspended)
                 except ValueError:
                     pass
-            print(total_jail_days)
-            print(total_jail_days_suspended)
-            print(total_jail_days_credit)
             if total_jail_days_suspended > total_jail_days:
                 message = RequiredBox(
                     f"The total number of jail days suspended is {total_jail_days_suspended} which is "
