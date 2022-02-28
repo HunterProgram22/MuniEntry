@@ -379,6 +379,21 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.addButton(QPushButton(no_choice), QMessageBox.NoRole)
 
 
+class DataInputBox(QInputDialog):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Question)
+        self.setWindowTitle("Additional Information Required")
+        self.setText(self.message)
+        self.addLineEdit
+        self.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+
+
 class JailWarningBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)
