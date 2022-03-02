@@ -271,6 +271,8 @@ class InfoChecker(object):
 
     @classmethod
     def check_jail_time_credit_fields(cls, dialog):
+        """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
+        The custom message boxes need to be double checked for return values, see article link."""
         if dialog.entry_case_information.currently_in_jail == 'Yes':
 
             if dialog.entry_case_information.days_in_jail == '':
@@ -288,11 +290,10 @@ class InfoChecker(object):
                     "Sentence",
                     "Costs and Fines"
                 )
-                return_value = message.exec()
-                print(return_value)
-                if return_value == 5: # Return Value of a YesRole box = 5; Sentence is tied to YesRole
+                return_value = message.exec() # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
+                if return_value == 0:
                     dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-                elif return_value == 6: # Return Value of a NoRole box = 5; Costs and Fines is tied to NoRole
+                elif return_value == 1:
                     dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
         elif dialog.entry_case_information.days_in_jail != '':
