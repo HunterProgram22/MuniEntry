@@ -249,11 +249,13 @@ class LicenseSuspension:
     suspended_date: str = None
     suspension_term: str = None
     remedial_driving_class_required: bool = False
+    als_terminated: bool = False
     terms_list = [
         ("license_type", "license_type_box"),
         ("suspended_date", "license_suspension_date_box"),
         ("suspension_term", "term_of_suspension_box"),
         ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
+        ("als_terminated", "als_terminated_checkBox"),
     ]
 
 
