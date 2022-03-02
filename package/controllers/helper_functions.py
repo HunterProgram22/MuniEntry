@@ -199,7 +199,8 @@ class InfoChecker(object):
             return "Pass"
         if dialog.dialog_name != 'Jail CC Plea Dialog':
             return "Pass"
-        InfoChecker.check_jail_time_credit_fields(dialog)
+        if InfoChecker.check_jail_time_credit_fields(dialog) == "Fail":
+            return "Fail"
         total_jail_days = 0
         total_jail_days_suspended = 0
         if dialog.entry_case_information.days_in_jail == "":
@@ -288,9 +289,10 @@ class InfoChecker(object):
                     "Costs and Fines"
                 )
                 return_value = message.exec()
-                if return_value == QMessageBox.Yes:
+                print(return_value)
+                if return_value == 5: # Return Value of a YesRole box = 5; Sentence is tied to YesRole
                     dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-                elif return_value == QMessageBox.Yes:
+                elif return_value == 6: # Return Value of a NoRole box = 5; Costs and Fines is tied to NoRole
                     dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
         elif dialog.entry_case_information.days_in_jail != '':

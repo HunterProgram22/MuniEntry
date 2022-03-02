@@ -320,8 +320,8 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.setIcon(QMessageBox.Question)
         self.setWindowTitle("Additional Information Required")
         self.setText(self.message)
-        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole)
-        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)
+        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
+        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
 
 
 class DataInputBox(QInputDialog):
