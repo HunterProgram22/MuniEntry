@@ -336,7 +336,6 @@ class DataInputBox(QInputDialog):
         self.box = QLineEdit()
 
 
-
 class JailWarningBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)
