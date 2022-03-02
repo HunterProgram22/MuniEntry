@@ -354,21 +354,29 @@ class JailWarningBox(QMessageBox):
 # DataValidator Widgets
 class IntegerValidator(QLineEdit):
     def __init__(self, parent=None):
-        super(QLineEdit, self).__init__(parent)
+        super().__init__(parent)
         self.validator = QIntValidator(0, 1000, self)
         self.setValidator(self.validator)
 
 
-class FineLineEdit(IntegerValidator):
-    def __init__(self, offense=None, parent=None):
-        super(IntegerValidator, self).__init__(parent)
-        self.set_up_widget(offense)
+class ChargeGridIntegerWidget(IntegerValidator):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.set_up_widget()
 
-    def set_up_widget(self, offense):
+    def set_up_widget(self):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
+
+
+class FineLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, offense=None, parent=None):
+        super().__init__(parent)
         self.setObjectName("fines_amount")
+        self.set_fine_amount(offense)
+
+    def set_fine_amount(self, offense):
         if offense == "Seatbelt - Driver":
             self.setText("30")
         elif offense == "Seatbelt - Passenger":
@@ -379,40 +387,23 @@ class FineLineEdit(IntegerValidator):
             self.setText("")
 
 
-class FineSuspendedLineEdit(QLineEdit):
+class FineSuspendedLineEdit(ChargeGridIntegerWidget):
     def __init__(self, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        super().__init__(parent)
         self.setObjectName("fines_suspended")
 
 
-class JailLineEdit(QLineEdit):
+class JailLineEdit(ChargeGridIntegerWidget):
     def __init__(self, offense=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget(offense)
-
-    def set_up_widget(self, offense):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        super().__init__(parent)
         self.setObjectName("jail_days")
 
 
-class JailSuspendedLineEdit(QLineEdit):
+class JailSuspendedLineEdit(ChargeGridIntegerWidget):
     def __init__(self, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        super().__init__(parent)
         self.setObjectName("jail_days_suspended")
+
 
 def main():
     pass
