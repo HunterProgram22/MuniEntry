@@ -55,6 +55,18 @@ def check_if_days_in_jail_blank(dialog):
     return False
 
 
+def check_if_currently_in_jail_blank(dialog):
+    if dialog.entry_case_information.currently_in_jail == '':
+        message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
+                             f"does not indicate whether the Defendant is Currently In Jail. "
+                             f"\n\nIs the Defendant currently in jail?")
+        return_value = message.exec()
+        if return_value == QMessageBox.No:
+            dialog.in_jail_box.setCurrentText("No")
+        elif return_value == QMessageBox.Yes:
+            dialog.in_jail_box.setCurrentText("Yes")
+
+
 def check_if_apply_jtc_blank(dialog):
     """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
     The custom message boxes need to be double checked for return values, see article link."""
@@ -305,29 +317,8 @@ class InfoChecker(object):
                 return "Fail"
             check_if_apply_jtc_blank(dialog)
 
-
         elif dialog.entry_case_information.days_in_jail != '':
+            check_if_currently_in_jail_blank(dialog)
+            check_if_apply_jtc_blank(dialog)
 
-            if dialog.entry_case_information.currently_in_jail == '':
-                message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
-                                     f"does not indicate whether the Defendant is Currently In Jail. "
-                                     f"\n\nIs the Defendant currently in jail?")
-                return_value = message.exec()
-                print(f"Currently in jail return value is: {return_value}")
-                if return_value == QMessageBox.No:
-                    dialog.in_jail_box.setCurrentText("No")
-                elif return_value == QMessageBox.Yes:
-                    dialog.in_jail_box.setCurrentText("Yes")
 
-            if dialog.entry_case_information.apply_jtc == '':
-                message = TwoChoiceQuestionBox(
-                    f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
-                    f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
-                    "Sentence",
-                    "Costs and Fines"
-                )
-                return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
-                if return_value == 0:
-                    dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-                elif return_value == 1:
-                    dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
