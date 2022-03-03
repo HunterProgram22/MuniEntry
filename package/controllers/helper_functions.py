@@ -44,6 +44,34 @@ def set_future_date(days_to_add, days_to_add_dict, next_day):
     return total_days_to_add
 
 
+def check_if_days_in_jail_blank(dialog):
+    if dialog.entry_case_information.days_in_jail == '':
+        message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
+                              f"the number of Days In Jail is blank. \n\nPlease enter the number of "
+                              f"Days In Jail and select whether to apply Jail Time Credit to "
+                              f"Sentence or Costs and Fines.")
+        message.exec()
+        return True
+    return False
+
+
+def check_if_apply_jtc_blank(dialog):
+    """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
+    The custom message boxes need to be double checked for return values, see article link."""
+    if dialog.entry_case_information.apply_jtc == '':
+        message = TwoChoiceQuestionBox(
+            f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
+            f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+            "Sentence",
+            "Costs and Fines"
+        )
+        return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
+        if return_value == 0:
+            dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+        elif return_value == 1:
+            dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and
@@ -271,30 +299,12 @@ class InfoChecker(object):
 
     @classmethod
     def check_jail_time_credit_fields(cls, dialog):
-        """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
-        The custom message boxes need to be double checked for return values, see article link."""
+
         if dialog.entry_case_information.currently_in_jail == 'Yes':
-
-            if dialog.entry_case_information.days_in_jail == '':
-                message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
-                                      f"the number of Days In Jail is blank. \n\nPlease enter the number of "
-                                      f"Days In Jail and select whether to apply Jail Time Credit to "
-                                      f"Sentence or Costs and Fines.")
-                message.exec()
+            if check_if_days_in_jail_blank(dialog) is True:
                 return "Fail"
+            check_if_apply_jtc_blank(dialog)
 
-            elif dialog.entry_case_information.apply_jtc == '':
-                message = TwoChoiceQuestionBox(
-                    f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
-                    f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
-                    "Sentence",
-                    "Costs and Fines"
-                )
-                return_value = message.exec() # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
-                if return_value == 0:
-                    dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-                elif return_value == 1:
-                    dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
         elif dialog.entry_case_information.days_in_jail != '':
 
