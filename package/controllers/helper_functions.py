@@ -137,15 +137,27 @@ def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
 
 
 def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    print(total_jail_days, total_jail_days_suspended, total_jail_days_credit)
     if (
-            total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+            total_jail_days >= (total_jail_days_suspended + total_jail_days_credit)
             and dialog.entry_case_information.jail_terms.ordered is True
             and dialog.entry_case_information.currently_in_jail == 'Yes'
     ):
         message = WarningBox(f"The Defendant is currently indicated as being in jail, "
                              f"but you set Jail Reporting Terms. \n\nAre you sure you want "
                              f"to set Jail Reporting Terms?")
-        return message.exec()
+        unset_jail_reporting_terms(dialog, message.exec())
+    elif (
+            total_jail_days == (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is True
+            and dialog.entry_case_information.currently_in_jail == 'No'
+    ):
+        message = WarningBox(f"The total jail days imposed of {total_jail_days} is equal to the total jail days "
+                             f"suspended of {total_jail_days_suspended} and total jail time credit of "
+                             f"{total_jail_days_credit}. The Defendant does not appear to have any jail days left "
+                             f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
+                             f"Jail Reporting Terms?")
+        unset_jail_reporting_terms(dialog, message.exec())
 
 
 def unset_jail_reporting_terms(dialog, return_value):
@@ -325,8 +337,8 @@ class InfoChecker(object):
         jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
         if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
             return "Fail"
-        unset_jail = check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-        unset_jail_reporting_terms(dialog, unset_jail)
+        check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+
         return "Pass"
 
     @classmethod
