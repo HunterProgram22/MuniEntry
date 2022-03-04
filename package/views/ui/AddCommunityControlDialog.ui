@@ -166,10 +166,10 @@ font-weight: bold;</string>
      <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
-        <x>-90</x>
-        <y>-897</y>
+        <x>0</x>
+        <y>-953</y>
         <width>1053</width>
-        <height>2002</height>
+        <height>1971</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1569,12 +1569,12 @@ font-weight: bold;</string>
             </item>
             <item>
              <property name="text">
-              <string>hunting</string>
+              <string>concealed carry</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>concealed carry</string>
+              <string>hunting</string>
              </property>
             </item>
            </widget>
@@ -1622,6 +1622,9 @@ font-weight: bold;</string>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
             <item>
              <property name="text">
               <string>6 months</string>
@@ -1640,6 +1643,16 @@ font-weight: bold;</string>
             <item>
              <property name="text">
               <string>24 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>36 months</string>
              </property>
             </item>
            </widget>
