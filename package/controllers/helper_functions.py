@@ -255,13 +255,7 @@ class InfoChecker(object):
         if check_jail_time_credit_fields(dialog) == "Fail":
             return "Fail"
         total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
-
-        if dialog.entry_case_information.days_in_jail == "":
-            total_jail_days_credit = 0
-        else:
-            total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
-
-
+        total_jail_days_credit = cls.calculate_jail_days_credit(dialog)
 
         if total_jail_days_suspended > total_jail_days:
             message = RequiredBox(
@@ -305,6 +299,14 @@ class InfoChecker(object):
             elif return_value == QMessageBox.Yes:
                 return "Pass"
         return "Pass"
+
+    @classmethod
+    def calculate_jail_days_credit(cls, dialog):
+        if dialog.entry_case_information.days_in_jail == '':
+            total_jail_days_credit = 0
+        else:
+            total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
+        return total_jail_days_credit
 
     @classmethod
     def calculate_total_jail_days(cls, dialog):
