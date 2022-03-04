@@ -125,15 +125,44 @@ def check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_j
         return message.exec()
 
 
-def add_jail_reporting_terms(dialog, return_value):
-    if return_value == QMessageBox.No:
+def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
+    if jail_days_greater_than_zero == QMessageBox.No:
         return True
-    elif return_value == QMessageBox.Yes:
+    elif jail_days_greater_than_zero == QMessageBox.Yes:
         dialog.jail_checkBox.setChecked(True)
         dialog.start_jail_only_dialog()
         return True
-    elif return_value == QMessageBox.Cancel:
+    elif jail_days_greater_than_zero == QMessageBox.Cancel:
         return False
+
+
+def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    if (
+            total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is True
+            and dialog.entry_case_information.currently_in_jail == 'Yes'
+    ):
+        message = WarningBox(f"The Defendant is currently indicated as being in jail, "
+                             f"but you set Jail Reporting Terms. \n\nAre you sure you want "
+                             f"to set Jail Reporting Terms?")
+        return message.exec()
+
+
+def unset_jail_reporting_terms(dialog, return_value):
+        if return_value == QMessageBox.No:
+            dialog.jail_checkBox.setChecked(False)
+            return "Pass"
+        elif return_value == QMessageBox.Yes:
+            return "Pass"
+
+
+def stop_jail_check(dialog):
+    if dialog.entry_case_information.diversion.ordered is True:
+        return True
+    if dialog.entry_case_information.community_control.driver_intervention_program is True:
+        return True
+    if dialog.dialog_name != 'Jail CC Plea Dialog':
+        return True
 
 
 class InfoChecker(object):
@@ -285,11 +314,7 @@ class InfoChecker(object):
 
     @classmethod
     def check_jail_days(cls, dialog):
-        if dialog.entry_case_information.diversion.ordered is True:
-            return "Pass"
-        if dialog.entry_case_information.community_control.driver_intervention_program is True:
-            return "Pass"
-        if dialog.dialog_name != 'Jail CC Plea Dialog':
+        if stop_jail_check(dialog) is True:
             return "Pass"
         if check_jail_time_credit_fields(dialog) == "Fail":
             return "Fail"
@@ -300,23 +325,8 @@ class InfoChecker(object):
         jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
         if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
             return "Fail"
-
-
-
-        if (
-                total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
-                and dialog.entry_case_information.jail_terms.ordered is True
-                and dialog.entry_case_information.currently_in_jail == 'Yes'
-        ):
-            message = WarningBox(f"The Defendant is currently indicated as being in jail, "
-                                 f"but you set Jail Reporting Terms. \n\nAre you sure you want "
-                                 f"to set Jail Reporting Terms?")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                dialog.jail_checkBox.setChecked(False)
-                return "Pass"
-            elif return_value == QMessageBox.Yes:
-                return "Pass"
+        unset_jail = check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+        unset_jail_reporting_terms(dialog, unset_jail)
         return "Pass"
 
     @classmethod
