@@ -84,6 +84,19 @@ def check_if_apply_jtc_blank(dialog):
             dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
 
+def check_jail_time_credit_fields(dialog):
+    """Generates warning messages if certain required jail time credit fields have data, but other required
+    fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
+    generated because a user may enter no for currently in jail, but there may not be jail time credit."""
+    if dialog.entry_case_information.currently_in_jail == 'Yes':
+        if check_if_days_in_jail_blank(dialog) is True:
+            return "Fail"
+        check_if_apply_jtc_blank(dialog)
+    elif dialog.entry_case_information.days_in_jail != '':
+        check_if_currently_in_jail_blank(dialog)
+        check_if_apply_jtc_blank(dialog)
+
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and
@@ -239,7 +252,7 @@ class InfoChecker(object):
             return "Pass"
         if dialog.dialog_name != 'Jail CC Plea Dialog':
             return "Pass"
-        if InfoChecker.check_jail_time_credit_fields(dialog) == "Fail":
+        if check_jail_time_credit_fields(dialog) == "Fail":
             return "Fail"
         total_jail_days = 0
         total_jail_days_suspended = 0
@@ -308,18 +321,3 @@ class InfoChecker(object):
             elif return_value == QMessageBox.Yes:
                 return "Pass"
         return "Pass"
-
-    @classmethod
-    def check_jail_time_credit_fields(cls, dialog):
-        """Generates warning messages if certain required jail time credit fields have data, but other required
-        fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
-        generated because a user may enter no for currently in jail, but there may not be jail time credit."""
-        if dialog.entry_case_information.currently_in_jail == 'Yes':
-            if check_if_days_in_jail_blank(dialog) is True:
-                return "Fail"
-            check_if_apply_jtc_blank(dialog)
-        elif dialog.entry_case_information.days_in_jail != '':
-            check_if_currently_in_jail_blank(dialog)
-            check_if_apply_jtc_blank(dialog)
-
-
