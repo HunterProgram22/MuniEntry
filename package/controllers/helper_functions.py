@@ -311,12 +311,13 @@ class InfoChecker(object):
 
     @classmethod
     def check_jail_time_credit_fields(cls, dialog):
-
+        """Generates warning messages if certain required jail time credit fields have data, but other required
+        fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
+        generated because a user may enter no for currently in jail, but there may not be jail time credit."""
         if dialog.entry_case_information.currently_in_jail == 'Yes':
             if check_if_days_in_jail_blank(dialog) is True:
                 return "Fail"
             check_if_apply_jtc_blank(dialog)
-
         elif dialog.entry_case_information.days_in_jail != '':
             check_if_currently_in_jail_blank(dialog)
             check_if_apply_jtc_blank(dialog)
