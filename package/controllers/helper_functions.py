@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
-from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox
+from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox, TwoChoiceQuestionBox
 
 
 def set_document_name(dialog):
@@ -42,6 +42,138 @@ def set_future_date(days_to_add, days_to_add_dict, next_day):
     future_date = next_court_day(future_date, next_day)
     total_days_to_add = (future_date - today).days
     return total_days_to_add
+
+
+def check_if_days_in_jail_blank(dialog):
+    if dialog.entry_case_information.days_in_jail == '':
+        message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
+                              f"the number of Days In Jail is blank. \n\nPlease enter the number of "
+                              f"Days In Jail and select whether to apply Jail Time Credit to "
+                              f"Sentence or Costs and Fines.")
+        message.exec()
+        return True
+    return False
+
+
+def check_if_currently_in_jail_blank(dialog):
+    if dialog.entry_case_information.currently_in_jail == '':
+        message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
+                             f"does not indicate whether the Defendant is Currently In Jail. "
+                             f"\n\nIs the Defendant currently in jail?")
+        return_value = message.exec()
+        if return_value == QMessageBox.No:
+            dialog.in_jail_box.setCurrentText("No")
+        elif return_value == QMessageBox.Yes:
+            dialog.in_jail_box.setCurrentText("Yes")
+
+
+def check_if_apply_jtc_blank(dialog):
+    """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
+    The custom message boxes need to be double checked for return values, see article link."""
+    if dialog.entry_case_information.apply_jtc == '':
+        message = TwoChoiceQuestionBox(
+            f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
+            f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+            "Sentence",
+            "Costs and Fines"
+        )
+        return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
+        if return_value == 0:
+            dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+        elif return_value == 1:
+            dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+
+
+def check_jail_time_credit_fields(dialog):
+    """Generates warning messages if certain required jail time credit fields have data, but other required
+    fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
+    generated because a user may enter no for currently in jail, but there may not be jail time credit."""
+    if dialog.entry_case_information.currently_in_jail == 'Yes':
+        if check_if_days_in_jail_blank(dialog) is True:
+            return "Fail"
+        check_if_apply_jtc_blank(dialog)
+    elif dialog.entry_case_information.days_in_jail != '':
+        check_if_currently_in_jail_blank(dialog)
+        check_if_apply_jtc_blank(dialog)
+
+
+def check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended):
+    if total_jail_days_suspended > total_jail_days:
+        message = RequiredBox(
+            f"The total number of jail days suspended is {total_jail_days_suspended} which is "
+            f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
+        message.exec()
+        return True
+    return False
+
+
+def check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    if (
+            total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is False
+            and (
+            dialog.entry_case_information.currently_in_jail == 'No' or dialog.entry_case_information.currently_in_jail == '')
+    ):
+        message = JailWarningBox(
+            f"The total jail days imposed of {total_jail_days} is greater than the total "
+            f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
+            f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
+            f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
+            f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
+            f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
+            f"entry so that you can change the number of jail days imposed/suspended/credited.")
+        return message.exec()
+
+
+def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
+    if jail_days_greater_than_zero == QMessageBox.No:
+        return True
+    elif jail_days_greater_than_zero == QMessageBox.Yes:
+        dialog.jail_checkBox.setChecked(True)
+        dialog.start_jail_only_dialog()
+        return True
+    elif jail_days_greater_than_zero == QMessageBox.Cancel:
+        return False
+
+
+def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    if (
+            total_jail_days >= (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is True
+            and dialog.entry_case_information.currently_in_jail == 'Yes'
+    ):
+        message = WarningBox(f"The Defendant is currently indicated as being in jail, "
+                             f"but you set Jail Reporting Terms. \n\nAre you sure you want "
+                             f"to set Jail Reporting Terms?")
+        unset_jail_reporting_terms(dialog, message.exec())
+    elif (
+            total_jail_days == (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is True
+            and dialog.entry_case_information.currently_in_jail == 'No'
+    ):
+        message = WarningBox(f"The total jail days imposed of {total_jail_days} is equal to the total jail days "
+                             f"suspended of {total_jail_days_suspended} and total jail time credit of "
+                             f"{total_jail_days_credit}. The Defendant does not appear to have any jail days left "
+                             f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
+                             f"Jail Reporting Terms?")
+        unset_jail_reporting_terms(dialog, message.exec())
+
+
+def unset_jail_reporting_terms(dialog, return_value):
+        if return_value == QMessageBox.No:
+            dialog.jail_checkBox.setChecked(False)
+            return "Pass"
+        elif return_value == QMessageBox.Yes:
+            return "Pass"
+
+
+def stop_jail_check(dialog):
+    if dialog.dialog_name != 'Jail CC Plea Dialog':
+        return True
+    if dialog.entry_case_information.diversion.ordered is True:
+        return True
+    if dialog.entry_case_information.community_control.driver_intervention_program is True:
+        return True
 
 
 class InfoChecker(object):
@@ -136,13 +268,20 @@ class InfoChecker(object):
 
     @classmethod
     def check_additional_conditions_ordered(cls, dialog):
+        """TODO: This should be a method and the conditions_list should be passed based on the dialog so it only
+        loops over the items in that dialog."""
         conditions_list = [
             ("license_suspension", "license_type", "License Suspension"),
             ("community_service", "hours_of_service", "Community Service"),
             ("other_conditions", "terms", "Other Conditions"),
             ("community_control", "term_of_control", "Community Control"),
             ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
+            ("admin_license_suspension", "disposition", "Admin License Suspension"),
+            ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
+            ("no_contact", "name", "No Contact"),
+            ("custodial_supervision", "supervisor", "Custodial Supervision"),
             ("diversion", "program_name", "Diversion"),
+            # Domestic Violence Special Bond Condition needs to be added - but conditions don't work for method
         ]
         for condition_item in conditions_list:
             # Because dialog.entry_case_information is a model with all case conditions there is
@@ -161,13 +300,17 @@ class InfoChecker(object):
                                       f"{description} box if there is no {description} in this case.")
                 message.exec()
                 return "Fail"
-        """The bond_conditions_list for Victim Notification is used because of two checkboxes as only options, no 
+        """The bond_conditions_list for Victim Notification and Domestic Violence is used because of two checkboxes as only options, no 
         ordered option like other conditions. TODO: figure out way to make it part of standard conditions list."""
         bool_conditions_list = [
             (dialog.entry_case_information.victim_notification.ordered,
              dialog.entry_case_information.victim_notification.victim_reparation_notice,
              dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
              "Victim Notification"),
+            (dialog.entry_case_information.domestic_violence_conditions.ordered,
+             dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
+             dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+             "Domestic Violence Restrictions"),
         ]
         for bool_condition_item in bool_conditions_list:
             (bool_condition_ordered, bool_condition_one, bool_condition_two, description) = bool_condition_item
@@ -186,60 +329,38 @@ class InfoChecker(object):
 
     @classmethod
     def check_jail_days(cls, dialog):
-        if dialog.entry_case_information.diversion.ordered is True:
+        if stop_jail_check(dialog) is True:
             return "Pass"
-        if dialog.entry_case_information.currently_in_jail == 'Yes':
-            return "Pass"
-        if dialog.dialog_name == 'Jail CC Plea Dialog':
-            total_jail_days = 0
-            total_jail_days_suspended = 0
-            if dialog.entry_case_information.days_in_jail == "":
-                total_jail_days_credit = 0
-            else:
-                total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
-            for charge in dialog.entry_case_information.charges_list:
-                try:
-                    if charge.jail_days == 'None':
-                        charge.jail_days = 0
-                except ValueError:
-                    charge.jail_days = 0
-                try:
-                    if charge.jail_days_suspended == 'None':
-                        charge.jail_days_suspended = 0
-                except ValueError:
-                    charge.jail_days_suspended = 0
-                try:
-                    total_jail_days += int(charge.jail_days)
-                except ValueError:
-                    pass
-                try:
-                    total_jail_days_suspended += int(charge.jail_days_suspended)
-                except ValueError:
-                    pass
-            if total_jail_days_suspended > total_jail_days:
-                message = RequiredBox(
-                    f"The total number of jail days suspended is {total_jail_days_suspended} which is "
-                    f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
-                message.exec()
-                return "Fail"
-            if (
-                total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
-                and dialog.entry_case_information.jail_terms.ordered is False
-            ):
-                message = JailWarningBox(
-                    f"The total jail days imposed of {total_jail_days} is greater than the total "
-                    f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
-                    f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
-                    f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
-                    f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
-                    f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
-                    f"entry so that you can change the number of jail days imposed/suspended/credited.")
-                return_value = message.exec()
-                if return_value == QMessageBox.No:
-                    return "Pass"
-                elif return_value == QMessageBox.Yes:
-                    dialog.jail_checkBox.setChecked(True)
-                    dialog.start_jail_only_dialog()
-                elif return_value == QMessageBox.Cancel:
-                    return "Fail"
+        if check_jail_time_credit_fields(dialog) == "Fail":
+            return "Fail"
+        total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
+        total_jail_days_credit = cls.calculate_jail_days_credit(dialog)
+        if check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended) is True:
+            return "Fail"
+        jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+        if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
+            return "Fail"
+        check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
         return "Pass"
+
+    @classmethod
+    def calculate_jail_days_credit(cls, dialog):
+        if dialog.entry_case_information.days_in_jail == '':
+            total_jail_days_credit = 0
+        else:
+            total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
+        return total_jail_days_credit
+
+    @classmethod
+    def calculate_total_jail_days(cls, dialog):
+        total_jail_days, total_jail_days_suspended = (0, 0)
+        for charge in dialog.entry_case_information.charges_list:
+            try:
+                total_jail_days += int(charge.jail_days)
+            except ValueError:
+                pass
+            try:
+                total_jail_days_suspended += int(charge.jail_days_suspended)
+            except ValueError:
+                pass
+        return total_jail_days, total_jail_days_suspended

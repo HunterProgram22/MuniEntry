@@ -269,7 +269,6 @@ class JailTerms:
     jail_report_days_notes: str = None
     jail_term_type: str = None
     jail_sentence_execution_type: str = None
-    dip_ordered: bool = False
     companion_cases_exist: bool = False
     companion_case_numbers: str = None
     terms_list = [
@@ -279,7 +278,6 @@ class JailTerms:
         ("jail_term_type", "jail_term_type_box"),
         ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
         ("jail_report_days_notes", "jail_report_days_notes_box"),
-        ("dip_ordered", "dip_checkBox"),
         ("companion_case_numbers", "companion_cases_box"),
         ("companion_cases_exist", "companion_cases_checkBox"),
     ]

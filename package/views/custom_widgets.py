@@ -1,6 +1,7 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter
+from PyQt5.QtGui import QIntValidator
+from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, QInputDialog
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -162,62 +163,6 @@ class FindingComboBox(QComboBox):
         self.addItem("Not Guilty - Allied Offense")
 
 
-class FineLineEdit(QLineEdit):
-    def __init__(self, offense=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget(offense)
-
-    def set_up_widget(self, offense):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setObjectName("fines_amount")
-        if offense == "Seatbelt - Driver":
-            self.setText("30")
-        elif offense == "Seatbelt - Passenger":
-            self.setText("20")
-        elif offense == "Failure to Stop for School Bus":
-            self.setText("500")
-        else:
-            self.setText("")
-
-
-class FineSuspendedLineEdit(QLineEdit):
-    def __init__(self, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setObjectName("fines_suspended")
-
-
-class JailLineEdit(QLineEdit):
-    def __init__(self, offense=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget(offense)
-
-    def set_up_widget(self, offense):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setObjectName("jail_days")
-
-
-class JailSuspendedLineEdit(QLineEdit):
-    def __init__(self, parent=None):
-        super(QLineEdit, self).__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setObjectName("jail_days_suspended")
-
-
 class DeleteButton(QPushButton):
     def __init__(self, parent=None):
         super(QPushButton, self).__init__(parent)
@@ -364,6 +309,33 @@ class WarningBox(QMessageBox):
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
+class TwoChoiceQuestionBox(QMessageBox):
+    def __init__(self, message, yes_choice, no_choice, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget(yes_choice, no_choice)
+
+    def set_up_widget(self, yes_choice, no_choice):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setIcon(QMessageBox.Question)
+        self.setWindowTitle("Additional Information Required")
+        self.setText(self.message)
+        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
+        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
+
+
+class DataInputBox(QInputDialog):
+    def __init__(self, message, parent=None):
+        super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        layout = QFormLayout()
+        self.box = QLineEdit()
+
+
 class JailWarningBox(QMessageBox):
     def __init__(self, message, parent=None):
         super(QMessageBox, self).__init__(parent)
@@ -376,6 +348,66 @@ class JailWarningBox(QMessageBox):
         self.setWindowTitle("Warning - No Jail Report Date Set")
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+
+
+# DataValidator Widgets
+class IntegerValidator(QLineEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.validator = QIntValidator(0, 1000, self)
+        self.setValidator(self.validator)
+
+
+class ChargeGridIntegerWidget(IntegerValidator):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.setMinimumSize(QtCore.QSize(200, 0))
+        self.setMaximumSize(QtCore.QSize(200, 50))
+        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+
+
+class FineLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, offense=None, parent=None):
+        super().__init__(parent)
+        self.setObjectName("fines_amount")
+        self.set_fine_amount(offense)
+
+    def set_fine_amount(self, offense):
+        if offense == "Seatbelt - Driver":
+            self.setText("30")
+        elif offense == "Seatbelt - Passenger":
+            self.setText("20")
+        elif offense == "Failure to Stop for School Bus":
+            self.setText("500")
+        else:
+            self.setText("")
+
+
+class FineSuspendedLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("fines_suspended")
+
+
+class JailLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, offense=None, parent=None):
+        super().__init__(parent)
+        self.setObjectName("jail_days")
+
+
+class JailSuspendedLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("jail_days_suspended")
+
+
+class JailTimeCreditLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("jail_time_credit_box")
 
 
 def main():
