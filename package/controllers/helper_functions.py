@@ -107,6 +107,35 @@ def check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_da
     return False
 
 
+def check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    if (
+            total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
+            and dialog.entry_case_information.jail_terms.ordered is False
+            and (
+            dialog.entry_case_information.currently_in_jail == 'No' or dialog.entry_case_information.currently_in_jail == '')
+    ):
+        message = JailWarningBox(
+            f"The total jail days imposed of {total_jail_days} is greater than the total "
+            f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
+            f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
+            f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
+            f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
+            f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
+            f"entry so that you can change the number of jail days imposed/suspended/credited.")
+        return message.exec()
+
+
+def add_jail_reporting_terms(dialog, return_value):
+    if return_value == QMessageBox.No:
+        return True
+    elif return_value == QMessageBox.Yes:
+        dialog.jail_checkBox.setChecked(True)
+        dialog.start_jail_only_dialog()
+        return True
+    elif return_value == QMessageBox.Cancel:
+        return False
+
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and
@@ -266,31 +295,14 @@ class InfoChecker(object):
             return "Fail"
         total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
         total_jail_days_credit = cls.calculate_jail_days_credit(dialog)
-
         if check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended) is True:
             return "Fail"
+        jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+        if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
+            return "Fail"
 
-        if (
-            total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
-            and dialog.entry_case_information.jail_terms.ordered is False
-            and (dialog.entry_case_information.currently_in_jail == 'No' or dialog.entry_case_information.currently_in_jail == '')
-        ):
-            message = JailWarningBox(
-                f"The total jail days imposed of {total_jail_days} is greater than the total "
-                f"jail days suspended of {total_jail_days_suspended} and the total jail time credit applied "
-                f"to the sentence of {total_jail_days_credit}, and the Jail Reporting Terms "
-                f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
-                f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
-                f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
-                f"entry so that you can change the number of jail days imposed/suspended/credited.")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                return "Pass"
-            elif return_value == QMessageBox.Yes:
-                dialog.jail_checkBox.setChecked(True)
-                dialog.start_jail_only_dialog()
-            elif return_value == QMessageBox.Cancel:
-                return "Fail"
+
+
         if (
                 total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
                 and dialog.entry_case_information.jail_terms.ordered is True
