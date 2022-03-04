@@ -137,7 +137,6 @@ def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
 
 
 def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
-    print(total_jail_days, total_jail_days_suspended, total_jail_days_credit)
     if (
             total_jail_days >= (total_jail_days_suspended + total_jail_days_credit)
             and dialog.entry_case_information.jail_terms.ordered is True
