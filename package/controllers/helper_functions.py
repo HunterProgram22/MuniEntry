@@ -157,11 +157,11 @@ def unset_jail_reporting_terms(dialog, return_value):
 
 
 def stop_jail_check(dialog):
+    if dialog.dialog_name != 'Jail CC Plea Dialog':
+        return True
     if dialog.entry_case_information.diversion.ordered is True:
         return True
     if dialog.entry_case_information.community_control.driver_intervention_program is True:
-        return True
-    if dialog.dialog_name != 'Jail CC Plea Dialog':
         return True
 
 
