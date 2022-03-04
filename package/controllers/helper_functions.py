@@ -338,7 +338,6 @@ class InfoChecker(object):
         if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
             return "Fail"
         check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-
         return "Pass"
 
     @classmethod
