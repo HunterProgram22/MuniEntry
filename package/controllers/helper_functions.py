@@ -97,6 +97,16 @@ def check_jail_time_credit_fields(dialog):
         check_if_apply_jtc_blank(dialog)
 
 
+def check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended):
+    if total_jail_days_suspended > total_jail_days:
+        message = RequiredBox(
+            f"The total number of jail days suspended is {total_jail_days_suspended} which is "
+            f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
+        message.exec()
+        return True
+    return False
+
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and
@@ -257,12 +267,9 @@ class InfoChecker(object):
         total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
         total_jail_days_credit = cls.calculate_jail_days_credit(dialog)
 
-        if total_jail_days_suspended > total_jail_days:
-            message = RequiredBox(
-                f"The total number of jail days suspended is {total_jail_days_suspended} which is "
-                f"greater than the total jail days imposed of {total_jail_days}. Please correct.")
-            message.exec()
+        if check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended) is True:
             return "Fail"
+
         if (
             total_jail_days > (total_jail_days_suspended + total_jail_days_credit)
             and dialog.entry_case_information.jail_terms.ordered is False
