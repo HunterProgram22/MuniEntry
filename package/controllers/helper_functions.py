@@ -300,13 +300,17 @@ class InfoChecker(object):
                                       f"{description} box if there is no {description} in this case.")
                 message.exec()
                 return "Fail"
-        """The bond_conditions_list for Victim Notification is used because of two checkboxes as only options, no 
+        """The bond_conditions_list for Victim Notification and Domestic Violence is used because of two checkboxes as only options, no 
         ordered option like other conditions. TODO: figure out way to make it part of standard conditions list."""
         bool_conditions_list = [
             (dialog.entry_case_information.victim_notification.ordered,
              dialog.entry_case_information.victim_notification.victim_reparation_notice,
              dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
              "Victim Notification"),
+            (dialog.entry_case_information.domestic_violence_conditions.ordered,
+             dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
+             dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+             "Domestic Violence Restrictions"),
         ]
         for bool_condition_item in bool_conditions_list:
             (bool_condition_ordered, bool_condition_one, bool_condition_two, description) = bool_condition_item
