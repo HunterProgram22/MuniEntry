@@ -1,10 +1,11 @@
 from PyQt5 import QtCore
+from PyQt5.QtGui import QIntValidator
 from loguru import logger
 
 from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog, AddJailOnlyDialog
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
-from package.views.custom_widgets import InfoBox
+from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
@@ -203,6 +204,10 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
+
+        self.validator = QIntValidator(0, 1000, self)
+        self.jail_time_credit_box.setValidator(self.validator)
+
         self.additional_conditions_list = [
             ("community_control_checkBox", self.entry_case_information.community_control),
             ("license_suspension_checkBox", self.entry_case_information.license_suspension),

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>819</width>
-    <height>680</height>
+    <width>1010</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>880</width>
-        <height>751</height>
+        <width>990</width>
+        <height>762</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">

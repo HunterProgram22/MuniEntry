@@ -404,6 +404,12 @@ class JailSuspendedLineEdit(ChargeGridIntegerWidget):
         self.setObjectName("jail_days_suspended")
 
 
+class JailTimeCreditLineEdit(ChargeGridIntegerWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setObjectName("jail_time_credit_box")
+
+
 def main():
     pass
 
