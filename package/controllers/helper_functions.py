@@ -254,31 +254,15 @@ class InfoChecker(object):
             return "Pass"
         if check_jail_time_credit_fields(dialog) == "Fail":
             return "Fail"
-        total_jail_days = 0
-        total_jail_days_suspended = 0
+        total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
+
         if dialog.entry_case_information.days_in_jail == "":
             total_jail_days_credit = 0
         else:
             total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
-        for charge in dialog.entry_case_information.charges_list:
-            try:
-                if charge.jail_days == 'None':
-                    charge.jail_days = 0
-            except ValueError:
-                charge.jail_days = 0
-            try:
-                if charge.jail_days_suspended == 'None':
-                    charge.jail_days_suspended = 0
-            except ValueError:
-                charge.jail_days_suspended = 0
-            try:
-                total_jail_days += int(charge.jail_days)
-            except ValueError:
-                pass
-            try:
-                total_jail_days_suspended += int(charge.jail_days_suspended)
-            except ValueError:
-                pass
+
+
+
         if total_jail_days_suspended > total_jail_days:
             message = RequiredBox(
                 f"The total number of jail days suspended is {total_jail_days_suspended} which is "
@@ -321,3 +305,17 @@ class InfoChecker(object):
             elif return_value == QMessageBox.Yes:
                 return "Pass"
         return "Pass"
+
+    @classmethod
+    def calculate_total_jail_days(cls, dialog):
+        total_jail_days, total_jail_days_suspended = (0, 0)
+        for charge in dialog.entry_case_information.charges_list:
+            try:
+                total_jail_days += int(charge.jail_days)
+            except ValueError:
+                pass
+            try:
+                total_jail_days_suspended += int(charge.jail_days_suspended)
+            except ValueError:
+                pass
+        return total_jail_days, total_jail_days_suspended
