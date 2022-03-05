@@ -153,11 +153,6 @@ class CriminalBaseDialog(BaseDialog):
         self.delete_button_list = []
         self.amend_button_list = []
 
-    # def modify_view(self):
-    #     self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-    #     if self.case_table == "final_pretrials":
-    #         self.appearance_reason_box.setCurrentText("change of plea")
-
     def connect_signals_to_slots(self):
         """This method extends the base_dialog method to add additional signals
         and slots to be connected. The lambda function is used because it needs the dialog to be
