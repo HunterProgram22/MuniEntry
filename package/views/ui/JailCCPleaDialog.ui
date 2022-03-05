@@ -1136,6 +1136,7 @@ font-weight: bold;</string>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>appearance_reason_box</tabstop>
   <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>defense_counsel_type_box</tabstop>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
@@ -1144,13 +1145,21 @@ font-weight: bold;</string>
   <tabstop>balance_due_date</tabstop>
   <tabstop>fra_in_file_box</tabstop>
   <tabstop>fra_in_court_box</tabstop>
+  <tabstop>diversion_checkBox</tabstop>
+  <tabstop>jail_checkBox</tabstop>
   <tabstop>community_control_checkBox</tabstop>
-  <tabstop>add_conditions_Button</tabstop>
+  <tabstop>license_suspension_checkBox</tabstop>
+  <tabstop>impoundment_checkBox</tabstop>
+  <tabstop>community_service_checkBox</tabstop>
+  <tabstop>victim_notification_checkBox</tabstop>
+  <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>in_jail_box</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
-  <tabstop>create_entry_Button</tabstop>
+  <tabstop>add_conditions_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
   <tabstop>scrollArea</tabstop>
+  <tabstop>add_charge_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>
