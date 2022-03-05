@@ -106,29 +106,33 @@ class BaseDialog(QDialog):
         """Function that loops through a list of fields and transfers the data in the field
         to the appropriate model attribute. The function uses the appropriate pyqt method for the field type.
         Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)"""
+        item[1] = view field that contains the data)
+
+        The try/except block accounts for dialogs that may not have an attribute from a terms_list."""
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
-            if isinstance(getattr(self, view_field), QComboBox):
-                setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
-            elif isinstance(getattr(self, view_field), QCheckBox):
-                setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
-            elif isinstance(getattr(self, view_field), QLineEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).text())
-            elif isinstance(getattr(self, view_field), QTextEdit):
-                plain_text = getattr(self, view_field).toPlainText()
-                try:
-                    if plain_text[-1] == '.':
-                        plain_text = plain_text[:-1]
-                except IndexError:
-                    pass
-                setattr(terms_object, model_attribute, plain_text)
-            elif isinstance(getattr(self, view_field), QDateEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).date().toString("MMMM dd, yyyy"))
-            elif isinstance(getattr(self, view_field), QTimeEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).time().toString("hh:mm A"))
-
+            try:
+                if isinstance(getattr(self, view_field), QComboBox):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
+                elif isinstance(getattr(self, view_field), QCheckBox):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+                elif isinstance(getattr(self, view_field), QLineEdit):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).text())
+                elif isinstance(getattr(self, view_field), QTextEdit):
+                    plain_text = getattr(self, view_field).toPlainText()
+                    try:
+                        if plain_text[-1] == '.':
+                            plain_text = plain_text[:-1]
+                    except IndexError:
+                        pass
+                    setattr(terms_object, model_attribute, plain_text)
+                elif isinstance(getattr(self, view_field), QDateEdit):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).date().toString("MMMM dd, yyyy"))
+                elif isinstance(getattr(self, view_field), QTimeEdit):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).time().toString("hh:mm A"))
+            except AttributeError:
+                pass
 
 class CriminalBaseDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
