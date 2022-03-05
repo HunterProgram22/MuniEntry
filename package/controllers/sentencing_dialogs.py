@@ -28,24 +28,12 @@ class CriminalSentencingDialog(CriminalBaseDialog):
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
 
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.community_service_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.connect_plea_signals_and_slots()
+    # @logger.catch
+    # def connect_signals_to_slots(self):
+    #     """The method connects additional signals to slots. That are not
+    #     included in the BaseDialog."""
+    #     super().connect_signals_to_slots()
 
-    def connect_plea_signals_and_slots(self):
-        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
-        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
-        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
-        self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
     def update_case_information(self):

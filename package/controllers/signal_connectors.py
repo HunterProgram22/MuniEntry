@@ -25,20 +25,34 @@ class BaseDialogSignalConnector(object):
         dialog.guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
         dialog.no_contest_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
 
+    def connect_court_cost_signals(self, dialog):
+        dialog.ability_to_pay_box.currentTextChanged.connect(dialog.set_pay_date)
+        dialog.costs_and_fines_Button.clicked.connect(dialog.show_costs_and_fines)
+
+    def connect_main_additional_condition_signals(self, dialog):
+        dialog.license_suspension_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
+        dialog.community_service_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
+        dialog.other_conditions_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
+        dialog.add_conditions_Button.pressed.connect(dialog.start_add_conditions_dialog)
+
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.connect_fra_signals(dialog)
         self.connect_plea_all_button_signals(dialog)
+        self.connect_fra_signals(dialog)
+        self.connect_court_cost_signals(dialog)
+        self.connect_main_additional_condition_signals(dialog)
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.set_fines_credit_for_jail_field)
 
 
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.connect_fra_signals(dialog)
         self.connect_plea_all_button_signals(dialog)
+        self.connect_fra_signals(dialog)
+        self.connect_court_cost_signals(dialog)
+        self.connect_main_additional_condition_signals(dialog)
         dialog.jail_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
         dialog.community_control_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
         dialog.impoundment_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
@@ -48,8 +62,8 @@ class JailCCDialogSignalConnector(BaseDialogSignalConnector):
 class DiversionDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.connect_fra_signals(dialog)
         self.connect_plea_all_button_signals(dialog)
+        self.connect_fra_signals(dialog)
         dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.show_jail_report_date_box)
         dialog.other_conditions_checkBox.toggled.connect(dialog.show_other_conditions_box)
 
