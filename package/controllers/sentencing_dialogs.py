@@ -208,6 +208,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
         self.dialog_name = 'Diversion Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.entry_case_information.diversion.ordered = True
         self.load_cms_data_to_view()
 
     @logger.catch

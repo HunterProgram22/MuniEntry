@@ -287,7 +287,6 @@ class InfoChecker(object):
             ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
             ("no_contact", "name", "No Contact"),
             ("custodial_supervision", "supervisor", "Custodial Supervision"),
-            ("diversion", "program_name", "Diversion"),
             # Domestic Violence Special Bond Condition needs to be added - but conditions don't work for method
         ]
         for condition_item in conditions_list:
