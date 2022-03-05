@@ -5,12 +5,21 @@ be updated each time a view file is recompiled through the pyuic5 command."""
 from loguru import logger
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
+from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
+from PyQt5 import QtGui
 
 from package.controllers.helper_functions import set_future_date
 
 
 class BaseDialogViewModifier(object):
     def __init__(self, dialog):
+        dialog.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
+        dialog.setWindowFlags(dialog.windowFlags() |
+                            QtCore.Qt.CustomizeWindowHint |
+                            QtCore.Qt.WindowMaximizeButtonHint |
+                            QtCore.Qt.WindowCloseButtonHint)
+        dialog.setupUi(dialog)
         dialog.plea_trial_date.setDate(QtCore.QDate.currentDate())
         if dialog.case_table == "final_pretrials":
             dialog.appearance_reason_box.setCurrentText("change of plea")
