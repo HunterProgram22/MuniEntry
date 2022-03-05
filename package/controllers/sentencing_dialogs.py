@@ -13,6 +13,7 @@ from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
+from package.controllers.diversion_classes import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -214,13 +215,30 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.load_cms_data_to_view()
 
     def modify_view(self):
-        super().modify_view()
-        diversion_pay_days_to_add = set_future_date(97, None, 1)
-        self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
-        jail_report_days_to_add = set_future_date(97, None, 4)
-        self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
-        self.show_jail_report_date_box()
-        self.show_other_conditions_box()
+        return DiversionDialogViewModifier(self)
+
+    # @logger.catch
+    # def connect_signals_to_slots(self):
+    #     return DiversionDialogSignalConnector(self)
+
+# class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
+#     @logger.catch
+#     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+#         super().__init__(judicial_officer, cms_case, case_table, parent)
+#         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
+#         self.dialog_name = 'Diversion Plea Dialog'
+#         self.template = TEMPLATE_DICT.get(self.dialog_name)
+#         self.entry_case_information.diversion.ordered = True
+#         self.load_cms_data_to_view()
+#
+#     def modify_view(self):
+#         super().modify_view()
+#         diversion_pay_days_to_add = set_future_date(97, None, 1)
+#         self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
+#         jail_report_days_to_add = set_future_date(97, None, 4)
+#         self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
+#         self.show_jail_report_date_box()
+#         self.show_other_conditions_box()
 
     @logger.catch
     def connect_signals_to_slots(self):
