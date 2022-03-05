@@ -297,12 +297,10 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def modify_view(self):
         return JailCCDialogViewModifier(self)
 
+    @logger.catch
     def connect_signals_to_slots(self):
-        super().connect_signals_to_slots()
-        self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.impoundment_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.victim_notification_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+        return JailCCDialogSignalConnector(self)
+
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
@@ -349,10 +347,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog or CriminalSentencingDialog."""
-        super().connect_signals_to_slots()
-        self.credit_for_jail_checkBox.toggled.connect(self.set_fines_credit_for_jail_field)
+        return FineOnlyDialogSignalConnector(self)
 
     def set_fines_credit_for_jail_field(self):
         if self.credit_for_jail_checkBox.isChecked():

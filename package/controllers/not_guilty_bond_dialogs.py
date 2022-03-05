@@ -39,6 +39,10 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return NotGuiltyBondDialogViewModifier(self)
 
     @logger.catch
+    def connect_signals_to_slots(self):
+        return NotGuiltyBondDialogSignalConnector(self)
+
+    @logger.catch
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
@@ -74,24 +78,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
                 else:
                     getattr(self, condition_field).setEnabled(False)
                     getattr(self, condition_field).setHidden(True)
-
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
-        self.admin_license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.domestic_violence_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.no_contact_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.custodial_supervision_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.vehicle_seizure_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.monitoring_checkBox.toggled.connect(self.set_field_enabled)
-        self.specialized_docket_checkBox.toggled.connect(self.set_field_enabled)
-
 
     @logger.catch
     def update_not_guilty_conditions(self):
