@@ -15,7 +15,6 @@ sys.path.insert(0, parent_dir)
 import MuniEntry_app
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
-from package.controllers.leap_plea_dialogs import LeapPleaShortDialog, LeapPleaLongDialog
 
 def open_daily_case_list_db_connection():
     daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)

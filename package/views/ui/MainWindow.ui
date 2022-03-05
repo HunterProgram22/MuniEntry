@@ -190,7 +190,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="7" column="1">
-         <widget class="QPushButton" name="LeapPleaLongButton">
+         <widget class="QPushButton" name="DiversionButton">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -201,23 +201,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(85, 170, 127);</string>
           </property>
           <property name="text">
-           <string>LEAP Plea </string>
-          </property>
-         </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QPushButton" name="LeapPleaShortButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(85, 170, 127);</string>
-          </property>
-          <property name="text">
-           <string>LEAP Plea Pre-Court Complete</string>
+           <string>Diversion Plea</string>
           </property>
          </widget>
         </item>
@@ -629,7 +613,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

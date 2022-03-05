@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QMainWindow
 
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
 from package.controllers.check_decorators import check_judicial_officer, check_case_list_selected
-from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
 from package.models.case_information import CriminalCaseInformation
@@ -50,9 +49,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dialog_dict = {
             self.NoJailPleaButton: NoJailPleaDialog,
             self.JailCCButton: JailCCPleaDialog,
-            self.LeapPleaLongButton: LeapPleaLongDialog,
-            self.LeapPleaShortButton: LeapPleaShortDialog,
-            # self.FTABondButton: FTABondDialog,
+            self.DiversionButton: DiversionDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
         self.daily_case_list_buttons = {
