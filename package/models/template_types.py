@@ -16,13 +16,18 @@ class Template():
 
 
 No_Jail_Plea_Final_Judgment_Template = Template(
-    "Traffic Judgment Entry",
+    "Crim_Traffic Judgment Entry",
     "No_Jail_Plea_Final_Judgment_Template.docx",
 )
 
 Jail_CC_Plea_Final_Judgment_Template = Template(
-    "Traffic Judgment Entry",
+    "Crim_Traffic Judgment Entry",
     "Jail_Plea_Final_Judgment_Template.docx",
+)
+
+Diversion_Template = Template(
+    "Diversion Judgment Entry",
+    "Diversion_Template.docx",
 )
 
 Not_Guilty_Bond_Template = Template(
@@ -34,5 +39,6 @@ Not_Guilty_Bond_Template = Template(
 TEMPLATE_DICT = {
     "No Jail Plea Dialog": No_Jail_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
+    "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
 }
