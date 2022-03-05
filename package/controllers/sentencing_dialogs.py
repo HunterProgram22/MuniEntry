@@ -278,17 +278,14 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
-
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
-
         self.additional_conditions_list = [
             ("community_control_checkBox", self.entry_case_information.community_control),
             ("license_suspension_checkBox", self.entry_case_information.license_suspension),
             ("community_service_checkBox", self.entry_case_information.community_service),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
             ("jail_checkBox", self.entry_case_information.jail_terms),
-            ("diversion_checkBox", self.entry_case_information.diversion),
             ("impoundment_checkBox", self.entry_case_information.impoundment),
             ("victim_notification_checkBox", self.entry_case_information.victim_notification),
         ]
