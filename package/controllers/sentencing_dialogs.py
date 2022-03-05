@@ -13,7 +13,7 @@ from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
-from package.controllers.diversion_classes import *
+from package.controllers.view_modifiers import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -26,12 +26,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
     @logger.catch
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
-
-    @logger.catch
-    def modify_view(self):
-        """Sets the balance due date in the view to today."""
-        super().modify_view()
-        self.balance_due_date.setDate(QtCore.QDate.currentDate())
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -333,6 +327,9 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
 
+    def modify_view(self):
+        return JailCCDialogViewModifier(self)
+
     def connect_signals_to_slots(self):
         super().connect_signals_to_slots()
         self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
@@ -379,6 +376,9 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
         self.set_fines_credit_for_jail_field()
+
+    def modify_view(self):
+        return FineOnlyDialogViewModifier(self)
 
     @logger.catch
     def connect_signals_to_slots(self):

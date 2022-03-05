@@ -7,7 +7,7 @@ from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.models.template_types import TEMPLATE_DICT
 from package.models.case_information import BondConditions
 from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
-
+from package.controllers.view_modifiers import NotGuiltyBondDialogViewModifier
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
@@ -34,6 +34,9 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
         self.hide_boxes()
+
+    def modify_view(self):
+        return NotGuiltyBondDialogViewModifier(self)
 
     @logger.catch
     def add_charge_to_grid(self):
