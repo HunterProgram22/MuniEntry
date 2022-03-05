@@ -201,7 +201,7 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         AddJailOnlyDialog(self).exec()
 
 
-class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
+class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
@@ -209,6 +209,19 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
         self.dialog_name = 'Diversion Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        """The method connects additional signals to slots. That are not
+        included in the BaseDialog."""
+        super().connect_signals_to_slots()
+        self.connect_plea_signals_and_slots()
+
+    def connect_plea_signals_and_slots(self):
+        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
+        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
+        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
+        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
@@ -223,6 +236,29 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
         """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
         self.add_plea_findings_and_fines_to_entry_case_information()
         return CasePartyUpdater(self)
+
+    @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.entry_case_information.fra_in_file = False
+        else:
+            self.entry_case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_court = True
+        elif current_text == "No":
+            self.entry_case_information.fra_in_court = False
+        else:
+            self.entry_case_information.fra_in_court = None
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
