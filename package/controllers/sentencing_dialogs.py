@@ -14,6 +14,7 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import *
+from package.controllers.signal_connectors import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -211,37 +212,9 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def modify_view(self):
         return DiversionDialogViewModifier(self)
 
-    # @logger.catch
-    # def connect_signals_to_slots(self):
-    #     return DiversionDialogSignalConnector(self)
-
-# class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
-#     @logger.catch
-#     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-#         super().__init__(judicial_officer, cms_case, case_table, parent)
-#         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
-#         self.dialog_name = 'Diversion Plea Dialog'
-#         self.template = TEMPLATE_DICT.get(self.dialog_name)
-#         self.entry_case_information.diversion.ordered = True
-#         self.load_cms_data_to_view()
-#
-#     def modify_view(self):
-#         super().modify_view()
-#         diversion_pay_days_to_add = set_future_date(97, None, 1)
-#         self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
-#         jail_report_days_to_add = set_future_date(97, None, 4)
-#         self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
-#         self.show_jail_report_date_box()
-#         self.show_other_conditions_box()
-
     @logger.catch
     def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.connect_plea_signals_and_slots()
-        self.diversion_jail_imposed_checkBox.toggled.connect(self.show_jail_report_date_box)
-        self.other_conditions_checkBox.toggled.connect(self.show_other_conditions_box)
+        return DiversionDialogSignalConnector(self)
 
     def show_other_conditions_box(self):
         if self.other_conditions_checkBox.isChecked():
@@ -257,12 +230,6 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         else:
             self.diversion_jail_report_date_box.setHidden(True)
             self.diversion_jail_report_date_label.setHidden(True)
-
-    def connect_plea_signals_and_slots(self):
-        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
-        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
-        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)

@@ -4,10 +4,11 @@ view file. Modifications to the view are placed in the ViewModifier class so tha
 be updated each time a view file is recompiled through the pyuic5 command."""
 from loguru import logger
 from PyQt5 import QtCore
+from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
-from PyQt5 import QtGui
+
 
 from package.controllers.helper_functions import set_future_date
 
