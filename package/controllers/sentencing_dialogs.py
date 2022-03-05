@@ -219,6 +219,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
         self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
+        self.show_jail_report_date_box()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -226,6 +227,15 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         included in the BaseDialog."""
         super().connect_signals_to_slots()
         self.connect_plea_signals_and_slots()
+        self.diversion_jail_imposed_checkBox.toggled.connect(self.show_jail_report_date_box)
+
+    def show_jail_report_date_box(self):
+        if self.diversion_jail_imposed_checkBox.isChecked():
+            self.diversion_jail_report_date_box.setHidden(False)
+            self.diversion_jail_report_date_label.setHidden(False)
+        else:
+            self.diversion_jail_report_date_box.setHidden(True)
+            self.diversion_jail_report_date_label.setHidden(True)
 
     def connect_plea_signals_and_slots(self):
         self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
