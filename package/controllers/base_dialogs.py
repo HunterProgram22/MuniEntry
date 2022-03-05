@@ -118,8 +118,11 @@ class BaseDialog(QDialog):
                 setattr(terms_object, model_attribute, getattr(self, view_field).text())
             elif isinstance(getattr(self, view_field), QTextEdit):
                 plain_text = getattr(self, view_field).toPlainText()
-                if plain_text[-1] == '.':
-                    plain_text = plain_text[:-1]
+                try:
+                    if plain_text[-1] == '.':
+                        plain_text = plain_text[:-1]
+                except IndexError:
+                    pass
                 setattr(terms_object, model_attribute, plain_text)
             elif isinstance(getattr(self, view_field), QDateEdit):
                 setattr(terms_object, model_attribute, getattr(self, view_field).date().toString("MMMM dd, yyyy"))
