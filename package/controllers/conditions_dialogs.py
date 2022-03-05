@@ -218,10 +218,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def modify_view(self):
         super().modify_view()
         self.report_date_box.setDate(QDate.currentDate())
-        diversion_pay_days_to_add = set_future_date(97, None, 1)
-        self.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
-        jail_report_days_to_add = set_future_date(97, None, 4)
-        self.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
         self.hide_boxes()
         self.show_report_days_notes_box()
 
