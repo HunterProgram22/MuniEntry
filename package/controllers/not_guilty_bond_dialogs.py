@@ -38,7 +38,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def modify_view(self):
         return NotGuiltyBondDialogViewModifier(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)
 

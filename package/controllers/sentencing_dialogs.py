@@ -28,13 +28,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
 
-    # @logger.catch
-    # def connect_signals_to_slots(self):
-    #     """The method connects additional signals to slots. That are not
-    #     included in the BaseDialog."""
-    #     super().connect_signals_to_slots()
-
-
     @logger.catch
     def update_case_information(self):
         """"Docstring needs updating."""
@@ -200,7 +193,6 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def modify_view(self):
         return DiversionDialogViewModifier(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
 
@@ -285,7 +277,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def modify_view(self):
         return JailCCDialogViewModifier(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
 
@@ -333,7 +324,6 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
 
