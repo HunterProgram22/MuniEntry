@@ -245,6 +245,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def update_case_information(self):
         """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
         self.add_plea_findings_and_fines_to_entry_case_information()
+        self.transfer_field_data_to_model(self.entry_case_information.diversion)
+        self.entry_case_information.diversion.program_name = self.entry_case_information.diversion.get_program_name()
         return CasePartyUpdater(self)
 
     @logger.catch
