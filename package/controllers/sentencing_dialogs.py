@@ -233,10 +233,10 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 
     def show_other_conditions_box(self):
         if self.other_conditions_checkBox.isChecked():
-            self.other_conditions_box.setHidden(False)
-            self.other_conditions_box.setFocus()
+            self.other_conditions_textEdit.setHidden(False)
+            self.other_conditions_textEdit.setFocus()
         else:
-            self.other_conditions_box.setHidden(True)
+            self.other_conditions_textEdit.setHidden(True)
 
     def show_jail_report_date_box(self):
         if self.diversion_jail_imposed_checkBox.isChecked():
@@ -266,6 +266,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.add_plea_findings_and_fines_to_entry_case_information()
         self.transfer_field_data_to_model(self.entry_case_information.diversion)
         self.entry_case_information.diversion.program_name = self.entry_case_information.diversion.get_program_name()
+        self.transfer_field_data_to_model(self.entry_case_information.other_conditions)
         return CasePartyUpdater(self)
 
     @logger.catch
