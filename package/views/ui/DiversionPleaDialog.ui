@@ -773,6 +773,13 @@ font-weight: bold;</string>
           <number>2</number>
          </property>
          <layout class="QGridLayout" name="gridLayout_8">
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="other_conditions_checkBox">
+            <property name="text">
+             <string>Add Other Conditions</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="3">
            <widget class="QDateEdit" name="diversion_fine_pay_date_box">
             <property name="styleSheet">
@@ -839,6 +846,20 @@ font-weight: bold;</string>
            <widget class="QCheckBox" name="other_diversion_checkBox">
             <property name="text">
              <string>Other Diversion Program</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="4">
+           <widget class="Line" name="line_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2" colspan="2">
+           <widget class="QLineEdit" name="other_conditions_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
