@@ -8,6 +8,7 @@ from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 
 
@@ -197,6 +198,14 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddJailOnlyDialog(self).exec()
+
+
+class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
+    @logger.catch
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.charges_gridLayout.__class__ = JailChargesGrid
+
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
