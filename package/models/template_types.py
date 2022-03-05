@@ -25,38 +25,14 @@ Jail_CC_Plea_Final_Judgment_Template = Template(
     "Jail_Plea_Final_Judgment_Template.docx",
 )
 
-Leap_Plea_And_Admission_Template = Template(
-    "LEAP Plea Admission Entry",
-    "Leap_Plea_Admission_Template.docx",
-)
-
-Leap_Plea_Precourt_Completion_Template = Template(
-    "LEAP Plea Precourt Completion Entry",
-    "Leap_Plea_Precourt_Completion_Template.docx",
-)
-
-FTA_Bond_Template = Template(
-    "FTA Bond Dialog",
-    "FTA_Bond_Template.docx",
-)
-
 Not_Guilty_Bond_Template = Template(
     "Not Guilty Bond Dialog",
     "Not_Guilty_Bond_Template.docx",
-)
-
-Juror_Payment_Template = Template(
-    "Juror Payment Dialog",
-    "Juror_Payment_Template.docx",
 )
 
 
 TEMPLATE_DICT = {
     "No Jail Plea Dialog": No_Jail_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
-    "Leap Plea Dialog": Leap_Plea_And_Admission_Template,
-    "Leap Precourt Completion Dialog": Leap_Plea_Precourt_Completion_Template,
-    "FTA Bond Dialog": FTA_Bond_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
-    "Juror Payment Dialog": Juror_Payment_Template,
 }
