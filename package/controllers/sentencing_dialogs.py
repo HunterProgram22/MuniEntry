@@ -221,6 +221,7 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
     @logger.catch
     def update_case_information(self):
         """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
+        self.add_plea_findings_and_fines_to_entry_case_information()
         return CasePartyUpdater(self)
 
 
