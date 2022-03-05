@@ -3,6 +3,7 @@ from PyQt5.QtGui import QIntValidator
 from loguru import logger
 
 from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog, AddJailOnlyDialog
+from package.controllers.base_dialogs import CasePartyUpdater
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
@@ -204,8 +205,23 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.charges_gridLayout.__class__ = JailChargesGrid
+        self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
+        self.dialog_name = 'Diversion Plea Dialog'
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.load_cms_data_to_view()
 
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.defense_counsel_name_box.setFocus()
+
+    @logger.catch
+    def add_plea_findings_and_fines_to_entry_case_information(self):
+        return JailAddPleaFindingsFinesJail.add(self) # self is dialog
+
+    @logger.catch
+    def update_case_information(self):
+        """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
+        return CasePartyUpdater(self)
 
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
