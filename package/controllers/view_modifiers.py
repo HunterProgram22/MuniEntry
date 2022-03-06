@@ -101,3 +101,10 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
         dialog.update_community_service_due_date()
+
+
+class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_conditions_case_information_banner(dialog)
+        self.set_jail_report_default_date(dialog)

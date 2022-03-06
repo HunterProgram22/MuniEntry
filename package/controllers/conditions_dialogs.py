@@ -8,7 +8,7 @@ from package.views.add_community_control_dialog_ui import Ui_AddCommunityControl
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from package.controllers.helper_functions import set_future_date
-from package.controllers.view_modifiers import AddConditionsDialogViewModifier
+from package.controllers.view_modifiers import AddConditionsDialogViewModifier, AddJailOnlyDialogViewModifier
 
 
 CONDITIONS_FRAMES = [
@@ -110,8 +110,7 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
     @logger.catch
     def modify_view(self):
-        super().modify_view()
-
+        AddJailOnlyDialogViewModifier(self)
         self.hide_boxes()
         self.show_report_days_notes_box()
 
