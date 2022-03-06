@@ -11,7 +11,8 @@ from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBon
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
     AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, AddSpecialBondConditionsDialogViewModifier
-from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, AddJailOnlyDialogSignalConnector
+from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
+    AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector
 
 
 CONDITIONS_FRAMES = [
@@ -179,6 +180,10 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         return AddCommunityControlDialogViewModifier(self)
 
     @logger.catch
+    def connect_signals_to_slots(self):
+        return AddCommunityControlDialogSignalConnector(self)
+
+    @logger.catch
     def add_conditions(self):
         """The method calls the base method add_conditions and then adds community control specific conditions."""
         super().add_conditions()
@@ -190,26 +195,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
             self.transfer_field_data_to_model(self.case_information.impoundment)
         if self.main_dialog.victim_notification_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.victim_notification)
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """This method overrides the base_dialog connect_signals_to_slots entirely because
-        there are no fields to clear or create_entry_button to press."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(self.update_community_service_due_date)
-        self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
-        self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled)
-        self.community_control_no_contact_checkBox.toggled.connect(self.set_field_enabled)
-        self.house_arrest_checkBox.toggled.connect(self.set_field_enabled)
-        self.community_control_community_service_checkBox.toggled.connect(self.set_field_enabled)
-        self.other_community_control_checkBox.toggled.connect(self.set_field_enabled)
-        self.alcohol_monitoring_checkBox.toggled.connect(self.set_field_enabled)
-        self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
-        self.report_type_box.currentTextChanged.connect(self.set_report_date)
-        self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
-        self.companion_cases_checkBox.toggled.connect(self.set_field_enabled)
 
     def show_report_days_notes_box(self):
         if self.jail_sentence_execution_type_box.currentText() == "consecutive days":

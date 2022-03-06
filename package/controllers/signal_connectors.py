@@ -46,6 +46,11 @@ class BaseDialogSignalConnector(object):
         dialog.jail_sentence_execution_type_box.currentTextChanged.connect(dialog.show_report_days_notes_box)
         dialog.companion_cases_checkBox.toggled.connect(dialog.set_field_enabled)
 
+    def connect_community_service_days_update(self, dialog):
+        dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
+            dialog.update_community_service_due_date
+        )
+
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
@@ -104,14 +109,28 @@ class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_condition_dialog_main_signals(dialog)
         self.connect_community_service_days_update(dialog)
 
-    def connect_community_service_days_update(self, dialog):
-        dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            dialog.update_community_service_due_date
-        )
-
 
 class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)
         self.connect_jail_frame_signals(dialog)
+
+
+class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_condition_dialog_main_signals(dialog)
+        self.connect_community_service_days_update(dialog)
+        self.connect_jail_frame_signals(dialog)
+        self.connect_community_control_dialog_specific_signals(dialog)
+
+    def connect_community_control_dialog_specific_signals(self, dialog):
+        dialog.gps_exclusion_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.community_control_not_within_500_feet_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.community_control_no_contact_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.house_arrest_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.community_control_community_service_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.other_community_control_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.alcohol_monitoring_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.pay_restitution_checkBox.toggled.connect(dialog.set_field_enabled)
