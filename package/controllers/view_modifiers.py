@@ -21,26 +21,39 @@ class BaseDialogViewModifier(object):
                             QtCore.Qt.WindowMaximizeButtonHint |
                             QtCore.Qt.WindowCloseButtonHint)
         dialog.setupUi(dialog)
+
+    def set_plea_trial_date(self, dialog):
         dialog.plea_trial_date.setDate(QtCore.QDate.currentDate())
+
+    def set_appearance_reason(self, dialog):
         if dialog.case_table == "final_pretrials":
             dialog.appearance_reason_box.setCurrentText("change of plea")
+
+    def set_balance_due_date(self, dialog):
+        dialog.balance_due_date.setDate(QtCore.QDate.currentDate())
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        dialog.balance_due_date.setDate(QtCore.QDate.currentDate())
+        self.set_plea_trial_date(dialog)
+        self.set_appearance_reason(dialog)
+        self.set_balance_due_date(dialog)
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        dialog.balance_due_date.setDate(QtCore.QDate.currentDate())
+        self.set_plea_trial_date(dialog)
+        self.set_appearance_reason(dialog)
+        self.set_balance_due_date(dialog)
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.set_plea_trial_date(dialog)
+        self.set_appearance_reason(dialog)
         diversion_pay_days_to_add = set_future_date(97, None, 1)
         dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
@@ -52,3 +65,6 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.set_plea_trial_date(dialog)
+        self.set_appearance_reason(dialog)
+

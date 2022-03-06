@@ -8,6 +8,7 @@ from package.models.template_types import TEMPLATE_DICT
 from package.models.case_information import BondConditions
 from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
 from package.controllers.view_modifiers import NotGuiltyBondDialogViewModifier
+from package.controllers.signal_connectors import NotGuiltyBondDialogSignalConnector
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
