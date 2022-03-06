@@ -11,6 +11,7 @@ from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBon
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
     AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, AddSpecialBondConditionsDialogViewModifier
+from package.controllers.signal_connectors import AddConditionsDialogSignalConnector
 
 
 CONDITIONS_FRAMES = [
@@ -49,17 +50,6 @@ class ConditionsDialog(BaseDialog):
         self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
 
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """Overrides the BaseDialog connect_signals_to_slots entirely because
-        there are no fields to clear or create_entry_button to press."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.update_community_service_due_date
-        )
-
     def update_community_service_due_date(self, _index=None):
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
         self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
@@ -76,9 +66,6 @@ class ConditionsDialog(BaseDialog):
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
-    """The AddConditionsDialog is created when the addConditionsButton is clicked on
-    the NoJailPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the NJPD screen."""
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
@@ -86,6 +73,10 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
 
     def modify_view(self):
         return AddConditionsDialogViewModifier(self)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        return AddConditionsDialogSignalConnector(self)
 
 
 class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
