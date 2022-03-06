@@ -7,8 +7,7 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
-
+from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 
 from package.controllers.helper_functions import set_future_date
 
@@ -22,6 +21,8 @@ class BaseDialogViewModifier(object):
                             QtCore.Qt.WindowCloseButtonHint)
         dialog.setupUi(dialog)
 
+
+    ###Main Dialog Setup Methods###
     def set_plea_trial_date(self, dialog):
         dialog.plea_trial_date.setDate(QtCore.QDate.currentDate())
 
@@ -31,6 +32,28 @@ class BaseDialogViewModifier(object):
 
     def set_balance_due_date(self, dialog):
         dialog.balance_due_date.setDate(QtCore.QDate.currentDate())
+
+
+    ###Additional Condition Dialog Setup Methods###
+    def set_conditions_case_information_banner(self, dialog):
+        column = dialog.charges_gridLayout.columnCount() + 1
+        for _index, charge in enumerate(dialog.charges_list):
+            charge = vars(charge)
+            if charge is not None:
+                dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
+                column += 1
+
+    def set_license_suspension_default_date(self, dialog):
+        dialog.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
+
+    def set_community_service_default_date(self, dialog):
+        dialog.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+
+    def set_community_service_due_date(self, dialog, _index=None):
+        days_to_complete = int(dialog.community_service_days_to_complete_box.currentText())
+        dialog.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -68,3 +91,11 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
 
+
+class AddConditionsDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_conditions_case_information_banner(dialog)
+        self.set_license_suspension_default_date(dialog)
+        self.set_community_service_default_date(dialog)
+        self.set_community_service_due_date(dialog)

@@ -8,6 +8,7 @@ from package.views.add_community_control_dialog_ui import Ui_AddCommunityControl
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from package.controllers.helper_functions import set_future_date
+from package.controllers.view_modifiers import AddConditionsDialogViewModifier
 
 
 CONDITIONS_FRAMES = [
@@ -46,23 +47,13 @@ class ConditionsDialog(BaseDialog):
         self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
 
-    @logger.catch
-    def modify_view(self):
-        """Overrides the BaseDialog modify_view and modifies the view of AddConditionsDialog
-        that is created by the UI file. Gets the total number of charges from the charges in
-        charges_list then loops through the charges_list and adds parts of each charge to the
-        view. Also sets date fields to 'today.'"""
-        column = self.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
-                column += 1
-        self.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
-        self.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
-        self.set_community_service_date()
+    # @logger.catch
+    # def modify_view(self):
+    #     """Overrides the BaseDialog modify_view and modifies the view of AddConditionsDialog
+    #     that is created by the UI file. Gets the total number of charges from the charges in
+    #     charges_list then loops through the charges_list and adds parts of each charge to the
+    #     view. Also sets date fields to 'today.'"""
+    #     # self.set_community_service_date()
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -72,7 +63,7 @@ class ConditionsDialog(BaseDialog):
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_community_service_date
+            self.set_community_service_due_date
         )
 
     @logger.catch
@@ -85,12 +76,10 @@ class ConditionsDialog(BaseDialog):
         if self.main_dialog.other_conditions_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.other_conditions)
 
-    @logger.catch
-    def set_community_service_date(self, _index=None):
-        """Sets the community_service_date_to_complete_box based on the number of days chosen in the
-        community_service_date_to_complete_box. The _index is passed from the signal but not used."""
-        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
+    # @logger.catch
+    # def set_community_service_date(self, _index=None):
+    #     """Sets the community_service_date_to_complete_box based on the number of days chosen in the
+    #     community_service_date_to_complete_box. The _index is passed from the signal but not used."""
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
@@ -101,6 +90,9 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
+
+    def modify_view(self):
+        return AddConditionsDialogViewModifier(self)
 
 
 class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
