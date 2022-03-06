@@ -63,8 +63,13 @@ class ConditionsDialog(BaseDialog):
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
         self.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.set_community_service_due_date
+            self.update_community_service_due_date
         )
+
+    def update_community_service_due_date(self, _index=None):
+        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
+        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
+
 
     @logger.catch
     def add_conditions(self):

@@ -51,10 +51,6 @@ class BaseDialogViewModifier(object):
     def set_community_service_default_date(self, dialog):
         dialog.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
 
-    def set_community_service_due_date(self, dialog, _index=None):
-        days_to_complete = int(dialog.community_service_days_to_complete_box.currentText())
-        dialog.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
-
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
@@ -98,4 +94,4 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
-        self.set_community_service_due_date(dialog)
+        dialog.update_community_service_due_date()
