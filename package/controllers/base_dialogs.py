@@ -62,12 +62,6 @@ class BaseDialog(QDialog):
         when the UI is built so it can populate fields.The setupUI calls to
         the view to create the UI."""
         super().__init__(parent)
-        self.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
-        self.setWindowFlags(self.windowFlags() |
-                            QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint |
-                            QtCore.Qt.WindowCloseButtonHint)
-        self.setupUi(self)
         self.case_table = case_table
         self.modify_view()
         self.connect_signals_to_slots()
@@ -76,12 +70,13 @@ class BaseDialog(QDialog):
         """The modify view method updates the view that is created on init with self.setupUI.
         Place items in this method that can't be added directly in QtDesigner (or are more easily added later)
         so that they don't need to be changed in the view file each time pyuic5 is run."""
-        pass
+        raise NotImplementedError
 
     def connect_signals_to_slots(self):
         """This method includes buttons common to all dialogs. Buttons that are
         specific to only a certain dialog are added in the subclassed version of the method."""
-        self.cancel_Button.pressed.connect(self.close_event)
+        raise NotImplementedError
+
 
     @logger.catch
     def close_event(self):
@@ -153,32 +148,28 @@ class CriminalBaseDialog(BaseDialog):
         self.delete_button_list = []
         self.amend_button_list = []
 
-    def modify_view(self):
-        self.plea_trial_date.setDate(QtCore.QDate.currentDate())
-        if self.case_table == "final_pretrials":
-            self.appearance_reason_box.setCurrentText("change of plea")
-
-    def connect_signals_to_slots(self):
-        """This method extends the base_dialog method to add additional signals
-        and slots to be connected. The lambda function is used because it needs the dialog to be
-        passed as an argument (dialog = self) and if it is connected without lambda it would be called on
-        dialog creation instead of upon button clicked."""
-        super().connect_signals_to_slots()
-        self.clear_fields_case_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
-        self.create_entry_Button.clicked.connect(
-            lambda _bool, dialog=self: CriminalSlotFunctions.create_entry_process(_bool, dialog))
-        try:
-            """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
-            eventually."""
-            self.print_entry_Button.clicked.connect(
-                lambda _bool, dialog=self: CriminalSlotFunctions.print_entry_process(_bool, dialog))
-        except AttributeError:
-            pass
-        self.close_dialog_Button.pressed.connect(
-            lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
-        self.add_charge_Button.clicked.connect(self.start_add_charge_dialog)
-        self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
+    # def connect_signals_to_slots(self):
+    #     """This method extends the base_dialog method to add additional signals
+    #     and slots to be connected. The lambda function is used because it needs the dialog to be
+    #     passed as an argument (dialog = self) and if it is connected without lambda it would be called on
+    #     dialog creation instead of upon button clicked."""
+    #     print("Criminal Base connect signals ran")
+    #     super().connect_signals_to_slots()
+        # self.clear_fields_case_Button.pressed.connect(
+        #     lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
+        # self.create_entry_Button.clicked.connect(
+        #     lambda _bool, dialog=self: CriminalSlotFunctions.create_entry_process(_bool, dialog))
+        # try:
+        #     """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
+        #     eventually."""
+        #     self.print_entry_Button.clicked.connect(
+        #         lambda _bool, dialog=self: CriminalSlotFunctions.print_entry_process(_bool, dialog))
+        # except AttributeError:
+        #     pass
+        # self.close_dialog_Button.pressed.connect(
+        #     lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
+        # self.add_charge_Button.clicked.connect(self.start_add_charge_dialog)
+        # self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
 
     def set_defense_counsel(self):
         if self.defense_counsel_waived_checkBox.isChecked():
