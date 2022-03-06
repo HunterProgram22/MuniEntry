@@ -41,6 +41,12 @@ class BaseDialogSignalConnector(object):
         dialog.add_conditions_Button.pressed.connect(dialog.add_conditions)
         dialog.add_conditions_Button.released.connect(dialog.close_window)
 
+    def connect_jail_frame_signals(self, dialog):
+        dialog.report_type_box.currentTextChanged.connect(dialog.set_report_date)
+        dialog.jail_sentence_execution_type_box.currentTextChanged.connect(dialog.show_report_days_notes_box)
+        dialog.companion_cases_checkBox.toggled.connect(dialog.set_field_enabled)
+
+
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -102,3 +108,10 @@ class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
         dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
             dialog.update_community_service_due_date
         )
+
+
+class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_condition_dialog_main_signals(dialog)
+        self.connect_jail_frame_signals(dialog)

@@ -11,7 +11,7 @@ from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBon
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
     AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, AddSpecialBondConditionsDialogViewModifier
-from package.controllers.signal_connectors import AddConditionsDialogSignalConnector
+from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, AddJailOnlyDialogSignalConnector
 
 
 CONDITIONS_FRAMES = [
@@ -94,12 +94,7 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
         return AddJailOnlyDialogViewModifier(self)
 
     def connect_signals_to_slots(self):
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_conditions_Button.pressed.connect(self.add_conditions)
-        self.add_conditions_Button.released.connect(self.close_window)
-        self.report_type_box.currentTextChanged.connect(self.set_report_date)
-        self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
-        self.companion_cases_checkBox.toggled.connect(self.set_field_enabled)
+        return AddJailOnlyDialogSignalConnector(self)
 
     def set_field_enabled(self):
         """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
