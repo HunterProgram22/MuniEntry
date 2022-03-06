@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QLabel
 from package.controllers.base_dialogs import BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
+from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, AddJailOnlyDialogViewModifier
@@ -86,7 +87,7 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
         return AddConditionsDialogViewModifier(self)
 
 
-class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
+class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
     jail_condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
@@ -95,18 +96,6 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
-        self.enable_condition_frames(main_dialog)
-
-    def enable_condition_frames(self, main_dialog):
-        for index, item in enumerate(CONDITIONS_FRAMES):
-            (frame_checkbox, frame) = item
-            if hasattr(main_dialog, frame_checkbox):
-                if frame_checkbox == "jail_checkBox":
-                    getattr(self, frame).setEnabled(True)
-                else:
-                    frame = getattr(self, frame)
-                    frame.setParent(None)
-                    frame.deleteLater()
 
     @logger.catch
     def modify_view(self):
