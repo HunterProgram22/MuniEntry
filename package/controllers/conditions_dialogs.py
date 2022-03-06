@@ -10,7 +10,7 @@ from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
-    AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier
+    AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, AddSpecialBondConditionsDialogViewModifier
 
 
 CONDITIONS_FRAMES = [
@@ -100,7 +100,7 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
 
     @logger.catch
     def modify_view(self):
-        AddJailOnlyDialogViewModifier(self)
+        return AddJailOnlyDialogViewModifier(self)
 
     def connect_signals_to_slots(self):
         self.cancel_Button.pressed.connect(self.close_event)
@@ -190,7 +190,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
     @logger.catch
     def modify_view(self):
-        AddCommunityControlDialogViewModifier(self)
+        return AddCommunityControlDialogViewModifier(self)
 
     @logger.catch
     def add_conditions(self):
@@ -270,14 +270,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
                     getattr(self, condition_field).setEnabled(False)
                     getattr(self, condition_field).setHidden(True)
 
-    def hide_boxes(self):
-        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
-        for item in AddCommunityControlDialog.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                getattr(self, condition_field).setEnabled(False)
-                getattr(self, condition_field).setHidden(True)
-
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
@@ -291,17 +283,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def modify_view(self):
-        """Modifies the view that is created by the UI file. Gets the total number of charges
-        from the charges in charges_list then loops through the charges_list and adds parts of
-        each charge to the view."""
-        column = self.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                column += 1
-        self.domestic_violence_surrender_weapons_dateBox.setDate(QtCore.QDate.currentDate())
+        return AddSpecialBondConditionsDialogViewModifier(self)
 
     @logger.catch
     def connect_signals_to_slots(self):
