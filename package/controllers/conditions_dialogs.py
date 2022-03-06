@@ -47,14 +47,6 @@ class ConditionsDialog(BaseDialog):
         self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
 
-    # @logger.catch
-    # def modify_view(self):
-    #     """Overrides the BaseDialog modify_view and modifies the view of AddConditionsDialog
-    #     that is created by the UI file. Gets the total number of charges from the charges in
-    #     charges_list then loops through the charges_list and adds parts of each charge to the
-    #     view. Also sets date fields to 'today.'"""
-    #     # self.set_community_service_date()
-
     @logger.catch
     def connect_signals_to_slots(self):
         """Overrides the BaseDialog connect_signals_to_slots entirely because
@@ -70,7 +62,6 @@ class ConditionsDialog(BaseDialog):
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
         self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
 
-
     @logger.catch
     def add_conditions(self):
         """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
@@ -80,11 +71,6 @@ class ConditionsDialog(BaseDialog):
             self.transfer_field_data_to_model(self.case_information.license_suspension)
         if self.main_dialog.other_conditions_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.other_conditions)
-
-    # @logger.catch
-    # def set_community_service_date(self, _index=None):
-    #     """Sets the community_service_date_to_complete_box based on the number of days chosen in the
-    #     community_service_date_to_complete_box. The _index is passed from the signal but not used."""
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
