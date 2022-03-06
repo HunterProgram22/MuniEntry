@@ -12,6 +12,9 @@ from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QT
 from package.controllers.helper_functions import set_future_date
 
 
+TODAY = QtCore.QDate.currentDate()
+
+
 class BaseDialogViewModifier(object):
     def __init__(self, dialog):
         dialog.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
@@ -24,14 +27,14 @@ class BaseDialogViewModifier(object):
 
     ###Main Dialog Setup Methods###
     def set_plea_trial_date(self, dialog):
-        dialog.plea_trial_date.setDate(QtCore.QDate.currentDate())
+        dialog.plea_trial_date.setDate(TODAY)
 
     def set_appearance_reason(self, dialog):
         if dialog.case_table == "final_pretrials":
             dialog.appearance_reason_box.setCurrentText("change of plea")
 
     def set_balance_due_date(self, dialog):
-        dialog.balance_due_date.setDate(QtCore.QDate.currentDate())
+        dialog.balance_due_date.setDate(TODAY)
 
 
     ###Additional Condition Dialog Setup Methods###
@@ -46,10 +49,13 @@ class BaseDialogViewModifier(object):
                 column += 1
 
     def set_license_suspension_default_date(self, dialog):
-        dialog.license_suspension_date_box.setDate(QtCore.QDate.currentDate())
+        dialog.license_suspension_date_box.setDate(TODAY)
 
     def set_community_service_default_date(self, dialog):
-        dialog.community_service_date_to_complete_box.setDate(QtCore.QDate.currentDate())
+        dialog.community_service_date_to_complete_box.setDate(TODAY)
+
+    def set_jail_report_default_date(self, dialog):
+        dialog.report_date_box.setDate(TODAY)
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):

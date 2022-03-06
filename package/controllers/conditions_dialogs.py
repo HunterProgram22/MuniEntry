@@ -111,7 +111,7 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def modify_view(self):
         super().modify_view()
-        self.report_date_box.setDate(QDate.currentDate())
+
         self.hide_boxes()
         self.show_report_days_notes_box()
 
