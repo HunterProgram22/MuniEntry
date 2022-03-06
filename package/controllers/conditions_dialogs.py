@@ -111,8 +111,6 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def modify_view(self):
         AddJailOnlyDialogViewModifier(self)
-        self.hide_boxes()
-        self.show_report_days_notes_box()
 
     def connect_signals_to_slots(self):
         self.cancel_Button.pressed.connect(self.close_event)
@@ -141,14 +139,6 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         """The method calls the base method add_conditions and then adds community control specific conditions."""
         if self.main_dialog.jail_checkBox.isChecked():
             self.transfer_field_data_to_model(self.case_information.jail_terms)
-
-    def hide_boxes(self):
-        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
-        for item in AddJailOnlyDialog.jail_condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                getattr(self, condition_field).setEnabled(False)
-                getattr(self, condition_field).setHidden(True)
 
     def show_report_days_notes_box(self):
         if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
