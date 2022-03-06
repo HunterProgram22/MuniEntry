@@ -191,9 +191,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     @logger.catch
     def modify_view(self):
         AddCommunityControlDialogViewModifier(self)
-        self.report_date_box.setDate(QDate.currentDate())
-        self.hide_boxes()
-        self.show_report_days_notes_box()
 
     @logger.catch
     def add_conditions(self):

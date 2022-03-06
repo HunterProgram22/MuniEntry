@@ -37,7 +37,7 @@ class BaseDialogViewModifier(object):
         dialog.balance_due_date.setDate(TODAY)
 
 
-    ###Additional Condition Dialog Setup Methods###
+    ###Additional Condition/Jail Dialog Setup Methods###
     def set_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(dialog.charges_list):
@@ -56,6 +56,22 @@ class BaseDialogViewModifier(object):
 
     def set_jail_report_default_date(self, dialog):
         dialog.report_date_box.setDate(TODAY)
+
+    @classmethod
+    def hide_boxes(cls, dialog):
+        for item in cls.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(dialog, condition_checkbox):
+                getattr(dialog, condition_field).setEnabled(False)
+                getattr(dialog, condition_field).setHidden(True)
+
+    def set_report_days_notes_box(self, dialog):
+        if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
+            dialog.jail_report_days_notes_box.setDisabled(True)
+            dialog.jail_report_days_notes_box.setHidden(True)
+        else:
+            dialog.jail_report_days_notes_box.setDisabled(False)
+            dialog.jail_report_days_notes_box.setHidden(False)
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -104,7 +120,7 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
-    jail_condition_checkbox_list = [
+    condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
@@ -117,21 +133,6 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         self.hide_boxes(dialog)
         self.set_report_days_notes_box(dialog)
 
-    def hide_boxes(self, dialog):
-        for item in AddJailOnlyDialogViewModifier.jail_condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(dialog, condition_checkbox):
-                getattr(dialog, condition_field).setEnabled(False)
-                getattr(dialog, condition_field).setHidden(True)
-
-    def set_report_days_notes_box(self, dialog):
-        if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            dialog.jail_report_days_notes_box.setDisabled(True)
-            dialog.jail_report_days_notes_box.setHidden(True)
-        else:
-            dialog.jail_report_days_notes_box.setDisabled(False)
-            dialog.jail_report_days_notes_box.setHidden(False)
-
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
@@ -140,4 +141,6 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
         dialog.update_community_service_due_date()
+        self.hide_boxes(dialog)
         self.set_jail_report_default_date(dialog)
+        self.set_report_days_notes_box(dialog)
