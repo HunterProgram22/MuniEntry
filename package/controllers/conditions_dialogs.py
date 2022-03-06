@@ -120,6 +120,21 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.add_conditions_Button.released.connect(self.close_window)
         self.report_type_box.currentTextChanged.connect(self.set_report_date)
         self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
+        self.companion_cases_checkBox.toggled.connect(self.set_field_enabled)
+
+    def set_field_enabled(self):
+        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
+        any additional fields that are required for that condition."""
+        for item in AddJailOnlyDialog.jail_condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self, condition_checkbox):
+                if getattr(self, condition_checkbox).isChecked():
+                    getattr(self, condition_field).setEnabled(True)
+                    getattr(self, condition_field).setHidden(False)
+                    getattr(self, condition_field).setFocus(True)
+                else:
+                    getattr(self, condition_field).setEnabled(False)
+                    getattr(self, condition_field).setHidden(True)
 
     @logger.catch
     def add_conditions(self):
@@ -185,7 +200,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
         ("pay_restitution_checkBox", "pay_restitution_to_box"),
-        ("diversion_jail_imposed_checkBox", "diversion_jail_report_date_box"),
+        # ("diversion_jail_imposed_checkBox", "diversion_jail_report_date_box"),
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
