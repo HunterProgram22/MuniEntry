@@ -9,7 +9,8 @@ from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
 from package.controllers.helper_functions import set_future_date
-from package.controllers.view_modifiers import AddConditionsDialogViewModifier, AddJailOnlyDialogViewModifier
+from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
+    AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier
 
 
 CONDITIONS_FRAMES = [
@@ -162,12 +163,10 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
 
 
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
-    """The AddCommunityControlDialog is created when the addConditionsButton is clicked on
-    the JailCCPleaDialog. The conditions that are available to enter information
-    for are based on the checkboxes that are checked on the JCPD screen.
-
+    """
     :conditions_checkbox_list: list of tuples that show or hide fields only when they are
-    necessary for additional data input because the checkbox is checked."""
+    necessary for additional data input because the checkbox is checked.
+    """
     condition_checkbox_list = [
         ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
         ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
@@ -179,7 +178,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
         ("pay_restitution_checkBox", "pay_restitution_to_box"),
-        # ("diversion_jail_imposed_checkBox", "diversion_jail_report_date_box"),
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
@@ -192,7 +190,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
     @logger.catch
     def modify_view(self):
-        super().modify_view()
+        AddCommunityControlDialogViewModifier(self)
         self.report_date_box.setDate(QDate.currentDate())
         self.hide_boxes()
         self.show_report_days_notes_box()
@@ -217,7 +215,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.cancel_Button.pressed.connect(self.close_event)
         self.add_conditions_Button.pressed.connect(self.add_conditions)
         self.add_conditions_Button.released.connect(self.close_window)
-        self.community_service_days_to_complete_box.currentIndexChanged.connect(self.set_community_service_date)
+        self.community_service_days_to_complete_box.currentIndexChanged.connect(self.update_community_service_due_date)
         self.gps_exclusion_checkBox.toggled.connect(self.set_field_enabled)
         self.community_control_not_within_500_feet_checkBox.toggled.connect(self.set_field_enabled)
         self.community_control_no_contact_checkBox.toggled.connect(self.set_field_enabled)
@@ -228,7 +226,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         self.pay_restitution_checkBox.toggled.connect(self.set_field_enabled)
         self.report_type_box.currentTextChanged.connect(self.set_report_date)
         self.jail_sentence_execution_type_box.currentTextChanged.connect(self.show_report_days_notes_box)
-        self.diversion_jail_imposed_checkBox.toggled.connect(self.set_field_enabled)
         self.companion_cases_checkBox.toggled.connect(self.set_field_enabled)
 
     def show_report_days_notes_box(self):

@@ -131,3 +131,9 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         else:
             dialog.jail_report_days_notes_box.setDisabled(False)
             dialog.jail_report_days_notes_box.setHidden(False)
+
+
+class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_conditions_case_information_banner(dialog)
