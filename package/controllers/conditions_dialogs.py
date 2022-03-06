@@ -12,7 +12,8 @@ from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
     AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, AddSpecialBondConditionsDialogViewModifier
 from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
-    AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector
+    AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
+    AddSpecialBondConditionsDialogSignalConnector
 
 
 CONDITIONS_FRAMES = [
@@ -258,14 +259,10 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """This method overrides the base_dialog method because there are no
-        fields to clear or create_entry button to press."""
-        self.cancel_Button.pressed.connect(self.close_event)
-        self.add_special_conditions_Button.pressed.connect(self.add_special_conditions)
-        self.add_special_conditions_Button.released.connect(self.close_window)
+        return AddSpecialBondConditionsDialogSignalConnector(self)
 
     @logger.catch
-    def add_special_conditions(self):
+    def add_conditions(self):
         """The method is connected to the pressed() signal of add_special_conditions_Button on the
         Add Special Conditions screen."""
         if self.main_dialog.domestic_violence_checkBox.isChecked():

@@ -170,7 +170,7 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-57</y>
+           <y>-340</y>
            <width>938</width>
            <height>1028</height>
           </rect>
@@ -304,7 +304,7 @@ font-weight: bold;</string>
               <number>3</number>
              </property>
              <item row="0" column="0">
-              <widget class="QPushButton" name="add_special_conditions_Button">
+              <widget class="QPushButton" name="add_conditions_Button">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(62, 146, 255)</string>
                </property>
