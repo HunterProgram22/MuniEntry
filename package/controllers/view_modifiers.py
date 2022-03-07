@@ -24,7 +24,6 @@ class BaseDialogViewModifier(object):
                             QtCore.Qt.WindowCloseButtonHint)
         dialog.setupUi(dialog)
 
-
     ###Main Dialog Setup Methods###
     def set_plea_trial_date(self, dialog):
         dialog.plea_trial_date.setDate(TODAY)
@@ -36,7 +35,6 @@ class BaseDialogViewModifier(object):
     def set_balance_due_date(self, dialog):
         dialog.balance_due_date.setDate(TODAY)
 
-    @logger.catch
     def set_case_information_banner(self, dialog):
         dialog.defendant_name_label.setText(
             "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
@@ -45,7 +43,6 @@ class BaseDialogViewModifier(object):
             )
         )
         dialog.case_number_label.setText(dialog.case_information.case_number)
-
 
     ###Additional Condition/Jail Dialog Setup Methods###
     def set_conditions_case_information_banner(self, dialog):

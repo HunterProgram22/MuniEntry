@@ -56,11 +56,15 @@ class Window(QMainWindow, Ui_MainWindow):
             self.arraignments_radioButton: "arraignments",
             self.slated_radioButton: "slated",
             self.final_pretrial_radioButton:"final_pretrials",
+            self.pleas_radioButton: "pleas",
+            self.trials_to_court_radioButton: "trials_to_court",
         }
         self.database_table_dict = {
             "arraignments": self.arraignment_cases_box,
             "slated": self.slated_cases_box,
             "final_pretrials": self.final_pretrial_cases_box,
+            "pleas": self.pleas_cases_box,
+            "trials_to_court": self.trials_to_court_cases_box,
         }
 
     def set_daily_case_lists_type(self):
@@ -69,12 +73,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.arraignment_cases_box.__class__ = ExtendedComboBox
         self.slated_cases_box.__class__ = ExtendedComboBox
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
+        self.pleas_cases_box.__class__ = ExtendedComboBox
+        self.trials_to_court_cases_box.__class__ = ExtendedComboBox
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
         self.arraignments_radioButton.toggled.connect(lambda: self.button_state(self.arraignments_radioButton))
         self.slated_radioButton.toggled.connect(lambda: self.button_state(self.slated_radioButton))
         self.final_pretrial_radioButton.toggled.connect(lambda: self.button_state(self.final_pretrial_radioButton))
+        self.pleas_radioButton.toggled.connect(lambda: self.button_state(self.pleas_radioButton))
+        self.trials_to_court_radioButton.toggled.connect(lambda: self.button_state(self.trials_to_court_radioButton))
         for key in self.daily_case_list_buttons:
             key.clicked.connect(self.set_case_list_table)
         for key in self.dialog_dict:
@@ -83,6 +91,19 @@ class Window(QMainWindow, Ui_MainWindow):
             key.clicked.connect(self.set_judicial_officer)
 
     def button_state(self, button):
+        # button_state_list = [
+        #     ("Arraignments", "arraignment_cases_box"),
+        #     ("Slated", "slated_cases_box"),
+        #     ("Final Pre-trials", "final_pretrial_cases_box"),
+        #     ("Pleas", "pleas_cases_box"),
+        #     ("Trials to Court", "trials_to_court_cases_box"),
+        # ]
+        # for item in button_state_list:
+        #     (button_text, cases_box) = item
+        # print(button)
+        # print(button.text())
+        # print(button.isChecked())
+
         if button.text() == "Arraignments":
             if button.isChecked():
                 self.arraignment_cases_box.setEnabled(True)
@@ -91,6 +112,10 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
+                self.pleas_cases_box.setCurrentText("")
+                self.pleas_cases_box.setEnabled(False)
+                self.trials_to_court_cases_box.setCurrentText("")
+                self.trials_to_court_cases_box.setEnabled(False)
         if button.text() == "Slated":
             if button.isChecked():
                 self.arraignment_cases_box.setCurrentText("")
@@ -99,6 +124,10 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.slated_cases_box.setFocus()
                 self.final_pretrial_cases_box.setCurrentText("")
                 self.final_pretrial_cases_box.setEnabled(False)
+                self.pleas_cases_box.setCurrentText("")
+                self.pleas_cases_box.setEnabled(False)
+                self.trials_to_court_cases_box.setCurrentText("")
+                self.trials_to_court_cases_box.setEnabled(False)
         if button.text() == "Final Pre-trials":
             if button.isChecked():
                 self.arraignment_cases_box.setCurrentText("")
@@ -107,6 +136,34 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.slated_cases_box.setEnabled(False)
                 self.final_pretrial_cases_box.setEnabled(True)
                 self.final_pretrial_cases_box.setFocus()
+                self.pleas_cases_box.setCurrentText("")
+                self.pleas_cases_box.setEnabled(False)
+                self.trials_to_court_cases_box.setCurrentText("")
+                self.trials_to_court_cases_box.setEnabled(False)
+        if button.text() == "Pleas":
+            if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setCurrentText("")
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setCurrentText("")
+                self.final_pretrial_cases_box.setEnabled(False)
+                self.pleas_cases_box.setEnabled(True)
+                self.pleas_cases_box.setFocus()
+                self.trials_to_court_cases_box.setCurrentText("")
+                self.trials_to_court_cases_box.setEnabled(False)
+        if button.text() == "Trials to Court":
+            if button.isChecked():
+                self.arraignment_cases_box.setCurrentText("")
+                self.arraignment_cases_box.setEnabled(False)
+                self.slated_cases_box.setCurrentText("")
+                self.slated_cases_box.setEnabled(False)
+                self.final_pretrial_cases_box.setCurrentText("")
+                self.final_pretrial_cases_box.setEnabled(False)
+                self.pleas_cases_box.setCurrentText("")
+                self.pleas_cases_box.setEnabled(False)
+                self.trials_to_court_cases_box.setEnabled(True)
+                self.trials_to_court_cases_box.setFocus()
 
     def set_judicial_officer(self):
         """Checks the judicial officer radio buttons and then sets the judicial officer to the one that is checked."""
@@ -123,6 +180,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.arraignment_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "arraignments"))
         self.slated_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","slated"))
         self.final_pretrial_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","final_pretrials"))
+        self.pleas_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "pleas"))
+        self.trials_to_court_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "trials_to_court"))
 
     @logger.catch
     @check_judicial_officer
