@@ -1,4 +1,3 @@
-import main_window
 import pytest
 import os
 import sys
@@ -13,8 +12,9 @@ sys.path.insert(0, parent_dir)
 
 
 import MuniEntry_app
+import main_window
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
+from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 
 def open_daily_case_list_db_connection():
     daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
@@ -53,22 +53,6 @@ def app_nocase(qtbot):
 def ngb_dialog(app, qtbot):
     mouse_click(app.NotGuiltyBondButton)
     app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
-    qtbot.addWidget(app)
-    return app
-
-
-@pytest.fixture
-def leap_long_dialog(app, qtbot):
-    mouse_click(app.LeapPleaLongButton)
-    app = LeapPleaLongDialog(app.judicial_officer, app.case_to_load)
-    qtbot.addWidget(app)
-    return app
-
-
-@pytest.fixture
-def leap_short_dialog(app, qtbot):
-    mouse_click(app.LeapPleaShortButton)
-    app = LeapPleaShortDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
 
@@ -117,6 +101,22 @@ def jail_dialog(app, qtbot):
 def jail_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.JailCCButton)
     app_nocase = JailCCPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
+    qtbot.addWidget(app_nocase)
+    return app_nocase
+
+
+@pytest.fixture
+def diversion_dialog(app, qtbot):
+    mouse_click(app.JailCCButton)
+    app = DiversionPleaDialog(app.judicial_officer, app.case_to_load)
+    qtbot.addWidget(app)
+    return app
+
+
+@pytest.fixture
+def diversion_dialog_nocase(app_nocase, qtbot):
+    mouse_click(app_nocase.JailCCButton)
+    app_nocase = DiversionPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
     return app_nocase
 

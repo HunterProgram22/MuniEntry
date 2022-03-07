@@ -2,6 +2,7 @@ import os
 import sqlite3
 import sys
 from abc import ABC, abstractmethod
+import string
 import pdb
 
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
@@ -14,6 +15,8 @@ DATABASE_TABLE_LIST = [
     ("Arraignments.xlsx", "arraignments"),
     ("Slated.xlsx", "slated"),
     ("Final_Pretrials.xlsx", "final_pretrials"),
+    ("Pleas.xlsx", "pleas"),
+    ("Trials_to_Court.xlsx", "trials_to_court"),
 ]
 
 
@@ -70,15 +73,24 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             if case_number is None:
                 self.case.case_number = query.value(1)
                 case_number = self.case.case_number
-                self.case.defendant.last_name = query.value(2)
-                self.case.defendant.first_name = query.value(3)
+                self.case.defendant.last_name = query.value(2).title()
+                self.case.defendant.first_name = query.value(3).title()
                 self.case.fra_in_file = query.value(7)
-            offense = query.value(4)
+            offense = self.clean_offense_name(query.value(4))
             statute = query.value(5)
             degree = query.value(6)
             offense_type = query.value(8)
             new_charge = (offense, statute, degree, offense_type)
             self.case.charges_list.append(new_charge)
+
+    def clean_offense_name(self, offense):
+        abbreviation_list = ["DUS", "OVI", "BMV"]
+        if offense[:3] in abbreviation_list:
+            caps = offense[:3]
+            remaining_offense = string.capwords(offense[3:])
+            return f"{caps} {remaining_offense}"
+        else:
+            return string.capwords(offense)
 
     def load_case(self):
         return self.case
@@ -182,7 +194,9 @@ def create_daily_cases_list(database, table):
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:
-        name = i[0] + " - " + i[2]
+        last_name = i[0].title()
+        case_number = i[2]
+        name = f"{last_name} - {case_number}"
         clean_cases_list.append(name)
     clean_cases_list.sort()
     conn.close()
