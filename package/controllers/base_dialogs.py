@@ -16,6 +16,7 @@ from package.controllers.helper_functions import set_document_name, set_future_d
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
 from package.views.custom_widgets import RequiredBox, DefenseCounselComboBox
 from settings import PAY_DATE_DICT, SAVE_PATH
 
@@ -128,6 +129,7 @@ class BaseDialog(QDialog):
                     setattr(terms_object, model_attribute, getattr(self, view_field).time().toString("hh:mm A"))
             except AttributeError:
                 pass
+
 
 class CriminalBaseDialog(BaseDialog):
     """This class subclasses the BaseDialog for methods that are specific to
@@ -272,7 +274,6 @@ class BaseChargeDialog(BaseDialog):
         self.button_index = button_index
         charges_database.open()
         super().__init__(parent)
-        self.set_case_information_banner()
         self.set_statute_and_offense_choice_boxes()
 
     @logger.catch
@@ -296,18 +297,6 @@ class BaseChargeDialog(BaseDialog):
         self.statute_choice_box.setCurrentText("")
         self.offense_choice_box.setCurrentText("")
 
-    @logger.catch
-    def set_case_information_banner(self):
-        """Sets the banner on a view of the interface. It modifies label
-        widgets on the view to text that was entered."""
-        self.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.case_information.defendant.first_name,
-                defendant_last_name=self.case_information.defendant.last_name
-            )
-        )
-        self.case_number_label.setText(self.case_information.case_number)
-
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
@@ -316,6 +305,9 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         super().__init__(main_dialog, case_information, button_index, parent)
+
+    def modify_view(self):
+        return AddChargeDialogViewModifier(self)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -356,6 +348,9 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         self.amend_offense_details = AmendOffenseDetails()
         self.current_offense = self.case_information.charges_list[self.button_index].offense
         self.original_charge_label.setText(self.current_offense)
+
+    def modify_view(self):
+        return AmendChargeDialogViewModifier(self)
 
     @logger.catch
     def connect_signals_to_slots(self):
