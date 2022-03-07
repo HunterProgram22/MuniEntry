@@ -325,7 +325,7 @@ class Ui_MainWindow(object):
         self.slated_radioButton.setText(_translate("MainWindow", "Slated"))
         self.NotGuiltyBondButton.setText(_translate("MainWindow", "Not Guilty / Bond"))
         self.JailCCButton.setText(_translate("MainWindow", "Jail and Comm. Control Plea"))
-        self.NoJailPleaButton.setText(_translate("MainWindow", "Fines Only Plea"))
+        self.NoJailPleaButton.setText(_translate("MainWindow", "Fine Only Plea"))
         self.DiversionButton.setText(_translate("MainWindow", "Diversion Plea"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))

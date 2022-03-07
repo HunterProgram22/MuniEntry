@@ -185,7 +185,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(85, 170, 127);</string>
           </property>
           <property name="text">
-           <string>Fines Only Plea</string>
+           <string>Fine Only Plea</string>
           </property>
          </widget>
         </item>
@@ -653,7 +653,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

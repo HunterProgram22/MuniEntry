@@ -91,79 +91,21 @@ class Window(QMainWindow, Ui_MainWindow):
             key.clicked.connect(self.set_judicial_officer)
 
     def button_state(self, button):
-        # button_state_list = [
-        #     ("Arraignments", "arraignment_cases_box"),
-        #     ("Slated", "slated_cases_box"),
-        #     ("Final Pre-trials", "final_pretrial_cases_box"),
-        #     ("Pleas", "pleas_cases_box"),
-        #     ("Trials to Court", "trials_to_court_cases_box"),
-        # ]
-        # for item in button_state_list:
-        #     (button_text, cases_box) = item
-        # print(button)
-        # print(button.text())
-        # print(button.isChecked())
-
-        if button.text() == "Arraignments":
-            if button.isChecked():
-                self.arraignment_cases_box.setEnabled(True)
-                self.arraignment_cases_box.setFocus()
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-                self.pleas_cases_box.setCurrentText("")
-                self.pleas_cases_box.setEnabled(False)
-                self.trials_to_court_cases_box.setCurrentText("")
-                self.trials_to_court_cases_box.setEnabled(False)
-        if button.text() == "Slated":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setEnabled(True)
-                self.slated_cases_box.setFocus()
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-                self.pleas_cases_box.setCurrentText("")
-                self.pleas_cases_box.setEnabled(False)
-                self.trials_to_court_cases_box.setCurrentText("")
-                self.trials_to_court_cases_box.setEnabled(False)
-        if button.text() == "Final Pre-trials":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setEnabled(True)
-                self.final_pretrial_cases_box.setFocus()
-                self.pleas_cases_box.setCurrentText("")
-                self.pleas_cases_box.setEnabled(False)
-                self.trials_to_court_cases_box.setCurrentText("")
-                self.trials_to_court_cases_box.setEnabled(False)
-        if button.text() == "Pleas":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-                self.pleas_cases_box.setEnabled(True)
-                self.pleas_cases_box.setFocus()
-                self.trials_to_court_cases_box.setCurrentText("")
-                self.trials_to_court_cases_box.setEnabled(False)
-        if button.text() == "Trials to Court":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-                self.pleas_cases_box.setCurrentText("")
-                self.pleas_cases_box.setEnabled(False)
-                self.trials_to_court_cases_box.setEnabled(True)
-                self.trials_to_court_cases_box.setFocus()
+        button_state_dict = {
+            "Arraignments": self.arraignment_cases_box,
+            "Slated": self.slated_cases_box,
+            "Final Pre-trials": self.final_pretrial_cases_box,
+            "Pleas": self.pleas_cases_box,
+            "Trials to Court": self.trials_to_court_cases_box,
+        }
+        selected_case_list = button_state_dict[button.text()]
+        for value in button_state_dict.values():
+            if value == selected_case_list:
+                value.setEnabled(True)
+                value.setFocus()
+            else:
+                value.setCurrentText("")
+                value.setEnabled(False)
 
     def set_judicial_officer(self):
         """Checks the judicial officer radio buttons and then sets the judicial officer to the one that is checked."""
