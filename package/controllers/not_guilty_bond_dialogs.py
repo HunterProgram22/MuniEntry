@@ -7,7 +7,8 @@ from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.models.template_types import TEMPLATE_DICT
 from package.models.case_information import BondConditions
 from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
-
+from package.controllers.view_modifiers import NotGuiltyBondDialogViewModifier
+from package.controllers.signal_connectors import NotGuiltyBondDialogSignalConnector
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
@@ -34,6 +35,12 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
         self.hide_boxes()
+
+    def modify_view(self):
+        return NotGuiltyBondDialogViewModifier(self)
+
+    def connect_signals_to_slots(self):
+        return NotGuiltyBondDialogSignalConnector(self)
 
     @logger.catch
     def add_charge_to_grid(self):
@@ -71,24 +78,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
                 else:
                     getattr(self, condition_field).setEnabled(False)
                     getattr(self, condition_field).setHidden(True)
-
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.not_guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.add_special_conditions_Button.pressed.connect(self.start_add_special_bond_conditions_dialog)
-        self.admin_license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.domestic_violence_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.no_contact_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.custodial_supervision_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.vehicle_seizure_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.monitoring_checkBox.toggled.connect(self.set_field_enabled)
-        self.specialized_docket_checkBox.toggled.connect(self.set_field_enabled)
-
 
     @logger.catch
     def update_not_guilty_conditions(self):

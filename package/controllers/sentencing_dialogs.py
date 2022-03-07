@@ -1,14 +1,20 @@
 from PyQt5 import QtCore
+from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QIntValidator
 from loguru import logger
 
 from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommunityControlDialog, AddJailOnlyDialog
+from package.controllers.base_dialogs import CasePartyUpdater
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
+from package.controllers.helper_functions import set_future_date
+from package.controllers.view_modifiers import *
+from package.controllers.signal_connectors import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -21,31 +27,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
     @logger.catch
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
-
-    @logger.catch
-    def modify_view(self):
-        """Sets the balance due date in the view to today."""
-        super().modify_view()
-        self.balance_due_date.setDate(QtCore.QDate.currentDate())
-
-    @logger.catch
-    def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog."""
-        super().connect_signals_to_slots()
-        self.license_suspension_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.community_service_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.other_conditions_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.connect_plea_signals_and_slots()
-
-    def connect_plea_signals_and_slots(self):
-        self.guilty_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.add_conditions_Button.pressed.connect(self.start_add_conditions_dialog)
-        self.fra_in_file_box.currentTextChanged.connect(self.set_fra_in_file)
-        self.fra_in_court_box.currentTextChanged.connect(self.set_fra_in_court)
-        self.ability_to_pay_box.currentTextChanged.connect(self.set_pay_date)
-        self.no_contest_all_Button.pressed.connect(self.set_plea_and_findings_process)
-        self.costs_and_fines_Button.clicked.connect(self.show_costs_and_fines)
 
     @logger.catch
     def update_case_information(self):
@@ -199,22 +180,91 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         AddJailOnlyDialog(self).exec()
 
 
+class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
+    @logger.catch
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
+        self.dialog_name = 'Diversion Plea Dialog'
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.entry_case_information.diversion.ordered = True
+        self.load_cms_data_to_view()
+
+    def modify_view(self):
+        return DiversionDialogViewModifier(self)
+
+    def connect_signals_to_slots(self):
+        return DiversionDialogSignalConnector(self)
+
+    def show_other_conditions_box(self):
+        if self.other_conditions_checkBox.isChecked():
+            self.other_conditions_textEdit.setHidden(False)
+            self.other_conditions_textEdit.setFocus()
+        else:
+            self.other_conditions_textEdit.setHidden(True)
+
+    def show_jail_report_date_box(self):
+        if self.diversion_jail_imposed_checkBox.isChecked():
+            self.diversion_jail_report_date_box.setHidden(False)
+            self.diversion_jail_report_date_label.setHidden(False)
+        else:
+            self.diversion_jail_report_date_box.setHidden(True)
+            self.diversion_jail_report_date_label.setHidden(True)
+
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.defense_counsel_name_box.setFocus()
+
+    @logger.catch
+    def add_plea_findings_and_fines_to_entry_case_information(self):
+        return JailAddPleaFindingsFinesJail.add(self) # self is dialog
+
+    @logger.catch
+    def update_case_information(self):
+        """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
+        self.add_plea_findings_and_fines_to_entry_case_information()
+        self.transfer_field_data_to_model(self.entry_case_information.diversion)
+        self.entry_case_information.diversion.program_name = self.entry_case_information.diversion.get_program_name()
+        self.transfer_field_data_to_model(self.entry_case_information.other_conditions)
+        return CasePartyUpdater(self)
+
+    @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_file = True
+            self.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.entry_case_information.fra_in_file = False
+        else:
+            self.entry_case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.entry_case_information.fra_in_court = True
+        elif current_text == "No":
+            self.entry_case_information.fra_in_court = False
+        else:
+            self.entry_case_information.fra_in_court = None
+
+
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
-
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
-
         self.additional_conditions_list = [
             ("community_control_checkBox", self.entry_case_information.community_control),
             ("license_suspension_checkBox", self.entry_case_information.license_suspension),
             ("community_service_checkBox", self.entry_case_information.community_service),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
             ("jail_checkBox", self.entry_case_information.jail_terms),
-            ("diversion_checkBox", self.entry_case_information.diversion),
             ("impoundment_checkBox", self.entry_case_information.impoundment),
             ("victim_notification_checkBox", self.entry_case_information.victim_notification),
         ]
@@ -224,41 +274,12 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
 
-    def connect_signals_to_slots(self):
-        super().connect_signals_to_slots()
-        self.jail_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.community_control_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.diversion_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.diversion_checkBox.toggled.connect(self.diversion_hide_costs_frame)
-        self.impoundment_checkBox.toggled.connect(self.conditions_checkbox_toggle)
-        self.victim_notification_checkBox.toggled.connect(self.conditions_checkbox_toggle)
+    def modify_view(self):
+        return JailCCDialogViewModifier(self)
 
-    def diversion_hide_costs_frame(self):
-        """Sets the fines and costs due date fields to hidden."""
-        if self.costs_frame.isHidden():
-            self.costs_frame.setHidden(False)
-            self.add_conditions_label.setHidden(False)
-            self.community_control_checkBox.setHidden(False)
-            self.license_suspension_checkBox.setHidden(False)
-            self.impoundment_checkBox.setHidden(False)
-            self.community_service_checkBox.setHidden(False)
-            self.victim_notification_checkBox.setHidden(False)
-            # self.other_conditions_checkBox.setHidden(False)
-            self.jail_checkBox.setHidden(False)
-            self.jail_time_credit_frame.setHidden(False)
-            self.add_conditions_Button.setText("Add Jail Reporting and/or Additional Conditions")
-        else:
-            self.costs_frame.setHidden(True)
-            self.add_conditions_label.setHidden(True)
-            self.community_control_checkBox.setHidden(True)
-            self.license_suspension_checkBox.setHidden(True)
-            self.impoundment_checkBox.setHidden(True)
-            self.community_service_checkBox.setHidden(True)
-            self.victim_notification_checkBox.setHidden(True)
-            # self.other_conditions_checkBox.setHidden(True)
-            self.jail_checkBox.setHidden(True)
-            self.jail_time_credit_frame.setHidden(True)
-            self.add_conditions_Button.setText("Set Diversion Program and Due Dates")
+    def connect_signals_to_slots(self):
+        return JailCCDialogSignalConnector(self)
+
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
@@ -300,12 +321,11 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         self.load_cms_data_to_view()
         self.set_fines_credit_for_jail_field()
 
-    @logger.catch
+    def modify_view(self):
+        return FineOnlyDialogViewModifier(self)
+
     def connect_signals_to_slots(self):
-        """The method connects additional signals to slots. That are not
-        included in the BaseDialog or CriminalSentencingDialog."""
-        super().connect_signals_to_slots()
-        self.credit_for_jail_checkBox.toggled.connect(self.set_fines_credit_for_jail_field)
+        return FineOnlyDialogSignalConnector(self)
 
     def set_fines_credit_for_jail_field(self):
         if self.credit_for_jail_checkBox.isChecked():

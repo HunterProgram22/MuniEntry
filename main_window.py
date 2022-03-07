@@ -4,9 +4,8 @@ from PyQt5.QtWidgets import QMainWindow
 
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
 from package.controllers.check_decorators import check_judicial_officer, check_case_list_selected
-from package.controllers.leap_plea_dialogs import LeapPleaLongDialog, LeapPleaShortDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog
+from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
@@ -50,20 +49,22 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dialog_dict = {
             self.NoJailPleaButton: NoJailPleaDialog,
             self.JailCCButton: JailCCPleaDialog,
-            self.LeapPleaLongButton: LeapPleaLongDialog,
-            self.LeapPleaShortButton: LeapPleaShortDialog,
-            # self.FTABondButton: FTABondDialog,
+            self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
         }
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",
             self.slated_radioButton: "slated",
             self.final_pretrial_radioButton:"final_pretrials",
+            self.pleas_radioButton: "pleas",
+            self.trials_to_court_radioButton: "trials_to_court",
         }
         self.database_table_dict = {
             "arraignments": self.arraignment_cases_box,
             "slated": self.slated_cases_box,
             "final_pretrials": self.final_pretrial_cases_box,
+            "pleas": self.pleas_cases_box,
+            "trials_to_court": self.trials_to_court_cases_box,
         }
 
     def set_daily_case_lists_type(self):
@@ -72,12 +73,16 @@ class Window(QMainWindow, Ui_MainWindow):
         self.arraignment_cases_box.__class__ = ExtendedComboBox
         self.slated_cases_box.__class__ = ExtendedComboBox
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
+        self.pleas_cases_box.__class__ = ExtendedComboBox
+        self.trials_to_court_cases_box.__class__ = ExtendedComboBox
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
         self.arraignments_radioButton.toggled.connect(lambda: self.button_state(self.arraignments_radioButton))
         self.slated_radioButton.toggled.connect(lambda: self.button_state(self.slated_radioButton))
         self.final_pretrial_radioButton.toggled.connect(lambda: self.button_state(self.final_pretrial_radioButton))
+        self.pleas_radioButton.toggled.connect(lambda: self.button_state(self.pleas_radioButton))
+        self.trials_to_court_radioButton.toggled.connect(lambda: self.button_state(self.trials_to_court_radioButton))
         for key in self.daily_case_list_buttons:
             key.clicked.connect(self.set_case_list_table)
         for key in self.dialog_dict:
@@ -86,30 +91,21 @@ class Window(QMainWindow, Ui_MainWindow):
             key.clicked.connect(self.set_judicial_officer)
 
     def button_state(self, button):
-        if button.text() == "Arraignments":
-            if button.isChecked():
-                self.arraignment_cases_box.setEnabled(True)
-                self.arraignment_cases_box.setFocus()
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-        if button.text() == "Slated":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setEnabled(True)
-                self.slated_cases_box.setFocus()
-                self.final_pretrial_cases_box.setCurrentText("")
-                self.final_pretrial_cases_box.setEnabled(False)
-        if button.text() == "Final Pre-trials":
-            if button.isChecked():
-                self.arraignment_cases_box.setCurrentText("")
-                self.arraignment_cases_box.setEnabled(False)
-                self.slated_cases_box.setCurrentText("")
-                self.slated_cases_box.setEnabled(False)
-                self.final_pretrial_cases_box.setEnabled(True)
-                self.final_pretrial_cases_box.setFocus()
+        button_state_dict = {
+            "Arraignments": self.arraignment_cases_box,
+            "Slated": self.slated_cases_box,
+            "Final Pre-trials": self.final_pretrial_cases_box,
+            "Pleas": self.pleas_cases_box,
+            "Trials to Court": self.trials_to_court_cases_box,
+        }
+        selected_case_list = button_state_dict[button.text()]
+        for value in button_state_dict.values():
+            if value == selected_case_list:
+                value.setEnabled(True)
+                value.setFocus()
+            else:
+                value.setCurrentText("")
+                value.setEnabled(False)
 
     def set_judicial_officer(self):
         """Checks the judicial officer radio buttons and then sets the judicial officer to the one that is checked."""
@@ -126,6 +122,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.arraignment_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "arraignments"))
         self.slated_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","slated"))
         self.final_pretrial_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite","final_pretrials"))
+        self.pleas_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "pleas"))
+        self.trials_to_court_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "trials_to_court"))
 
     @logger.catch
     @check_judicial_officer

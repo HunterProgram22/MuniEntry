@@ -3,4 +3,5 @@ Items for Judge Discussion
 2. Jail Time - scenarios and stopping out ones that would never happen
 3. DV and Gun specifications
 4. General User Interface Changes
-5. 
+5. Does Diversion Plea ever have Jail Time Credit
+6. 

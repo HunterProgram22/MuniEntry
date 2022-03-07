@@ -137,6 +137,10 @@ def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
 
 
 def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+
+
+def check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
     if (
             total_jail_days >= (total_jail_days_suspended + total_jail_days_credit)
             and dialog.entry_case_information.jail_terms.ordered is True
@@ -146,7 +150,18 @@ def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_j
                              f"but you set Jail Reporting Terms. \n\nAre you sure you want "
                              f"to set Jail Reporting Terms?")
         unset_jail_reporting_terms(dialog, message.exec())
-    elif (
+
+
+def unset_jail_reporting_terms(dialog, return_value):
+        if return_value == QMessageBox.No:
+            dialog.jail_checkBox.setChecked(False)
+            return "Pass"
+        elif return_value == QMessageBox.Yes:
+            return "Pass"
+
+
+def check_if_jail_days_equals_suspended_and_imposed_days(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
+    if (
             total_jail_days == (total_jail_days_suspended + total_jail_days_credit)
             and dialog.entry_case_information.jail_terms.ordered is True
             and dialog.entry_case_information.currently_in_jail == 'No'
@@ -157,14 +172,6 @@ def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_j
                              f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
                              f"Jail Reporting Terms?")
         unset_jail_reporting_terms(dialog, message.exec())
-
-
-def unset_jail_reporting_terms(dialog, return_value):
-        if return_value == QMessageBox.No:
-            dialog.jail_checkBox.setChecked(False)
-            return "Pass"
-        elif return_value == QMessageBox.Yes:
-            return "Pass"
 
 
 def stop_jail_check(dialog):
@@ -280,7 +287,6 @@ class InfoChecker(object):
             ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
             ("no_contact", "name", "No Contact"),
             ("custodial_supervision", "supervisor", "Custodial Supervision"),
-            ("diversion", "program_name", "Diversion"),
             # Domestic Violence Special Bond Condition needs to be added - but conditions don't work for method
         ]
         for condition_item in conditions_list:
@@ -341,6 +347,8 @@ class InfoChecker(object):
         if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
             return "Fail"
         check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+        check_if_jail_days_equals_suspended_and_imposed_days(dialog, total_jail_days, total_jail_days_suspended,
+                                                             total_jail_days_credit)
         return "Pass"
 
     @classmethod
