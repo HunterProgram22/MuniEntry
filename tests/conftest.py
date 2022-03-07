@@ -13,6 +13,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 import main_window
+from package.controllers.base_dialogs import AddChargeDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 
@@ -107,7 +108,7 @@ def jail_dialog_nocase(app_nocase, qtbot):
 
 @pytest.fixture
 def diversion_dialog(app, qtbot):
-    mouse_click(app.JailCCButton)
+    mouse_click(app.DiversionButton)
     app = DiversionPleaDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
@@ -115,7 +116,7 @@ def diversion_dialog(app, qtbot):
 
 @pytest.fixture
 def diversion_dialog_nocase(app_nocase, qtbot):
-    mouse_click(app_nocase.JailCCButton)
+    mouse_click(app_nocase.DiversionButton)
     app_nocase = DiversionPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
     return app_nocase
