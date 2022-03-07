@@ -31,6 +31,10 @@ class BaseDialogViewModifier(object):
     def set_appearance_reason(self, dialog):
         if dialog.case_table == "final_pretrials":
             dialog.appearance_reason_box.setCurrentText("change of plea")
+        elif dialog.case_table == "pleas":
+            dialog.appearance_reason_box.setCurrentText("change of plea")
+        elif dialog.case_table == "trials_to_court":
+            dialog.appearance_reason_box.setCurrentText("trial to court")
 
     def set_balance_due_date(self, dialog):
         dialog.balance_due_date.setDate(TODAY)
