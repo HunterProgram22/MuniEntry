@@ -84,35 +84,6 @@ class ChargesGrid(QGridLayout):
                 column += 1
 
 
-class LeapPleaGrid(ChargesGrid):
-    row_dismissed_box = 3
-    row_plea = 4
-    row_delete_button = 5
-
-    @logger.catch
-    def add_charge_only_to_grid(self, dialog):
-        column = self.columnCount() + 1
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), LeapPleaGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
-        self.addWidget(DismissedCheckbox(column, dialog), LeapPleaGrid.row_dismissed_box, column)
-        self.addWidget(PleaComboBox(column), LeapPleaGrid.row_plea, column)
-        self.add_delete_button_to_grid(dialog, LeapPleaGrid.row_delete_button, column)
-
-    @logger.catch
-    def set_all_plea_and_findings(self, dialog):
-        button_dict = self.create_button_dict(dialog)
-        plea = button_dict.get(self.sender())
-        for column in range(1, self.columnCount()):
-            if self.itemAtPosition(LeapPleaGrid.row_offense, column) is not None:
-                if self.itemAtPosition(LeapPleaGrid.row_dismissed_box, column).widget().isChecked():
-                    continue
-                else:
-                    self.itemAtPosition(LeapPleaGrid.row_plea, column).widget().setCurrentText(plea)
-
-
 class NotGuiltyPleaGrid(ChargesGrid):
     row_plea = 3
     row_delete_button = 4
