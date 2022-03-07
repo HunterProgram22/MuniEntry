@@ -27,7 +27,7 @@ class ChargesGrid(QGridLayout):
     def add_delete_button_to_grid(self, dialog, row, column):
         delete_button = DeleteButton()
         dialog.delete_button_list.append(delete_button)
-        delete_button.pressed.connect(dialog.delete_charge)
+        delete_button.pressed.connect(dialog.delete_charge_process)
         self.addWidget(delete_button, row, column)
 
     def add_amend_button_to_grid(self, dialog, row, column):

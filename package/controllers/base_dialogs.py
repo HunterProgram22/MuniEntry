@@ -150,29 +150,6 @@ class CriminalBaseDialog(BaseDialog):
         self.delete_button_list = []
         self.amend_button_list = []
 
-    # def connect_signals_to_slots(self):
-    #     """This method extends the base_dialog method to add additional signals
-    #     and slots to be connected. The lambda function is used because it needs the dialog to be
-    #     passed as an argument (dialog = self) and if it is connected without lambda it would be called on
-    #     dialog creation instead of upon button clicked."""
-    #     print("Criminal Base connect signals ran")
-    #     super().connect_signals_to_slots()
-        # self.clear_fields_case_Button.pressed.connect(
-        #     lambda dialog=self: CriminalSlotFunctions.clear_case_information_fields(dialog))
-        # self.create_entry_Button.clicked.connect(
-        #     lambda _bool, dialog=self: CriminalSlotFunctions.create_entry_process(_bool, dialog))
-        # try:
-        #     """This is part of a try/except because the JailCC Dialog doesnt currently have a print button, but might
-        #     eventually."""
-        #     self.print_entry_Button.clicked.connect(
-        #         lambda _bool, dialog=self: CriminalSlotFunctions.print_entry_process(_bool, dialog))
-        # except AttributeError:
-        #     pass
-        # self.close_dialog_Button.pressed.connect(
-        #     lambda dialog=self: CriminalSlotFunctions.close_dialog(dialog))
-        # self.add_charge_Button.clicked.connect(self.start_add_charge_dialog)
-        # self.defense_counsel_waived_checkBox.toggled.connect(self.set_defense_counsel)
-
     def set_defense_counsel(self):
         if self.defense_counsel_waived_checkBox.isChecked():
             self.defense_counsel_name_box.setEnabled(False)
@@ -226,10 +203,7 @@ class CriminalBaseDialog(BaseDialog):
                 return offense_type
 
     @logger.catch
-    def delete_charge(self):
-        """Deletes the offense from the entry_case_information.charges list. Then
-        decrements the total charges by one so that other functions using the
-        total charges for indexing are correct."""
+    def delete_charge_process(self):
         index = self.delete_button_list.index(self.sender())
         del self.entry_case_information.charges_list[index]
         del self.delete_button_list[index]
