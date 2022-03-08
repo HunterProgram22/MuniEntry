@@ -230,7 +230,6 @@ class BaseChargeDialog(BaseDialog):
     @logger.catch
     def __init__(self, main_dialog, button_index=None, parent=None):
         self.main_dialog = main_dialog
-        self.case_information = main_dialog.entry_case_information # This can be refactored to main_dialog.case_information
         self.button_index = button_index
         charges_database.open()
         super().__init__(parent)
@@ -300,7 +299,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     def __init__(self, main_dialog, button_index=None, parent=None):
         super().__init__(main_dialog, button_index, parent)
         self.amend_offense_details = AmendOffenseDetails()
-        self.current_offense = self.case_information.charges_list[self.button_index].offense
+        self.current_offense = self.main_dialog.entry_case_information.charges_list[self.button_index].offense
         self.original_charge_label.setText(self.current_offense)
 
     def modify_view(self):
@@ -328,11 +327,11 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         self.amend_offense_details.original_charge = self.current_offense
         self.amend_offense_details.amended_charge = self.offense_choice_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
-        self.case_information.amend_offense_details = self.amend_offense_details
+        self.main_dialog.entry_case_information.amend_offense_details = self.amend_offense_details
         if self.motion_decision_box.currentText() == "Granted":
             amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
-            self.case_information.charges_list[self.button_index].offense = amended_charge
-            self.case_information.amended_charges_list.append(
+            self.main_dialog.entry_case_information.charges_list[self.button_index].offense = amended_charge
+            self.main_dialog.entry_case_information.amended_charges_list.append(
                 (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
             )
             for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
