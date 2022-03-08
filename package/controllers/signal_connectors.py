@@ -16,7 +16,7 @@ class BaseDialogSignalConnector(object):
             lambda _bool, dialog=dialog: CriminalSlotFunctions.create_entry_process(_bool, dialog))
         dialog.close_dialog_Button.pressed.connect(
             lambda dialog=dialog: CriminalSlotFunctions.close_dialog(dialog))
-        dialog.add_charge_Button.clicked.connect(dialog.start_add_charge_dialog)
+        dialog.add_charge_Button.released.connect(dialog.start_add_charge_dialog)
         dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):
