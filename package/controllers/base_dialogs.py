@@ -202,17 +202,13 @@ class CriminalBaseDialog(BaseDialog):
                 return offense_type
 
     @logger.catch
-    def start_amend_offense_dialog(self, _bool):
-        """Opens the amend offense dialog as a modal window. The
-        entry_case_information is passed to the dialog class in order to populate
-        the cms_case information banner. The _bool is from clicked and not used."""
+    def start_amend_offense_dialog(self):
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
         AmendChargeDialog(self, button_index).exec()
 
     @logger.catch
     def start_add_charge_dialog(self):
-        """Opens the amend offense dialog as a modal window."""
         self.update_case_information()
         AddChargeDialog(self).exec()
 

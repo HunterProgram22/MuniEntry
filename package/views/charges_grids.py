@@ -27,7 +27,7 @@ class ChargesGrid(QGridLayout):
     def add_amend_button_to_grid(self, dialog, row, column):
         amend_button = AmendButton()
         dialog.amend_button_list.append(amend_button)
-        amend_button.clicked.connect(dialog.start_amend_offense_dialog)
+        amend_button.released.connect(dialog.start_amend_offense_dialog)
         self.addWidget(amend_button, row, column)
 
     def get_charge_information(self, dialog):
