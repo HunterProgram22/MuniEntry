@@ -208,7 +208,7 @@ class CriminalBaseDialog(BaseDialog):
         the cms_case information banner. The _bool is from clicked and not used."""
         self.update_case_information()
         button_index = self.amend_button_list.index(self.sender())
-        AmendChargeDialog(self, self.entry_case_information, button_index).exec()
+        AmendChargeDialog(self, button_index).exec()
 
     @logger.catch
     def start_add_charge_dialog(self):
@@ -228,19 +228,13 @@ class CriminalBaseDialog(BaseDialog):
 
 class BaseChargeDialog(BaseDialog):
     @logger.catch
-    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
+    def __init__(self, main_dialog, button_index=None, parent=None):
         self.main_dialog = main_dialog
         self.case_information = main_dialog.entry_case_information # This can be refactored to main_dialog.case_information
         self.button_index = button_index
         charges_database.open()
         super().__init__(parent)
         self.set_statute_and_offense_choice_boxes()
-
-    @logger.catch
-    def modify_view(self):
-        """The modify view sets the original charge based on the item in the main dialog
-        for which amend button was pressed."""
-        pass
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -303,8 +297,8 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     @logger.catch
-    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
-        super().__init__(main_dialog, case_information, button_index, parent)
+    def __init__(self, main_dialog, button_index=None, parent=None):
+        super().__init__(main_dialog, button_index, parent)
         self.amend_offense_details = AmendOffenseDetails()
         self.current_offense = self.case_information.charges_list[self.button_index].offense
         self.original_charge_label.setText(self.current_offense)
