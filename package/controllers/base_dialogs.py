@@ -147,7 +147,6 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
-        self.delete_button_list = []
         self.amend_button_list = []
 
     def set_defense_counsel(self):
@@ -201,17 +200,6 @@ class CriminalBaseDialog(BaseDialog):
             if statute == key:
                 query.finish()
                 return offense_type
-
-    @logger.catch
-    def delete_charge_process(self):
-        index = self.delete_button_list.index(self.sender())
-        del self.entry_case_information.charges_list[index]
-        del self.delete_button_list[index]
-        self.charges_gridLayout.delete_charge_from_grid()
-        try: # This try/except is to account for not guilty button on Not Guilty dialog
-            self.guilty_all_Button.setFocus()
-        except AttributeError:
-            self.not_guilty_all_Button.setFocus()
 
     @logger.catch
     def start_amend_offense_dialog(self, _bool):

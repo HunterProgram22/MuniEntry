@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QGridLayout, QLabel
 from loguru import logger
 from package.views.custom_widgets import DeleteButton, AmendButton, PleaComboBox, AlliedCheckbox, FineLineEdit, \
     StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit, \
-    DismissedCheckbox
+    DismissedCheckbox, ChargeGridDeleteButton
 
 
 class ChargesGrid(QGridLayout):
@@ -24,17 +24,18 @@ class ChargesGrid(QGridLayout):
     def add_charge_only_to_grid(self, dialog):
         pass
 
-    def add_delete_button_to_grid(self, dialog, row, column):
-        delete_button = DeleteButton()
-        dialog.delete_button_list.append(delete_button)
-        delete_button.pressed.connect(dialog.delete_charge_process)
-        self.addWidget(delete_button, row, column)
-
     def add_amend_button_to_grid(self, dialog, row, column):
         amend_button = AmendButton()
         dialog.amend_button_list.append(amend_button)
         amend_button.clicked.connect(dialog.start_amend_offense_dialog)
         self.addWidget(amend_button, row, column)
+
+    def get_charge_information(self, dialog):
+        column = self.columnCount() + 1
+        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
+        charge_dict = vars(dialog.entry_case_information.charges_list[added_charge_index])
+        charge_in_list = dialog.entry_case_information.charges_list[added_charge_index]
+        return charge_dict, charge_in_list, column
 
     def set_plea_and_finding_rows(self):
         """The initial values of row_plea and row_finding are the common rows for plea and findings.
@@ -48,18 +49,6 @@ class ChargesGrid(QGridLayout):
             if self.itemAtPosition(row, 0).widget().text() == "Finding:":
                 row_finding = row
         return row_plea, row_finding
-
-    @logger.catch
-    def delete_charge_from_grid(self):
-        """Uses the delete_button that is indexed to the column to delete the
-        QLabels for the charge."""
-        index = self.indexOf(self.sender())
-        column = self.getItemPosition(index)[1]
-        for row in range(self.rowCount()):
-            layout_item = self.itemAtPosition(row, column)
-            if layout_item is not None:
-                layout_item.widget().deleteLater()
-                self.removeItem(layout_item)
 
     def create_button_dict(self, dialog):
         button_dict = {}
@@ -90,14 +79,13 @@ class NotGuiltyPleaGrid(ChargesGrid):
 
     @logger.catch
     def add_charge_only_to_grid(self, dialog):
-        column = self.columnCount() + 1
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), NotGuiltyPleaGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge['statute']), LeapPleaGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge['degree']), LeapPleaGrid.row_degree, column)
+        charge_dict, charge_in_list, column = self.get_charge_information(dialog)
+        self.addWidget(QLabel(charge_dict['offense']), NotGuiltyPleaGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge_dict['statute']), NotGuiltyPleaGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge_dict['degree']), NotGuiltyPleaGrid.row_degree, column)
         self.addWidget(PleaComboBox(column), NotGuiltyPleaGrid.row_plea, column)
-        self.add_delete_button_to_grid(dialog, NotGuiltyPleaGrid.row_delete_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), NotGuiltyPleaGrid.row_delete_button,
+                       column)
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
@@ -123,20 +111,18 @@ class NoJailChargesGrid(ChargesGrid):
 
     @logger.catch
     def add_charge_only_to_grid(self, dialog):
-        column = self.columnCount() + 1
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), NoJailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge['statute']), NoJailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge['degree']), NoJailChargesGrid.row_degree, column)
+        charge_dict, charge_in_list, column = self.get_charge_information(dialog)
+        self.addWidget(QLabel(charge_dict['offense']), NoJailChargesGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge_dict['statute']), NoJailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge_dict['degree']), NoJailChargesGrid.row_degree, column)
         self.addWidget(DismissedCheckbox(column, dialog), NoJailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(column, dialog), NoJailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge['offense']), NoJailChargesGrid.row_fine, column)
+        self.addWidget(FineLineEdit(charge_dict['offense']), NoJailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), NoJailChargesGrid.row_fine_suspended, column)
         self.add_amend_button_to_grid(dialog, NoJailChargesGrid.row_amend_button, column)
-        self.add_delete_button_to_grid(dialog, NoJailChargesGrid.row_delete_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), NoJailChargesGrid.row_delete_button, column)
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
@@ -144,18 +130,16 @@ class NoJailChargesGrid(ChargesGrid):
         plea = button_dict.get(self.sender())
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NoJailChargesGrid.row_offense, column) is not None:
-                if self.itemAtPosition(LeapPleaGrid.row_dismissed_box, column).widget().isChecked():
-                    continue
+                self.itemAtPosition(NoJailChargesGrid.row_plea, column).widget().setCurrentText(plea)
+                if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
+                    self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
                 else:
-                    self.itemAtPosition(NoJailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                    if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
-                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
         self.set_cursor_to_fine_line_edit()
 
 
 class JailChargesGrid(NoJailChargesGrid):
+    """The Jail Charges Grid is used as of 3/8/22 for both the JailCCPleaDialog and the DiversionDialog."""
     row_jail_days = 9
     row_jail_days_suspended = 10
     row_amend_button = 11
@@ -166,22 +150,20 @@ class JailChargesGrid(NoJailChargesGrid):
 
     @logger.catch
     def add_charge_only_to_grid(self, dialog):
-        column = self.columnCount() + 1
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        self.addWidget(QLabel(charge['offense']), JailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge['statute']), JailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge['degree']), JailChargesGrid.row_degree, column)
+        charge_dict, charge_in_list, column = self.get_charge_information(dialog)
+        self.addWidget(QLabel(charge_dict['offense']), JailChargesGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge_dict['statute']), JailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge_dict['degree']), JailChargesGrid.row_degree, column)
         self.addWidget(DismissedCheckbox(column, dialog), JailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(column, dialog), JailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), JailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), JailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge['offense']), JailChargesGrid.row_fine, column)
+        self.addWidget(FineLineEdit(charge_dict['offense']), JailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), JailChargesGrid.row_fine_suspended, column)
-        self.addWidget(JailLineEdit(charge['offense']), JailChargesGrid.row_jail_days, column)
+        self.addWidget(JailLineEdit(charge_dict['offense']), JailChargesGrid.row_jail_days, column)
         self.addWidget(JailSuspendedLineEdit(), JailChargesGrid.row_jail_days_suspended, column)
         self.add_amend_button_to_grid(dialog, JailChargesGrid.row_amend_button, column)
-        self.add_delete_button_to_grid(dialog, JailChargesGrid.row_delete_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), JailChargesGrid.row_delete_button, column)
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
@@ -189,14 +171,11 @@ class JailChargesGrid(NoJailChargesGrid):
         plea = button_dict.get(self.sender())
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(JailChargesGrid.row_offense, column) is not None:
-                if self.itemAtPosition(LeapPleaGrid.row_dismissed_box, column).widget().isChecked():
-                    continue
+                self.itemAtPosition(JailChargesGrid.row_plea, column).widget().setCurrentText(plea)
+                if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
+                    self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
                 else:
-                    self.itemAtPosition(JailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                    if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
-                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
         self.set_cursor_to_fine_line_edit()
 
 def main():

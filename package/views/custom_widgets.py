@@ -163,16 +163,30 @@ class FindingComboBox(QComboBox):
         self.addItem("Not Guilty - Allied Offense")
 
 
-class DeleteButton(QPushButton):
-    def __init__(self, parent=None):
+class ChargeGridDeleteButton(QPushButton):
+    def __init__(self, column_index, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
+        self.column_index = column_index
+        self.dialog = dialog
+        self.charge = charge
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setStyleSheet("background-color: rgb(170, 58, 63);")
         self.setText("Delete")
-        self.setObjectName("delete_Button")
+        self.setObjectName("charge_grid_delete_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pressed.connect(self.delete_charge_from_grid_and_charges_list)
+
+    def delete_charge_from_grid_and_charges_list(self):
+        """Uses the delete_button that is indexed to the column to delete the
+        QLabels for the charge."""
+        self.dialog.entry_case_information.charges_list.remove(self.charge)
+        for row in range(self.dialog.charges_gridLayout.rowCount()):
+            layout_item = self.dialog.charges_gridLayout.itemAtPosition(row, self.column_index)
+            if layout_item is not None:
+                layout_item.widget().deleteLater()
+                self.dialog.charges_gridLayout.removeItem(layout_item)
 
 
 class AmendButton(QPushButton):
