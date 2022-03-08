@@ -147,7 +147,6 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
-        self.amend_button_list = []
 
     def set_defense_counsel(self):
         if self.defense_counsel_waived_checkBox.isChecked():
@@ -204,8 +203,7 @@ class CriminalBaseDialog(BaseDialog):
     @logger.catch
     def start_amend_offense_dialog(self):
         self.update_case_information()
-        button_index = self.amend_button_list.index(self.sender())
-        AmendChargeDialog(self, button_index).exec()
+        AmendChargeDialog(self).exec()
 
     @logger.catch
     def start_add_charge_dialog(self):
@@ -292,11 +290,12 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     @logger.catch
-    def __init__(self, main_dialog, button_index=None, parent=None):
-        super().__init__(main_dialog, button_index, parent)
+    def __init__(self, main_dialog, parent=None):
+        super().__init__(main_dialog, parent)
         self.amend_offense_details = AmendOffenseDetails()
-        self.current_offense = self.main_dialog.entry_case_information.charges_list[self.button_index].offense
-        self.original_charge_label.setText(self.current_offense)
+        self.charge = self.sender().charge
+        self.current_offense_name = self.sender().charge.offense
+        self.original_charge_label.setText(self.current_offense_name)
 
     def modify_view(self):
         return AmendChargeDialogViewModifier(self)
@@ -306,8 +305,8 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         """This method overrides the base_dialog method to connect signals and
         slots specific to the amend_offense dialog."""
         super().connect_signals_to_slots()
-        self.clear_fields_Button.pressed.connect(self.clear_amend_charge_fields)
-        self.amend_charge_Button.pressed.connect(self.amend_offense)
+        self.clear_fields_Button.released.connect(self.clear_amend_charge_fields)
+        self.amend_charge_Button.released.connect(self.amend_offense)
 
     @logger.catch
     def clear_amend_charge_fields(self):
@@ -320,13 +319,13 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the entry_case_information object to the AmendOffenseDetails
         object."""
-        self.amend_offense_details.original_charge = self.current_offense
+        self.amend_offense_details.original_charge = self.current_offense_name
         self.amend_offense_details.amended_charge = self.offense_choice_box.currentText()
         self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
         self.main_dialog.entry_case_information.amend_offense_details = self.amend_offense_details
         if self.motion_decision_box.currentText() == "Granted":
-            amended_charge = f"{self.current_offense} - AMENDED to {self.amend_offense_details.amended_charge}"
-            self.main_dialog.entry_case_information.charges_list[self.button_index].offense = amended_charge
+            amended_charge = f"{self.current_offense_name} - AMENDED to {self.amend_offense_details.amended_charge}"
+            setattr(self.charge, 'offense', amended_charge)
             self.main_dialog.entry_case_information.amended_charges_list.append(
                 (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
             )
@@ -334,7 +333,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
                 if (
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
                     and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.current_offense
+                        0, columns).widget().text() == self.current_offense_name
                 ):
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
                     self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.statute_choice_box.currentText())

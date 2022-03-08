@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QGridLayout, QLabel
 from loguru import logger
-from package.views.custom_widgets import AmendButton, PleaComboBox, AlliedCheckbox, FineLineEdit, \
+from package.views.custom_widgets import PleaComboBox, AlliedCheckbox, FineLineEdit, \
     StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit, \
-    DismissedCheckbox, ChargeGridDeleteButton
+    DismissedCheckbox, ChargeGridDeleteButton, ChargeGridAmendButton
 
 
 class ChargesGrid(QGridLayout):
@@ -23,12 +23,6 @@ class ChargesGrid(QGridLayout):
 
     def add_charge_only_to_grid(self, dialog):
         pass
-
-    def add_amend_button_to_grid(self, dialog, row, column):
-        amend_button = AmendButton()
-        dialog.amend_button_list.append(amend_button)
-        amend_button.released.connect(dialog.start_amend_offense_dialog)
-        self.addWidget(amend_button, row, column)
 
     def get_charge_information(self, dialog):
         column = self.columnCount() + 1
@@ -121,7 +115,7 @@ class NoJailChargesGrid(ChargesGrid):
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
         self.addWidget(FineLineEdit(charge_dict['offense']), NoJailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), NoJailChargesGrid.row_fine_suspended, column)
-        self.add_amend_button_to_grid(dialog, NoJailChargesGrid.row_amend_button, column)
+        self.addWidget(ChargeGridAmendButton(column, charge_in_list, dialog), NoJailChargesGrid.row_amend_button, column)
         self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), NoJailChargesGrid.row_delete_button, column)
 
     @logger.catch
@@ -162,7 +156,7 @@ class JailChargesGrid(NoJailChargesGrid):
         self.addWidget(FineSuspendedLineEdit(), JailChargesGrid.row_fine_suspended, column)
         self.addWidget(JailLineEdit(charge_dict['offense']), JailChargesGrid.row_jail_days, column)
         self.addWidget(JailSuspendedLineEdit(), JailChargesGrid.row_jail_days_suspended, column)
-        self.add_amend_button_to_grid(dialog, JailChargesGrid.row_amend_button, column)
+        self.addWidget(ChargeGridAmendButton(column, charge_in_list, dialog), JailChargesGrid.row_amend_button, column)
         self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), JailChargesGrid.row_delete_button, column)
 
     @logger.catch
