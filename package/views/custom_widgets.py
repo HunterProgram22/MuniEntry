@@ -169,7 +169,6 @@ class ChargeGridDeleteButton(QPushButton):
         self.column_index = column_index
         self.dialog = dialog
         self.charge = charge
-        print(self.charge)
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -177,18 +176,12 @@ class ChargeGridDeleteButton(QPushButton):
         self.setText("Delete")
         self.setObjectName("charge_grid_delete_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.charge_to_delete = self.charge
-        self.pressed.connect(self.delete_charge_from_grid)
+        self.pressed.connect(self.delete_charge_from_grid_and_charges_list)
 
-    def delete_charge_from_grid(self):
+    def delete_charge_from_grid_and_charges_list(self):
         """Uses the delete_button that is indexed to the column to delete the
         QLabels for the charge."""
-        print(self.dialog.entry_case_information.charges_list)
-
-        #     index = self.dialog.delete_button_list.index(self.sender())
-        #     del self.dialog.entry_case_information.charges_list[index]
-        self.dialog.entry_case_information.charges_list.remove(self.charge_to_delete)
-        print(self.dialog.entry_case_information.charges_list)
+        self.dialog.entry_case_information.charges_list.remove(self.charge)
         for row in range(self.dialog.charges_gridLayout.rowCount()):
             layout_item = self.dialog.charges_gridLayout.itemAtPosition(row, self.column_index)
             if layout_item is not None:
