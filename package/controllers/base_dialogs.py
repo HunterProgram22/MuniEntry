@@ -212,9 +212,7 @@ class CriminalBaseDialog(BaseDialog):
 
     @logger.catch
     def start_add_charge_dialog(self):
-        """Opens the amend offense dialog as a modal window. The
-        entry_case_information is passed to the dialog class in order to populate
-        the cms_case information banner."""
+        """Opens the amend offense dialog as a modal window."""
         self.update_case_information()
         AddChargeDialog(self).exec()
 
@@ -265,8 +263,8 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
-    def __init__(self, main_dialog, button_index=None, parent=None):
-        super().__init__(main_dialog, button_index, parent)
+    def __init__(self, main_dialog, parent=None):
+        super().__init__(main_dialog, parent)
 
     def modify_view(self):
         return AddChargeDialogViewModifier(self)
