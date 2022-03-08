@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QGridLayout, QLabel
 from loguru import logger
-from package.views.custom_widgets import DeleteButton, AmendButton, PleaComboBox, AlliedCheckbox, FineLineEdit, \
+from package.views.custom_widgets import AmendButton, PleaComboBox, AlliedCheckbox, FineLineEdit, \
     StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit, \
     DismissedCheckbox, ChargeGridDeleteButton
 
