@@ -189,18 +189,6 @@ class ChargeGridDeleteButton(QPushButton):
                 self.dialog.charges_gridLayout.removeItem(layout_item)
 
 
-class DeleteButton(QPushButton):
-    def __init__(self, parent=None):
-        super(QPushButton, self).__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setStyleSheet("background-color: rgb(170, 58, 63);")
-        self.setText("Delete")
-        self.setObjectName("delete_Button")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
-
-
 class AmendButton(QPushButton):
     def __init__(self, parent=None):
         super(QPushButton, self).__init__(parent)
