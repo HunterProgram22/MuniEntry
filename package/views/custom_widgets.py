@@ -189,16 +189,20 @@ class ChargeGridDeleteButton(QPushButton):
                 self.dialog.charges_gridLayout.removeItem(layout_item)
 
 
-class AmendButton(QPushButton):
-    def __init__(self, parent=None):
+class ChargeGridAmendButton(QPushButton):
+    def __init__(self, column_index, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
+        self.column_index = column_index
+        self.dialog = dialog
+        self.charge = charge
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
-        self.setObjectName("amend_Button")
+        self.setObjectName("charge_grid_amend_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.released.connect(self.dialog.start_amend_offense_dialog)
 
 
 class AlliedCheckbox(QCheckBox):

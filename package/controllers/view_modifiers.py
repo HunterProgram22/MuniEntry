@@ -39,15 +39,6 @@ class BaseDialogViewModifier(object):
     def set_balance_due_date(self, dialog):
         dialog.balance_due_date.setDate(TODAY)
 
-    def set_case_information_banner(self, dialog):
-        dialog.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=dialog.case_information.defendant.first_name,
-                defendant_last_name=dialog.case_information.defendant.last_name
-            )
-        )
-        dialog.case_number_label.setText(dialog.case_information.case_number)
-
     ###Additional Condition/Jail Dialog Setup Methods###
     def set_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1
@@ -90,11 +81,29 @@ class AddChargeDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_case_information_banner(dialog)
 
+    def set_case_information_banner(self, dialog):
+        dialog.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
+                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
+            )
+        )
+        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
+
 
 class AmendChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_case_information_banner(dialog)
+
+    def set_case_information_banner(self, dialog):
+        dialog.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
+                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
+            )
+        )
+        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
