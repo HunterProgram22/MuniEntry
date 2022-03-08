@@ -216,7 +216,7 @@ class CriminalBaseDialog(BaseDialog):
         entry_case_information is passed to the dialog class in order to populate
         the cms_case information banner."""
         self.update_case_information()
-        AddChargeDialog(self, self.entry_case_information).exec()
+        AddChargeDialog(self).exec()
 
     @logger.catch
     def set_pay_date(self, days_to_add):
@@ -232,7 +232,7 @@ class BaseChargeDialog(BaseDialog):
     @logger.catch
     def __init__(self, main_dialog, case_information, button_index=None, parent=None):
         self.main_dialog = main_dialog
-        self.case_information = case_information
+        self.case_information = main_dialog.entry_case_information # This can be refactored to main_dialog.case_information
         self.button_index = button_index
         charges_database.open()
         super().__init__(parent)
@@ -265,8 +265,8 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     The cms_case information is passed in order to populate the cms_case information banner. The
     button_index is to determine which charge the amend_button is amending."""
     @logger.catch
-    def __init__(self, main_dialog, case_information, button_index=None, parent=None):
-        super().__init__(main_dialog, case_information, button_index, parent)
+    def __init__(self, main_dialog, button_index=None, parent=None):
+        super().__init__(main_dialog, button_index, parent)
 
     def modify_view(self):
         return AddChargeDialogViewModifier(self)
@@ -295,7 +295,7 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
         self.criminal_charge.statute = self.statute_choice_box.currentText()
         self.criminal_charge.degree = self.degree_choice_box.currentText()
         # self.criminal_charge.type = self.set_offense_type()
-        self.case_information.add_charge_to_list(self.criminal_charge)
+        self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
 
     @logger.catch
     def clear_add_charge_fields(self):
