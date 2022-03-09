@@ -198,6 +198,7 @@ def check_if_diversion_program_selected(dialog):
         message.exec()
         return False
 
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and

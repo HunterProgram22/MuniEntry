@@ -307,9 +307,9 @@ class Diversion:
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
     terms_list = [
-        ("marijuana_diversion", "marijuana_diversion_checkBox"),
-        ("theft_diversion", "theft_diversion_checkBox"),
-        ("other_diversion", "other_diversion_checkBox"),
+        ("marijuana_diversion", "marijuana_diversion_radioButton"),
+        ("theft_diversion", "theft_diversion_radioButton"),
+        ("other_diversion", "other_diversion_radioButton"),
         ("jail_imposed", "diversion_jail_imposed_checkBox"),
         ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
         ("diversion_jail_report_date", "diversion_jail_report_date_box"),

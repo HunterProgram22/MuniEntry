@@ -8,7 +8,7 @@ from win32com import client
 from PyQt5 import QtCore
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
+from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit, QRadioButton
 from PyQt5 import QtGui
 
 from db.databases import open_charges_db_connection, extract_data, create_offense_list, create_statute_list
@@ -113,6 +113,8 @@ class BaseDialog(QDialog):
                 if isinstance(getattr(self, view_field), QComboBox):
                     setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
                 elif isinstance(getattr(self, view_field), QCheckBox):
+                    setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+                elif isinstance(getattr(self, view_field), QRadioButton):
                     setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
                 elif isinstance(getattr(self, view_field), QLineEdit):
                     setattr(terms_object, model_attribute, getattr(self, view_field).text())
