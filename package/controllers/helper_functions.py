@@ -183,6 +183,21 @@ def stop_jail_check(dialog):
         return True
 
 
+def check_if_diversion_program_selected(dialog):
+    diversion_program_list = [
+        'marijuana_diversion',
+        'theft_diversion',
+        'other_diversion',
+    ]
+    if dialog.dialog_name == 'Diversion Plea Dialog':
+        for program in diversion_program_list:
+            if getattr(dialog.entry_case_information.diversion, program) is True:
+                return True
+        message = RequiredBox(f"No Diversion Program was selected. \n\n"
+                              f"Please select a Diversion Program.")
+        message.exec()
+        return False
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and

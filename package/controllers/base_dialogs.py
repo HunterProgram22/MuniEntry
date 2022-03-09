@@ -12,7 +12,8 @@ from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit,
 from PyQt5 import QtGui
 
 from db.databases import open_charges_db_connection, extract_data, create_offense_list, create_statute_list
-from package.controllers.helper_functions import set_document_name, set_future_date, InfoChecker
+from package.controllers.helper_functions import set_document_name, set_future_date, \
+    InfoChecker, check_if_diversion_program_selected
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
@@ -446,6 +447,8 @@ class CriminalSlotFunctions:
     def update_info_and_perform_checks(cls, dialog):
         dialog.update_case_information()
         if InfoChecker.check_defense_counsel(dialog) == "Fail":
+            return "Fail"
+        if check_if_diversion_program_selected(dialog) is False:
             return "Fail"
         if InfoChecker.check_plea_and_findings(dialog) == "Fail":
             return "Fail"
