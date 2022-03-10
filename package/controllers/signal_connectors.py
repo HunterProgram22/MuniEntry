@@ -2,7 +2,7 @@
 when a dialog is built and connect all of the interface objects (i.e. buttons,
 checkboxes, etc.) to the dialog."""
 from PyQt5 import QtCore
-from package.controllers.base_dialogs import CriminalSlotFunctions
+from package.controllers.slot_functions import CriminalSlotFunctions
 
 
 class BaseDialogSignalConnector(object):
@@ -50,6 +50,28 @@ class BaseDialogSignalConnector(object):
         dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
             dialog.update_community_service_due_date
         )
+
+    def connect_statute_and_offense_boxes(self, dialog):
+        dialog.statute_choice_box.currentTextChanged.connect(
+            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        dialog.offense_choice_box.currentTextChanged.connect(
+            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+
+
+class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_statute_and_offense_boxes(dialog)
+        dialog.clear_fields_Button.released.connect(dialog.clear_add_charge_fields)
+        dialog.add_charge_Button.released.connect(dialog.add_charge_process)
+
+
+class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_statute_and_offense_boxes(dialog)
+        dialog.clear_fields_Button.released.connect(dialog.clear_amend_charge_fields)
+        dialog.amend_charge_Button.released.connect(dialog.amend_offense)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
