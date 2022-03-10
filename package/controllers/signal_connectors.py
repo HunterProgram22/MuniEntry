@@ -52,10 +52,10 @@ class BaseDialogSignalConnector(object):
         )
 
     def connect_statute_and_offense_boxes(self, dialog):
-        self.statute_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
-        self.offense_choice_box.currentTextChanged.connect(
-            lambda key, dialog=self: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        dialog.statute_choice_box.currentTextChanged.connect(
+            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+        dialog.offense_choice_box.currentTextChanged.connect(
+            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
 
 
 class AddChargeDialogSignalConnector(BaseDialogSignalConnector):

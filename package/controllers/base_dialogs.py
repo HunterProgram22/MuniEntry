@@ -198,12 +198,6 @@ class BaseChargeDialog(BaseDialog):
         super().__init__(parent)
         self.set_statute_and_offense_choice_boxes()
 
-    # @logger.catch
-    # def connect_signals_to_slots(self):
-    #     """TODO: The statute/offense connections can probably be moved to this dialog directly."""
-    #
-    #     self.cancel_Button.pressed.connect(self.close_event)
-
     def set_statute_and_offense_choice_boxes(self):
         self.statute_choice_box.addItems(create_statute_list())
         self.offense_choice_box.addItems(create_offense_list())
