@@ -11,7 +11,7 @@ from package.models.case_information import CriminalCaseInformation, CriminalCha
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-from package.controllers.signal_connectors import AddChargeDialogSignalConnector
+from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
 from package.views.custom_widgets import DefenseCounselComboBox
 from settings import PAY_DATE_DICT
 
@@ -206,10 +206,6 @@ class BaseChargeDialog(BaseDialog):
 
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
-    """The AddOffenseDialog is created when the amend_button is pressed for a specific charge.
-    The cms_case information is passed in order to populate the cms_case information banner. The
-    button_index is to determine which charge the amend_button is amending."""
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
 
@@ -247,7 +243,6 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         self.amend_offense_details = AmendOffenseDetails()
@@ -260,11 +255,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     @logger.catch
     def connect_signals_to_slots(self):
-        """This method overrides the base_dialog method to connect signals and
-        slots specific to the amend_offense dialog."""
-        super().connect_signals_to_slots()
-        self.clear_fields_Button.released.connect(self.clear_amend_charge_fields)
-        self.amend_charge_Button.released.connect(self.amend_offense)
+        return AmendChargeDialogSignalConnector(self)
 
     @logger.catch
     def clear_amend_charge_fields(self):

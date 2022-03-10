@@ -62,8 +62,16 @@ class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
-        dialog.clear_fields_Button.pressed.connect(dialog.clear_add_charge_fields)
-        dialog.add_charge_Button.pressed.connect(dialog.add_charge_process)
+        dialog.clear_fields_Button.released.connect(dialog.clear_add_charge_fields)
+        dialog.add_charge_Button.released.connect(dialog.add_charge_process)
+
+
+class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_statute_and_offense_boxes(dialog)
+        dialog.clear_fields_Button.released.connect(dialog.clear_amend_charge_fields)
+        dialog.amend_charge_Button.released.connect(dialog.amend_offense)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
