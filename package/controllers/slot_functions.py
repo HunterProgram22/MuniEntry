@@ -23,14 +23,13 @@ class CriminalSlotFunctions:
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    @classmethod
     @logger.catch
-    def create_entry_process(cls, dialog):
+    def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
         update_info_and_perform_checks method (found in helper_functions.py)."""
-        info_checks = cls.update_info_and_perform_checks(dialog)
+        info_checks = self.update_info_and_perform_checks()
         if info_checks == "Pass":
-            create_entry(dialog)
+            create_entry(self)
 
     @classmethod
     @logger.catch
@@ -39,31 +38,29 @@ class CriminalSlotFunctions:
         if info_checks == "Pass":
             create_entry(dialog, print_doc=True)
 
-    @classmethod
     @logger.catch
-    def update_info_and_perform_checks(cls, dialog):
-        dialog.update_case_information()
-        if InfoChecker.check_defense_counsel(dialog) == "Fail":
+    def update_info_and_perform_checks(self):
+        self.dialog.update_case_information()
+        if InfoChecker.check_defense_counsel(self.dialog) == "Fail":
             return "Fail"
-        if check_if_diversion_program_selected(dialog) is False:
+        if check_if_diversion_program_selected(self.dialog) is False:
             return "Fail"
-        if InfoChecker.check_plea_and_findings(dialog) == "Fail":
+        if InfoChecker.check_plea_and_findings(self.dialog) == "Fail":
             return "Fail"
-        if InfoChecker.check_insurance(dialog) == "Fail":
+        if InfoChecker.check_insurance(self.dialog) == "Fail":
             return "Fail"
-        if InfoChecker.check_bond_amount(dialog) == "Fail":
+        if InfoChecker.check_bond_amount(self.dialog) == "Fail":
             return "Fail"
-        if InfoChecker.check_additional_conditions_ordered(dialog) == "Fail":
+        if InfoChecker.check_additional_conditions_ordered(self.dialog) == "Fail":
             return "Fail"
-        if InfoChecker.check_jail_days(dialog) == "Fail":
+        if InfoChecker.check_jail_days(self.dialog) == "Fail":
             return "Fail"
-        dialog.update_case_information()
+        self.dialog.update_case_information()
         return "Pass"
 
-    @classmethod
     @logger.catch
-    def close_dialog(cls, dialog):
-        dialog.close_event()
+    def close_dialog(self):
+        self.dialog.close_event()
 
 
     @classmethod
