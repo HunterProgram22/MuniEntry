@@ -32,12 +32,16 @@ class BaseDialog(QDialog):
         super().__init__(parent)
         self.case_table = case_table
         self.modify_view()
+        self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
 
     def modify_view(self):
         """The modify view method updates the view that is created on init with self.setupUI.
         Place items in this method that can't be added directly in QtDesigner (or are more easily added later)
         so that they don't need to be changed in the view file each time pyuic5 is run."""
+        raise NotImplementedError
+
+    def create_dialog_slot_functions(self):
         raise NotImplementedError
 
     def connect_signals_to_slots(self):

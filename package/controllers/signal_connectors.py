@@ -10,8 +10,9 @@ class BaseDialogSignalConnector(object):
         dialog.cancel_Button.released.connect(dialog.close_event)
 
     def connect_main_dialog_common_signals(self, dialog):
-        dialog.clear_fields_case_Button.released.connect(
-            lambda dialog=dialog: CriminalSlotFunctions.clear_case_information_fields(dialog))
+        # dialog.clear_fields_case_Button.released.connect(
+        #     lambda dialog=dialog: CriminalSlotFunctions.clear_case_information_fields(dialog))
+        dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
         dialog.create_entry_Button.released.connect(
             lambda dialog=dialog: CriminalSlotFunctions.create_entry_process(dialog))
         dialog.close_dialog_Button.released.connect(

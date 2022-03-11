@@ -13,16 +13,15 @@ from win32com import client
 
 
 class CriminalSlotFunctions:
-    """Class for common criminal functions that are connected to slots/buttons in a dialog."""
-    @classmethod
+    def __init__(self, dialog):
+        self.dialog = dialog
+
     @logger.catch
-    def clear_case_information_fields(cls, dialog):
-        """Clears the text in the fields in the top cms_case information frame and resets the cursor
-        to the first text entry (defendant_first_name_lineEdit) box."""
-        dialog.defendant_first_name_lineEdit.clear()
-        dialog.defendant_last_name_lineEdit.clear()
-        dialog.case_number_lineEdit.clear()
-        dialog.defendant_first_name_lineEdit.setFocus()
+    def clear_case_information_fields(self):
+        self.dialog.defendant_first_name_lineEdit.clear()
+        self.dialog.defendant_last_name_lineEdit.clear()
+        self.dialog.case_number_lineEdit.clear()
+        self.dialog.defendant_first_name_lineEdit.setFocus()
 
     @classmethod
     @logger.catch

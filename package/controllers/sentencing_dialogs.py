@@ -15,6 +15,7 @@ from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import *
 from package.controllers.signal_connectors import *
+from package.controllers.slot_functions import CriminalSlotFunctions
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -323,6 +324,9 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
 
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = CriminalSlotFunctions(self)
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
