@@ -26,7 +26,7 @@ class CriminalSlotFunctions:
 
     @classmethod
     @logger.catch
-    def create_entry_process(cls, _bool, dialog):
+    def create_entry_process(cls, dialog):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
         update_info_and_perform_checks method (found in helper_functions.py)."""
         info_checks = cls.update_info_and_perform_checks(dialog)
@@ -35,7 +35,7 @@ class CriminalSlotFunctions:
 
     @classmethod
     @logger.catch
-    def print_entry_process(cls, _bool, dialog):
+    def print_entry_process(cls, dialog):
         info_checks = cls.update_info_and_perform_checks(dialog)
         if info_checks == "Pass":
             create_entry(dialog, print_doc=True)

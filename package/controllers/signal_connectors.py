@@ -7,14 +7,14 @@ from package.controllers.slot_functions import CriminalSlotFunctions
 
 class BaseDialogSignalConnector(object):
     def __init__(self, dialog):
-        dialog.cancel_Button.pressed.connect(dialog.close_event)
+        dialog.cancel_Button.released.connect(dialog.close_event)
 
     def connect_main_dialog_common_signals(self, dialog):
-        dialog.clear_fields_case_Button.pressed.connect(
+        dialog.clear_fields_case_Button.released.connect(
             lambda dialog=dialog: CriminalSlotFunctions.clear_case_information_fields(dialog))
-        dialog.create_entry_Button.clicked.connect(
-            lambda _bool, dialog=dialog: CriminalSlotFunctions.create_entry_process(_bool, dialog))
-        dialog.close_dialog_Button.pressed.connect(
+        dialog.create_entry_Button.released.connect(
+            lambda dialog=dialog: CriminalSlotFunctions.create_entry_process(dialog))
+        dialog.close_dialog_Button.released.connect(
             lambda dialog=dialog: CriminalSlotFunctions.close_dialog(dialog))
         dialog.add_charge_Button.released.connect(dialog.start_add_charge_dialog)
         dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.set_defense_counsel)
@@ -83,6 +83,8 @@ class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_court_cost_signals(dialog)
         self.connect_main_dialog_additional_condition_signals(dialog)
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.set_fines_credit_for_jail_field)
+        dialog.print_entry_Button.released.connect(
+            lambda dialog=dialog: CriminalSlotFunctions.print_entry_process(dialog))
 
 
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
@@ -113,6 +115,8 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
+        dialog.print_entry_Button.released.connect(
+            lambda dialog=dialog: CriminalSlotFunctions.print_entry_process(dialog))
         dialog.not_guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
