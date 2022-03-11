@@ -3,7 +3,7 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
-from package.controllers.check_decorators import check_judicial_officer, check_case_list_selected
+from package.controllers.helper_functions import check_judicial_officer, check_case_list_selected
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 from package.models.case_information import CriminalCaseInformation
