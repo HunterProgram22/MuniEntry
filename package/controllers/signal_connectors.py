@@ -14,7 +14,7 @@ from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 
 class BaseDialogSignalConnector(object):
     def __init__(self, dialog):
-        dialog.cancel_Button.released.connect(dialog.close_event)
+        dialog.cancel_Button.released.connect(dialog.functions.close_event)
 
     def connect_main_dialog_common_signals(self, dialog):
         dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
@@ -210,7 +210,7 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
         updated before the charge is added and the data cleared from the fields."""
         self.add_charge_to_entry_case_information()
         self.main_dialog.add_charge_to_grid()
-        self.close_event()
+        self.functions.close_event()
 
     @logger.catch
     def add_charge_to_entry_case_information(self):
@@ -277,4 +277,4 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
                     self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.statute_choice_box.currentText())
                     self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.degree_choice_box.currentText())
-        self.close_event()
+        self.functions.close_event()

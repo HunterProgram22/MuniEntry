@@ -37,7 +37,7 @@ class BaseDialogSlotFunctions(object):
         """Function connected to a button to close the window. Can be connected
         to any button press/click/release to close a window. This can also be called
         at the end of the close_event process to close the dialog."""
-        self.close()
+        self.dialog.close()
 
     @logger.catch
     def clear_case_information_fields(self):
