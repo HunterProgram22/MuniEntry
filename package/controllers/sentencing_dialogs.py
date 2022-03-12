@@ -9,7 +9,7 @@ from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
 from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
@@ -305,9 +305,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         AddCommunityControlDialog(self).exec()
 
 
-class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
-    """The dialog inherits from the CriminalBaseDialog (controller) and the
-    Ui_NoJailPleaDialog (view)."""
+class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
