@@ -9,6 +9,8 @@ from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import charges_database
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name
 
+from package.models.case_information import CriminalCharge, AmendOffenseDetails
+
 from package.views.custom_widgets import RequiredBox
 
 from settings import SAVE_PATH
@@ -125,6 +127,38 @@ class BaseDialogSlotFunctions(object):
             dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
             break
+
+
+class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.main_dialog = dialog.main_dialog
+
+    @logger.catch
+    def clear_add_charge_fields(self):
+        self.dialog.statute_choice_box.clearEditText()
+        self.dialog.offense_choice_box.clearEditText()
+
+    @logger.catch
+    def add_charge_process(self):
+        """The order of functions that are called when the add_charge_Button is
+        clicked(). The order is important to make sure the information is
+        updated before the charge is added and the data cleared from the fields."""
+        self.add_charge_to_entry_case_information()
+        self.main_dialog.add_charge_to_grid()
+        self.close_event()
+
+    @logger.catch
+    def add_charge_to_entry_case_information(self):
+        """TODO: self.criminal_charge_type needs to be fixed to add back in to get costs calculator to work
+        again eventually."""
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.dialog.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.dialog.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.dialog.degree_choice_box.currentText()
+        # self.criminal_charge.type = self.set_offense_type()
+        self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+
 
 
 def close_databases():

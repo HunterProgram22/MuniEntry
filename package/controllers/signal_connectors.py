@@ -5,9 +5,9 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog
 from db.databases import create_statute_list, create_offense_list
 from loguru import logger
-from package.controllers.slot_functions import BaseDialogSlotFunctions, charges_database
+from package.controllers.slot_functions import BaseDialogSlotFunctions, AddChargeDialogSlotFunctions, charges_database
 from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-from package.models.case_information import CriminalCharge, AmendOffenseDetails
+
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 
@@ -66,8 +66,8 @@ class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
-        dialog.clear_fields_Button.released.connect(dialog.clear_add_charge_fields)
-        dialog.add_charge_Button.released.connect(dialog.add_charge_process)
+        dialog.clear_fields_Button.released.connect(dialog.functions.clear_add_charge_fields)
+        dialog.add_charge_Button.released.connect(dialog.functions.add_charge_process)
 
 
 class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
@@ -195,36 +195,11 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
         return AddChargeDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        self.functions = BaseDialogSlotFunctions(self)
+        self.functions = AddChargeDialogSlotFunctions(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return AddChargeDialogSignalConnector(self)
 
-    @logger.catch
-    def add_charge_process(self):
-        """The order of functions that are called when the add_charge_Button is
-        clicked(). The order is important to make sure the information is
-        updated before the charge is added and the data cleared from the fields."""
-        self.add_charge_to_entry_case_information()
-        self.main_dialog.add_charge_to_grid()
-        self.functions.close_event()
-
-    @logger.catch
-    def add_charge_to_entry_case_information(self):
-        """TODO: self.criminal_charge_type needs to be fixed to add back in to get costs calculator to work
-        again eventually."""
-        self.criminal_charge = CriminalCharge()
-        self.criminal_charge.offense = self.offense_choice_box.currentText()
-        self.criminal_charge.statute = self.statute_choice_box.currentText()
-        self.criminal_charge.degree = self.degree_choice_box.currentText()
-        # self.criminal_charge.type = self.set_offense_type()
-        self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
-
-    @logger.catch
-    def clear_add_charge_fields(self):
-        self.statute_choice_box.clearEditText()
-        self.offense_choice_box.clearEditText()
 
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
