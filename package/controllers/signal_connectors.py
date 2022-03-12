@@ -172,7 +172,6 @@ class BaseChargeDialog(QDialog):
     @logger.catch
     def __init__(self, main_dialog, button_index=None, parent=None):
         super().__init__(parent)
-        print(main_dialog)
         self.button_index = button_index
         self.main_dialog = main_dialog
         charges_database.open()
@@ -190,7 +189,6 @@ class BaseChargeDialog(QDialog):
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     def __init__(self, main_dialog, parent=None):
-        print(f"Add charge main dialog is {main_dialog}")
         super().__init__(main_dialog, parent)
 
     def modify_view(self):

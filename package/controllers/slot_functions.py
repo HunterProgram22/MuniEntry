@@ -94,7 +94,6 @@ class BaseDialogSlotFunctions(object):
     def close_dialog(self):
         self.dialog.close_event()
 
-
     @classmethod
     @logger.catch
     def set_statute_and_offense(cls, key, dialog):
@@ -126,10 +125,6 @@ class BaseDialogSlotFunctions(object):
             dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
             break
-
-
-
-
 
 
 def close_databases():
