@@ -172,29 +172,29 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
 
     @logger.catch
     def amend_offense(self):
-        """Adds the data entered for the amended offense to the AmendOffenseDetails
+        """Adds the data entered for the amended ofdialog.fense to the AmendOffenseDetails
         object then points the entry_case_information object to the AmendOffenseDetails
         object."""
-        self.amend_offense_details.original_charge = self.dialog.current_offense_name
-        self.amend_offense_details.amended_charge = self.dialog.offense_choice_box.currentText()
-        self.amend_offense_details.motion_disposition = self.dialog.motion_decision_box.currentText()
-        self.main_dialog.entry_case_information.amend_offense_details = self.amend_offense_details
+        self.dialog.amend_offense_details.original_charge = self.dialog.current_offense_name
+        self.dialog.amend_offense_details.amended_charge = self.dialog.offense_choice_box.currentText()
+        self.dialog.amend_offense_details.motion_disposition = self.dialog.motion_decision_box.currentText()
+        self.main_dialog.entry_case_information.amend_offense_details = self.dialog.amend_offense_details
         if self.dialog.motion_decision_box.currentText() == "Granted":
-            amended_charge = f"{self.dialog.current_offense_name} - AMENDED to {self.amend_offense_details.amended_charge}"
-            setattr(self.charge, 'offense', amended_charge)
+            amended_charge = f"{self.dialog.current_offense_name} - AMENDED to {self.dialog.amend_offense_details.amended_charge}"
+            setattr(self.dialog.charge, 'offense', amended_charge)
             self.main_dialog.entry_case_information.amended_charges_list.append(
-                (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
+                (self.dialog.amend_offense_details.original_charge, self.dialog.amend_offense_details.amended_charge)
             )
             for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
                 if (
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
                     and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.current_offense_name
+                        0, columns).widget().text() == self.dialog.current_offense_name
                 ):
                     self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
-                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.main_dialog.statute_choice_box.currentText())
-                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.main_dialog.degree_choice_box.currentText())
-        self.functions.close_event()
+                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.dialog.statute_choice_box.currentText())
+                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.dialog.degree_choice_box.currentText())
+        self.close_event()
 
 
 def close_databases():
