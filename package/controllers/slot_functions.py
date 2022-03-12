@@ -194,6 +194,15 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
 
+    def set_fines_credit_for_jail_field(self):
+        if self.dialog.credit_for_jail_checkBox.isChecked():
+            self.dialog.jail_time_credit_box.setEnabled(True)
+            self.dialog.jail_time_credit_box.setHidden(False)
+            self.dialog.jail_time_credit_box.setFocus()
+        else:
+            self.dialog.jail_time_credit_box.setEnabled(False)
+            self.dialog.jail_time_credit_box.setHidden(True)
+
 
 def close_databases():
     """This function is duplicate of the one in base_dialogs.py"""

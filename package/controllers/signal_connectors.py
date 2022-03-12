@@ -78,7 +78,7 @@ class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_fra_signals(dialog)
         self.connect_court_cost_signals(dialog)
         self.connect_main_dialog_additional_condition_signals(dialog)
-        dialog.credit_for_jail_checkBox.toggled.connect(dialog.set_fines_credit_for_jail_field)
+        dialog.credit_for_jail_checkBox.toggled.connect(dialog.functions.set_fines_credit_for_jail_field)
 
 
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):

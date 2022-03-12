@@ -318,7 +318,7 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
         self.dialog_name = 'No Jail Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
-        self.set_fines_credit_for_jail_field()
+        self.functions.set_fines_credit_for_jail_field()
 
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
@@ -328,15 +328,6 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
-
-    def set_fines_credit_for_jail_field(self):
-        if self.credit_for_jail_checkBox.isChecked():
-            self.jail_time_credit_box.setEnabled(True)
-            self.jail_time_credit_box.setHidden(False)
-            self.jail_time_credit_box.setFocus()
-        else:
-            self.jail_time_credit_box.setEnabled(False)
-            self.jail_time_credit_box.setHidden(True)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
