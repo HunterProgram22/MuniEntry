@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
 from package.controllers.helper_functions import check_judicial_officer, check_case_list_selected
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
+from package.controllers.sentencing_dialogs import FineOnlyPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
@@ -48,7 +48,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
         }
         self.dialog_dict = {
-            self.NoJailPleaButton: NoJailPleaDialog,
+            self.NoJailPleaButton: FineOnlyPleaDialog,
             self.JailCCButton: JailCCPleaDialog,
             self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,

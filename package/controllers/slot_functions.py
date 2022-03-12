@@ -190,6 +190,11 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.close_event()
 
 
+class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+
 def close_databases():
     """This function is duplicate of the one in base_dialogs.py"""
     charges_database.close()

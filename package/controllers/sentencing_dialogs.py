@@ -15,7 +15,7 @@ from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import *
 from package.controllers.signal_connectors import *
-from package.controllers.slot_functions import BaseDialogSlotFunctions
+from package.controllers.slot_functions import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
@@ -305,7 +305,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         AddCommunityControlDialog(self).exec()
 
 
-class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
+class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
     """The dialog inherits from the CriminalBaseDialog (controller) and the
     Ui_NoJailPleaDialog (view)."""
     @logger.catch
@@ -326,7 +326,7 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
         return FineOnlyDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        self.functions = BaseDialogSlotFunctions(self)
+        self.functions = FineOnlyDialogSlotFunctions(self)
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
