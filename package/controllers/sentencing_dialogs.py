@@ -306,7 +306,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
 
 
 class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
-    @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
@@ -315,7 +314,7 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
             ("community_service_checkBox", self.entry_case_information.community_service),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
         ]
-        self.dialog_name = 'No Jail Plea Dialog'
+        self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
         self.functions.set_fines_credit_for_jail_field()
@@ -337,7 +336,6 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
         self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
 
-    @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self) # self is the dialog
 
