@@ -1,21 +1,17 @@
 import os
-import time
 
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog
 
 from db.databases import extract_data
 from docxtpl import DocxTemplate
 from loguru import logger
-from db.databases import open_charges_db_connection, create_offense_list, create_statute_list
+from db.databases import open_charges_db_connection
+from package.controllers.base_dialogs import charges_database
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name
 
 from package.views.custom_widgets import RequiredBox
 
-from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-
 from settings import SAVE_PATH
-from win32com import client
 
 
 class BaseDialogSlotFunctions(object):
@@ -24,11 +20,13 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def start_add_charge_dialog(self):
+        from package.controllers.signal_connectors import AddChargeDialog
         self.dialog.update_case_information()
         AddChargeDialog(self.dialog).exec()
 
     @logger.catch
     def start_amend_offense_dialog(self):
+        from package.controllers.signal_connectors import AmendChargeDialog
         self.dialog.update_case_information()
         AmendChargeDialog(self.dialog).exec()
 
@@ -145,3 +143,5 @@ if __name__ == "__main__":
 else:
     print("Slot Functions imported")
     charges_database = open_charges_db_connection()
+
+

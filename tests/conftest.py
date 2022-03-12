@@ -13,7 +13,7 @@ sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
 import main_window
-from package.controllers.base_dialogs import AddChargeDialog
+from package.controllers.signal_connectors import AddChargeDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
 from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 
