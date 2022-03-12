@@ -6,7 +6,7 @@ from db.databases import extract_data
 from docxtpl import DocxTemplate
 from loguru import logger
 from db.databases import open_charges_db_connection
-from package.controllers.base_dialogs import charges_database
+
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name
 
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
@@ -22,13 +22,13 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def start_add_charge_dialog(self):
-        from package.controllers.signal_connectors import AddChargeDialog
+        from package.controllers.base_dialogs import AddChargeDialog
         self.dialog.update_case_information()
         AddChargeDialog(self.dialog).exec()
 
     @logger.catch
     def start_amend_offense_dialog(self):
-        from package.controllers.signal_connectors import AmendChargeDialog
+        from package.controllers.base_dialogs import AmendChargeDialog
         self.dialog.update_case_information()
         AmendChargeDialog(self.dialog).exec()
 
@@ -101,6 +101,7 @@ class BaseDialogSlotFunctions(object):
     def set_statute_and_offense(cls, key, dialog):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
+        charges_database = open_charges_db_connection()
         field = None
         if dialog.freeform_entry_checkBox.isChecked():
             return None
