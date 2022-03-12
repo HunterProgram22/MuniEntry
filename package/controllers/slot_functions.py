@@ -170,7 +170,6 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.statute_choice_box.clearEditText()
         self.dialog.offense_choice_box.clearEditText()
 
-    @logger.catch
     def amend_offense(self):
         """Adds the data entered for the amended ofdialog.fense to the AmendOffenseDetails
         object then points the entry_case_information object to the AmendOffenseDetails
