@@ -2,7 +2,7 @@
 when a dialog is built and connect all of the interface objects (i.e. buttons,
 checkboxes, etc.) to the dialog."""
 from PyQt5 import QtCore
-from package.controllers.slot_functions import CriminalSlotFunctions
+from package.controllers.slot_functions import BaseDialogSlotFunctions
 
 
 class BaseDialogSignalConnector(object):
@@ -50,9 +50,9 @@ class BaseDialogSignalConnector(object):
 
     def connect_statute_and_offense_boxes(self, dialog):
         dialog.statute_choice_box.currentTextChanged.connect(
-            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+            lambda key, dialog=dialog: BaseDialogSlotFunctions.set_statute_and_offense(key, dialog))
         dialog.offense_choice_box.currentTextChanged.connect(
-            lambda key, dialog=dialog: CriminalSlotFunctions.set_statute_and_offense(key, dialog))
+            lambda key, dialog=dialog: BaseDialogSlotFunctions.set_statute_and_offense(key, dialog))
 
 
 class AddChargeDialogSignalConnector(BaseDialogSignalConnector):

@@ -12,9 +12,18 @@ from settings import SAVE_PATH
 from win32com import client
 
 
-class CriminalSlotFunctions:
+class BaseDialogSlotFunctions(object):
     def __init__(self, dialog):
         self.dialog = dialog
+
+    def close_event(self):
+        self.close_window()
+
+    def close_window(self):
+        """Function connected to a button to close the window. Can be connected
+        to any button press/click/release to close a window. This can also be called
+        at the end of the close_event process to close the dialog."""
+        self.close()
 
     @logger.catch
     def clear_case_information_fields(self):

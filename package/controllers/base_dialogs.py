@@ -12,6 +12,7 @@ from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
 from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
+from package.controllers.slot_functions import BaseDialogSlotFunctions
 from package.views.custom_widgets import DefenseCounselComboBox
 from settings import PAY_DATE_DICT
 
@@ -48,26 +49,6 @@ class BaseDialog(QDialog):
         """This method includes buttons common to all dialogs. Buttons that are
         specific to only a certain dialog are added in the subclassed version of the method."""
         raise NotImplementedError
-
-
-    @logger.catch
-    def close_event(self):
-        """This is a generic close event function tied to certain buttons. Used if you don't want to override the
-        base dialog. TODO: This should be refactored to a single closeEvent method."""
-        self.close_window()
-
-    @logger.catch
-    def closeEvent(self, event):
-        """This is the QDialog base version of the method that is being overriden here.
-        Place any cleanup items (i.e. close_databases) here that should be
-        called when the entry is created and the dialog closed."""
-        self.close_window()
-
-    def close_window(self):
-        """Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window. This can also be called
-        at the end of the close_event process to close the dialog."""
-        self.close()
 
     def transfer_field_data_to_model(self, terms_object):
         """Function that loops through a list of fields and transfers the data in the field
@@ -134,9 +115,11 @@ class CriminalBaseDialog(BaseDialog):
         return CMSLoader(self)
 
     def close_event(self):
+        """ TEMPORARY METHOD TO BE MOVED TO SLOT FUNCTIONS"""
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
-        super().close_event()
+        self.close()
+        # BaseDialogSlotFunctions.close_event(self) # TODO: THIS IS TEMP FOR REFACTORING
 
     @logger.catch
     def update_case_information(self):
