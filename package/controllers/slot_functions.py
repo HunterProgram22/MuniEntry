@@ -24,19 +24,28 @@ class CriminalSlotFunctions:
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
     @logger.catch
+    def create_entry(self):
+        """Loads the proper template and creates the entry."""
+        doc = DocxTemplate(self.dialog.template.template_path)
+        case_data = self.dialog.entry_case_information.get_case_information()
+        extract_data(case_data)
+        doc.render(case_data)
+        docname = set_document_name(self.dialog)
+        try:
+            doc.save(SAVE_PATH + docname)
+            os.startfile(SAVE_PATH + docname)
+        except PermissionError:
+            message = RequiredBox("An entry for this case is already open in Word."
+                                  " You must close the Word document first.")
+            message.exec()
+
+    @logger.catch
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
         update_info_and_perform_checks method (found in helper_functions.py)."""
         info_checks = self.update_info_and_perform_checks()
         if info_checks == "Pass":
-            create_entry(self)
-
-    @classmethod
-    @logger.catch
-    def print_entry_process(cls, dialog):
-        info_checks = cls.update_info_and_perform_checks(dialog)
-        if info_checks == "Pass":
-            create_entry(dialog, print_doc=True)
+            self.create_entry()
 
     @logger.catch
     def update_info_and_perform_checks(self):
@@ -96,32 +105,7 @@ class CriminalSlotFunctions:
             break
 
 
-def print_document(docname):
-    word = client.Dispatch("Word.Application")
-    word.Documents.Open(SAVE_PATH + docname)
-    word.ActiveDocument.PrintOut()
-    time.sleep(1)
-    word.ActiveDocument.Close()
-    word.Quit()
 
-
-@logger.catch
-def create_entry(dialog, print_doc=False):
-    """Loads the proper template and creates the entry."""
-    doc = DocxTemplate(dialog.template.template_path)
-    case_data = dialog.entry_case_information.get_case_information()
-    extract_data(case_data)
-    doc.render(case_data)
-    docname = set_document_name(dialog)
-    try:
-        doc.save(SAVE_PATH + docname)
-        if print_doc is True:
-            print_document(docname)
-        os.startfile(SAVE_PATH + docname)
-    except PermissionError:
-        message = RequiredBox("An entry for this case is already open in Word."
-                              " You must close the Word document first.")
-        message.exec()
 
 
 def close_databases():

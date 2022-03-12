@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>977</width>
-        <height>715</height>
+        <width>1000</width>
+        <height>702</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,2,0" columnstretch="2,1,2,1">
@@ -856,7 +856,7 @@ font-weight: bold;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_6">
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -880,22 +880,6 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Open Entry</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QPushButton" name="print_entry_Button">
-            <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(160, 160, 160);</string>
-            </property>
-            <property name="text">
-             <string>Print and Open Entry</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
@@ -1008,7 +992,6 @@ font-weight: bold;</string>
   <tabstop>other_conditions_checkBox</tabstop>
   <tabstop>add_conditions_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
-  <tabstop>print_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>

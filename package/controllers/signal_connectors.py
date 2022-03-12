@@ -80,8 +80,6 @@ class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_court_cost_signals(dialog)
         self.connect_main_dialog_additional_condition_signals(dialog)
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.set_fines_credit_for_jail_field)
-        dialog.print_entry_Button.released.connect(
-            lambda dialog=dialog: CriminalSlotFunctions.print_entry_process(dialog))
 
 
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
@@ -112,8 +110,6 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
-        dialog.print_entry_Button.released.connect(
-            lambda dialog=dialog: CriminalSlotFunctions.print_entry_process(dialog))
         dialog.not_guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.conditions_checkbox_toggle)
