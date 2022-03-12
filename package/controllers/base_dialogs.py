@@ -5,6 +5,9 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit, QRadioButton
 
+from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
+from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+
 from db.databases import open_charges_db_connection, create_offense_list, create_statute_list
 from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
@@ -80,6 +83,118 @@ class BaseDialog(QDialog):
                     setattr(terms_object, model_attribute, getattr(self, view_field).time().toString("hh:mm A"))
             except AttributeError:
                 pass
+
+
+class BaseChargeDialog(QDialog):
+    @logger.catch
+    def __init__(self, main_dialog, button_index=None, parent=None):
+        super().__init__(parent)
+        print(main_dialog)
+        self.button_index = button_index
+        self.main_dialog = main_dialog
+        charges_database.open()
+        self.modify_view()
+        self.create_dialog_slot_functions()
+        self.connect_signals_to_slots()
+        self.set_statute_and_offense_choice_boxes()
+
+    def set_statute_and_offense_choice_boxes(self):
+        self.statute_choice_box.addItems(create_statute_list())
+        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.setCurrentText("")
+        self.offense_choice_box.setCurrentText("")
+
+
+class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
+    def __init__(self, main_dialog, parent=None):
+        print(f"Add charge main dialog is {main_dialog}")
+        super().__init__(main_dialog, parent)
+
+    def modify_view(self):
+        return AddChargeDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = BaseDialogSlotFunctions(self)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        return AddChargeDialogSignalConnector(self)
+
+    @logger.catch
+    def add_charge_process(self):
+        """The order of functions that are called when the add_charge_Button is
+        clicked(). The order is important to make sure the information is
+        updated before the charge is added and the data cleared from the fields."""
+        self.add_charge_to_entry_case_information()
+        self.main_dialog.add_charge_to_grid()
+        self.close_event()
+
+    @logger.catch
+    def add_charge_to_entry_case_information(self):
+        """TODO: self.criminal_charge_type needs to be fixed to add back in to get costs calculator to work
+        again eventually."""
+        self.criminal_charge = CriminalCharge()
+        self.criminal_charge.offense = self.offense_choice_box.currentText()
+        self.criminal_charge.statute = self.statute_choice_box.currentText()
+        self.criminal_charge.degree = self.degree_choice_box.currentText()
+        # self.criminal_charge.type = self.set_offense_type()
+        self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+
+    @logger.catch
+    def clear_add_charge_fields(self):
+        self.statute_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
+
+
+class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
+    def __init__(self, main_dialog, parent=None):
+        super().__init__(main_dialog, parent)
+        self.amend_offense_details = AmendOffenseDetails()
+        self.charge = self.sender().charge
+        self.current_offense_name = self.sender().charge.offense
+        self.original_charge_label.setText(self.current_offense_name)
+
+    def modify_view(self):
+        return AmendChargeDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = BaseDialogSlotFunctions(self)
+
+    @logger.catch
+    def connect_signals_to_slots(self):
+        return AmendChargeDialogSignalConnector(self)
+
+    @logger.catch
+    def clear_amend_charge_fields(self):
+        """Clears the fields in the view."""
+        self.statute_choice_box.clearEditText()
+        self.offense_choice_box.clearEditText()
+
+    @logger.catch
+    def amend_offense(self):
+        """Adds the data entered for the amended offense to the AmendOffenseDetails
+        object then points the entry_case_information object to the AmendOffenseDetails
+        object."""
+        self.amend_offense_details.original_charge = self.current_offense_name
+        self.amend_offense_details.amended_charge = self.offense_choice_box.currentText()
+        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
+        self.main_dialog.entry_case_information.amend_offense_details = self.amend_offense_details
+        if self.motion_decision_box.currentText() == "Granted":
+            amended_charge = f"{self.current_offense_name} - AMENDED to {self.amend_offense_details.amended_charge}"
+            setattr(self.charge, 'offense', amended_charge)
+            self.main_dialog.entry_case_information.amended_charges_list.append(
+                (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
+            )
+            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
+                if (
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(
+                        0, columns).widget().text() == self.current_offense_name
+                ):
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
+                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.statute_choice_box.currentText())
+                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.degree_choice_box.currentText())
+        self.close_event()
 
 
 class CriminalBaseDialog(BaseDialog):
