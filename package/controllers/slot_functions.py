@@ -1,18 +1,13 @@
 import os
 
-from PyQt5.QtSql import QSqlQuery
-
-from db.databases import extract_data
 from docxtpl import DocxTemplate
 from loguru import logger
-from db.databases import open_charges_db_connection
+from PyQt5.QtSql import QSqlQuery
 
+from db.databases import open_charges_db_connection, extract_data
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name
-
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
-
 from package.views.custom_widgets import RequiredBox
-
 from settings import SAVE_PATH
 
 
@@ -20,13 +15,11 @@ class BaseDialogSlotFunctions(object):
     def __init__(self, dialog):
         self.dialog = dialog
 
-    @logger.catch
     def start_add_charge_dialog(self):
         from package.controllers.base_dialogs import AddChargeDialog
         self.dialog.update_case_information()
         AddChargeDialog(self.dialog).exec()
 
-    @logger.catch
     def start_amend_offense_dialog(self):
         from package.controllers.base_dialogs import AmendChargeDialog
         self.dialog.update_case_information()

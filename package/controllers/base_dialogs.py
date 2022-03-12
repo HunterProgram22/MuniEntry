@@ -31,9 +31,6 @@ class BaseDialog(QDialog):
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
     def __init__(self, case_table=None, parent=None):
-        """Databases must be opened first in order for them to be accessed
-        when the UI is built so it can populate fields.The setupUI calls to
-        the view to create the UI."""
         super().__init__(parent)
         self.case_table = case_table
         self.modify_view()
@@ -157,10 +154,6 @@ class CriminalBaseDialog(BaseDialog):
             if statute == key:
                 query.finish()
                 return offense_type
-
-
-
-
 
     @logger.catch
     def set_pay_date(self, days_to_add):
@@ -301,9 +294,11 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
 
 if __name__ == "__main__":
-    print("BCD ran directly")
+    print("Base Dialogs ran directly")
 else:
-    print("BCD ran when imported")
+    print("Base Dialogs imported")
+    """Databases must be opened first in order for them to be accessed
+    when the UI is built so it can populate fields."""
     charges_database = open_charges_db_connection()
 
 
