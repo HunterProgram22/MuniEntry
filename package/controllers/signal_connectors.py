@@ -5,9 +5,10 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QDialog
 from db.databases import create_statute_list, create_offense_list
 from loguru import logger
-from package.controllers.slot_functions import BaseDialogSlotFunctions, AddChargeDialogSlotFunctions, charges_database
+from package.controllers.slot_functions import BaseDialogSlotFunctions, \
+    AmendChargeDialogSlotFunctions, AddChargeDialogSlotFunctions, charges_database
 from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-
+from package.models.case_information import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 
@@ -74,8 +75,8 @@ class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
-        dialog.clear_fields_Button.released.connect(dialog.clear_amend_charge_fields)
-        dialog.amend_charge_Button.released.connect(dialog.amend_offense)
+        dialog.clear_fields_Button.released.connect(dialog.functions.clear_amend_charge_fields)
+        dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
@@ -214,40 +215,8 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         return AmendChargeDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        self.functions = BaseDialogSlotFunctions(self)
+        self.functions = AmendChargeDialogSlotFunctions(self)
 
     @logger.catch
     def connect_signals_to_slots(self):
         return AmendChargeDialogSignalConnector(self)
-
-    @logger.catch
-    def clear_amend_charge_fields(self):
-        """Clears the fields in the view."""
-        self.statute_choice_box.clearEditText()
-        self.offense_choice_box.clearEditText()
-
-    @logger.catch
-    def amend_offense(self):
-        """Adds the data entered for the amended offense to the AmendOffenseDetails
-        object then points the entry_case_information object to the AmendOffenseDetails
-        object."""
-        self.amend_offense_details.original_charge = self.current_offense_name
-        self.amend_offense_details.amended_charge = self.offense_choice_box.currentText()
-        self.amend_offense_details.motion_disposition = self.motion_decision_box.currentText()
-        self.main_dialog.entry_case_information.amend_offense_details = self.amend_offense_details
-        if self.motion_decision_box.currentText() == "Granted":
-            amended_charge = f"{self.current_offense_name} - AMENDED to {self.amend_offense_details.amended_charge}"
-            setattr(self.charge, 'offense', amended_charge)
-            self.main_dialog.entry_case_information.amended_charges_list.append(
-                (self.amend_offense_details.original_charge, self.amend_offense_details.amended_charge)
-            )
-            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-                if (
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                    and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.current_offense_name
-                ):
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
-                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.statute_choice_box.currentText())
-                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.degree_choice_box.currentText())
-        self.functions.close_event()
