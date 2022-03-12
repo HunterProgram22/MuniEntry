@@ -118,7 +118,6 @@ class CriminalBaseDialog(BaseDialog):
         """This method closes the databases before calling the base dialog close_event."""
         close_databases()
         self.close()
-        # BaseDialogSlotFunctions.close_event(self) # TODO: THIS IS TEMP FOR REFACTORING
 
     @logger.catch
     def update_case_information(self):
