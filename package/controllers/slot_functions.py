@@ -122,6 +122,16 @@ class BaseDialogSlotFunctions(object):
             query.finish()
             break
 
+    def conditions_checkbox_toggle(self):
+        if self.dialog.sender().isChecked():
+            for items in self.dialog.additional_conditions_list:
+                if items[0] == self.dialog.sender().objectName():
+                    setattr(items[1], "ordered", True)
+        else:
+            for items in self.dialog.additional_conditions_list:
+                if items[0] == self.dialog.sender().objectName():
+                    setattr(items[1], "ordered", False)
+
 
 class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
@@ -202,6 +212,17 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
         else:
             self.dialog.jail_time_credit_box.setEnabled(False)
             self.dialog.jail_time_credit_box.setHidden(True)
+
+
+class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    @logger.catch
+    def start_add_conditions_dialog(self):
+        from package.controllers.conditions_dialogs import AddCommunityControlDialog
+        self.dialog.update_case_information()
+        AddCommunityControlDialog(self.dialog).exec()
 
 
 def close_databases():

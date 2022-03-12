@@ -52,16 +52,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.update_jail_time_credit()
         self.calculate_costs_and_fines()
 
-    def conditions_checkbox_toggle(self):
-        if self.sender().isChecked():
-            for items in self.additional_conditions_list:
-                if items[0] == self.sender().objectName():
-                    setattr(items[1], "ordered", True)
-        else:
-            for items in self.additional_conditions_list:
-                if items[0] == self.sender().objectName():
-                    setattr(items[1], "ordered", False)
-
     @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
@@ -278,9 +268,11 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def modify_view(self):
         return JailCCDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = JailCCDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
-
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
@@ -294,15 +286,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
-
-    @logger.catch
-    def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
-        self.update_case_information()
-        AddCommunityControlDialog(self).exec()
 
 
 class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
