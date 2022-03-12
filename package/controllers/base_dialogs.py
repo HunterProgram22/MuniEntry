@@ -12,9 +12,6 @@ from package.controllers.slot_functions import charges_database, AddChargeDialog
     AmendChargeDialogSlotFunctions
 from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
-
-# from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-# from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 from package.views.custom_widgets import DefenseCounselComboBox
