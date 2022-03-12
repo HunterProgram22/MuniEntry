@@ -13,6 +13,8 @@ from package.controllers.helper_functions import InfoChecker, check_if_diversion
 from package.views.custom_widgets import RequiredBox
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
+# from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
 
 from settings import SAVE_PATH
 from win32com import client
@@ -25,7 +27,13 @@ class BaseDialogSlotFunctions(object):
     @logger.catch
     def start_add_charge_dialog(self):
         self.dialog.update_case_information()
-        AddChargeDialog(self).exec()
+        print(self.dialog)
+        AddChargeDialog(self.dialog).exec()
+
+    @logger.catch
+    def start_amend_offense_dialog(self):
+        self.update_case_information()
+        AmendChargeDialog(self).exec()
 
     def close_event(self):
         self.close_window()
@@ -128,10 +136,14 @@ class BaseDialogSlotFunctions(object):
 class BaseChargeDialog(QDialog):
     @logger.catch
     def __init__(self, main_dialog, button_index=None, parent=None):
-        self.main_dialog = main_dialog
-        self.button_index = button_index
-        charges_database.open()
         super().__init__(parent)
+        print(main_dialog)
+        self.button_index = button_index
+        self.main_dialog = main_dialog
+        charges_database.open()
+        self.modify_view()
+        self.create_dialog_slot_functions()
+        self.connect_signals_to_slots()
         self.set_statute_and_offense_choice_boxes()
 
     def set_statute_and_offense_choice_boxes(self):
@@ -143,10 +155,14 @@ class BaseChargeDialog(QDialog):
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     def __init__(self, main_dialog, parent=None):
+        print(f"Add charge main dialog is {main_dialog}")
         super().__init__(main_dialog, parent)
 
     def modify_view(self):
         return AddChargeDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = BaseDialogSlotFunctions(self)
 
     @logger.catch
     def connect_signals_to_slots(self):
@@ -188,6 +204,9 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     def modify_view(self):
         return AmendChargeDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = BaseDialogSlotFunctions(self)
 
     @logger.catch
     def connect_signals_to_slots(self):

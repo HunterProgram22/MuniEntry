@@ -13,7 +13,7 @@ class BaseDialogSignalConnector(object):
         dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
         dialog.create_entry_Button.released.connect(dialog.functions.create_entry_process)
         dialog.close_dialog_Button.released.connect(dialog.functions.close_dialog)
-        dialog.add_charge_Button.released.connect(dialog.start_add_charge_dialog)
+        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):

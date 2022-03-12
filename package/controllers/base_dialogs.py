@@ -9,8 +9,8 @@ from db.databases import open_charges_db_connection, create_offense_list, create
 from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCaseInformation, CriminalCharge, AmendOffenseDetails
 
-from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
-from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
+# from package.controllers.view_modifiers import AddChargeDialogViewModifier, AmendChargeDialogViewModifier
+# from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
 from package.controllers.slot_functions import BaseDialogSlotFunctions
 from package.views.custom_widgets import DefenseCounselComboBox
 from settings import PAY_DATE_DICT
@@ -153,10 +153,7 @@ class CriminalBaseDialog(BaseDialog):
                 query.finish()
                 return offense_type
 
-    @logger.catch
-    def start_amend_offense_dialog(self):
-        self.update_case_information()
-        AmendChargeDialog(self).exec()
+
 
 
 
