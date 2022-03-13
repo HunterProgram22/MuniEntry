@@ -1,11 +1,9 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
-
 from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit, QRadioButton
 
 from db.databases import open_charges_db_connection
-
 from package.controllers.slot_functions import charges_database
 from package.models.case_information import CriminalCaseInformation, CriminalCharge
 from package.views.custom_widgets import DefenseCounselComboBox
@@ -93,6 +91,7 @@ class CriminalBaseDialog(BaseDialog):
 
     @logger.catch
     def load_cms_data_to_view(self):
+        print("Criminal Base Dialog CMSLoader ran")
         return CMSLoader(self)
 
     def close_event(self):
