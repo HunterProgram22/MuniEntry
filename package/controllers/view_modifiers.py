@@ -146,7 +146,6 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -186,7 +185,6 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
         self.hide_boxes(dialog)
         self.set_jail_report_default_date(dialog)
         self.set_report_days_notes_box(dialog)

@@ -52,10 +52,7 @@ class ConditionsDialog(BaseDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         self.main_dialog = main_dialog
         super().__init__(parent)
-
-    def update_community_service_due_date(self, _index=None):
-        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
+        self.functions.update_community_service_due_date()
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):

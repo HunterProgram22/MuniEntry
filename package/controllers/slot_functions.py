@@ -145,6 +145,10 @@ class BaseDialogSlotFunctions(object):
     def close_dialog(self):
         self.dialog.close_event()
 
+    def update_community_service_due_date(self, _index=None):
+        days_to_complete = int(self.dialog.community_service_days_to_complete_box.currentText())
+        self.dialog.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
+
     @classmethod
     @logger.catch
     def set_statute_and_offense(cls, key, dialog):

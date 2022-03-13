@@ -44,7 +44,7 @@ class BaseDialogSignalConnector(object):
 
     def connect_community_service_days_update(self, dialog):
         dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            dialog.update_community_service_due_date
+            dialog.functions.update_community_service_due_date
         )
 
     def connect_statute_and_offense_boxes(self, dialog):
