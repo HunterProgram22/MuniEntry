@@ -38,9 +38,9 @@ class BaseDialogSignalConnector(object):
         dialog.add_conditions_Button.released.connect(dialog.functions.close_window)
 
     def connect_jail_frame_signals(self, dialog):
-        dialog.report_type_box.currentTextChanged.connect(dialog.set_report_date)
-        dialog.jail_sentence_execution_type_box.currentTextChanged.connect(dialog.show_report_days_notes_box)
-        dialog.companion_cases_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.report_type_box.currentTextChanged.connect(dialog.functions.set_report_date)
+        dialog.jail_sentence_execution_type_box.currentTextChanged.connect(dialog.functions.show_report_days_notes_box)
+        dialog.companion_cases_checkBox.toggled.connect(dialog.functions.set_field_enabled)
 
     def connect_community_service_days_update(self, dialog):
         dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
@@ -144,14 +144,14 @@ class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_community_control_dialog_specific_signals(dialog)
 
     def connect_community_control_dialog_specific_signals(self, dialog):
-        dialog.gps_exclusion_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.community_control_not_within_500_feet_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.community_control_no_contact_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.house_arrest_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.community_control_community_service_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.other_community_control_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.alcohol_monitoring_checkBox.toggled.connect(dialog.set_field_enabled)
-        dialog.pay_restitution_checkBox.toggled.connect(dialog.set_field_enabled)
+        dialog.gps_exclusion_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.community_control_not_within_500_feet_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.community_control_no_contact_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.house_arrest_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.community_control_community_service_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.other_community_control_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.alcohol_monitoring_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.set_field_enabled)
 
 
 class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnector):

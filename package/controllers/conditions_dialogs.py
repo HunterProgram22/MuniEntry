@@ -15,7 +15,7 @@ from package.controllers.signal_connectors import AddConditionsDialogSignalConne
     AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
     AddSpecialBondConditionsDialogSignalConnector
 from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, \
-    AddCommunityControlDialogSlotFunctions, AddSpecialBondConditionsDialogSlotFunctions
+    AddCommunityControlDialogSlotFunctions, AddSpecialBondConditionsDialogSlotFunctions, AddJailOnlyDialogSlotFunctions
 
 
 CONDITIONS_FRAMES = [
@@ -87,6 +87,9 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
     def modify_view(self):
         return AddJailOnlyDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = AddJailOnlyDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return AddJailOnlyDialogSignalConnector(self)
 
@@ -103,43 +106,6 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
                 else:
                     getattr(self, condition_field).setEnabled(False)
                     getattr(self, condition_field).setHidden(True)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method calls the base method add_conditions and then adds community control specific conditions."""
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.jail_terms)
-
-    def show_report_days_notes_box(self):
-        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            self.jail_report_days_notes_box.setDisabled(True)
-            self.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.jail_report_days_notes_box.setDisabled(False)
-            self.jail_report_days_notes_box.setHidden(False)
-
-    def set_report_date(self):
-        if self.report_type_box.currentText() == "date set by Office of Community Control":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        elif self.report_type_box.currentText() == "forthwith":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        else:
-            self.report_date_box.setEnabled(True)
-            self.report_date_box.setHidden(False)
-            self.report_time_box.setEnabled(True)
-            self.report_time_box.setHidden(False)
-            self.report_date_label.setHidden(False)
-            self.report_time_label.setHidden(False)
 
 
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
@@ -175,51 +141,6 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
     def connect_signals_to_slots(self):
         return AddCommunityControlDialogSignalConnector(self)
-
-    def show_report_days_notes_box(self):
-        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            self.jail_report_days_notes_box.setDisabled(True)
-            self.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.jail_report_days_notes_box.setDisabled(False)
-            self.jail_report_days_notes_box.setHidden(False)
-
-    def set_report_date(self):
-        if self.report_type_box.currentText() == "date set by Office of Community Control":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        elif self.report_type_box.currentText() == "forthwith":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        else:
-            self.report_date_box.setEnabled(True)
-            self.report_date_box.setHidden(False)
-            self.report_time_box.setEnabled(True)
-            self.report_time_box.setHidden(False)
-            self.report_date_label.setHidden(False)
-            self.report_time_label.setHidden(False)
-
-    def set_field_enabled(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
-        for item in AddCommunityControlDialog.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                if getattr(self, condition_checkbox).isChecked():
-                    getattr(self, condition_field).setEnabled(True)
-                    getattr(self, condition_field).setHidden(False)
-                    getattr(self, condition_field).setFocus(True)
-                else:
-                    getattr(self, condition_field).setEnabled(False)
-                    getattr(self, condition_field).setHidden(True)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):

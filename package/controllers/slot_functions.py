@@ -132,6 +132,51 @@ class BaseDialogSlotFunctions(object):
                 if items[0] == self.dialog.sender().objectName():
                     setattr(items[1], "ordered", False)
 
+    def set_report_date(self):
+        if self.dialog.report_type_box.currentText() == "date set by Office of Community Control":
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        elif self.dialog.report_type_box.currentText() == "forthwith":
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        else:
+            self.dialog.report_date_box.setEnabled(True)
+            self.dialog.report_date_box.setHidden(False)
+            self.dialog.report_time_box.setEnabled(True)
+            self.dialog.report_time_box.setHidden(False)
+            self.dialog.report_date_label.setHidden(False)
+            self.dialog.report_time_label.setHidden(False)
+
+    def show_report_days_notes_box(self):
+        if self.dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
+            self.dialog.jail_report_days_notes_box.setDisabled(True)
+            self.dialog.jail_report_days_notes_box.setHidden(True)
+        else:
+            self.dialog.jail_report_days_notes_box.setDisabled(False)
+            self.dialog.jail_report_days_notes_box.setHidden(False)
+
+    def set_field_enabled(self):
+        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
+        any additional fields that are required for that condition."""
+        for item in self.dialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self.dialog, condition_checkbox):
+                if getattr(self.dialog, condition_checkbox).isChecked():
+                    getattr(self.dialog, condition_field).setEnabled(True)
+                    getattr(self.dialog, condition_field).setHidden(False)
+                    getattr(self.dialog, condition_field).setFocus(True)
+                else:
+                    getattr(self.dialog, condition_field).setEnabled(False)
+                    getattr(self.dialog, condition_field).setHidden(True)
+
 
 class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
@@ -347,6 +392,16 @@ class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.vehicle_seizure)
+
+
+class AddJailOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.main_dialog = dialog.main_dialog
+
+    def add_conditions(self):
+        if self.main_dialog.jail_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.jail_terms)
 
 
 def close_databases():
