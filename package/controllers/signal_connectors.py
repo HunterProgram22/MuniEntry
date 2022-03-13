@@ -16,8 +16,8 @@ class BaseDialogSignalConnector(object):
         dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):
-        dialog.fra_in_file_box.currentTextChanged.connect(dialog.set_fra_in_file)
-        dialog.fra_in_court_box.currentTextChanged.connect(dialog.set_fra_in_court)
+        dialog.fra_in_file_box.currentTextChanged.connect(dialog.functions.set_fra_in_file)
+        dialog.fra_in_court_box.currentTextChanged.connect(dialog.functions.set_fra_in_court)
 
     def connect_plea_all_button_signals(self, dialog):
         dialog.guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)

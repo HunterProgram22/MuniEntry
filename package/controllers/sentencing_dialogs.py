@@ -132,29 +132,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         message.exec_()
 
     @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
-
-    @logger.catch
     def start_jail_only_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
         instance of the NoJailPleaDialog class (self) as an argument

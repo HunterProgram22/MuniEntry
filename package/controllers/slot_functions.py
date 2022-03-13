@@ -93,6 +93,29 @@ class BaseDialogSlotFunctions(object):
             self.dialog.defense_counsel_name_box.setEnabled(True)
             self.dialog.defense_counsel_type_box.setEnabled(True)
 
+    @logger.catch
+    def set_fra_in_file(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in the complaint of file."""
+        if current_text == "Yes":
+            self.dialog.entry_case_information.fra_in_file = True
+            self.dialog.fra_in_court_box.setCurrentText("No")
+        elif current_text == "No":
+            self.dialog.entry_case_information.fra_in_file = False
+        else:
+            self.dialog.entry_case_information.fra_in_file = None
+
+    @logger.catch
+    def set_fra_in_court(self, current_text):
+        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
+        that the FRA was shown in court."""
+        if current_text == "Yes":
+            self.dialog.entry_case_information.fra_in_court = True
+        elif current_text == "No":
+            self.dialog.entry_case_information.fra_in_court = False
+        else:
+            self.dialog.entry_case_information.fra_in_court = None
+
     def close_dialog(self):
         self.dialog.close_event()
 

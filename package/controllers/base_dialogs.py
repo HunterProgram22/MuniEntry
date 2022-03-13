@@ -221,8 +221,8 @@ class CMS_FRALoader(CMSLoader):
             dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
             dialog.fra_in_file_box.setCurrentText("N/A")
-        dialog.set_fra_in_file(dialog.fra_in_file_box.currentText())
-        dialog.set_fra_in_court(dialog.fra_in_court_box.currentText())
+        dialog.functions.set_fra_in_file(dialog.fra_in_file_box.currentText())
+        dialog.functions.set_fra_in_court(dialog.fra_in_court_box.currentText())
 
 
 class AddPlea:
