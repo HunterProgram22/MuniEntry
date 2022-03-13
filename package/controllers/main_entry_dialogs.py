@@ -1,6 +1,6 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
-from package.controllers.base_dialogs import CMS_FRALoader, CMSLoader, BaseDialog, charges_database
+from package.controllers.base_dialogs import CmsFraLoader, CmsLoader, BaseDialog, charges_database
 from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
     FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
@@ -92,7 +92,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = DiversionChargesGrid
-        return CMS_FRALoader(self)
+        return CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return DiversionDialogCaseUpdater(self)
@@ -131,7 +131,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = JailChargesGrid
-        return CMS_FRALoader(self)
+        return CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return JailCCDialogCaseUpdater(self)
@@ -163,7 +163,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NoJailChargesGrid
-        return CMS_FRALoader(self)
+        return CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return FineOnlyDialogCaseUpdater(self)
@@ -204,7 +204,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
-        return CMSLoader(self)
+        return CmsLoader(self)
 
     def update_entry_case_information(self):
         return NotGuiltyBondDialogCaseUpdater(self)
