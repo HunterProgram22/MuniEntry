@@ -98,14 +98,6 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
 
-    def set_defense_counsel(self):
-        if self.defense_counsel_waived_checkBox.isChecked():
-            self.defense_counsel_name_box.setEnabled(False)
-            self.defense_counsel_type_box.setEnabled(False)
-        else:
-            self.defense_counsel_name_box.setEnabled(True)
-            self.defense_counsel_type_box.setEnabled(True)
-
     @logger.catch
     def load_cms_data_to_view(self):
         return CMSLoader(self)

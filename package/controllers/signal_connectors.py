@@ -13,7 +13,7 @@ class BaseDialogSignalConnector(object):
         dialog.create_entry_Button.released.connect(dialog.functions.create_entry_process)
         dialog.close_dialog_Button.released.connect(dialog.functions.close_dialog)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.set_defense_counsel)
+        dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):
         dialog.fra_in_file_box.currentTextChanged.connect(dialog.set_fra_in_file)

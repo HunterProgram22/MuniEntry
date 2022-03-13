@@ -85,7 +85,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_case_information()
         return "Pass"
 
-    @logger.catch
+    def set_defense_counsel(self):
+        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+            self.dialog.defense_counsel_name_box.setEnabled(False)
+            self.dialog.defense_counsel_type_box.setEnabled(False)
+        else:
+            self.dialog.defense_counsel_name_box.setEnabled(True)
+            self.dialog.defense_counsel_type_box.setEnabled(True)
+
     def close_dialog(self):
         self.dialog.close_event()
 

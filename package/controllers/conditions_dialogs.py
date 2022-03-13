@@ -74,7 +74,7 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
 
 
 class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
-    jail_condition_checkbox_list = [
+    condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
@@ -92,20 +92,6 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
 
     def connect_signals_to_slots(self):
         return AddJailOnlyDialogSignalConnector(self)
-
-    def set_field_enabled(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
-        for item in AddJailOnlyDialog.jail_condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                if getattr(self, condition_checkbox).isChecked():
-                    getattr(self, condition_field).setEnabled(True)
-                    getattr(self, condition_field).setHidden(False)
-                    getattr(self, condition_field).setFocus(True)
-                else:
-                    getattr(self, condition_field).setEnabled(False)
-                    getattr(self, condition_field).setHidden(True)
 
 
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
