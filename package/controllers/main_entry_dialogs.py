@@ -1,9 +1,7 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
-from loguru import logger
-from package.controllers.base_dialogs import CMS_FRALoader, CMSLoader, BaseDialog, close_databases, \
-    charges_database
-from package.controllers.case_updaters import DiversionDialogCaseUpdater, JailCCDialogCaseUpdater, \
+from package.controllers.base_dialogs import CMS_FRALoader, CMSLoader, BaseDialog, charges_database
+from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
     FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
@@ -17,7 +15,7 @@ from package.controllers.view_modifiers import DiversionDialogViewModifier, Jail
 from package.controllers.case_updaters import DiversionDialogCaseUpdater
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
-from package.views.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid
+from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid
 from package.views.custom_widgets import DefenseCounselComboBox
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
