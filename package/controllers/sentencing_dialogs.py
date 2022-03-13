@@ -153,15 +153,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
             self.entry_case_information.fra_in_court = None
 
     @logger.catch
-    def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
-        self.update_case_information()
-        AddConditionsDialog(self).exec()
-
-    @logger.catch
     def start_jail_only_dialog(self):
         """Opens the add conditions dialog as a modal window. It passes the
         instance of the NoJailPleaDialog class (self) as an argument
@@ -312,6 +303,7 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
         return FineOnlyDialogSignalConnector(self)
 
     def add_charge_to_grid(self):
+        print("add charge to grid ran")
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
 

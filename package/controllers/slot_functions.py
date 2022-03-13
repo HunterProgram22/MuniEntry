@@ -213,6 +213,12 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.jail_time_credit_box.setEnabled(False)
             self.dialog.jail_time_credit_box.setHidden(True)
 
+    @logger.catch
+    def start_add_conditions_dialog(self):
+        from package.controllers.conditions_dialogs import AddConditionsDialog
+        self.dialog.update_case_information()
+        AddConditionsDialog(self.dialog).exec()
+
 
 class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
