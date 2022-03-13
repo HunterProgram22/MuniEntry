@@ -121,5 +121,3 @@ else:
     """Databases must be opened first in order for them to be accessed
     when the UI is built so it can populate fields."""
     charges_database = open_charges_db_connection()
-
-

@@ -99,7 +99,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return DiversionDialogCaseUpdater(self)
 
     def add_plea_findings_and_fines_to_entry_case_information(self):
-        return JailAddPleaFindingsFinesJail.add(self) # self is dialog
+        return JailAddPleaFindingsFinesJail.add(self)
 
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
@@ -138,7 +138,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         return JailCCDialogCaseUpdater(self)
 
     def add_plea_findings_and_fines_to_entry_case_information(self):
-        return JailAddPleaFindingsFinesJail.add(self) # self is dialog
+        return JailAddPleaFindingsFinesJail.add(self)
 
 
 class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
@@ -170,7 +170,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return FineOnlyDialogCaseUpdater(self)
 
     def add_plea_findings_and_fines_to_entry_case_information(self):
-        return NoJailPleaFindingFines.add(self) # self is the dialog
+        return NoJailPleaFindingFines.add(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
@@ -215,4 +215,4 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.defense_counsel_name_box.setFocus()
 
     def add_plea_to_entry_case_information(self):
-        return NotGuiltyAddPlea.add(self) # self is the dialog
+        return NotGuiltyAddPlea.add(self) 
