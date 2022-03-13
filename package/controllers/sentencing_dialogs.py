@@ -201,29 +201,6 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
         self.transfer_field_data_to_model(self.entry_case_information.other_conditions)
         return CasePartyUpdater(self)
 
-    @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
-
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
