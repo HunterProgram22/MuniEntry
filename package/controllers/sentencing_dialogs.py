@@ -168,7 +168,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
 
 class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
-    @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
