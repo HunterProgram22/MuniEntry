@@ -33,13 +33,13 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
         self.load_cms_data_to_view()
-        self.functions.hide_boxes()
 
     def modify_view(self):
         return NotGuiltyBondDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
+        self.functions.hide_boxes()
 
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)

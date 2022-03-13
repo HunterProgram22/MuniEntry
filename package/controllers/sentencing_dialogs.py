@@ -126,14 +126,14 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
         self.load_cms_data_to_view()
-        self.functions.show_jail_report_date_box()
-        self.functions.show_other_conditions_box()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = DiversionDialogSlotFunctions(self)
+        self.functions.show_jail_report_date_box()
+        self.functions.show_other_conditions_box()
 
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
@@ -204,13 +204,13 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
         self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
-        self.functions.set_fines_credit_for_jail_field()
 
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = FineOnlyDialogSlotFunctions(self)
+        self.functions.set_fines_credit_for_jail_field()
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)

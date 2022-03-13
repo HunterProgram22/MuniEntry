@@ -52,7 +52,7 @@ class ConditionsDialog(BaseDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         self.main_dialog = main_dialog
         super().__init__(parent)
-        self.functions.update_community_service_due_date()
+
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
@@ -65,6 +65,7 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
 
     def create_dialog_slot_functions(self):
         self.functions = AddConditionsDialogSlotFunctions(self)
+        self.functions.update_community_service_due_date()
 
     def connect_signals_to_slots(self):
         return AddConditionsDialogSignalConnector(self)
