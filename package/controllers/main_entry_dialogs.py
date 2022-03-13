@@ -23,28 +23,22 @@ from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 
 
 class CriminalBaseDialog(BaseDialog):
-    """This class subclasses the BaseDialog for methods that are specific to
-    dialogs/entries that require entering a plea and finding in a cms_case.
-
-    The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
-    custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
-    in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        # open_databases() # This only seems necessary for testing as the connection is already opened when run as main.
-        super().__init__(case_table, parent)
+        self.case_table = case_table
+        super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
+        self.load_cms_data_to_view()
         self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
 
+    def load_cms_data_to_view(self):
+        raise NotImplementedError
 
-    def close_event(self):
-        """ TEMPORARY METHOD TO BE MOVED TO SLOT FUNCTIONS"""
-        """This method closes the databases before calling the base dialog close_event."""
-        close_databases()
-        self.close()
+    def add_plea_to_entry_case_information(self):
+        raise NotImplementedError
 
     @logger.catch
     def update_case_information(self):
@@ -54,12 +48,6 @@ class CriminalBaseDialog(BaseDialog):
         CriminalCaseInformation model which is passed as self.entry_case_information."""
         self.add_additional_case_information()
         return CasePartyUpdater(self)
-
-    @logger.catch
-    def add_plea_to_entry_case_information(self):
-        """This method is never used directly. AddPlea is a pass-through for this case dialog. In the specific dialogs
-        it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
-        return AddPlea(self)
 
     @logger.catch
     def set_offense_type(self):
@@ -95,10 +83,14 @@ class CriminalBaseDialog(BaseDialog):
         """The additional conditions are set by the toggling of the Additional Conditions checkbox.
         If the box is checked, but Additional Conditions is not pressed, then conditions will appear
         with None for details. TODO: Add warning box."""
-        self.add_plea_findings_and_fines_to_entry_case_information()
-        self.update_costs_and_fines_information()
-        self.update_jail_time_credit()
-        self.calculate_costs_and_fines()
+        try:
+            self.add_plea_findings_and_fines_to_entry_case_information()
+            self.update_costs_and_fines_information()
+            self.update_jail_time_credit()
+            self.calculate_costs_and_fines()
+        except AttributeError:
+            print("Fix this it exists because of refactoring and not Guilty and add_additional_case_information")
+            pass
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -167,11 +159,9 @@ class CriminalBaseDialog(BaseDialog):
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
         self.dialog_name = 'Diversion Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
-        self.load_cms_data_to_view()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)
@@ -185,6 +175,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return DiversionDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
         return CMS_FRALoader(self)
 
     @logger.catch
@@ -204,7 +195,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.charges_gridLayout.__class__ = JailChargesGrid
+
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
@@ -218,7 +209,6 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         ]
         self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.load_cms_data_to_view()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
 
@@ -232,6 +222,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         return JailCCDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = JailChargesGrid
         return CMS_FRALoader(self)
 
     def update_jail_time_credit(self):
@@ -247,7 +238,6 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
 class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.charges_gridLayout.__class__ = NoJailChargesGrid
         self.additional_conditions_list = [
             ("license_suspension_checkBox", self.entry_case_information.license_suspension),
             ("community_service_checkBox", self.entry_case_information.community_service),
@@ -255,7 +245,6 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         ]
         self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.load_cms_data_to_view()
 
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
@@ -268,6 +257,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return FineOnlyDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = NoJailChargesGrid
         return CMS_FRALoader(self)
 
     def update_jail_time_credit(self):
@@ -287,7 +277,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
-        self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
         self.additional_conditions_list = [
             ("admin_license_suspension_checkBox", self.entry_case_information.admin_license_suspension),
             ("domestic_violence_checkBox", self.entry_case_information.domestic_violence_conditions),
@@ -299,7 +288,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
-        self.load_cms_data_to_view()
 
     def modify_view(self):
         return NotGuiltyBondDialogViewModifier(self)
@@ -312,6 +300,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return NotGuiltyBondDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
         return CMSLoader(self)
 
     @logger.catch

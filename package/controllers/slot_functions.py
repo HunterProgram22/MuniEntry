@@ -28,6 +28,9 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_case_information()
         AmendChargeDialog(self.dialog).exec()
 
+    def close_dialog(self):
+        self.close_event()
+
     def close_event(self):
         self.close_window()
 
@@ -141,9 +144,6 @@ class BaseDialogSlotFunctions(object):
             self.dialog.entry_case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.exec_()
-
-    def close_dialog(self):
-        self.dialog.close_event()
 
     def update_community_service_due_date(self, _index=None):
         days_to_complete = int(self.dialog.community_service_days_to_complete_box.currentText())

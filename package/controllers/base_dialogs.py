@@ -15,9 +15,8 @@ class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
-    def __init__(self, case_table=None, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.case_table = case_table
         self.modify_view()
         self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
