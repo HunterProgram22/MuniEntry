@@ -20,13 +20,16 @@ class BaseDialogSlotFunctions(object):
 
     def start_add_charge_dialog(self):
         from package.controllers.charges_dialogs import AddChargeDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddChargeDialog(self.dialog).exec()
 
     def start_amend_offense_dialog(self):
         from package.controllers.charges_dialogs import AmendChargeDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AmendChargeDialog(self.dialog).exec()
+
+    def close_dialog(self):
+        self.close_event()
 
     def close_event(self):
         self.close_window()
@@ -78,7 +81,7 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def update_info_and_perform_checks(self):
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         if InfoChecker.check_defense_counsel(self.dialog) == "Fail":
             return "Fail"
         if check_if_diversion_program_selected(self.dialog) is False:
@@ -93,7 +96,7 @@ class BaseDialogSlotFunctions(object):
             return "Fail"
         if InfoChecker.check_jail_days(self.dialog) == "Fail":
             return "Fail"
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         return "Pass"
 
     def set_defense_counsel(self):
@@ -127,7 +130,7 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def show_costs_and_fines(self):
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         message = InfoBox()
         message.setWindowTitle("Total Costs and Fines")
         # noinspection PyUnresolvedReferences
@@ -141,9 +144,6 @@ class BaseDialogSlotFunctions(object):
             self.dialog.entry_case_information.total_fines_suspended
         message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
         message.exec_()
-
-    def close_dialog(self):
-        self.dialog.close_event()
 
     def update_community_service_due_date(self, _index=None):
         days_to_complete = int(self.dialog.community_service_days_to_complete_box.currentText())
@@ -329,7 +329,7 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddConditionsDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddConditionsDialog(self.dialog).exec()
 
 
@@ -340,7 +340,7 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddCommunityControlDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddCommunityControlDialog(self.dialog).exec()
 
 
@@ -370,7 +370,7 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def start_add_special_bond_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddSpecialBondConditionsDialog(self.dialog).exec()
 
     def conditions_checkbox_toggle(self):

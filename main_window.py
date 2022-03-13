@@ -4,8 +4,8 @@ from PyQt5.QtWidgets import QMainWindow
 
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
 from package.controllers.helper_functions import check_judicial_officer, check_case_list_selected
-from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import FineOnlyPleaDialog, JailCCPleaDialog, DiversionPleaDialog
+from package.controllers.main_entry_dialogs import DiversionPleaDialog, JailCCPleaDialog, FineOnlyPleaDialog, \
+    NotGuiltyBondDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox

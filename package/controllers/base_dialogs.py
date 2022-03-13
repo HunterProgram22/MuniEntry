@@ -1,12 +1,9 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
-from loguru import logger
-from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit, QRadioButton
 
 from db.databases import open_charges_db_connection
 from package.controllers.slot_functions import charges_database
-from package.models.case_information import CriminalCaseInformation, CriminalCharge
-from package.views.custom_widgets import DefenseCounselComboBox
+from package.models.case_information import CriminalCharge
 
 
 def close_databases():
@@ -18,9 +15,8 @@ class BaseDialog(QDialog):
     """This class is a base class to provide methods that are used by some criminal controllers
      in the application. This class is never instantiated as its own dialog, but the init contains
      the setup for all inherited class controllers."""
-    def __init__(self, case_table=None, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.case_table = case_table
         self.modify_view()
         self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
@@ -72,93 +68,6 @@ class BaseDialog(QDialog):
                 pass
 
 
-class CriminalBaseDialog(BaseDialog):
-    """This class subclasses the BaseDialog for methods that are specific to
-    dialogs/entries that require entering a plea and finding in a cms_case.
-
-    The self.charges_gridLayout class is changed so that the methods from the ChargesGrid
-    custom widget can be used, but the design of a standard QtDesigner QGridLayout can be changed
-    in QtDesigner and pyuic5 ran without needing to update the ui.py file each time."""
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        # open_databases() # This only seems necessary for testing as the connection is already opened when run as main.
-        super().__init__(case_table, parent)
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
-        self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
-        self.defense_counsel_name_box.load_attorneys()
-        self.criminal_charge = None
-
-    @logger.catch
-    def load_cms_data_to_view(self):
-        print("Criminal Base Dialog CMSLoader ran")
-        return CMSLoader(self)
-
-    def close_event(self):
-        """ TEMPORARY METHOD TO BE MOVED TO SLOT FUNCTIONS"""
-        """This method closes the databases before calling the base dialog close_event."""
-        close_databases()
-        self.close()
-
-    @logger.catch
-    def update_case_information(self):
-        """Calls the class responsible for updating party and counsel information and plea date. The
-        'self' that is passed is the dialog. It loads the information in those fields into the CriminalCaseInformation
-        model attributes. PyCharm highlights potential error because that attributes are part of the
-        CriminalCaseInformation model which is passed as self.entry_case_information."""
-        return CasePartyUpdater(self)
-
-    @logger.catch
-    def add_plea_to_entry_case_information(self):
-        """This method is never used directly. AddPlea is a pass-through for this case dialog. In the specific dialogs
-        it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
-        return AddPlea(self)
-
-    @logger.catch
-    def set_offense_type(self):
-        """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
-        for each charge. It does not show up in the view, but is used for calculating costs."""
-        key = self.statute_choice_box.currentText()
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(charges_database)
-        query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            statute = query.value(2)
-            offense_type = query.value(4)
-            if statute == key:
-                query.finish()
-                return offense_type
-
-
-class CasePartyUpdater:
-    """Class responsible for updating case number, date, appearance reasons and party information. Top frame
-    on primary dialogs."""
-    def __init__(self, dialog):
-        self.set_case_number_and_date(dialog)
-        self.set_party_information(dialog)
-        self.set_defense_counsel_information(dialog)
-        self.set_appearance_reason(dialog)
-
-    def set_case_number_and_date(self, dialog):
-        dialog.entry_case_information.case_number = dialog.case_number_lineEdit.text()
-        dialog.entry_case_information.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
-
-    def set_party_information(self, dialog):
-        dialog.entry_case_information.defendant.first_name = dialog.defendant_first_name_lineEdit.text()
-        dialog.entry_case_information.defendant.last_name = dialog.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self, dialog):
-        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.currentText()
-        dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
-        dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
-
-    def set_appearance_reason(self, dialog):
-        dialog.entry_case_information.appearance_reason = dialog.appearance_reason_box.currentText()
-
-
 class CMSLoader:
     """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
     def __init__(self, dialog):
@@ -205,11 +114,6 @@ class CMS_FRALoader(CMSLoader):
         dialog.functions.set_fra_in_court(dialog.fra_in_court_box.currentText())
 
 
-class AddPlea:
-    """This class is specifically implemented for each main dialog with a more specific name."""
-    pass
-
-
 if __name__ == "__main__":
     print("Base Dialogs ran directly")
 else:
@@ -217,5 +121,3 @@ else:
     """Databases must be opened first in order for them to be accessed
     when the UI is built so it can populate fields."""
     charges_database = open_charges_db_connection()
-
-
