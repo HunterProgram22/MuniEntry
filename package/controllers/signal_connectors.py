@@ -4,7 +4,7 @@ checkboxes, etc.) to the dialog."""
 from package.controllers.slot_functions import BaseDialogSlotFunctions
 
 
-class BaseDialogSignalConnector(object):
+class BaseDialogSignalConnector:
     def __init__(self, dialog):
         dialog.cancel_Button.released.connect(dialog.functions.close_event)
 
