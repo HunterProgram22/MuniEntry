@@ -4,7 +4,6 @@ main class."""
 
 class CaseUpdater:
     def __init__(self, dialog):
-        self.dialog = dialog
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
         self.set_defense_counsel_information(dialog)
@@ -88,7 +87,7 @@ class DiversionDialogCaseUpdater(CaseUpdater):
         self.update_case_information(dialog)
 
     def update_case_information(self, dialog):
-        dialog.add_plea_findings_and_fines_to_entry_case_information()
+        dialog.add_plea_to_entry_case_information()
         dialog.transfer_field_data_to_model(dialog.entry_case_information.diversion)
         dialog.entry_case_information.diversion.program_name = \
             dialog.entry_case_information.diversion.get_program_name()
@@ -98,7 +97,7 @@ class DiversionDialogCaseUpdater(CaseUpdater):
 class JailCCDialogCaseUpdater(CaseUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
-        dialog.add_plea_findings_and_fines_to_entry_case_information()
+        dialog.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information(dialog)
         self.update_jail_time_credit(dialog)
         self.calculate_costs_and_fines(dialog)
@@ -112,7 +111,7 @@ class JailCCDialogCaseUpdater(CaseUpdater):
 class FineOnlyDialogCaseUpdater(CaseUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
-        dialog.add_plea_findings_and_fines_to_entry_case_information()
+        dialog.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information(dialog)
         self.update_jail_time_credit(dialog)
         self.calculate_costs_and_fines(dialog)

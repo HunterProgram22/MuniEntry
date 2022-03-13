@@ -1,8 +1,10 @@
+"""The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
+
 from package.controllers.base_dialogs import CmsFraLoader, CmsLoader, BaseDialog, charges_database
 from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
-    FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater
+    FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater, DiversionDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
     NotGuiltyAddPlea
@@ -12,7 +14,6 @@ from package.controllers.slot_functions import DiversionDialogSlotFunctions, Jai
     FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
 from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
     FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier
-from package.controllers.case_updaters import DiversionDialogCaseUpdater
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
@@ -97,7 +98,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def update_entry_case_information(self):
         return DiversionDialogCaseUpdater(self)
 
-    def add_plea_findings_and_fines_to_entry_case_information(self):
+    def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
 
@@ -136,7 +137,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def update_entry_case_information(self):
         return JailCCDialogCaseUpdater(self)
 
-    def add_plea_findings_and_fines_to_entry_case_information(self):
+    def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
 
@@ -168,7 +169,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def update_entry_case_information(self):
         return FineOnlyDialogCaseUpdater(self)
 
-    def add_plea_findings_and_fines_to_entry_case_information(self):
+    def add_plea_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self)
 
 
@@ -214,4 +215,4 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.defense_counsel_name_box.setFocus()
 
     def add_plea_to_entry_case_information(self):
-        return NotGuiltyAddPlea.add(self) 
+        return NotGuiltyAddPlea.add(self)
