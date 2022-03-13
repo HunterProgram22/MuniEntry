@@ -1,9 +1,8 @@
 from PyQt5.QtGui import QIntValidator
 from loguru import logger
-from package.controllers.base_dialogs import CasePartyUpdater, CriminalBaseDialog
-from package.controllers.not_guilty_bond_dialogs import NotGuiltyAddPlea
-from package.controllers.sentencing_dialogs import CriminalSentencingDialog, JailAddPleaFindingsFinesJail, \
-    NoJailPleaFindingFines
+from package.controllers.base_dialogs import CasePartyUpdater, CriminalBaseDialog, CMS_FRALoader, CMSLoader
+from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
+    NotGuiltyAddPlea
 from package.controllers.signal_connectors import DiversionDialogSignalConnector, JailCCDialogSignalConnector, \
     FineOnlyDialogSignalConnector, NotGuiltyBondDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
@@ -19,7 +18,7 @@ from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 
 
-class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
+class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
@@ -39,6 +38,9 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
 
+    def load_cms_data_to_view(self):
+        return CMS_FRALoader(self)
+
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
@@ -53,7 +55,7 @@ class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
         return CasePartyUpdater(self)
 
 
-class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
+class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
@@ -83,6 +85,9 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
 
+    def load_cms_data_to_view(self):
+        return CMS_FRALoader(self)
+
     def update_jail_time_credit(self):
         self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
@@ -93,7 +98,7 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
 
 
-class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
+class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
@@ -115,6 +120,9 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self):
+        return CMS_FRALoader(self)
 
     def update_jail_time_credit(self):
         self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
@@ -156,6 +164,9 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self):
+        return CMSLoader(self)
 
     @logger.catch
     def add_charge_to_grid(self):
