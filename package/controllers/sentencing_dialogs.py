@@ -25,6 +25,11 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
 
+    def add_charge_to_grid(self):
+        print("Add charge to grid in CrimSentencing")
+        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.defense_counsel_name_box.setFocus()
+
     @logger.catch
     def load_cms_data_to_view(self):
         return CMS_FRALoader(self)
@@ -193,10 +198,6 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
             self.diversion_jail_report_date_box.setHidden(True)
             self.diversion_jail_report_date_label.setHidden(True)
 
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
-
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
@@ -265,10 +266,6 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
 
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
-
     def update_jail_time_credit(self):
         self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
@@ -301,11 +298,6 @@ class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
 
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
-
-    def add_charge_to_grid(self):
-        print("add charge to grid ran")
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
         self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
