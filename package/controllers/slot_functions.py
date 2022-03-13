@@ -19,12 +19,12 @@ class BaseDialogSlotFunctions(object):
         self.dialog = dialog
 
     def start_add_charge_dialog(self):
-        from package.controllers.base_dialogs import AddChargeDialog
+        from package.controllers.charges_dialogs import AddChargeDialog
         self.dialog.update_case_information()
         AddChargeDialog(self.dialog).exec()
 
     def start_amend_offense_dialog(self):
-        from package.controllers.base_dialogs import AmendChargeDialog
+        from package.controllers.charges_dialogs import AmendChargeDialog
         self.dialog.update_case_information()
         AmendChargeDialog(self.dialog).exec()
 
