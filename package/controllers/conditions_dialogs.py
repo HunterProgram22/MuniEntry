@@ -59,7 +59,6 @@ class ConditionsDialog(BaseDialog):
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
@@ -70,7 +69,6 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
     def create_dialog_slot_functions(self):
         self.functions = AddConditionsDialogSlotFunctions(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return AddConditionsDialogSignalConnector(self)
 
