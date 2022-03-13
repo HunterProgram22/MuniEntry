@@ -29,17 +29,7 @@ class CaseUpdater(object):
         dialog.entry_case_information.court_costs.balance_due_date = dialog.balance_due_date.date().toString("MMMM dd, yyyy")
 
 
-    #     self.add_additional_case_information
-    #     return CasePartyUpdater(self)
-    #
-    # def add_additional_case_information(self):
-    #     """The additional conditions are set by the toggling of the Additional Conditions checkbox.
-    #     If the box is checked, but Additional Conditions is not pressed, then conditions will appear
-    #     with None for details. TODO: Add warning box."""
-    #     try:
-    #         self.add_plea_findings_and_fines_to_entry_case_information()
-    #         self.update_costs_and_fines_information()
-    #         self.update_jail_time_credit()
+    #         NEED TO ADD THIS SOMEWHERE and REFACTOR the METHOD in Criminal Base
     #         self.calculate_costs_and_fines()
     #     except AttributeError:
     #         print("Fix this it exists because of refactoring and not Guilty and add_additional_case_information")
@@ -81,3 +71,14 @@ class FineOnlyDialogCaseUpdater(CaseUpdater):
     def update_jail_time_credit(self, dialog):
         dialog.entry_case_information.fines_and_costs_jail_credit = dialog.credit_for_jail_checkBox.isChecked()
         dialog.entry_case_information.days_in_jail = dialog.jail_time_credit_box.text()
+
+
+class NotGuiltyBondDialogCaseUpdater(CaseUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        dialog.add_plea_to_entry_case_information()
+        self.update_bond_conditions(dialog)
+
+    def update_bond_conditions(self, dialog):
+        """Updates the bond conditions from the GUI(view) and saves it to the model."""
+        dialog.transfer_field_data_to_model(dialog.entry_case_information.bond_conditions)

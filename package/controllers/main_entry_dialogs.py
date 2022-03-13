@@ -4,7 +4,7 @@ from loguru import logger
 from package.controllers.base_dialogs import CMS_FRALoader, CMSLoader, BaseDialog, close_databases, \
     charges_database
 from package.controllers.case_updaters import DiversionDialogCaseUpdater, JailCCDialogCaseUpdater, \
-    FineOnlyDialogCaseUpdater
+    FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
     NotGuiltyAddPlea
@@ -237,7 +237,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         ("specialized_docket_checkBox", "specialized_docket_type_box"),
     ]
 
-    @logger.catch
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.additional_conditions_list = [
@@ -266,27 +265,12 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
         return CMSLoader(self)
 
-    @logger.catch
+    def update_entry_case_information(self):
+        return NotGuiltyBondDialogCaseUpdater(self)
+
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
 
-    @logger.catch
     def add_plea_to_entry_case_information(self):
         return NotGuiltyAddPlea.add(self) # self is the dialog
-
-    @logger.catch
-    def update_entry_case_information(self):
-        super().update_entry_case_information()
-        self.update_not_guilty_conditions()
-        self.update_bond_conditions()
-
-    @logger.catch
-    def update_not_guilty_conditions(self):
-        self.entry_case_information.appearance_reason = self.appearance_reason_box.currentText()
-        self.add_plea_to_entry_case_information()
-
-    @logger.catch
-    def update_bond_conditions(self):
-        """Updates the bond conditions from the GUI(view) and saves it to the model."""
-        self.transfer_field_data_to_model(self.entry_case_information.bond_conditions)
