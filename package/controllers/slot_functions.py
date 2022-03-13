@@ -268,6 +268,10 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         # self.criminal_charge.type = self.set_offense_type()
         self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
 
+    def close_event(self):
+        self.dialog.charges_database.close()
+        self.close_window()
+
 
 class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
@@ -303,6 +307,10 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
                     self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.dialog.statute_choice_box.currentText())
                     self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.dialog.degree_choice_box.currentText())
         self.close_event()
+
+    def close_event(self):
+        self.dialog.charges_database.close()
+        self.close_window()
 
 
 class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
