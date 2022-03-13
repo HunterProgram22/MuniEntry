@@ -6,7 +6,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit, QRadioButton
 
 from db.databases import open_charges_db_connection, create_statute_list, create_offense_list
-from package.controllers.helper_functions import set_future_date
+
 from package.controllers.signal_connectors import AddChargeDialogSignalConnector, AmendChargeDialogSignalConnector
 from package.controllers.slot_functions import charges_database, AddChargeDialogSlotFunctions, \
     AmendChargeDialogSlotFunctions
@@ -15,7 +15,6 @@ from package.models.case_information import CriminalCaseInformation, CriminalCha
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 from package.views.custom_widgets import DefenseCounselComboBox
-from settings import PAY_DATE_DICT
 
 
 def close_databases():
@@ -139,15 +138,6 @@ class CriminalBaseDialog(BaseDialog):
             if statute == key:
                 query.finish()
                 return offense_type
-
-    @logger.catch
-    def set_pay_date(self, days_to_add):
-        "Sets the sentencing date to the Tuesday (1) after the days added."""
-        if days_to_add == "forthwith":
-            self.balance_due_date.setDate(QDate.currentDate())
-        else:
-            total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
-            self.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
 
 class CasePartyUpdater:

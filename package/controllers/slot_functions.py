@@ -3,12 +3,14 @@ import os
 from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtCore import QDate
 
 from db.databases import open_charges_db_connection, extract_data
-from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name
+from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name, \
+    set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
-from settings import SAVE_PATH
+from settings import SAVE_PATH, PAY_DATE_DICT
 
 
 class BaseDialogSlotFunctions(object):
@@ -59,6 +61,16 @@ class BaseDialogSlotFunctions(object):
 
     def set_plea_and_findings_process(self):
         self.dialog.charges_gridLayout.set_all_plea_and_findings(self.dialog)
+
+
+    @logger.catch
+    def set_pay_date(self, days_to_add):
+        "Sets the sentencing date to the Tuesday (1) after the days added."""
+        if days_to_add == "forthwith":
+            self.dialog.balance_due_date.setDate(QDate.currentDate())
+        else:
+            total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
+            self.dialog.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
     @logger.catch
     def create_entry_process(self):
