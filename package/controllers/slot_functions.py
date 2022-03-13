@@ -1,3 +1,4 @@
+"""Module containing all classes that load functions tied to a signal."""
 import os
 
 from docxtpl import DocxTemplate
@@ -133,16 +134,17 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_entry_case_information()
         message = InfoBox()
         message.setWindowTitle("Total Costs and Fines")
-        # noinspection PyUnresolvedReferences
-        message.setInformativeText("Costs: $" + str(self.dialog.entry_case_information.court_costs.amount) +
-                                   "\nFines: $" + str(self.dialog.entry_case_information.total_fines) +
-                                   "\nFines Suspended: $" + str(self.dialog.entry_case_information.total_fines_suspended) +
-                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in the case. ")
+        message.setInformativeText(
+            f"Costs: $ {str(self.dialog.entry_case_information.court_costs.amount)}" 
+            f"\nFines: $ {str(self.dialog.entry_case_information.total_fines)}"
+            f"\nFines Suspended: $ {str(self.dialog.entry_case_information.total_fines_suspended)}"
+            f"\n\n*Does not include possible bond forfeiture or other costs \n that " 
+            f"may be assessed as a result of prior actions in the case. ")
         total_fines_and_costs = \
-            (self.dialog.entry_case_information.court_costs.amount + self.dialog.entry_case_information.total_fines) - \
-            self.dialog.entry_case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
+            (self.dialog.entry_case_information.court_costs.amount + \
+                self.dialog.entry_case_information.total_fines) - \
+                self.dialog.entry_case_information.total_fines_suspended
+        message.setText(f"Total Costs and Fines Due By Due Date: $ {str(total_fines_and_costs)}")
         message.exec_()
 
     def update_community_service_due_date(self, _index=None):
