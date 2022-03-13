@@ -46,7 +46,6 @@ class CriminalBaseDialog(BaseDialog):
     def update_entry_case_information(self):
         raise NotImplementedError
 
-
     # TO BE REFACTORED #
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
@@ -68,63 +67,6 @@ class CriminalBaseDialog(BaseDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
-
-    def calculate_costs_and_fines(self):
-        """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
-        then adds it to any fines that are in the fines_amount box and subtracts fines in the
-        fines_suspended box. The loop stops when a cms_case of the highest fine is found because
-        court costs are always for the highest charge. The _index is underscored because it is
-        not used but is required to unpack enumerate().
-
-        TODO: This needs to be refactored and fixed - code in the AddPlea functions for each dialog have code
-        that exists just to deal with this function setting the charge fines/fines_suspended to 0."""
-        self.entry_case_information.court_costs.amount = self.calculate_court_costs()
-        total_fines = 0
-        try:
-            for charge in self.entry_case_information.charges_list:
-                try:
-                    local_charge_fines_amount = int(charge.fines_amount[2:])
-                except ValueError:
-                    local_charge_fines_amount = 0
-                if local_charge_fines_amount == '':
-                    local_charge_fines_amount = 0
-                try:
-                    total_fines = total_fines + int(local_charge_fines_amount)
-                except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
-                    pass
-            self.entry_case_information.total_fines = total_fines
-            total_fines_suspended = 0
-            for _index, charge in enumerate(self.entry_case_information.charges_list):
-                try:
-                    local_charge_fines_suspended = int(charge.fines_suspended[2:])
-                except ValueError:
-                    local_charge_fines_suspended = 0
-                if local_charge_fines_suspended == '':
-                    local_charge_fines_suspended = 0
-                try:
-                    total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
-                except ValueError: # This error catches the " " (space) that is placed if a charge is dismissed.
-                    pass
-            self.entry_case_information.total_fines_suspended = total_fines_suspended
-        except TypeError:
-            print("A type error was allowed to pass - this is because of deleted charge.")
-
-    def calculate_court_costs(self):
-        self.entry_case_information.court_costs.amount = 0
-        if self.court_costs_box.currentText() == "Yes":
-            for charge in self.entry_case_information.charges_list:
-                if self.entry_case_information.court_costs.amount == 124:
-                    break
-                if charge.type == "Moving":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 124)
-                elif charge.type == "Criminal":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 114)
-                elif charge.type == "Non-moving":
-                    self.entry_case_information.court_costs.amount = max(
-                        self.entry_case_information.court_costs.amount, 95)
-        return self.entry_case_information.court_costs.amount
 
     def start_jail_only_dialog(self):
         self.update_entry_case_information()

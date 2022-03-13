@@ -28,12 +28,54 @@ class CaseUpdater(object):
         dialog.entry_case_information.court_costs.ability_to_pay_time = dialog.ability_to_pay_box.currentText()
         dialog.entry_case_information.court_costs.balance_due_date = dialog.balance_due_date.date().toString("MMMM dd, yyyy")
 
+    def calculate_costs_and_fines(self, dialog):
+        dialog.entry_case_information.court_costs.amount = self.calculate_court_costs(dialog)
+        total_fines = 0
+        try:
+            for charge in dialog.entry_case_information.charges_list:
+                try:
+                    local_charge_fines_amount = int(charge.fines_amount[2:])
+                except ValueError:
+                    local_charge_fines_amount = 0
+                if local_charge_fines_amount == '':
+                    local_charge_fines_amount = 0
+                try:
+                    total_fines = total_fines + int(local_charge_fines_amount)
+                except ValueError:  # This error catches the " " (space) that is placed if a charge is dismissed.
+                    pass
+            dialog.entry_case_information.total_fines = total_fines
+            total_fines_suspended = 0
+            for  charge in dialog.entry_case_information.charges_list:
+                try:
+                    local_charge_fines_suspended = int(charge.fines_suspended[2:])
+                except ValueError:
+                    local_charge_fines_suspended = 0
+                if local_charge_fines_suspended == '':
+                    local_charge_fines_suspended = 0
+                try:
+                    total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
+                except ValueError:  # This error catches the " " (space) that is placed if a charge is dismissed.
+                    pass
+            dialog.entry_case_information.total_fines_suspended = total_fines_suspended
+        except TypeError:
+            print("A type error was allowed to pass - this is because of deleted charge.")
 
-    #         NEED TO ADD THIS SOMEWHERE and REFACTOR the METHOD in Criminal Base
-    #         self.calculate_costs_and_fines()
-    #     except AttributeError:
-    #         print("Fix this it exists because of refactoring and not Guilty and add_additional_case_information")
-    #         pass
+    def calculate_court_costs(self, dialog):
+        dialog.entry_case_information.court_costs.amount = 0
+        if dialog.court_costs_box.currentText() == "Yes":
+            for charge in dialog.entry_case_information.charges_list:
+                if dialog.entry_case_information.court_costs.amount == 137:
+                    break
+                if charge.type == "Moving":
+                    dialog.entry_case_information.court_costs.amount = max(
+                        dialog.entry_case_information.court_costs.amount, 137)
+                elif charge.type == "Criminal":
+                    dialog.entry_case_information.court_costs.amount = max(
+                        dialog.entry_case_information.court_costs.amount, 127)
+                elif charge.type == "Non-moving":
+                    dialog.entry_case_information.court_costs.amount = max(
+                        dialog.entry_case_information.court_costs.amount, 108)
+        return dialog.entry_case_information.court_costs.amount
 
 
 class DiversionDialogCaseUpdater(CaseUpdater):
@@ -54,6 +96,7 @@ class JailCCDialogCaseUpdater(CaseUpdater):
         dialog.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information(dialog)
         self.update_jail_time_credit(dialog)
+        self.calculate_costs_and_fines(dialog)
 
     def update_jail_time_credit(self, dialog):
         dialog.entry_case_information.currently_in_jail = dialog.in_jail_box.currentText()
@@ -67,6 +110,7 @@ class FineOnlyDialogCaseUpdater(CaseUpdater):
         dialog.add_plea_findings_and_fines_to_entry_case_information()
         self.update_costs_and_fines_information(dialog)
         self.update_jail_time_credit(dialog)
+        self.calculate_costs_and_fines(dialog)
 
     def update_jail_time_credit(self, dialog):
         dialog.entry_case_information.fines_and_costs_jail_credit = dialog.credit_for_jail_checkBox.isChecked()
