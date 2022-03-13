@@ -15,7 +15,8 @@ from package.controllers.view_modifiers import DiversionDialogViewModifier, Jail
 from package.controllers.case_updaters import DiversionDialogCaseUpdater
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
-from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid
+from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
+    DiversionChargesGrid
 from package.views.custom_widgets import DefenseCounselComboBox
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
@@ -90,7 +91,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return DiversionDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
+        self.charges_gridLayout.__class__ = DiversionChargesGrid
         return CMS_FRALoader(self)
 
     def update_entry_case_information(self):

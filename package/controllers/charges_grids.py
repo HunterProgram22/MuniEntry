@@ -133,7 +133,6 @@ class NoJailChargesGrid(ChargesGrid):
 
 
 class JailChargesGrid(NoJailChargesGrid):
-    """The Jail Charges Grid is used as of 3/8/22 for both the JailCCPleaDialog and the DiversionDialog."""
     row_jail_days = 9
     row_jail_days_suspended = 10
     row_amend_button = 11
@@ -171,6 +170,12 @@ class JailChargesGrid(NoJailChargesGrid):
                 else:
                     self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
         self.set_cursor_to_fine_line_edit()
+
+
+class DiversionChargesGrid(JailChargesGrid):
+    """This is the same as the JailChargesGrid."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
 def main():
     pass
