@@ -131,8 +131,6 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
         dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
         dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
-        dialog.show_jail_report_date_box()
-        dialog.show_other_conditions_box()
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):

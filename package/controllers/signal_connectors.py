@@ -101,8 +101,8 @@ class DiversionDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_main_dialog_common_signals(dialog)
         self.connect_plea_all_button_signals(dialog)
         self.connect_fra_signals(dialog)
-        dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.show_jail_report_date_box)
-        dialog.other_conditions_checkBox.toggled.connect(dialog.show_other_conditions_box)
+        dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.functions.show_jail_report_date_box)
+        dialog.other_conditions_checkBox.toggled.connect(dialog.functions.show_other_conditions_box)
 
 
 class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):

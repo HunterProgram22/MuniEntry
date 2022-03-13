@@ -231,6 +231,26 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
         AddCommunityControlDialog(self.dialog).exec()
 
 
+class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def show_other_conditions_box(self):
+        if self.dialog.other_conditions_checkBox.isChecked():
+            self.dialog.other_conditions_textEdit.setHidden(False)
+            self.dialog.other_conditions_textEdit.setFocus()
+        else:
+            self.dialog.other_conditions_textEdit.setHidden(True)
+
+    def show_jail_report_date_box(self):
+        if self.dialog.diversion_jail_imposed_checkBox.isChecked():
+            self.dialog.diversion_jail_report_date_box.setHidden(False)
+            self.dialog.diversion_jail_report_date_label.setHidden(False)
+        else:
+            self.dialog.diversion_jail_report_date_box.setHidden(True)
+            self.dialog.diversion_jail_report_date_label.setHidden(True)
+
+
 def close_databases():
     """This function is duplicate of the one in base_dialogs.py"""
     charges_database.close()

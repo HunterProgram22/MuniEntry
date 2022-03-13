@@ -167,7 +167,7 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         AddJailOnlyDialog(self).exec()
 
 
-class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
+class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
     @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
@@ -176,27 +176,17 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
         self.load_cms_data_to_view()
+        self.functions.show_jail_report_date_box()
+        self.functions.show_other_conditions_box()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = DiversionDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
-
-    def show_other_conditions_box(self):
-        if self.other_conditions_checkBox.isChecked():
-            self.other_conditions_textEdit.setHidden(False)
-            self.other_conditions_textEdit.setFocus()
-        else:
-            self.other_conditions_textEdit.setHidden(True)
-
-    def show_jail_report_date_box(self):
-        if self.diversion_jail_imposed_checkBox.isChecked():
-            self.diversion_jail_report_date_box.setHidden(False)
-            self.diversion_jail_report_date_label.setHidden(False)
-        else:
-            self.diversion_jail_report_date_box.setHidden(True)
-            self.diversion_jail_report_date_label.setHidden(True)
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
