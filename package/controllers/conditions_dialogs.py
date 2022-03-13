@@ -163,19 +163,16 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
     ]
 
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
 
-    @logger.catch
     def modify_view(self):
         return AddCommunityControlDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = AddCommunityControlDialogSlotFunctions(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return AddCommunityControlDialogSignalConnector(self)
 
@@ -226,21 +223,17 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
-    """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         self.main_dialog = main_dialog
         super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
-    @logger.catch
     def modify_view(self):
         return AddSpecialBondConditionsDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = AddSpecialBondConditionsDialogSlotFunctions(self)
 
-    @logger.catch
     def connect_signals_to_slots(self):
         return AddSpecialBondConditionsDialogSignalConnector(self)
