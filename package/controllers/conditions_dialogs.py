@@ -47,17 +47,11 @@ def enable_condition_frames(conditions_dialog, main_dialog):
                 frame.deleteLater()
 
 
-class ConditionsDialog(BaseDialog):
+class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
+        self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
-
-
-
-class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
-    def __init__(self, main_dialog, parent=None):
-        super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
 
     def modify_view(self):
@@ -71,7 +65,7 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
         return AddConditionsDialogSignalConnector(self)
 
 
-class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
+class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
@@ -79,7 +73,9 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
     ]
     @logger.catch
     def __init__(self, main_dialog, parent=None):
-        super().__init__(main_dialog, parent)
+        self.charges_list = main_dialog.entry_case_information.charges_list
+        self.main_dialog = main_dialog
+        super().__init__(parent)
 
     @logger.catch
     def modify_view(self):
@@ -92,11 +88,7 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
         return AddJailOnlyDialogSignalConnector(self)
 
 
-class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
-    """
-    :conditions_checkbox_list: list of tuples that show or hide fields only when they are
-    necessary for additional data input because the checkbox is checked.
-    """
+class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     condition_checkbox_list = [
         ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
         ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
@@ -114,7 +106,9 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     ]
 
     def __init__(self, main_dialog, parent=None):
-        super().__init__(main_dialog, parent)
+        self.charges_list = main_dialog.entry_case_information.charges_list
+        self.main_dialog = main_dialog
+        super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
     def modify_view(self):
@@ -129,7 +123,7 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     def __init__(self, main_dialog, parent=None):
-        self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
+        self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
         enable_condition_frames(self, main_dialog)
