@@ -7,7 +7,7 @@ from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommu
 from package.controllers.base_dialogs import CasePartyUpdater
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
-from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
+from package.views.custom_widgets import JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
@@ -111,25 +111,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
                     self.entry_case_information.court_costs.amount = max(
                         self.entry_case_information.court_costs.amount, 95)
         return self.entry_case_information.court_costs.amount
-
-    @logger.catch
-    def show_costs_and_fines(self, _bool):
-        """The _bool is the toggle from the clicked() of the button pressed. No
-        action is taken with respect to it."""
-        self.update_case_information()
-        message = InfoBox()
-        message.setWindowTitle("Total Costs and Fines")
-        # noinspection PyUnresolvedReferences
-        message.setInformativeText("Costs: $" + str(self.entry_case_information.court_costs.amount) +
-                                   "\nFines: $" + str(self.entry_case_information.total_fines) +
-                                   "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
-                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in the case. ")
-        total_fines_and_costs = \
-            (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
-            self.entry_case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
-        message.exec_()
 
     @logger.catch
     def start_jail_only_dialog(self):

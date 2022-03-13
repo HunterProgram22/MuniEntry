@@ -5,6 +5,7 @@ from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
+from package.views.custom_widgets import InfoBox
 from db.databases import open_charges_db_connection, extract_data
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name, \
     set_future_date
@@ -36,14 +37,12 @@ class BaseDialogSlotFunctions(object):
         at the end of the close_event process to close the dialog."""
         self.dialog.close()
 
-    @logger.catch
     def clear_case_information_fields(self):
         self.dialog.defendant_first_name_lineEdit.clear()
         self.dialog.defendant_last_name_lineEdit.clear()
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    @logger.catch
     def create_entry(self):
         """Loads the proper template and creates the entry."""
         doc = DocxTemplate(self.dialog.template.template_path)
@@ -62,8 +61,6 @@ class BaseDialogSlotFunctions(object):
     def set_plea_and_findings_process(self):
         self.dialog.charges_gridLayout.set_all_plea_and_findings(self.dialog)
 
-
-    @logger.catch
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""
         if days_to_add == "forthwith":
@@ -72,7 +69,6 @@ class BaseDialogSlotFunctions(object):
             total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
             self.dialog.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
 
-    @logger.catch
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
         update_info_and_perform_checks method (found in helper_functions.py)."""
@@ -108,7 +104,6 @@ class BaseDialogSlotFunctions(object):
             self.dialog.defense_counsel_name_box.setEnabled(True)
             self.dialog.defense_counsel_type_box.setEnabled(True)
 
-    @logger.catch
     def set_fra_in_file(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in the complaint of file."""
@@ -120,7 +115,6 @@ class BaseDialogSlotFunctions(object):
         else:
             self.dialog.entry_case_information.fra_in_file = None
 
-    @logger.catch
     def set_fra_in_court(self, current_text):
         """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
         that the FRA was shown in court."""
@@ -130,6 +124,23 @@ class BaseDialogSlotFunctions(object):
             self.dialog.entry_case_information.fra_in_court = False
         else:
             self.dialog.entry_case_information.fra_in_court = None
+
+    @logger.catch
+    def show_costs_and_fines(self):
+        self.dialog.update_case_information()
+        message = InfoBox()
+        message.setWindowTitle("Total Costs and Fines")
+        # noinspection PyUnresolvedReferences
+        message.setInformativeText("Costs: $" + str(self.dialog.entry_case_information.court_costs.amount) +
+                                   "\nFines: $" + str(self.dialog.entry_case_information.total_fines) +
+                                   "\nFines Suspended: $" + str(self.dialog.entry_case_information.total_fines_suspended) +
+                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
+                                   "may be assessed as a result of prior actions in the case. ")
+        total_fines_and_costs = \
+            (self.dialog.entry_case_information.court_costs.amount + self.dialog.entry_case_information.total_fines) - \
+            self.dialog.entry_case_information.total_fines_suspended
+        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
+        message.exec_()
 
     def close_dialog(self):
         self.dialog.close_event()
