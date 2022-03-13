@@ -2,8 +2,7 @@
 main entry dialog when a charge needs to be added or amended."""
 from PyQt5.QtWidgets import QDialog
 
-from db.databases import create_statute_list, create_offense_list
-from package.controllers.base_dialogs import charges_database
+from db.databases import create_statute_list, create_offense_list, open_charges_db_connection
 from package.controllers.signal_connectors import AddChargeDialogSignalConnector, \
     AmendChargeDialogSignalConnector
 from package.controllers.slot_functions import AddChargeDialogSlotFunctions, \
@@ -22,7 +21,7 @@ class BaseChargeDialog(QDialog):
         super().__init__(parent)
         self.button_index = button_index
         self.main_dialog = main_dialog
-        self.charges_database = charges_database
+        self.charges_database = open_charges_db_connection()
         self.charges_database.open()
         self.modify_view()
         self.functions = self.create_dialog_slot_functions()
