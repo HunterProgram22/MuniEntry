@@ -20,12 +20,12 @@ class BaseDialogSlotFunctions(object):
 
     def start_add_charge_dialog(self):
         from package.controllers.charges_dialogs import AddChargeDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddChargeDialog(self.dialog).exec()
 
     def start_amend_offense_dialog(self):
         from package.controllers.charges_dialogs import AmendChargeDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AmendChargeDialog(self.dialog).exec()
 
     def close_dialog(self):
@@ -81,7 +81,7 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def update_info_and_perform_checks(self):
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         if InfoChecker.check_defense_counsel(self.dialog) == "Fail":
             return "Fail"
         if check_if_diversion_program_selected(self.dialog) is False:
@@ -96,7 +96,7 @@ class BaseDialogSlotFunctions(object):
             return "Fail"
         if InfoChecker.check_jail_days(self.dialog) == "Fail":
             return "Fail"
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         return "Pass"
 
     def set_defense_counsel(self):
@@ -130,7 +130,7 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def show_costs_and_fines(self):
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         message = InfoBox()
         message.setWindowTitle("Total Costs and Fines")
         # noinspection PyUnresolvedReferences
@@ -329,7 +329,7 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddConditionsDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddConditionsDialog(self.dialog).exec()
 
 
@@ -340,7 +340,7 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddCommunityControlDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddCommunityControlDialog(self.dialog).exec()
 
 
@@ -370,7 +370,7 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def start_add_special_bond_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
-        self.dialog.update_case_information()
+        self.dialog.update_entry_case_information()
         AddSpecialBondConditionsDialog(self.dialog).exec()
 
     def conditions_checkbox_toggle(self):

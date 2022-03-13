@@ -68,32 +68,6 @@ class BaseDialog(QDialog):
                 pass
 
 
-class CasePartyUpdater:
-    """Class responsible for updating case number, date, appearance reasons and party information. Top frame
-    on primary dialogs."""
-    def __init__(self, dialog):
-        self.set_case_number_and_date(dialog)
-        self.set_party_information(dialog)
-        self.set_defense_counsel_information(dialog)
-        self.set_appearance_reason(dialog)
-
-    def set_case_number_and_date(self, dialog):
-        dialog.entry_case_information.case_number = dialog.case_number_lineEdit.text()
-        dialog.entry_case_information.plea_trial_date = dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
-
-    def set_party_information(self, dialog):
-        dialog.entry_case_information.defendant.first_name = dialog.defendant_first_name_lineEdit.text()
-        dialog.entry_case_information.defendant.last_name = dialog.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self, dialog):
-        dialog.entry_case_information.defense_counsel = dialog.defense_counsel_name_box.currentText()
-        dialog.entry_case_information.defense_counsel_type = dialog.defense_counsel_type_box.currentText()
-        dialog.entry_case_information.defense_counsel_waived = dialog.defense_counsel_waived_checkBox.isChecked()
-
-    def set_appearance_reason(self, dialog):
-        dialog.entry_case_information.appearance_reason = dialog.appearance_reason_box.currentText()
-
-
 class CMSLoader:
     """Uses the cms_case number selected to get the cms_case object from main and load cms_case data."""
     def __init__(self, dialog):
@@ -138,11 +112,6 @@ class CMS_FRALoader(CMSLoader):
             dialog.fra_in_file_box.setCurrentText("N/A")
         dialog.functions.set_fra_in_file(dialog.fra_in_file_box.currentText())
         dialog.functions.set_fra_in_court(dialog.fra_in_court_box.currentText())
-
-
-class AddPlea:
-    """This class is specifically implemented for each main dialog with a more specific name."""
-    pass
 
 
 if __name__ == "__main__":

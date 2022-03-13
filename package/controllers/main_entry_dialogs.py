@@ -1,8 +1,10 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
 from loguru import logger
-from package.controllers.base_dialogs import CasePartyUpdater, CMS_FRALoader, CMSLoader, BaseDialog, close_databases, \
-    AddPlea, charges_database
+from package.controllers.base_dialogs import CMS_FRALoader, CMSLoader, BaseDialog, close_databases, \
+    charges_database
+from package.controllers.case_updaters import DiversionDialogCaseUpdater, JailCCDialogCaseUpdater, \
+    FineOnlyDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
     NotGuiltyAddPlea
@@ -12,6 +14,7 @@ from package.controllers.slot_functions import DiversionDialogSlotFunctions, Jai
     FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
 from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
     FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier
+from package.controllers.case_updaters import DiversionDialogCaseUpdater
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
 from package.views.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid
@@ -40,16 +43,11 @@ class CriminalBaseDialog(BaseDialog):
     def add_plea_to_entry_case_information(self):
         raise NotImplementedError
 
-    @logger.catch
-    def update_case_information(self):
-        """Calls the class responsible for updating party and counsel information and plea date. The
-        'self' that is passed is the dialog. It loads the information in those fields into the CriminalCaseInformation
-        model attributes. PyCharm highlights potential error because that attributes are part of the
-        CriminalCaseInformation model which is passed as self.entry_case_information."""
-        self.add_additional_case_information()
-        return CasePartyUpdater(self)
+    def update_entry_case_information(self):
+        raise NotImplementedError
 
-    @logger.catch
+
+    # TO BE REFACTORED #
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
         for each charge. It does not show up in the view, but is used for calculating costs."""
@@ -71,28 +69,6 @@ class CriminalBaseDialog(BaseDialog):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
 
-    @logger.catch
-    def update_costs_and_fines_information(self):
-        """Updates the costs and fines from the GUI(view) and saves it to the model."""
-        self.entry_case_information.court_costs.ordered = self.court_costs_box.currentText()
-        self.entry_case_information.court_costs.ability_to_pay_time = self.ability_to_pay_box.currentText()
-        self.entry_case_information.court_costs.balance_due_date = \
-            self.balance_due_date.date().toString("MMMM dd, yyyy")
-
-    def add_additional_case_information(self):
-        """The additional conditions are set by the toggling of the Additional Conditions checkbox.
-        If the box is checked, but Additional Conditions is not pressed, then conditions will appear
-        with None for details. TODO: Add warning box."""
-        try:
-            self.add_plea_findings_and_fines_to_entry_case_information()
-            self.update_costs_and_fines_information()
-            self.update_jail_time_credit()
-            self.calculate_costs_and_fines()
-        except AttributeError:
-            print("Fix this it exists because of refactoring and not Guilty and add_additional_case_information")
-            pass
-
-    @logger.catch
     def calculate_costs_and_fines(self):
         """Calculates costs and fines based on the cms_case type (moving, non-moving, criminal) and
         then adds it to any fines that are in the fines_amount box and subtracts fines in the
@@ -150,9 +126,8 @@ class CriminalBaseDialog(BaseDialog):
                         self.entry_case_information.court_costs.amount, 95)
         return self.entry_case_information.court_costs.amount
 
-    @logger.catch
     def start_jail_only_dialog(self):
-        self.update_case_information()
+        self.update_entry_case_information()
         AddJailOnlyDialog(self).exec()
 
 
@@ -178,24 +153,16 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
         return CMS_FRALoader(self)
 
-    @logger.catch
+    def update_entry_case_information(self):
+        return DiversionDialogCaseUpdater(self)
+
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
-
-    @logger.catch
-    def update_case_information(self):
-        """"Ovverrides CriminalSentencingDialog update so add_additional_conditions method is not called."""
-        self.add_plea_findings_and_fines_to_entry_case_information()
-        self.transfer_field_data_to_model(self.entry_case_information.diversion)
-        self.entry_case_information.diversion.program_name = self.entry_case_information.diversion.get_program_name()
-        self.transfer_field_data_to_model(self.entry_case_information.other_conditions)
-        return CasePartyUpdater(self)
 
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
@@ -225,12 +192,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         self.charges_gridLayout.__class__ = JailChargesGrid
         return CMS_FRALoader(self)
 
-    def update_jail_time_credit(self):
-        self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
-        self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
-        self.entry_case_information.apply_jtc = self.jail_time_credit_apply_box.currentText()
+    def update_entry_case_information(self):
+        return JailCCDialogCaseUpdater(self)
 
-    @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
 
@@ -260,9 +224,8 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         return CMS_FRALoader(self)
 
-    def update_jail_time_credit(self):
-        self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
-        self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
+    def update_entry_case_information(self):
+        return FineOnlyDialogCaseUpdater(self)
 
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self) # self is the dialog
@@ -313,8 +276,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return NotGuiltyAddPlea.add(self) # self is the dialog
 
     @logger.catch
-    def update_case_information(self):
-        super().update_case_information()
+    def update_entry_case_information(self):
+        super().update_entry_case_information()
         self.update_not_guilty_conditions()
         self.update_bond_conditions()
 
