@@ -1,7 +1,10 @@
-class CaseUpdater(object):
-    """Class responsible for updating case number, date, appearance reasons and party information. Top frame
-    on primary dialogs."""
+"""Module containing classes responsible for updating case information anytime a function for
+the case is ran. Each main dialog class has a subclass that governs what is updated for the
+main class."""
+
+class CaseUpdater:
     def __init__(self, dialog):
+        self.dialog = dialog
         self.set_case_number_and_date(dialog)
         self.set_party_information(dialog)
         self.set_defense_counsel_information(dialog)
@@ -26,7 +29,8 @@ class CaseUpdater(object):
     def update_costs_and_fines_information(self, dialog):
         dialog.entry_case_information.court_costs.ordered = dialog.court_costs_box.currentText()
         dialog.entry_case_information.court_costs.ability_to_pay_time = dialog.ability_to_pay_box.currentText()
-        dialog.entry_case_information.court_costs.balance_due_date = dialog.balance_due_date.date().toString("MMMM dd, yyyy")
+        dialog.entry_case_information.court_costs.balance_due_date = dialog.balance_due_date.date(
+            ).toString("MMMM dd, yyyy")
 
     def calculate_costs_and_fines(self, dialog):
         dialog.entry_case_information.court_costs.amount = self.calculate_court_costs(dialog)
@@ -86,7 +90,8 @@ class DiversionDialogCaseUpdater(CaseUpdater):
     def update_case_information(self, dialog):
         dialog.add_plea_findings_and_fines_to_entry_case_information()
         dialog.transfer_field_data_to_model(dialog.entry_case_information.diversion)
-        dialog.entry_case_information.diversion.program_name = dialog.entry_case_information.diversion.get_program_name()
+        dialog.entry_case_information.diversion.program_name = \
+            dialog.entry_case_information.diversion.get_program_name()
         dialog.transfer_field_data_to_model(dialog.entry_case_information.other_conditions)
 
 
@@ -124,5 +129,4 @@ class NotGuiltyBondDialogCaseUpdater(CaseUpdater):
         self.update_bond_conditions(dialog)
 
     def update_bond_conditions(self, dialog):
-        """Updates the bond conditions from the GUI(view) and saves it to the model."""
         dialog.transfer_field_data_to_model(dialog.entry_case_information.bond_conditions)
