@@ -251,6 +251,22 @@ class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.diversion_jail_report_date_label.setHidden(True)
 
 
+class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.main_dialog = dialog.main_dialog
+
+    @logger.catch
+    def add_conditions(self):
+        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
+        if self.main_dialog.community_service_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_service)
+        if self.main_dialog.license_suspension_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.license_suspension)
+        if self.main_dialog.other_conditions_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
+
+
 def close_databases():
     """This function is duplicate of the one in base_dialogs.py"""
     charges_database.close()

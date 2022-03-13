@@ -14,6 +14,7 @@ from package.controllers.view_modifiers import AddConditionsDialogViewModifier, 
 from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
     AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
     AddSpecialBondConditionsDialogSignalConnector
+from package.controllers.slot_functions import AddConditionsDialogSlotFunctions
 
 
 CONDITIONS_FRAMES = [
@@ -48,23 +49,13 @@ def enable_condition_frames(conditions_dialog, main_dialog):
 class ConditionsDialog(BaseDialog):
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(parent)
-        self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
+        super().__init__(parent)
+
 
     def update_community_service_due_date(self, _index=None):
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
         self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
-
-    @logger.catch
-    def add_conditions(self):
-        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
-        if self.main_dialog.community_service_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_service)
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.license_suspension)
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions)
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
@@ -75,6 +66,9 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
 
     def modify_view(self):
         return AddConditionsDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = AddConditionsDialogSlotFunctions(self)
 
     @logger.catch
     def connect_signals_to_slots(self):

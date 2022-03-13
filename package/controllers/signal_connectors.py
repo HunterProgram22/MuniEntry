@@ -34,8 +34,8 @@ class BaseDialogSignalConnector(object):
         dialog.add_conditions_Button.pressed.connect(dialog.functions.start_add_conditions_dialog)
 
     def connect_condition_dialog_main_signals(self, dialog):
-        dialog.add_conditions_Button.pressed.connect(dialog.add_conditions)
-        dialog.add_conditions_Button.released.connect(dialog.close_window)
+        dialog.add_conditions_Button.pressed.connect(dialog.functions.add_conditions)
+        dialog.add_conditions_Button.released.connect(dialog.functions.close_window)
 
     def connect_jail_frame_signals(self, dialog):
         dialog.report_type_box.currentTextChanged.connect(dialog.set_report_date)

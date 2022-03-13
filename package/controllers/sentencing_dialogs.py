@@ -26,7 +26,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.cms_case = cms_case
 
     def add_charge_to_grid(self):
-        print("Add charge to grid in CrimSentencing")
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
 

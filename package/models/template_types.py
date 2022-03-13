@@ -15,9 +15,9 @@ class Template():
         self.template_path = TEMPLATE_PATH + template_path
 
 
-No_Jail_Plea_Final_Judgment_Template = Template(
+Fine_Only_Plea_Final_Judgment_Template = Template(
     "Crim_Traffic Judgment Entry",
-    "No_Jail_Plea_Final_Judgment_Template.docx",
+    "Fine_Only_Plea_Final_Judgment_Template.docx",
 )
 
 Jail_CC_Plea_Final_Judgment_Template = Template(
@@ -31,13 +31,13 @@ Diversion_Template = Template(
 )
 
 Not_Guilty_Bond_Template = Template(
-    "Not Guilty Bond Dialog",
+    "Not Guilty Bond Entry",
     "Not_Guilty_Bond_Template.docx",
 )
 
 
 TEMPLATE_DICT = {
-    "No Jail Plea Dialog": No_Jail_Plea_Final_Judgment_Template,
+    "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
     "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
