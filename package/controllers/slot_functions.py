@@ -57,6 +57,9 @@ class BaseDialogSlotFunctions(object):
                                   " You must close the Word document first.")
             message.exec()
 
+    def set_plea_and_findings_process(self):
+        self.dialog.charges_gridLayout.set_all_plea_and_findings(self.dialog)
+
     @logger.catch
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the

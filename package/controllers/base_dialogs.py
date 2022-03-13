@@ -122,9 +122,6 @@ class CriminalBaseDialog(BaseDialog):
         it will call to a subclassed version of AddPlea that is specific to the charges grid for that dialog."""
         return AddPlea(self)
 
-    def set_plea_and_findings_process(self):
-        self.charges_gridLayout.set_all_plea_and_findings(self)
-
     @logger.catch
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate cms_case type

@@ -20,8 +20,8 @@ class BaseDialogSignalConnector(object):
         dialog.fra_in_court_box.currentTextChanged.connect(dialog.functions.set_fra_in_court)
 
     def connect_plea_all_button_signals(self, dialog):
-        dialog.guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
-        dialog.no_contest_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
+        dialog.guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
+        dialog.no_contest_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
 
     def connect_court_cost_signals(self, dialog):
         dialog.ability_to_pay_box.currentTextChanged.connect(dialog.set_pay_date)
@@ -109,7 +109,7 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
-        dialog.not_guilty_all_Button.pressed.connect(dialog.set_plea_and_findings_process)
+        dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
         dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
