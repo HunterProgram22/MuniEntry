@@ -114,10 +114,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
     @logger.catch
     def start_jail_only_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddJailOnlyDialog(self).exec()
 
