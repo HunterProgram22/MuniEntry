@@ -256,7 +256,6 @@ class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
         self.main_dialog = dialog.main_dialog
 
-    @logger.catch
     def add_conditions(self):
         """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
         if self.main_dialog.community_service_checkBox.isChecked():

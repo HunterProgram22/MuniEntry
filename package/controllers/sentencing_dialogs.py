@@ -19,7 +19,6 @@ from package.controllers.slot_functions import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
-    """Subclass for common methods to Sentencing."""
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.judicial_officer = judicial_officer
@@ -35,7 +34,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
     @logger.catch
     def update_case_information(self):
-        """"Docstring needs updating."""
         super().update_case_information()
         self.add_additional_case_information()
 
