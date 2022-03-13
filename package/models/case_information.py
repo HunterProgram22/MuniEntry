@@ -6,7 +6,7 @@ from package.models.party_types import Defendant
 
 @dataclass
 class CaseLoadData:
-    """This object is used to store data from the arraignments database that is loaded. The data can
+    """This object is used to store data from the daily case list databases that is loaded. The data can
     then be passed to the specific dialog selected and will be transferred to cms_case information."""
     case_number: str = None
     defendant_last_name: str = None

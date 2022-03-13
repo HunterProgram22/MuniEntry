@@ -92,6 +92,10 @@ class CmsLoader:
             dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
             dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
             dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
+            if self.cms_case.defense_counsel_type == "PD":
+                dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+            else:
+                dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
             self.add_cms_criminal_charges_to_entry_case_information(dialog)
 
     def add_cms_criminal_charges_to_entry_case_information(self, dialog):
