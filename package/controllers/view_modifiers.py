@@ -131,8 +131,6 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
         dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
         dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
-        dialog.show_jail_report_date_box()
-        dialog.show_other_conditions_box()
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
@@ -148,7 +146,6 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -188,7 +185,6 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_date(dialog)
         self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
         self.hide_boxes(dialog)
         self.set_jail_report_default_date(dialog)
         self.set_report_days_notes_box(dialog)

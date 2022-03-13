@@ -14,6 +14,8 @@ from package.controllers.view_modifiers import AddConditionsDialogViewModifier, 
 from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
     AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
     AddSpecialBondConditionsDialogSignalConnector
+from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, \
+    AddCommunityControlDialogSlotFunctions, AddSpecialBondConditionsDialogSlotFunctions, AddJailOnlyDialogSlotFunctions
 
 
 CONDITIONS_FRAMES = [
@@ -48,27 +50,12 @@ def enable_condition_frames(conditions_dialog, main_dialog):
 class ConditionsDialog(BaseDialog):
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(parent)
-        self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
-
-    def update_community_service_due_date(self, _index=None):
-        days_to_complete = int(self.community_service_days_to_complete_box.currentText())
-        self.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
-
-    @logger.catch
-    def add_conditions(self):
-        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
-        if self.main_dialog.community_service_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_service)
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.license_suspension)
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions)
+        super().__init__(parent)
+        self.functions.update_community_service_due_date()
 
 
 class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
@@ -76,13 +63,15 @@ class AddConditionsDialog(ConditionsDialog, Ui_AddConditionsDialog):
     def modify_view(self):
         return AddConditionsDialogViewModifier(self)
 
-    @logger.catch
+    def create_dialog_slot_functions(self):
+        self.functions = AddConditionsDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return AddConditionsDialogSignalConnector(self)
 
 
 class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
-    jail_condition_checkbox_list = [
+    condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
@@ -95,59 +84,11 @@ class AddJailOnlyDialog(ConditionsDialog, Ui_AddJailOnly):
     def modify_view(self):
         return AddJailOnlyDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = AddJailOnlyDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return AddJailOnlyDialogSignalConnector(self)
-
-    def set_field_enabled(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
-        for item in AddJailOnlyDialog.jail_condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                if getattr(self, condition_checkbox).isChecked():
-                    getattr(self, condition_field).setEnabled(True)
-                    getattr(self, condition_field).setHidden(False)
-                    getattr(self, condition_field).setFocus(True)
-                else:
-                    getattr(self, condition_field).setEnabled(False)
-                    getattr(self, condition_field).setHidden(True)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method calls the base method add_conditions and then adds community control specific conditions."""
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.jail_terms)
-
-    def show_report_days_notes_box(self):
-        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            self.jail_report_days_notes_box.setDisabled(True)
-            self.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.jail_report_days_notes_box.setDisabled(False)
-            self.jail_report_days_notes_box.setHidden(False)
-
-    def set_report_date(self):
-        if self.report_type_box.currentText() == "date set by Office of Community Control":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        elif self.report_type_box.currentText() == "forthwith":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        else:
-            self.report_date_box.setEnabled(True)
-            self.report_date_box.setHidden(False)
-            self.report_time_box.setEnabled(True)
-            self.report_time_box.setHidden(False)
-            self.report_date_label.setHidden(False)
-            self.report_time_label.setHidden(False)
 
 
 class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
@@ -171,109 +112,32 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
     ]
 
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)
         enable_condition_frames(self, main_dialog)
 
-    @logger.catch
     def modify_view(self):
         return AddCommunityControlDialogViewModifier(self)
 
-    @logger.catch
+    def create_dialog_slot_functions(self):
+        self.functions = AddCommunityControlDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return AddCommunityControlDialogSignalConnector(self)
 
-    @logger.catch
-    def add_conditions(self):
-        """The method calls the base method add_conditions and then adds community control specific conditions."""
-        super().add_conditions()
-        if self.main_dialog.community_control_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_control)
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.jail_terms)
-        if self.main_dialog.impoundment_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.impoundment)
-        if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.victim_notification)
-
-    def show_report_days_notes_box(self):
-        if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            self.jail_report_days_notes_box.setDisabled(True)
-            self.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.jail_report_days_notes_box.setDisabled(False)
-            self.jail_report_days_notes_box.setHidden(False)
-
-    def set_report_date(self):
-        if self.report_type_box.currentText() == "date set by Office of Community Control":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        elif self.report_type_box.currentText() == "forthwith":
-            self.report_date_box.setDisabled(True)
-            self.report_date_box.setHidden(True)
-            self.report_time_box.setDisabled(True)
-            self.report_time_box.setHidden(True)
-            self.report_date_label.setHidden(True)
-            self.report_time_label.setHidden(True)
-        else:
-            self.report_date_box.setEnabled(True)
-            self.report_date_box.setHidden(False)
-            self.report_time_box.setEnabled(True)
-            self.report_time_box.setHidden(False)
-            self.report_date_label.setHidden(False)
-            self.report_time_label.setHidden(False)
-
-    def set_field_enabled(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
-        for item in AddCommunityControlDialog.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self, condition_checkbox):
-                if getattr(self, condition_checkbox).isChecked():
-                    getattr(self, condition_field).setEnabled(True)
-                    getattr(self, condition_field).setHidden(False)
-                    getattr(self, condition_field).setFocus(True)
-                else:
-                    getattr(self, condition_field).setEnabled(False)
-                    getattr(self, condition_field).setHidden(True)
-
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
-    """The AddSpecialBondConditionsDialog is for Bond Conditions for NGBond and FTABond Dialogs."""
-    @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(parent)
-        self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
+        super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
-    @logger.catch
     def modify_view(self):
         return AddSpecialBondConditionsDialogViewModifier(self)
 
-    @logger.catch
+    def create_dialog_slot_functions(self):
+        self.functions = AddSpecialBondConditionsDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return AddSpecialBondConditionsDialogSignalConnector(self)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method is connected to the pressed() signal of add_special_conditions_Button on the
-        Add Special Conditions screen."""
-        if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.domestic_violence_conditions)
-        if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.admin_license_suspension)
-        if self.main_dialog.no_contact_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.no_contact)
-        if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.custodial_supervision)
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions)
-        if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.vehicle_seizure)

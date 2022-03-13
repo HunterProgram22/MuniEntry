@@ -7,22 +7,26 @@ from package.controllers.conditions_dialogs import AddConditionsDialog, AddCommu
 from package.controllers.base_dialogs import CasePartyUpdater
 from package.views.charges_grids import NoJailChargesGrid, JailChargesGrid
 from package.models.template_types import TEMPLATE_DICT
-from package.views.custom_widgets import InfoBox, JailTimeCreditLineEdit
+from package.views.custom_widgets import JailTimeCreditLineEdit
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-from package.views.no_jail_plea_dialog_ui import Ui_NoJailPleaDialog
+from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.controllers.base_dialogs import CriminalBaseDialog, CMS_FRALoader
 from package.controllers.helper_functions import set_future_date
 from package.controllers.view_modifiers import *
 from package.controllers.signal_connectors import *
+from package.controllers.slot_functions import *
 
 
 class CriminalSentencingDialog(CriminalBaseDialog):
-    """Subclass for common methods to Sentencing."""
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.defense_counsel_name_box.setFocus()
 
     @logger.catch
     def load_cms_data_to_view(self):
@@ -30,7 +34,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
 
     @logger.catch
     def update_case_information(self):
-        """"Docstring needs updating."""
         super().update_case_information()
         self.add_additional_case_information()
 
@@ -50,16 +53,6 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         self.update_costs_and_fines_information()
         self.update_jail_time_credit()
         self.calculate_costs_and_fines()
-
-    def conditions_checkbox_toggle(self):
-        if self.sender().isChecked():
-            for items in self.additional_conditions_list:
-                if items[0] == self.sender().objectName():
-                    setattr(items[1], "ordered", True)
-        else:
-            for items in self.additional_conditions_list:
-                if items[0] == self.sender().objectName():
-                    setattr(items[1], "ordered", False)
 
     @logger.catch
     def calculate_costs_and_fines(self):
@@ -120,68 +113,12 @@ class CriminalSentencingDialog(CriminalBaseDialog):
         return self.entry_case_information.court_costs.amount
 
     @logger.catch
-    def show_costs_and_fines(self, _bool):
-        """The _bool is the toggle from the clicked() of the button pressed. No
-        action is taken with respect to it."""
-        self.update_case_information()
-        message = InfoBox()
-        message.setWindowTitle("Total Costs and Fines")
-        # noinspection PyUnresolvedReferences
-        message.setInformativeText("Costs: $" + str(self.entry_case_information.court_costs.amount) +
-                                   "\nFines: $" + str(self.entry_case_information.total_fines) +
-                                   "\nFines Suspended: $" + str(self.entry_case_information.total_fines_suspended) +
-                                   "\n\n*Does not include possible bond forfeiture or other costs \n that " +
-                                   "may be assessed as a result of prior actions in the case. ")
-        total_fines_and_costs = \
-            (self.entry_case_information.court_costs.amount + self.entry_case_information.total_fines) - \
-            self.entry_case_information.total_fines_suspended
-        message.setText("Total Costs and Fines Due By Due Date: $" + str(total_fines_and_costs))
-        message.exec_()
-
-    @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
-
-    @logger.catch
-    def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
-        self.update_case_information()
-        AddConditionsDialog(self).exec()
-
-    @logger.catch
     def start_jail_only_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
         self.update_case_information()
         AddJailOnlyDialog(self).exec()
 
 
-class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
-    @logger.catch
+class DiversionPleaDialog(CriminalSentencingDialog, Ui_DiversionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid # Use JailChargesGrid because same setup for Diversion
@@ -189,31 +126,17 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
         self.load_cms_data_to_view()
+        self.functions.show_jail_report_date_box()
+        self.functions.show_other_conditions_box()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = DiversionDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
-
-    def show_other_conditions_box(self):
-        if self.other_conditions_checkBox.isChecked():
-            self.other_conditions_textEdit.setHidden(False)
-            self.other_conditions_textEdit.setFocus()
-        else:
-            self.other_conditions_textEdit.setHidden(True)
-
-    def show_jail_report_date_box(self):
-        if self.diversion_jail_imposed_checkBox.isChecked():
-            self.diversion_jail_report_date_box.setHidden(False)
-            self.diversion_jail_report_date_label.setHidden(False)
-        else:
-            self.diversion_jail_report_date_box.setHidden(True)
-            self.diversion_jail_report_date_label.setHidden(True)
-
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
@@ -228,32 +151,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.transfer_field_data_to_model(self.entry_case_information.other_conditions)
         return CasePartyUpdater(self)
 
-    @logger.catch
-    def set_fra_in_file(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_file = True
-            self.fra_in_court_box.setCurrentText("No")
-        elif current_text == "No":
-            self.entry_case_information.fra_in_file = False
-        else:
-            self.entry_case_information.fra_in_file = None
-
-    @logger.catch
-    def set_fra_in_court(self, current_text):
-        """Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court."""
-        if current_text == "Yes":
-            self.entry_case_information.fra_in_court = True
-        elif current_text == "No":
-            self.entry_case_information.fra_in_court = False
-        else:
-            self.entry_case_information.fra_in_court = None
-
 
 class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
-    @logger.catch
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = JailChargesGrid
@@ -277,13 +176,11 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def modify_view(self):
         return JailCCDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = JailCCDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
-
-
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
         self.entry_case_information.currently_in_jail = self.in_jail_box.currentText()
@@ -294,20 +191,8 @@ class JailCCPleaDialog(CriminalSentencingDialog, Ui_JailCCPleaDialog):
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self) # self is dialog
 
-    @logger.catch
-    def start_add_conditions_dialog(self):
-        """Opens the add conditions dialog as a modal window. It passes the
-        instance of the NoJailPleaDialog class (self) as an argument
-        so that the AddConditionsDialog can access all data from the
-        NoJailPleaDialog when working in the AddConditionsDialog."""
-        self.update_case_information()
-        AddCommunityControlDialog(self).exec()
 
-
-class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
-    """The dialog inherits from the CriminalBaseDialog (controller) and the
-    Ui_NoJailPleaDialog (view)."""
-    @logger.catch
+class FineOnlyPleaDialog(CriminalSentencingDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.charges_gridLayout.__class__ = NoJailChargesGrid
@@ -316,35 +201,24 @@ class NoJailPleaDialog(CriminalSentencingDialog, Ui_NoJailPleaDialog):
             ("community_service_checkBox", self.entry_case_information.community_service),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
         ]
-        self.dialog_name = 'No Jail Plea Dialog'
+        self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.load_cms_data_to_view()
-        self.set_fines_credit_for_jail_field()
+        self.functions.set_fines_credit_for_jail_field()
 
     def modify_view(self):
         return FineOnlyDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = FineOnlyDialogSlotFunctions(self)
+
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
-
-    def set_fines_credit_for_jail_field(self):
-        if self.credit_for_jail_checkBox.isChecked():
-            self.jail_time_credit_box.setEnabled(True)
-            self.jail_time_credit_box.setHidden(False)
-            self.jail_time_credit_box.setFocus()
-        else:
-            self.jail_time_credit_box.setEnabled(False)
-            self.jail_time_credit_box.setHidden(True)
-
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     def update_jail_time_credit(self):
         self.entry_case_information.fines_and_costs_jail_credit = self.credit_for_jail_checkBox.isChecked()
         self.entry_case_information.days_in_jail = self.jail_time_credit_box.text()
 
-    @logger.catch
     def add_plea_findings_and_fines_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self) # self is the dialog
 

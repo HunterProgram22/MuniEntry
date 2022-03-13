@@ -15,7 +15,7 @@ import MuniEntry_app
 import main_window
 from package.controllers.base_dialogs import AddChargeDialog
 from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
+from package.controllers.sentencing_dialogs import FineOnlyPleaDialog, JailCCPleaDialog, DiversionPleaDialog
 
 def open_daily_case_list_db_connection():
     daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
@@ -77,7 +77,7 @@ def ngb_dialog_nocase(app_nocase, qtbot):
 @pytest.fixture
 def njp_dialog(app, qtbot):
     mouse_click(app.NoJailPleaButton)
-    app = NoJailPleaDialog(app.judicial_officer, app.case_to_load)
+    app = FineOnlyPleaDialog(app.judicial_officer, app.case_to_load)
     qtbot.addWidget(app)
     return app
 
@@ -85,7 +85,7 @@ def njp_dialog(app, qtbot):
 @pytest.fixture
 def njp_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NoJailPleaButton)
-    app_nocase = NoJailPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
+    app_nocase = FineOnlyPleaDialog(app_nocase.judicial_officer, app_nocase.case_to_load)
     qtbot.addWidget(app_nocase)
     return app_nocase
 
