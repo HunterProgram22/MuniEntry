@@ -14,7 +14,7 @@ from package.controllers.view_modifiers import AddConditionsDialogViewModifier, 
 from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
     AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
     AddSpecialBondConditionsDialogSignalConnector
-from package.controllers.slot_functions import AddConditionsDialogSlotFunctions
+from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, AddCommunityControlDialogSlotFunctions
 
 
 CONDITIONS_FRAMES = [
@@ -172,22 +172,12 @@ class AddCommunityControlDialog(ConditionsDialog, Ui_AddCommunityControlDialog):
     def modify_view(self):
         return AddCommunityControlDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = AddCommunityControlDialogSlotFunctions(self)
+
     @logger.catch
     def connect_signals_to_slots(self):
         return AddCommunityControlDialogSignalConnector(self)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method calls the base method add_conditions and then adds community control specific conditions."""
-        super().add_conditions()
-        if self.main_dialog.community_control_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.community_control)
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.jail_terms)
-        if self.main_dialog.impoundment_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.impoundment)
-        if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.victim_notification)
 
     def show_report_days_notes_box(self):
         if self.jail_sentence_execution_type_box.currentText() == "consecutive days":
