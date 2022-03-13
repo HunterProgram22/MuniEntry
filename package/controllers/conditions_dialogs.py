@@ -14,7 +14,8 @@ from package.controllers.view_modifiers import AddConditionsDialogViewModifier, 
 from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
     AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
     AddSpecialBondConditionsDialogSignalConnector
-from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, AddCommunityControlDialogSlotFunctions
+from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, \
+    AddCommunityControlDialogSlotFunctions, AddSpecialBondConditionsDialogSlotFunctions
 
 
 CONDITIONS_FRAMES = [
@@ -51,7 +52,6 @@ class ConditionsDialog(BaseDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
         self.main_dialog = main_dialog
         super().__init__(parent)
-
 
     def update_community_service_due_date(self, _index=None):
         days_to_complete = int(self.community_service_days_to_complete_box.currentText())
@@ -230,32 +230,17 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     @logger.catch
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list  # Show charges on banner
-        super().__init__(parent)
-        self.case_information = main_dialog.entry_case_information
         self.main_dialog = main_dialog
+        super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
     @logger.catch
     def modify_view(self):
         return AddSpecialBondConditionsDialogViewModifier(self)
 
+    def create_dialog_slot_functions(self):
+        self.functions = AddSpecialBondConditionsDialogSlotFunctions(self)
+
     @logger.catch
     def connect_signals_to_slots(self):
         return AddSpecialBondConditionsDialogSignalConnector(self)
-
-    @logger.catch
-    def add_conditions(self):
-        """The method is connected to the pressed() signal of add_special_conditions_Button on the
-        Add Special Conditions screen."""
-        if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.domestic_violence_conditions)
-        if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.admin_license_suspension)
-        if self.main_dialog.no_contact_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.no_contact)
-        if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.custodial_supervision)
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.other_conditions)
-        if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.transfer_field_data_to_model(self.case_information.vehicle_seizure)

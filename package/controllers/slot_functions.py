@@ -251,13 +251,54 @@ class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.diversion_jail_report_date_label.setHidden(True)
 
 
+class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def start_add_special_bond_conditions_dialog(self):
+        from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
+        self.dialog.update_case_information()
+        AddSpecialBondConditionsDialog(self.dialog).exec()
+
+    def conditions_checkbox_toggle(self):
+        if self.dialog.sender().isChecked():
+            for items in self.dialog.additional_conditions_list:
+                if items[0] == self.dialog.sender().objectName():
+                    setattr(items[1], "ordered", True)
+        else:
+            for items in self.dialog.additional_conditions_list:
+                if items[0] == self.dialog.sender().objectName():
+                    setattr(items[1], "ordered", False)
+
+    def hide_boxes(self):
+        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
+        for item in self.dialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self.dialog, condition_checkbox):
+                getattr(self.dialog, condition_field).setEnabled(False)
+                getattr(self.dialog, condition_field).setHidden(True)
+
+    def set_field_enabled(self):
+        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
+        any additional fields that are required for that condition."""
+        for item in self.dialog.condition_checkbox_list:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self.dialog, condition_checkbox):
+                if getattr(self.dialog, condition_checkbox).isChecked():
+                    getattr(self.dialog, condition_field).setEnabled(True)
+                    getattr(self.dialog, condition_field).setHidden(False)
+                    getattr(self.dialog, condition_field).setFocus(True)
+                else:
+                    getattr(self.dialog, condition_field).setEnabled(False)
+                    getattr(self.dialog, condition_field).setHidden(True)
+
+
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
         self.main_dialog = dialog.main_dialog
 
     def add_conditions(self):
-        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
         if self.main_dialog.community_service_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_service)
         if self.main_dialog.license_suspension_checkBox.isChecked():
@@ -272,7 +313,6 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
         self.main_dialog = dialog.main_dialog
 
     def add_conditions(self):
-        """The conditions in this method in the case class are in both the No Jail and the JaillCC dialogs."""
         if self.main_dialog.community_service_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_service)
         if self.main_dialog.license_suspension_checkBox.isChecked():
@@ -287,6 +327,26 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.impoundment)
         if self.main_dialog.victim_notification_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.victim_notification)
+
+
+class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.main_dialog = dialog.main_dialog
+
+    def add_conditions(self):
+        if self.main_dialog.domestic_violence_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.domestic_violence_conditions)
+        if self.main_dialog.admin_license_suspension_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.admin_license_suspension)
+        if self.main_dialog.no_contact_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.no_contact)
+        if self.main_dialog.custodial_supervision_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.custodial_supervision)
+        if self.main_dialog.other_conditions_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
+        if self.main_dialog.vehicle_seizure_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.vehicle_seizure)
 
 
 def close_databases():
