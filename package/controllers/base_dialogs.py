@@ -104,7 +104,9 @@ class CmsLoader:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
              self.criminal_charge.degree, self.criminal_charge.type) = charge
+            print(f"before {self.criminal_charge.type}")
             self.criminal_charge.type = self.set_offense_type_from_daily_case_list()
+            print(f"after {self.criminal_charge.type}")
             dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             dialog.add_charge_to_grid()
 
@@ -116,7 +118,7 @@ class CmsLoader:
                 return "Criminal"
             else:
                 return "Non-moving"
-        elif self.criminal_charge == "True":
+        elif self.criminal_charge.type == "True":
             return "Moving"
         else:
             return "Moving"

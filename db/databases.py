@@ -238,6 +238,9 @@ def return_data_from_excel(excel_file):
         elif worksheet.cell(row=row, column=9).value is False:
             worksheet.cell(row=row, column=9).value = "False"
             moving_bool = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is True:
+            worksheet.cell(row=row, column=9).value = "True"
+            moving_bool = worksheet.cell(row=row, column=9)
         else:
             moving_bool = worksheet.cell(row=row, column=9)
 
