@@ -267,25 +267,25 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.criminal_charge.offense = self.dialog.offense_choice_box.currentText()
         self.criminal_charge.statute = self.dialog.statute_choice_box.currentText()
         self.criminal_charge.degree = self.dialog.degree_choice_box.currentText()
-        # self.criminal_charge.type = self.set_offense_type()
+        self.criminal_charge.type = self.set_offense_type()
         self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
 
-    # def set_offense_type(self):
-    #     """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
-    #     for each charge. It does not show up in the view, but is used for calculating costs."""
-    #     key = self.statute_choice_box.currentText()
-    #     if self.freeform_entry_checkBox.isChecked():
-    #         return None
-    #     query = QSqlQuery(charges_database)
-    #     query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
-    #     query.bindValue(":key", key)
-    #     query.exec()
-    #     while query.next():
-    #         statute = query.value(2)
-    #         offense_type = query.value(4)
-    #         if statute == key:
-    #             query.finish()
-    #             return offense_type
+    def set_offense_type(self):
+        """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
+        for each charge. It does not show up in the view, but is used for calculating costs."""
+        key = self.dialog.statute_choice_box.currentText()
+        if self.dialog.freeform_entry_checkBox.isChecked():
+            return None
+        query = QSqlQuery(charges_database)
+        query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
+        query.bindValue(":key", key)
+        query.exec()
+        while query.next():
+            statute = query.value(2)
+            offense_type = query.value(4)
+            if statute == key:
+                query.finish()
+                return offense_type
 
     def close_event(self):
         self.dialog.charges_database.close()
@@ -298,12 +298,11 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.main_dialog = dialog.main_dialog
 
     def clear_amend_charge_fields(self):
-        """Clears the fields in the view."""
         self.dialog.statute_choice_box.clearEditText()
         self.dialog.offense_choice_box.clearEditText()
 
     def amend_offense(self):
-        """Adds the data entered for the amended ofdialog.fense to the AmendOffenseDetails
+        """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the entry_case_information object to the AmendOffenseDetails
         object."""
         self.dialog.amend_offense_details.original_charge = self.dialog.current_offense_name
