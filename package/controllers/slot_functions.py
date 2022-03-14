@@ -261,8 +261,6 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
 
     @logger.catch
     def add_charge_to_entry_case_information(self):
-        """TODO: self.criminal_charge_type needs to be fixed to add back in to get costs calculator to work
-        again eventually."""
         self.criminal_charge = CriminalCharge()
         self.criminal_charge.offense = self.dialog.offense_choice_box.currentText()
         self.criminal_charge.statute = self.dialog.statute_choice_box.currentText()
