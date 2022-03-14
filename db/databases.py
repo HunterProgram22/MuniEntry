@@ -231,11 +231,12 @@ def return_data_from_excel(excel_file):
             fra_in_file = worksheet.cell(row=row, column=8)
         else:
             fra_in_file = worksheet.cell(row=row, column=8)
+
         if worksheet.cell(row=row, column=9).value is None:
             worksheet.cell(row=row, column=9).value = "No Data"
             moving_bool = worksheet.cell(row=row, column=9)
         elif worksheet.cell(row=row, column=9).value is False:
-            worksheet.cell(row=row, column=9).value = "No Data"
+            worksheet.cell(row=row, column=9).value = "False"
             moving_bool = worksheet.cell(row=row, column=9)
         else:
             moving_bool = worksheet.cell(row=row, column=9)

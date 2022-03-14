@@ -47,23 +47,6 @@ class CriminalBaseDialog(BaseDialog):
         raise NotImplementedError
 
     # TO BE REFACTORED #
-    def set_offense_type(self):
-        """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
-        for each charge. It does not show up in the view, but is used for calculating costs."""
-        key = self.statute_choice_box.currentText()
-        if self.freeform_entry_checkBox.isChecked():
-            return None
-        query = QSqlQuery(charges_database)
-        query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            statute = query.value(2)
-            offense_type = query.value(4)
-            if statute == key:
-                query.finish()
-                return offense_type
-
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()

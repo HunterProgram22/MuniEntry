@@ -270,6 +270,23 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         # self.criminal_charge.type = self.set_offense_type()
         self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
 
+    # def set_offense_type(self):
+    #     """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
+    #     for each charge. It does not show up in the view, but is used for calculating costs."""
+    #     key = self.statute_choice_box.currentText()
+    #     if self.freeform_entry_checkBox.isChecked():
+    #         return None
+    #     query = QSqlQuery(charges_database)
+    #     query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
+    #     query.bindValue(":key", key)
+    #     query.exec()
+    #     while query.next():
+    #         statute = query.value(2)
+    #         offense_type = query.value(4)
+    #         if statute == key:
+    #             query.finish()
+    #             return offense_type
+
     def close_event(self):
         self.dialog.charges_database.close()
         self.close_window()

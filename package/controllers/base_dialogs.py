@@ -99,14 +99,27 @@ class CmsLoader:
             self.add_cms_criminal_charges_to_entry_case_information(dialog)
 
     def add_cms_criminal_charges_to_entry_case_information(self, dialog):
-        """Loads the data from the cms_case object that is created from the sql table.
-        TODO: self.criminal_charge.type = self.set_offense_type() FIGURE OUT FOR COSTS"""
+        """Loads the data from the cms_case object that is created from the sql table."""
         for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
              self.criminal_charge.degree, self.criminal_charge.type) = charge
+            self.criminal_charge.type = self.set_offense_type_from_daily_case_list()
             dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             dialog.add_charge_to_grid()
+
+    def set_offense_type_from_daily_case_list(self):
+        """TODO: This is currently setting the charge type to Moving if CMS provides
+        'No Data', but perhaps should be set to Non-moving?"""
+        if self.criminal_charge.type == "False":
+            if self.cms_case.case_number[2:5] == "CRB":
+                return "Criminal"
+            else:
+                return "Non-moving"
+        elif self.criminal_charge == "True":
+            return "Moving"
+        else:
+            return "Moving"
 
 
 class CmsFraLoader(CmsLoader):
