@@ -107,6 +107,8 @@ class CmsLoader:
             self.criminal_charge.type = self.set_offense_type_from_daily_case_list()
             dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             dialog.add_charge_to_grid()
+            dialog.setFocus()
+
 
     def set_offense_type_from_daily_case_list(self):
         """TODO: This is currently setting the charge type to Moving if CMS provides
