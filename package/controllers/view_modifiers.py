@@ -9,6 +9,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 
+from package.views.custom_widgets import NoScrollComboBox
 from package.controllers.helper_functions import set_future_date
 
 
@@ -58,6 +59,12 @@ class BaseDialogViewModifier(object):
 
     def set_jail_report_default_date(self, dialog):
         dialog.report_date_box.setDate(TODAY)
+
+    def set_court_cost_and_fra_boxes_to_no_scroll(self, dialog):
+        dialog.court_costs_box.__class__ = NoScrollComboBox
+        dialog.ability_to_pay_box.__class__ = NoScrollComboBox
+        dialog.fra_in_file_box.__class__ = NoScrollComboBox
+        dialog.fra_in_court_box.__class__ = NoScrollComboBox
 
     def set_report_days_notes_box(self, dialog):
         if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
@@ -112,6 +119,7 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
         self.set_balance_due_date(dialog)
+        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
@@ -120,6 +128,9 @@ class JailCCDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
         self.set_balance_due_date(dialog)
+        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
+        dialog.in_jail_box.__class__ = NoScrollComboBox
+        dialog.jail_time_credit_apply_box.__class__ = NoScrollComboBox
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):

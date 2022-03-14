@@ -36,10 +36,12 @@ ATTORNEY_LIST = [
 class NoScrollComboBox(QComboBox):
     def __init__(self, parent=None):
         super(QComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
             event.ignore()
+
 
 class ExtendedComboBox(QComboBox):
     def __init__(self, parent=None):
@@ -92,12 +94,6 @@ class DefenseCounselComboBox(NoScrollComboBox):
     def load_attorneys(self):
         for attorney in ATTORNEY_LIST:
             self.addItem(attorney)
-
-
-class AppearanceReasonComboBox(NoScrollComboBox):
-    def __init__(self, parent=None):
-        super(NoScrollComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
 
 class StatuteLineEdit(QLineEdit):
