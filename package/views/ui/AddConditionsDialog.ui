@@ -162,8 +162,8 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>978</width>
-        <height>820</height>
+        <width>980</width>
+        <height>822</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_5">
@@ -190,11 +190,95 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0">
-          <property name="sizeConstraint">
-           <enum>QLayout::SetDefaultConstraint</enum>
-          </property>
-          <item row="0" column="0" colspan="4">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="text">
+             <string>License type:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="license_type_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>driving</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="als_terminated_checkBox">
+            <property name="text">
+             <string>ALS is terminated, OBMV form 2261 shall issue</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>License suspended from:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDateEdit" name="license_suspension_date_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QCheckBox" name="remedial_driving_class_checkBox">
+            <property name="text">
+             <string>Remedial driving class required for OL return</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_21">
+            <property name="text">
+             <string>Term of suspension:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="term_of_suspension_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>6 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>12 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>18 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>24 months</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
            <widget class="QLabel" name="label_24">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -223,93 +307,6 @@ font-weight: bold;</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="text">
-             <string>License type:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="license_type_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>driving</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>hunting</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>concealed carry</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_18">
-            <property name="text">
-             <string>License suspended from:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QDateEdit" name="license_suspension_date_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="calendarPopup">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_21">
-            <property name="text">
-             <string>Term of suspension:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="term_of_suspension_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>6 months</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>12 months</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>18 months</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>24 months</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="2" colspan="2">
-           <widget class="QCheckBox" name="remedial_driving_class_checkBox">
-            <property name="text">
-             <string>Remedial driving class required for OL return</string>
             </property>
            </widget>
           </item>
