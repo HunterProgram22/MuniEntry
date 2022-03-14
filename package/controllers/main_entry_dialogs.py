@@ -18,7 +18,7 @@ from package.models.case_information import BondConditions, CriminalCaseInformat
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
     DiversionChargesGrid
-from package.views.custom_widgets import DefenseCounselComboBox
+from package.views.custom_widgets import DefenseCounselComboBox, AppearanceReasonComboBox
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
@@ -35,6 +35,7 @@ class CriminalBaseDialog(BaseDialog):
         self.load_cms_data_to_view()
         self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
         self.defense_counsel_name_box.load_attorneys()
+        self.appearance_reason_box.__class__ = AppearanceReasonComboBox
         self.criminal_charge = None
 
     def load_cms_data_to_view(self):

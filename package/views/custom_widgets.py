@@ -94,6 +94,12 @@ class DefenseCounselComboBox(NoScrollComboBox):
             self.addItem(attorney)
 
 
+class AppearanceReasonComboBox(NoScrollComboBox):
+    def __init__(self, parent=None):
+        super(NoScrollComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+
 class StatuteLineEdit(QLineEdit):
     def __init__(self, statute=None, parent=None):
         super(QLineEdit, self).__init__(parent)
