@@ -8,6 +8,7 @@ from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
 from db.databases import open_charges_db_connection, extract_data
+from db.sql_queries import sql_query_offense_type
 from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name, \
     set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
@@ -274,16 +275,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         key = self.dialog.statute_choice_box.currentText()
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        query = QSqlQuery(charges_database)
-        query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
-        query.bindValue(":key", key)
-        query.exec()
-        while query.next():
-            statute = query.value(2)
-            offense_type = query.value(4)
-            if statute == key:
-                query.finish()
-                return offense_type
+        return sql_query_offense_type(key)
 
     def close_event(self):
         self.dialog.charges_database.close()
