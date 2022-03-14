@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, QInputDialog
 from PyQt5 import QtGui
@@ -32,6 +32,14 @@ ATTORNEY_LIST = [
     "Tod Brininger",
     "S Welt",
 ]
+
+class NoScrollComboBox(QComboBox):
+    def __init__(self, parent=None):
+        super(QComboBox, self).__init__(parent)
+
+    def wheelEvent(self, event):
+        if event == QtCore.QEvent.Wheel:
+            event.ignore()
 
 class ExtendedComboBox(QComboBox):
     def __init__(self, parent=None):
@@ -76,9 +84,10 @@ class ExtendedComboBox(QComboBox):
         super(ExtendedComboBox, self).setModelColumn(column)
 
 
-class DefenseCounselComboBox(QComboBox):
+class DefenseCounselComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def load_attorneys(self):
         for attorney in ATTORNEY_LIST:
@@ -99,9 +108,9 @@ class StatuteLineEdit(QLineEdit):
         self.setText(statute)
 
 
-class DegreeComboBox(QComboBox):
+class DegreeComboBox(NoScrollComboBox):
     def __init__(self, degree, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.set_up_widget(degree)
 
     def set_up_widget(self, degree):
@@ -109,7 +118,7 @@ class DegreeComboBox(QComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("degree_choice_box")
         self.addItem("")
         self.addItem("M1")
@@ -121,9 +130,9 @@ class DegreeComboBox(QComboBox):
         self.setCurrentText(degree)
 
 
-class PleaComboBox(QComboBox):
+class PleaComboBox(NoScrollComboBox):
     def __init__(self, column, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.column = column
         self.set_up_widget()
 
@@ -132,7 +141,7 @@ class PleaComboBox(QComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("plea_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -143,9 +152,9 @@ class PleaComboBox(QComboBox):
         #   lambda plea, column=self.column: ChargesGrid.update_if_dismissed(plea, column))
 
 
-class FindingComboBox(QComboBox):
+class FindingComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -153,7 +162,7 @@ class FindingComboBox(QComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("finding_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -215,7 +224,7 @@ class AlliedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
@@ -249,7 +258,7 @@ class DismissedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Offense Dismissed")
         self.setObjectName("dismissed_checkBox")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):

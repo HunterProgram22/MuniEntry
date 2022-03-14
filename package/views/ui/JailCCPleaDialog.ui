@@ -131,6 +131,9 @@
     <bold>true</bold>
    </font>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>Jail Community Control Plea Case Information</string>
   </property>
@@ -151,6 +154,9 @@ font-weight: bold;</string>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
    <item>
     <widget class="QScrollArea" name="scrollArea">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(85, 170, 127);</string>
      </property>
@@ -165,6 +171,9 @@ font-weight: bold;</string>
         <width>990</width>
         <height>762</height>
        </rect>
+      </property>
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
       </property>
       <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
        <item row="3" column="0">
@@ -197,6 +206,9 @@ font-weight: bold;</string>
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="fra_in_file_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -226,6 +238,9 @@ font-weight: bold;</string>
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="fra_in_court_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -256,6 +271,9 @@ font-weight: bold;</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(240, 240, 240);</string>
@@ -393,6 +411,9 @@ font-weight: bold;</string>
           </item>
           <item row="3" column="2">
            <widget class="QComboBox" name="defense_counsel_type_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -417,6 +438,9 @@ font-weight: bold;</string>
           </item>
           <item row="3" column="1">
            <widget class="QComboBox" name="defense_counsel_name_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -427,6 +451,9 @@ font-weight: bold;</string>
           </item>
           <item row="2" column="1">
            <widget class="QComboBox" name="appearance_reason_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -497,6 +524,9 @@ font-weight: bold;</string>
           </item>
           <item row="0" column="1">
            <widget class="QComboBox" name="court_costs_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -526,6 +556,9 @@ font-weight: bold;</string>
           </item>
           <item row="1" column="1">
            <widget class="QComboBox" name="ability_to_pay_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -560,6 +593,9 @@ font-weight: bold;</string>
           </item>
           <item row="2" column="1">
            <widget class="QDateEdit" name="balance_due_date">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -900,6 +936,9 @@ font-weight: bold;</string>
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="2" column="1">
            <widget class="QComboBox" name="in_jail_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -976,6 +1015,9 @@ font-weight: bold;</string>
           </item>
           <item row="4" column="1">
            <widget class="QComboBox" name="jail_time_credit_apply_box">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
