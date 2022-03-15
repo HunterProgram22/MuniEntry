@@ -206,7 +206,7 @@ class InfoChecker(object):
     no object is instantiated."""
     @classmethod
     def check_defense_counsel(cls, dialog):
-        if (dialog.defense_counsel_name_box.currentText() == ""
+        if (dialog.defense_counsel_name_box.currentText().strip() == ""
                 and not dialog.defense_counsel_waived_checkBox.isChecked()):
             message = WarningBox("There is no attorney listed. Did "
                                  "the Defendant waive his right to counsel?"

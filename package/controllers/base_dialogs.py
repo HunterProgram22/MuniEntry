@@ -91,8 +91,9 @@ class CmsLoader:
             dialog.case_number_lineEdit.setText(self.cms_case.case_number)
             dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
             dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
-            dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
-            dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
+            if self.cms_case.defense_counsel is not None:
+                dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
+                dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
             if self.cms_case.defense_counsel_type == "PD":
                 dialog.defense_counsel_type_box.setCurrentText("Public Defender")
             else:
