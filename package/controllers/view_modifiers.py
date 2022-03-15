@@ -64,7 +64,7 @@ class BaseDialogViewModifier(object):
         dialog.community_service_days_to_complete_box.__class__ = NoScrollComboBox
         dialog.community_service_date_to_complete_box.__class__ = NoScrollDateEdit
 
-    def set_jail_report_default_date(self, dialog):
+    def set_jail_report_default_view(self, dialog):
         dialog.report_date_box.setDate(TODAY)
 
     def set_court_cost_and_fra_boxes_to_no_scroll(self, dialog):
@@ -177,7 +177,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_jail_report_default_date(dialog)
+        self.set_jail_report_default_view(dialog)
         self.hide_boxes(dialog)
         self.set_report_days_notes_box(dialog)
 
@@ -205,7 +205,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_license_suspension_default_view(dialog)
         self.set_community_service_default_view(dialog)
         self.hide_boxes(dialog)
-        self.set_jail_report_default_date(dialog)
+        self.set_jail_report_default_view(dialog)
         self.set_report_days_notes_box(dialog)
 
 
