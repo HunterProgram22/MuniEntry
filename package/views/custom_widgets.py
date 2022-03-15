@@ -140,6 +140,7 @@ class DegreeComboBox(NoScrollComboBox):
         self.addItem("M4")
         self.addItem("MM")
         self.addItem("UCM")
+        self.addItem("No Data")
         self.setCurrentText(degree)
 
 

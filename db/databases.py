@@ -221,11 +221,13 @@ def return_data_from_excel(excel_file):
             statute = worksheet.cell(row=row, column=6)
         else:
             statute = worksheet.cell(row=row, column=6)
+
         if worksheet.cell(row=row, column=7).value is None:
             worksheet.cell(row=row, column=7).value = "No Data"
             degree = worksheet.cell(row=row, column=7)
         else:
             degree = worksheet.cell(row=row, column=7)
+
         if worksheet.cell(row=row, column=8).value is None:
             worksheet.cell(row=row, column=8).value = "U"
             fra_in_file = worksheet.cell(row=row, column=8)
