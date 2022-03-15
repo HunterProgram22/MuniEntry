@@ -223,6 +223,8 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_special_bond_conditions_case_information_banner(dialog)
         self.set_domestic_violence_surrender_weapons_default_date(dialog)
+        dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
+        dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
 
     def set_special_bond_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1
