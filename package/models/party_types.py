@@ -48,12 +48,3 @@ class Entity(object):
 
     def __init__(self, entity_name: str):
         self.entity_name = entity_name
-
-
-"""
-test = JudicialOfficer("Marianne", "Hemmeter", "Judge")
-print(test.officer_type)
-test_2 = PlaintiffEntity(Entity("State of Ohio"))
-print(test_2.party_type)
-print(test_2.full_name)
-"""

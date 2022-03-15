@@ -177,8 +177,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>929</width>
-           <height>802</height>
+           <width>927</width>
+           <height>727</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,2,0,1,1">
@@ -647,7 +647,7 @@ background-color: rgb(255, 255, 127);</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_10">
-             <item row="3" column="0">
+             <item row="2" column="0">
               <widget class="QPushButton" name="close_dialog_Button">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(170, 58, 63);
@@ -656,18 +656,6 @@ font-weight: bold;</string>
                </property>
                <property name="text">
                 <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QPushButton" name="print_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Print and Open Entry</string>
                </property>
               </widget>
              </item>
@@ -992,7 +980,6 @@ font-weight: bold;</string>
   <tabstop>other_conditions_checkBox</tabstop>
   <tabstop>add_special_conditions_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
-  <tabstop>print_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>

@@ -1,8 +1,7 @@
 import pytest
 from conftest import mouse_click
 from datetime import date, timedelta
-from package.controllers.sentencing_dialogs import NoJailPleaFindingFines
-
+from package.controllers.plea_finding_controllers import NoJailPleaFindingFines
 
 TODAY = date.today()
 

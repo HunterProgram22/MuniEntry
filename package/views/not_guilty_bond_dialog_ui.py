@@ -80,7 +80,7 @@ class Ui_NotGuiltyBondDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 929, 802))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 927, 727))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_9.setObjectName("gridLayout_9")
@@ -317,13 +317,7 @@ class Ui_NotGuiltyBondDialog(object):
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.close_dialog_Button.setObjectName("close_dialog_Button")
-        self.gridLayout_10.addWidget(self.close_dialog_Button, 3, 0, 1, 1)
-        self.print_entry_Button = QtWidgets.QPushButton(self.frame_8)
-        self.print_entry_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
-"font: 75 11pt \"Palatino Linotype\";\n"
-"font-weight: bold;")
-        self.print_entry_Button.setObjectName("print_entry_Button")
-        self.gridLayout_10.addWidget(self.print_entry_Button, 1, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.close_dialog_Button, 2, 0, 1, 1)
         self.create_entry_Button = QtWidgets.QPushButton(self.frame_8)
         self.create_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
@@ -466,8 +460,7 @@ class Ui_NotGuiltyBondDialog(object):
         NotGuiltyBondDialog.setTabOrder(self.no_contact_checkBox, self.other_conditions_checkBox)
         NotGuiltyBondDialog.setTabOrder(self.other_conditions_checkBox, self.add_special_conditions_Button)
         NotGuiltyBondDialog.setTabOrder(self.add_special_conditions_Button, self.create_entry_Button)
-        NotGuiltyBondDialog.setTabOrder(self.create_entry_Button, self.print_entry_Button)
-        NotGuiltyBondDialog.setTabOrder(self.print_entry_Button, self.close_dialog_Button)
+        NotGuiltyBondDialog.setTabOrder(self.create_entry_Button, self.close_dialog_Button)
 
     def retranslateUi(self, NotGuiltyBondDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -501,7 +494,6 @@ class Ui_NotGuiltyBondDialog(object):
         self.label_21.setText(_translate("NotGuiltyBondDialog", "Degree:"))
         self.add_charge_Button.setText(_translate("NotGuiltyBondDialog", "Add Charge"))
         self.close_dialog_Button.setText(_translate("NotGuiltyBondDialog", "Close Dialog"))
-        self.print_entry_Button.setText(_translate("NotGuiltyBondDialog", "Print and Open Entry"))
         self.create_entry_Button.setText(_translate("NotGuiltyBondDialog", "Open Entry"))
         self.label_8.setText(_translate("NotGuiltyBondDialog", "Bond Type:"))
         self.bond_amount_box.setItemText(0, _translate("NotGuiltyBondDialog", "None (OR Bond)"))

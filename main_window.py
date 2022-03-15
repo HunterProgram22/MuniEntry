@@ -3,9 +3,9 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
-from package.controllers.check_decorators import check_judicial_officer, check_case_list_selected
-from package.controllers.not_guilty_bond_dialogs import NotGuiltyBondDialog
-from package.controllers.sentencing_dialogs import NoJailPleaDialog, JailCCPleaDialog, DiversionPleaDialog
+from package.controllers.helper_functions import check_judicial_officer, check_case_list_selected
+from package.controllers.main_entry_dialogs import DiversionPleaDialog, JailCCPleaDialog, FineOnlyPleaDialog, \
+    NotGuiltyBondDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
@@ -23,6 +23,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.set_daily_case_lists_type()
         self.connect_signals_to_slots()
         self.load_case_lists()
+        self.button_state() # This is called to set boxes all to hidden b/c no button is selected on load.
         self.judicial_officer = None
         self.case_to_load = None
 
@@ -47,7 +48,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
         }
         self.dialog_dict = {
-            self.NoJailPleaButton: NoJailPleaDialog,
+            self.NoJailPleaButton: FineOnlyPleaDialog,
             self.JailCCButton: JailCCPleaDialog,
             self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
@@ -65,6 +66,13 @@ class Window(QMainWindow, Ui_MainWindow):
             "final_pretrials": self.final_pretrial_cases_box,
             "pleas": self.pleas_cases_box,
             "trials_to_court": self.trials_to_court_cases_box,
+        }
+        self.button_state_dict = {
+            "Arraignments": self.arraignment_cases_box,
+            "Slated": self.slated_cases_box,
+            "Final Pre-trials": self.final_pretrial_cases_box,
+            "Pleas": self.pleas_cases_box,
+            "Trials to Court": self.trials_to_court_cases_box,
         }
 
     def set_daily_case_lists_type(self):
@@ -90,21 +98,19 @@ class Window(QMainWindow, Ui_MainWindow):
         for key in self.judicial_officer_dict:
             key.clicked.connect(self.set_judicial_officer)
 
-    def button_state(self, button):
-        button_state_dict = {
-            "Arraignments": self.arraignment_cases_box,
-            "Slated": self.slated_cases_box,
-            "Final Pre-trials": self.final_pretrial_cases_box,
-            "Pleas": self.pleas_cases_box,
-            "Trials to Court": self.trials_to_court_cases_box,
-        }
-        selected_case_list = button_state_dict[button.text()]
-        for value in button_state_dict.values():
+    def button_state(self, button=None):
+        if button is None:
+            selected_case_list = None
+        else:
+            selected_case_list = self.button_state_dict[button.text()]
+        for value in self.button_state_dict.values():
             if value == selected_case_list:
                 value.setEnabled(True)
+                value.setHidden(False)
                 value.setFocus()
             else:
                 value.setCurrentText("")
+                value.setHidden(True)
                 value.setEnabled(False)
 
     def set_judicial_officer(self):

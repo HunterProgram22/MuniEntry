@@ -3,8 +3,8 @@ from conftest import mouse_click, enter_data
 
 
 dialog_all_title_list = [
-    (pytest.lazy_fixture("njp_dialog"), "No Jail Plea Case Information"),
-    (pytest.lazy_fixture("njp_dialog_nocase"), "No Jail Plea Case Information"),
+    (pytest.lazy_fixture("njp_dialog"), "Fine Only Plea Case Information"),
+    (pytest.lazy_fixture("njp_dialog_nocase"), "Fine Only Plea Case Information"),
     (pytest.lazy_fixture("jail_dialog"), "Jail Community Control Plea Case Information"),
     (pytest.lazy_fixture("jail_dialog_nocase"), "Jail Community Control Plea Case Information"),
     (pytest.lazy_fixture("ngb_dialog"), "Not Guilty Bond Case Information"),
@@ -83,7 +83,7 @@ def test_case_information_dialog(test_input):
     assert test_input.case_number_lineEdit.text() == "21TRC1234"
     assert test_input.defendant_first_name_lineEdit.text() == "John"
     assert test_input.defendant_last_name_lineEdit.text() == "Smith"
-    test_input.update_case_information()
+    test_input.update_entry_case_information()
     assert test_input.entry_case_information.case_number == "21TRC1234"
     assert test_input.entry_case_information.defendant.first_name == "John"
     assert test_input.entry_case_information.defendant.last_name == "Smith"

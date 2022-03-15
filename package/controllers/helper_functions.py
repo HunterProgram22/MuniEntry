@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QMessageBox
 from loguru import logger
 
 from MuniEntry.package.views.custom_widgets import WarningBox, RequiredBox, JailWarningBox, TwoChoiceQuestionBox
+from package.views.custom_widgets import RequiredBox
 
 
 def set_document_name(dialog):
@@ -183,13 +184,29 @@ def stop_jail_check(dialog):
         return True
 
 
+def check_if_diversion_program_selected(dialog):
+    diversion_program_list = [
+        'marijuana_diversion',
+        'theft_diversion',
+        'other_diversion',
+    ]
+    if dialog.dialog_name == 'Diversion Plea Dialog':
+        for program in diversion_program_list:
+            if getattr(dialog.entry_case_information.diversion, program) is True:
+                return True
+        message = RequiredBox(f"No Diversion Program was selected. \n\n"
+                              f"Please select a Diversion Program.")
+        message.exec()
+        return False
+
+
 class InfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered.
     Methods are class methods because this is a factory method to perform checks and
     no object is instantiated."""
     @classmethod
     def check_defense_counsel(cls, dialog):
-        if (dialog.defense_counsel_name_box.currentText() == ""
+        if (dialog.defense_counsel_name_box.currentText().strip() == ""
                 and not dialog.defense_counsel_waived_checkBox.isChecked()):
             message = WarningBox("There is no attorney listed. Did "
                                  "the Defendant waive his right to counsel?"
@@ -372,3 +389,24 @@ class InfoChecker(object):
             except ValueError:
                 pass
         return total_jail_days, total_jail_days_suspended
+
+
+def check_judicial_officer(func):
+    def wrapper(self):
+        if self.judicial_officer is None:
+            message = RequiredBox("You must select a judicial officer.")
+            message.exec()
+        else:
+            func(self)
+    return wrapper
+
+
+def check_case_list_selected(func):
+    def wrapper(self):
+        if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
+            func(self)
+        else:
+            message = RequiredBox("You must select a case list to load. If loading a "
+                                  "blank template choose any case list and leave dropdown menu blank.")
+            message.exec()
+    return wrapper

@@ -6,7 +6,7 @@ from package.models.party_types import Defendant
 
 @dataclass
 class CaseLoadData:
-    """This object is used to store data from the arraignments database that is loaded. The data can
+    """This object is used to store data from the daily case list databases that is loaded. The data can
     then be passed to the specific dialog selected and will be transferred to cms_case information."""
     case_number: str = None
     defendant_last_name: str = None
@@ -307,9 +307,9 @@ class Diversion:
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
     terms_list = [
-        ("marijuana_diversion", "marijuana_diversion_checkBox"),
-        ("theft_diversion", "theft_diversion_checkBox"),
-        ("other_diversion", "other_diversion_checkBox"),
+        ("marijuana_diversion", "marijuana_diversion_radioButton"),
+        ("theft_diversion", "theft_diversion_radioButton"),
+        ("other_diversion", "other_diversion_radioButton"),
         ("jail_imposed", "diversion_jail_imposed_checkBox"),
         ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
         ("diversion_jail_report_date", "diversion_jail_report_date_box"),

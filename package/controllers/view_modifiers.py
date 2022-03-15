@@ -9,6 +9,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 
+from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit
 from package.controllers.helper_functions import set_future_date
 
 
@@ -27,6 +28,7 @@ class BaseDialogViewModifier(object):
     ###Main Dialog Setup Methods###
     def set_plea_trial_date(self, dialog):
         dialog.plea_trial_date.setDate(TODAY)
+        dialog.plea_trial_date.__class__ = NoScrollDateEdit
 
     def set_appearance_reason(self, dialog):
         if dialog.case_table == "final_pretrials":
@@ -39,15 +41,6 @@ class BaseDialogViewModifier(object):
     def set_balance_due_date(self, dialog):
         dialog.balance_due_date.setDate(TODAY)
 
-    def set_case_information_banner(self, dialog):
-        dialog.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=dialog.case_information.defendant.first_name,
-                defendant_last_name=dialog.case_information.defendant.last_name
-            )
-        )
-        dialog.case_number_label.setText(dialog.case_information.case_number)
-
     ###Additional Condition/Jail Dialog Setup Methods###
     def set_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1
@@ -59,14 +52,27 @@ class BaseDialogViewModifier(object):
                 dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
 
-    def set_license_suspension_default_date(self, dialog):
+    def set_license_suspension_default_view(self, dialog):
         dialog.license_suspension_date_box.setDate(TODAY)
+        dialog.license_suspension_date_box.__class__ = NoScrollDateEdit
+        dialog.license_type_box.__class__ = NoScrollComboBox
+        dialog.term_of_suspension_box.__class__ = NoScrollComboBox
 
-    def set_community_service_default_date(self, dialog):
+    def set_community_service_default_view(self, dialog):
         dialog.community_service_date_to_complete_box.setDate(TODAY)
+        dialog.community_service_hours_ordered_box.__class__ = NoScrollComboBox
+        dialog.community_service_days_to_complete_box.__class__ = NoScrollComboBox
+        dialog.community_service_date_to_complete_box.__class__ = NoScrollDateEdit
 
-    def set_jail_report_default_date(self, dialog):
+    def set_jail_report_default_view(self, dialog):
         dialog.report_date_box.setDate(TODAY)
+
+    def set_court_cost_and_fra_boxes_to_no_scroll(self, dialog):
+        dialog.court_costs_box.__class__ = NoScrollComboBox
+        dialog.ability_to_pay_box.__class__ = NoScrollComboBox
+        dialog.fra_in_file_box.__class__ = NoScrollComboBox
+        dialog.fra_in_court_box.__class__ = NoScrollComboBox
+        dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     def set_report_days_notes_box(self, dialog):
         if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
@@ -90,11 +96,29 @@ class AddChargeDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_case_information_banner(dialog)
 
+    def set_case_information_banner(self, dialog):
+        dialog.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
+                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
+            )
+        )
+        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
+
 
 class AmendChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_case_information_banner(dialog)
+
+    def set_case_information_banner(self, dialog):
+        dialog.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
+                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
+            )
+        )
+        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -103,6 +127,7 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
         self.set_balance_due_date(dialog)
+        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
@@ -111,6 +136,9 @@ class JailCCDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
         self.set_balance_due_date(dialog)
+        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
+        dialog.in_jail_box.__class__ = NoScrollComboBox
+        dialog.jail_time_credit_apply_box.__class__ = NoScrollComboBox
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):
@@ -122,8 +150,6 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
         dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
         dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
-        dialog.show_jail_report_date_box()
-        dialog.show_other_conditions_box()
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
@@ -131,15 +157,16 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
+        dialog.bond_type_box.__class__ = NoScrollComboBox
+        dialog.bond_amount_box.__class__ = NoScrollComboBox
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_date(dialog)
-        self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
+        self.set_license_suspension_default_view(dialog)
+        self.set_community_service_default_view(dialog)
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -152,7 +179,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_jail_report_default_date(dialog)
+        self.set_jail_report_default_view(dialog)
         self.hide_boxes(dialog)
         self.set_report_days_notes_box(dialog)
 
@@ -177,12 +204,18 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_date(dialog)
-        self.set_community_service_default_date(dialog)
-        dialog.update_community_service_due_date()
+        self.set_license_suspension_default_view(dialog)
+        self.set_community_service_default_view(dialog)
         self.hide_boxes(dialog)
-        self.set_jail_report_default_date(dialog)
+        self.set_jail_report_default_view(dialog)
         self.set_report_days_notes_box(dialog)
+        dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
+        dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
+        dialog.house_arrest_time_box.__class__ = NoScrollComboBox
+        dialog.gps_exclusion_radius_box.__class__ = NoScrollComboBox
+        dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
+        dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
+        dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
 
 
 class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
@@ -190,6 +223,8 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_special_bond_conditions_case_information_banner(dialog)
         self.set_domestic_violence_surrender_weapons_default_date(dialog)
+        dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
+        dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
 
     def set_special_bond_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1

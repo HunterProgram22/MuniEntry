@@ -1,7 +1,8 @@
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, QInputDialog
+from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
+    QInputDialog, QDateEdit
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -32,6 +33,26 @@ ATTORNEY_LIST = [
     "Tod Brininger",
     "S Welt",
 ]
+
+class NoScrollComboBox(QComboBox):
+    def __init__(self, parent=None):
+        super(QComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def wheelEvent(self, event):
+        if event == QtCore.QEvent.Wheel:
+            event.ignore()
+
+
+class NoScrollDateEdit(QDateEdit):
+    def __init__(self, parent=None):
+        super(QDateEdit, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def wheelEvent(self, event):
+        if event == QtCore.QEvent.Wheel:
+            event.ignore()
+
 
 class ExtendedComboBox(QComboBox):
     def __init__(self, parent=None):
@@ -76,9 +97,10 @@ class ExtendedComboBox(QComboBox):
         super(ExtendedComboBox, self).setModelColumn(column)
 
 
-class DefenseCounselComboBox(QComboBox):
+class DefenseCounselComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def load_attorneys(self):
         for attorney in ATTORNEY_LIST:
@@ -99,17 +121,17 @@ class StatuteLineEdit(QLineEdit):
         self.setText(statute)
 
 
-class DegreeComboBox(QComboBox):
+class DegreeComboBox(NoScrollComboBox):
     def __init__(self, degree, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.set_up_widget(degree)
 
     def set_up_widget(self, degree):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setEditable(False)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("degree_choice_box")
         self.addItem("")
         self.addItem("M1")
@@ -118,12 +140,13 @@ class DegreeComboBox(QComboBox):
         self.addItem("M4")
         self.addItem("MM")
         self.addItem("UCM")
+        self.addItem("No Data")
         self.setCurrentText(degree)
 
 
-class PleaComboBox(QComboBox):
+class PleaComboBox(NoScrollComboBox):
     def __init__(self, column, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.column = column
         self.set_up_widget()
 
@@ -131,8 +154,8 @@ class PleaComboBox(QComboBox):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setEditable(False)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("plea_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -143,17 +166,17 @@ class PleaComboBox(QComboBox):
         #   lambda plea, column=self.column: ChargesGrid.update_if_dismissed(plea, column))
 
 
-class FindingComboBox(QComboBox):
+class FindingComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
-        super(QComboBox, self).__init__(parent)
+        super(NoScrollComboBox, self).__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.setEditable(True)
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setEditable(False)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("finding_choice_box")
         self.addItem("")
         self.addItem("Guilty")
@@ -163,28 +186,46 @@ class FindingComboBox(QComboBox):
         self.addItem("Not Guilty - Allied Offense")
 
 
-class DeleteButton(QPushButton):
-    def __init__(self, parent=None):
+class ChargeGridDeleteButton(QPushButton):
+    def __init__(self, column_index, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
+        self.column_index = column_index
+        self.dialog = dialog
+        self.charge = charge
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setStyleSheet("background-color: rgb(170, 58, 63);")
         self.setText("Delete")
-        self.setObjectName("delete_Button")
+        self.setObjectName("charge_grid_delete_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pressed.connect(self.delete_charge_from_grid_and_charges_list)
+
+    def delete_charge_from_grid_and_charges_list(self):
+        """Uses the delete_button that is indexed to the column to delete the
+        QLabels for the charge."""
+        self.dialog.entry_case_information.charges_list.remove(self.charge)
+        for row in range(self.dialog.charges_gridLayout.rowCount()):
+            layout_item = self.dialog.charges_gridLayout.itemAtPosition(row, self.column_index)
+            if layout_item is not None:
+                layout_item.widget().deleteLater()
+                self.dialog.charges_gridLayout.removeItem(layout_item)
 
 
-class AmendButton(QPushButton):
-    def __init__(self, parent=None):
+class ChargeGridAmendButton(QPushButton):
+    def __init__(self, column_index, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
+        self.column_index = column_index
+        self.dialog = dialog
+        self.charge = charge
         self.set_up_widget()
 
     def set_up_widget(self):
         self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
-        self.setObjectName("amend_Button")
+        self.setObjectName("charge_grid_amend_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.released.connect(self.dialog.functions.start_amend_offense_dialog)
 
 
 class AlliedCheckbox(QCheckBox):
@@ -197,7 +238,7 @@ class AlliedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
@@ -231,7 +272,7 @@ class DismissedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Offense Dismissed")
         self.setObjectName("dismissed_checkBox")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):
