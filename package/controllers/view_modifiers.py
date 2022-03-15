@@ -157,6 +157,8 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date(dialog)
         self.set_appearance_reason(dialog)
+        dialog.bond_type_box.__class__ = NoScrollComboBox
+        dialog.bond_amount_box.__class__ = NoScrollComboBox
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
