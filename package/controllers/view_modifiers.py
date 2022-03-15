@@ -207,6 +207,8 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.hide_boxes(dialog)
         self.set_jail_report_default_view(dialog)
         self.set_report_days_notes_box(dialog)
+        dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
+        dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
 
 
 class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
