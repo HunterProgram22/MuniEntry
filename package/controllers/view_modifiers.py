@@ -9,7 +9,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 
-from package.views.custom_widgets import NoScrollComboBox
+from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit
 from package.controllers.helper_functions import set_future_date
 
 
@@ -28,6 +28,7 @@ class BaseDialogViewModifier(object):
     ###Main Dialog Setup Methods###
     def set_plea_trial_date(self, dialog):
         dialog.plea_trial_date.setDate(TODAY)
+        dialog.plea_trial_date.__class__ = NoScrollDateEdit
 
     def set_appearance_reason(self, dialog):
         if dialog.case_table == "final_pretrials":
@@ -51,11 +52,17 @@ class BaseDialogViewModifier(object):
                 dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
 
-    def set_license_suspension_default_date(self, dialog):
+    def set_license_suspension_default_view(self, dialog):
         dialog.license_suspension_date_box.setDate(TODAY)
+        dialog.license_suspension_date_box.__class__ = NoScrollDateEdit
+        dialog.license_type_box.__class__ = NoScrollComboBox
+        dialog.term_of_suspension_box.__class__ = NoScrollComboBox
 
-    def set_community_service_default_date(self, dialog):
+    def set_community_service_default_view(self, dialog):
         dialog.community_service_date_to_complete_box.setDate(TODAY)
+        dialog.community_service_hours_ordered_box.__class__ = NoScrollComboBox
+        dialog.community_service_days_to_complete_box.__class__ = NoScrollComboBox
+        dialog.community_service_date_to_complete_box.__class__ = NoScrollDateEdit
 
     def set_jail_report_default_date(self, dialog):
         dialog.report_date_box.setDate(TODAY)
@@ -65,6 +72,7 @@ class BaseDialogViewModifier(object):
         dialog.ability_to_pay_box.__class__ = NoScrollComboBox
         dialog.fra_in_file_box.__class__ = NoScrollComboBox
         dialog.fra_in_court_box.__class__ = NoScrollComboBox
+        dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     def set_report_days_notes_box(self, dialog):
         if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
@@ -155,8 +163,8 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_date(dialog)
-        self.set_community_service_default_date(dialog)
+        self.set_license_suspension_default_view(dialog)
+        self.set_community_service_default_view(dialog)
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -194,8 +202,8 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_date(dialog)
-        self.set_community_service_default_date(dialog)
+        self.set_license_suspension_default_view(dialog)
+        self.set_community_service_default_view(dialog)
         self.hide_boxes(dialog)
         self.set_jail_report_default_date(dialog)
         self.set_report_days_notes_box(dialog)

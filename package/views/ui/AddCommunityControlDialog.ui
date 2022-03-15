@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-669</y>
+        <y>-701</y>
         <width>1039</width>
         <height>1807</height>
        </rect>
@@ -1695,6 +1695,16 @@ font-weight: bold;</string>
             <item>
              <property name="text">
               <string>driving</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>hunting</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>concealed carry</string>
              </property>
             </item>
            </widget>

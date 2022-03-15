@@ -211,6 +211,16 @@ font-weight: bold;</string>
               <string>driving</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>hunting</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>concealed carry</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="2">
@@ -274,6 +284,16 @@ font-weight: bold;</string>
             <item>
              <property name="text">
               <string>24 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 months</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>36 months</string>
              </property>
             </item>
            </widget>

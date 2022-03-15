@@ -1,7 +1,8 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, QInputDialog
+from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
+    QInputDialog, QDateEdit
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -36,6 +37,16 @@ ATTORNEY_LIST = [
 class NoScrollComboBox(QComboBox):
     def __init__(self, parent=None):
         super(QComboBox, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def wheelEvent(self, event):
+        if event == QtCore.QEvent.Wheel:
+            event.ignore()
+
+
+class NoScrollDateEdit(QDateEdit):
+    def __init__(self, parent=None):
+        super(QDateEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def wheelEvent(self, event):
