@@ -211,6 +211,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
         dialog.house_arrest_time_box.__class__ = NoScrollComboBox
         dialog.gps_exclusion_radius_box.__class__ = NoScrollComboBox
+        dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
         dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
         dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
 
