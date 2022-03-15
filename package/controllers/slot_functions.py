@@ -183,6 +183,7 @@ class BaseDialogSlotFunctions(object):
                     dialog.offense_choice_box.setCurrentText(offense)
             dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
+            charges_database.close()
             break
 
     def conditions_checkbox_toggle(self):
