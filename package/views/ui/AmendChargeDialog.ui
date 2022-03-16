@@ -217,7 +217,7 @@ font-weight: bold;</string>
         </property>
         <item>
          <property name="text">
-          <string>Minor Misdemeanor</string>
+          <string>MM</string>
          </property>
         </item>
         <item>
@@ -242,7 +242,7 @@ font-weight: bold;</string>
         </item>
         <item>
          <property name="text">
-          <string>Unclassified Misdemeanor</string>
+          <string>UCM</string>
          </property>
         </item>
        </widget>
