@@ -90,8 +90,7 @@ class BaseInfoChecker(object):
             message.exec()
             return "Fail"
 
-    @classmethod
-    def check_additional_conditions_ordered(cls, dialog):
+    def check_additional_conditions_ordered(self):
         """TODO: This should be a method and the conditions_list should be passed based on the dialog so it only
         loops over the items in that dialog."""
         conditions_list = [
@@ -109,7 +108,7 @@ class BaseInfoChecker(object):
         for condition_item in conditions_list:
             # Because dialog.entry_case_information is a model with all case conditions there is
             # apparently no need to check if it has that attribute (hasattr).
-            condition = getattr(dialog.entry_case_information, condition_item[0])
+            condition = getattr(self.dialog.entry_case_information, condition_item[0])
             condition_ordered = getattr(condition, "ordered")
             main_condition_set = getattr(condition, condition_item[1])
             description = condition_item[2]
@@ -131,9 +130,9 @@ class BaseInfoChecker(object):
             #  dialog.entry_case_information.victim_notification.victim_reparation_notice,
             #  dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
             #  "Victim Notification"),
-            (dialog.entry_case_information.domestic_violence_conditions.ordered,
-             dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
-             dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+            (self.dialog.entry_case_information.domestic_violence_conditions.ordered,
+             self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
+             self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
              "Domestic Violence Restrictions"),
         ]
         for bool_condition_item in bool_conditions_list:
@@ -199,6 +198,7 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
             "check_defense_counsel",
             "check_plea_and_findings",
             "check_insurance",
+            "check_additional_conditions_ordered",
         ]
         self.check_status = self.perform_check_list()
 
