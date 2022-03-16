@@ -124,11 +124,14 @@ class NoJailChargesGrid(ChargesGrid):
         plea = button_dict.get(self.sender())
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NoJailChargesGrid.row_offense, column) is not None:
-                self.itemAtPosition(NoJailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
-                    self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
+                if self.itemAtPosition(NoJailChargesGrid.row_dismissed_box, column).widget().isChecked():
+                    continue
                 else:
-                    self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.itemAtPosition(NoJailChargesGrid.row_plea, column).widget().setCurrentText(plea)
+                    if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
+                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
         self.set_cursor_to_fine_line_edit()
 
 
@@ -164,11 +167,14 @@ class JailChargesGrid(NoJailChargesGrid):
         plea = button_dict.get(self.sender())
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(JailChargesGrid.row_offense, column) is not None:
-                self.itemAtPosition(JailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
-                    self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
+                if self.itemAtPosition(JailChargesGrid.row_dismissed_box, column).widget().isChecked():
+                    continue
                 else:
-                    self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.itemAtPosition(JailChargesGrid.row_plea, column).widget().setCurrentText(plea)
+                    if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
+                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
+                    else:
+                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
         self.set_cursor_to_fine_line_edit()
 
 
