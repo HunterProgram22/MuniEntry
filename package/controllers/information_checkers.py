@@ -50,22 +50,21 @@ class BaseInfoChecker(object):
             loop_counter += 1
         return "Pass"
 
-    @classmethod
-    def check_insurance(cls, dialog):
+    def check_insurance(self):
         if (
-            hasattr(dialog, 'fra_in_file_box')
-            and dialog.fra_in_file_box.currentText() == "No"
-            and dialog.fra_in_court_box.currentText() == "N/A"
+            hasattr(self.dialog, 'fra_in_file_box')
+            and self.dialog.fra_in_file_box.currentText() == "No"
+            and self.dialog.fra_in_court_box.currentText() == "N/A"
         ):
             message = WarningBox("The information provided currently "
                                  "indicates insurance was not shown in the file. "
                                  "\n\nDid the defendant show proof of insurance in court?")
             return_value = message.exec()
             if return_value == QMessageBox.No:
-                dialog.fra_in_court_box.setCurrentText("No")
+                self.dialog.fra_in_court_box.setCurrentText("No")
                 return "Pass"
             elif return_value == QMessageBox.Yes:
-                dialog.fra_in_court_box.setCurrentText("Yes")
+                self.dialog.fra_in_court_box.setCurrentText("Yes")
                 return "Pass"
         else:
             return "Pass"
@@ -199,6 +198,7 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
         self.dialog_check_list = [
             "check_defense_counsel",
             "check_plea_and_findings",
+            "check_insurance",
         ]
         self.check_status = self.perform_check_list()
 
