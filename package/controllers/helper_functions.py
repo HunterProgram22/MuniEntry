@@ -209,7 +209,7 @@ class InfoChecker(object):
         if (dialog.defense_counsel_name_box.currentText().strip() == ""
                 and not dialog.defense_counsel_waived_checkBox.isChecked()):
             message = WarningBox("There is no attorney listed. Did "
-                                 "the Defendant waive his right to counsel?"
+                                 "the Defendant appear without or waive his right to counsel?"
                                  "\n\nIf you select 'No' you must enter a name "
                                  "for Def. Counsel.")
             return_value = message.exec()
