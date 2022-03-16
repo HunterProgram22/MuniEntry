@@ -96,6 +96,8 @@ class CmsLoader:
                 dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
             if self.cms_case.defense_counsel_type == "PD":
                 dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+            elif self.cms_case.defense_counsel.strip() == "":
+                dialog.defense_counsel_type_box.setCurrentText("Public Defender")
             else:
                 dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
             self.add_cms_criminal_charges_to_entry_case_information(dialog)
