@@ -629,7 +629,7 @@ class Ui_JailCCPleaDialog(object):
         self.add_conditions_label.setText(_translate("JailCCPleaDialog", "Additional Conditions"))
         self.add_conditions_Button.setText(_translate("JailCCPleaDialog", "Add Jail and/or  Additional Conditions"))
         self.community_control_checkBox.setText(_translate("JailCCPleaDialog", "Community Control"))
-        self.victim_notification_checkBox.setText(_translate("JailCCPleaDialog", "Victim Notification"))
+        self.victim_notification_checkBox.setText(_translate("JailCCPleaDialog", "DV and Victim Notifications"))
         self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service"))
         self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other"))
         self.impoundment_checkBox.setText(_translate("JailCCPleaDialog", "Immobilize/Impound"))

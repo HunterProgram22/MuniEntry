@@ -1113,7 +1113,7 @@ font-weight: bold;</string>
           <item row="5" column="2">
            <widget class="QCheckBox" name="victim_notification_checkBox">
             <property name="text">
-             <string>Victim Notification</string>
+             <string>DV and Victim Notifications</string>
             </property>
            </widget>
           </item>

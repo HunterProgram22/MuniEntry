@@ -326,10 +326,11 @@ class InfoChecker(object):
         """The bond_conditions_list for Victim Notification and Domestic Violence is used because of two checkboxes as only options, no 
         ordered option like other conditions. TODO: figure out way to make it part of standard conditions list."""
         bool_conditions_list = [
-            (dialog.entry_case_information.victim_notification.ordered,
-             dialog.entry_case_information.victim_notification.victim_reparation_notice,
-             dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
-             "Victim Notification"),
+            # Refactored out because added third notifcation condition for DV and 18 USC gun prohibitions - TODO: Fix
+            # (dialog.entry_case_information.victim_notification.ordered,
+            #  dialog.entry_case_information.victim_notification.victim_reparation_notice,
+            #  dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
+            #  "Victim Notification"),
             (dialog.entry_case_information.domestic_violence_conditions.ordered,
              dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
              dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
