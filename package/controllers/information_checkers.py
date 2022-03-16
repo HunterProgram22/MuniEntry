@@ -197,7 +197,10 @@ class BaseInfoChecker(object):
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.check_defense_counsel()
+        self.return_info_check_status()
+
+    def return_info_check_status(self):
+        self.dialog.info_check_status = self.check_defense_counsel()
 
 
 def check_if_days_in_jail_blank(dialog):

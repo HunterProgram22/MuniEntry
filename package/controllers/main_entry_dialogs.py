@@ -162,6 +162,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return FineOnlyDialogInfoChecker(self)
 
 
+
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     condition_checkbox_list = [
         ("monitoring_checkBox", "monitoring_type_box"),

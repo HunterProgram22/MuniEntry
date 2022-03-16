@@ -86,6 +86,8 @@ class BaseDialogSlotFunctions(object):
     def update_info_and_perform_checks(self):
         self.dialog.update_entry_case_information()
         self.dialog.perform_info_checks()
+        if self.dialog.info_check_status == "Fail":
+            return "Fail"
         # if BaseInfoChecker.check_defense_counsel(self.dialog) == "Fail":
         #     return "Fail"
         # if check_if_diversion_program_selected(self.dialog) is False:
