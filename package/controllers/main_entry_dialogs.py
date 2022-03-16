@@ -159,7 +159,8 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return NoJailPleaFindingFines.add(self)
 
     def perform_info_checks(self):
-        return FineOnlyDialogInfoChecker(self)
+        self.dialog_checks = FineOnlyDialogInfoChecker(self)
+
 
 
 
