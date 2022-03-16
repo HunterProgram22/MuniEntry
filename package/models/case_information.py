@@ -337,9 +337,11 @@ class CourtCosts:
 @dataclass
 class VictimNotification:
     ordered: bool = False
+    firearm_prohibition: bool = False
     victim_reparation_notice: bool = False
     victim_prosecutor_notice: bool = False
     terms_list = [
+        ("firearm_prohibition", "firearm_prohibition_checkBox"),
         ("victim_reparation_notice", "victim_reparation_checkBox"),
         ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
     ]
