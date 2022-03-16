@@ -23,25 +23,24 @@ class BaseInfoChecker(object):
                 return "Fail"
         return "Pass"
 
-    @classmethod
-    def check_plea_and_findings(cls, dialog):
+    def check_plea_and_findings(self):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
         fields have a plea and finding you will get the warning until they are filled in."""
-        row_plea, row_finding = dialog.charges_gridLayout.set_plea_and_finding_rows()
+        row_plea, row_finding = self.dialog.charges_gridLayout.set_plea_and_finding_rows()
         column = 2
         loop_counter = 0
-        while loop_counter < dialog.charges_gridLayout.columnCount():
+        while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense = dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
-                if dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
+                offense = self.dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
+                if self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
                     message = RequiredBox(f"You must enter a plea for {offense}.")
                     message.exec()
                     return "Fail"
-                elif dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
+                elif self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
                     column += 2
                     loop_counter += 1
                     continue
-                elif dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
+                elif self.dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
                     message = RequiredBox(f"You must enter a finding for {offense}.")
                     message.exec()
                     return "Fail"
@@ -199,12 +198,12 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
+            "check_plea_and_findings",
         ]
         self.check_status = self.perform_check_list()
 
     def perform_check_list(self):
         for item in self.dialog_check_list:
-            print(getattr(self, item)())
             if getattr(self, item)() == "Fail":
                 return "Fail"
 
