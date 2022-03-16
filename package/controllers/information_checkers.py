@@ -8,8 +8,9 @@ class BaseInfoChecker(object):
         self.dialog = dialog
 
     def check_defense_counsel(self):
-        if (self.dialog.defense_counsel_name_box.currentText().strip() == ""
-                and not self.dialog.defense_counsel_waived_checkBox.isChecked()):
+        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+            return "Pass"
+        elif self.dialog.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox("There is no attorney listed. Did "
                                  "the Defendant waive his right to counsel?"
                                  "\n\nIf you select 'No' you must enter a name "
@@ -20,8 +21,7 @@ class BaseInfoChecker(object):
                 return "Pass"
             elif return_value == QMessageBox.No:
                 return "Fail"
-        else:
-            return "Pass"
+        return "Pass"
 
     @classmethod
     def check_plea_and_findings(cls, dialog):
