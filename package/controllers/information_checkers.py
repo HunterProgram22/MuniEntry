@@ -234,7 +234,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_jail_days(self):
         if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
             return "Pass"
-        if check_jail_time_credit_fields(self.dialog) == "Fail":
+        if self.check_jail_time_credit_fields() == "Fail":
             return "Fail"
         total_jail_days, total_jail_days_suspended = self.calculate_total_jail_days()
         total_jail_days_credit = self.calculate_jail_days_credit()
@@ -251,6 +251,57 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         check_if_jail_days_equals_suspended_and_imposed_days(self.dialog, total_jail_days, total_jail_days_suspended,
                                                              total_jail_days_credit)
         return "Pass"
+
+    def check_jail_time_credit_fields(self):
+        """Generates warning messages if certain required jail time credit fields have data, but other required
+        fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
+        generated because a user may enter no for currently in jail, but there may not be jail time credit."""
+        if self.dialog.entry_case_information.currently_in_jail == 'Yes':
+            if self.check_if_days_in_jail_blank() is True:
+                return "Fail"
+            self.check_if_apply_jtc_blank()
+        elif self.dialog.entry_case_information.days_in_jail != '':
+            self.check_if_currently_in_jail_blank()
+            self.check_if_apply_jtc_blank()
+
+    def check_if_days_in_jail_blank(self):
+        if self.dialog.entry_case_information.days_in_jail == '':
+            message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
+                                  f"the number of Days In Jail is blank. \n\nPlease enter the number of "
+                                  f"Days In Jail and select whether to apply Jail Time Credit to "
+                                  f"Sentence or Costs and Fines.")
+            message.exec()
+            return True
+        return False
+
+    def check_if_currently_in_jail_blank(self):
+        if self.dialog.entry_case_information.currently_in_jail == '':
+            message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
+                                 f"does not indicate whether the Defendant is Currently In Jail. "
+                                 f"\n\nIs the Defendant currently in jail?")
+            return_value = message.exec()
+            if return_value == QMessageBox.No:
+                self.dialog.in_jail_box.setCurrentText("No")
+            elif return_value == QMessageBox.Yes:
+                self.dialog.in_jail_box.setCurrentText("Yes")
+
+    def check_if_apply_jtc_blank(self):
+        """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
+        The custom message boxes need to be double checked for return values, see article link."""
+        if self.dialog.entry_case_information.apply_jtc == '':
+            message = TwoChoiceQuestionBox(
+                f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
+                f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+                "Sentence",
+                "Costs and Fines"
+            )
+            return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
+            if return_value == 0:
+                self.dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+            elif return_value == 1:
+                self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+
+
 
     def calculate_jail_days_credit(self):
         if self.dialog.entry_case_information.days_in_jail == '':
@@ -273,57 +324,13 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         return total_jail_days, total_jail_days_suspended
 
 
-def check_if_days_in_jail_blank(dialog):
-    if dialog.entry_case_information.days_in_jail == '':
-        message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
-                              f"the number of Days In Jail is blank. \n\nPlease enter the number of "
-                              f"Days In Jail and select whether to apply Jail Time Credit to "
-                              f"Sentence or Costs and Fines.")
-        message.exec()
-        return True
-    return False
 
 
-def check_if_currently_in_jail_blank(dialog):
-    if dialog.entry_case_information.currently_in_jail == '':
-        message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
-                             f"does not indicate whether the Defendant is Currently In Jail. "
-                             f"\n\nIs the Defendant currently in jail?")
-        return_value = message.exec()
-        if return_value == QMessageBox.No:
-            dialog.in_jail_box.setCurrentText("No")
-        elif return_value == QMessageBox.Yes:
-            dialog.in_jail_box.setCurrentText("Yes")
 
 
-def check_if_apply_jtc_blank(dialog):
-    """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
-    The custom message boxes need to be double checked for return values, see article link."""
-    if dialog.entry_case_information.apply_jtc == '':
-        message = TwoChoiceQuestionBox(
-            f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
-            f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
-            "Sentence",
-            "Costs and Fines"
-        )
-        return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
-        if return_value == 0:
-            dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-        elif return_value == 1:
-            dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
 
-def check_jail_time_credit_fields(dialog):
-    """Generates warning messages if certain required jail time credit fields have data, but other required
-    fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
-    generated because a user may enter no for currently in jail, but there may not be jail time credit."""
-    if dialog.entry_case_information.currently_in_jail == 'Yes':
-        if check_if_days_in_jail_blank(dialog) is True:
-            return "Fail"
-        check_if_apply_jtc_blank(dialog)
-    elif dialog.entry_case_information.days_in_jail != '':
-        check_if_currently_in_jail_blank(dialog)
-        check_if_apply_jtc_blank(dialog)
+
 
 
 def check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended):
