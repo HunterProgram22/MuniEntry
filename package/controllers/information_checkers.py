@@ -237,6 +237,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             "check_if_jail_days_suspended_greater_than_jail_imposed",
             "check_if_jail_days_imposed_greater_than_suspended_and_credit",
             "check_if_jail_days_equals_suspended_and_imposed_days",
+            "check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered",
             # "check_jail_days",
         ]
         self.check_status = self.perform_check_list()
@@ -246,7 +247,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return "Pass" # CREATE DECORATOR
         if self.check_jail_time_credit_fields() == "Fail":
             return "Fail"
-        check_if_in_jail(self.dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
 
 
     def check_jail_time_credit_fields(self):
@@ -378,21 +378,16 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Yes:
             return "Pass"
 
-
-def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
-    check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-
-
-def check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
-    if (
-            total_jail_days >= (total_jail_days_suspended + total_jail_days_credit)
-            and dialog.entry_case_information.jail_terms.ordered is True
-            and dialog.entry_case_information.currently_in_jail == 'Yes'
-    ):
-        message = WarningBox(f"The Defendant is currently indicated as being in jail, "
-                             f"but you set Jail Reporting Terms. \n\nAre you sure you want "
-                             f"to set Jail Reporting Terms?")
-        unset_jail_reporting_terms(dialog, message.exec())
+    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
+        if (
+                self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
+                and self.dialog.entry_case_information.jail_terms.ordered is True
+                and self.dialog.entry_case_information.currently_in_jail == 'Yes'
+        ):
+            message = WarningBox(f"The Defendant is currently indicated as being in jail, "
+                                 f"but you set Jail Reporting Terms. \n\nAre you sure you want "
+                                 f"to set Jail Reporting Terms?")
+            return self.unset_jail_reporting_terms(message.exec())
 
 
 
