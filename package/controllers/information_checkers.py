@@ -363,7 +363,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if (
                 self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
                 and self.dialog.entry_case_information.jail_terms.ordered is True
-                and self.dialog.entry_case_information.currently_in_jail == "No" or self.dialog.entry_case_information.currently_in_jail == ""
+                and (self.dialog.entry_case_information.currently_in_jail == "No" or self.dialog.entry_case_information.currently_in_jail == "")
         ):
             message = WarningBox(f"The total jail days imposed of {self.total_jail_days} is equal to the total jail days "
                                  f"suspended of {self.total_jail_days_suspended} and total jail time credit of "
@@ -380,7 +380,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return "Pass"
 
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
-        print(self.dialog.entry_case_information.jail_terms.ordered)
         if (
                 self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
                 and self.dialog.entry_case_information.jail_terms.ordered is True
