@@ -50,6 +50,9 @@ class CriminalBaseDialog(BaseDialog):
     def update_entry_case_information(self):
         raise NotImplementedError
 
+    def perform_info_checks(self):
+        raise NotImplementedError
+
     # TO BE REFACTORED #
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
