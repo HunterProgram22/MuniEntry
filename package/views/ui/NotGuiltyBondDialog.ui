@@ -177,7 +177,7 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>927</width>
+           <width>931</width>
            <height>727</height>
           </rect>
          </property>
@@ -327,7 +327,7 @@ font-weight: bold;</string>
              <item row="3" column="3">
               <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
                <property name="text">
-                <string>Defendant waived right to counsel</string>
+                <string>Defendant appeared without counsel</string>
                </property>
               </widget>
              </item>

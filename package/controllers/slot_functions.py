@@ -9,7 +9,7 @@ from PyQt5.QtCore import QDate
 from package.views.custom_widgets import InfoBox
 from db.databases import open_charges_db_connection, extract_data
 from db.sql_queries import sql_query_offense_type
-from package.controllers.helper_functions import set_document_name, \
+from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name, \
     set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
@@ -83,12 +83,20 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def update_info_and_perform_checks(self):
-        """This method performs an update then calls to the main_entry_dialog's InfoChecker class to run
-        the checks for that dialog. The InfoChecker calls check_status will be return as "Fail" if any of the
-        checks are hard stops - meaning the warning message doesn't allow immediate correction."""
         self.dialog.update_entry_case_information()
-        self.dialog.perform_info_checks()
-        if self.dialog.dialog_checks.check_status == "Fail":
+        if InfoChecker.check_defense_counsel(self.dialog) == "Fail":
+            return "Fail"
+        if check_if_diversion_program_selected(self.dialog) is False:
+            return "Fail"
+        if InfoChecker.check_plea_and_findings(self.dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_insurance(self.dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_bond_amount(self.dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_additional_conditions_ordered(self.dialog) == "Fail":
+            return "Fail"
+        if InfoChecker.check_jail_days(self.dialog) == "Fail":
             return "Fail"
         self.dialog.update_entry_case_information()
         return "Pass"
