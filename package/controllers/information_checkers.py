@@ -360,18 +360,17 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
                 f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
                 f"entry so that you can change the number of jail days imposed/suspended/credited.")
-            return message.exec()
+            return self.add_jail_reporting_terms(message.exec())
 
-
-def add_jail_reporting_terms(dialog, jail_days_greater_than_zero):
-    if jail_days_greater_than_zero == QMessageBox.No:
-        return True
-    elif jail_days_greater_than_zero == QMessageBox.Yes:
-        dialog.jail_checkBox.setChecked(True)
-        dialog.start_jail_only_dialog()
-        return True
-    elif jail_days_greater_than_zero == QMessageBox.Cancel:
-        return False
+    def add_jail_reporting_terms(self, message_response):
+        if message_response == QMessageBox.No:
+            return "Pass"
+        elif message_response == QMessageBox.Yes:
+            self.dialog.jail_checkBox.setChecked(True)
+            self.dialog.start_jail_only_dialog()
+            return "Pass"
+        elif message_response == QMessageBox.Cancel:
+            return "Fail"
 
 
 def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
