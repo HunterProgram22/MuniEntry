@@ -236,32 +236,18 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             "check_additional_conditions_ordered",
             "check_if_jail_days_suspended_greater_than_jail_imposed",
             "check_if_jail_days_imposed_greater_than_suspended_and_credit",
+            "check_if_jail_days_equals_suspended_and_imposed_days",
             # "check_jail_days",
         ]
         self.check_status = self.perform_check_list()
 
     def check_jail_days(self):
         if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
-            return "Pass"
+            return "Pass" # CREATE DECORATOR
         if self.check_jail_time_credit_fields() == "Fail":
             return "Fail"
-
-        # total_jail_days, total_jail_days_suspended = self.calculate_total_jail_days()
-        # total_jail_days_credit = self.calculate_jail_days_credit()
-        # if check_if_jail_days_suspended_greater_than_jail_imposed(self.dialog, total_jail_days,
-        #                                                           total_jail_days_suspended) is True:
-        #     return "Fail"
-        # jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(self.dialog,
-        #                                                                                            total_jail_days,
-        #                                                                                            total_jail_days_suspended,
-        #                                                                                            total_jail_days_credit)
-        if add_jail_reporting_terms(self.dialog, jail_days_greater_than_zero) is False:
-            return "Fail"
-
         check_if_in_jail(self.dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-        check_if_jail_days_equals_suspended_and_imposed_days(self.dialog, total_jail_days, total_jail_days_suspended,
-                                                             total_jail_days_credit)
-        return "Pass"
+
 
     def check_jail_time_credit_fields(self):
         """Generates warning messages if certain required jail time credit fields have data, but other required
@@ -372,6 +358,26 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Cancel:
             return "Fail"
 
+    def check_if_jail_days_equals_suspended_and_imposed_days(self):
+        if (
+                self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
+                and self.dialog.entry_case_information.jail_terms.ordered is True
+                and self.dialog.entry_case_information.currently_in_jail == "No" or self.dialog.entry_case_information.currently_in_jail == ""
+        ):
+            message = WarningBox(f"The total jail days imposed of {self.total_jail_days} is equal to the total jail days "
+                                 f"suspended of {self.total_jail_days_suspended} and total jail time credit of "
+                                 f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail days left "
+                                 f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
+                                 f"Jail Reporting Terms?")
+            return self.unset_jail_reporting_terms(message.exec())
+
+    def unset_jail_reporting_terms(self, message_response):
+        if message_response == QMessageBox.No:
+            self.dialog.jail_checkBox.setChecked(False)
+            return "Pass"
+        elif message_response == QMessageBox.Yes:
+            return "Pass"
+
 
 def check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
     check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
@@ -389,23 +395,7 @@ def check_if_jails_days_left_in_jail_and_reporting_ordered(dialog, total_jail_da
         unset_jail_reporting_terms(dialog, message.exec())
 
 
-def unset_jail_reporting_terms(dialog, return_value):
-        if return_value == QMessageBox.No:
-            dialog.jail_checkBox.setChecked(False)
-            return "Pass"
-        elif return_value == QMessageBox.Yes:
-            return "Pass"
 
 
-def check_if_jail_days_equals_suspended_and_imposed_days(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit):
-    if (
-            total_jail_days == (total_jail_days_suspended + total_jail_days_credit)
-            and dialog.entry_case_information.jail_terms.ordered is True
-            and dialog.entry_case_information.currently_in_jail == 'No'
-    ):
-        message = WarningBox(f"The total jail days imposed of {total_jail_days} is equal to the total jail days "
-                             f"suspended of {total_jail_days_suspended} and total jail time credit of "
-                             f"{total_jail_days_credit}. The Defendant does not appear to have any jail days left "
-                             f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
-                             f"Jail Reporting Terms?")
-        unset_jail_reporting_terms(dialog, message.exec())
+
+
