@@ -235,6 +235,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             "check_insurance",
             "check_additional_conditions_ordered",
             "check_if_jail_days_suspended_greater_than_jail_imposed",
+            "check_jail_time_credit_fields",
             "check_if_jail_days_imposed_greater_than_suspended_and_credit",
             "check_if_jail_days_equals_suspended_and_imposed_days",
             "check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered",
@@ -379,6 +380,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return "Pass"
 
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
+        print(self.dialog.entry_case_information.jail_terms.ordered)
         if (
                 self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
                 and self.dialog.entry_case_information.jail_terms.ordered is True
