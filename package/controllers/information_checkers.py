@@ -6,6 +6,12 @@ class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
     def __init__(self, dialog):
         self.dialog = dialog
+        self.check_status = self.perform_check_list()
+
+    def perform_check_list(self):
+        for item in self.dialog_check_list:
+            if getattr(self, item)() == "Fail":
+                return "Fail"
 
     def check_defense_counsel(self):
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
@@ -69,20 +75,19 @@ class BaseInfoChecker(object):
         else:
             return "Pass"
 
-    @classmethod
-    def check_bond_amount(cls, dialog):
+    def check_bond_amount(self):
         if(
-            hasattr(dialog, 'bond_type_box')
-            and dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
-            and dialog.bond_amount_box.currentText() == 'None (OR Bond)'
+            hasattr(self.dialog, 'bond_type_box')
+            and self.dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
+            and self.dialog.bond_amount_box.currentText() == 'None (OR Bond)'
         ):
             message = RequiredBox("A bond type requiring a bond amount was selected, but a bond amount was not selected. Please specify the bond amount.")
             message.exec()
             return "Fail"
         if (
-                hasattr(dialog, 'bond_type_box')
-                and dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
-                and dialog.bond_amount_box.currentText() != 'None (OR Bond)'
+                hasattr(self.dialog, 'bond_type_box')
+                and self.dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
+                and self.dialog.bond_amount_box.currentText() != 'None (OR Bond)'
         ):
             message = RequiredBox(
                 "A Recognizance (OR) Bond was selected but a bond amount other than None(OR Bond) "
@@ -193,22 +198,24 @@ class BaseInfoChecker(object):
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
-        super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
             "check_plea_and_findings",
             "check_insurance",
             "check_additional_conditions_ordered",
         ]
-        self.check_status = self.perform_check_list()
-
-    def perform_check_list(self):
-        for item in self.dialog_check_list:
-            if getattr(self, item)() == "Fail":
-                return "Fail"
+        super().__init__(dialog)
 
 
-
+class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_plea_and_findings",
+            "check_bond_amount",
+            "check_additional_conditions_ordered",
+        ]
+        super().__init__(dialog)
 
 
 def check_if_days_in_jail_blank(dialog):

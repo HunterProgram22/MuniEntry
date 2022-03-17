@@ -23,7 +23,7 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
-from package.controllers.information_checkers import FineOnlyDialogInfoChecker
+from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -162,8 +162,6 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         self.dialog_checks = FineOnlyDialogInfoChecker(self)
 
 
-
-
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     condition_checkbox_list = [
         ("monitoring_checkBox", "monitoring_type_box"),
@@ -207,3 +205,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def add_plea_to_entry_case_information(self):
         return NotGuiltyAddPlea.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
