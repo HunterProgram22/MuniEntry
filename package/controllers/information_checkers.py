@@ -151,46 +151,6 @@ class BaseInfoChecker(object):
                 return "Fail"
         return "Pass"
 
-    @classmethod
-    def check_jail_days(cls, dialog):
-        if stop_jail_check(dialog) is True:
-            return "Pass"
-        if check_jail_time_credit_fields(dialog) == "Fail":
-            return "Fail"
-        total_jail_days, total_jail_days_suspended = cls.calculate_total_jail_days(dialog)
-        total_jail_days_credit = cls.calculate_jail_days_credit(dialog)
-        if check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended) is True:
-            return "Fail"
-        jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-        if add_jail_reporting_terms(dialog, jail_days_greater_than_zero) is False:
-            return "Fail"
-        check_if_in_jail(dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
-        check_if_jail_days_equals_suspended_and_imposed_days(dialog, total_jail_days, total_jail_days_suspended,
-                                                             total_jail_days_credit)
-        return "Pass"
-
-    @classmethod
-    def calculate_jail_days_credit(cls, dialog):
-        if dialog.entry_case_information.days_in_jail == '':
-            total_jail_days_credit = 0
-        else:
-            total_jail_days_credit = int(dialog.entry_case_information.days_in_jail)
-        return total_jail_days_credit
-
-    @classmethod
-    def calculate_total_jail_days(cls, dialog):
-        total_jail_days, total_jail_days_suspended = (0, 0)
-        for charge in dialog.entry_case_information.charges_list:
-            try:
-                total_jail_days += int(charge.jail_days)
-            except ValueError:
-                pass
-            try:
-                total_jail_days_suspended += int(charge.jail_days_suspended)
-            except ValueError:
-                pass
-        return total_jail_days, total_jail_days_suspended
-
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
@@ -236,6 +196,60 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
                               f"Please select a Diversion Program.")
         message.exec()
         return "Fail"
+
+
+class JailCCPleaDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_plea_and_findings",
+            "check_insurance",
+            "check_additional_conditions_ordered",
+            "check_jail_days",
+        ]
+        super().__init__(dialog)
+
+    def check_jail_days(self):
+        if stop_jail_check(self.dialog) is True:
+            return "Pass"
+        if check_jail_time_credit_fields(self.dialog) == "Fail":
+            return "Fail"
+        total_jail_days, total_jail_days_suspended = self.calculate_total_jail_days()
+        total_jail_days_credit = self.calculate_jail_days_credit()
+        if check_if_jail_days_suspended_greater_than_jail_imposed(self.dialog, total_jail_days,
+                                                                  total_jail_days_suspended) is True:
+            return "Fail"
+        jail_days_greater_than_zero = check_if_jail_days_imposed_greater_than_suspended_and_credit(self.dialog,
+                                                                                                   total_jail_days,
+                                                                                                   total_jail_days_suspended,
+                                                                                                   total_jail_days_credit)
+        if add_jail_reporting_terms(self.dialog, jail_days_greater_than_zero) is False:
+            return "Fail"
+        check_if_in_jail(self.dialog, total_jail_days, total_jail_days_suspended, total_jail_days_credit)
+        check_if_jail_days_equals_suspended_and_imposed_days(self.dialog, total_jail_days, total_jail_days_suspended,
+                                                             total_jail_days_credit)
+        return "Pass"
+
+    def calculate_jail_days_credit(self):
+        if self.dialog.entry_case_information.days_in_jail == '':
+            total_jail_days_credit = 0
+        else:
+            total_jail_days_credit = int(self.dialog.entry_case_information.days_in_jail)
+        return total_jail_days_credit
+
+    def calculate_total_jail_days(self):
+        total_jail_days, total_jail_days_suspended = (0, 0)
+        for charge in self.dialog.entry_case_information.charges_list:
+            try:
+                total_jail_days += int(charge.jail_days)
+            except ValueError:
+                pass
+            try:
+                total_jail_days_suspended += int(charge.jail_days_suspended)
+            except ValueError:
+                pass
+        return total_jail_days, total_jail_days_suspended
+
 
 def check_if_days_in_jail_blank(dialog):
     if dialog.entry_case_information.days_in_jail == '':

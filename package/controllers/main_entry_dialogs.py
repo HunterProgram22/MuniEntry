@@ -24,7 +24,7 @@ from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
-    DiversionDialogInfoChecker
+    DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -129,6 +129,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
 
     def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = JailCCPleaDialogInfoChecker(self)
 
 
 class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
