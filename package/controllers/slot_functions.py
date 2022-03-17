@@ -9,8 +9,7 @@ from PyQt5.QtCore import QDate
 from package.views.custom_widgets import InfoBox
 from db.databases import open_charges_db_connection, extract_data
 from db.sql_queries import sql_query_offense_type
-from package.controllers.helper_functions import InfoChecker, check_if_diversion_program_selected, set_document_name, \
-    set_future_date
+from package.controllers.helper_functions import set_document_name, set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH, PAY_DATE_DICT
