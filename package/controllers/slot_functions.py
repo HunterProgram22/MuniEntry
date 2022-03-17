@@ -83,20 +83,12 @@ class BaseDialogSlotFunctions(object):
 
     @logger.catch
     def update_info_and_perform_checks(self):
+        """This method performs an update then calls to the main_entry_dialog's InfoChecker class to run
+        the checks for that dialog. The InfoChecker calls check_status will be return as "Fail" if any of the
+        checks are hard stops - meaning the warning message doesn't allow immediate correction."""
         self.dialog.update_entry_case_information()
-        if InfoChecker.check_defense_counsel(self.dialog) == "Fail":
-            return "Fail"
-        if check_if_diversion_program_selected(self.dialog) is False:
-            return "Fail"
-        if InfoChecker.check_plea_and_findings(self.dialog) == "Fail":
-            return "Fail"
-        if InfoChecker.check_insurance(self.dialog) == "Fail":
-            return "Fail"
-        if InfoChecker.check_bond_amount(self.dialog) == "Fail":
-            return "Fail"
-        if InfoChecker.check_additional_conditions_ordered(self.dialog) == "Fail":
-            return "Fail"
-        if InfoChecker.check_jail_days(self.dialog) == "Fail":
+        self.dialog.perform_info_checks()
+        if self.dialog.dialog_checks.check_status == "Fail":
             return "Fail"
         self.dialog.update_entry_case_information()
         return "Pass"
