@@ -301,8 +301,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             elif return_value == 1:
                 self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
-
-
     def calculate_jail_days_credit(self):
         if self.dialog.entry_case_information.days_in_jail == '':
             total_jail_days_credit = 0
@@ -322,15 +320,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             except ValueError:
                 pass
         return total_jail_days, total_jail_days_suspended
-
-
-
-
-
-
-
-
-
 
 
 def check_if_jail_days_suspended_greater_than_jail_imposed(dialog, total_jail_days, total_jail_days_suspended):
