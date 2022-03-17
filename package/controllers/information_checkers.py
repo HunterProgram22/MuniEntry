@@ -2,6 +2,28 @@ from PyQt5.QtWidgets import QMessageBox
 from package.views.custom_widgets import WarningBox, RequiredBox, TwoChoiceQuestionBox, JailWarningBox
 
 
+# InfoChecker Wrappers
+def check_judicial_officer(func):
+    def wrapper(self):
+        if self.judicial_officer is None:
+            message = RequiredBox("You must select a judicial officer.")
+            message.exec()
+        else:
+            func(self)
+    return wrapper
+
+
+def check_case_list_selected(func):
+    def wrapper(self):
+        if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
+            func(self)
+        else:
+            message = RequiredBox("You must select a case list to load. If loading a "
+                                  "blank template choose any case list and leave dropdown menu blank.")
+            message.exec()
+    return wrapper
+
+
 class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
     def __init__(self, dialog):
@@ -210,7 +232,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
 
     def check_jail_days(self):
-        if stop_jail_check(self.dialog) is True:
+        if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
             return "Pass"
         if check_jail_time_credit_fields(self.dialog) == "Fail":
             return "Fail"
@@ -379,33 +401,3 @@ def check_if_jail_days_equals_suspended_and_imposed_days(dialog, total_jail_days
                              f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
                              f"Jail Reporting Terms?")
         unset_jail_reporting_terms(dialog, message.exec())
-
-
-def stop_jail_check(dialog):
-    if dialog.dialog_name != 'Jail CC Plea Dialog':
-        return True
-    if dialog.entry_case_information.diversion.ordered is True:
-        return True
-    if dialog.entry_case_information.community_control.driver_intervention_program is True:
-        return True
-
-
-def check_judicial_officer(func):
-    def wrapper(self):
-        if self.judicial_officer is None:
-            message = RequiredBox("You must select a judicial officer.")
-            message.exec()
-        else:
-            func(self)
-    return wrapper
-
-
-def check_case_list_selected(func):
-    def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
-            func(self)
-        else:
-            message = RequiredBox("You must select a case list to load. If loading a "
-                                  "blank template choose any case list and leave dropdown menu blank.")
-            message.exec()
-    return wrapper
