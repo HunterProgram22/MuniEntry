@@ -214,6 +214,29 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
 
 
+class DiversionDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_plea_and_findings",
+            "check_if_diversion_program_selected",
+        ]
+        super().__init__(dialog)
+
+    def check_if_diversion_program_selected(self):
+        diversion_program_list = [
+            'marijuana_diversion',
+            'theft_diversion',
+            'other_diversion',
+        ]
+        for program in diversion_program_list:
+            if getattr(self.dialog.entry_case_information.diversion, program) is True:
+                return "Pass"
+        message = RequiredBox(f"No Diversion Program was selected. \n\n"
+                              f"Please select a Diversion Program.")
+        message.exec()
+        return "Fail"
+
 def check_if_days_in_jail_blank(dialog):
     if dialog.entry_case_information.days_in_jail == '':
         message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
@@ -351,22 +374,6 @@ def stop_jail_check(dialog):
         return True
     if dialog.entry_case_information.community_control.driver_intervention_program is True:
         return True
-
-
-def check_if_diversion_program_selected(dialog):
-    diversion_program_list = [
-        'marijuana_diversion',
-        'theft_diversion',
-        'other_diversion',
-    ]
-    if dialog.dialog_name == 'Diversion Plea Dialog':
-        for program in diversion_program_list:
-            if getattr(dialog.entry_case_information.diversion, program) is True:
-                return True
-        message = RequiredBox(f"No Diversion Program was selected. \n\n"
-                              f"Please select a Diversion Program.")
-        message.exec()
-        return False
 
 
 def check_judicial_officer(func):

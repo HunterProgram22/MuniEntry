@@ -11,7 +11,7 @@ from db.databases import open_charges_db_connection, extract_data
 from db.sql_queries import sql_query_offense_type
 from package.controllers.helper_functions import set_document_name, \
     set_future_date
-from package.controllers.information_checkers import BaseInfoChecker, check_if_diversion_program_selected
+from package.controllers.information_checkers import BaseInfoChecker
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH, PAY_DATE_DICT
@@ -89,18 +89,6 @@ class BaseDialogSlotFunctions(object):
         if self.dialog.dialog_checks.check_status == "Fail":
             return "Fail"
 
-        # if BaseInfoChecker.check_defense_counsel(self.dialog) == "Fail":
-        #     return "Fail"
-        # if check_if_diversion_program_selected(self.dialog) is False:
-        #     return "Fail"
-        # if BaseInfoChecker.check_plea_and_findings(self.dialog) == "Fail":
-        #     return "Fail"
-        # if BaseInfoChecker.check_insurance(self.dialog) == "Fail":
-        #     return "Fail"
-        # if BaseInfoChecker.check_bond_amount(self.dialog) == "Fail":
-        #     return "Fail"
-        # if BaseInfoChecker.check_additional_conditions_ordered(self.dialog) == "Fail":
-        #     return "Fail"
         # if BaseInfoChecker.check_jail_days(self.dialog) == "Fail":
         #     return "Fail"
         self.dialog.update_entry_case_information()
