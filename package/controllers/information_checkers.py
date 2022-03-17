@@ -76,17 +76,13 @@ class BaseInfoChecker(object):
             return "Pass"
 
     def check_bond_amount(self):
-        if(
-            hasattr(self.dialog, 'bond_type_box')
-            and self.dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
-            and self.dialog.bond_amount_box.currentText() == 'None (OR Bond)'
+        if (    self.dialog.bond_type_box.currentText() != 'Recognizance (OR) Bond'
+                and self.dialog.bond_amount_box.currentText() == 'None (OR Bond)'
         ):
             message = RequiredBox("A bond type requiring a bond amount was selected, but a bond amount was not selected. Please specify the bond amount.")
             message.exec()
             return "Fail"
-        if (
-                hasattr(self.dialog, 'bond_type_box')
-                and self.dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
+        if (    self.dialog.bond_type_box.currentText() == 'Recognizance (OR) Bond'
                 and self.dialog.bond_amount_box.currentText() != 'None (OR Bond)'
         ):
             message = RequiredBox(
