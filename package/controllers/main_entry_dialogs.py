@@ -23,6 +23,8 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
+    DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -86,6 +88,9 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
+    def perform_info_checks(self):
+        self.dialog_checks = DiversionDialogInfoChecker(self)
+
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
@@ -125,6 +130,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
+    def perform_info_checks(self):
+        self.dialog_checks = JailCCPleaDialogInfoChecker(self)
+
 
 class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
@@ -156,6 +164,9 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def add_plea_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = FineOnlyDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
@@ -201,3 +212,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def add_plea_to_entry_case_information(self):
         return NotGuiltyAddPlea.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
+        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
