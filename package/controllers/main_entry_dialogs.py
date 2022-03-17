@@ -215,4 +215,3 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
-        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
