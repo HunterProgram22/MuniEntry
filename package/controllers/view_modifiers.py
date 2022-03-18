@@ -2,6 +2,8 @@
 after the setupUI is called. This class makes changes to the view that are outside the the specific
 view file. Modifications to the view are placed in the ViewModifier class so that they don't need to
 be updated each time a view file is recompiled through the pyuic5 command."""
+import datetime
+
 from loguru import logger
 from PyQt5 import QtCore
 from PyQt5 import QtGui
@@ -180,6 +182,7 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
         self.load_data_previously_entered()
+        # set driving license type here
 
     def load_data_previously_entered(self):
         self.transfer_model_data_to_field()
@@ -199,8 +202,13 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
             #
             # elif isinstance(getattr(self, view_field), QTextEdit):
             #
-            # elif isinstance(getattr(self, view_field), QDateEdit):
-            #
+            elif isinstance(getattr(self.dialog, view_field), QDateEdit):
+                try:
+                    format = "%B %d, %Y"
+                    date = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
+                    getattr(self.dialog, view_field).setDate(date)
+                except TypeError:
+                    pass
             # elif isinstance(getattr(self, view_field), QTimeEdit):
 
 

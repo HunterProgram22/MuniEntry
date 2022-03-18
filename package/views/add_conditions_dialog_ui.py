@@ -91,7 +91,7 @@ class Ui_AddConditionsDialog(object):
         self.gridLayout_2.addWidget(self.label_9, 1, 0, 1, 1)
         self.license_type_box = QtWidgets.QComboBox(self.license_suspension_frame)
         self.license_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.license_type_box.setEditable(True)
+        self.license_type_box.setEditable(False)
         self.license_type_box.setObjectName("license_type_box")
         self.license_type_box.addItem("")
         self.license_type_box.addItem("")
