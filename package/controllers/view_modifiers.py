@@ -9,7 +9,8 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
+from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, \
+    QTimeEdit, QRadioButton
 
 from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit, NoScrollTimeEdit
 from package.controllers.helper_functions import set_future_date
@@ -94,6 +95,29 @@ class BaseDialogViewModifier(object):
     def set_jail_report_default_view(self):
         self.dialog.report_date_box.setDate(TODAY)
 
+    def set_report_date_view(self):
+        if self.dialog.report_type_box.currentText() == "date set by Office of Community Control":
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        elif self.dialog.report_type_box.currentText() == "forthwith":
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        else:
+            self.dialog.report_date_box.setEnabled(True)
+            self.dialog.report_date_box.setHidden(False)
+            self.dialog.report_time_box.setEnabled(True)
+            self.dialog.report_time_box.setHidden(False)
+            self.dialog.report_date_label.setHidden(False)
+            self.dialog.report_time_label.setHidden(False)
+
     def set_report_days_notes_box(self):
         if self.dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
             self.dialog.jail_report_days_notes_box.setDisabled(True)
@@ -110,6 +134,36 @@ class BaseDialogViewModifier(object):
                 getattr(dialog, condition_field).setEnabled(False)
                 getattr(dialog, condition_field).setHidden(True)
 
+    def transfer_model_data_to_condition_dialog_fields(self):
+        model_class = self.dialog.main_dialog.entry_case_information.jail_terms
+
+        terms_list = getattr(model_class, "terms_list")
+        for item in terms_list:
+            (model_attribute, view_field) = item
+            if isinstance(getattr(self.dialog, view_field), QComboBox):
+                getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QCheckBox):
+                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QRadioButton):
+                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QLineEdit):
+                getattr(self.dialog, view_field).setText(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QTextEdit):
+                getattr(self.dialog, view_field).setPlainText(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QDateEdit):
+                try:
+                    format = "%B %d, %Y"
+                    date = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
+                    getattr(self.dialog, view_field).setDate(date)
+                except TypeError:
+                    pass
+            elif isinstance(getattr(self.dialog, view_field), QTimeEdit):
+                try:
+                    format = "%H:%M %p"
+                    time = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
+                    getattr(self.dialog, view_field).setTime(time)
+                except TypeError:
+                    pass
 
 class AddChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
@@ -181,36 +235,7 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner()
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
-        self.load_data_previously_entered()
-
-    def load_data_previously_entered(self):
-        self.transfer_model_data_to_field()
-
-    def transfer_model_data_to_field(self):
-        model_class = self.dialog.main_dialog.entry_case_information.license_suspension
-        terms_list = getattr(model_class, "terms_list")
-        for item in terms_list:
-            (model_attribute, view_field) = item
-            if isinstance(getattr(self.dialog, view_field), QComboBox):
-                getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QCheckBox):
-                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
-            # elif isinstance(getattr(self, view_field), QRadioButton):
-            #
-            # elif isinstance(getattr(self, view_field), QLineEdit):
-            #
-            # elif isinstance(getattr(self, view_field), QTextEdit):
-            #
-            elif isinstance(getattr(self.dialog, view_field), QDateEdit):
-                try:
-                    format = "%B %d, %Y"
-                    date = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
-                    getattr(self.dialog, view_field).setDate(date)
-                except TypeError:
-                    pass
-            # elif isinstance(getattr(self, view_field), QTimeEdit):
-
-
+        self.transfer_model_data_to_condition_dialog_fields()
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -227,6 +252,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
         self.set_report_days_notes_box()
         self.set_jail_commitment_boxes_to_no_scroll()
+        self.transfer_model_data_to_condition_dialog_fields()
 
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
@@ -251,10 +277,15 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner()
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
+        self.transfer_model_data_to_condition_dialog_fields()
         self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
         self.set_jail_report_default_view()
+        self.set_report_date_view()
         self.set_report_days_notes_box()
         self.set_jail_commitment_boxes_to_no_scroll()
+        self.set_community_control_dialog_boxes_to_no_scroll()
+
+    def set_community_control_dialog_boxes_to_no_scroll(self):
         self.dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
         self.dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
         self.dialog.house_arrest_time_box.__class__ = NoScrollComboBox
