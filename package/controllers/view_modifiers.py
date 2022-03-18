@@ -49,6 +49,15 @@ class BaseDialogViewModifier(object):
         self.dialog.fra_in_court_box.__class__ = NoScrollComboBox
         self.dialog.balance_due_date.__class__ = NoScrollDateEdit
 
+    def set_case_information_banner(self):
+        self.dialog.defendant_name_label.setText(
+            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
+                defendant_first_name=self.dialog.main_dialog.entry_case_information.defendant.first_name,
+                defendant_last_name=self.dialog.main_dialog.entry_case_information.defendant.last_name
+            )
+        )
+        self.dialog.case_number_label.setText(self.dialog.main_dialog.entry_case_information.case_number)
+
     ###Additional Condition/Jail Dialog Setup Methods###
     def set_jail_commitment_boxes_to_no_scroll(self):
         self.dialog.report_type_box.__class__ = NoScrollComboBox
@@ -58,38 +67,38 @@ class BaseDialogViewModifier(object):
         self.dialog.jail_term_type_box.__class__ = NoScrollComboBox
 
 
-    def set_conditions_case_information_banner(self, dialog):
-        column = dialog.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(dialog.charges_list):
+    def set_conditions_case_information_banner(self):
+        column = self.dialog.charges_gridLayout.columnCount() + 1
+        for _index, charge in enumerate(self.dialog.charges_list):
             charge = vars(charge)
             if charge is not None:
-                dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
+                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
                 column += 1
 
-    def set_license_suspension_default_view(self, dialog):
-        dialog.license_suspension_date_box.setDate(TODAY)
-        dialog.license_suspension_date_box.__class__ = NoScrollDateEdit
-        dialog.license_type_box.__class__ = NoScrollComboBox
-        dialog.term_of_suspension_box.__class__ = NoScrollComboBox
+    def set_license_suspension_default_view(self):
+        self.dialog.license_suspension_date_box.setDate(TODAY)
+        self.dialog.license_suspension_date_box.__class__ = NoScrollDateEdit
+        self.dialog.license_type_box.__class__ = NoScrollComboBox
+        self.dialog.term_of_suspension_box.__class__ = NoScrollComboBox
 
-    def set_community_service_default_view(self, dialog):
-        dialog.community_service_date_to_complete_box.setDate(TODAY)
-        dialog.community_service_hours_ordered_box.__class__ = NoScrollComboBox
-        dialog.community_service_days_to_complete_box.__class__ = NoScrollComboBox
-        dialog.community_service_date_to_complete_box.__class__ = NoScrollDateEdit
+    def set_community_service_default_view(self):
+        self.dialog.community_service_date_to_complete_box.setDate(TODAY)
+        self.dialog.community_service_hours_ordered_box.__class__ = NoScrollComboBox
+        self.dialog.community_service_days_to_complete_box.__class__ = NoScrollComboBox
+        self.dialog.community_service_date_to_complete_box.__class__ = NoScrollDateEdit
 
-    def set_jail_report_default_view(self, dialog):
-        dialog.report_date_box.setDate(TODAY)
+    def set_jail_report_default_view(self):
+        self.dialog.report_date_box.setDate(TODAY)
 
-    def set_report_days_notes_box(self, dialog):
-        if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            dialog.jail_report_days_notes_box.setDisabled(True)
-            dialog.jail_report_days_notes_box.setHidden(True)
+    def set_report_days_notes_box(self):
+        if self.dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
+            self.dialog.jail_report_days_notes_box.setDisabled(True)
+            self.dialog.jail_report_days_notes_box.setHidden(True)
         else:
-            dialog.jail_report_days_notes_box.setDisabled(False)
-            dialog.jail_report_days_notes_box.setHidden(False)
+            self.dialog.jail_report_days_notes_box.setDisabled(False)
+            self.dialog.jail_report_days_notes_box.setHidden(False)
 
     @classmethod
     def hide_boxes(cls, dialog):
@@ -103,31 +112,13 @@ class BaseDialogViewModifier(object):
 class AddChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_case_information_banner(dialog)
-
-    def set_case_information_banner(self, dialog):
-        dialog.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
-                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
-            )
-        )
-        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
+        self.set_case_information_banner()
 
 
 class AmendChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_case_information_banner(dialog)
-
-    def set_case_information_banner(self, dialog):
-        dialog.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=dialog.main_dialog.entry_case_information.defendant.first_name,
-                defendant_last_name=dialog.main_dialog.entry_case_information.defendant.last_name
-            )
-        )
-        dialog.case_number_label.setText(dialog.main_dialog.entry_case_information.case_number)
+        self.set_case_information_banner()
 
 
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -185,9 +176,9 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_view(dialog)
-        self.set_community_service_default_view(dialog)
+        self.set_conditions_case_information_banner()
+        self.set_license_suspension_default_view()
+        self.set_community_service_default_view()
     #     self.load_data_previously_entered(dialog)
     #
     # def load_data_previously_entered(self, dialog):
@@ -237,10 +228,10 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_conditions_case_information_banner(dialog)
-        self.set_jail_report_default_view(dialog)
-        self.hide_boxes(dialog)
-        self.set_report_days_notes_box(dialog)
+        self.set_conditions_case_information_banner()
+        self.set_jail_report_default_view()
+        self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
+        self.set_report_days_notes_box()
         self.set_jail_commitment_boxes_to_no_scroll()
 
 
@@ -263,38 +254,38 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_conditions_case_information_banner(dialog)
-        self.set_license_suspension_default_view(dialog)
-        self.set_community_service_default_view(dialog)
-        self.hide_boxes(dialog)
-        self.set_jail_report_default_view(dialog)
-        self.set_report_days_notes_box(dialog)
+        self.set_conditions_case_information_banner()
+        self.set_license_suspension_default_view()
+        self.set_community_service_default_view()
+        self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
+        self.set_jail_report_default_view()
+        self.set_report_days_notes_box()
         self.set_jail_commitment_boxes_to_no_scroll()
-        dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
-        dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
-        dialog.house_arrest_time_box.__class__ = NoScrollComboBox
-        dialog.gps_exclusion_radius_box.__class__ = NoScrollComboBox
-        dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
-        dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
-        dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
+        self.dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
+        self.dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
+        self.dialog.house_arrest_time_box.__class__ = NoScrollComboBox
+        self.dialog.gps_exclusion_radius_box.__class__ = NoScrollComboBox
+        self.dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
+        self.dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
+        self.dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
 
 
 class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_special_bond_conditions_case_information_banner(dialog)
-        self.set_domestic_violence_surrender_weapons_default_date(dialog)
-        dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
-        dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
+        self.set_special_bond_conditions_case_information_banner()
+        self.set_domestic_violence_surrender_weapons_default_date()
+        self.dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
+        self.dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
 
-    def set_special_bond_conditions_case_information_banner(self, dialog):
-        column = dialog.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(dialog.charges_list):
+    def set_special_bond_conditions_case_information_banner(self):
+        column = self.dialog.charges_gridLayout.columnCount() + 1
+        for charge in self.dialog.charges_list:
             charge = vars(charge)
             if charge is not None:
-                dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
+                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
+                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
                 column += 1
 
-    def set_domestic_violence_surrender_weapons_default_date(self, dialog):
-        dialog.domestic_violence_surrender_weapons_dateBox.setDate(TODAY)
+    def set_domestic_violence_surrender_weapons_default_date(self):
+        self.dialog.domestic_violence_surrender_weapons_dateBox.setDate(TODAY)
