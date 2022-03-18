@@ -24,6 +24,7 @@ from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
+from package.views.failure_to_appear_dialog_ui import Ui_FailiureToAppearDialog
 from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
     DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
