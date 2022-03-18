@@ -134,9 +134,31 @@ class BaseDialogViewModifier(object):
                 getattr(dialog, condition_field).setEnabled(False)
                 getattr(dialog, condition_field).setHidden(True)
 
-    def transfer_model_data_to_condition_dialog_fields(self):
-        model_class = self.dialog.main_dialog.entry_case_information.jail_terms
+    def load_existing_data_to_dialog(self):
+        CONDITIONS_CLASSES = [
+            ("other_conditions_checkBox", "other_conditions"),
+            ("license_suspension_checkBox", "license_suspension"),
+            ("community_service_checkBox", "community_service"),
+            ("admin_license_suspension_checkBox", "admin_license_suspension"),
+            ("domestic_violence_checkBox", "domestic_violence"),
+            ("vehicle_seizure_checkBox", "vehicle_seizure"),
+            ("no_contact_checkBox", "no_contact"),
+            ("custodial_supervision_checkBox", "custodial_supervision"),
+            ("community_control_checkBox", "community_control"),
+            ("jail_checkBox", "jail_terms"),
+            ("impoundment_checkBox", "impoundment"),
+            ("victim_notification_checkBox", "victim_notification"),
+        ]
+        for item in CONDITIONS_CLASSES:
+            (condition_checkbox, model_class) = item
+            if hasattr(self.dialog.main_dialog, condition_checkbox):
+                if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
+                    model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
+                    self.transfer_model_data_to_condition_dialog_fields(model_class)
+                else:
+                    continue
 
+    def transfer_model_data_to_condition_dialog_fields(self, model_class):
         terms_list = getattr(model_class, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
@@ -235,7 +257,7 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner()
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
-        self.transfer_model_data_to_condition_dialog_fields()
+        self.load_existing_data_to_dialog()
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
@@ -248,11 +270,12 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_conditions_case_information_banner()
+        self.load_existing_data_to_dialog()
+        self.hide_boxes(dialog)  # Class method needs dialog ? TODO: Fix
         self.set_jail_report_default_view()
-        self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
+        self.set_report_date_view()
         self.set_report_days_notes_box()
         self.set_jail_commitment_boxes_to_no_scroll()
-        self.transfer_model_data_to_condition_dialog_fields()
 
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
@@ -277,7 +300,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner()
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
-        self.transfer_model_data_to_condition_dialog_fields()
+        self.load_existing_data_to_dialog()
         self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
         self.set_jail_report_default_view()
         self.set_report_date_view()
