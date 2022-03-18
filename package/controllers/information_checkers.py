@@ -24,15 +24,6 @@ def check_case_list_selected(func):
     return wrapper
 
 
-def check_driver_intervention_program(func):
-    def wrapper(self):
-        if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
-            return "Pass"
-        else:
-            func(self)
-    print(wrapper)
-    return wrapper
-
 class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
     def __init__(self, dialog):
