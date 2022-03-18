@@ -240,6 +240,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             "check_if_jail_days_imposed_greater_than_suspended_and_credit",
             "check_if_jail_days_equals_suspended_and_imposed_days",
             "check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered",
+            "check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed",
         ]
         self.check_status = self.perform_check_list()
 
@@ -388,3 +389,16 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                                  f"but you set Jail Reporting Terms. \n\nAre you sure you want "
                                  f"to set Jail Reporting Terms?")
             return self.unset_jail_reporting_terms(message.exec())
+
+    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
+        if (
+            self.total_jail_days_credit > self.total_jail_days
+            and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
+        ):
+            message = RequiredBox(f"The Defendant is set to have {self.total_jail_days_credit} days of jail time "
+                                  f"credit applied to a sentence, but a total of only {self.total_jail_days} are set "
+                                  f"to be imposed in the case. The total jail day imposed is less than the jail time "
+                                  f"credit that is being applied to the sentence. \n\nPlease impose additional jails "
+                                  f"days or change the Apply JTC to box to 'Costs and Fines'.")
+            message.exec()
+            return "Fail"
