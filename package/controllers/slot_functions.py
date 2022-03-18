@@ -306,17 +306,22 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def update_charges_grid_with_amended_charge(self):
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
             if (
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    self.main_dialog.charges_gridLayout.itemAtPosition(
+                        self.main_dialog.charges_gridLayout.row_offense, columns) is not None
                     and self.main_dialog.charges_gridLayout.itemAtPosition(
-                0, columns).widget().text() == self.dialog.current_offense_name
+                        self.main_dialog.charges_gridLayout.row_offense, columns
+                        ).widget().text() == self.dialog.current_offense_name
             ):
-                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(
+                self.main_dialog.charges_gridLayout.itemAtPosition(
+                    self.main_dialog.charges_gridLayout.row_offense, columns).widget().setText(
                     f"{self.dialog.current_offense_name} - AMENDED to "
                     f"{self.dialog.amend_offense_details.amended_charge}"
                     )
-                self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(
+                self.main_dialog.charges_gridLayout.itemAtPosition(
+                    self.main_dialog.charges_gridLayout.row_statute, columns).widget().setText(
                     self.dialog.statute_choice_box.currentText())
-                self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(
+                self.main_dialog.charges_gridLayout.itemAtPosition(
+                    self.main_dialog.charges_gridLayout.row_degree, columns).widget().setCurrentText(
                     self.dialog.degree_choice_box.currentText())
 
     def add_charge_to_amended_charge_list(self):
