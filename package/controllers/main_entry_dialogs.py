@@ -23,6 +23,7 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
 from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
     DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
@@ -218,3 +219,11 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
+
+
+class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
+    pass
+
+
+class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
+    pass
