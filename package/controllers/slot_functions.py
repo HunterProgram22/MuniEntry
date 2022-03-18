@@ -75,16 +75,18 @@ class BaseDialogSlotFunctions(object):
 
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
-        update_info_and_perform_checks method (found in helper_functions.py)."""
-        info_checks = self.update_info_and_perform_checks()
-        if info_checks == "Pass":
+        update_info_and_perform_checks method."""
+        if self.update_info_and_perform_checks() == "Pass":
             self.create_entry()
 
     @logger.catch
     def update_info_and_perform_checks(self):
         """This method performs an update then calls to the main_entry_dialog's InfoChecker class to run
-        the checks for that dialog. The InfoChecker calls check_status will be return as "Fail" if any of the
-        checks are hard stops - meaning the warning message doesn't allow immediate correction."""
+        the checks for that dialog. The InfoChecker check_status will return as "Fail" if any of the
+        checks are hard stops - meaning the warning message doesn't allow immediate correction.
+
+        The dialog.update_entry_case_information is called a second time to update the model with any changes
+        to information that was made by the InfoChecker checks."""
         self.dialog.update_entry_case_information()
         self.dialog.perform_info_checks()
         if self.dialog.dialog_checks.check_status == "Fail":
