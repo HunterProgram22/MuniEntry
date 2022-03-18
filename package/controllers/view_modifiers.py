@@ -182,7 +182,6 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.load_data_previously_entered()
 
     def load_data_previously_entered(self):
-        print(self.dialog.main_dialog.entry_case_information.license_suspension)
         self.transfer_model_data_to_field()
 
     def transfer_model_data_to_field(self):
@@ -191,10 +190,8 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         for item in terms_list:
             (model_attribute, view_field) = item
             if isinstance(getattr(self.dialog, view_field), QComboBox):
-                print(f"Model class is {model_class}")
                 getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
             elif isinstance(getattr(self.dialog, view_field), QCheckBox):
-                print(f"Model class is {model_class}")
                 getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
             # elif isinstance(getattr(self, view_field), QRadioButton):
             #
