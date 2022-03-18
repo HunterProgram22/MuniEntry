@@ -50,7 +50,7 @@ class BaseDialogViewModifier(object):
         self.dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     ###Additional Condition/Jail Dialog Setup Methods###
-    def set_jail_committment_boxes_to_no_scroll(self):
+    def set_jail_commitment_boxes_to_no_scroll(self):
         self.dialog.report_type_box.__class__ = NoScrollComboBox
         self.dialog.report_date_box.__class__ = NoScrollDateEdit
         self.dialog.report_time_box.__class__ = NoScrollTimeEdit
@@ -241,7 +241,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_jail_report_default_view(dialog)
         self.hide_boxes(dialog)
         self.set_report_days_notes_box(dialog)
-        self.set_jail_committment_boxes_to_no_scroll()
+        self.set_jail_commitment_boxes_to_no_scroll()
 
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
@@ -269,7 +269,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.hide_boxes(dialog)
         self.set_jail_report_default_view(dialog)
         self.set_report_days_notes_box(dialog)
-        self.set_jail_committment_boxes_to_no_scroll()
+        self.set_jail_commitment_boxes_to_no_scroll()
         dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
         dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
         dialog.house_arrest_time_box.__class__ = NoScrollComboBox
