@@ -285,30 +285,47 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.statute_choice_box.clearEditText()
         self.dialog.offense_choice_box.clearEditText()
 
-    def amend_offense(self):
+    def amend_offense_process(self):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
         object then points the entry_case_information object to the AmendOffenseDetails
         object."""
+        self.set_amended_offense_details()
+        if self.dialog.motion_decision_box.currentText() == "Granted":
+            setattr(self.dialog.charge,
+                    'offense',
+                    f"{self.dialog.current_offense_name} - AMENDED to "
+                    f"{self.dialog.amend_offense_details.amended_charge}"
+                    )
+            self.add_charge_to_amended_charge_list()
+            self.update_charges_grid_with_amended_charge()
+        self.close_event()
+
+    def update_charges_grid_with_amended_charge(self):
+        for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
+            if (
+                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
+                    and self.main_dialog.charges_gridLayout.itemAtPosition(
+                0, columns).widget().text() == self.dialog.current_offense_name
+            ):
+                self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(
+                    f"{self.dialog.current_offense_name} - AMENDED to "
+                    f"{self.dialog.amend_offense_details.amended_charge}"
+                    )
+                self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(
+                    self.dialog.statute_choice_box.currentText())
+                self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(
+                    self.dialog.degree_choice_box.currentText())
+
+    def add_charge_to_amended_charge_list(self):
+        self.main_dialog.entry_case_information.amended_charges_list.append(
+            (self.dialog.amend_offense_details.original_charge, self.dialog.amend_offense_details.amended_charge)
+        )
+
+    def set_amended_offense_details(self):
         self.dialog.amend_offense_details.original_charge = self.dialog.current_offense_name
         self.dialog.amend_offense_details.amended_charge = self.dialog.offense_choice_box.currentText()
         self.dialog.amend_offense_details.motion_disposition = self.dialog.motion_decision_box.currentText()
         self.main_dialog.entry_case_information.amend_offense_details = self.dialog.amend_offense_details
-        if self.dialog.motion_decision_box.currentText() == "Granted":
-            amended_charge = f"{self.dialog.current_offense_name} - AMENDED to {self.dialog.amend_offense_details.amended_charge}"
-            setattr(self.dialog.charge, 'offense', amended_charge)
-            self.main_dialog.entry_case_information.amended_charges_list.append(
-                (self.dialog.amend_offense_details.original_charge, self.dialog.amend_offense_details.amended_charge)
-            )
-            for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
-                if (
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns) is not None
-                    and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        0, columns).widget().text() == self.dialog.current_offense_name
-                ):
-                    self.main_dialog.charges_gridLayout.itemAtPosition(0, columns).widget().setText(amended_charge)
-                    self.main_dialog.charges_gridLayout.itemAtPosition(1, columns).widget().setText(self.dialog.statute_choice_box.currentText())
-                    self.main_dialog.charges_gridLayout.itemAtPosition(2, columns).widget().setCurrentText(self.dialog.degree_choice_box.currentText())
-        self.close_event()
 
     def close_event(self):
         self.dialog.charges_database.close()

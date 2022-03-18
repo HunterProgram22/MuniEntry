@@ -67,7 +67,7 @@ class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
         dialog.clear_fields_Button.released.connect(dialog.functions.clear_amend_charge_fields)
-        dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense)
+        dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense_process)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
