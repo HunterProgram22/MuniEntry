@@ -147,10 +147,18 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date()
         self.set_appearance_reason()
+        self.set_diversion_fine_pay_date_box()
+        self.set_diversion_jail_report_date_box()
+
+    def set_diversion_fine_pay_date_box(self):
         diversion_pay_days_to_add = set_future_date(97, None, 1)
         self.dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
+        self.dialog.diversion_fine_pay_date_box.__class__ = NoScrollDateEdit
+
+    def set_diversion_jail_report_date_box(self):
         jail_report_days_to_add = set_future_date(97, None, 4)
         self.dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
+        self.dialog.diversion_jail_report_date_box.__class__ = NoScrollDateEdit
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
