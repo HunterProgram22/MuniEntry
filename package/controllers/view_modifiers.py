@@ -18,28 +18,36 @@ TODAY = QtCore.QDate.currentDate()
 
 class BaseDialogViewModifier(object):
     def __init__(self, dialog):
-        dialog.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
-        dialog.setWindowFlags(dialog.windowFlags() |
+        self.dialog = dialog
+        self.dialog.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
+        self.dialog.setWindowFlags(self.dialog.windowFlags() |
                             QtCore.Qt.CustomizeWindowHint |
                             QtCore.Qt.WindowMaximizeButtonHint |
                             QtCore.Qt.WindowCloseButtonHint)
-        dialog.setupUi(dialog)
+        self.dialog.setupUi(self.dialog)
 
     ###Main Dialog Setup Methods###
-    def set_plea_trial_date(self, dialog):
-        dialog.plea_trial_date.setDate(TODAY)
-        dialog.plea_trial_date.__class__ = NoScrollDateEdit
+    def set_plea_trial_date(self):
+        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.plea_trial_date.__class__ = NoScrollDateEdit
 
-    def set_appearance_reason(self, dialog):
-        if dialog.case_table == "final_pretrials":
-            dialog.appearance_reason_box.setCurrentText("change of plea")
-        elif dialog.case_table == "pleas":
-            dialog.appearance_reason_box.setCurrentText("change of plea")
-        elif dialog.case_table == "trials_to_court":
-            dialog.appearance_reason_box.setCurrentText("trial to court")
+    def set_appearance_reason(self):
+        if self.dialog.case_table == "final_pretrials":
+            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+        elif self.dialog.case_table == "pleas":
+            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+        elif self.dialog.case_table == "trials_to_court":
+            self.dialog.appearance_reason_box.setCurrentText("trial to court")
 
-    def set_balance_due_date(self, dialog):
-        dialog.balance_due_date.setDate(TODAY)
+    def set_balance_due_date(self):
+        self.dialog.balance_due_date.setDate(TODAY)
+
+    def set_court_cost_and_fra_boxes_to_no_scroll(self):
+        self.dialog.court_costs_box.__class__ = NoScrollComboBox
+        self.dialog.ability_to_pay_box.__class__ = NoScrollComboBox
+        self.dialog.fra_in_file_box.__class__ = NoScrollComboBox
+        self.dialog.fra_in_court_box.__class__ = NoScrollComboBox
+        self.dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     ###Additional Condition/Jail Dialog Setup Methods###
     def set_conditions_case_information_banner(self, dialog):
@@ -66,13 +74,6 @@ class BaseDialogViewModifier(object):
 
     def set_jail_report_default_view(self, dialog):
         dialog.report_date_box.setDate(TODAY)
-
-    def set_court_cost_and_fra_boxes_to_no_scroll(self, dialog):
-        dialog.court_costs_box.__class__ = NoScrollComboBox
-        dialog.ability_to_pay_box.__class__ = NoScrollComboBox
-        dialog.fra_in_file_box.__class__ = NoScrollComboBox
-        dialog.fra_in_court_box.__class__ = NoScrollComboBox
-        dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     def set_report_days_notes_box(self, dialog):
         if dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
@@ -124,41 +125,41 @@ class AmendChargeDialogViewModifier(BaseDialogViewModifier):
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_plea_trial_date(dialog)
-        self.set_appearance_reason(dialog)
-        self.set_balance_due_date(dialog)
-        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.set_balance_due_date()
+        self.set_court_cost_and_fra_boxes_to_no_scroll()
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_plea_trial_date(dialog)
-        self.set_appearance_reason(dialog)
-        self.set_balance_due_date(dialog)
-        self.set_court_cost_and_fra_boxes_to_no_scroll(dialog)
-        dialog.in_jail_box.__class__ = NoScrollComboBox
-        dialog.jail_time_credit_apply_box.__class__ = NoScrollComboBox
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.set_balance_due_date()
+        self.set_court_cost_and_fra_boxes_to_no_scroll()
+        self.dialog.in_jail_box.__class__ = NoScrollComboBox
+        self.dialog.jail_time_credit_apply_box.__class__ = NoScrollComboBox
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_plea_trial_date(dialog)
-        self.set_appearance_reason(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
         diversion_pay_days_to_add = set_future_date(97, None, 1)
-        dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
+        self.dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         jail_report_days_to_add = set_future_date(97, None, 4)
-        dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
+        self.dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_plea_trial_date(dialog)
-        self.set_appearance_reason(dialog)
-        dialog.bond_type_box.__class__ = NoScrollComboBox
-        dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.dialog.bond_type_box.__class__ = NoScrollComboBox
+        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
@@ -167,6 +168,44 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner(dialog)
         self.set_license_suspension_default_view(dialog)
         self.set_community_service_default_view(dialog)
+    #     self.load_data_previously_entered(dialog)
+    #
+    # def load_data_previously_entered(self, dialog):
+    #     print(dialog.main_dialog.entry_case_information.license_suspension)
+    #     self.transfer_model_data_to_field(dialog.main_dialog.entry_case_information.license_suspension)
+
+    # def transfer_model_data_to_field(self, terms_object):
+    #     terms_list = getattr(terms_object, "terms_list")
+    #     for item in terms_list:
+    #         (model_attribute, view_field) = item
+    #         if isinstance(getattr(self, view_field), QComboBox):
+    #             print(f"Self is {self}")
+    #             print(f"View field is {view_field}")
+    #             print(f"Model attribute is {model_attribute}")
+
+                    # setattr(dialog, view_field, getattr(self, model_attribute))
+
+
+                    # setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
+
+
+            #     elif isinstance(getattr(self, view_field), QCheckBox):
+            #         setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+            #     elif isinstance(getattr(self, view_field), QRadioButton):
+            #         setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+            #     elif isinstance(getattr(self, view_field), QLineEdit):
+            #         setattr(terms_object, model_attribute, getattr(self, view_field).text())
+            #     elif isinstance(getattr(self, view_field), QTextEdit):
+            #         plain_text = getattr(self, view_field).toPlainText()
+            #         setattr(terms_object, model_attribute, plain_text)
+            #     elif isinstance(getattr(self, view_field), QDateEdit):
+            #         setattr(terms_object, model_attribute, getattr(self, view_field).date(
+            #             ).toString("MMMM dd, yyyy"))
+            #     elif isinstance(getattr(self, view_field), QTimeEdit):
+            #         setattr(terms_object, model_attribute, getattr(self, view_field).time(
+            #             ).toString("hh:mm A"))
+            # except AttributeError:
+            #     pass
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
