@@ -58,14 +58,14 @@ class BaseInfoChecker(object):
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
                 offense = self.dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
-                if self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
-                    message = RequiredBox(f"You must enter a plea for {offense}.")
-                    message.exec()
-                    return "Fail"
-                elif self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
+                if self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "Dismissed":
                     column += 2
                     loop_counter += 1
                     continue
+                elif self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText() == "":
+                    message = RequiredBox(f"You must enter a plea for {offense}.")
+                    message.exec()
+                    return "Fail"
                 elif self.dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText() == "":
                     message = RequiredBox(f"You must enter a finding for {offense}.")
                     message.exec()
