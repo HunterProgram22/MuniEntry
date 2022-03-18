@@ -179,44 +179,34 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_conditions_case_information_banner()
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
-    #     self.load_data_previously_entered(dialog)
-    #
-    # def load_data_previously_entered(self, dialog):
-    #     print(dialog.main_dialog.entry_case_information.license_suspension)
-    #     self.transfer_model_data_to_field(dialog.main_dialog.entry_case_information.license_suspension)
+        self.load_data_previously_entered()
 
-    # def transfer_model_data_to_field(self, terms_object):
-    #     terms_list = getattr(terms_object, "terms_list")
-    #     for item in terms_list:
-    #         (model_attribute, view_field) = item
-    #         if isinstance(getattr(self, view_field), QComboBox):
-    #             print(f"Self is {self}")
-    #             print(f"View field is {view_field}")
-    #             print(f"Model attribute is {model_attribute}")
+    def load_data_previously_entered(self):
+        print(self.dialog.main_dialog.entry_case_information.license_suspension)
+        self.transfer_model_data_to_field()
 
-                    # setattr(dialog, view_field, getattr(self, model_attribute))
+    def transfer_model_data_to_field(self):
+        model_class = self.dialog.main_dialog.entry_case_information.license_suspension
+        terms_list = getattr(model_class, "terms_list")
+        for item in terms_list:
+            (model_attribute, view_field) = item
+            if isinstance(getattr(self.dialog, view_field), QComboBox):
+                print(f"Model class is {model_class}")
+                getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
+            elif isinstance(getattr(self.dialog, view_field), QCheckBox):
+                print(f"Model class is {model_class}")
+                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
+            # elif isinstance(getattr(self, view_field), QRadioButton):
+            #
+            # elif isinstance(getattr(self, view_field), QLineEdit):
+            #
+            # elif isinstance(getattr(self, view_field), QTextEdit):
+            #
+            # elif isinstance(getattr(self, view_field), QDateEdit):
+            #
+            # elif isinstance(getattr(self, view_field), QTimeEdit):
 
 
-                    # setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
-
-
-            #     elif isinstance(getattr(self, view_field), QCheckBox):
-            #         setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
-            #     elif isinstance(getattr(self, view_field), QRadioButton):
-            #         setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
-            #     elif isinstance(getattr(self, view_field), QLineEdit):
-            #         setattr(terms_object, model_attribute, getattr(self, view_field).text())
-            #     elif isinstance(getattr(self, view_field), QTextEdit):
-            #         plain_text = getattr(self, view_field).toPlainText()
-            #         setattr(terms_object, model_attribute, plain_text)
-            #     elif isinstance(getattr(self, view_field), QDateEdit):
-            #         setattr(terms_object, model_attribute, getattr(self, view_field).date(
-            #             ).toString("MMMM dd, yyyy"))
-            #     elif isinstance(getattr(self, view_field), QTimeEdit):
-            #         setattr(terms_object, model_attribute, getattr(self, view_field).time(
-            #             ).toString("hh:mm A"))
-            # except AttributeError:
-            #     pass
 
 
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
