@@ -24,6 +24,15 @@ def check_case_list_selected(func):
     return wrapper
 
 
+def check_driver_intervention_program(func):
+    def wrapper(self):
+        if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
+            return "Pass"
+        else:
+            func(self)
+    print(wrapper)
+    return wrapper
+
 class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
     def __init__(self, dialog):
@@ -239,14 +248,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             "check_if_jail_days_imposed_greater_than_suspended_and_credit",
             "check_if_jail_days_equals_suspended_and_imposed_days",
             "check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered",
-            # "check_jail_days",
         ]
         self.check_status = self.perform_check_list()
-
-    def check_jail_days(self):
-        if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
-            return "Pass" # CREATE DECORATOR
-
 
     def check_jail_time_credit_fields(self):
         """Generates warning messages if certain required jail time credit fields have data, but other required
@@ -336,8 +339,12 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if (
                 self.total_jail_days > (self.total_jail_days_suspended + self.total_jail_days_credit)
                 and self.dialog.entry_case_information.jail_terms.ordered is False
-                and (
-                self.dialog.entry_case_information.currently_in_jail == 'No' or self.dialog.entry_case_information.currently_in_jail == '')
+                and
+                (
+                self.dialog.entry_case_information.currently_in_jail == 'No'
+                or self.dialog.entry_case_information.currently_in_jail == ''
+                )
+                and self.dialog.entry_case_information.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.total_jail_days} is greater than the total "
@@ -389,9 +396,3 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                                  f"but you set Jail Reporting Terms. \n\nAre you sure you want "
                                  f"to set Jail Reporting Terms?")
             return self.unset_jail_reporting_terms(message.exec())
-
-
-
-
-
-
