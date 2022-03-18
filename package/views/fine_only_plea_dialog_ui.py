@@ -248,7 +248,8 @@ class Ui_FineOnlyPleaDialog(object):
         self.label_18.setObjectName("label_18")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_18)
         self.balance_due_date = QtWidgets.QDateEdit(self.frame_5)
-        self.balance_due_date.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.balance_due_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.balance_due_date.setCalendarPopup(True)
         self.balance_due_date.setObjectName("balance_due_date")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.balance_due_date)
@@ -314,7 +315,8 @@ class Ui_FineOnlyPleaDialog(object):
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.plea_trial_date = QtWidgets.QDateEdit(self.case_name_Frame)
         self.plea_trial_date.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.plea_trial_date.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setCalendarPopup(True)
         self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))

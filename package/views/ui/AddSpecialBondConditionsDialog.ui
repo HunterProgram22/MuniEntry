@@ -170,8 +170,8 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-340</y>
-           <width>938</width>
+           <y>0</y>
+           <width>942</width>
            <height>1028</height>
           </rect>
          </property>
@@ -770,7 +770,8 @@ font-weight: bold;</string>
              <item row="2" column="4">
               <widget class="QDateEdit" name="domestic_violence_surrender_weapons_dateBox">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>

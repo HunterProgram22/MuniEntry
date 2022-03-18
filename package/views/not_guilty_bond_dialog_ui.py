@@ -101,7 +101,8 @@ class Ui_NotGuiltyBondDialog(object):
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.plea_trial_date = QtWidgets.QDateEdit(self.case_name_Frame)
         self.plea_trial_date.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.plea_trial_date.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setCalendarPopup(True)
         self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))

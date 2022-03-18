@@ -335,7 +335,8 @@ font-weight: bold;</string>
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="minimumDate">
              <date>
@@ -597,7 +598,8 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
