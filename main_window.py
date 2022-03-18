@@ -52,6 +52,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.JailCCButton: JailCCPleaDialog,
             self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
+            self.FailureToAppearButton: FailureToAppearDialog,
+            self.ProbationViolationBondButton: ProbationViolationBondDialog,
         }
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",

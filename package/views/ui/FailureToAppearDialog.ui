@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FailiureToAppearDialog</class>
- <widget class="QDialog" name="FailiureToAppearDialog">
+ <class>FailureToAppearDialog</class>
+ <widget class="QDialog" name="FailureToAppearDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
