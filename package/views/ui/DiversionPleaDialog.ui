@@ -162,7 +162,7 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>969</width>
+        <width>973</width>
         <height>926</height>
        </rect>
       </property>
@@ -202,7 +202,8 @@ font-weight: bold;</string>
           <item row="1" column="3">
            <widget class="QDateEdit" name="diversion_fine_pay_date_box">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -240,7 +241,8 @@ font-weight: bold;</string>
           <item row="3" column="3">
            <widget class="QDateEdit" name="diversion_jail_report_date_box">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -602,7 +604,8 @@ font-weight: bold;</string>
              <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="minimumDate">
              <date>

@@ -72,7 +72,7 @@ class Ui_DiversionPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 969, 926))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 973, 926))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -93,7 +93,8 @@ class Ui_DiversionPleaDialog(object):
         self.other_conditions_checkBox.setObjectName("other_conditions_checkBox")
         self.gridLayout_8.addWidget(self.other_conditions_checkBox, 5, 0, 1, 1)
         self.diversion_fine_pay_date_box = QtWidgets.QDateEdit(self.diversion_frame)
-        self.diversion_fine_pay_date_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.diversion_fine_pay_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.diversion_fine_pay_date_box.setCalendarPopup(True)
         self.diversion_fine_pay_date_box.setObjectName("diversion_fine_pay_date_box")
         self.gridLayout_8.addWidget(self.diversion_fine_pay_date_box, 1, 3, 1, 1)
@@ -114,7 +115,8 @@ class Ui_DiversionPleaDialog(object):
         self.diversion_jail_imposed_checkBox.setObjectName("diversion_jail_imposed_checkBox")
         self.gridLayout_8.addWidget(self.diversion_jail_imposed_checkBox, 2, 2, 1, 1)
         self.diversion_jail_report_date_box = QtWidgets.QDateEdit(self.diversion_frame)
-        self.diversion_jail_report_date_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.diversion_jail_report_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.diversion_jail_report_date_box.setCalendarPopup(True)
         self.diversion_jail_report_date_box.setObjectName("diversion_jail_report_date_box")
         self.gridLayout_8.addWidget(self.diversion_jail_report_date_box, 3, 3, 1, 1)
@@ -314,7 +316,8 @@ class Ui_DiversionPleaDialog(object):
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 0, 1, 1, 1)
         self.plea_trial_date = QtWidgets.QDateEdit(self.case_name_Frame)
         self.plea_trial_date.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.plea_trial_date.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
         self.plea_trial_date.setCalendarPopup(True)
         self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))

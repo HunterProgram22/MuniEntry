@@ -78,7 +78,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -340, 938, 1028))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 942, 1028))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_11.setObjectName("gridLayout_11")
@@ -392,7 +392,8 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.domestic_violence_surrender_weapons_checkBox.setObjectName("domestic_violence_surrender_weapons_checkBox")
         self.gridLayout_2.addWidget(self.domestic_violence_surrender_weapons_checkBox, 2, 3, 1, 1)
         self.domestic_violence_surrender_weapons_dateBox = QtWidgets.QDateEdit(self.domestic_violence_frame)
-        self.domestic_violence_surrender_weapons_dateBox.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.domestic_violence_surrender_weapons_dateBox.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.domestic_violence_surrender_weapons_dateBox.setCalendarPopup(True)
         self.domestic_violence_surrender_weapons_dateBox.setObjectName("domestic_violence_surrender_weapons_dateBox")
         self.gridLayout_2.addWidget(self.domestic_violence_surrender_weapons_dateBox, 2, 4, 1, 1)

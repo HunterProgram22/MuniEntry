@@ -12,7 +12,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
+    <width>1128</width>
     <height>627</height>
    </rect>
   </property>
@@ -167,8 +167,8 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1169</y>
-        <width>1039</width>
+        <y>-887</y>
+        <width>1091</width>
         <height>1869</height>
        </rect>
       </property>
@@ -1367,7 +1367,8 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -1442,7 +1443,8 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -1743,7 +1745,8 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
