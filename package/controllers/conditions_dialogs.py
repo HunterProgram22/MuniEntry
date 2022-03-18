@@ -27,7 +27,6 @@ CONDITIONS_FRAMES = [
     ("custodial_supervision_checkBox", "custodial_supervision_frame"),
     ("community_control_checkBox", "community_control_frame"),
     ("jail_checkBox", "jail_commitment_frame"),
-    ("diversion_checkBox", "diversion_frame"),
     ("impoundment_checkBox", "impoundment_frame"),
     ("victim_notification_checkBox", "victim_notification_frame"),
 ]
