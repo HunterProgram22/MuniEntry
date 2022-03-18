@@ -1,5 +1,5 @@
 """Module containing all classes that load functions tied to a signal."""
-import os
+from os import startfile
 
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -56,7 +56,7 @@ class BaseDialogSlotFunctions(object):
         docname = set_document_name(self.dialog)
         try:
             doc.save(SAVE_PATH + docname)
-            os.startfile(SAVE_PATH + docname)
+            startfile(SAVE_PATH + docname)
         except PermissionError:
             message = RequiredBox("An entry for this case is already open in Word."
                                   " You must close the Word document first.")
