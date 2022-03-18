@@ -1063,7 +1063,7 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0,0,0">
           <item row="2" column="0" colspan="3">
            <widget class="QLabel" name="add_conditions_label">
             <property name="maximumSize">
@@ -1090,7 +1090,7 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="8" column="0" colspan="3">
+          <item row="9" column="0" colspan="3">
            <widget class="QPushButton" name="add_conditions_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(62, 146, 255)</string>
@@ -1103,20 +1103,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="community_control_checkBox">
-            <property name="text">
-             <string>Community Control</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QCheckBox" name="victim_notification_checkBox">
-            <property name="text">
-             <string>DV and Victim Notifications</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="2">
            <widget class="QCheckBox" name="community_service_checkBox">
             <property name="text">
@@ -1124,16 +1110,10 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="6" column="2">
-           <widget class="QCheckBox" name="other_conditions_checkBox">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="community_control_checkBox">
             <property name="text">
-             <string>Other</string>
+             <string>Community Control</string>
             </property>
            </widget>
           </item>
@@ -1144,6 +1124,20 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QCheckBox" name="jail_checkBox">
+            <property name="text">
+             <string>Set Jail Reporting Terms</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0" colspan="3">
+           <widget class="QCheckBox" name="victim_notification_checkBox">
+            <property name="text">
+             <string>DV and Victim Notifications and Fingerprinting</string>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="license_suspension_checkBox">
             <property name="text">
@@ -1151,10 +1145,16 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0" colspan="2">
-           <widget class="QCheckBox" name="jail_checkBox">
+          <item row="5" column="2">
+           <widget class="QCheckBox" name="other_conditions_checkBox">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="text">
-             <string>Set Jail Reporting Terms</string>
+             <string>Other</string>
             </property>
            </widget>
           </item>
@@ -1184,8 +1184,6 @@ font-weight: bold;</string>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>impoundment_checkBox</tabstop>
   <tabstop>community_service_checkBox</tabstop>
-  <tabstop>victim_notification_checkBox</tabstop>
-  <tabstop>other_conditions_checkBox</tabstop>
   <tabstop>in_jail_box</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>

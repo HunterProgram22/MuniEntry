@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1039</y>
+        <y>-1169</y>
         <width>1039</width>
-        <height>1838</height>
+        <height>1869</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -355,13 +355,6 @@ font-weight: bold;</string>
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_11">
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="victim_reparation_checkBox">
-            <property name="text">
-             <string>Clerk shall serve notice of right to apply for reparation to victim pursuant to R.C. 2743.51 to 2743.72.</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QLabel" name="label_29">
             <property name="font">
@@ -382,17 +375,31 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="firearm_prohibition_checkBox">
+            <property name="text">
+             <string>Defendant prohibited from shipping, owning, possessing, or purchasing a firearm pursuant to 18 U.S.C. 922(g)(9)</string>
+            </property>
+           </widget>
+          </item>
           <item row="3" column="0">
+           <widget class="QCheckBox" name="victim_reparation_checkBox">
+            <property name="text">
+             <string>Clerk shall serve notice of right to apply for reparation to victim pursuant to R.C. 2743.51 to 2743.72.</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
            <widget class="QCheckBox" name="victim_prosecutor_notification_checkBox">
             <property name="text">
              <string>Clerk shall serve prosecutor who shall notify victim of court proceedings pursuant to R.C. 2930.06.</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="firearm_prohibition_checkBox">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="fingerprinting_checkBox">
             <property name="text">
-             <string>Defendant prohibited from shipping, owning, possessing, or purchasing a firearm pursuant to 18 U.S.C. 922(g)(9)</string>
+             <string>Defendant shall contact the Delaware County Jail within 24 hours to schedule a time for fingerprinting</string>
             </property>
            </widget>
           </item>
