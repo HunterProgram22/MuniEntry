@@ -182,7 +182,6 @@ class AddConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_license_suspension_default_view()
         self.set_community_service_default_view()
         self.load_data_previously_entered()
-        # set driving license type here
 
     def load_data_previously_entered(self):
         self.transfer_model_data_to_field()
