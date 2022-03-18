@@ -54,17 +54,15 @@ class ChargesGrid(QGridLayout):
             button_dict[dialog.not_guilty_all_Button] = "Not Guilty"
         return button_dict
 
-    @logger.catch
     def set_cursor_to_fine_line_edit(self):
-        """Moves the cursor to the FineLineEdit box. Row is set to 6, but
-        for different dialogs this could end up changing, however, the check
-        for the delete button may resolve this issue."""
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(ChargesGrid.row_fine, column) is not None:
-                if isinstance(self.itemAtPosition(ChargesGrid.row_fine, column).widget(), FineLineEdit):
-                    self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
-                    break
-                column += 1
+                if self.itemAtPosition(ChargesGrid.row_dismissed_box, column).widget().isChecked():
+                    column += 1
+                    continue
+                self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
+                break
+            column += 1
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
