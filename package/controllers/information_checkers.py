@@ -277,15 +277,15 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             message = WarningBox(f"The Days in Jail has been provided, but the Jail Time Credit "
                                  f"does not indicate whether the Defendant is Currently In Jail. "
                                  f"\n\nIs the Defendant currently in jail?")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                self.dialog.in_jail_box.setCurrentText("No")
-            elif return_value == QMessageBox.Yes:
-                self.dialog.in_jail_box.setCurrentText("Yes")
+            return self.set_in_jail_box(message.exec())
+
+    def set_in_jail_box(self, message_response):
+        if message_response == QMessageBox.No:
+            self.dialog.in_jail_box.setCurrentText("No")
+        elif message_response == QMessageBox.Yes:
+            self.dialog.in_jail_box.setCurrentText("Yes")
 
     def check_if_apply_jtc_blank(self):
-        """TODO: https://gis.stackexchange.com/questions/401769/qgis-pyqt5-button-role-returns-different-values-on-definition-and-button-activat
-        The custom message boxes need to be double checked for return values, see article link."""
         if self.dialog.entry_case_information.apply_jtc == '':
             message = TwoChoiceQuestionBox(
                 f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
@@ -293,11 +293,13 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 "Sentence",
                 "Costs and Fines"
             )
-            return_value = message.exec()  # Sentence (YesRole) returns 0, Costs and Fines (NoRole) returns 1
-            if return_value == 0:
-                self.dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
-            elif return_value == 1:
-                self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+            return self.set_jtc_apply_box(message.exec())
+
+    def set_jtc_apply_box(self, message_response):
+        if message_response == 0:
+            self.dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+        elif message_response == 1:
+            self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
     def calculate_jail_days_credit(self):
         if self.dialog.entry_case_information.days_in_jail.strip() == "":
