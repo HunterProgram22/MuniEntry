@@ -9,7 +9,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog, QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, QTimeEdit
 
-from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit, NoScrollTimeEdit
 from package.controllers.helper_functions import set_future_date
 
 
@@ -50,6 +50,14 @@ class BaseDialogViewModifier(object):
         self.dialog.balance_due_date.__class__ = NoScrollDateEdit
 
     ###Additional Condition/Jail Dialog Setup Methods###
+    def set_jail_committment_boxes_to_no_scroll(self):
+        self.dialog.report_type_box.__class__ = NoScrollComboBox
+        self.dialog.report_date_box.__class__ = NoScrollDateEdit
+        self.dialog.report_time_box.__class__ = NoScrollTimeEdit
+        self.dialog.jail_sentence_execution_type_box.__class__ = NoScrollComboBox
+        self.dialog.jail_term_type_box.__class__ = NoScrollComboBox
+
+
     def set_conditions_case_information_banner(self, dialog):
         column = dialog.charges_gridLayout.columnCount() + 1
         for _index, charge in enumerate(dialog.charges_list):
@@ -233,6 +241,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_jail_report_default_view(dialog)
         self.hide_boxes(dialog)
         self.set_report_days_notes_box(dialog)
+        self.set_jail_committment_boxes_to_no_scroll()
 
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
@@ -260,6 +269,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.hide_boxes(dialog)
         self.set_jail_report_default_view(dialog)
         self.set_report_days_notes_box(dialog)
+        self.set_jail_committment_boxes_to_no_scroll()
         dialog.community_control_type_of_control_box.__class__ = NoScrollComboBox
         dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
         dialog.house_arrest_time_box.__class__ = NoScrollComboBox
