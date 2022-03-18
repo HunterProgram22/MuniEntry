@@ -246,24 +246,22 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_jail_days(self):
         if self.dialog.entry_case_information.community_control.driver_intervention_program is True:
             return "Pass" # CREATE DECORATOR
-        if self.check_jail_time_credit_fields() == "Fail":
-            return "Fail"
 
 
     def check_jail_time_credit_fields(self):
         """Generates warning messages if certain required jail time credit fields have data, but other required
         fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
         generated because a user may enter no for currently in jail, but there may not be jail time credit."""
-        if self.dialog.entry_case_information.currently_in_jail == 'Yes':
-            if self.check_if_days_in_jail_blank() is True:
+        if self.dialog.entry_case_information.currently_in_jail == "Yes":
+            if self.check_if_days_in_jail_blank():
                 return "Fail"
             self.check_if_apply_jtc_blank()
-        elif self.dialog.entry_case_information.days_in_jail != '':
+        elif self.dialog.entry_case_information.days_in_jail != "":
             self.check_if_currently_in_jail_blank()
             self.check_if_apply_jtc_blank()
 
     def check_if_days_in_jail_blank(self):
-        if self.dialog.entry_case_information.days_in_jail == '':
+        if self.dialog.entry_case_information.days_in_jail == "":
             message = RequiredBox(f"The Jail Time Credit box indicates Defendant is in Jail, but "
                                   f"the number of Days In Jail is blank. \n\nPlease enter the number of "
                                   f"Days In Jail and select whether to apply Jail Time Credit to "
