@@ -291,14 +291,17 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         object."""
         self.set_amended_offense_details()
         if self.dialog.motion_decision_box.currentText() == "Granted":
-            setattr(self.dialog.charge,
-                    'offense',
-                    f"{self.dialog.current_offense_name} - AMENDED to "
-                    f"{self.dialog.amend_offense_details.amended_charge}"
-                    )
+            self.update_criminal_charge_offense_name()
             self.add_charge_to_amended_charge_list()
             self.update_charges_grid_with_amended_charge()
         self.close_event()
+
+    def update_criminal_charge_offense_name(self):
+        setattr(self.dialog.charge,
+                'offense',
+                f"{self.dialog.current_offense_name} - AMENDED to "
+                f"{self.dialog.amend_offense_details.amended_charge}"
+                )
 
     def update_charges_grid_with_amended_charge(self):
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
