@@ -29,7 +29,6 @@ class BaseInfoChecker(object):
     def __init__(self, dialog):
         self.dialog = dialog
 
-
     def perform_check_list(self):
         for item in self.dialog_check_list:
             if getattr(self, item)() == "Fail":
@@ -43,13 +42,12 @@ class BaseInfoChecker(object):
                                  "the Defendant waive his right to counsel?"
                                  "\n\nIf you select 'No' you must enter a name "
                                  "for Def. Counsel.")
-            return_value = message.exec()
-            if return_value == QMessageBox.Yes:
+            message_response = message.exec()
+            if message_response == QMessageBox.Yes:
                 self.dialog.defense_counsel_waived_checkBox.setChecked(True)
                 return "Pass"
-            elif return_value == QMessageBox.No:
+            elif message_response == QMessageBox.No:
                 return "Fail"
-        return "Pass"
 
     def check_plea_and_findings(self):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
@@ -79,22 +77,20 @@ class BaseInfoChecker(object):
         return "Pass"
 
     def check_insurance(self):
-        if (
-            hasattr(self.dialog, 'fra_in_file_box')
-            and self.dialog.fra_in_file_box.currentText() == "No"
+        if (self.dialog.fra_in_file_box.currentText() == "No"
             and self.dialog.fra_in_court_box.currentText() == "N/A"
         ):
             message = WarningBox("The information provided currently "
                                  "indicates insurance was not shown in the file. "
                                  "\n\nDid the defendant show proof of insurance in court?")
-            return_value = message.exec()
-            if return_value == QMessageBox.No:
-                self.dialog.fra_in_court_box.setCurrentText("No")
-                return "Pass"
-            elif return_value == QMessageBox.Yes:
-                self.dialog.fra_in_court_box.setCurrentText("Yes")
-                return "Pass"
-        else:
+            return self.set_fra_in_court_box(message.exec())
+
+    def set_fra_in_court_box(self, message_response):
+        if message_response == QMessageBox.No:
+            self.dialog.fra_in_court_box.setCurrentText("No")
+            return "Pass"
+        elif message_response == QMessageBox.Yes:
+            self.dialog.fra_in_court_box.setCurrentText("Yes")
             return "Pass"
 
     def check_bond_amount(self):
