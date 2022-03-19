@@ -1,6 +1,7 @@
 """Module containing classes responsible for updating case information anytime a function for
 the case is ran. Each main dialog class has a subclass that governs what is updated for the
 main class."""
+from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 class CaseUpdater:
     def __init__(self, dialog):
@@ -65,21 +66,18 @@ class CaseUpdater:
             print("A type error was allowed to pass - this is because of deleted charge.")
 
     def calculate_court_costs(self):
-        self.dialog.entry_case_information.court_costs.amount = 0
+        court_costs = 0
         if self.dialog.court_costs_box.currentText() == "Yes":
             for charge in self.dialog.entry_case_information.charges_list:
-                if self.dialog.entry_case_information.court_costs.amount == 137:
-                    break
-                if charge.type == "Moving":
-                    self.dialog.entry_case_information.court_costs.amount = max(
-                        self.dialog.entry_case_information.court_costs.amount, 137)
+                if court_costs == MOVING_COURT_COSTS:
+                    return MOVING_COURT_COSTS
+                elif charge.type == "Moving":
+                    return MOVING_COURT_COSTS
                 elif charge.type == "Criminal":
-                    self.dialog.entry_case_information.court_costs.amount = max(
-                        self.dialog.entry_case_information.court_costs.amount, 127)
+                    court_costs = max(court_costs, CRIMINAL_COURT_COSTS)
                 elif charge.type == "Non-moving":
-                    self.dialog.entry_case_information.court_costs.amount = max(
-                        self.dialog.entry_case_information.court_costs.amount, 108)
-        return self.dialog.entry_case_information.court_costs.amount
+                    court_costs = max(court_costs, NONMOVING_COURT_COSTS)
+        return court_costs
 
 
 class DiversionDialogCaseUpdater(CaseUpdater):
