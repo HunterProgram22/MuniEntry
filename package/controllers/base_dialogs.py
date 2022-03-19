@@ -1,11 +1,20 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
-from PyQt5.QtWidgets import QDialog, QComboBox, QCheckBox, QLineEdit, QTextEdit, \
-    QDateEdit, QTimeEdit, QRadioButton
+from PyQt5.QtWidgets import (
+    QDialog,
+    QComboBox,
+    QCheckBox,
+    QLineEdit,
+    QTextEdit,
+    QDateEdit,
+    QTimeEdit,
+    QRadioButton,
+)
 
 
 class BaseDialog(QDialog):
     """This class is a base class for all dialog windows. Every window must have a view loaded
     (modify view), slot functions created, and then the slot functions connected to signals."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.modify_view()
@@ -43,27 +52,47 @@ class BaseDialog(QDialog):
             (model_attribute, view_field) = item
             try:
                 if isinstance(getattr(self, view_field), QComboBox):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).currentText())
+                    setattr(
+                        terms_object,
+                        model_attribute,
+                        getattr(self, view_field).currentText(),
+                    )
                 elif isinstance(getattr(self, view_field), QCheckBox):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+                    setattr(
+                        terms_object,
+                        model_attribute,
+                        getattr(self, view_field).isChecked(),
+                    )
                 elif isinstance(getattr(self, view_field), QRadioButton):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).isChecked())
+                    setattr(
+                        terms_object,
+                        model_attribute,
+                        getattr(self, view_field).isChecked(),
+                    )
                 elif isinstance(getattr(self, view_field), QLineEdit):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).text())
+                    setattr(
+                        terms_object, model_attribute, getattr(self, view_field).text()
+                    )
                 elif isinstance(getattr(self, view_field), QTextEdit):
                     plain_text = getattr(self, view_field).toPlainText()
                     try:
-                        if plain_text[-1] == '.':
+                        if plain_text[-1] == ".":
                             plain_text = plain_text[:-1]
                     except IndexError:
                         pass
                     setattr(terms_object, model_attribute, plain_text)
                 elif isinstance(getattr(self, view_field), QDateEdit):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).date(
-                        ).toString("MMMM dd, yyyy"))
+                    setattr(
+                        terms_object,
+                        model_attribute,
+                        getattr(self, view_field).date().toString("MMMM dd, yyyy"),
+                    )
                 elif isinstance(getattr(self, view_field), QTimeEdit):
-                    setattr(terms_object, model_attribute, getattr(self, view_field).time(
-                        ).toString("hh:mm A"))
+                    setattr(
+                        terms_object,
+                        model_attribute,
+                        getattr(self, view_field).time().toString("hh:mm A"),
+                    )
             except AttributeError:
                 pass
 
