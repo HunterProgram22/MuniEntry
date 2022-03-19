@@ -286,9 +286,11 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
     ]
 
     def __init__(self, dialog):
+        """This does not include a load_existing_data_to_dialog method because it is only called
+        from a warning message if user forgot to add jail reporting terms and chooses to add them
+        after getting the warning."""
         super().__init__(dialog)
         self.set_conditions_case_information_banner()
-        self.load_existing_data_to_dialog()
         self.hide_boxes(dialog)  # Class method needs dialog ? TODO: Fix
         self.set_jail_report_default_view()
         self.set_report_date_view()
