@@ -35,35 +35,8 @@ class CaseUpdater:
 
     def calculate_costs_and_fines(self):
         self.dialog.entry_case_information.court_costs.amount = self.calculate_court_costs()
-        total_fines = 0
-        try:
-            for charge in self.dialog.entry_case_information.charges_list:
-                try:
-                    local_charge_fines_amount = int(charge.fines_amount[2:])
-                except ValueError:
-                    local_charge_fines_amount = 0
-                if local_charge_fines_amount == '':
-                    local_charge_fines_amount = 0
-                try:
-                    total_fines = total_fines + int(local_charge_fines_amount)
-                except ValueError:  # This error catches the " " (space) that is placed if a charge is dismissed.
-                    pass
-            self.dialog.entry_case_information.total_fines = total_fines
-            total_fines_suspended = 0
-            for  charge in self.dialog.entry_case_information.charges_list:
-                try:
-                    local_charge_fines_suspended = int(charge.fines_suspended[2:])
-                except ValueError:
-                    local_charge_fines_suspended = 0
-                if local_charge_fines_suspended == '':
-                    local_charge_fines_suspended = 0
-                try:
-                    total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
-                except ValueError:  # This error catches the " " (space) that is placed if a charge is dismissed.
-                    pass
-            self.dialog.entry_case_information.total_fines_suspended = total_fines_suspended
-        except TypeError:
-            print("A type error was allowed to pass - this is because of deleted charge.")
+        self.dialog.entry_case_information.total_fines = self.calculate_total_fines()
+        self.dialog.entry_case_information.total_fines_suspended = self.calculate_total_fines_suspended()
 
     def calculate_court_costs(self):
         court_costs = 0
@@ -78,6 +51,26 @@ class CaseUpdater:
                 elif charge.type == "Non-moving":
                     court_costs = max(court_costs, NONMOVING_COURT_COSTS)
         return court_costs
+
+    def calculate_total_fines(self):
+        total_fines = 0
+        for charge in self.dialog.entry_case_information.charges_list:
+            try:
+                local_charge_fines_amount = int(charge.fines_amount[2:])
+            except ValueError:
+                local_charge_fines_amount = 0
+            total_fines = total_fines + int(local_charge_fines_amount)
+        return total_fines
+
+    def calculate_total_fines_suspended(self):
+        total_fines_suspended = 0
+        for charge in self.dialog.entry_case_information.charges_list:
+            try:
+                local_charge_fines_suspended = int(charge.fines_suspended[2:])
+            except ValueError:
+                local_charge_fines_suspended = 0
+            total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
+        return total_fines_suspended
 
 
 class DiversionDialogCaseUpdater(CaseUpdater):
