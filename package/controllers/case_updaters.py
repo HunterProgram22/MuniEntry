@@ -7,6 +7,7 @@ from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_C
 class CaseUpdater:
     """Base class that contains methods used by subclasses and is called by a main entry dialog to update
     the entry_case_information (model data)."""
+
     def __init__(self, dialog):
         self.dialog = dialog
         self.set_case_number_and_date()
