@@ -2,7 +2,9 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
 
-from package.controllers.base_dialogs import CmsFraLoader, CmsLoader, BaseDialog, charges_database
+from db.databases import open_charges_db_connection
+from package.controllers.base_dialogs import BaseDialog
+from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
 from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
     FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater, DiversionDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
@@ -290,3 +292,9 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
     def perform_info_checks(self):
         pass
     #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+
+
+if __name__ == "__main__":
+    charges_database = open_charges_db_connection()
+else:
+    charges_database = open_charges_db_connection()
