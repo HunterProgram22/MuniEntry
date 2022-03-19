@@ -162,7 +162,9 @@ class BaseDialogViewModifier(object):
         terms_list = getattr(model_class, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
-            if isinstance(getattr(self.dialog, view_field), QComboBox):
+            if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
+                continue
+            elif isinstance(getattr(self.dialog, view_field), QComboBox):
                 getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
             elif isinstance(getattr(self.dialog, view_field), QCheckBox):
                 getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))

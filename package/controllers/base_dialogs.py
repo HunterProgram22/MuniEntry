@@ -47,7 +47,9 @@ class BaseDialog(QDialog):
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
-            if isinstance(getattr(self, view_field), QComboBox):
+            if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
+                continue
+            elif isinstance(getattr(self, view_field), QComboBox):
                 setattr(
                     terms_object,
                     model_attribute,
