@@ -206,6 +206,7 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
             "check_defense_counsel",
             "check_plea_and_findings",
             "check_if_diversion_program_selected",
+            "check_insurance",
         ]
         self.check_status = self.perform_check_list()
 

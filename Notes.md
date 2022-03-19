@@ -4,5 +4,5 @@ Items for Judge Discussion
 3. DV and Gun specifications
 4. General User Interface Changes
 5. Does Diversion Plea ever have Jail Time Credit
-6. Remove Print button from app?
+6. Defaults vs empty fields - example Community Service in Fines only no hours vs License Suspension license
 7. 
