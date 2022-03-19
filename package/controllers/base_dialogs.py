@@ -43,10 +43,7 @@ class BaseDialog(QDialog):
         """Function that loops through a list of fields and transfers the data in the field
         to the appropriate model attribute. The function uses the appropriate pyqt method for
         the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)
-
-        The try/except block accounts for dialogs that may not have an attribute from a
-        terms_list."""
+        item[1] = view field that contains the data)."""
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
@@ -69,9 +66,7 @@ class BaseDialog(QDialog):
                     getattr(self, view_field).isChecked(),
                 )
             elif isinstance(getattr(self, view_field), QLineEdit):
-                setattr(
-                    terms_object, model_attribute, getattr(self, view_field).text()
-                )
+                setattr(terms_object, model_attribute, getattr(self, view_field).text())
             elif isinstance(getattr(self, view_field), QTextEdit):
                 plain_text = getattr(self, view_field).toPlainText()
                 try:
