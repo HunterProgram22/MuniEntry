@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QMainWindow
 from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
 from package.controllers.information_checkers import check_judicial_officer, check_case_list_selected
 from package.controllers.main_entry_dialogs import DiversionPleaDialog, JailCCPleaDialog, FineOnlyPleaDialog, \
-    NotGuiltyBondDialog
+    NotGuiltyBondDialog, ProbationViolationBondDialog, FailureToAppearDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
@@ -52,6 +52,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.JailCCButton: JailCCPleaDialog,
             self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
+            self.FailureToAppearButton: FailureToAppearDialog,
+            self.ProbationViolationBondButton: ProbationViolationBondDialog,
         }
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",

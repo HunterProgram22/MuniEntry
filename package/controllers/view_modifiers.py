@@ -251,6 +251,24 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         self.dialog.bond_amount_box.__class__ = NoScrollComboBox
 
 
+class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.dialog.bond_type_box.__class__ = NoScrollComboBox
+        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+
+
+class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.dialog.bond_type_box.__class__ = NoScrollComboBox
+        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+
+
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

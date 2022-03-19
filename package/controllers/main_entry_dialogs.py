@@ -13,7 +13,8 @@ from package.controllers.signal_connectors import DiversionDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
     FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
 from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
-    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier
+    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier, ProbationViolationBondDialogViewModifier, \
+    FailureToAppearDialogViewModifier
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
@@ -23,6 +24,8 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
+from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
     DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
@@ -218,3 +221,72 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
+
+
+class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = "Probation Violation Bond Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information.bond_conditions = BondConditions()
+
+    def modify_view(self):
+        return ProbationViolationBondDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        pass
+    #     self.functions = ProbationViolationBondDialogSlotFunctions(self)
+    #     self.functions.hide_boxes()
+
+    def connect_signals_to_slots(self):
+        pass
+    #     return ProbationViolationBondDialogSignalConnector(self)
+    #
+    def load_cms_data_to_view(self):
+        pass
+    #     return CmsLoader(self)
+    #
+    def update_entry_case_information(self):
+        pass
+    #     return ProbationViolationBondDialogCaseUpdater(self)
+
+
+    def perform_info_checks(self):
+        pass
+    #     self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
+
+
+class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = "Failure To Appear Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information.bond_conditions = BondConditions()
+
+    def modify_view(self):
+        return FailureToAppearDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        pass
+
+    #     self.functions = FailureToAppearDialogSlotFunctions(self)
+    #     self.functions.hide_boxes()
+    #
+    def connect_signals_to_slots(self):
+        pass
+
+    #     return FailureToAppearDialogSignalConnector(self)
+    #
+    def load_cms_data_to_view(self):
+        pass
+
+    #     return CmsLoader(self)
+    #
+    def update_entry_case_information(self):
+        pass
+
+    #     return FailureToAppearDialogCaseUpdater(self)
+
+    def perform_info_checks(self):
+        pass
+    #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
