@@ -5,6 +5,8 @@ from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_C
 
 
 class CaseUpdater:
+    """Base class that contains methods used by subclasses and is called by a main entry dialog to update
+    the entry_case_information (model data)."""
     def __init__(self, dialog):
         self.dialog = dialog
         self.set_case_number_and_date()
@@ -68,11 +70,9 @@ class CaseUpdater:
         court_costs = 0
         if self.dialog.court_costs_box.currentText() == "Yes":
             for charge in self.dialog.entry_case_information.charges_list:
-                if court_costs == MOVING_COURT_COSTS:
+                if charge.type == "Moving":
                     return MOVING_COURT_COSTS
-                elif charge.type == "Moving":
-                    return MOVING_COURT_COSTS
-                elif charge.type == "Criminal":
+                if charge.type == "Criminal":
                     court_costs = max(court_costs, CRIMINAL_COURT_COSTS)
                 elif charge.type == "Non-moving":
                     court_costs = max(court_costs, NONMOVING_COURT_COSTS)
