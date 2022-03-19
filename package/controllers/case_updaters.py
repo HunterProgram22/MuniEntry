@@ -113,10 +113,10 @@ class FineOnlyDialogCaseUpdater(CaseUpdater):
         super().__init__(dialog)
         dialog.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information(dialog)
-        self.update_jail_time_credit(dialog)
+        self.update_jail_time_credit_for_fines(dialog)
         self.calculate_costs_and_fines(dialog)
 
-    def update_jail_time_credit(self, dialog):
+    def update_jail_time_credit_for_fines(self, dialog):
         dialog.entry_case_information.fines_and_costs_jail_credit = dialog.credit_for_jail_checkBox.isChecked()
         dialog.entry_case_information.days_in_jail = dialog.jail_time_credit_box.text()
 
