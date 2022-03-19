@@ -49,8 +49,7 @@ class BaseChargeDialog(QDialog):
 
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
-    def __init__(self, main_dialog, parent=None):
-        super().__init__(main_dialog, parent)
+    """This class does not need its own init method since it usess the BaseChargeDialog init method."""
 
     def modify_view(self):
         return AddChargeDialogViewModifier(self)
