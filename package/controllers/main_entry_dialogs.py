@@ -13,7 +13,8 @@ from package.controllers.signal_connectors import DiversionDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
     FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
 from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
-    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier, ProbationViolationBondDialogViewModifier
+    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier, ProbationViolationBondDialogViewModifier, \
+    FailureToAppearDialogViewModifier
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
@@ -236,7 +237,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         pass
     #     self.functions = ProbationViolationBondDialogSlotFunctions(self)
     #     self.functions.hide_boxes()
-    #
+
     def connect_signals_to_slots(self):
         pass
     #     return ProbationViolationBondDialogSignalConnector(self)
@@ -256,4 +257,36 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
 
 
 class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
-    pass
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = "Failure To Appear Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information.bond_conditions = BondConditions()
+
+    def modify_view(self):
+        return FailureToAppearDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        pass
+
+    #     self.functions = FailureToAppearDialogSlotFunctions(self)
+    #     self.functions.hide_boxes()
+    #
+    def connect_signals_to_slots(self):
+        pass
+
+    #     return FailureToAppearDialogSignalConnector(self)
+    #
+    def load_cms_data_to_view(self):
+        pass
+
+    #     return CmsLoader(self)
+    #
+    def update_entry_case_information(self):
+        pass
+
+    #     return FailureToAppearDialogCaseUpdater(self)
+
+    def perform_info_checks(self):
+        pass
+    #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
