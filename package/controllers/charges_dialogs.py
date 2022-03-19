@@ -2,31 +2,44 @@
 main entry dialog when a charge needs to be added or amended."""
 from PyQt5.QtWidgets import QDialog
 
-from db.databases import create_statute_list, create_offense_list, open_charges_db_connection
-from package.controllers.signal_connectors import AddChargeDialogSignalConnector, \
-    AmendChargeDialogSignalConnector
-from package.controllers.slot_functions import AddChargeDialogSlotFunctions, \
-    AmendChargeDialogSlotFunctions
-from package.controllers.view_modifiers import AddChargeDialogViewModifier, \
-    AmendChargeDialogViewModifier
+from db.databases import (
+    create_statute_list,
+    create_offense_list,
+    open_charges_db_connection,
+)
 from package.models.case_information import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+from package.controllers.signal_connectors import (
+    AddChargeDialogSignalConnector,
+    AmendChargeDialogSignalConnector,
+)
+from package.controllers.slot_functions import (
+    AddChargeDialogSlotFunctions,
+    AmendChargeDialogSlotFunctions,
+)
+from package.controllers.view_modifiers import (
+    AddChargeDialogViewModifier,
+    AmendChargeDialogViewModifier,
+)
 
 
 class BaseChargeDialog(QDialog):
     """The Base Charge Dialog loads the statutes and offenses from the database as
     both subclasses require access to the statutes and offenses."""
-    def __init__(self, main_dialog, button_index=None, parent=None):
+
+    def __init__(self, main_dialog, parent=None):
         super().__init__(parent)
-        self.button_index = button_index
         self.main_dialog = main_dialog
-        self.charges_database = open_charges_db_connection()
-        self.charges_database.open()
+        self.set_database()
         self.modify_view()
         self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
         self.load_statute_and_offense_choice_boxes()
+
+    def set_database(self):
+        self.charges_database = open_charges_db_connection()
+        self.charges_database.open()
 
     def load_statute_and_offense_choice_boxes(self):
         self.statute_choice_box.addItems(create_statute_list())
