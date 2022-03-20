@@ -61,7 +61,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
                        column)
 
     @logger.catch
-    def set_all_plea_and_findings(self, dialog):
+    def set_all_pleas(self, dialog):
         plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NotGuiltyPleaGrid.row_offense, column) is not None:
@@ -97,7 +97,7 @@ class NoJailChargesGrid(ChargesGrid):
         self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NoJailChargesGrid.row_delete_button, column)
 
     @logger.catch
-    def set_all_plea_and_findings(self, dialog):
+    def set_all_pleas(self, dialog):
         plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NoJailChargesGrid.row_offense, column) is not None:
@@ -105,11 +105,15 @@ class NoJailChargesGrid(ChargesGrid):
                     continue
                 else:
                     self.itemAtPosition(NoJailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                    if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
-                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.set_all_findings(column)
         self.set_cursor_to_fine_line_edit()
+
+    def set_all_findings(self, column):
+        if self.itemAtPosition(NoJailChargesGrid.row_allied_box, column).widget().isChecked():
+            self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText(
+                "Guilty - Allied Offense")
+        else:
+            self.itemAtPosition(NoJailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
 
 
 class JailChargesGrid(NoJailChargesGrid):
@@ -139,7 +143,7 @@ class JailChargesGrid(NoJailChargesGrid):
         self.addWidget(ChargeGridDeleteButton(column, charge, dialog), JailChargesGrid.row_delete_button, column)
 
     @logger.catch
-    def set_all_plea_and_findings(self, dialog):
+    def set_all_pleas(self, dialog):
         plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(JailChargesGrid.row_offense, column) is not None:
@@ -147,11 +151,14 @@ class JailChargesGrid(NoJailChargesGrid):
                     continue
                 else:
                     self.itemAtPosition(JailChargesGrid.row_plea, column).widget().setCurrentText(plea)
-                    if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
-                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
-                    else:
-                        self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
+                    self.set_all_findings(column)
         self.set_cursor_to_fine_line_edit()
+
+    def set_all_findings(self, column):
+        if self.itemAtPosition(JailChargesGrid.row_allied_box, column).widget().isChecked():
+            self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty - Allied Offense")
+        else:
+            self.itemAtPosition(JailChargesGrid.row_finding, column).widget().setCurrentText("Guilty")
 
 
 class DiversionChargesGrid(JailChargesGrid):
