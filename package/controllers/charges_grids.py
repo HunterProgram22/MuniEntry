@@ -74,11 +74,8 @@ class ChargesGrid(QGridLayout):
                     .isChecked()
                 ):
                     continue
-                else:
-                    self.itemAtPosition(self.row_plea, column).widget().setCurrentText(
-                        plea
-                    )
-                    self.set_all_findings(column)
+                self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
+                self.set_all_findings(column)
         self.set_cursor_to_fine_line_edit()
 
     def set_all_findings(self, column):
@@ -196,12 +193,8 @@ class DiversionChargesGrid(JailChargesGrid):
     assigned to to this class of grid for consistency and in case there is a need for
     specific changes in the fututre."""
 
-    pass
-
-
-def main():
-    pass
-
 
 if __name__ == "__main__":
-    main()
+    print("Charges Grids ran directly")
+else:
+    print("Charges Grids imported")
