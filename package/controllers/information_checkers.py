@@ -37,17 +37,19 @@ class BaseInfoChecker(object):
     def check_defense_counsel(self):
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
             return "Pass"
-        elif self.dialog.defense_counsel_name_box.currentText().strip() == "":
+        if self.dialog.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox("There is no attorney listed. Did "
-                                 "the Defendant waive his right to counsel?"
-                                 "\n\nIf you select 'No' you must enter a name "
-                                 "for Def. Counsel.")
-            message_response = message.exec()
-            if message_response == QMessageBox.Yes:
-                self.dialog.defense_counsel_waived_checkBox.setChecked(True)
-                return "Pass"
-            elif message_response == QMessageBox.No:
-                return "Fail"
+                                 "the Defendant appear without or waive his right to "
+                                 "counsel?\n\nIf you select 'No' you must enter a name "
+                                 "for Defense Counsel.")
+            return self.set_defense_counsel_waived_or_fail_check(message.exec())
+
+    def set_defense_counsel_waived_or_fail_check(self, message_response):
+        if message_response == QMessageBox.Yes:
+            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+            return "Pass"
+        elif message_response == QMessageBox.No:
+            return "Fail"
 
     def check_plea_and_findings(self):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
