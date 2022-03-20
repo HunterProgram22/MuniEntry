@@ -27,19 +27,6 @@ class ChargesGrid(QGridLayout):
     def get_last_charge_in_charges_list(self, dialog):
         return dialog.entry_case_information.charges_list[-1]
 
-    def set_plea_and_finding_rows(self):
-        """The initial values of row_plea and row_finding are the common rows for plea and findings.
-        They are set to allow this method to return both values even if there is no finding row
-        (i.e. LEAP Dialog)."""
-        row_plea = 4
-        row_finding = 5
-        for row in range(self.rowCount()):
-            if self.itemAtPosition(row, 0).widget().text() == "Plea:":
-                row_plea = row
-            if self.itemAtPosition(row, 0).widget().text() == "Finding:":
-                row_finding = row
-        return row_plea, row_finding
-
     def create_button_dict(self, dialog):
         button_dict = {}
         if hasattr(dialog, "guilty_all_Button"):

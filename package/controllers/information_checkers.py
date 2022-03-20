@@ -52,7 +52,8 @@ class BaseInfoChecker(object):
     def check_plea_and_findings(self):
         """Shows warning if no plea or findings are entered. Checks one at a time so unless all
         fields have a plea and finding you will get the warning until they are filled in."""
-        row_plea, row_finding = self.dialog.charges_gridLayout.set_plea_and_finding_rows()
+        row_plea = self.dialog.charges_gridLayout.row_plea
+        row_finding = self.dialog.charges_gridLayout.row_finding
         column = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
