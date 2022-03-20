@@ -49,7 +49,8 @@ class BaseChargeDialog(QDialog):
 
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
-    """This class does not need its own init method since it usess the BaseChargeDialog init method."""
+    """This class does not need its own init method since it usess the BaseChargeDialog
+    init method."""
 
     def modify_view(self):
         return AddChargeDialogViewModifier(self)
@@ -62,9 +63,10 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
-    """The amend charge dialog class takes the charge that is being amended and updates both the view and
-    the charge in the entry_case_information (model data). In AmendChargeDialogSlotFunctions it adds the
-    charge to an amended charge list for use in the template of the dialog."""
+    """The amend charge dialog class takes the charge that is being amended and updates
+    both the view and the charge in the entry_case_information (model data). In
+    AmendChargeDialogSlotFunctions it adds the charge to an amended charge list for use
+    in the template of the dialog."""
 
     def __init__(self, main_dialog, parent=None):
         super().__init__(main_dialog, parent)

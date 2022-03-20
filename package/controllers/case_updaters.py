@@ -1,12 +1,12 @@
-"""Module containing classes responsible for updating case information anytime a function for
-the case is ran. Each main dialog class has a subclass that governs what is updated for the
-main class."""
+"""Module containing classes responsible for updating case information anytime a
+function for the case is ran. Each main dialog class has a subclass that governs what
+is updated for the main class."""
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
 class CaseUpdater:
-    """Base class that contains methods used by subclasses and is called by a main entry dialog to update
-    the entry_case_information (model data)."""
+    """Base class that contains methods used by subclasses and is called by a main
+    entry dialog to update the entry_case_information (model data)."""
 
     def __init__(self, dialog):
         self.dialog = dialog

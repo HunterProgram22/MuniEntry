@@ -1,4 +1,5 @@
-"""The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+"""The BaseDialogs modules contains common base classes from which other dialogs
+inherit."""
 from PyQt5.QtWidgets import (
     QDialog,
     QComboBox,
