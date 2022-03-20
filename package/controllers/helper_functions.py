@@ -1,13 +1,6 @@
 """Helper functions that are used throughout the application."""
 from datetime import date, timedelta
 
-
-def set_document_name(dialog):
-    """Sets document name based on the cms_case number and name of the template
-    must include '.docx' to make it a Word document."""
-    return dialog.entry_case_information.case_number + "_" + dialog.template.template_name + ".docx"
-
-
 def set_future_date(days_to_add, days_to_add_dict, next_day):
     """This is a general helper function that will accept the numbers of days to
     add to the current date and set a new date.

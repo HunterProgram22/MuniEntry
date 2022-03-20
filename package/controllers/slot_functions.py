@@ -9,7 +9,7 @@ from PyQt5.QtCore import QDate
 from package.views.custom_widgets import InfoBox
 from db.databases import open_charges_db_connection, extract_data
 from db.sql_queries import sql_query_offense_type
-from package.controllers.helper_functions import set_document_name, set_future_date
+from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH, PAY_DATE_DICT
@@ -21,11 +21,13 @@ class BaseDialogSlotFunctions(object):
 
     def start_add_charge_dialog(self):
         from package.controllers.charges_dialogs import AddChargeDialog
+
         self.dialog.update_entry_case_information()
         AddChargeDialog(self.dialog).exec()
 
     def start_amend_offense_dialog(self):
         from package.controllers.charges_dialogs import AmendChargeDialog
+
         self.dialog.update_entry_case_information()
         AmendChargeDialog(self.dialog).exec()
 
@@ -53,28 +55,40 @@ class BaseDialogSlotFunctions(object):
         case_data = self.dialog.entry_case_information.get_case_information()
         extract_data(case_data)
         doc.render(case_data)
-        docname = set_document_name(self.dialog)
+        docname = self.set_document_name()
         try:
             doc.save(SAVE_PATH + docname)
             startfile(SAVE_PATH + docname)
         except PermissionError:
-            message = RequiredBox("An entry for this case is already open in Word."
-                                  " You must close the Word document first.")
+            message = RequiredBox(
+                "An entry for this case is already open in Word."
+                " You must close the Word document first."
+            )
             message.exec()
 
+    def set_document_name(self):
+        """Returns a name for the document in the format CaseNumber_TemplateName.docx
+        (i.e. 21CRB1234_Crim_Traffic Judgment Entry.docx"""
+        return (
+            f"{self.dialog.entry_case_information.case_number}"
+            f"_{self.dialog.template.template_name}.docx"
+        )
+
     def set_plea_and_findings_process(self):
-        """Calls the dialog specific method to set all the pleas based on the plea all button
-        that is pressed (i.e. "Guilty All"). For Guilty and No Contest the charges_gridLayout
-        specific method will also set the finding."""
+        """Calls the dialog specific method to set all the pleas based on the plea
+        all button that is pressed (i.e. "Guilty All"). For Guilty and No Contest the
+        charges_gridLayout specific method will also set the finding."""
         self.dialog.charges_gridLayout.set_all_pleas()
 
     def set_pay_date(self, days_to_add):
-        "Sets the sentencing date to the Tuesday (1) after the days added."""
+        "Sets the sentencing date to the Tuesday (1) after the days added." ""
         if days_to_add == "forthwith":
             self.dialog.balance_due_date.setDate(QDate.currentDate())
         else:
             total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
-            self.dialog.balance_due_date.setDate(QDate.currentDate().addDays(total_days_to_add))
+            self.dialog.balance_due_date.setDate(
+                QDate.currentDate().addDays(total_days_to_add)
+            )
 
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
@@ -132,21 +146,28 @@ class BaseDialogSlotFunctions(object):
         message = InfoBox()
         message.setWindowTitle("Total Costs and Fines")
         message.setInformativeText(
-            f"Costs: $ {str(self.dialog.entry_case_information.court_costs.amount)}" 
+            f"Costs: $ {str(self.dialog.entry_case_information.court_costs.amount)}"
             f"\nFines: $ {str(self.dialog.entry_case_information.total_fines)}"
             f"\nFines Suspended: $ {str(self.dialog.entry_case_information.total_fines_suspended)}"
-            f"\n\n*Does not include possible bond forfeiture or other costs \n that " 
-            f"may be assessed as a result of prior actions in the case. ")
-        total_fines_and_costs = \
-            (self.dialog.entry_case_information.court_costs.amount + \
-                self.dialog.entry_case_information.total_fines) - \
-                self.dialog.entry_case_information.total_fines_suspended
-        message.setText(f"Total Costs and Fines Due By Due Date: $ {str(total_fines_and_costs)}")
+            f"\n\n*Does not include possible bond forfeiture or other costs \n that "
+            f"may be assessed as a result of prior actions in the case. "
+        )
+        total_fines_and_costs = (
+            self.dialog.entry_case_information.court_costs.amount
+            + self.dialog.entry_case_information.total_fines
+        ) - self.dialog.entry_case_information.total_fines_suspended
+        message.setText(
+            f"Total Costs and Fines Due By Due Date: $ {str(total_fines_and_costs)}"
+        )
         message.exec_()
 
     def update_community_service_due_date(self, _index=None):
-        days_to_complete = int(self.dialog.community_service_days_to_complete_box.currentText())
-        self.dialog.community_service_date_to_complete_box.setDate(QDate.currentDate().addDays(days_to_complete))
+        days_to_complete = int(
+            self.dialog.community_service_days_to_complete_box.currentText()
+        )
+        self.dialog.community_service_date_to_complete_box.setDate(
+            QDate.currentDate().addDays(days_to_complete)
+        )
 
     @classmethod
     @logger.catch
@@ -158,9 +179,9 @@ class BaseDialogSlotFunctions(object):
         if dialog.freeform_entry_checkBox.isChecked():
             return None
         if dialog.sender() == dialog.statute_choice_box:
-            field = 'statute'
+            field = "statute"
         elif dialog.sender() == dialog.offense_choice_box:
-            field = 'offense'
+            field = "offense"
         query = QSqlQuery(charges_database)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
         query.prepare(query_string)
@@ -171,10 +192,10 @@ class BaseDialogSlotFunctions(object):
             offense = query.value(1)
             statute = query.value(2)
             degree = query.value(3)
-            if field == 'offense':
+            if field == "offense":
                 if offense == key:
                     dialog.statute_choice_box.setCurrentText(statute)
-            elif field == 'statute':
+            elif field == "statute":
                 if statute == key:
                     dialog.offense_choice_box.setCurrentText(offense)
             dialog.degree_choice_box.setCurrentText(degree)
@@ -193,7 +214,10 @@ class BaseDialogSlotFunctions(object):
                     setattr(items[1], "ordered", False)
 
     def set_report_date(self):
-        if self.dialog.report_type_box.currentText() == "date set by Office of Community Control":
+        if (
+            self.dialog.report_type_box.currentText()
+            == "date set by Office of Community Control"
+        ):
             self.dialog.report_date_box.setDisabled(True)
             self.dialog.report_date_box.setHidden(True)
             self.dialog.report_time_box.setDisabled(True)
@@ -216,7 +240,10 @@ class BaseDialogSlotFunctions(object):
             self.dialog.report_time_label.setHidden(False)
 
     def show_report_days_notes_box(self):
-        if self.dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
+        if (
+            self.dialog.jail_sentence_execution_type_box.currentText()
+            == "consecutive days"
+        ):
             self.dialog.jail_report_days_notes_box.setDisabled(True)
             self.dialog.jail_report_days_notes_box.setHidden(True)
         else:
@@ -300,43 +327,61 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.close_event()
 
     def update_criminal_charge_offense_name(self):
-        setattr(self.dialog.charge,
-                'offense',
-                f"{self.dialog.current_offense_name} - AMENDED to "
-                f"{self.dialog.amend_offense_details.amended_charge}"
-                )
+        setattr(
+            self.dialog.charge,
+            "offense",
+            f"{self.dialog.current_offense_name} - AMENDED to "
+            f"{self.dialog.amend_offense_details.amended_charge}",
+        )
 
     def update_charges_grid_with_amended_charge(self):
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
             if (
-                    self.main_dialog.charges_gridLayout.itemAtPosition(
-                        self.main_dialog.charges_gridLayout.row_offense, columns) is not None
-                    and self.main_dialog.charges_gridLayout.itemAtPosition(
-                        self.main_dialog.charges_gridLayout.row_offense, columns
-                        ).widget().text() == self.dialog.current_offense_name
+                self.main_dialog.charges_gridLayout.itemAtPosition(
+                    self.main_dialog.charges_gridLayout.row_offense, columns
+                )
+                is not None
+                and self.main_dialog.charges_gridLayout.itemAtPosition(
+                    self.main_dialog.charges_gridLayout.row_offense, columns
+                )
+                .widget()
+                .text()
+                == self.dialog.current_offense_name
             ):
                 self.main_dialog.charges_gridLayout.itemAtPosition(
-                    self.main_dialog.charges_gridLayout.row_offense, columns).widget().setText(
+                    self.main_dialog.charges_gridLayout.row_offense, columns
+                ).widget().setText(
                     f"{self.dialog.current_offense_name} - AMENDED to "
                     f"{self.dialog.amend_offense_details.amended_charge}"
-                    )
+                )
                 self.main_dialog.charges_gridLayout.itemAtPosition(
-                    self.main_dialog.charges_gridLayout.row_statute, columns).widget().setText(
-                    self.dialog.statute_choice_box.currentText())
+                    self.main_dialog.charges_gridLayout.row_statute, columns
+                ).widget().setText(self.dialog.statute_choice_box.currentText())
                 self.main_dialog.charges_gridLayout.itemAtPosition(
-                    self.main_dialog.charges_gridLayout.row_degree, columns).widget().setCurrentText(
-                    self.dialog.degree_choice_box.currentText())
+                    self.main_dialog.charges_gridLayout.row_degree, columns
+                ).widget().setCurrentText(self.dialog.degree_choice_box.currentText())
 
     def add_charge_to_amended_charge_list(self):
         self.main_dialog.entry_case_information.amended_charges_list.append(
-            (self.dialog.amend_offense_details.original_charge, self.dialog.amend_offense_details.amended_charge)
+            (
+                self.dialog.amend_offense_details.original_charge,
+                self.dialog.amend_offense_details.amended_charge,
+            )
         )
 
     def set_amended_offense_details(self):
-        self.dialog.amend_offense_details.original_charge = self.dialog.current_offense_name
-        self.dialog.amend_offense_details.amended_charge = self.dialog.offense_choice_box.currentText()
-        self.dialog.amend_offense_details.motion_disposition = self.dialog.motion_decision_box.currentText()
-        self.main_dialog.entry_case_information.amend_offense_details = self.dialog.amend_offense_details
+        self.dialog.amend_offense_details.original_charge = (
+            self.dialog.current_offense_name
+        )
+        self.dialog.amend_offense_details.amended_charge = (
+            self.dialog.offense_choice_box.currentText()
+        )
+        self.dialog.amend_offense_details.motion_disposition = (
+            self.dialog.motion_decision_box.currentText()
+        )
+        self.main_dialog.entry_case_information.amend_offense_details = (
+            self.dialog.amend_offense_details
+        )
 
     def close_event(self):
         self.dialog.charges_database.close()
@@ -359,6 +404,7 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddConditionsDialog
+
         self.dialog.update_entry_case_information()
         AddConditionsDialog(self.dialog).exec()
 
@@ -370,6 +416,7 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddCommunityControlDialog
+
         self.dialog.update_entry_case_information()
         AddCommunityControlDialog(self.dialog).exec()
 
@@ -399,7 +446,10 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
     def start_add_special_bond_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import AddSpecialBondConditionsDialog
+        from package.controllers.conditions_dialogs import (
+            AddSpecialBondConditionsDialog,
+        )
+
         self.dialog.update_entry_case_information()
         AddSpecialBondConditionsDialog(self.dialog).exec()
 
@@ -443,11 +493,17 @@ class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def add_conditions(self):
         if self.main_dialog.community_service_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_service)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.community_service
+            )
         if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.license_suspension)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.license_suspension
+            )
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.other_conditions
+            )
 
 
 class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -457,19 +513,33 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def add_conditions(self):
         if self.main_dialog.community_service_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_service)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.community_service
+            )
         if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.license_suspension)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.license_suspension
+            )
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.other_conditions
+            )
         if self.main_dialog.community_control_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.community_control)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.community_control
+            )
         if self.main_dialog.jail_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.jail_terms)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.jail_terms
+            )
         if self.main_dialog.impoundment_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.impoundment)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.impoundment
+            )
         if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.victim_notification)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.victim_notification
+            )
 
 
 class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -479,17 +549,29 @@ class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def add_conditions(self):
         if self.main_dialog.domestic_violence_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.domestic_violence_conditions)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.domestic_violence_conditions
+            )
         if self.main_dialog.admin_license_suspension_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.admin_license_suspension)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.admin_license_suspension
+            )
         if self.main_dialog.no_contact_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.no_contact)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.no_contact
+            )
         if self.main_dialog.custodial_supervision_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.custodial_supervision)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.custodial_supervision
+            )
         if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.other_conditions)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.other_conditions
+            )
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.vehicle_seizure)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.vehicle_seizure
+            )
 
 
 class AddJailOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -499,7 +581,9 @@ class AddJailOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def add_conditions(self):
         if self.main_dialog.jail_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(self.main_dialog.entry_case_information.jail_terms)
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.jail_terms
+            )
 
 
 def close_databases():
@@ -513,5 +597,3 @@ if __name__ == "__main__":
 else:
     print("Slot Functions imported")
     charges_database = open_charges_db_connection()
-
-
