@@ -81,12 +81,12 @@ class BaseDialogSlotFunctions(object):
         self.dialog.charges_gridLayout.set_all_pleas()
 
     def set_fines_costs_pay_date(self, days_to_add_string):
-        "Sets the sentencing date to the Tuesday (1) after the days added." ""
+        """Sets the sentencing date to the Tuesday after the number of days added."""
         if days_to_add_string == "forthwith":
             self.dialog.balance_due_date.setDate(QDate.currentDate())
         else:
             days_to_add = self.get_days_to_add(days_to_add_string)
-            total_days_to_add = set_future_date(days_to_add, 1)
+            total_days_to_add = set_future_date(days_to_add, "Tuesday")
             self.dialog.balance_due_date.setDate(
                 QDate.currentDate().addDays(total_days_to_add)
             )

@@ -232,14 +232,14 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
     def set_diversion_fine_pay_date_box(self):
         """Diversion pay date is set to the first Tuesday after 97 days - 90 days to comply, plus 7 days
         to process paperwork (per Judge Hemmeter). The 1 in the set_future_date is for Tuesday."""
-        diversion_pay_days_to_add = set_future_date(97, 1)
+        diversion_pay_days_to_add = set_future_date(97, "Tuesday")
         self.dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
         self.dialog.diversion_fine_pay_date_box.__class__ = NoScrollDateEdit
 
     def set_diversion_jail_report_date_box(self):
         """Diversion jail report date is set to the first Friday after 97 days - 90 days to comply, plus 7 days
         to process paperwork (per Judge Hemmeter). The 4 in the set_future_date is for Friday."""
-        jail_report_days_to_add = set_future_date(97, 4)
+        jail_report_days_to_add = set_future_date(97, "Friday")
         self.dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
         self.dialog.diversion_jail_report_date_box.__class__ = NoScrollDateEdit
 
