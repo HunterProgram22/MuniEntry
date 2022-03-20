@@ -335,6 +335,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.dialog.community_control_term_of_control_box.__class__ = NoScrollComboBox
         self.dialog.house_arrest_time_box.__class__ = NoScrollComboBox
         self.dialog.gps_exclusion_radius_box.__class__ = NoScrollComboBox
+        self.dialog.alcohol_monitoring_time_box.__class__ = NoScrollComboBox
         self.dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
         self.dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
         self.dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
@@ -347,6 +348,9 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
         self.set_domestic_violence_surrender_weapons_default_date()
         self.dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
         self.dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
+        self.dialog.domestic_violence_surrender_weapons_dateBox.__class__ = NoScrollDateEdit
+        self.dialog.state_opposes_box.__class__ = NoScrollComboBox
+        self.dialog.disposition_motion_to_return_box.__class__ = NoScrollComboBox
 
     def set_special_bond_conditions_case_information_banner(self):
         column = self.dialog.charges_gridLayout.columnCount() + 1
