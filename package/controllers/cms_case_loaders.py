@@ -48,24 +48,23 @@ class CmsLoader:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
              self.criminal_charge.degree, self.criminal_charge.type) = charge
-            self.criminal_charge.type = self.set_offense_type_from_daily_case_list()
+            self.criminal_charge.type = self.set_offense_type()
             self.dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             self.dialog.add_charge_to_grid()
             self.dialog.setFocus()
 
-
-    def set_offense_type_from_daily_case_list(self):
-        """TODO: This is currently setting the charge type to Moving if CMS provides
-        'No Data', but perhaps should be set to Non-moving?"""
+    def set_offense_type(self):
+        """This sets the charge type to Moving if CMS provides "No Data" the rationale
+        that if the user uses the show costs and fines it would provide the highest
+        possible costs if there is no data. Then defendant will get actual costs that
+        could actually be less when they go to clerk's office."""
+        if self.cms_case.case_number[2:5] == "CRB":
+            return "Criminal"
         if self.criminal_charge.type == "False":
-            if self.cms_case.case_number[2:5] == "CRB":
-                return "Criminal"
-            else:
-                return "Non-moving"
-        elif self.criminal_charge.type == "True":
+            return "Non-moving"
+        if self.criminal_charge.type == "True":
             return "Moving"
-        else:
-            return "Moving"
+        return "Moving"
 
 
 class CmsFraLoader(CmsLoader):
