@@ -4,16 +4,27 @@ from package.controllers.base_dialogs import BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
-from package.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
-from package.controllers.view_modifiers import AddConditionsDialogViewModifier, \
-    AddJailOnlyDialogViewModifier, AddCommunityControlDialogViewModifier, \
-    AddSpecialBondConditionsDialogViewModifier
-from package.controllers.signal_connectors import AddConditionsDialogSignalConnector, \
-    AddJailOnlyDialogSignalConnector, AddCommunityControlDialogSignalConnector, \
-    AddSpecialBondConditionsDialogSignalConnector
-from package.controllers.slot_functions import AddConditionsDialogSlotFunctions, \
-    AddCommunityControlDialogSlotFunctions, AddSpecialBondConditionsDialogSlotFunctions, \
-    AddJailOnlyDialogSlotFunctions
+from package.views.add_special_bond_conditions_dialog_ui import (
+    Ui_AddSpecialBondConditionsDialog,
+)
+from package.controllers.view_modifiers import (
+    AddConditionsDialogViewModifier,
+    AddJailOnlyDialogViewModifier,
+    AddCommunityControlDialogViewModifier,
+    AddSpecialBondConditionsDialogViewModifier,
+)
+from package.controllers.signal_connectors import (
+    AddConditionsDialogSignalConnector,
+    AddJailOnlyDialogSignalConnector,
+    AddCommunityControlDialogSignalConnector,
+    AddSpecialBondConditionsDialogSignalConnector,
+)
+from package.controllers.slot_functions import (
+    AddConditionsDialogSlotFunctions,
+    AddCommunityControlDialogSlotFunctions,
+    AddSpecialBondConditionsDialogSlotFunctions,
+    AddJailOnlyDialogSlotFunctions,
+)
 
 
 CONDITIONS_FRAMES = [
@@ -49,6 +60,7 @@ def enable_condition_frames(conditions_dialog, main_dialog):
 
 class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     """The 'secondary' conditions dialog for the Fines Only Plea Dialog."""
+
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
@@ -69,6 +81,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
 class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     """This 'secondary' dialog is called from a warning message if the
     user forgot to set jail time."""
+
     condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
@@ -92,15 +105,23 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
 
 class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     """The 'secondary' conditions dialog for the Jail CC Plea Dialog."""
+
     condition_checkbox_list = [
         ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
         ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
-        ("community_control_not_within_500_feet_checkBox",
-            "community_control_not_within_500_feet_person_box"),
-        ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
+        (
+            "community_control_not_within_500_feet_checkBox",
+            "community_control_not_within_500_feet_person_box",
+        ),
+        (
+            "community_control_no_contact_checkBox",
+            "community_control_no_contact_with_box",
+        ),
         ("house_arrest_checkBox", "house_arrest_time_box"),
-        ("community_control_community_service_checkBox",
-            "community_control_community_service_hours_box"),
+        (
+            "community_control_community_service_checkBox",
+            "community_control_community_service_hours_box",
+        ),
         ("other_community_control_checkBox", "other_community_control_conditions_box"),
         ("alcohol_monitoring_checkBox", "alcohol_monitoring_time_box"),
         ("pay_restitution_checkBox", "pay_restitution_amount_box"),
@@ -128,6 +149,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     """The 'secondary' dialog for the Not Guilty Bond Dialog."""
+
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
