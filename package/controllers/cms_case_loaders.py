@@ -5,36 +5,37 @@ class CmsLoader:
     """Uses the cms_case number selected to get the cms_case object from main_window and
     load cms_case data."""
     def __init__(self, dialog):
+        self.dialog = dialog
         self.cms_case = dialog.cms_case
         self.criminal_charge = None
-        self.load_cms_data(dialog)
+        self.load_cms_data()
 
-    def load_cms_data(self, dialog):
+    def load_cms_data(self):
         if self.cms_case.case_number is not None:
-            dialog.case_number_lineEdit.setText(self.cms_case.case_number)
-            dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
-            dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
+            self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+            self.dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
+            self.dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
             if self.cms_case.defense_counsel is not None:
-                dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
-                dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
+                self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
+                self.dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
             if self.cms_case.defense_counsel_type == "PD":
-                dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+                self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
             elif self.cms_case.defense_counsel.strip() == "":
-                dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+                self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
             else:
-                dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
-            self.add_cms_criminal_charges_to_entry_case_information(dialog)
+                self.dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
+            self.add_cms_criminal_charges_to_entry_case_information()
 
-    def add_cms_criminal_charges_to_entry_case_information(self, dialog):
+    def add_cms_criminal_charges_to_entry_case_information(self):
         """Loads the data from the cms_case object that is created from the sql table."""
         for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
             (self.criminal_charge.offense, self.criminal_charge.statute,
              self.criminal_charge.degree, self.criminal_charge.type) = charge
             self.criminal_charge.type = self.set_offense_type_from_daily_case_list()
-            dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
-            dialog.add_charge_to_grid()
-            dialog.setFocus()
+            self.dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+            self.dialog.add_charge_to_grid()
+            self.dialog.setFocus()
 
 
     def set_offense_type_from_daily_case_list(self):
@@ -56,17 +57,17 @@ class CmsFraLoader(CmsLoader):
     FRA (insurance) data for the case."""
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.add_fra_data(dialog)
+        self.add_fra_data()
 
-    def add_fra_data(self, dialog):
+    def add_fra_data(self):
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
         if self.cms_case.case_number is None:
-            dialog.fra_in_file_box.setCurrentText("N/A")
+            self.dialog.fra_in_file_box.setCurrentText("N/A")
         elif self.cms_case.case_number[2:5] == "CRB":
-            dialog.fra_frame.setHidden(True)
+            self.dialog.fra_frame.setHidden(True)
         elif self.cms_case.fra_in_file in fra_value_dict:
-            dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
+            self.dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
-            dialog.fra_in_file_box.setCurrentText("N/A")
-        dialog.functions.set_fra_in_file(dialog.fra_in_file_box.currentText())
-        dialog.functions.set_fra_in_court(dialog.fra_in_court_box.currentText())
+            self.dialog.fra_in_file_box.setCurrentText("N/A")
+        self.dialog.functions.set_fra_in_file(self.dialog.fra_in_file_box.currentText())
+        self.dialog.functions.set_fra_in_court(self.dialog.fra_in_court_box.currentText())
