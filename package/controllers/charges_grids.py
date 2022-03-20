@@ -6,6 +6,12 @@ from package.views.custom_widgets import PleaComboBox, AlliedCheckbox, FineLineE
 
 
 class ChargesGrid(QGridLayout):
+    """The base format of the charges grid that is used when a main_entry_dialog needs to display and interact
+    with charges in a case. The ChargesGrid subclasses the QGridLayout and provides methods for manipulating the
+    grid. Each main_entry_dialog that has a ChargesGrid has a specific subclassed version that is set by changing
+    the class of the QGridLayout to the class of the specific subclassed ChargesGrid. This avoids having to
+    initialize the grid during the setupUI method called by the main_entry_dialog classes modify_view method.
+    The class is set prior to loading the case data during the main_entry_dialog load_cms_data_to_view method."""
     row_offense = 0
     row_statute = 1
     row_degree = 2
@@ -17,9 +23,6 @@ class ChargesGrid(QGridLayout):
     row_fine_suspended = 8
     row_amend_button = 9
     row_delete_button = 10
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
 
     def add_charge_only_to_grid(self, dialog):
         pass
