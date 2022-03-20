@@ -24,11 +24,8 @@ class ChargesGrid(QGridLayout):
     row_amend_button = 9
     row_delete_button = 10
 
-    def get_charge_information(self, dialog):
-        added_charge_index = len(dialog.entry_case_information.charges_list) - 1
-        charge_dict = vars(dialog.entry_case_information.charges_list[added_charge_index])
-        charge_in_list = dialog.entry_case_information.charges_list[added_charge_index]
-        return charge_dict, charge_in_list
+    def get_last_charge_in_charges_list(self, dialog):
+        return dialog.entry_case_information.charges_list[-1]
 
     def set_plea_and_finding_rows(self):
         """The initial values of row_plea and row_finding are the common rows for plea and findings.
@@ -72,13 +69,13 @@ class NotGuiltyPleaGrid(ChargesGrid):
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because a new charge is being
         added."""
-        charge_dict, charge_in_list = self.get_charge_information(dialog)
+        charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge_dict['offense']), NotGuiltyPleaGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge_dict['statute']), NotGuiltyPleaGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge_dict['degree']), NotGuiltyPleaGrid.row_degree, column)
+        self.addWidget(QLabel(charge.offense), NotGuiltyPleaGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), NotGuiltyPleaGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), NotGuiltyPleaGrid.row_degree, column)
         self.addWidget(PleaComboBox(column), NotGuiltyPleaGrid.row_plea, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), NotGuiltyPleaGrid.row_delete_button,
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NotGuiltyPleaGrid.row_delete_button,
                        column)
 
     @logger.catch
@@ -104,19 +101,19 @@ class NoJailChargesGrid(ChargesGrid):
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because a new charge is being
         added."""
-        charge_dict, charge_in_list = self.get_charge_information(dialog)
+        charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge_dict['offense']), NoJailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge_dict['statute']), NoJailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge_dict['degree']), NoJailChargesGrid.row_degree, column)
+        self.addWidget(QLabel(charge.offense), NoJailChargesGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), NoJailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), NoJailChargesGrid.row_degree, column)
         self.addWidget(DismissedCheckbox(column, dialog), NoJailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(column, dialog), NoJailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge_dict['offense']), NoJailChargesGrid.row_fine, column)
+        self.addWidget(FineLineEdit(charge.offense), NoJailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), NoJailChargesGrid.row_fine_suspended, column)
-        self.addWidget(ChargeGridAmendButton(column, charge_in_list, dialog), NoJailChargesGrid.row_amend_button, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), NoJailChargesGrid.row_delete_button, column)
+        self.addWidget(ChargeGridAmendButton(column, charge, dialog), NoJailChargesGrid.row_amend_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NoJailChargesGrid.row_delete_button, column)
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
@@ -145,21 +142,21 @@ class JailChargesGrid(NoJailChargesGrid):
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because a new charge is being
         added."""
-        charge_dict, charge_in_list = self.get_charge_information(dialog)
+        charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge_dict['offense']), JailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge_dict['statute']), JailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge_dict['degree']), JailChargesGrid.row_degree, column)
+        self.addWidget(QLabel(charge.offense), JailChargesGrid.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), JailChargesGrid.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), JailChargesGrid.row_degree, column)
         self.addWidget(DismissedCheckbox(column, dialog), JailChargesGrid.row_dismissed_box, column)
         self.addWidget(AlliedCheckbox(column, dialog), JailChargesGrid.row_allied_box, column)
         self.addWidget(PleaComboBox(column), JailChargesGrid.row_plea, column)
         self.addWidget(FindingComboBox(), JailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge_dict['offense']), JailChargesGrid.row_fine, column)
+        self.addWidget(FineLineEdit(charge.offense), JailChargesGrid.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), JailChargesGrid.row_fine_suspended, column)
-        self.addWidget(JailLineEdit(charge_dict['offense']), JailChargesGrid.row_jail_days, column)
+        self.addWidget(JailLineEdit(charge.offense), JailChargesGrid.row_jail_days, column)
         self.addWidget(JailSuspendedLineEdit(), JailChargesGrid.row_jail_days_suspended, column)
-        self.addWidget(ChargeGridAmendButton(column, charge_in_list, dialog), JailChargesGrid.row_amend_button, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge_in_list, dialog), JailChargesGrid.row_delete_button, column)
+        self.addWidget(ChargeGridAmendButton(column, charge, dialog), JailChargesGrid.row_amend_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), JailChargesGrid.row_delete_button, column)
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
