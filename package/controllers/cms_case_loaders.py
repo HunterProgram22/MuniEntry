@@ -1,9 +1,11 @@
+"""Module for loading the CMS case data into the main_entry_dialog view."""
 from package.models.case_information import CriminalCharge
 
 
 class CmsLoader:
     """Uses the cms_case number selected to get the cms_case object from main_window and
     load cms_case data."""
+
     def __init__(self, dialog):
         self.dialog = dialog
         self.cms_case = dialog.cms_case
@@ -23,15 +25,18 @@ class CmsLoader:
 
     def set_defendant_name(self):
         self.dialog.defendant_first_name_lineEdit.setText(
-            self.cms_case.defendant.first_name)
+            self.cms_case.defendant.first_name
+        )
         self.dialog.defendant_last_name_lineEdit.setText(
-            self.cms_case.defendant.last_name)
+            self.cms_case.defendant.last_name
+        )
 
     def set_defense_counsel_name(self):
         if self.cms_case.defense_counsel is not None:
             self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
             self.dialog.defense_counsel_name_box.setCurrentText(
-                self.cms_case.defense_counsel)
+                self.cms_case.defense_counsel
+            )
 
     def set_defense_counsel_type(self):
         if self.cms_case.defense_counsel_type == "PD":
@@ -46,8 +51,12 @@ class CmsLoader:
         table."""
         for charge in self.cms_case.charges_list:
             self.criminal_charge = CriminalCharge()
-            (self.criminal_charge.offense, self.criminal_charge.statute,
-             self.criminal_charge.degree, self.criminal_charge.type) = charge
+            (
+                self.criminal_charge.offense,
+                self.criminal_charge.statute,
+                self.criminal_charge.degree,
+                self.criminal_charge.type,
+            ) = charge
             self.criminal_charge.type = self.set_offense_type()
             self.dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
             self.dialog.add_charge_to_grid()
@@ -70,6 +79,7 @@ class CmsLoader:
 class CmsFraLoader(CmsLoader):
     """This subclass is used for the Fine Only Plea and Jail CC Plea Dialogs to load the
     FRA (insurance) data for the case."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.load_fra_data()
@@ -80,7 +90,9 @@ class CmsFraLoader(CmsLoader):
         if self.cms_case.case_number is None:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
         elif self.cms_case.fra_in_file in fra_value_dict:
-            self.dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
+            self.dialog.fra_in_file_box.setCurrentText(
+                fra_value_dict[self.cms_case.fra_in_file]
+            )
         else:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
 
