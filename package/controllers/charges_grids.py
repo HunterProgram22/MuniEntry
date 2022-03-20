@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QGridLayout, QLabel
-from loguru import logger
+
 from package.views.custom_widgets import PleaComboBox, AlliedCheckbox, FineLineEdit, \
     StatuteLineEdit, DegreeComboBox, FindingComboBox, FineSuspendedLineEdit, JailLineEdit, JailSuspendedLineEdit, \
     DismissedCheckbox, ChargeGridDeleteButton, ChargeGridAmendButton
@@ -43,6 +43,9 @@ class ChargesGrid(QGridLayout):
             column += 1
 
     def set_all_pleas(self):
+        """This method after setting all pleas calls the set_all_findings. In the Not Guilty Plea Grid the method is
+        overriden to not call the set_all_findings because there are no findings to be set with a Not Guilty
+        plea."""
         plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
@@ -70,12 +73,11 @@ class NotGuiltyPleaGrid(ChargesGrid):
         added."""
         charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge.offense), NotGuiltyPleaGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge.statute), NotGuiltyPleaGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge.degree), NotGuiltyPleaGrid.row_degree, column)
-        self.addWidget(PleaComboBox(column), NotGuiltyPleaGrid.row_plea, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NotGuiltyPleaGrid.row_delete_button,
-                       column)
+        self.addWidget(QLabel(charge.offense), self.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), self.row_delete_button, column)
 
     def set_all_pleas(self):
         """This method overrides the ChargesGrid set_all_pleas because there are no findings to
@@ -96,23 +98,22 @@ class NoJailChargesGrid(ChargesGrid):
     row_amend_button = 9
     row_delete_button = 10
 
-    @logger.catch
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because a new charge is being
         added."""
         charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge.offense), NoJailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge.statute), NoJailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge.degree), NoJailChargesGrid.row_degree, column)
-        self.addWidget(DismissedCheckbox(column, dialog), NoJailChargesGrid.row_dismissed_box, column)
-        self.addWidget(AlliedCheckbox(column, dialog), NoJailChargesGrid.row_allied_box, column)
-        self.addWidget(PleaComboBox(column), NoJailChargesGrid.row_plea, column)
-        self.addWidget(FindingComboBox(), NoJailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge.offense), NoJailChargesGrid.row_fine, column)
-        self.addWidget(FineSuspendedLineEdit(), NoJailChargesGrid.row_fine_suspended, column)
-        self.addWidget(ChargeGridAmendButton(column, charge, dialog), NoJailChargesGrid.row_amend_button, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NoJailChargesGrid.row_delete_button, column)
+        self.addWidget(QLabel(charge.offense), self.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
+        self.addWidget(AlliedCheckbox(column, dialog), self.row_allied_box, column)
+        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(FindingComboBox(), self.row_finding, column)
+        self.addWidget(FineLineEdit(charge.offense), self.row_fine, column)
+        self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.addWidget(ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), self.row_delete_button, column)
 
 
 class JailChargesGrid(NoJailChargesGrid):
@@ -121,25 +122,24 @@ class JailChargesGrid(NoJailChargesGrid):
     row_amend_button = 11
     row_delete_button = 12
 
-    @logger.catch
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because a new charge is being
         added."""
         charge = self.get_last_charge_in_charges_list(dialog)
         column = self.columnCount() + 1
-        self.addWidget(QLabel(charge.offense), JailChargesGrid.row_offense, column)
-        self.addWidget(StatuteLineEdit(charge.statute), JailChargesGrid.row_statute, column)
-        self.addWidget(DegreeComboBox(charge.degree), JailChargesGrid.row_degree, column)
-        self.addWidget(DismissedCheckbox(column, dialog), JailChargesGrid.row_dismissed_box, column)
-        self.addWidget(AlliedCheckbox(column, dialog), JailChargesGrid.row_allied_box, column)
-        self.addWidget(PleaComboBox(column), JailChargesGrid.row_plea, column)
-        self.addWidget(FindingComboBox(), JailChargesGrid.row_finding, column)
-        self.addWidget(FineLineEdit(charge.offense), JailChargesGrid.row_fine, column)
-        self.addWidget(FineSuspendedLineEdit(), JailChargesGrid.row_fine_suspended, column)
-        self.addWidget(JailLineEdit(charge.offense), JailChargesGrid.row_jail_days, column)
-        self.addWidget(JailSuspendedLineEdit(), JailChargesGrid.row_jail_days_suspended, column)
-        self.addWidget(ChargeGridAmendButton(column, charge, dialog), JailChargesGrid.row_amend_button, column)
-        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), JailChargesGrid.row_delete_button, column)
+        self.addWidget(QLabel(charge.offense), self.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
+        self.addWidget(AlliedCheckbox(column, dialog), self.row_allied_box, column)
+        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(FindingComboBox(), self.row_finding, column)
+        self.addWidget(FineLineEdit(charge.offense), self.row_fine, column)
+        self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.addWidget(JailLineEdit(charge.offense), self.row_jail_days, column)
+        self.addWidget(JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
+        self.addWidget(ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column)
+        self.addWidget(ChargeGridDeleteButton(column, charge, dialog), self.row_delete_button, column)
 
 
 class DiversionChargesGrid(JailChargesGrid):
