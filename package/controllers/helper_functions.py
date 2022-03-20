@@ -1,19 +1,13 @@
 """Helper functions that are used throughout the application."""
 from datetime import date, timedelta
 
-def set_future_date(days_to_add, days_to_add_dict, next_day):
+def set_future_date(days_to_add, next_day):
     """This is a general helper function that will accept the numbers of days to
     add to the current date and set a new date.
     :days_to_add: A string from the view.
-    :days_to_add_dict: A dict that has the different date options available in
-    the view.
     :next_day: The next day of the week to set the date after the days to add.
     For example 0 days sets it to the next Monday after the added days, 1 sets
     it to the next Tuesday after the added days, etc."""
-    if days_to_add_dict is None:
-        days_to_add = days_to_add
-    else:
-        days_to_add = days_to_add_dict[days_to_add]
     future_date = date.today() + timedelta(days_to_add)
     today = date.today()
 

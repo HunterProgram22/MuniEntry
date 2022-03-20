@@ -12,7 +12,7 @@ from db.sql_queries import sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
 from package.views.custom_widgets import RequiredBox
-from settings import SAVE_PATH, PAY_DATE_DICT
+from settings import SAVE_PATH
 
 
 class BaseDialogSlotFunctions(object):
@@ -80,15 +80,24 @@ class BaseDialogSlotFunctions(object):
         charges_gridLayout specific method will also set the finding."""
         self.dialog.charges_gridLayout.set_all_pleas()
 
-    def set_pay_date(self, days_to_add):
+    def set_fines_costs_pay_date(self, days_to_add_string):
         "Sets the sentencing date to the Tuesday (1) after the days added." ""
-        if days_to_add == "forthwith":
+        if days_to_add_string == "forthwith":
             self.dialog.balance_due_date.setDate(QDate.currentDate())
         else:
-            total_days_to_add = set_future_date(days_to_add, PAY_DATE_DICT, 1)
+            days_to_add = self.get_days_to_add(days_to_add_string)
+            total_days_to_add = set_future_date(days_to_add, 1)
             self.dialog.balance_due_date.setDate(
                 QDate.currentDate().addDays(total_days_to_add)
             )
+
+    def get_days_to_add(self, days_to_add_string):
+        pay_date_dict = {
+            "within 30 days": 30,
+            "within 60 days": 60,
+            "within 90 days": 90,
+        }
+        return pay_date_dict.get(days_to_add_string)
 
     def create_entry_process(self):
         """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the

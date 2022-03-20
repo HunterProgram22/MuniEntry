@@ -24,7 +24,7 @@ class BaseDialogSignalConnector:
         dialog.no_contest_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
 
     def connect_court_cost_signals(self, dialog):
-        dialog.ability_to_pay_box.currentTextChanged.connect(dialog.functions.set_pay_date)
+        dialog.ability_to_pay_box.currentTextChanged.connect(dialog.functions.set_fines_costs_pay_date)
         dialog.costs_and_fines_Button.released.connect(dialog.functions.show_costs_and_fines)
 
     def connect_main_dialog_additional_condition_signals(self, dialog):
