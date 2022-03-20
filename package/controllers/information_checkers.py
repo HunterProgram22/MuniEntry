@@ -135,7 +135,6 @@ class BaseInfoChecker(object):
             self.dialog.fra_in_court_box.setCurrentText("Yes")
             return "Pass"
 
-
     def check_additional_conditions_ordered(self):
         for condition_item in self.conditions_list:
             condition = getattr(self.dialog.entry_case_information,
@@ -152,43 +151,6 @@ class BaseInfoChecker(object):
                 )
                 message.exec()
                 return "Fail"
-
-        # """The bond_conditions_list for Victim Notification and Domestic Violence is used because of two checkboxes as only options, no
-        # ordered option like other conditions. TODO: figure out way to make it part of standard conditions list."""
-        # bool_conditions_list = [
-        #     # Refactored out because added third notifcation condition for DV and 18 USC gun prohibitions - TODO: Fix
-        #     # (dialog.entry_case_information.victim_notification.ordered,
-        #     #  dialog.entry_case_information.victim_notification.victim_reparation_notice,
-        #     #  dialog.entry_case_information.victim_notification.victim_prosecutor_notice,
-        #     #  "Victim Notification"),
-        #     (
-        #         self.dialog.entry_case_information.domestic_violence_conditions.ordered,
-        #         self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
-        #         self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
-        #         "Domestic Violence Restrictions",
-        #     ),
-        # ]
-        # for bool_condition_item in bool_conditions_list:
-        #     (
-        #         bool_condition_ordered,
-        #         bool_condition_one,
-        #         bool_condition_two,
-        #         description,
-        #     ) = bool_condition_item
-        #     if (
-        #         bool_condition_ordered is True
-        #         and bool_condition_one is False
-        #         and bool_condition_two is False
-        #     ):
-        #         message = RequiredBox(
-        #             f"The Additional Condition {description} is checked, but "
-        #             f"the details of the {description} have not been selected. "
-        #             f"Click the Add Conditions button to add details, or uncheck the "
-        #             f"{description} box if there is no {description} in this case."
-        #         )
-        #         message.exec()
-        #         return "Fail"
-        # return "Pass"
 
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
@@ -225,7 +187,7 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             "check_plea_and_findings",
             "check_if_no_bond_amount",
             "check_if_improper_bond_type",
-            "check_additional_conditions_ordered",
+            # "check_additional_conditions_ordered",
             # "check_domestic_violence_bond_condition",
         ]
         self.check_status = self.perform_check_list()
