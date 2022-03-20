@@ -27,39 +27,28 @@ from package.controllers.slot_functions import (
 )
 
 
-CONDITIONS_FRAMES = [
-    ("other_conditions_checkBox", "other_conditions_frame"),
-    ("license_suspension_checkBox", "license_suspension_frame"),
-    ("community_service_checkBox", "community_service_frame"),
-    ("admin_license_suspension_checkBox", "admin_license_suspension_frame"),
-    ("domestic_violence_checkBox", "domestic_violence_frame"),
-    ("vehicle_seizure_checkBox", "vehicle_seizure_frame"),
-    ("no_contact_checkBox", "no_contact_frame"),
-    ("custodial_supervision_checkBox", "custodial_supervision_frame"),
-    ("community_control_checkBox", "community_control_frame"),
-    ("jail_checkBox", "jail_commitment_frame"),
-    ("impoundment_checkBox", "impoundment_frame"),
-    ("victim_notification_checkBox", "victim_notification_frame"),
-]
-
-
 def enable_condition_frames(conditions_dialog, main_dialog):
     """The function is called from some of the conditions dialogs on init to hide frames
     for conditions that have not been selected in the main dialog. This is necessary
     because the base view contains all frames."""
-    for item in CONDITIONS_FRAMES:
+    for item in conditions_dialog.CONDITIONS_FRAMES:
         (frame_checkbox, frame) = item
-        if hasattr(main_dialog, frame_checkbox):
-            if getattr(main_dialog, frame_checkbox).isChecked():
-                getattr(conditions_dialog, frame).setEnabled(True)
-            else:
-                frame = getattr(conditions_dialog, frame)
-                frame.setParent(None)
-                frame.deleteLater()
+        if getattr(main_dialog, frame_checkbox).isChecked():
+            getattr(conditions_dialog, frame).setEnabled(True)
+        else:
+            frame = getattr(conditions_dialog, frame)
+            frame.setParent(None)
+            frame.deleteLater()
 
 
 class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     """The 'secondary' conditions dialog for the Fines Only Plea Dialog."""
+
+    CONDITIONS_FRAMES = [
+        ("other_conditions_checkBox", "other_conditions_frame"),
+        ("license_suspension_checkBox", "license_suspension_frame"),
+        ("community_service_checkBox", "community_service_frame"),
+    ]
 
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list
@@ -106,6 +95,16 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
 class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     """The 'secondary' conditions dialog for the Jail CC Plea Dialog."""
 
+    CONDITIONS_FRAMES = [
+        ("other_conditions_checkBox", "other_conditions_frame"),
+        ("license_suspension_checkBox", "license_suspension_frame"),
+        ("community_service_checkBox", "community_service_frame"),
+        ("community_control_checkBox", "community_control_frame"),
+        ("jail_checkBox", "jail_commitment_frame"),
+        ("impoundment_checkBox", "impoundment_frame"),
+        ("victim_notification_checkBox", "victim_notification_frame"),
+    ]
+
     condition_checkbox_list = [
         ("gps_exclusion_checkBox", "gps_exclusion_radius_box"),
         ("gps_exclusion_checkBox", "gps_exclusion_location_box"),
@@ -149,6 +148,15 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
     """The 'secondary' dialog for the Not Guilty Bond Dialog."""
+
+    CONDITIONS_FRAMES = [
+        ("other_conditions_checkBox", "other_conditions_frame"),
+        ("admin_license_suspension_checkBox", "admin_license_suspension_frame"),
+        ("domestic_violence_checkBox", "domestic_violence_frame"),
+        ("vehicle_seizure_checkBox", "vehicle_seizure_frame"),
+        ("no_contact_checkBox", "no_contact_frame"),
+        ("custodial_supervision_checkBox", "custodial_supervision_frame"),
+    ]
 
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list
