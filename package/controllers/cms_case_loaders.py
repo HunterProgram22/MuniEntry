@@ -72,17 +72,18 @@ class CmsFraLoader(CmsLoader):
     FRA (insurance) data for the case."""
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.add_fra_data()
+        self.load_fra_data()
+        self.hide_fra_if_criminal_case()
 
-    def add_fra_data(self):
+    def load_fra_data(self):
         fra_value_dict = {"Y": "Yes", "N": "No", "U": "N/A"}
         if self.cms_case.case_number is None:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
-        elif self.cms_case.case_number[2:5] == "CRB":
-            self.dialog.fra_frame.setHidden(True)
         elif self.cms_case.fra_in_file in fra_value_dict:
             self.dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
-        self.dialog.functions.set_fra_in_file(self.dialog.fra_in_file_box.currentText())
-        self.dialog.functions.set_fra_in_court(self.dialog.fra_in_court_box.currentText())
+
+    def hide_fra_if_criminal_case(self):
+        if self.cms_case.case_number[2:5] == "CRB":
+            self.dialog.fra_frame.setHidden(True)
