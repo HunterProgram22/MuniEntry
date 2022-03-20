@@ -445,9 +445,11 @@ class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
         if self.dialog.diversion_jail_imposed_checkBox.isChecked():
             self.dialog.diversion_jail_report_date_box.setHidden(False)
             self.dialog.diversion_jail_report_date_label.setHidden(False)
+            self.dialog.jail_report_date_note_label.setHidden(False)
         else:
             self.dialog.diversion_jail_report_date_box.setHidden(True)
             self.dialog.diversion_jail_report_date_label.setHidden(True)
+            self.dialog.jail_report_date_note_label.setHidden(True)
 
 
 class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
