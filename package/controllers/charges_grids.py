@@ -27,15 +27,9 @@ class ChargesGrid(QGridLayout):
     def get_last_charge_in_charges_list(self, dialog):
         return dialog.entry_case_information.charges_list[-1]
 
-    def create_button_dict(self, dialog):
-        button_dict = {}
-        if hasattr(dialog, "guilty_all_Button"):
-            button_dict[dialog.guilty_all_Button] = "Guilty"
-        if hasattr(dialog, "no_contest_all_Button"):
-            button_dict[dialog.no_contest_all_Button] = "No Contest"
-        if hasattr(dialog, "not_guilty_all_Button"):
-            button_dict[dialog.not_guilty_all_Button] = "Not Guilty"
-        return button_dict
+    def set_plea(self):
+        """Returns a copy of the label of the specific plea all button (i.e. "Guilty All" is returned as "Guilty")."""
+        return self.sender().text().strip(" All")
 
     def set_cursor_to_fine_line_edit(self):
         for column in range(1, self.columnCount()):
@@ -67,8 +61,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
-        button_dict = self.create_button_dict(dialog)
-        plea = button_dict.get(self.sender())
+        plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NotGuiltyPleaGrid.row_offense, column) is not None:
                 self.itemAtPosition(NotGuiltyPleaGrid.row_plea, column).widget().setCurrentText(plea)
@@ -104,8 +97,7 @@ class NoJailChargesGrid(ChargesGrid):
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
-        button_dict = self.create_button_dict(dialog)
-        plea = button_dict.get(self.sender())
+        plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(NoJailChargesGrid.row_offense, column) is not None:
                 if self.itemAtPosition(NoJailChargesGrid.row_dismissed_box, column).widget().isChecked():
@@ -147,8 +139,7 @@ class JailChargesGrid(NoJailChargesGrid):
 
     @logger.catch
     def set_all_plea_and_findings(self, dialog):
-        button_dict = self.create_button_dict(dialog)
-        plea = button_dict.get(self.sender())
+        plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(JailChargesGrid.row_offense, column) is not None:
                 if self.itemAtPosition(JailChargesGrid.row_dismissed_box, column).widget().isChecked():
