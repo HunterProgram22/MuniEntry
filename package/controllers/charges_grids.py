@@ -32,6 +32,7 @@ class ChargesGrid(QGridLayout):
         return self.sender().text().strip(" All")
 
     def set_cursor_to_fine_line_edit(self):
+        """Sets the cursor to the first non-dismissed charge's fine box."""
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(ChargesGrid.row_fine, column) is not None:
                 if self.itemAtPosition(ChargesGrid.row_dismissed_box, column).widget().isChecked():
