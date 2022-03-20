@@ -66,7 +66,7 @@ class BaseDialogSlotFunctions(object):
         """Calls the dialog specific method to set all the pleas based on the plea all button
         that is pressed (i.e. "Guilty All"). For Guilty and No Contest the charges_gridLayout
         specific method will also set the finding."""
-        self.dialog.charges_gridLayout.set_all_pleas(self.dialog)
+        self.dialog.charges_gridLayout.set_all_pleas()
 
     def set_pay_date(self, days_to_add):
         "Sets the sentencing date to the Tuesday (1) after the days added."""

@@ -42,7 +42,7 @@ class ChargesGrid(QGridLayout):
                 break
             column += 1
 
-    def set_all_pleas(self, dialog):
+    def set_all_pleas(self):
         plea = self.set_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
@@ -77,7 +77,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
         self.addWidget(ChargeGridDeleteButton(column, charge, dialog), NotGuiltyPleaGrid.row_delete_button,
                        column)
 
-    def set_all_pleas(self, dialog):
+    def set_all_pleas(self):
         """This method overrides the ChargesGrid set_all_pleas because there are no findings to
         be added for a Not Guilty plea."""
         plea = self.set_plea()
