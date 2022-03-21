@@ -6,4 +6,6 @@ Items for Judge Discussion
 5. Does Diversion Plea ever have Jail Time Credit
 6. Defaults vs empty fields - example Community Service in Fines only no hours vs License Suspension license
 7. Combo Boxes - editable vs not editable - term of suspension for License Suspension as example
-8. 
+
+
+* On Information Checkers in refactoring process.
