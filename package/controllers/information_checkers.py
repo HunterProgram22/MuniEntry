@@ -187,8 +187,8 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             "check_plea_and_findings",
             "check_if_no_bond_amount",
             "check_if_improper_bond_type",
-            # "check_additional_conditions_ordered",
-            # "check_domestic_violence_bond_condition",
+            "check_additional_conditions_ordered",
+            "check_domestic_violence_bond_condition",
         ]
         self.check_status = self.perform_check_list()
 
@@ -217,30 +217,30 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             message.exec()
             return "Fail"
 
-    # def check_domestic_violence_bond_condition(self):
-    #     dv_bond_conditions_list = [
-    #         (
-    #             self.dialog.entry_case_information.domestic_violence_conditions.ordered,
-    #             self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
-    #             self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
-    #             "Domestic Violence Restrictions",
-    #         ),
-    #     ]
-    #     for item in dv_bond_conditions_list:
-    #         if (
-    #             item[0] is True
-    #             and item[1] is False
-    #             and item[2] is False
-    #         ):
-    #             description = item[3]
-    #             message = RequiredBox(
-    #                 f"The Additional Condition {description} is checked, but "
-    #                 f"the details of the {description} have not been selected. "
-    #                 f"Click the Add Conditions button to add details, or uncheck the "
-    #                 f"{description} box if there is no {description} in this case."
-    #             )
-    #             message.exec()
-    #             return "Fail"
+    def check_domestic_violence_bond_condition(self):
+        dv_bond_conditions_list = [
+            (
+                self.dialog.entry_case_information.domestic_violence_conditions.ordered,
+                self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
+                self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+                "Domestic Violence Restrictions",
+            ),
+        ]
+        for item in dv_bond_conditions_list:
+            if (
+                item[0] is True
+                and item[1] is False
+                and item[2] is False
+            ):
+                description = item[3]
+                message = RequiredBox(
+                    f"The Additional Condition {description} is checked, but "
+                    f"the details of the {description} have not been selected. "
+                    f"Click the Add Conditions button to add details, or uncheck the "
+                    f"{description} box if there is no {description} in this case."
+                )
+                message.exec()
+                return "Fail"
 
 
 class DiversionDialogInfoChecker(BaseInfoChecker):
