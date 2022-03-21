@@ -91,7 +91,7 @@ class Ui_AddConditionsDialog(object):
         self.gridLayout_2.addWidget(self.label_9, 1, 0, 1, 1)
         self.license_type_box = QtWidgets.QComboBox(self.license_suspension_frame)
         self.license_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.license_type_box.setEditable(True)
+        self.license_type_box.setEditable(False)
         self.license_type_box.setObjectName("license_type_box")
         self.license_type_box.addItem("")
         self.license_type_box.addItem("")
@@ -104,7 +104,8 @@ class Ui_AddConditionsDialog(object):
         self.label_18.setObjectName("label_18")
         self.gridLayout_2.addWidget(self.label_18, 2, 0, 1, 1)
         self.license_suspension_date_box = QtWidgets.QDateEdit(self.license_suspension_frame)
-        self.license_suspension_date_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.license_suspension_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.license_suspension_date_box.setCalendarPopup(True)
         self.license_suspension_date_box.setObjectName("license_suspension_date_box")
         self.gridLayout_2.addWidget(self.license_suspension_date_box, 2, 1, 1, 1)
@@ -184,7 +185,8 @@ class Ui_AddConditionsDialog(object):
         self.label_22.setObjectName("label_22")
         self.gridLayout.addWidget(self.label_22, 1, 4, 1, 1)
         self.community_service_date_to_complete_box = QtWidgets.QDateEdit(self.community_service_frame)
-        self.community_service_date_to_complete_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.community_service_date_to_complete_box.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.community_service_date_to_complete_box.setCalendarPopup(True)
         self.community_service_date_to_complete_box.setObjectName("community_service_date_to_complete_box")
         self.gridLayout.addWidget(self.community_service_date_to_complete_box, 1, 5, 1, 1)

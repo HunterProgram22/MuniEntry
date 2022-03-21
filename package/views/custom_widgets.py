@@ -2,7 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit
+    QInputDialog, QDateEdit, QTimeEdit
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -47,6 +47,16 @@ class NoScrollComboBox(QComboBox):
 class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super(QDateEdit, self).__init__(parent)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def wheelEvent(self, event):
+        if event == QtCore.QEvent.Wheel:
+            event.ignore()
+
+
+class NoScrollTimeEdit(QTimeEdit):
+    def __init__(self, parent=None):
+        super(QTimeEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def wheelEvent(self, event):

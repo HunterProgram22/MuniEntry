@@ -2,7 +2,9 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
 
-from package.controllers.base_dialogs import CmsFraLoader, CmsLoader, BaseDialog, charges_database
+from db.databases import open_charges_db_connection
+from package.controllers.base_dialogs import BaseDialog
+from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
 from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
     FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater, DiversionDialogCaseUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
@@ -13,7 +15,8 @@ from package.controllers.signal_connectors import DiversionDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
     FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
 from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
-    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier
+    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier, ProbationViolationBondDialogViewModifier, \
+    FailureToAppearDialogViewModifier
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
@@ -23,6 +26,10 @@ from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
+from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
+from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
+    DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -46,6 +53,9 @@ class CriminalBaseDialog(BaseDialog):
         raise NotImplementedError
 
     def update_entry_case_information(self):
+        raise NotImplementedError
+
+    def perform_info_checks(self):
         raise NotImplementedError
 
     # TO BE REFACTORED #
@@ -86,6 +96,9 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
+    def perform_info_checks(self):
+        self.dialog_checks = DiversionDialogInfoChecker(self)
+
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
@@ -125,6 +138,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def add_plea_to_entry_case_information(self):
         return JailAddPleaFindingsFinesJail.add(self)
 
+    def perform_info_checks(self):
+        self.dialog_checks = JailCCPleaDialogInfoChecker(self)
+
 
 class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
@@ -156,6 +172,9 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def add_plea_to_entry_case_information(self):
         return NoJailPleaFindingFines.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = FineOnlyDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
@@ -201,3 +220,81 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def add_plea_to_entry_case_information(self):
         return NotGuiltyAddPlea.add(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
+
+
+class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = "Probation Violation Bond Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information.bond_conditions = BondConditions()
+
+    def modify_view(self):
+        return ProbationViolationBondDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        pass
+    #     self.functions = ProbationViolationBondDialogSlotFunctions(self)
+    #     self.functions.hide_boxes()
+
+    def connect_signals_to_slots(self):
+        pass
+    #     return ProbationViolationBondDialogSignalConnector(self)
+    #
+    def load_cms_data_to_view(self):
+        pass
+    #     return CmsLoader(self)
+    #
+    def update_entry_case_information(self):
+        pass
+    #     return ProbationViolationBondDialogCaseUpdater(self)
+
+
+    def perform_info_checks(self):
+        pass
+    #     self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
+
+
+class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
+    def __init__(self, judicial_officer, case=None, parent=None):
+        super().__init__(judicial_officer, case, parent)
+        self.dialog_name = "Failure To Appear Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information.bond_conditions = BondConditions()
+
+    def modify_view(self):
+        return FailureToAppearDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        pass
+
+    #     self.functions = FailureToAppearDialogSlotFunctions(self)
+    #     self.functions.hide_boxes()
+    #
+    def connect_signals_to_slots(self):
+        pass
+
+    #     return FailureToAppearDialogSignalConnector(self)
+    #
+    def load_cms_data_to_view(self):
+        pass
+
+    #     return CmsLoader(self)
+    #
+    def update_entry_case_information(self):
+        pass
+
+    #     return FailureToAppearDialogCaseUpdater(self)
+
+    def perform_info_checks(self):
+        pass
+    #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+
+
+if __name__ == "__main__":
+    charges_database = open_charges_db_connection()
+else:
+    charges_database = open_charges_db_connection()

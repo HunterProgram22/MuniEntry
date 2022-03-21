@@ -157,7 +157,8 @@ class Ui_AddJailOnly(object):
         self.report_date_label.setObjectName("report_date_label")
         self.gridLayout_6.addWidget(self.report_date_label, 3, 0, 1, 1)
         self.report_date_box = QtWidgets.QDateEdit(self.jail_commitment_frame)
-        self.report_date_box.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.report_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.report_date_box.setCalendarPopup(True)
         self.report_date_box.setObjectName("report_date_box")
         self.gridLayout_6.addWidget(self.report_date_box, 3, 1, 1, 1)

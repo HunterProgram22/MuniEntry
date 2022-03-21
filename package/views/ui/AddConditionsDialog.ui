@@ -204,7 +204,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="editable">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <item>
              <property name="text">
@@ -240,7 +240,8 @@ font-weight: bold;</string>
           <item row="2" column="1">
            <widget class="QDateEdit" name="license_suspension_date_box">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>
@@ -440,7 +441,8 @@ font-weight: bold;</string>
           <item row="1" column="5">
            <widget class="QDateEdit" name="community_service_date_to_complete_box">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="calendarPopup">
              <bool>true</bool>

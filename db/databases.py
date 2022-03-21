@@ -79,6 +79,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
                 self.case.defense_counsel = f"{query.value(10).title()} {query.value(9).title()}"
                 self.case.defense_counsel_type = query.value(11)
             offense = self.clean_offense_name(query.value(4))
+            offense = offense.rstrip()
             statute = query.value(5)
             degree = query.value(6)
             moving_bool = query.value(8)
