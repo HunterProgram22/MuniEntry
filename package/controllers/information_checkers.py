@@ -137,8 +137,10 @@ class BaseInfoChecker(object):
 
     def check_additional_conditions_ordered(self):
         for condition_item in self.conditions_list:
-            condition = getattr(self.dialog.entry_case_information,
-                                condition_item[0])
+            condition = getattr(
+                self.dialog.entry_case_information,
+                condition_item[0],
+            )
             condition_ordered = getattr(condition, "ordered")
             main_condition_set = getattr(condition, condition_item[1])
             description = condition_item[2]
@@ -155,8 +157,16 @@ class BaseInfoChecker(object):
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        ("license_suspension", "license_type", "License Suspension"),
-        ("community_service", "hours_of_service", "Community Service"),
+        (
+            "license_suspension",
+            "license_type",
+            "License Suspension",
+        ),
+        (
+            "community_service",
+            "hours_of_service",
+            "Community Service",
+        ),
         ("other_conditions", "terms", "Other Conditions"),
     ]
 
@@ -173,11 +183,23 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
 
 class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-            ("admin_license_suspension", "disposition", "Admin License Suspension"),
-            ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
-            ("no_contact", "name", "No Contact"),
-            ("custodial_supervision", "supervisor", "Custodial Supervision"),
-            ("other_conditions", "terms", "Other Conditions"),
+        (
+            "admin_license_suspension",
+            "disposition",
+            "Admin License Suspension",
+        ),
+        (
+            "vehicle_seizure",
+            "vehicle_make_model",
+            "Vehicle Seizure",
+        ),
+        ("no_contact", "name", "No Contact"),
+        (
+            "custodial_supervision",
+            "supervisor",
+            "Custodial Supervision",
+        ),
+        ("other_conditions", "terms", "Other Conditions"),
     ]
 
     def __init__(self, dialog):
@@ -227,11 +249,7 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             ),
         ]
         for item in dv_bond_conditions_list:
-            if (
-                item[0] is True
-                and item[1] is False
-                and item[2] is False
-            ):
+            if item[0] is True and item[1] is False and item[2] is False:
                 description = item[3]
                 message = RequiredBox(
                     f"The Additional Condition {description} is checked, but "
@@ -261,7 +279,13 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
             "other_diversion",
         ]
         for program in diversion_program_list:
-            if getattr(self.dialog.entry_case_information.diversion, program) is True:
+            if (
+                getattr(
+                    self.dialog.entry_case_information.diversion,
+                    program,
+                )
+                is True
+            ):
                 return "Pass"
         message = RequiredBox(
             f"No Diversion Program was selected. \n\n"
@@ -273,11 +297,27 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
 
 class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        ("license_suspension", "license_type", "License Suspension"),
-        ("community_service", "hours_of_service", "Community Service"),
+        (
+            "license_suspension",
+            "license_type",
+            "License Suspension",
+        ),
+        (
+            "community_service",
+            "hours_of_service",
+            "Community Service",
+        ),
         ("other_conditions", "terms", "Other Conditions"),
-        ("community_control", "term_of_control", "Community Control"),
-        ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
+        (
+            "community_control",
+            "term_of_control",
+            "Community Control",
+        ),
+        (
+            "impoundment",
+            "vehicle_make_model",
+            "Immobilize/Impound",
+        ),
     ]
 
     def __init__(self, dialog):
@@ -382,7 +422,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 pass
         return self.total_jail_days_suspended
 
-    def check_if_jail_days_suspended_greater_than_jail_imposed(self):
+    def check_if_jail_days_suspended_greater_than_jail_imposed(
+        self,
+    ):
         if self.total_jail_days_suspended > self.total_jail_days:
             message = RequiredBox(
                 f"The total number of jail days suspended is {self.total_jail_days_suspended} which is "
@@ -392,7 +434,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return "Fail"
         return False
 
-    def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
+    def check_if_jail_days_imposed_greater_than_suspended_and_credit(
+        self,
+    ):
         if (
             self.total_jail_days
             > (self.total_jail_days_suspended + self.total_jail_days_credit)
@@ -425,7 +469,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Cancel:
             return "Fail"
 
-    def check_if_jail_days_equals_suspended_and_imposed_days(self):
+    def check_if_jail_days_equals_suspended_and_imposed_days(
+        self,
+    ):
         if (
             self.total_jail_days
             == (self.total_jail_days_suspended + self.total_jail_days_credit)
@@ -451,7 +497,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Yes:
             return "Pass"
 
-    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
+    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(
+        self,
+    ):
         if (
             self.total_jail_days
             >= (self.total_jail_days_suspended + self.total_jail_days_credit)
@@ -465,7 +513,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
             return self.unset_jail_reporting_terms(message.exec())
 
-    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
+    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(
+        self,
+    ):
         if (
             self.total_jail_days_credit > self.total_jail_days
             and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
