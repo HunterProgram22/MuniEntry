@@ -78,6 +78,7 @@ class BaseInfoChecker(object):
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
                 offense, plea, finding = self.get_offense_plea_finding(col)
+                print(plea)
             except AttributeError:
                 pass
             if plea == "Dismissed":
@@ -132,19 +133,16 @@ class BaseInfoChecker(object):
 
     def check_additional_conditions_ordered(self):
         for condition_item in self.conditions_list:
-            condition = getattr(
-                self.dialog.entry_case_information,
-                condition_item[0],
-            )
+            condition = getattr(self.dialog.entry_case_information, condition_item[0])
             condition_ordered = getattr(condition, "ordered")
             main_condition_set = getattr(condition, condition_item[1])
-            description = condition_item[2]
+            condition_name = condition_item[2]
             if condition_ordered is True and main_condition_set is None:
                 message = RequiredBox(
-                    f"The additional condition {description} is checked, but "
-                    f"the details of the {description} have not been entered.\n\n"
+                    f"The additional condition {condition_name} is checked, but "
+                    f"the details of the {condition_name} have not been entered.\n\n"
                     f"Click the Add Conditions button to add details, or uncheck the "
-                    f"{description} box if there is no {description} in this case."
+                    f"{condition_name} box if there is no {condition_name} in this case."
                 )
                 message.exec()
                 return "Fail"
@@ -152,16 +150,8 @@ class BaseInfoChecker(object):
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        (
-            "license_suspension",
-            "license_type",
-            "License Suspension",
-        ),
-        (
-            "community_service",
-            "hours_of_service",
-            "Community Service",
-        ),
+        ("license_suspension", "license_type", "License Suspension"),
+        ("community_service", "hours_of_service", "Community Service"),
         ("other_conditions", "terms", "Other Conditions"),
     ]
 
@@ -178,22 +168,10 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
 
 class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        (
-            "admin_license_suspension",
-            "disposition",
-            "Admin License Suspension",
-        ),
-        (
-            "vehicle_seizure",
-            "vehicle_make_model",
-            "Vehicle Seizure",
-        ),
+        ("admin_license_suspension", "disposition", "Admin License Suspension"),
+        ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
         ("no_contact", "name", "No Contact"),
-        (
-            "custodial_supervision",
-            "supervisor",
-            "Custodial Supervision",
-        ),
+        ("custodial_supervision", "supervisor", "Custodial Supervision"),
         ("other_conditions", "terms", "Other Conditions"),
     ]
 
@@ -201,7 +179,7 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_plea",
             "check_if_no_bond_amount",
             "check_if_improper_bond_type",
             "check_additional_conditions_ordered",
@@ -209,16 +187,55 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         ]
         self.check_status = self.perform_check_list()
 
+    def check_plea(self):
+        """Shows warning if no plea is entered. Checks one at a time so
+        unless all fields have a plea you will get the warning until they
+        are filled in.
+
+        The column (col) starts at 2 to skip label row and increments by 2 because
+        PyQt adds 2 columns when adding a charge.
+
+        Try/Except addresses the issue of PyQt not actually deleting a column from a
+        grid_layout when it is deleted, it actually just hides the column."""
+        col = 2
+        loop_counter = 0
+        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+            try:
+                offense, plea = self.get_offense_plea(col)
+            except AttributeError:
+                pass
+            if plea == "Dismissed":
+                col += 2
+                loop_counter += 1
+                continue
+            elif plea == "":
+                RequiredBox(f"You must enter a plea for {offense}.").exec()
+                return "Fail"
+            col += 2
+            loop_counter += 1
+        return "Pass"
+
+    def get_offense_plea(self, col):
+        row_offense, row_plea = self.get_offense_plea_rows()
+        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
+        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
+        return offense, plea
+
+    def get_offense_plea_rows(self):
+        row_offense = self.dialog.charges_gridLayout.row_offense
+        row_plea = self.dialog.charges_gridLayout.row_plea
+        return row_offense, row_plea
+
     def check_if_no_bond_amount(self):
         if (
             self.dialog.bond_type_box.currentText() != "Recognizance (OR) Bond"
             and self.dialog.bond_amount_box.currentText() == "None (OR Bond)"
         ):
-            message = RequiredBox(
+            message = (
                 "A bond type requiring a bond amount was selected, but a bond amount was "
                 "not selected. \n\nPlease specify the bond amount."
             )
-            message.exec()
+            RequiredBox(message).exec()
             return "Fail"
 
     def check_if_improper_bond_type(self):
@@ -226,12 +243,12 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             self.dialog.bond_type_box.currentText() == "Recognizance (OR) Bond"
             and self.dialog.bond_amount_box.currentText() != "None (OR Bond)"
         ):
-            message = RequiredBox(
-                "A Recognizance (OR) Bond was selected but a bond amount other than None(OR Bond) "
-                "was chosen. \n\nPlease either change bond type to 10% or Cash or Surety, or set "
-                "bond amount to None (OR Bond)."
+            message = (
+                "A Recognizance (OR) Bond was selected but a bond amount other than "
+                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
+                "or Cash or Surety, or set bond amount to None (OR Bond)."
             )
-            message.exec()
+            RequiredBox(message).exec()
             return "Fail"
 
     def check_domestic_violence_bond_condition(self):
