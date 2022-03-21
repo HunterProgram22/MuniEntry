@@ -76,11 +76,7 @@ class BaseInfoChecker(object):
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense = (
-                    self.dialog.charges_gridLayout.itemAtPosition(0, column)
-                    .widget()
-                    .text()
-                )
+                offense = self.dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
                 if (
                     self.dialog.charges_gridLayout.itemAtPosition(row_plea, column)
                     .widget()
@@ -288,8 +284,7 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
             ):
                 return "Pass"
         message = RequiredBox(
-            f"No Diversion Program was selected. \n\n"
-            f"Please select a Diversion Program."
+            f"No Diversion Program was selected. \n\n" f"Please select a Diversion Program."
         )
         message.exec()
         return "Fail"
@@ -438,8 +433,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         self,
     ):
         if (
-            self.total_jail_days
-            > (self.total_jail_days_suspended + self.total_jail_days_credit)
+            self.total_jail_days > (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is False
             and (
                 self.dialog.entry_case_information.currently_in_jail == "No"
@@ -473,8 +467,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         self,
     ):
         if (
-            self.total_jail_days
-            == (self.total_jail_days_suspended + self.total_jail_days_credit)
+            self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
             and (
                 self.dialog.entry_case_information.currently_in_jail == "No"
@@ -501,8 +494,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         self,
     ):
         if (
-            self.total_jail_days
-            >= (self.total_jail_days_suspended + self.total_jail_days_credit)
+            self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
             and self.dialog.entry_case_information.currently_in_jail == "Yes"
         ):
