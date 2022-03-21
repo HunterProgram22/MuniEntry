@@ -464,16 +464,6 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.update_entry_case_information()
         AddSpecialBondConditionsDialog(self.dialog).exec()
 
-    def conditions_checkbox_toggle(self):
-        if self.dialog.sender().isChecked():
-            for items in self.dialog.additional_conditions_list:
-                if items[0] == self.dialog.sender().objectName():
-                    setattr(items[1], "ordered", True)
-        else:
-            for items in self.dialog.additional_conditions_list:
-                if items[0] == self.dialog.sender().objectName():
-                    setattr(items[1], "ordered", False)
-
     def hide_boxes(self):
         """This method is called from modify_view as part of the init to hide all optional boxes on load."""
         for item in self.dialog.condition_checkbox_list:

@@ -140,7 +140,7 @@ class BaseDialogViewModifier(object):
             ("license_suspension_checkBox", "license_suspension"),
             ("community_service_checkBox", "community_service"),
             ("admin_license_suspension_checkBox", "admin_license_suspension"),
-            ("domestic_violence_checkBox", "domestic_violence"),
+            ("domestic_violence_checkBox", "domestic_violence_conditions"),
             ("vehicle_seizure_checkBox", "vehicle_seizure"),
             ("no_contact_checkBox", "no_contact"),
             ("custodial_supervision_checkBox", "custodial_supervision"),
@@ -346,6 +346,7 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_special_bond_conditions_case_information_banner()
         self.set_domestic_violence_surrender_weapons_default_date()
+        self.load_existing_data_to_dialog()
         self.dialog.admin_license_suspension_objection_box.__class__ = NoScrollComboBox
         self.dialog.admin_license_suspension_disposition_box.__class__ = NoScrollComboBox
         self.dialog.domestic_violence_surrender_weapons_dateBox.__class__ = NoScrollDateEdit
