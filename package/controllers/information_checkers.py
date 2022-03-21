@@ -72,7 +72,7 @@ class BaseInfoChecker(object):
         PyQt adds 2 columns when adding a charge.
 
         Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column. """
+        grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
@@ -95,21 +95,19 @@ class BaseInfoChecker(object):
         return "Pass"
 
     def get_offense_plea_finding(self, col):
-        row_offense, row_plea, row_finding  = self.get_offense_plea_finding_rows()
+        row_offense, row_plea, row_finding = self.get_offense_plea_finding_rows()
         offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
-        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea,
-                                                             col).widget().currentText()
-        finding = self.dialog.charges_gridLayout.itemAtPosition(row_finding,
-                                                                col).widget().currentText()
+        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
+        finding = (
+            self.dialog.charges_gridLayout.itemAtPosition(row_finding, col).widget().currentText()
+        )
         return offense, plea, finding
 
     def get_offense_plea_finding_rows(self):
         row_offense = self.dialog.charges_gridLayout.row_offense
         row_plea = self.dialog.charges_gridLayout.row_plea
         row_finding = self.dialog.charges_gridLayout.row_finding
-        return row_offense, row_plea, row_finding,
-
-
+        return row_offense, row_plea, row_finding
 
     def check_insurance(self):
         if (
