@@ -68,41 +68,48 @@ class BaseInfoChecker(object):
         unless all fields have a plea and finding you will get the warning until they
         are filled in.
 
+        The column (col) starts at 2 to skip label row and increments by 2 because
+        PyQt adds 2 columns when adding a charge.
+
         Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
-        row_plea = self.dialog.charges_gridLayout.row_plea
-        row_finding = self.dialog.charges_gridLayout.row_finding
-        column = 2
+        grid_layout when it is deleted, it actually just hides the column. """
+        col = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense = self.dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
-                if (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText()
-                    == "Dismissed"
-                ):
-                    column += 2
-                    loop_counter += 1
-                    continue
-                elif (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText()
-                    == ""
-                ):
-                    message = RequiredBox(f"You must enter a plea for {offense}.")
-                    message.exec()
-                    return "Fail"
-                elif (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText()
-                    == ""
-                ):
-                    message = RequiredBox(f"You must enter a finding for {offense}.")
-                    message.exec()
-                    return "Fail"
+                offense, plea, finding = self.get_offense_plea_finding(col)
             except AttributeError:
                 pass
-            column += 2
+            if plea == "Dismissed":
+                col += 2
+                loop_counter += 1
+                continue
+            elif plea == "":
+                RequiredBox(f"You must enter a plea for {offense}.").exec()
+                return "Fail"
+            elif finding == "":
+                RequiredBox(f"You must enter a finding for {offense}.").exec()
+                return "Fail"
+            col += 2
             loop_counter += 1
         return "Pass"
+
+    def get_offense_plea_finding(self, col):
+        row_offense, row_plea, row_finding  = self.get_offense_plea_finding_rows()
+        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
+        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea,
+                                                             col).widget().currentText()
+        finding = self.dialog.charges_gridLayout.itemAtPosition(row_finding,
+                                                                col).widget().currentText()
+        return offense, plea, finding
+
+    def get_offense_plea_finding_rows(self):
+        row_offense = self.dialog.charges_gridLayout.row_offense
+        row_plea = self.dialog.charges_gridLayout.row_plea
+        row_finding = self.dialog.charges_gridLayout.row_finding
+        return row_offense, row_plea, row_finding,
+
+
 
     def check_insurance(self):
         if (
@@ -433,7 +440,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 self.dialog.entry_case_information.currently_in_jail == "No"
                 or self.dialog.entry_case_information.currently_in_jail == ""
             )
-            and self.dialog.entry_case_information.community_control.driver_intervention_program is False
+            and self.dialog.entry_case_information.community_control.driver_intervention_program
+            is False
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.total_jail_days} is greater than the total "
