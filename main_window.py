@@ -28,7 +28,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.case_to_load = None
         self.FailureToAppearButton.setHidden(True)
         self.ProbationViolationBondButton.setHidden(True)
-        
 
     def create_main_window_dicts(self):
         """

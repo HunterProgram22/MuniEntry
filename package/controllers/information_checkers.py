@@ -78,7 +78,6 @@ class BaseInfoChecker(object):
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
                 offense, plea, finding = self.get_offense_plea_finding(col)
-                print(plea)
             except AttributeError:
                 pass
             if plea == "Dismissed":
