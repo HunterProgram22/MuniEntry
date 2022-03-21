@@ -78,27 +78,21 @@ class BaseInfoChecker(object):
             try:
                 offense = self.dialog.charges_gridLayout.itemAtPosition(0, column).widget().text()
                 if (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column)
-                    .widget()
-                    .currentText()
+                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText()
                     == "Dismissed"
                 ):
                     column += 2
                     loop_counter += 1
                     continue
                 elif (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column)
-                    .widget()
-                    .currentText()
+                    self.dialog.charges_gridLayout.itemAtPosition(row_plea, column).widget().currentText()
                     == ""
                 ):
                     message = RequiredBox(f"You must enter a plea for {offense}.")
                     message.exec()
                     return "Fail"
                 elif (
-                    self.dialog.charges_gridLayout.itemAtPosition(row_finding, column)
-                    .widget()
-                    .currentText()
+                    self.dialog.charges_gridLayout.itemAtPosition(row_finding, column).widget().currentText()
                     == ""
                 ):
                     message = RequiredBox(f"You must enter a finding for {offense}.")
@@ -439,8 +433,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 self.dialog.entry_case_information.currently_in_jail == "No"
                 or self.dialog.entry_case_information.currently_in_jail == ""
             )
-            and self.dialog.entry_case_information.community_control.driver_intervention_program
-            is False
+            and self.dialog.entry_case_information.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.total_jail_days} is greater than the total "
