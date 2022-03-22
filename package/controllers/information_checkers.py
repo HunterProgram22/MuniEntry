@@ -1,3 +1,4 @@
+"""Module that contains various data checks that are ran when a user creates an entry."""
 from PyQt5.QtWidgets import QMessageBox
 from package.views.custom_widgets import (
     WarningBox,
