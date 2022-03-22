@@ -49,10 +49,8 @@ class BaseInfoChecker(object):
             return "Pass"
         if self.dialog.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox(
-                "There is no attorney listed. Did "
-                "the Defendant appear without or waive his right to "
-                "counsel?\n\nIf you select 'No' you must enter a name "
-                "for Defense Counsel."
+                f"There is no attorney listed. Did the Defendant appear without or waive his right "
+                f"to counsel?\n\nIf you select 'No' you must enter a name for Defense Counsel."
             )
             return self.set_defense_counsel_waived_or_fail_check(message.exec())
 
@@ -71,10 +69,20 @@ class BaseInfoChecker(object):
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
-                plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
+                offense = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_offense, col
+                    )
+                    .widget()
+                    .text()
+                )
+                plea = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_plea, col
+                    )
+                    .widget()
+                    .currentText()
+                )
             except AttributeError:
                 offense, plea = None, None
             if plea == "Dismissed":
@@ -96,12 +104,27 @@ class BaseInfoChecker(object):
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
-                plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
-                finding = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_finding, col).widget().currentText()
+                offense = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_offense, col
+                    )
+                    .widget()
+                    .text()
+                )
+                plea = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_plea, col
+                    )
+                    .widget()
+                    .currentText()
+                )
+                finding = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_finding, col
+                    )
+                    .widget()
+                    .currentText()
+                )
             except AttributeError:
                 offense, plea, finding = None, None, None
             if plea == "Dismissed":
@@ -276,27 +299,11 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
 
 class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        (
-            "license_suspension",
-            "license_type",
-            "License Suspension",
-        ),
-        (
-            "community_service",
-            "hours_of_service",
-            "Community Service",
-        ),
+        ("license_suspension", "license_type", "License Suspension"),
+        ("community_service", "hours_of_service", "Community Service"),
         ("other_conditions", "terms", "Other Conditions"),
-        (
-            "community_control",
-            "term_of_control",
-            "Community Control",
-        ),
-        (
-            "impoundment",
-            "vehicle_make_model",
-            "Immobilize/Impound",
-        ),
+        ("community_control", "term_of_control", "Community Control"),
+        ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
     ]
 
     def __init__(self, dialog):
@@ -402,21 +409,18 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 pass
         return self.total_jail_days_suspended
 
-    def check_if_jail_days_suspended_greater_than_jail_imposed(
-        self,
-    ):
+    def check_if_jail_days_suspended_greater_than_jail_imposed(self):
         if self.total_jail_days_suspended > self.total_jail_days:
             message = RequiredBox(
-                f"The total number of jail days suspended is {self.total_jail_days_suspended} which is "
-                f"greater than the total jail days imposed of {self.total_jail_days}. Please correct."
+                f"The total number of jail days suspended is {self.total_jail_days_suspended} "
+                f"which is greater than the total jail days imposed of {self.total_jail_days}. "
+                f"Please correct."
             )
             message.exec()
             return "Fail"
         return False
 
-    def check_if_jail_days_imposed_greater_than_suspended_and_credit(
-        self,
-    ):
+    def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
             self.total_jail_days > (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is False
@@ -429,12 +433,13 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.total_jail_days} is greater than the total "
-                f"jail days suspended of {self.total_jail_days_suspended} and the total jail time credit applied "
-                f"to the sentence of {self.total_jail_days_credit}, and the Jail Reporting Terms "
-                f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
-                f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
-                f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
-                f"entry so that you can change the number of jail days imposed/suspended/credited."
+                f"jail days suspended of {self.total_jail_days_suspended} and the total jail time "
+                f"credit applied to the sentence of {self.total_jail_days_credit}, and the Jail "
+                f"Reporting Terms have not been entered. \n\nDo you want to set the Jail "
+                f"Reporting Terms? \n\nPress 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to "
+                f"open the entry with no Jail Reporting Terms. \n\nPress 'Cancel' to return to the "
+                f"Dialog without opening an entry so that you can change the number of jail days "
+                f"imposed/suspended/credited."
             )
             return self.add_jail_reporting_terms(message.exec())
 
