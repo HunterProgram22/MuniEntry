@@ -455,9 +455,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Cancel:
             return "Fail"
 
-    def check_if_jail_days_equals_suspended_and_imposed_days(
-        self,
-    ):
+    def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
             self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
@@ -482,9 +480,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Yes:
             return "Pass"
 
-    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(
-        self,
-    ):
+    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
             self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
@@ -497,9 +493,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
             return self.unset_jail_reporting_terms(message.exec())
 
-    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(
-        self,
-    ):
+    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
             self.total_jail_days_credit > self.total_jail_days
             and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
