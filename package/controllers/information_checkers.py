@@ -63,6 +63,38 @@ class BaseInfoChecker(object):
         elif message_response == QMessageBox.No:
             return "Fail"
 
+    def check_if_no_plea_entered(self):
+        """Shows warning if no plea is entered. Checks one at a time so
+        unless all fields have a plea you will get the warning until they
+        are filled in.
+
+        The column (col) starts at 2 to skip label row and increments by 2 because
+        PyQt adds 2 columns when adding a charge.
+
+        Try/Except addresses the issue of PyQt not actually deleting a column from a
+        grid_layout when it is deleted, it actually just hides the column."""
+        col = 2
+        loop_counter = 0
+        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+            try:
+                offense = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
+                plea = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
+            except AttributeError:
+                offense = None
+                plea = None
+            if plea == "Dismissed":
+                col += 2
+                loop_counter += 1
+                continue
+            elif plea == "":
+                RequiredBox(f"You must enter a plea for {offense}.").exec()
+                return "Fail"
+            col += 2
+            loop_counter += 1
+        return "Pass"
+
     def check_plea_and_findings(self):
         """Shows warning if no plea or findings are entered. Checks one at a time so
         unless all fields have a plea and finding you will get the warning until they
@@ -178,44 +210,13 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea",
+            "check_if_no_plea_entered",
             "check_if_no_bond_amount",
             "check_if_improper_bond_type",
             "check_additional_conditions_ordered",
             "check_domestic_violence_bond_condition",
         ]
         self.check_status = self.perform_check_list()
-
-    def check_plea(self):
-        """Shows warning if no plea is entered. Checks one at a time so
-        unless all fields have a plea you will get the warning until they
-        are filled in.
-
-        The column (col) starts at 2 to skip label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge.
-
-        Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
-        col = 2
-        loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
-            try:
-                offense = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
-                plea = self.dialog.charges_gridLayout.itemAtPosition(
-                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
-            except AttributeError:
-                pass
-            if plea == "Dismissed":
-                col += 2
-                loop_counter += 1
-                continue
-            elif plea == "":
-                RequiredBox(f"You must enter a plea for {offense}.").exec()
-                return "Fail"
-            col += 2
-            loop_counter += 1
-        return "Pass"
 
     def check_if_no_bond_amount(self):
         if (
