@@ -97,8 +97,7 @@ class CmsFraLoader(CmsLoader):
             self.dialog.fra_in_file_box.setCurrentText("N/A")
 
     def hide_fra_if_criminal_case(self):
-        try:
-            if self.cms_case.case_number[2:5] == "CRB":
-                self.dialog.fra_frame.setHidden(True)
-        except TypeError:
-            pass
+        if self.cms_case.case_number == None:
+            return None
+        elif self.cms_case.case_number[2:5] == "CRB":
+            self.dialog.fra_frame.setHidden(True)
