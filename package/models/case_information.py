@@ -370,13 +370,16 @@ class CriminalCaseInformation:
     fra_in_court: bool = None
     fines_and_costs_jail_credit: bool = False
     currently_in_jail: str = None
-    days_in_jail: str = None
+    days_in_jail: int = 0
     apply_jtc: str = None
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
     total_fines: int = 0
     total_fines_suspended: int = 0
+    total_jail_days_imposed: int = None
+    total_jail_days_suspended: int = None
+    total_jail_days_to_serve: int = None
     court_costs: object = field(default_factory=CourtCosts)
     diversion: object = field(default_factory=Diversion)
     community_control: object = field(default_factory=CommunityControl)

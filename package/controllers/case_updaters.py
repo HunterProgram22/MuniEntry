@@ -101,6 +101,44 @@ class CaseUpdater:
             )
         return total_fines_suspended
 
+    def calculate_all_jail_days(self):
+        self.dialog.entry_case_information.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
+        self.dialog.entry_case_information.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
+        self.dialog.entry_case_information.days_in_jail = self.calculate_days_in_jail()
+        self.dialog.entry_case_information.total_jail_days_to_serve = (
+            int(self.dialog.entry_case_information.total_jail_days_imposed)
+            - int(self.dialog.entry_case_information.total_jail_days_suspended)
+            - int(self.dialog.entry_case_information.days_in_jail)
+            )
+        print(self.dialog.entry_case_information.total_jail_days_imposed)
+        print(self.dialog.entry_case_information.total_jail_days_suspended)
+        print(self.dialog.entry_case_information.total_jail_days_to_serve)
+
+    def calculate_total_jail_days_imposed(self):
+        total_jail_days_imposed = 0
+        for charge in self.dialog.entry_case_information.charges_list:
+            try:
+                local_jail_days_imposed = int(charge.jail_days)
+            except ValueError:
+                local_jail_days_imposed = 0
+            total_jail_days_imposed = total_jail_days_imposed + local_jail_days_imposed
+        return total_jail_days_imposed
+
+    def calculate_total_jail_days_suspended(self):
+        total_jail_days_suspended = 0
+        for charge in self.dialog.entry_case_information.charges_list:
+            try:
+                local_jail_days_suspended = int(charge.jail_days_suspended)
+            except ValueError:
+                local_jail_days_suspended = 0
+            total_jail_days_suspended = total_jail_days_suspended + local_jail_days_suspended
+        return total_jail_days_suspended
+
+    def calculate_days_in_jail(self):
+        if self.dialog.entry_case_information.days_in_jail == "":
+            return 0
+        return self.dialog.entry_case_information.days_in_jail
+
 
 class DiversionDialogCaseUpdater(CaseUpdater):
     def __init__(self, dialog):
@@ -126,6 +164,7 @@ class JailCCDialogCaseUpdater(CaseUpdater):
         self.dialog.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit()
+        self.calculate_all_jail_days()
         self.calculate_costs_and_fines()
 
     def update_jail_time_credit(self):
