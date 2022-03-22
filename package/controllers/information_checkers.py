@@ -64,15 +64,9 @@ class BaseInfoChecker(object):
             return "Fail"
 
     def check_if_no_plea_entered(self):
-        """Shows warning if no plea is entered. Checks one at a time so
-        unless all fields have a plea you will get the warning until they
-        are filled in.
-
-        The column (col) starts at 2 to skip label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge.
-
-        Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
+        """The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
+        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
+        column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
@@ -82,8 +76,7 @@ class BaseInfoChecker(object):
                 plea = self.dialog.charges_gridLayout.itemAtPosition(
                     self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
             except AttributeError:
-                offense = None
-                plea = None
+                offense, plea = None, None
             if plea == "Dismissed":
                 col += 2
                 loop_counter += 1
@@ -95,51 +88,32 @@ class BaseInfoChecker(object):
             loop_counter += 1
         return "Pass"
 
-    def check_plea_and_findings(self):
-        """Shows warning if no plea or findings are entered. Checks one at a time so
-        unless all fields have a plea and finding you will get the warning until they
-        are filled in.
-
-        The column (col) starts at 2 to skip label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge.
-
-        Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
+    def check_if_no_finding_entered(self):
+        """The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
+        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
+        column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense, plea, finding = self.get_offense_plea_finding(col)
+                offense = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
+                plea = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
+                finding = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_finding, col).widget().currentText()
             except AttributeError:
-                pass
+                offense, plea, finding = None, None, None
             if plea == "Dismissed":
                 col += 2
                 loop_counter += 1
                 continue
-            elif plea == "":
-                RequiredBox(f"You must enter a plea for {offense}.").exec()
-                return "Fail"
             elif finding == "":
                 RequiredBox(f"You must enter a finding for {offense}.").exec()
                 return "Fail"
             col += 2
             loop_counter += 1
         return "Pass"
-
-    def get_offense_plea_finding(self, col):
-        row_offense, row_plea, row_finding = self.get_offense_plea_finding_rows()
-        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
-        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
-        finding = (
-            self.dialog.charges_gridLayout.itemAtPosition(row_finding, col).widget().currentText()
-        )
-        return offense, plea, finding
-
-    def get_offense_plea_finding_rows(self):
-        row_offense = self.dialog.charges_gridLayout.row_offense
-        row_plea = self.dialog.charges_gridLayout.row_plea
-        row_finding = self.dialog.charges_gridLayout.row_finding
-        return row_offense, row_plea, row_finding
 
     def check_insurance(self):
         if (
@@ -190,7 +164,8 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_insurance",
             "check_additional_conditions_ordered",
         ]
@@ -270,7 +245,8 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_if_diversion_program_selected",
             "check_insurance",
         ]
@@ -330,7 +306,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         self.total_jail_days_credit = self.calculate_jail_days_credit()
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_insurance",
             "check_additional_conditions_ordered",
             "check_dv_and_victim_notifications_ordered",
