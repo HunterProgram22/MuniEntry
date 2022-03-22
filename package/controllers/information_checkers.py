@@ -1,3 +1,4 @@
+"""Module that contains various data checks that are ran when a user creates an entry."""
 from PyQt5.QtWidgets import QMessageBox
 from package.views.custom_widgets import (
     WarningBox,
@@ -49,10 +50,8 @@ class BaseInfoChecker(object):
             return "Pass"
         if self.dialog.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox(
-                "There is no attorney listed. Did "
-                "the Defendant appear without or waive his right to "
-                "counsel?\n\nIf you select 'No' you must enter a name "
-                "for Defense Counsel."
+                f"There is no attorney listed. Did the Defendant appear without or waive his right "
+                f"to counsel?\n\nIf you select 'No' you must enter a name for Defense Counsel."
             )
             return self.set_defense_counsel_waived_or_fail_check(message.exec())
 
@@ -63,23 +62,30 @@ class BaseInfoChecker(object):
         elif message_response == QMessageBox.No:
             return "Fail"
 
-    def check_plea_and_findings(self):
-        """Shows warning if no plea or findings are entered. Checks one at a time so
-        unless all fields have a plea and finding you will get the warning until they
-        are filled in.
-
-        The column (col) starts at 2 to skip label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge.
-
-        Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
+    def check_if_no_plea_entered(self):
+        """The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
+        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
+        column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense, plea, finding = self.get_offense_plea_finding(col)
+                offense = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_offense, col
+                    )
+                    .widget()
+                    .text()
+                )
+                plea = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_plea, col
+                    )
+                    .widget()
+                    .currentText()
+                )
             except AttributeError:
-                pass
+                offense, plea = None, None
             if plea == "Dismissed":
                 col += 2
                 loop_counter += 1
@@ -87,27 +93,51 @@ class BaseInfoChecker(object):
             elif plea == "":
                 RequiredBox(f"You must enter a plea for {offense}.").exec()
                 return "Fail"
+            col += 2
+            loop_counter += 1
+        return "Pass"
+
+    def check_if_no_finding_entered(self):
+        """The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
+        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
+        column from a grid_layout when it is deleted, it actually just hides the column."""
+        col = 2
+        loop_counter = 0
+        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+            try:
+                offense = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_offense, col
+                    )
+                    .widget()
+                    .text()
+                )
+                plea = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_plea, col
+                    )
+                    .widget()
+                    .currentText()
+                )
+                finding = (
+                    self.dialog.charges_gridLayout.itemAtPosition(
+                        self.dialog.charges_gridLayout.row_finding, col
+                    )
+                    .widget()
+                    .currentText()
+                )
+            except AttributeError:
+                offense, plea, finding = None, None, None
+            if plea == "Dismissed":
+                col += 2
+                loop_counter += 1
+                continue
             elif finding == "":
                 RequiredBox(f"You must enter a finding for {offense}.").exec()
                 return "Fail"
             col += 2
             loop_counter += 1
         return "Pass"
-
-    def get_offense_plea_finding(self, col):
-        row_offense, row_plea, row_finding = self.get_offense_plea_finding_rows()
-        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
-        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
-        finding = (
-            self.dialog.charges_gridLayout.itemAtPosition(row_finding, col).widget().currentText()
-        )
-        return offense, plea, finding
-
-    def get_offense_plea_finding_rows(self):
-        row_offense = self.dialog.charges_gridLayout.row_offense
-        row_plea = self.dialog.charges_gridLayout.row_plea
-        row_finding = self.dialog.charges_gridLayout.row_finding
-        return row_offense, row_plea, row_finding
 
     def check_insurance(self):
         if (
@@ -158,7 +188,8 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_insurance",
             "check_additional_conditions_ordered",
         ]
@@ -178,52 +209,13 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea",
+            "check_if_no_plea_entered",
             "check_if_no_bond_amount",
             "check_if_improper_bond_type",
             "check_additional_conditions_ordered",
             "check_domestic_violence_bond_condition",
         ]
         self.check_status = self.perform_check_list()
-
-    def check_plea(self):
-        """Shows warning if no plea is entered. Checks one at a time so
-        unless all fields have a plea you will get the warning until they
-        are filled in.
-
-        The column (col) starts at 2 to skip label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge.
-
-        Try/Except addresses the issue of PyQt not actually deleting a column from a
-        grid_layout when it is deleted, it actually just hides the column."""
-        col = 2
-        loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
-            try:
-                offense, plea = self.get_offense_plea(col)
-            except AttributeError:
-                pass
-            if plea == "Dismissed":
-                col += 2
-                loop_counter += 1
-                continue
-            elif plea == "":
-                RequiredBox(f"You must enter a plea for {offense}.").exec()
-                return "Fail"
-            col += 2
-            loop_counter += 1
-        return "Pass"
-
-    def get_offense_plea(self, col):
-        row_offense, row_plea = self.get_offense_plea_rows()
-        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
-        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
-        return offense, plea
-
-    def get_offense_plea_rows(self):
-        row_offense = self.dialog.charges_gridLayout.row_offense
-        row_plea = self.dialog.charges_gridLayout.row_plea
-        return row_offense, row_plea
 
     def check_if_no_bond_amount(self):
         if (
@@ -277,7 +269,8 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_if_diversion_program_selected",
             "check_insurance",
         ]
@@ -307,27 +300,11 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
 
 class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
-        (
-            "license_suspension",
-            "license_type",
-            "License Suspension",
-        ),
-        (
-            "community_service",
-            "hours_of_service",
-            "Community Service",
-        ),
+        ("license_suspension", "license_type", "License Suspension"),
+        ("community_service", "hours_of_service", "Community Service"),
         ("other_conditions", "terms", "Other Conditions"),
-        (
-            "community_control",
-            "term_of_control",
-            "Community Control",
-        ),
-        (
-            "impoundment",
-            "vehicle_make_model",
-            "Immobilize/Impound",
-        ),
+        ("community_control", "term_of_control", "Community Control"),
+        ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
     ]
 
     def __init__(self, dialog):
@@ -337,7 +314,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         self.total_jail_days_credit = self.calculate_jail_days_credit()
         self.dialog_check_list = [
             "check_defense_counsel",
-            "check_plea_and_findings",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
             "check_insurance",
             "check_additional_conditions_ordered",
             "check_dv_and_victim_notifications_ordered",
@@ -354,9 +332,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         pass
 
     def check_jail_time_credit_fields(self):
-        """Generates warning messages if certain required jail time credit fields have data, but other required
-        fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
-        generated because a user may enter no for currently in jail, but there may not be jail time credit."""
+        """Generates warning messages if certain required jail time credit fields have data, but
+        other required fields do not contain data. If currenlty in jail is no, but other days in
+        jail is blank no warning is generated because a user may enter no for currently in jail,
+        but there may not be jail time credit."""
         if self.dialog.entry_case_information.currently_in_jail == "Yes":
             if self.check_if_days_in_jail_blank():
                 return "Fail"
@@ -396,7 +375,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if self.dialog.entry_case_information.apply_jtc == "":
             message = TwoChoiceQuestionBox(
                 f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
-                f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+                f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and "
+                f"Fines.",
                 "Sentence",
                 "Costs and Fines",
             )
@@ -432,21 +412,18 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 pass
         return self.total_jail_days_suspended
 
-    def check_if_jail_days_suspended_greater_than_jail_imposed(
-        self,
-    ):
+    def check_if_jail_days_suspended_greater_than_jail_imposed(self):
         if self.total_jail_days_suspended > self.total_jail_days:
             message = RequiredBox(
-                f"The total number of jail days suspended is {self.total_jail_days_suspended} which is "
-                f"greater than the total jail days imposed of {self.total_jail_days}. Please correct."
+                f"The total number of jail days suspended is {self.total_jail_days_suspended} "
+                f"which is greater than the total jail days imposed of {self.total_jail_days}. "
+                f"Please correct."
             )
             message.exec()
             return "Fail"
         return False
 
-    def check_if_jail_days_imposed_greater_than_suspended_and_credit(
-        self,
-    ):
+    def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
             self.total_jail_days > (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is False
@@ -459,12 +436,13 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.total_jail_days} is greater than the total "
-                f"jail days suspended of {self.total_jail_days_suspended} and the total jail time credit applied "
-                f"to the sentence of {self.total_jail_days_credit}, and the Jail Reporting Terms "
-                f"have not been entered. \n\nDo you want to set the Jail Reporting Terms? \n\n"
-                f"Press 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to open the entry with no "
-                f"Jail Reporting Terms. \n\nPress 'Cancel' to return to the Dialog without opening an "
-                f"entry so that you can change the number of jail days imposed/suspended/credited."
+                f"jail days suspended of {self.total_jail_days_suspended} and the total jail time "
+                f"credit applied to the sentence of {self.total_jail_days_credit}, and the Jail "
+                f"Reporting Terms have not been entered. \n\nDo you want to set the Jail "
+                f"Reporting Terms? \n\nPress 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to "
+                f"open the entry with no Jail Reporting Terms. \n\nPress 'Cancel' to return to the "
+                f"Dialog without opening an entry so that you can change the number of jail days "
+                f"imposed/suspended/credited."
             )
             return self.add_jail_reporting_terms(message.exec())
 
@@ -478,9 +456,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Cancel:
             return "Fail"
 
-    def check_if_jail_days_equals_suspended_and_imposed_days(
-        self,
-    ):
+    def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
             self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
@@ -490,11 +466,11 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
         ):
             message = WarningBox(
-                f"The total jail days imposed of {self.total_jail_days} is equal to the total jail days "
-                f"suspended of {self.total_jail_days_suspended} and total jail time credit of "
-                f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail days left "
-                f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
-                f"Jail Reporting Terms?"
+                f"The total jail days imposed of {self.total_jail_days} is equal to the total jail "
+                f"days suspended of {self.total_jail_days_suspended} and total jail time credit of "
+                f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail "
+                f"days left to serve but you set Jail Reporting Terms. \n\nAre you sure you want "
+                f"to set Jail Reporting Terms?"
             )
             return self.unset_jail_reporting_terms(message.exec())
 
@@ -505,9 +481,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         elif message_response == QMessageBox.Yes:
             return "Pass"
 
-    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(
-        self,
-    ):
+    def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
             self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
             and self.dialog.entry_case_information.jail_terms.ordered is True
@@ -520,9 +494,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
             return self.unset_jail_reporting_terms(message.exec())
 
-    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(
-        self,
-    ):
+    def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
             self.total_jail_days_credit > self.total_jail_days
             and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
