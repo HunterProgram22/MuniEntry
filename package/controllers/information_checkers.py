@@ -200,7 +200,10 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         loop_counter = 0
         while loop_counter < self.dialog.charges_gridLayout.columnCount():
             try:
-                offense, plea = self.get_offense_plea(col)
+                offense = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_offense, col).widget().text()
+                plea = self.dialog.charges_gridLayout.itemAtPosition(
+                    self.dialog.charges_gridLayout.row_plea, col).widget().currentText()
             except AttributeError:
                 pass
             if plea == "Dismissed":
@@ -213,17 +216,6 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             col += 2
             loop_counter += 1
         return "Pass"
-
-    def get_offense_plea(self, col):
-        row_offense, row_plea = self.get_offense_plea_rows()
-        offense = self.dialog.charges_gridLayout.itemAtPosition(row_offense, col).widget().text()
-        plea = self.dialog.charges_gridLayout.itemAtPosition(row_plea, col).widget().currentText()
-        return offense, plea
-
-    def get_offense_plea_rows(self):
-        row_offense = self.dialog.charges_gridLayout.row_offense
-        row_plea = self.dialog.charges_gridLayout.row_plea
-        return row_offense, row_plea
 
     def check_if_no_bond_amount(self):
         if (
