@@ -331,9 +331,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         pass
 
     def check_jail_time_credit_fields(self):
-        """Generates warning messages if certain required jail time credit fields have data, but other required
-        fields do not contain data. If currenlty in jail is no, but other days in jail is blank no warning is
-        generated because a user may enter no for currently in jail, but there may not be jail time credit."""
+        """Generates warning messages if certain required jail time credit fields have data, but
+        other required fields do not contain data. If currenlty in jail is no, but other days in
+        jail is blank no warning is generated because a user may enter no for currently in jail,
+        but there may not be jail time credit."""
         if self.dialog.entry_case_information.currently_in_jail == "Yes":
             if self.check_if_days_in_jail_blank():
                 return "Fail"
@@ -373,7 +374,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if self.dialog.entry_case_information.apply_jtc == "":
             message = TwoChoiceQuestionBox(
                 f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
-                f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and Fines.",
+                f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and "
+                f"Fines.",
                 "Sentence",
                 "Costs and Fines",
             )
@@ -465,11 +467,11 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
         ):
             message = WarningBox(
-                f"The total jail days imposed of {self.total_jail_days} is equal to the total jail days "
-                f"suspended of {self.total_jail_days_suspended} and total jail time credit of "
-                f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail days left "
-                f"to serve but you set Jail Reporting Terms. \n\nAre you sure you want to set "
-                f"Jail Reporting Terms?"
+                f"The total jail days imposed of {self.total_jail_days} is equal to the total jail "
+                f"days suspended of {self.total_jail_days_suspended} and total jail time credit of "
+                f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail "
+                f"days left to serve but you set Jail Reporting Terms. \n\nAre you sure you want "
+                f"to set Jail Reporting Terms?"
             )
             return self.unset_jail_reporting_terms(message.exec())
 
