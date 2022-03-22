@@ -341,6 +341,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
                 return "Fail"
             self.check_if_apply_jtc_blank()
         elif self.dialog.entry_case_information.days_in_jail != "":
+            if self.dialog.entry_case_information.days_in_jail == 0:
+                return "Pass"
             self.check_if_currently_in_jail_blank()
             self.check_if_apply_jtc_blank()
 
@@ -389,7 +391,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
     def calculate_jail_days_credit(self):
-        if self.dialog.entry_case_information.days_in_jail.strip() == "":
+        if self.dialog.entry_case_information.days_in_jail == "":
             return 0
         else:
             return int(self.dialog.entry_case_information.days_in_jail)

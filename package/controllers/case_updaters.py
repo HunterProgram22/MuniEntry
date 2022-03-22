@@ -108,11 +108,7 @@ class CaseUpdater:
         self.dialog.entry_case_information.total_jail_days_to_serve = (
             int(self.dialog.entry_case_information.total_jail_days_imposed)
             - int(self.dialog.entry_case_information.total_jail_days_suspended)
-            - int(self.dialog.entry_case_information.days_in_jail)
             )
-        print(self.dialog.entry_case_information.total_jail_days_imposed)
-        print(self.dialog.entry_case_information.total_jail_days_suspended)
-        print(self.dialog.entry_case_information.total_jail_days_to_serve)
 
     def calculate_total_jail_days_imposed(self):
         total_jail_days_imposed = 0
