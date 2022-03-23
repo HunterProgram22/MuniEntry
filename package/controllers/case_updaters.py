@@ -2,6 +2,17 @@
 Each main dialog class has a subclass that governs what
 is updated for the main class. The classes take the data from the view (GUI) and transfer
 it to the appropriate model object."""
+from PyQt5.QtWidgets import (
+    QDialog,
+    QComboBox,
+    QCheckBox,
+    QLineEdit,
+    QTextEdit,
+    QDateEdit,
+    QTimeEdit,
+    QRadioButton,
+)
+
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
@@ -12,6 +23,10 @@ class CaseModelUpdater:
     def __init__(self, dialog):
         self.view = dialog
         self.model = dialog.entry_case_information
+
+    def update_model_with_case_information_frame_data(self):
+        """Calls the methods that update all model with all fields in the case information (top
+        frame) in all main entry dialogs."""
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
@@ -77,22 +92,73 @@ class CaseModelUpdater:
             total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
         return total_fines_suspended
 
+    def transfer_view_data_to_model(self, terms_object):
+        """Function that loops through a list of fields and transfers the data in the field
+        to the appropriate model attribute. The function uses the appropriate pyqt method for
+        the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
+        item[1] = view field that contains the data)."""
+        terms_list = getattr(terms_object, "terms_list")
+        for item in terms_list:
+            (model_attribute, view_field) = item
+            if isinstance(getattr(self.view, view_field), QComboBox):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).currentText(),
+                )
+            elif isinstance(getattr(self.view, view_field), QCheckBox):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).isChecked(),
+                )
+            elif isinstance(getattr(self.view, view_field), QRadioButton):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).isChecked(),
+                )
+            elif isinstance(getattr(self.view, view_field), QLineEdit):
+                setattr(terms_object, model_attribute, getattr(self.view, view_field).text())
+            elif isinstance(getattr(self.view, view_field), QTextEdit):
+                plain_text = getattr(self.view, view_field).toPlainText()
+                try:
+                    if plain_text[-1] == ".":
+                        plain_text = plain_text[:-1]
+                except IndexError:
+                    pass
+                setattr(terms_object, model_attribute, plain_text)
+            elif isinstance(getattr(self.view, view_field), QDateEdit):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).date().toString("MMMM dd, yyyy"),
+                )
+            elif isinstance(getattr(self.view, view_field), QTimeEdit):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).time().toString("hh:mm A"),
+                )
 
-class DiversionDialogCaseUpdater(CaseModelUpdater):
+
+class DiversionDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
         self.update_case_information()
 
     def update_case_information(self):
         self.view.add_plea_to_entry_case_information()
-        self.view.transfer_field_data_to_model(self.model.diversion)
+        self.transfer_view_data_to_model(self.model.diversion)
         self.model.diversion.program_name = self.model.diversion.get_program_name()
-        self.view.transfer_field_data_to_model(self.model.other_conditions)
+        self.transfer_view_data_to_model(self.model.other_conditions)
 
 
-class JailCCDialogCaseUpdater(CaseModelUpdater):
+class JailCCDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
         self.view.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit()
@@ -137,9 +203,10 @@ class JailCCDialogCaseUpdater(CaseModelUpdater):
         return total_jail_days_suspended
 
 
-class FineOnlyDialogCaseUpdater(CaseModelUpdater):
+class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
         self.view.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit_for_fines()
@@ -150,11 +217,12 @@ class FineOnlyDialogCaseUpdater(CaseModelUpdater):
         self.model.days_in_jail = self.view.jail_time_credit_box.text()
 
 
-class NotGuiltyBondDialogCaseUpdater(CaseModelUpdater):
+class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
         self.view.add_plea_to_entry_case_information()
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.view.transfer_field_data_to_model(self.model.bond_conditions)
+        self.transfer_view_data_to_model(self.model.bond_conditions)
