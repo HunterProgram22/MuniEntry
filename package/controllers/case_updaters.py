@@ -10,7 +10,7 @@ class CaseModelUpdater:
     entry dialog to update the entry_case_information (model data)."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        self.view = dialog
         self.model = dialog.entry_case_information
         self.set_case_number_and_date()
         self.set_party_information()
@@ -18,25 +18,25 @@ class CaseModelUpdater:
         self.set_appearance_reason()
 
     def set_case_number_and_date(self):
-        self.model.case_number = self.dialog.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.model.case_number = self.view.case_number_lineEdit.text()
+        self.model.plea_trial_date = self.view.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     def set_party_information(self):
-        self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()
-        self.model.defendant.last_name = self.dialog.defendant_last_name_lineEdit.text()
+        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
+        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
 
     def set_defense_counsel_information(self):
-        self.model.defense_counsel = self.dialog.defense_counsel_name_box.currentText()
-        self.model.defense_counsel_type = self.dialog.defense_counsel_type_box.currentText()
-        self.model.defense_counsel_waived = self.dialog.defense_counsel_waived_checkBox.isChecked()
+        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
+        self.model.defense_counsel_type = self.view.defense_counsel_type_box.currentText()
+        self.model.defense_counsel_waived = self.view.defense_counsel_waived_checkBox.isChecked()
 
     def set_appearance_reason(self):
-        self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
+        self.model.appearance_reason = self.view.appearance_reason_box.currentText()
 
     def update_costs_and_fines_information(self):
-        self.model.court_costs.ordered = self.dialog.court_costs_box.currentText()
-        self.model.court_costs.ability_to_pay_time = self.dialog.ability_to_pay_box.currentText()
-        self.model.court_costs.balance_due_date = self.dialog.balance_due_date.date().toString(
+        self.model.court_costs.ordered = self.view.court_costs_box.currentText()
+        self.model.court_costs.ability_to_pay_time = self.view.ability_to_pay_box.currentText()
+        self.model.court_costs.balance_due_date = self.view.balance_due_date.date().toString(
             "MMMM dd, yyyy"
         )
 
@@ -47,7 +47,7 @@ class CaseModelUpdater:
 
     def calculate_court_costs(self):
         court_costs = 0
-        if self.dialog.court_costs_box.currentText() == "Yes":
+        if self.view.court_costs_box.currentText() == "Yes":
             for charge in self.model.charges_list:
                 if charge.type == "Moving":
                     return MOVING_COURT_COSTS
@@ -84,30 +84,30 @@ class DiversionDialogCaseUpdater(CaseModelUpdater):
         self.update_case_information()
 
     def update_case_information(self):
-        self.dialog.add_plea_to_entry_case_information()
-        self.dialog.transfer_field_data_to_model(self.model.diversion)
+        self.view.add_plea_to_entry_case_information()
+        self.view.transfer_field_data_to_model(self.model.diversion)
         self.model.diversion.program_name = self.model.diversion.get_program_name()
-        self.dialog.transfer_field_data_to_model(self.model.other_conditions)
+        self.view.transfer_field_data_to_model(self.model.other_conditions)
 
 
 class JailCCDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.add_plea_to_entry_case_information()
+        self.view.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit()
         self.calculate_total_jail_days_to_serve()
         self.calculate_costs_and_fines()
 
     def update_jail_time_credit(self):
-        self.model.currently_in_jail = self.dialog.in_jail_box.currentText()
+        self.model.currently_in_jail = self.view.in_jail_box.currentText()
         self.model.days_in_jail = self.set_jail_time_credit()
-        self.model.apply_jtc = self.dialog.jail_time_credit_apply_box.currentText()
+        self.model.apply_jtc = self.view.jail_time_credit_apply_box.currentText()
 
     def set_jail_time_credit(self):
-        if self.dialog.jail_time_credit_box.text() == "":
+        if self.view.jail_time_credit_box.text() == "":
             return 0
-        return int(self.dialog.jail_time_credit_box.text())
+        return int(self.view.jail_time_credit_box.text())
 
     def calculate_total_jail_days_to_serve(self):
         self.model.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
@@ -140,21 +140,21 @@ class JailCCDialogCaseUpdater(CaseModelUpdater):
 class FineOnlyDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.add_plea_to_entry_case_information()
+        self.view.add_plea_to_entry_case_information()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit_for_fines()
         self.calculate_costs_and_fines()
 
     def update_jail_time_credit_for_fines(self):
-        self.model.fines_and_costs_jail_credit = self.dialog.credit_for_jail_checkBox.isChecked()
-        self.model.days_in_jail = self.dialog.jail_time_credit_box.text()
+        self.model.fines_and_costs_jail_credit = self.view.credit_for_jail_checkBox.isChecked()
+        self.model.days_in_jail = self.view.jail_time_credit_box.text()
 
 
 class NotGuiltyBondDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.add_plea_to_entry_case_information()
+        self.view.add_plea_to_entry_case_information()
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.dialog.transfer_field_data_to_model(self.model.bond_conditions)
+        self.view.transfer_field_data_to_model(self.model.bond_conditions)
