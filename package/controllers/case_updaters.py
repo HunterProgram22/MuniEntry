@@ -1,76 +1,54 @@
-"""Module containing classes responsible for updating case information anytime a
-function for the case is ran. Each main dialog class has a subclass that governs what
-is updated for the main class."""
+"""Module containing classes responsible for updating case information.
+Each main dialog class has a subclass that governs what
+is updated for the main class. The classes take the data from the view (GUI) and transfer
+it to the appropriate model object."""
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
-class CaseUpdater:
+class CaseModelUpdater:
     """Base class that contains methods used by subclasses and is called by a main
     entry dialog to update the entry_case_information (model data)."""
 
     def __init__(self, dialog):
         self.dialog = dialog
+        self.model = dialog.entry_case_information
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_appearance_reason()
 
     def set_case_number_and_date(self):
-        self.dialog.entry_case_information.case_number = (
-            self.dialog.case_number_lineEdit.text()
-        )
-        self.dialog.entry_case_information.plea_trial_date = (
-            self.dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
-        )
+        self.model.case_number = self.dialog.case_number_lineEdit.text()
+        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString("MMMM dd, yyyy")
 
     def set_party_information(self):
-        self.dialog.entry_case_information.defendant.first_name = (
-            self.dialog.defendant_first_name_lineEdit.text()
-        )
-        self.dialog.entry_case_information.defendant.last_name = (
-            self.dialog.defendant_last_name_lineEdit.text()
-        )
+        self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()
+        self.model.defendant.last_name = self.dialog.defendant_last_name_lineEdit.text()
 
     def set_defense_counsel_information(self):
-        self.dialog.entry_case_information.defense_counsel = (
-            self.dialog.defense_counsel_name_box.currentText()
-        )
-        self.dialog.entry_case_information.defense_counsel_type = (
-            self.dialog.defense_counsel_type_box.currentText()
-        )
-        self.dialog.entry_case_information.defense_counsel_waived = (
-            self.dialog.defense_counsel_waived_checkBox.isChecked()
-        )
+        self.model.defense_counsel = self.dialog.defense_counsel_name_box.currentText()
+        self.model.defense_counsel_type = self.dialog.defense_counsel_type_box.currentText()
+        self.model.defense_counsel_waived = self.dialog.defense_counsel_waived_checkBox.isChecked()
 
     def set_appearance_reason(self):
-        self.dialog.entry_case_information.appearance_reason = (
-            self.dialog.appearance_reason_box.currentText()
-        )
+        self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
 
     def update_costs_and_fines_information(self):
-        self.dialog.entry_case_information.court_costs.ordered = (
-            self.dialog.court_costs_box.currentText()
-        )
-        self.dialog.entry_case_information.court_costs.ability_to_pay_time = (
-            self.dialog.ability_to_pay_box.currentText()
-        )
-        self.dialog.entry_case_information.court_costs.balance_due_date = (
-            self.dialog.balance_due_date.date().toString("MMMM dd, yyyy")
+        self.model.court_costs.ordered = self.dialog.court_costs_box.currentText()
+        self.model.court_costs.ability_to_pay_time = self.dialog.ability_to_pay_box.currentText()
+        self.model.court_costs.balance_due_date = self.dialog.balance_due_date.date().toString(
+            "MMMM dd, yyyy"
         )
 
     def calculate_costs_and_fines(self):
-        self.dialog.entry_case_information.court_costs.amount = (
-            self.calculate_court_costs()
-        )
-        self.dialog.entry_case_information.total_fines = self.calculate_total_fines()
-        self.dialog.entry_case_information.total_fines_suspended = (
-            self.calculate_total_fines_suspended()
-        )
+        self.model.court_costs.amount = self.calculate_court_costs()
+        self.model.total_fines = self.calculate_total_fines()
+        self.model.total_fines_suspended = self.calculate_total_fines_suspended()
 
     def calculate_court_costs(self):
         court_costs = 0
         if self.dialog.court_costs_box.currentText() == "Yes":
-            for charge in self.dialog.entry_case_information.charges_list:
+            for charge in self.model.charges_list:
                 if charge.type == "Moving":
                     return MOVING_COURT_COSTS
                 if charge.type == "Criminal":
@@ -81,7 +59,7 @@ class CaseUpdater:
 
     def calculate_total_fines(self):
         total_fines = 0
-        for charge in self.dialog.entry_case_information.charges_list:
+        for charge in self.model.charges_list:
             try:
                 local_charge_fines_amount = int(charge.fines_amount[2:])
             except ValueError:
@@ -91,36 +69,28 @@ class CaseUpdater:
 
     def calculate_total_fines_suspended(self):
         total_fines_suspended = 0
-        for charge in self.dialog.entry_case_information.charges_list:
+        for charge in self.model.charges_list:
             try:
                 local_charge_fines_suspended = int(charge.fines_suspended[2:])
             except ValueError:
                 local_charge_fines_suspended = 0
-            total_fines_suspended = total_fines_suspended + int(
-                local_charge_fines_suspended
-            )
+            total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
         return total_fines_suspended
 
 
-class DiversionDialogCaseUpdater(CaseUpdater):
+class DiversionDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.update_case_information()
 
     def update_case_information(self):
         self.dialog.add_plea_to_entry_case_information()
-        self.dialog.transfer_field_data_to_model(
-            self.dialog.entry_case_information.diversion
-        )
-        self.dialog.entry_case_information.diversion.program_name = (
-            self.dialog.entry_case_information.diversion.get_program_name()
-        )
-        self.dialog.transfer_field_data_to_model(
-            self.dialog.entry_case_information.other_conditions
-        )
+        self.dialog.transfer_field_data_to_model(self.model.diversion)
+        self.model.diversion.program_name = self.model.diversion.get_program_name()
+        self.dialog.transfer_field_data_to_model(self.model.other_conditions)
 
 
-class JailCCDialogCaseUpdater(CaseUpdater):
+class JailCCDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog.add_plea_to_entry_case_information()
@@ -130,15 +100,9 @@ class JailCCDialogCaseUpdater(CaseUpdater):
         self.calculate_costs_and_fines()
 
     def update_jail_time_credit(self):
-        self.dialog.entry_case_information.currently_in_jail = (
-            self.dialog.in_jail_box.currentText()
-        )
-        self.dialog.entry_case_information.days_in_jail = (
-            self.set_jail_time_credit()
-        )
-        self.dialog.entry_case_information.apply_jtc = (
-            self.dialog.jail_time_credit_apply_box.currentText()
-        )
+        self.model.currently_in_jail = self.dialog.in_jail_box.currentText()
+        self.model.days_in_jail = self.set_jail_time_credit()
+        self.model.apply_jtc = self.dialog.jail_time_credit_apply_box.currentText()
 
     def set_jail_time_credit(self):
         if self.dialog.jail_time_credit_box.text() == "":
@@ -146,16 +110,15 @@ class JailCCDialogCaseUpdater(CaseUpdater):
         return int(self.dialog.jail_time_credit_box.text())
 
     def calculate_total_jail_days_to_serve(self):
-        self.dialog.entry_case_information.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
-        self.dialog.entry_case_information.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
-        self.dialog.entry_case_information.total_jail_days_to_serve = (
-            int(self.dialog.entry_case_information.total_jail_days_imposed)
-            - int(self.dialog.entry_case_information.total_jail_days_suspended)
-            )
+        self.model.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
+        self.model.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
+        self.model.total_jail_days_to_serve = int(self.model.total_jail_days_imposed) - int(
+            self.model.total_jail_days_suspended
+        )
 
     def calculate_total_jail_days_imposed(self):
         total_jail_days_imposed = 0
-        for charge in self.dialog.entry_case_information.charges_list:
+        for charge in self.model.charges_list:
             try:
                 local_jail_days_imposed = int(charge.jail_days)
             except ValueError:
@@ -165,7 +128,7 @@ class JailCCDialogCaseUpdater(CaseUpdater):
 
     def calculate_total_jail_days_suspended(self):
         total_jail_days_suspended = 0
-        for charge in self.dialog.entry_case_information.charges_list:
+        for charge in self.model.charges_list:
             try:
                 local_jail_days_suspended = int(charge.jail_days_suspended)
             except ValueError:
@@ -174,7 +137,7 @@ class JailCCDialogCaseUpdater(CaseUpdater):
         return total_jail_days_suspended
 
 
-class FineOnlyDialogCaseUpdater(CaseUpdater):
+class FineOnlyDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog.add_plea_to_entry_case_information()
@@ -183,21 +146,15 @@ class FineOnlyDialogCaseUpdater(CaseUpdater):
         self.calculate_costs_and_fines()
 
     def update_jail_time_credit_for_fines(self):
-        self.dialog.entry_case_information.fines_and_costs_jail_credit = (
-            self.dialog.credit_for_jail_checkBox.isChecked()
-        )
-        self.dialog.entry_case_information.days_in_jail = (
-            self.dialog.jail_time_credit_box.text()
-        )
+        self.model.fines_and_costs_jail_credit = self.dialog.credit_for_jail_checkBox.isChecked()
+        self.model.days_in_jail = self.dialog.jail_time_credit_box.text()
 
 
-class NotGuiltyBondDialogCaseUpdater(CaseUpdater):
+class NotGuiltyBondDialogCaseUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog.add_plea_to_entry_case_information()
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.dialog.transfer_field_data_to_model(
-            self.dialog.entry_case_information.bond_conditions
-        )
+        self.dialog.transfer_field_data_to_model(self.model.bond_conditions)
