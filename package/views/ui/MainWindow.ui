@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.15.1</string>
+   <string>MuniEntry - ver 0.15.2</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -333,6 +333,16 @@ font-weight: bold;</string>
           <property name="text">
            <string>Prelim. Probation Violation / Bond</string>
           </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QRadioButton" name="kimbler_radioButton">
+          <property name="text">
+           <string>Judge Kimbler</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
        </layout>

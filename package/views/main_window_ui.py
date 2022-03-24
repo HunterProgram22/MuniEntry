@@ -163,6 +163,10 @@ class Ui_MainWindow(object):
         self.ProbationViolationBondButton.setStyleSheet("background-color: rgb(255, 255, 127);")
         self.ProbationViolationBondButton.setObjectName("ProbationViolationBondButton")
         self.gridLayout_2.addWidget(self.ProbationViolationBondButton, 10, 2, 1, 1)
+        self.kimbler_radioButton = QtWidgets.QRadioButton(self.tab)
+        self.kimbler_radioButton.setObjectName("kimbler_radioButton")
+        self.buttonGroup.addButton(self.kimbler_radioButton)
+        self.gridLayout_2.addWidget(self.kimbler_radioButton, 2, 0, 1, 1)
         self.tabWidget.addTab(self.tab, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -325,7 +329,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.15.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.15.2"))
         self.label.setText(_translate("MainWindow", "JUDICIAL OFFICER:"))
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
         self.arraignments_radioButton.setText(_translate("MainWindow", "Arraignments"))
@@ -345,6 +349,7 @@ class Ui_MainWindow(object):
         self.trials_to_court_radioButton.setText(_translate("MainWindow", "Trials to Court"))
         self.FailureToAppearButton.setText(_translate("MainWindow", "Failure to Appear"))
         self.ProbationViolationBondButton.setText(_translate("MainWindow", "Prelim. Probation Violation / Bond"))
+        self.kimbler_radioButton.setText(_translate("MainWindow", "Judge Kimbler"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Crim/Traffic"))
         self.label_4.setText(_translate("MainWindow", "Civil Entries"))
         self.FinalJudgmentEntryButton_11.setText(_translate("MainWindow", "Entry"))
