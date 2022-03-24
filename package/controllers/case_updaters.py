@@ -2,6 +2,7 @@
 Each main dialog class has a subclass that governs what
 is updated for the main class. The classes take the data from the view (GUI) and transfer
 it to the appropriate model object."""
+from loguru import logger
 from PyQt5.QtWidgets import (
     QDialog,
     QComboBox,
@@ -221,8 +222,168 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()
-        self.view.add_plea_to_entry_case_information()
+        self.add_plea_to_model()
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
         self.transfer_view_data_to_model(self.model.bond_conditions)
+
+    def add_plea_to_model(self):
+        return NotGuiltyPleaAdder(self.view, self.model)
+
+
+class PleaAdder:
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+
+    def __init__(self, view, model):
+        self.grid = view.charges_gridLayout
+        self.model = model
+
+
+class NotGuiltyPleaAdder(PleaAdder):
+    row_plea = 3
+
+    def __init__(self, view, model):
+        super().__init__(view, model)
+        self.update_and_add_plea()
+
+    @logger.catch
+    def update_and_add_plea(self):
+        """This method updates any changes to the statute and degree that were made in the grid and
+        adds the plea that is entered for each charge."""
+        col = 1
+        for charge in self.model.charges_list:
+            print(self.grid.columnCount())
+            try:
+                if self.grid.itemAtPosition(self.row_offense, col) is None:
+                    col += 1
+            except AttributeError:
+                col += 1
+            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
+            charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
+            charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
+            col += 1
+
+
+class NoJailPleaFindingFines:
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
+    row_amend_button = 9
+    row_delete_button = 10
+
+    @classmethod
+    def add(cls, dialog):
+        column = 1
+        for index, charge in enumerate(dialog.entry_case_information.charges_list):
+            while dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, column) is None:
+                column += 1
+            charge.statute = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_statute, column).widget().text()
+            charge.degree = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_degree, column).widget().currentText()
+            charge.plea = dialog.charges_gridLayout.itemAtPosition(
+                NoJailPleaFindingFines.row_plea, column).widget().currentText()
+            if dialog.charges_gridLayout.itemAtPosition(
+                    NoJailPleaFindingFines.row_plea, column).widget().currentText() == "Dismissed":
+                charge.finding = ""
+                charge.fines_amount = " " # A space is used here b/c otherwise puts 0
+                charge.fines_suspended = " " # A space is used here b/c otherwise puts 0
+            else:
+                charge.finding = dialog.charges_gridLayout.itemAtPosition(
+                    NoJailPleaFindingFines.row_finding, column).widget().currentText()
+                if dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, column).widget().text() == "":
+                    charge.fines_amount = 0
+                    charge.fines_amount = f"$ {charge.fines_amount}"
+                else:
+                    charge.fines_amount = (
+                        dialog.charges_gridLayout.itemAtPosition(
+                            NoJailPleaFindingFines.row_fine, column).widget().text()
+                    )
+                    charge.fines_amount = f"$ {charge.fines_amount}"
+                if dialog.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, column).widget().text() == "":
+                    charge.fines_suspended = 0
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
+                else:
+                    charge.fines_suspended = (
+                        dialog.charges_gridLayout.itemAtPosition(
+                            NoJailPleaFindingFines.row_fine_suspended, column).widget().text()
+                    )
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
+            column += 1
+
+
+class JailAddPleaFindingsFinesJail:
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
+    row_jail_days = 9
+    row_jail_days_suspended = 10
+    row_amend_button = 11
+    row_delete_button = 12
+
+    @classmethod
+    def add(cls, dialog):
+        column = 1
+        for index, charge in enumerate(dialog.entry_case_information.charges_list):
+            while dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_offense, column) is None:
+                column += 1
+            charge.statute = dialog.charges_gridLayout.itemAtPosition(
+                JailAddPleaFindingsFinesJail.row_statute, column).widget().text()
+            charge.degree = dialog.charges_gridLayout.itemAtPosition(
+                JailAddPleaFindingsFinesJail.row_degree, column).widget().currentText()
+            charge.plea = dialog.charges_gridLayout.itemAtPosition(
+                JailAddPleaFindingsFinesJail.row_plea, column).widget().currentText()
+            if dialog.charges_gridLayout.itemAtPosition(
+                    JailAddPleaFindingsFinesJail.row_plea, column).widget().currentText() == "Dismissed":
+                charge.finding = ""
+                charge.fines_amount = " " # A space is used here b/c otherwise puts 0
+                charge.fines_suspended = " " # A space is used here b/c otherwise puts 0
+                charge.jail_days = " " # A space is used here b/c otherwise puts None
+                charge.jail_days_suspended = " " # A space is used here b/c otherwise puts None
+            else:
+                charge.finding = dialog.charges_gridLayout.itemAtPosition(
+                    JailAddPleaFindingsFinesJail.row_finding, column).widget().currentText()
+                if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_fine,
+                                                            column).widget().text() == "":
+                    charge.fines_amount = 0
+                    charge.fines_amount = f"$ {charge.fines_amount}"
+                else:
+                    charge.fines_amount = (
+                        dialog.charges_gridLayout.itemAtPosition(
+                            JailAddPleaFindingsFinesJail.row_fine, column).widget().text()
+                    )
+                    charge.fines_amount = f"$ {charge.fines_amount}"
+                if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_fine_suspended, column).widget().text() == "":
+                    charge.fines_suspended = 0
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
+                else:
+                    charge.fines_suspended = (
+                        dialog.charges_gridLayout.itemAtPosition(
+                            JailAddPleaFindingsFinesJail.row_fine_suspended, column).widget().text()
+                    )
+                    charge.fines_suspended = f"$ {charge.fines_suspended}"
+                if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_jail_days, column).widget().text() == "":
+                    charge.jail_days = "None"
+                else:
+                    charge.jail_days = dialog.charges_gridLayout.itemAtPosition(
+                        JailAddPleaFindingsFinesJail.row_jail_days, column).widget().text()
+                if dialog.charges_gridLayout.itemAtPosition(JailAddPleaFindingsFinesJail.row_jail_days_suspended, column).widget().text() == "":
+                    charge.jail_days_suspended = "None"
+                else:
+                    charge.jail_days_suspended = dialog.charges_gridLayout.itemAtPosition(
+                        JailAddPleaFindingsFinesJail.row_jail_days_suspended, column).widget().text()
+            column += 1
+
+

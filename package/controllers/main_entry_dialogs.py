@@ -6,10 +6,10 @@ from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
 from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
 from package.controllers.case_updaters import JailCCDialogCaseModelUpdater, \
-    FineOnlyDialogCaseModelUpdater, NotGuiltyBondDialogCaseModelUpdater, DiversionDialogCaseModelUpdater
+    FineOnlyDialogCaseModelUpdater, NotGuiltyBondDialogCaseModelUpdater, \
+    DiversionDialogCaseModelUpdater, NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
+    NotGuiltyPleaAdder
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
-from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
-    NotGuiltyAddPlea
 from package.controllers.signal_connectors import DiversionDialogSignalConnector, JailCCDialogSignalConnector, \
     FineOnlyDialogSignalConnector, NotGuiltyBondDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
@@ -212,14 +212,12 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return CmsLoader(self)
 
     def update_entry_case_information(self):
+        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
         return NotGuiltyBondDialogCaseModelUpdater(self)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
-
-    def add_plea_to_entry_case_information(self):
-        return NotGuiltyAddPlea.add(self)
 
     def perform_info_checks(self):
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
