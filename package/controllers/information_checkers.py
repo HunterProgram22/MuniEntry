@@ -37,6 +37,7 @@ class BaseInfoChecker(object):
 
     def __init__(self, dialog):
         self.view = dialog
+        self.grid = dialog.charges_gridLayout
 
     def perform_check_list(self):
         for item in self.dialog_check_list:
@@ -66,22 +67,10 @@ class BaseInfoChecker(object):
         column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
-        while loop_counter < self.view.charges_gridLayout.columnCount():
+        while loop_counter < self.grid.columnCount():
             try:
-                offense = (
-                    self.view.charges_gridLayout.itemAtPosition(
-                        self.view.charges_gridLayout.row_offense, col
-                    )
-                    .widget()
-                    .text()
-                )
-                plea = (
-                    self.view.charges_gridLayout.itemAtPosition(
-                        self.view.charges_gridLayout.row_plea, col
-                    )
-                    .widget()
-                    .currentText()
-                )
+                offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
+                plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
             except AttributeError:
                 offense, plea = None, None
             if plea == "Dismissed":
@@ -408,14 +397,11 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
-            self.case_info.total_jail_days_imposed > (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.total_jail_days_imposed
+            > (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
             and self.case_info.jail_terms.ordered is False
-            and (
-                self.case_info.currently_in_jail == "No"
-                or self.case_info.currently_in_jail == ""
-            )
-            and self.case_info.community_control.driver_intervention_program
-            is False
+            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
+            and self.case_info.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
                 f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is greater than the total "
@@ -441,12 +427,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
-            self.case_info.total_jail_days_imposed == (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.total_jail_days_imposed
+            == (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
             and self.case_info.jail_terms.ordered is True
-            and (
-                self.case_info.currently_in_jail == "No"
-                or self.case_info.currently_in_jail == ""
-            )
+            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
         ):
             message = WarningBox(
                 f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is equal to the total jail "
@@ -466,7 +450,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
-            self.case_info.total_jail_days_imposed >= (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.total_jail_days_imposed
+            >= (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
             and self.case_info.jail_terms.ordered is True
             and self.case_info.currently_in_jail == "Yes"
         ):
