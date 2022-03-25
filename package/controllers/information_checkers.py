@@ -36,7 +36,7 @@ class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        self.view = dialog
 
     def perform_check_list(self):
         for item in self.dialog_check_list:
@@ -44,9 +44,9 @@ class BaseInfoChecker(object):
                 return "Fail"
 
     def check_defense_counsel(self):
-        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+        if self.view.defense_counsel_waived_checkBox.isChecked():
             return "Pass"
-        if self.dialog.defense_counsel_name_box.currentText().strip() == "":
+        if self.view.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox(
                 f"There is no attorney listed. Did the Defendant appear without or waive his right "
                 f"to counsel?\n\nIf you select 'No' you must enter a name for Defense Counsel."
@@ -55,7 +55,7 @@ class BaseInfoChecker(object):
 
     def set_defense_counsel_waived_or_fail_check(self, message_response):
         if message_response == QMessageBox.Yes:
-            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+            self.view.defense_counsel_waived_checkBox.setChecked(True)
             return "Pass"
         elif message_response == QMessageBox.No:
             return "Fail"
@@ -66,18 +66,18 @@ class BaseInfoChecker(object):
         column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+        while loop_counter < self.view.charges_gridLayout.columnCount():
             try:
                 offense = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_offense, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_offense, col
                     )
                     .widget()
                     .text()
                 )
                 plea = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_plea, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_plea, col
                     )
                     .widget()
                     .currentText()
@@ -101,25 +101,25 @@ class BaseInfoChecker(object):
         column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+        while loop_counter < self.view.charges_gridLayout.columnCount():
             try:
                 offense = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_offense, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_offense, col
                     )
                     .widget()
                     .text()
                 )
                 plea = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_plea, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_plea, col
                     )
                     .widget()
                     .currentText()
                 )
                 finding = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_finding, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_finding, col
                     )
                     .widget()
                     .currentText()
@@ -139,8 +139,8 @@ class BaseInfoChecker(object):
 
     def check_insurance(self):
         if (
-            self.dialog.fra_in_file_box.currentText() == "No"
-            and self.dialog.fra_in_court_box.currentText() == "N/A"
+            self.view.fra_in_file_box.currentText() == "No"
+            and self.view.fra_in_court_box.currentText() == "N/A"
         ):
             message = WarningBox(
                 "The information provided currently "
@@ -152,15 +152,15 @@ class BaseInfoChecker(object):
 
     def set_fra_in_court_box(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.fra_in_court_box.setCurrentText("No")
+            self.view.fra_in_court_box.setCurrentText("No")
             return "Pass"
         elif message_response == QMessageBox.Yes:
-            self.dialog.fra_in_court_box.setCurrentText("Yes")
+            self.view.fra_in_court_box.setCurrentText("Yes")
             return "Pass"
 
     def check_additional_conditions_ordered(self):
         for condition_item in self.conditions_list:
-            condition = getattr(self.dialog.entry_case_information, condition_item[0])
+            condition = getattr(self.view.entry_case_information, condition_item[0])
             condition_ordered = getattr(condition, "ordered")
             main_condition_set = getattr(condition, condition_item[1])
             condition_name = condition_item[2]
@@ -217,8 +217,8 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
 
     def check_if_no_bond_amount(self):
         if (
-            self.dialog.bond_type_box.currentText() != "Recognizance (OR) Bond"
-            and self.dialog.bond_amount_box.currentText() == "None (OR Bond)"
+            self.view.bond_type_box.currentText() != "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() == "None (OR Bond)"
         ):
             message = (
                 "A bond type requiring a bond amount was selected, but a bond amount was "
@@ -229,8 +229,8 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
 
     def check_if_improper_bond_type(self):
         if (
-            self.dialog.bond_type_box.currentText() == "Recognizance (OR) Bond"
-            and self.dialog.bond_amount_box.currentText() != "None (OR Bond)"
+            self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() != "None (OR Bond)"
         ):
             message = (
                 "A Recognizance (OR) Bond was selected but a bond amount other than "
@@ -243,9 +243,9 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
     def check_domestic_violence_bond_condition(self):
         dv_bond_conditions_list = [
             (
-                self.dialog.entry_case_information.domestic_violence_conditions.ordered,
-                self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
-                self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+                self.view.entry_case_information.domestic_violence_conditions.ordered,
+                self.view.entry_case_information.domestic_violence_conditions.vacate_residence,
+                self.view.entry_case_information.domestic_violence_conditions.surrender_weapons,
                 "Domestic Violence Restrictions",
             ),
         ]
@@ -283,7 +283,7 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
         for program in diversion_program_list:
             if (
                 getattr(
-                    self.dialog.entry_case_information.diversion,
+                    self.view.entry_case_information.diversion,
                     program,
                 )
                 is True
@@ -310,7 +310,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         # self.total_jail_days = self.calculate_total_jail_days()
         # self.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
         # self.total_jail_days_credit = self.calculate_jail_days_credit()
-        self.case_info = self.dialog.entry_case_information
+        self.case_info = self.view.entry_case_information
         self.dialog_check_list = [
             "check_defense_counsel",
             "check_if_no_plea_entered",
@@ -368,9 +368,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def set_in_jail_box(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.in_jail_box.setCurrentText("No")
+            self.view.in_jail_box.setCurrentText("No")
         elif message_response == QMessageBox.Yes:
-            self.dialog.in_jail_box.setCurrentText("Yes")
+            self.view.in_jail_box.setCurrentText("Yes")
 
     def check_if_apply_jtc_blank(self):
         if self.case_info.apply_jtc == "":
@@ -385,9 +385,9 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def set_jtc_apply_box(self, message_response):
         if message_response == 0:
-            self.dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+            self.view.jail_time_credit_apply_box.setCurrentText("Sentence")
         elif message_response == 1:
-            self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+            self.view.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
     def calculate_jail_days_credit(self):
         if self.case_info.days_in_jail == "":
@@ -433,8 +433,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if message_response == QMessageBox.No:
             return "Pass"
         elif message_response == QMessageBox.Yes:
-            self.dialog.jail_checkBox.setChecked(True)
-            self.dialog.start_jail_only_dialog()
+            self.view.jail_checkBox.setChecked(True)
+            self.view.start_jail_only_dialog()
             return "Pass"
         elif message_response == QMessageBox.Cancel:
             return "Fail"
@@ -459,7 +459,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def unset_jail_reporting_terms(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.jail_checkBox.setChecked(False)
+            self.view.jail_checkBox.setChecked(False)
             return "Pass"
         elif message_response == QMessageBox.Yes:
             return "Pass"
@@ -480,7 +480,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
             self.case_info.days_in_jail > self.case_info.total_jail_days_imposed
-            and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
+            and self.view.jail_time_credit_apply_box.currentText() == "Sentence"
         ):
             message = RequiredBox(
                 f"The Defendant is set to have {self.case_info.days_in_jail} days of jail time "
