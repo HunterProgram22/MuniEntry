@@ -12,8 +12,7 @@ from package.views.custom_widgets import (
 def check_judicial_officer(func):
     def wrapper(self):
         if self.judicial_officer is None:
-            message = RequiredBox("You must select a judicial officer.")
-            message.exec()
+            RequiredBox("You must select a judicial officer.").exec()
         else:
             func(self)
 
@@ -25,11 +24,10 @@ def check_case_list_selected(func):
         if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
             func(self)
         else:
-            message = RequiredBox(
+            RequiredBox(
                 "You must select a case list to load. If loading a "
                 "blank template choose any case list and leave dropdown menu blank."
-            )
-            message.exec()
+            ).exec()
 
     return wrapper
 
