@@ -112,10 +112,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
             "community_control_not_within_500_feet_checkBox",
             "community_control_not_within_500_feet_person_box",
         ),
-        (
-            "community_control_no_contact_checkBox",
-            "community_control_no_contact_with_box",
-        ),
+        ("community_control_no_contact_checkBox", "community_control_no_contact_with_box"),
         ("house_arrest_checkBox", "house_arrest_time_box"),
         (
             "community_control_community_service_checkBox",
