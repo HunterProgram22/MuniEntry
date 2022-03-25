@@ -25,3 +25,7 @@ exclude = '''
   | tests/data
   | profiling
 )/'''
+
+#[pytest]
+#filterwarnings =
+#    ignore: .*U.*mode is deprecated:DeprecationWarning

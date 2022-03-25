@@ -1,10 +1,7 @@
 import pytest
-import os
-import sys
-import inspect
-from PyQt5.QtSql import QSqlDatabase
-from pytestqt.plugin import QtBot
-from PyQt5 import QtCore
+
+
+
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
