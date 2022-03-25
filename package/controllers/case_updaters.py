@@ -250,7 +250,6 @@ class GridModelUpdater:
         self.grid = view.charges_gridLayout
         self.model = model
 
-    @logger.catch
     def update_model_with_plea_finding_grid_data(self):
         """This method updates any changes to the statute and degree that were made in the grid and
         adds the plea that is entered for each charge."""
@@ -264,8 +263,9 @@ class GridModelUpdater:
             if self.grid.itemAtPosition(self.row_plea, col).widget().currentText() == "Dismissed":
                 charge.finding = ""
             else:
-                charge.finding = self.grid.itemAtPosition(self.row_finding,
-                                                          col).widget().currentText()
+                charge.finding = (
+                    self.grid.itemAtPosition(self.row_finding, col).widget().currentText()
+                )
             col += 1
 
 
@@ -298,28 +298,30 @@ class FineOnlyGridModelUpdater(GridModelUpdater):
             while self.grid.itemAtPosition(self.row_offense, col) is None:
                 col += 1
             if self.grid.itemAtPosition(self.row_plea, col).widget().currentText() == "Dismissed":
-                charge.fines_amount = " " # A space is used here b/c otherwise puts 0
-                charge.fines_suspended = " " # A space is used here b/c otherwise puts 0
+                charge.fines_amount = " "  # A space is used here b/c otherwise puts 0
+                charge.fines_suspended = " "  # A space is used here b/c otherwise puts 0
             else:
-                if self.grid.itemAtPosition(self.row_fine, col).widget().text() == "":
-                    charge.fines_amount = 0
-                    charge.fines_amount = f"$ {charge.fines_amount}"
-                else:
-                    charge.fines_amount = (
-                        self.grid.itemAtPosition(
-                            self.row_fine, col).widget().text()
-                    )
-                    charge.fines_amount = f"$ {charge.fines_amount}"
-                if self.grid.itemAtPosition(self.row_fine_suspended, col).widget().text() == "":
-                    charge.fines_suspended = 0
-                    charge.fines_suspended = f"$ {charge.fines_suspended}"
-                else:
-                    charge.fines_suspended = (
-                        self.grid.itemAtPosition(
-                            self.row_fine_suspended, col).widget().text()
-                    )
-                    charge.fines_suspended = f"$ {charge.fines_suspended}"
+                self.update_model_with_fines(charge, col)
+                self.update_model_with_fines_suspended(charge, col)
             col += 1
+
+    def update_model_with_fines(self, charge, col):
+        if self.grid.itemAtPosition(self.row_fine, col).widget().text() == "":
+            charge.fines_amount = 0
+            charge.fines_amount = f"$ {charge.fines_amount}"
+        else:
+            charge.fines_amount = self.grid.itemAtPosition(self.row_fine, col).widget().text()
+            charge.fines_amount = f"$ {charge.fines_amount}"
+
+    def update_model_with_fines_suspended(self, charge, col):
+        if self.grid.itemAtPosition(self.row_fine_suspended, col).widget().text() == "":
+            charge.fines_suspended = 0
+            charge.fines_suspended = f"$ {charge.fines_suspended}"
+        else:
+            charge.fines_suspended = (
+                self.grid.itemAtPosition(self.row_fine_suspended, col).widget().text()
+            )
+            charge.fines_suspended = f"$ {charge.fines_suspended}"
 
 
 class JailCCGridModelUpdater(FineOnlyGridModelUpdater):
@@ -339,25 +341,30 @@ class JailCCGridModelUpdater(FineOnlyGridModelUpdater):
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
                 col += 1
-            if self.grid.itemAtPosition(
-                    self.row_plea, col).widget().currentText() == "Dismissed":
-                charge.jail_days = " " # A space is used here b/c otherwise puts None
-                charge.jail_days_suspended = " " # A space is used here b/c otherwise puts None
+            if self.grid.itemAtPosition(self.row_plea, col).widget().currentText() == "Dismissed":
+                charge.jail_days = " "  # A space is used here b/c otherwise puts None
+                charge.jail_days_suspended = " "  # A space is used here b/c otherwise puts None
             else:
-                if self.grid.itemAtPosition(self.row_jail_days, col).widget().text() == "":
-                    charge.jail_days = "None"
-                else:
-                    charge.jail_days = self.grid.itemAtPosition(self.row_jail_days, col).widget().text()
-                if self.grid.itemAtPosition(self.row_jail_days_suspended, col).widget().text() == "":
-                    charge.jail_days_suspended = "None"
-                else:
-                    charge.jail_days_suspended = self.grid.itemAtPosition(
-                        self.row_jail_days_suspended, col).widget().text()
+                self.update_model_with_jail_imposed(charge, col)
+                self.update_model_with_jail_suspended(charge, col)
             col += 1
+
+    def update_model_with_jail_imposed(self, charge, col):
+        if self.grid.itemAtPosition(self.row_jail_days, col).widget().text() == "":
+            charge.jail_days = "None"
+        else:
+            charge.jail_days = self.grid.itemAtPosition(self.row_jail_days, col).widget().text()
+
+    def update_model_with_jail_suspended(self, charge, col):
+        if self.grid.itemAtPosition(self.row_jail_days_suspended, col).widget().text() == "":
+            charge.jail_days_suspended = "None"
+        else:
+            charge.jail_days_suspended = (
+                self.grid.itemAtPosition(self.row_jail_days_suspended, col).widget().text()
+            )
 
 
 class DiversionGridModelUpdater(JailCCGridModelUpdater):
-
     def __init__(self, view, model):
         """The call to super init of DiversionGridModelUpdater calls the updates
         to plea and findings and jail of JailCCGridModelUpdater."""
