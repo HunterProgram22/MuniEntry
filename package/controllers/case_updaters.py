@@ -2,7 +2,6 @@
 Each main dialog class has a subclass that governs what
 is updated for the main class. The classes take the data from the view (GUI) and transfer
 it to the appropriate model object."""
-from loguru import logger
 from PyQt5.QtWidgets import (
     QDialog,
     QComboBox,
