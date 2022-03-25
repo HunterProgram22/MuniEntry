@@ -19,8 +19,7 @@ from package.controllers.main_entry_dialogs import DiversionPleaDialog, JailCCPl
 
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
-    return daily_case_list_database_connection
+    return QSqlDatabase.database("con_daily_case_lists", open=True)
 
 
 daily_case_list_database = open_daily_case_list_db_connection()
