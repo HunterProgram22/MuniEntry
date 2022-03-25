@@ -7,8 +7,8 @@ from package.controllers.base_dialogs import BaseDialog
 from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
 from package.controllers.case_updaters import JailCCDialogCaseModelUpdater, \
     FineOnlyDialogCaseModelUpdater, NotGuiltyBondDialogCaseModelUpdater, \
-    DiversionDialogCaseModelUpdater, NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
-    NotGuiltyPleaAdder
+    DiversionDialogCaseModelUpdater, FineOnlyGridModelUpdater, JailAddPleaFindingsFinesJail, \
+    NotGuiltyGridModelUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.signal_connectors import DiversionDialogSignalConnector, JailCCDialogSignalConnector, \
     FineOnlyDialogSignalConnector, NotGuiltyBondDialogSignalConnector
@@ -47,9 +47,6 @@ class CriminalBaseDialog(BaseDialog):
         self.criminal_charge = None
 
     def load_cms_data_to_view(self):
-        raise NotImplementedError
-
-    def add_plea_to_entry_case_information(self):
         raise NotImplementedError
 
     def update_entry_case_information(self):
@@ -169,9 +166,6 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def update_entry_case_information(self):
         return FineOnlyDialogCaseModelUpdater(self)
-
-    def add_plea_to_entry_case_information(self):
-        return NoJailPleaFindingFines.add(self)
 
     def perform_info_checks(self):
         self.dialog_checks = FineOnlyDialogInfoChecker(self)

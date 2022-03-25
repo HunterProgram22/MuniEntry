@@ -208,7 +208,7 @@ class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()
-        self.view.add_plea_to_entry_case_information()
+        self.update_model_with_charge_grid_data()
         self.update_costs_and_fines_information()
         self.update_jail_time_credit_for_fines()
         self.calculate_costs_and_fines()
@@ -217,22 +217,25 @@ class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
         self.model.fines_and_costs_jail_credit = self.view.credit_for_jail_checkBox.isChecked()
         self.model.days_in_jail = self.view.jail_time_credit_box.text()
 
+    def update_model_with_charge_grid_data(self):
+        return FineOnlyGridModelUpdater(self.view, self.model)
+
 
 class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()
-        self.add_plea_to_model()
+        self.update_model_with_charge_grid_data()
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
         self.transfer_view_data_to_model(self.model.bond_conditions)
 
-    def add_plea_to_model(self):
-        return NotGuiltyPleaAdder(self.view, self.model)
+    def update_model_with_charge_grid_data(self):
+        return NotGuiltyGridModelUpdater(self.view, self.model)
 
 
-class PleaAdder:
+class GridModelUpdater:
     row_offense = 0
     row_statute = 1
     row_degree = 2
@@ -242,7 +245,7 @@ class PleaAdder:
         self.model = model
 
     @logger.catch
-    def update_and_add_plea(self):
+    def update_model_with_plea_grid_data(self):
         """This method updates any changes to the statute and degree that were made in the grid and
         adds the plea that is entered for each charge."""
         col = 1
@@ -255,15 +258,15 @@ class PleaAdder:
             col += 1
 
 
-class NotGuiltyPleaAdder(PleaAdder):
+class NotGuiltyGridModelUpdater(GridModelUpdater):
     row_plea = 3
 
     def __init__(self, view, model):
         super().__init__(view, model)
-        self.update_and_add_plea()
+        self.update_model_with_plea_grid_data()
 
 
-class NoJailPleaFindingFines(PleaAdder):
+class FineOnlyGridModelUpdater(GridModelUpdater):
     row_offense = 0
     row_statute = 1
     row_degree = 2
@@ -276,18 +279,12 @@ class NoJailPleaFindingFines(PleaAdder):
     row_amend_button = 9
     row_delete_button = 10
 
-    def update_and_add_plea(self):
-        """This method updates any changes to the statute and degree that were made in the grid and
-        adds the plea that is entered for each charge."""
-        col = 1
-        for charge in self.model.charges_list:
-            while self.grid.itemAtPosition(self.row_offense, col) is None:
-                col += 1
-            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
-            charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
-            charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
+    def __init__(self, view, model):
+        super().__init__(view, model)
+        self.update_model_with_plea_grid_data()
+        self.update_model_with_fine_grid_data()
 
-    def update_and_add_fines(self):
+    def update_model_with_fine_grid_data(self):
         col = 1
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
@@ -298,21 +295,21 @@ class NoJailPleaFindingFines(PleaAdder):
                 charge.fines_suspended = " " # A space is used here b/c otherwise puts 0
             else:
                 charge.finding = self.grid.itemAtPosition(self.row_finding, col).widget().currentText()
-                if dialog.charges_gridLayout.itemAtPosition(self.row_fine, col).widget().text() == "":
+                if self.grid.itemAtPosition(self.row_fine, col).widget().text() == "":
                     charge.fines_amount = 0
                     charge.fines_amount = f"$ {charge.fines_amount}"
                 else:
                     charge.fines_amount = (
-                        dialog.charges_gridLayout.itemAtPosition(
+                        self.grid.itemAtPosition(
                             self.row_fine, col).widget().text()
                     )
                     charge.fines_amount = f"$ {charge.fines_amount}"
-                if dialog.charges_gridLayout.itemAtPosition(self.row_fine_suspended, col).widget().text() == "":
+                if self.grid.itemAtPosition(self.row_fine_suspended, col).widget().text() == "":
                     charge.fines_suspended = 0
                     charge.fines_suspended = f"$ {charge.fines_suspended}"
                 else:
                     charge.fines_suspended = (
-                        dialog.charges_gridLayout.itemAtPosition(
+                        self.grid.itemAtPosition(
                             self.row_fine_suspended, col).widget().text()
                     )
                     charge.fines_suspended = f"$ {charge.fines_suspended}"
