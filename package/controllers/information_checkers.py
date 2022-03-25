@@ -397,24 +397,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         else:
             return int(self.case_info.days_in_jail)
 
-    # def calculate_total_jail_days(self):
-    #     self.total_jail_days = 0
-    #     for charge in self.dialog.entry_case_information.charges_list:
-    #         try:
-    #             self.total_jail_days += int(charge.jail_days)
-    #         except ValueError:
-    #             pass
-    #     return self.total_jail_days
-    #
-    # def calculate_total_jail_days_suspended(self):
-    #     self.total_jail_days_suspended = 0
-    #     for charge in self.dialog.entry_case_information.charges_list:
-    #         try:
-    #             self.total_jail_days_suspended += int(charge.jail_days_suspended)
-    #         except ValueError:
-    #             pass
-    #     return self.total_jail_days_suspended
-
     def check_if_jail_days_suspended_greater_than_jail_imposed(self):
         if self.case_info.total_jail_days_suspended > self.case_info.total_jail_days_imposed:
             message = RequiredBox(
