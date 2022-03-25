@@ -255,11 +255,7 @@ class NotGuiltyPleaAdder(PleaAdder):
         adds the plea that is entered for each charge."""
         col = 1
         for charge in self.model.charges_list:
-            print(self.grid.columnCount())
-            try:
-                if self.grid.itemAtPosition(self.row_offense, col) is None:
-                    col += 1
-            except AttributeError:
+            while self.grid.itemAtPosition(self.row_offense, col) is None:
                 col += 1
             charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
             charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
