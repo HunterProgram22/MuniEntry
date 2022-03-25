@@ -1,7 +1,7 @@
 import pytest
 from conftest import mouse_click
 from datetime import date, timedelta
-from package.controllers.plea_finding_controllers import NoJailPleaFindingFines
+from package.controllers.case_updaters import FineOnlyGridModelUpdater
 
 TODAY = date.today()
 
@@ -10,19 +10,19 @@ def add_offense_speeding_25(njp_dialog_nocase):
     """The numbers in itemAtPosition need to be changed when ui is updated."""
     njp_dialog_nocase.offense_choice_box.setCurrentText("Speeding > 25 mph")
     mouse_click(njp_dialog_nocase.add_charge_Button)
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2).widget().setCurrentText("Not Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2).widget().setCurrentText("Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2).widget().setText("50")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2).widget().setText("25")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2).widget().setCurrentText("Not Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2).widget().setText("50")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2).widget().setText("25")
 
 
 def add_offense_speeding_25_after_delete(njp_dialog_nocase):
     njp_dialog_nocase.offense_choice_box.setCurrentText("Speeding > 25 mph")
     mouse_click(njp_dialog_nocase.add_charge_Button)
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 6).widget().setCurrentText("Not Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 6).widget().setCurrentText("Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 6).widget().setText("50")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 6).widget().setText("25")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 6).widget().setCurrentText("Not Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 6).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 6).widget().setText("50")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 6).widget().setText("25")
 
 
 #TESTS
@@ -57,67 +57,67 @@ def test_add_offense(njp_dialog_nocase, qtbot):
     add_offense_speeding_25(njp_dialog_nocase)
     # dialog = NoJailPleaDialog()
     # qtbot.addWidget(dialog)
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 2).widget().text() == "Speeding > 25 mph"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2).widget().currentText() == "Not Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2).widget().text() == "50"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2).widget().text() == "25"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2).widget().text() == "25"
 
 
 def test_add_multiple_offenses(njp_dialog_nocase):
     add_offense_speeding_25(njp_dialog_nocase)
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 2).widget().text() == "Speeding > 25 mph"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2).widget().currentText() == "Not Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2).widget().text() == "50"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2).widget().text() == "25"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2).widget().text() == "25"
     # Second Charge
     njp_dialog_nocase.offense_choice_box.setCurrentText("Driving in Marked Lanes")
     mouse_click(njp_dialog_nocase.add_charge_Button)
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 4).widget().setCurrentText("Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 4).widget().setCurrentText("Guilty")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 4).widget().setText("75")
-    njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 4).widget().setText("0")
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 4).widget().text() == "Driving in Marked Lanes"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 4).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 4).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 4).widget().text() == "75"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 4).widget().text() == "0"
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 4).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 4).widget().setCurrentText("Guilty")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 4).widget().setText("75")
+    njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 4).widget().setText("0")
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 4).widget().text() == "Driving in Marked Lanes"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 4).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 4).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 4).widget().text() == "75"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 4).widget().text() == "0"
 
 
 def test_add_offense_and_delete_offense(njp_dialog_nocase):
     add_offense_speeding_25(njp_dialog_nocase)
-    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_delete_button, 2).widget())
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2) == None
+    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_delete_button, 2).widget())
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2) == None
 
 
 def test_add_two_delete_one_add_one_offense(njp_dialog_nocase):
     add_offense_speeding_25(njp_dialog_nocase)
     add_offense_speeding_25(njp_dialog_nocase)
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 2).widget().text() == "Speeding > 25 mph"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2).widget().currentText() == "Not Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2).widget().text() == "50"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2).widget().text() == "25"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 2).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2).widget().text() == "25"
     # Delete first offense and check
-    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_delete_button, 2).widget())
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 2) == None
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 2) == None
+    mouse_click(njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_delete_button, 2).widget())
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 2) == None
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 2) == None
     # Add third offense, but two total since one deleted.
     add_offense_speeding_25_after_delete(njp_dialog_nocase)
     # Third added check
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_offense, 6).widget().text() == "Speeding > 25 mph"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_plea, 6).widget().currentText() == "Not Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_finding, 6).widget().currentText() == "Guilty"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine, 6).widget().text() == "50"
-    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(NoJailPleaFindingFines.row_fine_suspended, 6).widget().text() == "25"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_offense, 6).widget().text() == "Speeding > 25 mph"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_plea, 6).widget().currentText() == "Not Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_finding, 6).widget().currentText() == "Guilty"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine, 6).widget().text() == "50"
+    assert njp_dialog_nocase.charges_gridLayout.itemAtPosition(FineOnlyGridModelUpdater.row_fine_suspended, 6).widget().text() == "25"
 
 
 @pytest.mark.xfail

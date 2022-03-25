@@ -5,11 +5,10 @@ from PyQt5.QtSql import QSqlQuery
 from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
 from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
-from package.controllers.case_updaters import JailCCDialogCaseUpdater, \
-    FineOnlyDialogCaseUpdater, NotGuiltyBondDialogCaseUpdater, DiversionDialogCaseUpdater
+from package.controllers.case_updaters import JailCCDialogCaseModelUpdater, \
+    FineOnlyDialogCaseModelUpdater, NotGuiltyBondDialogCaseModelUpdater, \
+    DiversionDialogCaseModelUpdater
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
-from package.controllers.plea_finding_controllers import NoJailPleaFindingFines, JailAddPleaFindingsFinesJail, \
-    NotGuiltyAddPlea
 from package.controllers.signal_connectors import DiversionDialogSignalConnector, JailCCDialogSignalConnector, \
     FineOnlyDialogSignalConnector, NotGuiltyBondDialogSignalConnector
 from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
@@ -47,9 +46,6 @@ class CriminalBaseDialog(BaseDialog):
         self.criminal_charge = None
 
     def load_cms_data_to_view(self):
-        raise NotImplementedError
-
-    def add_plea_to_entry_case_information(self):
         raise NotImplementedError
 
     def update_entry_case_information(self):
@@ -91,10 +87,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return DiversionDialogCaseUpdater(self)
-
-    def add_plea_to_entry_case_information(self):
-        return JailAddPleaFindingsFinesJail.add(self)
+        return DiversionDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = DiversionDialogInfoChecker(self)
@@ -133,10 +126,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return JailCCDialogCaseUpdater(self)
-
-    def add_plea_to_entry_case_information(self):
-        return JailAddPleaFindingsFinesJail.add(self)
+        return JailCCDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = JailCCPleaDialogInfoChecker(self)
@@ -168,10 +158,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return FineOnlyDialogCaseUpdater(self)
-
-    def add_plea_to_entry_case_information(self):
-        return NoJailPleaFindingFines.add(self)
+        return FineOnlyDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = FineOnlyDialogInfoChecker(self)
@@ -212,14 +199,12 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return CmsLoader(self)
 
     def update_entry_case_information(self):
-        return NotGuiltyBondDialogCaseUpdater(self)
+        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
+        return NotGuiltyBondDialogCaseModelUpdater(self)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
         self.defense_counsel_name_box.setFocus()
-
-    def add_plea_to_entry_case_information(self):
-        return NotGuiltyAddPlea.add(self)
 
     def perform_info_checks(self):
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
