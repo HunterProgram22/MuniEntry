@@ -50,8 +50,8 @@ class Window(QMainWindow, Ui_MainWindow):
             self.kimbler_radioButton: JudicialOfficer("James", "Kimbler", "Judge"),
         }
         self.dialog_dict = {
-            self.NoJailPleaButton: FineOnlyPleaDialog,
-            self.JailCCButton: JailCCPleaDialog,
+            self.FineOnlyPleaButton: FineOnlyPleaDialog,
+            self.JailCCPleaButton: JailCCPleaDialog,
             self.DiversionButton: DiversionPleaDialog,
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
             self.FailureToAppearButton: FailureToAppearDialog,
