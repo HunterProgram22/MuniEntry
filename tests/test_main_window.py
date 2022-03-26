@@ -4,8 +4,10 @@ import inspect
 
 import pytest
 from pytestqt.plugin import QtBot
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtSql import QSqlDatabase
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtCore import QTimer
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -38,14 +40,29 @@ def main_window(qtbot):
     daily_case_list_database = open_daily_case_list_db_connection()
     window = Window(daily_case_list_database)
     qtbot.addWidget(window)
+    # window.show()
+    # qtbot.waitExposed(window)
     return window
 
 
 def test_window_opens(qtbot, main_window):
+    main_window.show()
     assert main_window.windowTitle() == "MuniEntry - ver 0.15.2"
 
-def test_judicial_officer_required_warning(qtbot, monkeypatch, main_window):
-    #mouse_click(main_window.JailCCButton)
-    message = RequiredBox("test")
-    qtbot.addWidget(message)
-    assert message.windowTitle() == "Required"
+def test_judicial_officer_required_warning(qtbot, main_window):
+    mouse_click(main_window.JailCCButton)
+    # assert main_window.windowTitle() == "Required"
+#
+def test_fine_only_dialog_no_case_open(qtbot, main_window):
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.NoJailPleaButton)
+#     qtbot.waitUntil(main_window.FineOnlyPleaDialog.isVisible)
+#     assert main_window.FineOnlyPleaDialog.windowTitle() == "Fine Only Plea Case Information"
+#
+# # def test_main_window(qtbot):
+#     widget = MainWindow()
+#     qtbot.addWidget(widget)
+#     qtbot.mouseClick(widget.about_button, QtCore.Qt.LeftButton)
+#     qtbot.waitUntil(widget.about_box.isVisible)
+#     assert widget.about_box.text() == 'This is a GUI App'
