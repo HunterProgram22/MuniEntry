@@ -368,3 +368,13 @@ class DiversionGridModelUpdater(JailCCGridModelUpdater):
         """The call to super init of DiversionGridModelUpdater calls the updates
         to plea and findings and jail of JailCCGridModelUpdater."""
         super().__init__(view, model)
+
+
+class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_bond_conditions()
+
+    def update_bond_conditions(self):
+        self.transfer_view_data_to_model(self.model.bond_conditions)

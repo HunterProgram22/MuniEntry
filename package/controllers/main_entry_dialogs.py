@@ -10,6 +10,7 @@ from package.controllers.case_updaters import (
     FineOnlyDialogCaseModelUpdater,
     NotGuiltyBondDialogCaseModelUpdater,
     DiversionDialogCaseModelUpdater,
+    ProbationViolationBondDialogCaseModelUpdater,
 )
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.signal_connectors import (
@@ -54,6 +55,7 @@ from package.controllers.information_checkers import (
     NotGuiltyBondDialogInfoChecker,
     DiversionDialogInfoChecker,
     JailCCPleaDialogInfoChecker,
+    ProbationViolationBondDialogInfoChecker,
 )
 
 
@@ -263,12 +265,10 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
-        pass
-    #     return ProbationViolationBondDialogCaseUpdater(self)
+        return ProbationViolationBondDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
-        pass
-    #     self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
+        self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
 
 
 class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):

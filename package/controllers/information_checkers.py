@@ -163,6 +163,31 @@ class BaseInfoChecker(object):
                 message.exec()
                 return "Fail"
 
+    def check_if_no_bond_amount(self):
+        if (
+            self.view.bond_type_box.currentText() != "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() == "None (OR Bond)"
+        ):
+            message = (
+                "A bond type requiring a bond amount was selected, but a bond amount was "
+                "not selected. \n\nPlease specify the bond amount."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
+    def check_if_improper_bond_type(self):
+        if (
+            self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() != "None (OR Bond)"
+        ):
+            message = (
+                "A Recognizance (OR) Bond was selected but a bond amount other than "
+                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
+                "or Cash or Surety, or set bond amount to None (OR Bond)."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
@@ -203,31 +228,6 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
             "check_domestic_violence_bond_condition",
         ]
         self.check_status = self.perform_check_list()
-
-    def check_if_no_bond_amount(self):
-        if (
-            self.view.bond_type_box.currentText() != "Recognizance (OR) Bond"
-            and self.view.bond_amount_box.currentText() == "None (OR Bond)"
-        ):
-            message = (
-                "A bond type requiring a bond amount was selected, but a bond amount was "
-                "not selected. \n\nPlease specify the bond amount."
-            )
-            RequiredBox(message).exec()
-            return "Fail"
-
-    def check_if_improper_bond_type(self):
-        if (
-            self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
-            and self.view.bond_amount_box.currentText() != "None (OR Bond)"
-        ):
-            message = (
-                "A Recognizance (OR) Bond was selected but a bond amount other than "
-                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
-                "or Cash or Surety, or set bond amount to None (OR Bond)."
-            )
-            RequiredBox(message).exec()
-            return "Fail"
 
     def check_domestic_violence_bond_condition(self):
         dv_bond_conditions_list = [
@@ -476,3 +476,15 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
             message.exec()
             return "Fail"
+
+
+class ProbationViolationBondDialogInfoChecker(BaseInfoChecker):
+
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_bond_amount",
+            "check_if_improper_bond_type",
+        ]
+        self.check_status = self.perform_check_list()
