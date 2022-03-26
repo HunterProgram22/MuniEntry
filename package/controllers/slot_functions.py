@@ -452,6 +452,17 @@ class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.jail_report_date_note_label.setHidden(True)
 
 
+class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def hide_bond_conditions(self):
+        if self.dialog.bond_type_box.currentText() == "No Bond":
+            self.dialog.bond_conditions_frame.setHidden(True)
+        else:
+            self.dialog.bond_conditions_frame.setHidden(False)
+
+
 class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

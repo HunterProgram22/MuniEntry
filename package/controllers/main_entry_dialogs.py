@@ -5,21 +5,42 @@ from PyQt5.QtSql import QSqlQuery
 from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
 from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
-from package.controllers.case_updaters import JailCCDialogCaseModelUpdater, \
-    FineOnlyDialogCaseModelUpdater, NotGuiltyBondDialogCaseModelUpdater, \
-    DiversionDialogCaseModelUpdater
+from package.controllers.case_updaters import (
+    JailCCDialogCaseModelUpdater,
+    FineOnlyDialogCaseModelUpdater,
+    NotGuiltyBondDialogCaseModelUpdater,
+    DiversionDialogCaseModelUpdater,
+)
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
-from package.controllers.signal_connectors import DiversionDialogSignalConnector, JailCCDialogSignalConnector, \
-    FineOnlyDialogSignalConnector, NotGuiltyBondDialogSignalConnector
-from package.controllers.slot_functions import DiversionDialogSlotFunctions, JailCCDialogSlotFunctions, \
-    FineOnlyDialogSlotFunctions, NotGuiltyBondDialogSlotFunctions
-from package.controllers.view_modifiers import DiversionDialogViewModifier, JailCCDialogViewModifier, \
-    FineOnlyDialogViewModifier, NotGuiltyBondDialogViewModifier, ProbationViolationBondDialogViewModifier, \
-    FailureToAppearDialogViewModifier
+from package.controllers.signal_connectors import (
+    DiversionDialogSignalConnector,
+    JailCCDialogSignalConnector,
+    FineOnlyDialogSignalConnector,
+    NotGuiltyBondDialogSignalConnector,
+)
+from package.controllers.slot_functions import (
+    DiversionDialogSlotFunctions,
+    JailCCDialogSlotFunctions,
+    FineOnlyDialogSlotFunctions,
+    NotGuiltyBondDialogSlotFunctions,
+    ProbationViolationBondDialogSlotFunctions,
+)
+from package.controllers.view_modifiers import (
+    DiversionDialogViewModifier,
+    JailCCDialogViewModifier,
+    FineOnlyDialogViewModifier,
+    NotGuiltyBondDialogViewModifier,
+    ProbationViolationBondDialogViewModifier,
+    FailureToAppearDialogViewModifier,
+)
 from package.models.case_information import BondConditions, CriminalCaseInformation
 from package.models.template_types import TEMPLATE_DICT
-from package.controllers.charges_grids import JailChargesGrid, NoJailChargesGrid, NotGuiltyPleaGrid, \
-    DiversionChargesGrid
+from package.controllers.charges_grids import (
+    JailChargesGrid,
+    NoJailChargesGrid,
+    NotGuiltyPleaGrid,
+    DiversionChargesGrid,
+)
 from package.views.custom_widgets import DefenseCounselComboBox, NoScrollComboBox
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
@@ -27,8 +48,12 @@ from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
-from package.controllers.information_checkers import FineOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker, \
-    DiversionDialogInfoChecker, JailCCPleaDialogInfoChecker
+from package.controllers.information_checkers import (
+    FineOnlyDialogInfoChecker,
+    NotGuiltyBondDialogInfoChecker,
+    DiversionDialogInfoChecker,
+    JailCCPleaDialogInfoChecker,
+)
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -67,7 +92,7 @@ class CriminalBaseDialog(BaseDialog):
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Diversion Plea Dialog'
+        self.dialog_name = "Diversion Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
 
@@ -107,10 +132,10 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
             ("impoundment_checkBox", self.entry_case_information.impoundment),
             ("victim_notification_checkBox", self.entry_case_information.victim_notification),
         ]
-        self.dialog_name = 'Jail CC Plea Dialog'
+        self.dialog_name = "Jail CC Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        if self.case_table == 'slated':
-            self.in_jail_box.setCurrentText('Yes')
+        if self.case_table == "slated":
+            self.in_jail_box.setCurrentText("Yes")
 
     def modify_view(self):
         return JailCCDialogViewModifier(self)
@@ -140,7 +165,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
             ("community_service_checkBox", self.entry_case_information.community_service),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
         ]
-        self.dialog_name = 'Fine Only Plea Dialog'
+        self.dialog_name = "Fine Only Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self):
@@ -173,8 +198,14 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
         self.additional_conditions_list = [
-            ("admin_license_suspension_checkBox", self.entry_case_information.admin_license_suspension),
-            ("domestic_violence_checkBox", self.entry_case_information.domestic_violence_conditions),
+            (
+                "admin_license_suspension_checkBox",
+                self.entry_case_information.admin_license_suspension,
+            ),
+            (
+                "domestic_violence_checkBox",
+                self.entry_case_information.domestic_violence_conditions,
+            ),
             ("no_contact_checkBox", self.entry_case_information.no_contact),
             ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
             ("other_conditions_checkBox", self.entry_case_information.other_conditions),
@@ -221,25 +252,27 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         return ProbationViolationBondDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        pass
-    #     self.functions = ProbationViolationBondDialogSlotFunctions(self)
-    #     self.functions.hide_boxes()
+        self.functions = ProbationViolationBondDialogSlotFunctions(self)
+        self.functions.hide_bond_conditions()
 
     def connect_signals_to_slots(self):
         pass
+
     #     return ProbationViolationBondDialogSignalConnector(self)
     #
     def load_cms_data_to_view(self):
         pass
+
     #     return CmsLoader(self)
     #
     def update_entry_case_information(self):
         pass
-    #     return ProbationViolationBondDialogCaseUpdater(self)
 
+    #     return ProbationViolationBondDialogCaseUpdater(self)
 
     def perform_info_checks(self):
         pass
+
     #     self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
 
 
@@ -276,6 +309,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
     def perform_info_checks(self):
         pass
+
     #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
 
 

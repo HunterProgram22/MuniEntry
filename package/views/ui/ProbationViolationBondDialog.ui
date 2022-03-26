@@ -376,6 +376,11 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
+                 <string>preliminary probation violation hearing</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>arraignment</string>
                 </property>
                </item>
@@ -438,7 +443,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="0" colspan="2">
-           <widget class="QFrame" name="frame_7">
+           <widget class="QFrame" name="bond_conditions_frame">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
             </property>
@@ -632,6 +637,11 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
+                 <string>None (No Bond)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>None (OR Bond)</string>
                 </property>
                </item>
@@ -682,6 +692,11 @@ font-weight: bold;</string>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>No Bond</string>
+                </property>
+               </item>
                <item>
                 <property name="text">
                  <string>Recognizance (OR) Bond</string>
