@@ -4,7 +4,7 @@ from PyQt5.QtSql import QSqlQuery
 
 from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
-from package.controllers.cms_case_loaders import CmsLoader, CmsFraLoader
+from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.controllers.case_updaters import (
     JailCCDialogCaseModelUpdater,
     FineOnlyDialogCaseModelUpdater,
@@ -228,7 +228,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
-        return CmsLoader(self)
+        return CmsChargeLoader(self)
 
     def update_entry_case_information(self):
         """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
@@ -260,8 +260,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         return ProbationViolationBondDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
-        pass
-    #     return CmsLoader(self)
+        return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
         pass
