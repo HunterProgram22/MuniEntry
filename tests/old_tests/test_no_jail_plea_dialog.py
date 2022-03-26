@@ -1,5 +1,5 @@
 import pytest
-from conftest import mouse_click
+from tests.old_tests.conftest import mouse_click
 from datetime import date, timedelta
 from package.controllers.case_updaters import FineOnlyGridModelUpdater
 

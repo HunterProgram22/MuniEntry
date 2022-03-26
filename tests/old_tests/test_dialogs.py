@@ -1,5 +1,5 @@
 import pytest
-from conftest import mouse_click, enter_data
+from tests.old_tests.conftest import mouse_click, enter_data
 
 
 dialog_all_title_list = [
