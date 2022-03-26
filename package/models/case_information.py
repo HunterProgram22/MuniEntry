@@ -380,6 +380,9 @@ class CriminalCaseInformation:
     total_jail_days_imposed: int = None
     total_jail_days_suspended: int = None
     total_jail_days_to_serve: int = None
+
+    cc_violation_probable_cause: str = None
+
     court_costs: object = field(default_factory=CourtCosts)
     diversion: object = field(default_factory=Diversion)
     community_control: object = field(default_factory=CommunityControl)

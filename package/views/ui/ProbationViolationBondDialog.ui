@@ -182,6 +182,131 @@ font-weight: bold;</string>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
+          <item row="3" column="0">
+           <widget class="QFrame" name="bond_conditions_frame">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="monitoring_checkBox">
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="text">
+                <string>Monitoring (GPS/Scram/Smart Start):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QComboBox" name="monitoring_type_box">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>SCRAM Only</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>GPS Only</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Smart Start Only</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>GPS and SCRAM</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>GPS and Smart Start</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>SCRAM and Smart Start</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>GPS, SCRAM and Smart Start</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
+               <property name="text">
+                <string> No alcohol/drugs of abuse.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="label_7">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>Bond Conditions</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
+               <property name="text">
+                <string> Alcohol Kiosk testing.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QCheckBox" name="comply_protection_order_checkBox">
+               <property name="text">
+                <string> Comply with Terms of Protection Order</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox">
+               <property name="text">
+                <string>Other Conditions</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1" colspan="2">
+              <widget class="QLineEdit" name="lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QFrame" name="case_name_Frame">
             <property name="sizePolicy">
@@ -366,7 +491,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="2" column="1" colspan="2">
               <widget class="QComboBox" name="appearance_reason_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -392,75 +517,6 @@ background-color: rgb(255, 255, 255);</string>
                <item>
                 <property name="text">
                  <string>warrant for failure to appear</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QFrame" name="frame">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(235, 235, 235);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Probable Cause for Community Control Violation:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
-              <widget class="QLabel" name="label_10">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>Probable Cause Finding</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Court finds probable cause</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Defendant waives probable cause finding</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>No probable cause</string>
                 </property>
                </item>
               </widget>
@@ -613,10 +669,10 @@ background-color: rgb(255, 255, 255);</string>
             </layout>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QFrame" name="bond_conditions_frame">
+          <item row="1" column="0">
+           <widget class="QFrame" name="frame">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
+             <string notr="true">background-color: rgb(235, 235, 235);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>
@@ -624,78 +680,16 @@ background-color: rgb(255, 255, 255);</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6">
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="monitoring_checkBox">
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
+            <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,0">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>Monitoring (GPS/Scram/Smart Start):</string>
+                <string>Probable Cause for Community Control Violation:</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
-               <property name="text">
-                <string> Obtain alcohol/drug assessment. </string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QComboBox" name="monitoring_type_box">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>SCRAM Only</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS Only</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Smart Start Only</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS and SCRAM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SCRAM and Smart Start</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>GPS, SCRAM and Smart Start</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QCheckBox" name="specialized_docket_checkBox">
-               <property name="text">
-                <string>Screen for Specialized Dockets:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="label_7">
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_10">
                <property name="font">
                 <font>
                  <family>Palatino Linotype</family>
@@ -707,64 +701,38 @@ background-color: rgb(255, 255, 255);</string>
                 </font>
                </property>
                <property name="text">
-                <string>Bond Conditions</string>
+                <string>Probable Cause Finding</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
-             <item row="2" column="2">
-              <widget class="QComboBox" name="specialized_docket_type_box">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="probable_cause_finding_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
-                 <string>OVI Docket</string>
+                 <string/>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Mission (Veteran's) Court</string>
+                 <string>Court finds probable cause</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Mental Health Docket</string>
+                 <string>Defendant waives probable cause finding</string>
                 </property>
                </item>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
-               <property name="text">
-                <string> Alcohol Kiosk testing.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
-               <property name="text">
-                <string> No alcohol/drugs of abuse.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="mental_health_assessment_checkBox">
-               <property name="text">
-                <string> Obtain mental health assessment.</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QCheckBox" name="comply_protection_order_checkBox">
-               <property name="text">
-                <string> Comply with Terms of Protection Order</string>
-               </property>
+               <item>
+                <property name="text">
+                 <string>No probable cause</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -831,11 +799,8 @@ font-weight: bold;</string>
   <tabstop>defense_counsel_waived_checkBox</tabstop>
   <tabstop>bond_type_box</tabstop>
   <tabstop>bond_amount_box</tabstop>
-  <tabstop>alcohol_drugs_assessment_checkBox</tabstop>
   <tabstop>monitoring_checkBox</tabstop>
   <tabstop>monitoring_type_box</tabstop>
-  <tabstop>specialized_docket_checkBox</tabstop>
-  <tabstop>specialized_docket_type_box</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

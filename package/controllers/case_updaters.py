@@ -240,6 +240,20 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
         return NotGuiltyGridModelUpdater(self.view, self.model)
 
 
+class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_model_with_probable_cause_information()
+        self.update_bond_conditions()
+
+    def update_model_with_probable_cause_information(self):
+        self.model.cc_violation_probable_cause = self.view.probable_cause_finding_box.currentText()
+
+    def update_bond_conditions(self):
+        self.transfer_view_data_to_model(self.model.bond_conditions)
+
+
 class GridModelUpdater:
     row_offense = 0
     row_statute = 1
@@ -368,13 +382,3 @@ class DiversionGridModelUpdater(JailCCGridModelUpdater):
         """The call to super init of DiversionGridModelUpdater calls the updates
         to plea and findings and jail of JailCCGridModelUpdater."""
         super().__init__(view, model)
-
-
-class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.update_model_with_case_information_frame_data()
-        self.update_bond_conditions()
-
-    def update_bond_conditions(self):
-        self.transfer_view_data_to_model(self.model.bond_conditions)
