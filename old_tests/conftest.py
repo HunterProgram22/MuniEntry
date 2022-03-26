@@ -56,14 +56,6 @@ def ngb_dialog(app, qtbot):
 
 
 @pytest.fixture
-def ngb_dialog(app, qtbot):
-    mouse_click(app.NotGuiltyBondButton)
-    app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
-    qtbot.addWidget(app)
-    return app
-
-
-@pytest.fixture
 def ngb_dialog_nocase(app_nocase, qtbot):
     mouse_click(app_nocase.NotGuiltyBondButton)
     app_nocase = NotGuiltyBondDialog(app_nocase.judicial_officer, app_nocase.case_to_load)

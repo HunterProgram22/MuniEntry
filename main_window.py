@@ -147,5 +147,5 @@ class Window(QMainWindow, Ui_MainWindow):
             case_number = selected_case_list.currentText().split("- ")[1]
             self.case_to_load = \
                 CriminalCaseSQLRetriever(case_number, self.case_table, self.daily_case_list_database).load_case()
-        dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, self.case_table)
-        dialog.exec()
+        self.dialog = self.dialog_dict[self.sender()](self.judicial_officer, self.case_to_load, self.case_table)
+        self.dialog.exec()
