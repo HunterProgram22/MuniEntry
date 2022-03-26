@@ -291,16 +291,19 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="cc_violation_other_conditions_checkBox">
                <property name="text">
                 <string>Other Conditions</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1" colspan="2">
-              <widget class="QLineEdit" name="lineEdit">
+             <item row="4" column="0" colspan="3">
+              <widget class="QLineEdit" name="cc_violation_other_conditions_terms_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>Other Conditions</string>
                </property>
               </widget>
              </item>

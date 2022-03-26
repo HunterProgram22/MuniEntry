@@ -35,7 +35,11 @@ from package.controllers.view_modifiers import (
     ProbationViolationBondDialogViewModifier,
     FailureToAppearDialogViewModifier,
 )
-from package.models.case_information import BondConditions, CriminalCaseInformation
+from package.models.case_information import (
+    BondConditions,
+    CriminalCaseInformation,
+    CommunityControlViolationBondConditions,
+)
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
     JailChargesGrid,
@@ -249,7 +253,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Probation Violation Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.bond_conditions = BondConditions()
+        self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
 
     def modify_view(self):
         return ProbationViolationBondDialogViewModifier(self)

@@ -41,12 +41,12 @@ class AmendOffenseDetails:
 
 @dataclass
 class BondConditions:
-    """Conditions specific to an FTA Bond Dialog. They are an object
+    """Conditions specific to a Not Guilty Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
-    forfeit_bond: str = None
-    issue_warrant: str = None
-    forfeit_license: str = None
-    vehicle_registration_block: str = None
+    # forfeit_bond: str = None
+    # issue_warrant: str = None
+    # forfeit_license: str = None
+    # vehicle_registration_block: str = None
     bond_type: str = None
     bond_amount: str = None
     no_contact: bool = False
@@ -71,6 +71,31 @@ class BondConditions:
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
         ("comply_protection_order", "comply_protection_order_checkBox"),
+    ]
+
+@dataclass
+class CommunityControlViolationBondConditions:
+    """Conditions specific to a Community Control Violation Bond Dialog. They are an object
+    that is then part of CriminalCaseInformation."""
+    bond_type: str = None
+    bond_amount: str = None
+    no_alcohol_drugs: bool = False
+    alcohol_test_kiosk: bool = False
+    monitoring: bool = False
+    monitoring_type: str = None
+    comply_protection_order: bool = False
+    cc_violation_other_conditions_ordered: bool = False
+    cc_violation_other_conditions_terms: str = None
+    terms_list = [
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
+        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("monitoring", "monitoring_checkBox"),
+        ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
+        ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
+        ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
     ]
 
 
@@ -382,6 +407,7 @@ class CriminalCaseInformation:
     total_jail_days_to_serve: int = None
 
     cc_violation_probable_cause: str = None
+    cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
 
     court_costs: object = field(default_factory=CourtCosts)
     diversion: object = field(default_factory=Diversion)

@@ -251,7 +251,9 @@ class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
         self.model.cc_violation_probable_cause = self.view.probable_cause_finding_box.currentText()
 
     def update_bond_conditions(self):
-        self.transfer_view_data_to_model(self.model.bond_conditions)
+        """This uses a cc_bond_conditions instead of bond_conditions because a separate model
+        was created. TODO: Refactor models"""
+        self.transfer_view_data_to_model(self.model.cc_bond_conditions)
 
 
 class GridModelUpdater:
