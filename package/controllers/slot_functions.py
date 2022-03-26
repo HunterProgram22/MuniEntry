@@ -462,6 +462,10 @@ class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
         else:
             self.dialog.bond_conditions_frame.setHidden(False)
 
+    def set_if_no_bond(self, dialog):
+        if self.dialog.bond_type_box.currentText() == "No Bond":
+            self.dialog.bond_amount_box.setCurrentText("None (No Bond)")
+
 
 class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):

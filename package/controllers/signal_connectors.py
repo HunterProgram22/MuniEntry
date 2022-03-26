@@ -126,6 +126,7 @@ class ProbationViolationBondDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
         dialog.bond_type_box.currentTextChanged.connect(dialog.functions.hide_bond_conditions)
+        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.set_if_no_bond)
 
 
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
