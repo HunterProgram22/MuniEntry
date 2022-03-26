@@ -249,7 +249,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Probation Violation Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        # self.entry_case_information.bond_conditions = BondConditions()
+        self.entry_case_information.bond_conditions = BondConditions()
 
     def modify_view(self):
         return ProbationViolationBondDialogViewModifier(self)
