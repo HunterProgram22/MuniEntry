@@ -12,7 +12,6 @@ class BaseDialogSignalConnector:
         dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
         dialog.create_entry_Button.released.connect(dialog.functions.create_entry_process)
         dialog.close_dialog_Button.released.connect(dialog.functions.close_dialog)
-        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):
@@ -20,6 +19,7 @@ class BaseDialogSignalConnector:
         dialog.fra_in_court_box.currentTextChanged.connect(dialog.functions.set_fra_in_court)
 
     def connect_plea_all_button_signals(self, dialog):
+        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
         dialog.no_contest_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
 
@@ -119,6 +119,13 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
         dialog.vehicle_seizure_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
         dialog.monitoring_checkBox.toggled.connect(dialog.functions.set_field_enabled)
         dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+
+
+class ProbationViolationBondDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals(dialog)
+        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.hide_bond_conditions)
 
 
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):

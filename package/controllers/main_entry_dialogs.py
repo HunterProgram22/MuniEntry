@@ -17,6 +17,7 @@ from package.controllers.signal_connectors import (
     JailCCDialogSignalConnector,
     FineOnlyDialogSignalConnector,
     NotGuiltyBondDialogSignalConnector,
+    ProbationViolationBondDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -256,23 +257,18 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         self.functions.hide_bond_conditions()
 
     def connect_signals_to_slots(self):
-        pass
+        return ProbationViolationBondDialogSignalConnector(self)
 
-    #     return ProbationViolationBondDialogSignalConnector(self)
-    #
     def load_cms_data_to_view(self):
         pass
-
     #     return CmsLoader(self)
-    #
+
     def update_entry_case_information(self):
         pass
-
     #     return ProbationViolationBondDialogCaseUpdater(self)
 
     def perform_info_checks(self):
         pass
-
     #     self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
 
 
