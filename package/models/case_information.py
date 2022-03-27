@@ -177,12 +177,14 @@ class FailureToAppearConditions:
     proof_of_service: bool = False
     supplemental_summons: bool = False
     registration_block: bool = False
+    set_bond: bool = False
     bond_type: str = None
     bond_amount: str = None
     terms_list = [
         ("arrest_warrant", "arrest_warrant_checkBox"),
         ("arrest_warrant_radius", "arrest_warrant_radius_box"),
         ("set_no_trial", "set_no_trial_checkBox"),
+        ("set_bond", "set_bond_checkBox"),
         ("bond_forfeited", "bond_forfeited_checkBox"),
         ("forfeit_license", "operator_license_checkBox"),
         ("non_resident_license", "non_resident_license_checkBox"),

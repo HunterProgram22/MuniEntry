@@ -35,6 +35,7 @@ all_fta_checkbox_conditions_model_test_list = [
     ("supplemental_summons_checkBox", "supplemental_summons"),
     ("proof_of_service_checkBox", "proof_of_service"),
     ("registration_block_checkBox", "registration_block"),
+    ("set_bond_checkBox", "set_bond"),
 ]
 
 @pytest.mark.parametrize("checkBox, model", all_fta_checkbox_conditions_model_test_list)
