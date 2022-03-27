@@ -61,3 +61,21 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
     QTimer.singleShot(100, handle_dialog)
     mouse_click(getattr(main_window, test_input))
     assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
+
+
+main_window_all_daily_case_lists = [
+    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignment_cases_box"),
+    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
+    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box"),
+    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box"),
+    ("pcvh_radioButton", "Miller - 21TRD09812", "pcvh_cases_box"),
+]
+
+
+@pytest.mark.parametrize("case_list_button, case_number, case_list_box", main_window_all_daily_case_lists)
+def test_all_daily_cases_lists_load(qtbot, main_window, case_list_button, case_number, case_list_box):
+    mouse_click(main_window.kudela_radioButton)
+    mouse_click(getattr(main_window, case_list_button))
+    enter_data(getattr(main_window, case_list_box), case_number)
+    assert getattr(main_window, case_list_box).currentText() == case_number
