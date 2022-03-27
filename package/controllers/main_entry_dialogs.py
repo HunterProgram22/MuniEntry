@@ -26,6 +26,7 @@ from package.controllers.slot_functions import (
     FineOnlyDialogSlotFunctions,
     NotGuiltyBondDialogSlotFunctions,
     ProbationViolationBondDialogSlotFunctions,
+    FailureToAppearDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -286,16 +287,11 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         return FailureToAppearDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        pass
+        self.functions = FailureToAppearDialogSlotFunctions(self)
 
-    #     self.functions = FailureToAppearDialogSlotFunctions(self)
-    #     self.functions.hide_boxes()
-    #
     def connect_signals_to_slots(self):
-        pass
+        return FailureToAppearDialogSignalConnector(self)
 
-    #     return FailureToAppearDialogSignalConnector(self)
-    #
     def load_cms_data_to_view(self):
         pass
 
