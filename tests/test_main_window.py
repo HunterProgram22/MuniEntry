@@ -1,6 +1,6 @@
 import pytest
 from PyQt5.QtCore import QTimer
-from conftest import mouse_click
+from conftest import mouse_click, enter_data
 
 
 main_window_all_button_test_list = [
@@ -22,10 +22,32 @@ def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
+def test_daily_case_list_required_warning(qtbot, main_window):
+    mouse_click(main_window.bunner_radioButton)
+    mouse_click(main_window.FineOnlyPleaButton)
+
+
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
 def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
+
+    def handle_dialog():
+        while main_window.dialog is None:
+            qApp.processEvents()
+        qtbot.addWidget(main_window.dialog)
+        mouse_click(main_window.dialog.close_dialog_Button)
+
+    QTimer.singleShot(100, handle_dialog)
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.windowTitle() == dialog_title
+
+
+@pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
+def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Colon - 21TRD09386")
 
     def handle_dialog():
         while main_window.dialog is None:

@@ -2,16 +2,7 @@ import pytest
 from tests.old_tests.conftest import mouse_click, enter_data
 
 
-dialog_all_title_list = [
-    (pytest.lazy_fixture("njp_dialog"), "Fine Only Plea Case Information"),
-    (pytest.lazy_fixture("njp_dialog_nocase"), "Fine Only Plea Case Information"),
-    (pytest.lazy_fixture("jail_dialog"), "Jail Community Control Plea Case Information"),
-    (pytest.lazy_fixture("jail_dialog_nocase"), "Jail Community Control Plea Case Information"),
-    (pytest.lazy_fixture("ngb_dialog"), "Not Guilty Bond Case Information"),
-    (pytest.lazy_fixture("ngb_dialog_nocase"), "Not Guilty Bond Case Information"),
-    (pytest.lazy_fixture("diversion_dialog"), "Diversion Plea Case Information"),
-    (pytest.lazy_fixture("diversion_dialog_nocase"), "Diversion Plea Case Information"),
-]
+
 
 all_dialogs_nocase_list = [
     (pytest.lazy_fixture("njp_dialog_nocase")),
