@@ -21,12 +21,6 @@ def open_daily_case_list_db_connection():
 
 daily_case_list_database = open_daily_case_list_db_connection()
 
-def enter_data(field, data: str):
-    return QtBot.keyClicks(field, data)
-
-def mouse_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
-
 
 @pytest.fixture
 def app(qtbot):
