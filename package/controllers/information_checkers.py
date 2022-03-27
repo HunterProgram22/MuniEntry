@@ -488,3 +488,13 @@ class ProbationViolationBondDialogInfoChecker(BaseInfoChecker):
             "check_if_improper_bond_type",
         ]
         self.check_status = self.perform_check_list()
+
+
+class FailureToAppearDialogInfoChecker(BaseInfoChecker):
+
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+        ]
+        self.check_status = self.perform_check_list()

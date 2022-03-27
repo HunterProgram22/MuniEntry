@@ -38,6 +38,14 @@ from package.controllers.view_modifiers import (
     ProbationViolationBondDialogViewModifier,
     FailureToAppearDialogViewModifier,
 )
+from package.controllers.information_checkers import (
+    FineOnlyDialogInfoChecker,
+    NotGuiltyBondDialogInfoChecker,
+    DiversionDialogInfoChecker,
+    JailCCPleaDialogInfoChecker,
+    ProbationViolationBondDialogInfoChecker,
+    FailureToAppearDialogInfoChecker,
+)
 from package.models.case_information import (
     BondConditions,
     CriminalCaseInformation,
@@ -58,13 +66,6 @@ from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
-from package.controllers.information_checkers import (
-    FineOnlyDialogInfoChecker,
-    NotGuiltyBondDialogInfoChecker,
-    DiversionDialogInfoChecker,
-    JailCCPleaDialogInfoChecker,
-    ProbationViolationBondDialogInfoChecker,
-)
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -302,8 +303,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         return FailureToAppearDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
-        return "Pass"
-    #   self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+        self.dialog_checks = FailureToAppearDialogInfoChecker(self)
 
 
 if __name__ == "__main__":
