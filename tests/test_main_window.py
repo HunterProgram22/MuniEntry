@@ -69,7 +69,7 @@ main_window_all_daily_case_lists = [
     ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
     ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box"),
-    ("pcvh_radioButton", "Miller - 21TRD09812", "pcvh_cases_box"),
+    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
 ]
 
 

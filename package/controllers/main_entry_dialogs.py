@@ -294,10 +294,8 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         return FailureToAppearDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
-        pass
+        return CmsNoChargeLoader(self)
 
-    #     return CmsLoader(self)
-    #
     def update_entry_case_information(self):
         pass
 
