@@ -167,6 +167,28 @@ class CommunityService:
 
 
 @dataclass
+class FailureToAppearConditions:
+    arrest_warrant: bool = False
+    set_no_trial: bool = False
+    bond_forfeited: bool = False
+    forfeit_license: bool = False
+    non_resident_license: bool = False
+    proof_of_service: bool = False
+    supplemental_summons: bool = False
+    registration_block: bool = False
+    terms_list = [
+        ("arrest_warrant", "arrest_warrant_checkBox"),
+        ("set_not_trial", "set_no_trial_checkBox"),
+        ("bond_forfeited", "bond_forfeited_checkBox"),
+        ("forfeit_license", "operator_license_checkBox"),
+        ("non_resident_license", "non_resident_license_checkBox"),
+        ("proof_of_service", "proof_of_service_checkBox"),
+        ("supplemental_summons", "supplemental_summons_checkBox"),
+        ("registration_block", "registration_block_checkBox"),
+    ]
+
+
+@dataclass
 class CommunityControl:
     ordered: bool = False
     type_of_control: str = "basic"
@@ -408,6 +430,8 @@ class CriminalCaseInformation:
 
     cc_violation_probable_cause: str = None
     cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
+
+    fta_conditions: object = field(default_factory=FailureToAppearConditions)
 
     court_costs: object = field(default_factory=CourtCosts)
     diversion: object = field(default_factory=Diversion)
