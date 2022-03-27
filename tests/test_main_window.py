@@ -41,6 +41,7 @@ def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_t
     QTimer.singleShot(100, handle_dialog)
     mouse_click(getattr(main_window, test_input))
     assert main_window.dialog.windowTitle() == dialog_title
+    assert main_window.dialog.case_number_lineEdit.text() == ""
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
