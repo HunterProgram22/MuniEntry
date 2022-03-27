@@ -42,8 +42,8 @@ class Window(QMainWindow, Ui_MainWindow):
         """
         Dictionaries linking buttons on MainWindow to different objects.
 
-        :judicial_officer_dict: - used to connect a radio button to a judicial officer. If a judicial
-        officer is added to the view then add new judicial officer to dict (key:
+        :judicial_officer_dict: - used to connect a radio button to a judicial officer. If a
+        judicial officer is added to the view then add new judicial officer to dict (key:
         self.lastname_radioButton, value: "Lastname").The button will be connected to the slot for
         self.judicial_officer by the function connect_judicial_officer_buttons.
 
@@ -90,8 +90,8 @@ class Window(QMainWindow, Ui_MainWindow):
         }
 
     def set_daily_case_lists_type(self):
-        """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox class allows
-        for auto-completion filtering when typing in the box."""
+        """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox
+        class allows for auto-completion filtering when typing in the box."""
         self.arraignment_cases_box.__class__ = ExtendedComboBox
         self.slated_cases_box.__class__ = ExtendedComboBox
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
@@ -147,8 +147,8 @@ class Window(QMainWindow, Ui_MainWindow):
                 self.judicial_officer = value
 
     def load_case_lists(self):
-        """Loads the cms_case numbers of all the cases that are in the daily_case_list databases. This
-        does not load the cms_case data for each cms_case."""
+        """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
+        This does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(
             create_daily_cases_list("daily_case_lists.sqlite", "arraignments")
         )
