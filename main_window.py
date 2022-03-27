@@ -73,6 +73,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.final_pretrial_radioButton: "final_pretrials",
             self.pleas_radioButton: "pleas",
             self.trials_to_court_radioButton: "trials_to_court",
+            self.pcvh_fcvh_radioButton: "pcvh_fcvh",
         }
         self.database_table_dict = {
             "arraignments": self.arraignment_cases_box,
@@ -80,6 +81,7 @@ class Window(QMainWindow, Ui_MainWindow):
             "final_pretrials": self.final_pretrial_cases_box,
             "pleas": self.pleas_cases_box,
             "trials_to_court": self.trials_to_court_cases_box,
+            "pcvh_fcvh": self.pcvh_fcvh_cases_box,
         }
         self.button_state_dict = {
             self.arraignments_radioButton: self.arraignment_cases_box,
@@ -87,6 +89,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.final_pretrial_radioButton: self.final_pretrial_cases_box,
             self.pleas_radioButton: self.pleas_cases_box,
             self.trials_to_court_radioButton: self.trials_to_court_cases_box,
+            self.pcvh_fcvh_radioButton: self.pcvh_fcvh_cases_box,
         }
 
     def set_daily_case_lists_type(self):
@@ -97,6 +100,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
         self.pleas_cases_box.__class__ = ExtendedComboBox
         self.trials_to_court_cases_box.__class__ = ExtendedComboBox
+        self.pcvh_fcvh_cases_box.__class__ = ExtendedComboBox
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
@@ -119,6 +123,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.pleas_radioButton.toggled.connect(lambda: self.button_state(self.pleas_radioButton))
         self.trials_to_court_radioButton.toggled.connect(
             lambda: self.button_state(self.trials_to_court_radioButton)
+        )
+        self.pcvh_fcvh_radioButton.toggled.connect(
+            lambda: self.button_state(self.pcvh_fcvh_radioButton)
         )
 
     def set_case_list_table(self):
@@ -159,6 +166,9 @@ class Window(QMainWindow, Ui_MainWindow):
         self.pleas_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "pleas"))
         self.trials_to_court_cases_box.addItems(
             create_daily_cases_list("daily_case_lists.sqlite", "trials_to_court")
+        )
+        self.pcvh_fcvh_cases_box.addItems(
+            create_daily_cases_list("daily_case_lists.sqlite", "pcvh_fcvh")
         )
 
     @logger.catch

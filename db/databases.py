@@ -17,6 +17,7 @@ DATABASE_TABLE_LIST = [
     ("Final_Pretrials.xlsx", "final_pretrials"),
     ("Pleas.xlsx", "pleas"),
     ("Trials_to_Court.xlsx", "trials_to_court"),
+    ("PCVH_FCVH.xlsx", "pcvh_fcvh"),
 ]
 
 
