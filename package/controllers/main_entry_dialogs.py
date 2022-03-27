@@ -19,6 +19,7 @@ from package.controllers.signal_connectors import (
     FineOnlyDialogSignalConnector,
     NotGuiltyBondDialogSignalConnector,
     ProbationViolationBondDialogSignalConnector,
+    FailureToAppearDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
