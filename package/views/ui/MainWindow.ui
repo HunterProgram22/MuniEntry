@@ -278,7 +278,7 @@ font-weight: bold;</string>
         <item row="6" column="0">
          <widget class="QRadioButton" name="pleas_radioButton">
           <property name="text">
-           <string>Pleas</string>
+           <string>Pleas and Motion/Oral Hearings</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_2</string>
@@ -683,7 +683,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

@@ -345,7 +345,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Traffic and Criminal Entries"))
         self.kudela_radioButton.setText(_translate("MainWindow", "Magistrate Kudela"))
         self.pelanda_radioButton.setText(_translate("MainWindow", "Magistrate Pelanda"))
-        self.pleas_radioButton.setText(_translate("MainWindow", "Pleas"))
+        self.pleas_radioButton.setText(_translate("MainWindow", "Pleas and Motion/Oral Hearings"))
         self.trials_to_court_radioButton.setText(_translate("MainWindow", "Trials to Court"))
         self.FailureToAppearButton.setText(_translate("MainWindow", "Failure to Appear"))
         self.ProbationViolationBondButton.setText(_translate("MainWindow", "Prelim. Probation Violation / Bond"))
