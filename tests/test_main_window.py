@@ -18,10 +18,12 @@ def test_window_opens(qtbot, main_window):
     assert main_window.windowTitle() == "MuniEntry - ver 0.15.2"
 
 
+@pytest.mark.skip(reason="Requires manual interaction")
 def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
+@pytest.mark.skip(reason="Requires manual interaction")
 def test_daily_case_list_required_warning(qtbot, main_window):
     mouse_click(main_window.bunner_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
