@@ -76,11 +76,14 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
                 self.case.defendant.last_name = query.value(2).title()
                 self.case.defendant.first_name = query.value(3).title()
                 self.case.fra_in_file = query.value(7)
+                self.case.defense_counsel = f"{query.value(10).title()} {query.value(9).title()}"
+                self.case.defense_counsel_type = query.value(11)
             offense = self.clean_offense_name(query.value(4))
+            offense = offense.rstrip()
             statute = query.value(5)
             degree = query.value(6)
-            offense_type = query.value(8)
-            new_charge = (offense, statute, degree, offense_type)
+            moving_bool = query.value(8)
+            new_charge = (offense, statute, degree, moving_bool)
             self.case.charges_list.append(new_charge)
 
     def clean_offense_name(self, offense):
@@ -219,24 +222,49 @@ def return_data_from_excel(excel_file):
             statute = worksheet.cell(row=row, column=6)
         else:
             statute = worksheet.cell(row=row, column=6)
+
         if worksheet.cell(row=row, column=7).value is None:
             worksheet.cell(row=row, column=7).value = "No Data"
             degree = worksheet.cell(row=row, column=7)
         else:
             degree = worksheet.cell(row=row, column=7)
+
         if worksheet.cell(row=row, column=8).value is None:
             worksheet.cell(row=row, column=8).value = "U"
             fra_in_file = worksheet.cell(row=row, column=8)
         else:
             fra_in_file = worksheet.cell(row=row, column=8)
+
         if worksheet.cell(row=row, column=9).value is None:
             worksheet.cell(row=row, column=9).value = "No Data"
-            offense_type = worksheet.cell(row=row, column=9)
+            moving_bool = worksheet.cell(row=row, column=9)
         elif worksheet.cell(row=row, column=9).value is False:
-            worksheet.cell(row=row, column=9).value = "No Data"
-            offense_type = worksheet.cell(row=row, column=9)
+            worksheet.cell(row=row, column=9).value = "False"
+            moving_bool = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is True:
+            worksheet.cell(row=row, column=9).value = "True"
+            moving_bool = worksheet.cell(row=row, column=9)
         else:
-            offense_type = worksheet.cell(row=row, column=9)
+            moving_bool = worksheet.cell(row=row, column=9)
+
+        if worksheet.cell(row=row, column=10).value is None:
+            worksheet.cell(row=row, column=10).value = ""
+            def_atty_last_name = worksheet.cell(row=row, column=10)
+        else:
+            def_atty_last_name = worksheet.cell(row=row, column=10)
+
+        if worksheet.cell(row=row, column=11).value is None:
+            worksheet.cell(row=row, column=11).value = ""
+            def_atty_first_name = worksheet.cell(row=row, column=11)
+        else:
+            def_atty_first_name = worksheet.cell(row=row, column=11)
+
+        if worksheet.cell(row=row, column=12).value is None:
+            worksheet.cell(row=row, column=12).value = None
+            def_atty_type = worksheet.cell(row=row, column=12)
+        else:
+            def_atty_type = worksheet.cell(row=row, column=12)
+
         case = (case_number.value,
                 defendant_last_name.value,
                 defendant_first_name.value,
@@ -244,7 +272,10 @@ def return_data_from_excel(excel_file):
                 statute.value,
                 degree.value,
                 fra_in_file.value,
-                offense_type.value,
+                moving_bool.value,
+                def_atty_last_name.value,
+                def_atty_first_name.value,
+                def_atty_type.value,
                 )
         data.append(case)
     return data
@@ -252,7 +283,7 @@ def return_data_from_excel(excel_file):
 
 def create_table_sql_string(table):
     """If changes are made to this create_table string then the old table must
-    be deleted."""
+    be deleted. No comma after last item."""
     return f"""
       CREATE TABLE {table} (
           id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
@@ -263,7 +294,10 @@ def create_table_sql_string(table):
           statute VARCHAR(50) NOT NULL,
           degree VARCHAR(10) NOT NULL,
           fra_in_file VARCHAR(5) NOT NULL,
-          offense_type VARCHAR(15) NOT NULL
+          moving_bool VARCHAR(15) NOT NULL,
+          def_atty_last_name VARCHAR (50),
+          def_atty_first_name VARCHAR (50),
+          def_atty_type VARCHAR(5)
       )
       """
 
@@ -278,9 +312,12 @@ def insert_table_sql_string(table):
             statute,
             degree,
             fra_in_file,
-            offense_type
+            moving_bool,
+            def_atty_last_name,
+            def_atty_first_name,
+            def_atty_type
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
 
@@ -307,7 +344,8 @@ def main():
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for case_number, defendant_last_name, defendant_first_name, offense, \
-                statute, degree, fra_in_file, offense_type in data_from_table:
+                statute, degree, fra_in_file, moving_bool, def_atty_last_name,\
+                def_atty_first_name, def_atty_type in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
             insert_data_query.addBindValue(defendant_first_name)
@@ -315,7 +353,10 @@ def main():
             insert_data_query.addBindValue(statute)
             insert_data_query.addBindValue(degree)
             insert_data_query.addBindValue(fra_in_file)
-            insert_data_query.addBindValue(offense_type)
+            insert_data_query.addBindValue(moving_bool)
+            insert_data_query.addBindValue(def_atty_last_name)
+            insert_data_query.addBindValue(def_atty_first_name)
+            insert_data_query.addBindValue(def_atty_type)
             insert_data_query.exec()
 
     con_daily_case_lists.close()

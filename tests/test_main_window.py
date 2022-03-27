@@ -47,7 +47,7 @@ def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_t
 def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
-    enter_data(main_window.pleas_cases_box, "Colon - 21TRD09386")
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
 
     def handle_dialog():
         while main_window.dialog is None:
@@ -57,4 +57,4 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
     QTimer.singleShot(100, handle_dialog)
     mouse_click(getattr(main_window, test_input))
-    assert main_window.dialog.windowTitle() == dialog_title
+    assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
