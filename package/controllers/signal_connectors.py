@@ -133,6 +133,7 @@ class FailureToAppearDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
+        dialog.arrest_warrant_checkBox.toggled.connect(dialog.functions.hide_warrant_radius)
 
 
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):

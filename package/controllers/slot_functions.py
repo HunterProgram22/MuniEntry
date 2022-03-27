@@ -471,6 +471,13 @@ class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
 
+    def hide_warrant_radius(self):
+        if self.dialog.arrest_warrant_checkBox.isChecked():
+            self.dialog.arrest_warrant_radius_label.setHidden(False)
+            self.dialog.arrest_warrant_radius_box.setHidden(False)
+        else:
+            self.dialog.arrest_warrant_radius_label.setHidden(True)
+            self.dialog.arrest_warrant_radius_box.setHidden(True)
 
 class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
