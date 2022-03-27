@@ -176,6 +176,8 @@ class FailureToAppearConditions:
     proof_of_service: bool = False
     supplemental_summons: bool = False
     registration_block: bool = False
+    bond_type: str = None
+    bond_amount: str = None
     terms_list = [
         ("arrest_warrant", "arrest_warrant_checkBox"),
         ("set_no_trial", "set_no_trial_checkBox"),
@@ -185,6 +187,8 @@ class FailureToAppearConditions:
         ("proof_of_service", "proof_of_service_checkBox"),
         ("supplemental_summons", "supplemental_summons_checkBox"),
         ("registration_block", "registration_block_checkBox"),
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
     ]
 
 

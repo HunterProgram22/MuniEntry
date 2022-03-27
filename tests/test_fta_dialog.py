@@ -26,7 +26,7 @@ def test_all_checkbox_conditions(qtbot, dialog, checkBox):
     assert getattr(dialog, checkBox).isChecked()
 
 
-all_fta_conditions_model_test_list = [
+all_fta_checkbox_conditions_model_test_list = [
     ("arrest_warrant_checkBox", "arrest_warrant"),
     ("bond_forfeited_checkBox", "bond_forfeited"),
     ("set_no_trial_checkBox", "set_no_trial"),
@@ -37,8 +37,18 @@ all_fta_conditions_model_test_list = [
     ("registration_block_checkBox", "registration_block"),
 ]
 
-@pytest.mark.parametrize("checkBox, model", all_fta_conditions_model_test_list)
+@pytest.mark.parametrize("checkBox, model", all_fta_checkbox_conditions_model_test_list)
 def test_model_updated_if_conditions_checked(qtbot, dialog, checkBox, model):
+    mouse_click(dialog.defense_counsel_waived_checkBox)
     mouse_click(getattr(dialog, checkBox))
     mouse_click(dialog.create_entry_Button)
     assert getattr(dialog.entry_case_information.fta_conditions, model) == True
+
+
+def test_set_bond_update_model(qtbot, dialog):
+    mouse_click(dialog.defense_counsel_waived_checkBox)
+    enter_data(dialog.bond_type_box, "Cash or Surety Bond")
+    enter_data(dialog.bond_amount_box, "$5,000")
+    mouse_click(dialog.create_entry_Button)
+    assert dialog.entry_case_information.fta_conditions.bond_type == "Cash or Surety Bond"
+    assert dialog.entry_case_information.fta_conditions.bond_amount == "$5,000"
