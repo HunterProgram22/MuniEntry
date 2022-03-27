@@ -45,6 +45,13 @@ def test_model_updated_if_conditions_checked(qtbot, dialog, checkBox, model):
     assert getattr(dialog.entry_case_information.fta_conditions, model) == True
 
 
+def test_arrest_warrant_radius_box_update_model(qtbot, dialog):
+    mouse_click(dialog.defense_counsel_waived_checkBox)
+    enter_data(dialog.arrest_warrant_radius_box, "2")
+    mouse_click(dialog.create_entry_Button)
+    assert dialog.entry_case_information.fta_conditions.arrest_warrant_radius == "2 (Statewide)"
+
+
 def test_set_bond_update_model(qtbot, dialog):
     mouse_click(dialog.defense_counsel_waived_checkBox)
     enter_data(dialog.bond_type_box, "Cash or Surety Bond")

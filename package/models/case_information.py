@@ -169,6 +169,7 @@ class CommunityService:
 @dataclass
 class FailureToAppearConditions:
     arrest_warrant: bool = False
+    arrest_warrant_radius: str = None
     set_no_trial: bool = False
     bond_forfeited: bool = False
     forfeit_license: bool = False
@@ -180,6 +181,7 @@ class FailureToAppearConditions:
     bond_amount: str = None
     terms_list = [
         ("arrest_warrant", "arrest_warrant_checkBox"),
+        ("arrest_warrant_radius", "arrest_warrant_radius_box"),
         ("set_no_trial", "set_no_trial_checkBox"),
         ("bond_forfeited", "bond_forfeited_checkBox"),
         ("forfeit_license", "operator_license_checkBox"),

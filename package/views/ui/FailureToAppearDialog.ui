@@ -200,6 +200,86 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Appearance Reason:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QComboBox" name="defense_counsel_name_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="appearance_reason_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>arraignment</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>motion hearing</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>warrant for failure to appear</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Def. Counsel:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Case Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
+               <property name="text">
+                <string>Defendant appeared without counsel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QComboBox" name="defense_counsel_type_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Public Defender</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Private Counsel</string>
+                </property>
+               </item>
+              </widget>
+             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
@@ -239,32 +319,6 @@ background-color: rgb(255, 255, 255);</string>
               <widget class="QLabel" name="label_26">
                <property name="text">
                 <string>Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="4">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
                </property>
               </widget>
              </item>
@@ -311,84 +365,30 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Case Number:</string>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
                </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>Def. Counsel:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="3">
-              <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
-               <property name="text">
-                <string>Defendant appeared without counsel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="2">
-              <widget class="QComboBox" name="defense_counsel_type_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
-               <item>
-                <property name="text">
-                 <string>Public Defender</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Private Counsel</string>
-                </property>
-               </item>
               </widget>
              </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="defense_counsel_name_box">
+             <item row="0" column="4">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
                </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_11">
                <property name="text">
-                <string>Appearance Reason:</string>
+                <string>Cancel</string>
                </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QComboBox" name="appearance_reason_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-               <item>
-                <property name="text">
-                 <string>arraignment</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>motion hearing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>warrant for failure to appear</string>
-                </property>
-               </item>
               </widget>
              </item>
             </layout>
@@ -574,8 +574,21 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
-             <item row="2" column="0">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Failure To Appear Actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
               <layout class="QGridLayout" name="gridLayout_3">
+               <property name="horizontalSpacing">
+                <number>6</number>
+               </property>
                <property name="verticalSpacing">
                 <number>16</number>
                </property>
@@ -594,16 +607,46 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QCheckBox" name="set_no_trial_checkBox">
+                <widget class="QLabel" name="label_5">
                  <property name="text">
-                  <string>Set no trial until Defendant appears</string>
+                  <string>Warrant Radius:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QCheckBox" name="proof_of_service_checkBox">
+                <widget class="QComboBox" name="arrest_warrant_radius_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>2 (Statewide)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3 (100-mile radius)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4 (Delaware and adjacent counties)</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>5 (Delaware county only)</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="bond_forfeited_checkBox">
                  <property name="text">
-                  <string>Absent proof of service of warrant/summons in 28 days case closed subject to reopen</string>
+                  <string>Bond forfeited, hearing date vacated</string>
                  </property>
                 </widget>
                </item>
@@ -615,37 +658,34 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="3" column="0">
+                <widget class="QCheckBox" name="set_no_trial_checkBox">
+                 <property name="text">
+                  <string>Set no trial until Defendant appears</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="proof_of_service_checkBox">
+                 <property name="text">
+                  <string>Absent proof of service of warrant/summons in 28 days case closed subject to reopen</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
                 <widget class="QCheckBox" name="operator_license_checkBox">
                  <property name="text">
                   <string>Forfeit Defendant OL/CDL/permit</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
+               <item row="4" column="1">
                 <widget class="QCheckBox" name="registration_block_checkBox">
                  <property name="text">
                   <string>Defendant Vehicle Registration is blocked absent compliance in 30 days</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
-                <widget class="QCheckBox" name="bond_forfeited_checkBox">
-                 <property name="text">
-                  <string>Bond forfeited, hearing date vacated</string>
-                 </property>
-                </widget>
-               </item>
               </layout>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Failure To Appear Actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
