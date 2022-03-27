@@ -40,4 +40,5 @@ all_fta_conditions_model_test_list = [
 @pytest.mark.parametrize("checkBox, model", all_fta_conditions_model_test_list)
 def test_model_updated_if_conditions_checked(qtbot, dialog, checkBox, model):
     mouse_click(getattr(dialog, checkBox))
+    mouse_click(dialog.create_entry_Button)
     assert getattr(dialog.entry_case_information.fta_conditions, model) == True

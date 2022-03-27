@@ -178,7 +178,7 @@ class FailureToAppearConditions:
     registration_block: bool = False
     terms_list = [
         ("arrest_warrant", "arrest_warrant_checkBox"),
-        ("set_not_trial", "set_no_trial_checkBox"),
+        ("set_no_trial", "set_no_trial_checkBox"),
         ("bond_forfeited", "bond_forfeited_checkBox"),
         ("forfeit_license", "operator_license_checkBox"),
         ("non_resident_license", "non_resident_license_checkBox"),

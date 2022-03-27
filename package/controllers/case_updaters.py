@@ -240,6 +240,16 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
         return NotGuiltyGridModelUpdater(self.view, self.model)
 
 
+class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_fta_conditions()
+
+    def update_fta_conditions(self):
+        self.transfer_view_data_to_model(self.model.fta_conditions)
+
+
 class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)

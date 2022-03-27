@@ -11,6 +11,7 @@ from package.controllers.case_updaters import (
     NotGuiltyBondDialogCaseModelUpdater,
     DiversionDialogCaseModelUpdater,
     ProbationViolationBondDialogCaseModelUpdater,
+    FailureToAppearDialogCaseModelUpdater,
 )
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.signal_connectors import (
@@ -41,6 +42,7 @@ from package.models.case_information import (
     BondConditions,
     CriminalCaseInformation,
     CommunityControlViolationBondConditions,
+    FailureToAppearConditions,
 )
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
@@ -282,7 +284,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         super().__init__(judicial_officer, case, parent)
         self.dialog_name = "Failure To Appear Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        # self.entry_case_information.bond_conditions = BondConditions()
+        self.entry_case_information.fta_conditions = FailureToAppearConditions()
 
     def modify_view(self):
         return FailureToAppearDialogViewModifier(self)
@@ -297,14 +299,11 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
-        pass
-
-    #     return FailureToAppearDialogCaseUpdater(self)
+        return FailureToAppearDialogCaseModelUpdater(self)
 
     def perform_info_checks(self):
-        pass
-
-    #     self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+        return "Pass"
+    #   self.dialog_checks = FailureToAppearDialogInfoChecker(self)
 
 
 if __name__ == "__main__":
