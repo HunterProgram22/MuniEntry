@@ -354,7 +354,7 @@ class Ui_ProbationViolationBondDialog(object):
 
     def retranslateUi(self, ProbationViolationBondDialog):
         _translate = QtCore.QCoreApplication.translate
-        ProbationViolationBondDialog.setWindowTitle(_translate("ProbationViolationBondDialog", "Probation Violation Bond Case Information"))
+        ProbationViolationBondDialog.setWindowTitle(_translate("ProbationViolationBondDialog", "Community Control Violation Bond Case Information"))
         self.monitoring_checkBox.setText(_translate("ProbationViolationBondDialog", "Monitoring (GPS/Scram/Smart Start):"))
         self.monitoring_type_box.setItemText(0, _translate("ProbationViolationBondDialog", "SCRAM Only"))
         self.monitoring_type_box.setItemText(1, _translate("ProbationViolationBondDialog", "GPS Only"))

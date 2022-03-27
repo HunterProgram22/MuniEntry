@@ -3,7 +3,7 @@ from PyQt5.QtCore import QTimer
 from conftest import mouse_click
 
 
-dialog_all_title_list = [
+main_window_all_button_test_list = [
     ("FineOnlyPleaButton", "Fine Only Plea Case Information"),
     ("JailCCPleaButton", "Jail Community Control Plea Case Information"),
     ("NotGuiltyBondButton", "Not Guilty Bond Case Information"),
@@ -18,11 +18,11 @@ def test_window_opens(qtbot, main_window):
     assert main_window.windowTitle() == "MuniEntry - ver 0.15.2"
 
 
-# def test_judicial_officer_required_warning(qtbot, main_window):
-#     mouse_click(main_window.JailCCButton)
+def test_judicial_officer_required_warning(qtbot, main_window):
+    mouse_click(main_window.JailCCPleaButton)
 
 
-@pytest.mark.parametrize("test_input, dialog_title", dialog_all_title_list)
+@pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
 def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
