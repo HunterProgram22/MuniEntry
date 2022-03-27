@@ -33,3 +33,21 @@ def main_window(qtbot):
     window = Window(daily_case_list_database)
     qtbot.addWidget(window)
     return window
+
+
+@pytest.fixture
+def dialog(qtbot, main_window):
+    """This is set for the FTA dialog for now, but can be refactored to be used for all
+    dialogs."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+
+    def handle_dialog():
+        while main_window.dialog is None:
+            qApp.processEvents()
+        qtbot.addWidget(main_window.dialog)
+        mouse_click(main_window.dialog.close_dialog_Button)
+
+    QTimer.singleShot(100, handle_dialog)
+    mouse_click(main_window.FailureToAppearButton)
+    return main_window.dialog
