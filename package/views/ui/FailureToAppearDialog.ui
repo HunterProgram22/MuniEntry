@@ -522,18 +522,6 @@ background-color: rgb(255, 255, 127);</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_10">
-             <item row="2" column="0">
-              <widget class="QPushButton" name="close_dialog_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(170, 58, 63);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QPushButton" name="create_entry_Button">
                <property name="styleSheet">
@@ -546,6 +534,18 @@ font-weight: bold;</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="close_dialog_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(170, 58, 63);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Close Dialog</string>
                </property>
               </widget>
              </item>
@@ -563,63 +563,77 @@ font-weight: bold;</string>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <item row="1" column="0">
-              <widget class="QCheckBox" name="failed_to_appear_checkBox">
-               <property name="text">
-                <string>Defendant failed to appear</string>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="2" column="0">
+              <layout class="QGridLayout" name="gridLayout_3">
+               <property name="verticalSpacing">
+                <number>16</number>
                </property>
-              </widget>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="arrest_warrant_checkBox">
+                 <property name="text">
+                  <string>Issue Warrant for Arrest forthwith</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="non_resident_license_checkBox">
+                 <property name="text">
+                  <string>Defendant has Non-Resident Violator compact state OL</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QCheckBox" name="set_no_trial_checkBox">
+                 <property name="text">
+                  <string>Set no trial until Defendant appears</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QCheckBox" name="proof_of_service_checkBox">
+                 <property name="text">
+                  <string>Absent proof of service of warrant/summons in 28 days case closed subject to reopen</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QCheckBox" name="supplemental_summons_checkBox">
+                 <property name="text">
+                  <string>Clerk issue supplemental summons by regular mail</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QCheckBox" name="operator_license_checkBox">
+                 <property name="text">
+                  <string>Forfeit Defendant OL/CDL/permit</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QCheckBox" name="registration_block_checkBox">
+                 <property name="text">
+                  <string>Defendant Vehicle Registration is blocked absent compliance in 30 days</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QCheckBox" name="bond_forfeited_checkBox">
+                 <property name="text">
+                  <string>Bond forfeited, hearing date vacated</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
-             <item row="5" column="0">
-              <widget class="QCheckBox" name="registration_block_checkBox">
-               <property name="text">
-                <string>Defendant Vehicle Registration is blocked absent compliance in 30 days</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QCheckBox" name="non_resident_license_checkBox">
-               <property name="text">
-                <string>Defendant has Non-Resident Violator compact state OL</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QCheckBox" name="proof_of_service_checkBox">
-               <property name="text">
-                <string>Absent proof of service of warrant/summons in 28 days case closed subject to reopen</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="2">
+             <item row="0" column="0">
               <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Failure to Appear Actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;Failure To Appear Actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QCheckBox" name="set_no_trial_checkBox">
-               <property name="text">
-                <string>Set no trial until Defendant appears</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QCheckBox" name="supplemental_summons_checkBox">
-               <property name="text">
-                <string>Clerk issue supplemental summons by regular mail</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QCheckBox" name="operator_license_checkBox">
-               <property name="text">
-                <string>Forfeit Defendant OL/CDL/permit</string>
                </property>
               </widget>
              </item>
