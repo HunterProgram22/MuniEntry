@@ -491,6 +491,17 @@ class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.bond_type_label.setHidden(True)
             self.dialog.bond_amount_label.setHidden(True)
 
+    def set_bond_amount_box(self):
+        if self.dialog.bond_type_box.currentText() == "No Bond":
+            self.dialog.bond_amount_box.setHidden(True)
+            self.dialog.bond_amount_label.setHidden(True)
+        elif self.dialog.bond_type_box.currentText() == "Recognizance (OR) Bond":
+            self.dialog.bond_amount_box.setHidden(True)
+            self.dialog.bond_amount_label.setHidden(True)
+        else:
+            self.dialog.bond_amount_box.setHidden(False)
+            self.dialog.bond_amount_label.setHidden(False)
+
 
 class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
