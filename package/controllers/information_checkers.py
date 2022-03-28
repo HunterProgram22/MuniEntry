@@ -12,8 +12,7 @@ from package.views.custom_widgets import (
 def check_judicial_officer(func):
     def wrapper(self):
         if self.judicial_officer is None:
-            message = RequiredBox("You must select a judicial officer.")
-            message.exec()
+            RequiredBox("You must select a judicial officer.").exec()
         else:
             func(self)
 
@@ -25,11 +24,10 @@ def check_case_list_selected(func):
         if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
             func(self)
         else:
-            message = RequiredBox(
+            RequiredBox(
                 "You must select a case list to load. If loading a "
                 "blank template choose any case list and leave dropdown menu blank."
-            )
-            message.exec()
+            ).exec()
 
     return wrapper
 
@@ -38,7 +36,8 @@ class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        self.view = dialog
+        self.grid = dialog.charges_gridLayout
 
     def perform_check_list(self):
         for item in self.dialog_check_list:
@@ -46,9 +45,9 @@ class BaseInfoChecker(object):
                 return "Fail"
 
     def check_defense_counsel(self):
-        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+        if self.view.defense_counsel_waived_checkBox.isChecked():
             return "Pass"
-        if self.dialog.defense_counsel_name_box.currentText().strip() == "":
+        if self.view.defense_counsel_name_box.currentText().strip() == "":
             message = WarningBox(
                 f"There is no attorney listed. Did the Defendant appear without or waive his right "
                 f"to counsel?\n\nIf you select 'No' you must enter a name for Defense Counsel."
@@ -57,7 +56,7 @@ class BaseInfoChecker(object):
 
     def set_defense_counsel_waived_or_fail_check(self, message_response):
         if message_response == QMessageBox.Yes:
-            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+            self.view.defense_counsel_waived_checkBox.setChecked(True)
             return "Pass"
         elif message_response == QMessageBox.No:
             return "Fail"
@@ -68,22 +67,10 @@ class BaseInfoChecker(object):
         column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+        while loop_counter < self.grid.columnCount():
             try:
-                offense = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_offense, col
-                    )
-                    .widget()
-                    .text()
-                )
-                plea = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_plea, col
-                    )
-                    .widget()
-                    .currentText()
-                )
+                offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
+                plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
             except AttributeError:
                 offense, plea = None, None
             if plea == "Dismissed":
@@ -103,25 +90,25 @@ class BaseInfoChecker(object):
         column from a grid_layout when it is deleted, it actually just hides the column."""
         col = 2
         loop_counter = 0
-        while loop_counter < self.dialog.charges_gridLayout.columnCount():
+        while loop_counter < self.view.charges_gridLayout.columnCount():
             try:
                 offense = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_offense, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_offense, col
                     )
                     .widget()
                     .text()
                 )
                 plea = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_plea, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_plea, col
                     )
                     .widget()
                     .currentText()
                 )
                 finding = (
-                    self.dialog.charges_gridLayout.itemAtPosition(
-                        self.dialog.charges_gridLayout.row_finding, col
+                    self.view.charges_gridLayout.itemAtPosition(
+                        self.view.charges_gridLayout.row_finding, col
                     )
                     .widget()
                     .currentText()
@@ -141,8 +128,8 @@ class BaseInfoChecker(object):
 
     def check_insurance(self):
         if (
-            self.dialog.fra_in_file_box.currentText() == "No"
-            and self.dialog.fra_in_court_box.currentText() == "N/A"
+            self.view.fra_in_file_box.currentText() == "No"
+            and self.view.fra_in_court_box.currentText() == "N/A"
         ):
             message = WarningBox(
                 "The information provided currently "
@@ -154,15 +141,15 @@ class BaseInfoChecker(object):
 
     def set_fra_in_court_box(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.fra_in_court_box.setCurrentText("No")
+            self.view.fra_in_court_box.setCurrentText("No")
             return "Pass"
         elif message_response == QMessageBox.Yes:
-            self.dialog.fra_in_court_box.setCurrentText("Yes")
+            self.view.fra_in_court_box.setCurrentText("Yes")
             return "Pass"
 
     def check_additional_conditions_ordered(self):
         for condition_item in self.conditions_list:
-            condition = getattr(self.dialog.entry_case_information, condition_item[0])
+            condition = getattr(self.view.entry_case_information, condition_item[0])
             condition_ordered = getattr(condition, "ordered")
             main_condition_set = getattr(condition, condition_item[1])
             condition_name = condition_item[2]
@@ -175,6 +162,31 @@ class BaseInfoChecker(object):
                 )
                 message.exec()
                 return "Fail"
+
+    def check_if_no_bond_amount(self):
+        if (
+            self.view.bond_type_box.currentText() != "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() == "None (OR Bond)"
+        ):
+            message = (
+                "A bond type requiring a bond amount was selected, but a bond amount was "
+                "not selected. \n\nPlease specify the bond amount."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
+    def check_if_improper_bond_type(self):
+        if (
+            self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
+            and self.view.bond_amount_box.currentText() != "None (OR Bond)"
+        ):
+            message = (
+                "A Recognizance (OR) Bond was selected but a bond amount other than "
+                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
+                "or Cash or Surety, or set bond amount to None (OR Bond)."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
 
 
 class FineOnlyDialogInfoChecker(BaseInfoChecker):
@@ -217,37 +229,12 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
         ]
         self.check_status = self.perform_check_list()
 
-    def check_if_no_bond_amount(self):
-        if (
-            self.dialog.bond_type_box.currentText() != "Recognizance (OR) Bond"
-            and self.dialog.bond_amount_box.currentText() == "None (OR Bond)"
-        ):
-            message = (
-                "A bond type requiring a bond amount was selected, but a bond amount was "
-                "not selected. \n\nPlease specify the bond amount."
-            )
-            RequiredBox(message).exec()
-            return "Fail"
-
-    def check_if_improper_bond_type(self):
-        if (
-            self.dialog.bond_type_box.currentText() == "Recognizance (OR) Bond"
-            and self.dialog.bond_amount_box.currentText() != "None (OR Bond)"
-        ):
-            message = (
-                "A Recognizance (OR) Bond was selected but a bond amount other than "
-                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
-                "or Cash or Surety, or set bond amount to None (OR Bond)."
-            )
-            RequiredBox(message).exec()
-            return "Fail"
-
     def check_domestic_violence_bond_condition(self):
         dv_bond_conditions_list = [
             (
-                self.dialog.entry_case_information.domestic_violence_conditions.ordered,
-                self.dialog.entry_case_information.domestic_violence_conditions.vacate_residence,
-                self.dialog.entry_case_information.domestic_violence_conditions.surrender_weapons,
+                self.view.entry_case_information.domestic_violence_conditions.ordered,
+                self.view.entry_case_information.domestic_violence_conditions.vacate_residence,
+                self.view.entry_case_information.domestic_violence_conditions.surrender_weapons,
                 "Domestic Violence Restrictions",
             ),
         ]
@@ -285,7 +272,7 @@ class DiversionDialogInfoChecker(BaseInfoChecker):
         for program in diversion_program_list:
             if (
                 getattr(
-                    self.dialog.entry_case_information.diversion,
+                    self.view.entry_case_information.diversion,
                     program,
                 )
                 is True
@@ -309,9 +296,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.total_jail_days = self.calculate_total_jail_days()
-        self.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
-        self.total_jail_days_credit = self.calculate_jail_days_credit()
+        # self.total_jail_days = self.calculate_total_jail_days()
+        # self.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
+        # self.total_jail_days_credit = self.calculate_jail_days_credit()
+        self.case_info = self.view.entry_case_information
         self.dialog_check_list = [
             "check_defense_counsel",
             "check_if_no_plea_entered",
@@ -336,16 +324,18 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         other required fields do not contain data. If currenlty in jail is no, but other days in
         jail is blank no warning is generated because a user may enter no for currently in jail,
         but there may not be jail time credit."""
-        if self.dialog.entry_case_information.currently_in_jail == "Yes":
+        if self.case_info.currently_in_jail == "Yes":
             if self.check_if_days_in_jail_blank():
                 return "Fail"
             self.check_if_apply_jtc_blank()
-        elif self.dialog.entry_case_information.days_in_jail != "":
+        elif self.case_info.days_in_jail != "":
+            if self.case_info.days_in_jail == 0:
+                return "Pass"
             self.check_if_currently_in_jail_blank()
             self.check_if_apply_jtc_blank()
 
     def check_if_days_in_jail_blank(self):
-        if self.dialog.entry_case_information.days_in_jail == "":
+        if self.case_info.days_in_jail == "":
             message = RequiredBox(
                 f"The Jail Time Credit box indicates Defendant is in Jail, but "
                 f"the number of Days In Jail is blank. \n\nPlease enter the number of "
@@ -357,7 +347,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         return False
 
     def check_if_currently_in_jail_blank(self):
-        if self.dialog.entry_case_information.currently_in_jail == "":
+        if self.case_info.currently_in_jail == "":
             message = WarningBox(
                 f"The Days in Jail has been provided, but the Jail Time Credit "
                 f"does not indicate whether the Defendant is Currently In Jail. "
@@ -367,12 +357,12 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def set_in_jail_box(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.in_jail_box.setCurrentText("No")
+            self.view.in_jail_box.setCurrentText("No")
         elif message_response == QMessageBox.Yes:
-            self.dialog.in_jail_box.setCurrentText("Yes")
+            self.view.in_jail_box.setCurrentText("Yes")
 
     def check_if_apply_jtc_blank(self):
-        if self.dialog.entry_case_information.apply_jtc == "":
+        if self.case_info.apply_jtc == "":
             message = TwoChoiceQuestionBox(
                 f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
                 f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and "
@@ -384,39 +374,21 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def set_jtc_apply_box(self, message_response):
         if message_response == 0:
-            self.dialog.jail_time_credit_apply_box.setCurrentText("Sentence")
+            self.view.jail_time_credit_apply_box.setCurrentText("Sentence")
         elif message_response == 1:
-            self.dialog.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
+            self.view.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
     def calculate_jail_days_credit(self):
-        if self.dialog.entry_case_information.days_in_jail.strip() == "":
+        if self.case_info.days_in_jail == "":
             return 0
         else:
-            return int(self.dialog.entry_case_information.days_in_jail)
-
-    def calculate_total_jail_days(self):
-        self.total_jail_days = 0
-        for charge in self.dialog.entry_case_information.charges_list:
-            try:
-                self.total_jail_days += int(charge.jail_days)
-            except ValueError:
-                pass
-        return self.total_jail_days
-
-    def calculate_total_jail_days_suspended(self):
-        self.total_jail_days_suspended = 0
-        for charge in self.dialog.entry_case_information.charges_list:
-            try:
-                self.total_jail_days_suspended += int(charge.jail_days_suspended)
-            except ValueError:
-                pass
-        return self.total_jail_days_suspended
+            return int(self.case_info.days_in_jail)
 
     def check_if_jail_days_suspended_greater_than_jail_imposed(self):
-        if self.total_jail_days_suspended > self.total_jail_days:
+        if self.case_info.total_jail_days_suspended > self.case_info.total_jail_days_imposed:
             message = RequiredBox(
-                f"The total number of jail days suspended is {self.total_jail_days_suspended} "
-                f"which is greater than the total jail days imposed of {self.total_jail_days}. "
+                f"The total number of jail days suspended is {self.case_info.total_jail_days_suspended} "
+                f"which is greater than the total jail days imposed of {self.case_info.total_jail_days_imposed}. "
                 f"Please correct."
             )
             message.exec()
@@ -425,19 +397,16 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
-            self.total_jail_days > (self.total_jail_days_suspended + self.total_jail_days_credit)
-            and self.dialog.entry_case_information.jail_terms.ordered is False
-            and (
-                self.dialog.entry_case_information.currently_in_jail == "No"
-                or self.dialog.entry_case_information.currently_in_jail == ""
-            )
-            and self.dialog.entry_case_information.community_control.driver_intervention_program
-            is False
+            self.case_info.total_jail_days_imposed
+            > (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            and self.case_info.jail_terms.ordered is False
+            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
+            and self.case_info.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
-                f"The total jail days imposed of {self.total_jail_days} is greater than the total "
-                f"jail days suspended of {self.total_jail_days_suspended} and the total jail time "
-                f"credit applied to the sentence of {self.total_jail_days_credit}, and the Jail "
+                f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is greater than the total "
+                f"jail days suspended of {self.case_info.total_jail_days_suspended} and the total jail time "
+                f"credit applied to the sentence of {self.case_info.days_in_jail}, and the Jail "
                 f"Reporting Terms have not been entered. \n\nDo you want to set the Jail "
                 f"Reporting Terms? \n\nPress 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to "
                 f"open the entry with no Jail Reporting Terms. \n\nPress 'Cancel' to return to the "
@@ -450,25 +419,23 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         if message_response == QMessageBox.No:
             return "Pass"
         elif message_response == QMessageBox.Yes:
-            self.dialog.jail_checkBox.setChecked(True)
-            self.dialog.start_jail_only_dialog()
+            self.view.jail_checkBox.setChecked(True)
+            self.view.start_jail_only_dialog()
             return "Pass"
         elif message_response == QMessageBox.Cancel:
             return "Fail"
 
     def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
-            self.total_jail_days == (self.total_jail_days_suspended + self.total_jail_days_credit)
-            and self.dialog.entry_case_information.jail_terms.ordered is True
-            and (
-                self.dialog.entry_case_information.currently_in_jail == "No"
-                or self.dialog.entry_case_information.currently_in_jail == ""
-            )
+            self.case_info.total_jail_days_imposed
+            == (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            and self.case_info.jail_terms.ordered is True
+            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
         ):
             message = WarningBox(
-                f"The total jail days imposed of {self.total_jail_days} is equal to the total jail "
-                f"days suspended of {self.total_jail_days_suspended} and total jail time credit of "
-                f"{self.total_jail_days_credit}. The Defendant does not appear to have any jail "
+                f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is equal to the total jail "
+                f"days suspended of {self.case_info.total_jail_days_suspended} and total jail time credit of "
+                f"{self.case_info.days_in_jail}. The Defendant does not appear to have any jail "
                 f"days left to serve but you set Jail Reporting Terms. \n\nAre you sure you want "
                 f"to set Jail Reporting Terms?"
             )
@@ -476,16 +443,17 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def unset_jail_reporting_terms(self, message_response):
         if message_response == QMessageBox.No:
-            self.dialog.jail_checkBox.setChecked(False)
+            self.view.jail_checkBox.setChecked(False)
             return "Pass"
         elif message_response == QMessageBox.Yes:
             return "Pass"
 
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
-            self.total_jail_days >= (self.total_jail_days_suspended + self.total_jail_days_credit)
-            and self.dialog.entry_case_information.jail_terms.ordered is True
-            and self.dialog.entry_case_information.currently_in_jail == "Yes"
+            self.case_info.total_jail_days_imposed
+            >= (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            and self.case_info.jail_terms.ordered is True
+            and self.case_info.currently_in_jail == "Yes"
         ):
             message = WarningBox(
                 f"The Defendant is currently indicated as being in jail, "
@@ -496,15 +464,37 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
-            self.total_jail_days_credit > self.total_jail_days
-            and self.dialog.jail_time_credit_apply_box.currentText() == "Sentence"
+            self.case_info.days_in_jail > self.case_info.total_jail_days_imposed
+            and self.view.jail_time_credit_apply_box.currentText() == "Sentence"
         ):
             message = RequiredBox(
-                f"The Defendant is set to have {self.total_jail_days_credit} days of jail time "
-                f"credit applied to a sentence, but a total of only {self.total_jail_days} are set "
+                f"The Defendant is set to have {self.case_info.days_in_jail} days of jail time "
+                f"credit applied to a sentence, but a total of only {self.case_info.total_jail_days_imposed} are set "
                 f"to be imposed in the case. The total jail day imposed is less than the jail time "
                 f"credit that is being applied to the sentence. \n\nPlease impose additional jails "
                 f"days or change the Apply JTC to box to 'Costs and Fines'."
             )
             message.exec()
             return "Fail"
+
+
+class ProbationViolationBondDialogInfoChecker(BaseInfoChecker):
+
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_bond_amount",
+            "check_if_improper_bond_type",
+        ]
+        self.check_status = self.perform_check_list()
+
+
+class FailureToAppearDialogInfoChecker(BaseInfoChecker):
+
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+        ]
+        self.check_status = self.perform_check_list()

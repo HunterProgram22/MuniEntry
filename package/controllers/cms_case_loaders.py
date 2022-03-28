@@ -2,7 +2,41 @@
 from package.models.case_information import CriminalCharge
 
 
-class CmsLoader:
+class CmsNoChargeLoader:
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.cms_case = dialog.cms_case
+        self.load_cms_data()
+
+    def load_cms_data(self):
+        if self.cms_case.case_number is not None:
+            self.set_case_number()
+            self.set_defendant_name()
+            self.set_defense_counsel_name()
+            self.set_defense_counsel_type()
+
+    def set_case_number(self):
+        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+
+    def set_defendant_name(self):
+        self.dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
+        self.dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
+
+    def set_defense_counsel_name(self):
+        if self.cms_case.defense_counsel is not None:
+            self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
+            self.dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
+
+    def set_defense_counsel_type(self):
+        if self.cms_case.defense_counsel_type == "PD":
+            self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+        elif self.cms_case.defense_counsel.strip() == "":
+            self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
+        else:
+            self.dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
+
+
+class CmsChargeLoader(CmsNoChargeLoader):
     """Uses the cms_case number selected to get the cms_case object from main_window and
     load cms_case data."""
 
@@ -19,32 +53,6 @@ class CmsLoader:
             self.set_defense_counsel_name()
             self.set_defense_counsel_type()
             self.add_cms_criminal_charges_to_entry_case_information()
-
-    def set_case_number(self):
-        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
-
-    def set_defendant_name(self):
-        self.dialog.defendant_first_name_lineEdit.setText(
-            self.cms_case.defendant.first_name
-        )
-        self.dialog.defendant_last_name_lineEdit.setText(
-            self.cms_case.defendant.last_name
-        )
-
-    def set_defense_counsel_name(self):
-        if self.cms_case.defense_counsel is not None:
-            self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
-            self.dialog.defense_counsel_name_box.setCurrentText(
-                self.cms_case.defense_counsel
-            )
-
-    def set_defense_counsel_type(self):
-        if self.cms_case.defense_counsel_type == "PD":
-            self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
-        elif self.cms_case.defense_counsel.strip() == "":
-            self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
-        else:
-            self.dialog.defense_counsel_type_box.setCurrentText("Private Counsel")
 
     def add_cms_criminal_charges_to_entry_case_information(self):
         """Loads the data from the cms_case object that is created from the sql
@@ -76,7 +84,7 @@ class CmsLoader:
         return "Moving"
 
 
-class CmsFraLoader(CmsLoader):
+class CmsFraLoader(CmsChargeLoader):
     """This subclass is used for the Fine Only Plea and Jail CC Plea Dialogs to load the
     FRA (insurance) data for the case."""
 
@@ -90,9 +98,7 @@ class CmsFraLoader(CmsLoader):
         if self.cms_case.case_number is None:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
         elif self.cms_case.fra_in_file in fra_value_dict:
-            self.dialog.fra_in_file_box.setCurrentText(
-                fra_value_dict[self.cms_case.fra_in_file]
-            )
+            self.dialog.fra_in_file_box.setCurrentText(fra_value_dict[self.cms_case.fra_in_file])
         else:
             self.dialog.fra_in_file_box.setCurrentText("N/A")
 

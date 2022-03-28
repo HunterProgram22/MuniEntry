@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.15.2</string>
+   <string>MuniEntry - ver 0.16.0</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -158,7 +158,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="10" column="0">
-         <widget class="QPushButton" name="JailCCButton">
+         <widget class="QPushButton" name="JailCCPleaButton">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -174,7 +174,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="9" column="0">
-         <widget class="QPushButton" name="NoJailPleaButton">
+         <widget class="QPushButton" name="FineOnlyPleaButton">
           <property name="minimumSize">
            <size>
             <width>120</width>
@@ -278,7 +278,7 @@ font-weight: bold;</string>
         <item row="6" column="0">
          <widget class="QRadioButton" name="pleas_radioButton">
           <property name="text">
-           <string>Pleas</string>
+           <string>Pleas and Motion/Oral Hearings</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup_2</string>
@@ -338,11 +338,31 @@ font-weight: bold;</string>
         <item row="2" column="0">
          <widget class="QRadioButton" name="kimbler_radioButton">
           <property name="text">
-           <string>Judge Kimbler</string>
+           <string>Judge Reece</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup</string>
           </attribute>
+         </widget>
+        </item>
+        <item row="6" column="2">
+         <widget class="QRadioButton" name="pcvh_fcvh_radioButton">
+          <property name="text">
+           <string>PCVH/FCVH</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="7" column="2">
+         <widget class="QComboBox" name="pcvh_fcvh_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -683,7 +703,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

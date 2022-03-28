@@ -1,10 +1,7 @@
 import pytest
-import os
-import sys
-import inspect
-from PyQt5.QtSql import QSqlDatabase
-from pytestqt.plugin import QtBot
-from PyQt5 import QtCore
+
+
+
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -19,17 +16,10 @@ from package.controllers.main_entry_dialogs import DiversionPleaDialog, JailCCPl
 
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
-    return daily_case_list_database_connection
+    return QSqlDatabase.database("con_daily_case_lists", open=True)
 
 
 daily_case_list_database = open_daily_case_list_db_connection()
-
-def enter_data(field, data: str):
-    return QtBot.keyClicks(field, data)
-
-def mouse_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
 
 
 @pytest.fixture
@@ -48,14 +38,6 @@ def app_nocase(qtbot):
     qtbot.addWidget(app)
     mouse_click(app.arraignments_radioButton)
     mouse_click(app.bunner_radioButton)
-    return app
-
-
-@pytest.fixture
-def ngb_dialog(app, qtbot):
-    mouse_click(app.NotGuiltyBondButton)
-    app = NotGuiltyBondDialog(app.judicial_officer, app.case_to_load)
-    qtbot.addWidget(app)
     return app
 
 

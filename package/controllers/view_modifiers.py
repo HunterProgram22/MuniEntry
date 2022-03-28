@@ -126,6 +126,12 @@ class BaseDialogViewModifier(object):
             self.dialog.jail_report_days_notes_box.setDisabled(False)
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
+    def set_bond_condition_boxes_to_no_scroll(self):
+        self.dialog.bond_type_box.__class__ = NoScrollComboBox
+        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.dialog.monitoring_type_box.__class__ = NoScrollComboBox
+
+
     @classmethod
     def hide_boxes(cls, dialog):
         for item in cls.condition_checkbox_list:
@@ -249,8 +255,8 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date()
         self.set_appearance_reason()
-        self.dialog.bond_type_box.__class__ = NoScrollComboBox
-        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.set_bond_condition_boxes_to_no_scroll()
+        self.dialog.specialized_docket_type_box.__class__ = NoScrollComboBox
 
 
 class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
@@ -258,8 +264,7 @@ class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date()
         self.set_appearance_reason()
-        self.dialog.bond_type_box.__class__ = NoScrollComboBox
-        self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.set_bond_condition_boxes_to_no_scroll()
 
 
 class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
@@ -269,6 +274,7 @@ class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
         self.dialog.bond_type_box.__class__ = NoScrollComboBox
         self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.dialog.arrest_warrant_radius_box.__class__ = NoScrollComboBox
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
