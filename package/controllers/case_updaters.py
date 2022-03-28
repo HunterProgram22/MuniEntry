@@ -277,7 +277,8 @@ class GridModelUpdater:
 
     def update_model_with_plea_finding_grid_data(self):
         """This method updates any changes to the statute and degree that were made in the grid and
-        adds the plea that is entered for each charge."""
+        adds the plea that is entered for each charge. TODO: This should be refactored b/c dismissed does
+        not apply to Not Guilty - did a Hotfix to fix NotGuilty."""
         col = 1
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
@@ -299,7 +300,18 @@ class NotGuiltyGridModelUpdater(GridModelUpdater):
 
     def __init__(self, view, model):
         super().__init__(view, model)
-        self.update_model_with_plea_finding_grid_data()
+        self.update_model_with_plea_grid_data()
+
+    def update_model_with_plea_grid_data(self):
+        """This method updates any changes to the statute and degree that were made in the grid and
+        adds the plea that is entered for each charge."""
+        col = 1
+        for charge in self.model.charges_list:
+            while self.grid.itemAtPosition(self.row_offense, col) is None:
+                col += 1
+            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
+            charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
+            charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
 
 
 class FineOnlyGridModelUpdater(GridModelUpdater):
