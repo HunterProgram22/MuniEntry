@@ -57,7 +57,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
             self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
-            self.kimbler_radioButton: JudicialOfficer("James", "Kimbler", "Judge"),
+            self.kimbler_radioButton: JudicialOfficer("Guy", "Reece II", "Judge"),
         }
         self.dialog_dict = {
             self.FineOnlyPleaButton: FineOnlyPleaDialog,

@@ -358,7 +358,7 @@ class Ui_MainWindow(object):
         self.trials_to_court_radioButton.setText(_translate("MainWindow", "Trials to Court"))
         self.FailureToAppearButton.setText(_translate("MainWindow", "Failure to Appear"))
         self.ProbationViolationBondButton.setText(_translate("MainWindow", "Prelim. Probation Violation / Bond"))
-        self.kimbler_radioButton.setText(_translate("MainWindow", "Judge Kimbler"))
+        self.kimbler_radioButton.setText(_translate("MainWindow", "Judge Reece"))
         self.pcvh_fcvh_radioButton.setText(_translate("MainWindow", "PCVH/FCVH"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Crim/Traffic"))
         self.label_4.setText(_translate("MainWindow", "Civil Entries"))
