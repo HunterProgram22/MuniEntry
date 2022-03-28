@@ -286,6 +286,8 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         self.dialog_name = "Failure To Appear Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
+        if self.case_table == "final_pretrials": # Ovverides the set_appearance_reason in ViewModifier
+            self.appearance_reason_box.setCurrentText("final pre-trial")
 
     def modify_view(self):
         return FailureToAppearDialogViewModifier(self)
