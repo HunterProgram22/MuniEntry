@@ -537,7 +537,7 @@ background-color: rgb(255, 255, 255);</string>
                <item row="1" column="0" colspan="2">
                 <widget class="QCheckBox" name="set_bond_checkBox">
                  <property name="text">
-                  <string>Set Bond</string>
+                  <string>Set bond                                                             </string>
                  </property>
                 </widget>
                </item>

@@ -352,7 +352,7 @@ class Ui_FailureToAppearDialog(object):
         self.bond_amount_box.setItemText(8, _translate("FailureToAppearDialog", "$5,000"))
         self.bond_amount_box.setItemText(9, _translate("FailureToAppearDialog", "$10,000"))
         self.label_5.setText(_translate("FailureToAppearDialog", "<html><head/><body><p><span style=\" font-weight:600; text-decoration: underline;\">Bond</span></p></body></html>"))
-        self.set_bond_checkBox.setText(_translate("FailureToAppearDialog", "Set Bond"))
+        self.set_bond_checkBox.setText(_translate("FailureToAppearDialog", "Set bond                                                             "))
         self.create_entry_Button.setText(_translate("FailureToAppearDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("FailureToAppearDialog", "Close Dialog"))
         self.label_4.setText(_translate("FailureToAppearDialog", "<html><head/><body><p><span style=\" font-weight:600; text-decoration: underline;\">Failure To Appear Actions</span></p></body></html>"))
