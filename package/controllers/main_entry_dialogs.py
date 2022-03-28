@@ -293,6 +293,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
     def create_dialog_slot_functions(self):
         self.functions = FailureToAppearDialogSlotFunctions(self)
         self.functions.hide_warrant_radius()
+        self.functions.hide_bond_boxes()
 
     def connect_signals_to_slots(self):
         return FailureToAppearDialogSignalConnector(self)

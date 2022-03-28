@@ -134,6 +134,7 @@ class FailureToAppearDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
         dialog.arrest_warrant_checkBox.toggled.connect(dialog.functions.hide_warrant_radius)
+        dialog.set_bond_checkBox.toggled.connect(dialog.functions.hide_bond_boxes)
 
 
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):

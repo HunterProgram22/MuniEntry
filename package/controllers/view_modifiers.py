@@ -274,6 +274,7 @@ class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
         self.dialog.bond_type_box.__class__ = NoScrollComboBox
         self.dialog.bond_amount_box.__class__ = NoScrollComboBox
+        self.dialog.arrest_warrant_radius_box.__class__ = NoScrollComboBox
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
