@@ -15,7 +15,7 @@ main_window_all_button_test_list = [
 
 def test_window_opens(qtbot, main_window):
     main_window.show()
-    assert main_window.windowTitle() == "MuniEntry - ver 0.15.2"
+    assert main_window.windowTitle() == "MuniEntry - ver 0.16.0"
 
 
 @pytest.mark.skip(reason="Requires manual interaction")
