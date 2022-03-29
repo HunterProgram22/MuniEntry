@@ -81,6 +81,7 @@ class CriminalBaseDialog(BaseDialog):
         self.appearance_reason_box.__class__ = NoScrollComboBox
         self.defense_counsel_type_box.__class__ = NoScrollComboBox
         self.criminal_charge = None
+        self.popup_dialog = None
 
     def load_cms_data_to_view(self):
         raise NotImplementedError

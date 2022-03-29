@@ -23,13 +23,16 @@ class BaseDialogSlotFunctions(object):
         from package.controllers.charges_dialogs import AddChargeDialog
 
         self.dialog.update_entry_case_information()
-        AddChargeDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AddChargeDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
+
 
     def start_amend_offense_dialog(self):
         from package.controllers.charges_dialogs import AmendChargeDialog
 
         self.dialog.update_entry_case_information()
-        AmendChargeDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
 
     def close_dialog(self):
         self.close_event()
