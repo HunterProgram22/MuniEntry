@@ -5,8 +5,25 @@ from pytestqt.plugin import QtBot
 from conftest import mouse_click, enter_data
 
 
-def test_dialog_opens(qtbot, dialog):
-    assert dialog.windowTitle() == "Failure To Appear Case Information"
+@pytest.fixture
+def fta_dialog(qtbot, main_window):
+    """Failure To Appear Dialog"""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+
+    def handle_dialog():
+        while main_window.dialog is None:
+            qApp.processEvents()
+        qtbot.addWidget(main_window.dialog)
+        mouse_click(main_window.dialog.close_dialog_Button)
+
+    QTimer.singleShot(100, handle_dialog)
+    mouse_click(main_window.FailureToAppearButton)
+    return main_window.dialog
+
+
+def test_dialog_opens(qtbot, fta_dialog):
+    assert fta_dialog.windowTitle() == "Failure To Appear Case Information"
 
 
 all_fta_conditions_test_list = [
@@ -21,9 +38,9 @@ all_fta_conditions_test_list = [
 ]
 
 @pytest.mark.parametrize("checkBox", all_fta_conditions_test_list)
-def test_all_checkbox_conditions(qtbot, dialog, checkBox):
-    mouse_click(getattr(dialog, checkBox))
-    assert getattr(dialog, checkBox).isChecked()
+def test_all_checkbox_conditions(qtbot, fta_dialog, checkBox):
+    mouse_click(getattr(fta_dialog, checkBox))
+    assert getattr(fta_dialog, checkBox).isChecked()
 
 
 all_fta_checkbox_conditions_model_test_list = [
@@ -39,24 +56,24 @@ all_fta_checkbox_conditions_model_test_list = [
 ]
 
 @pytest.mark.parametrize("checkBox, model", all_fta_checkbox_conditions_model_test_list)
-def test_model_updated_if_conditions_checked(qtbot, dialog, checkBox, model):
-    mouse_click(dialog.defense_counsel_waived_checkBox)
-    mouse_click(getattr(dialog, checkBox))
-    mouse_click(dialog.create_entry_Button)
-    assert getattr(dialog.entry_case_information.fta_conditions, model) == True
+def test_model_updated_if_conditions_checked(qtbot, fta_dialog, checkBox, model):
+    mouse_click(fta_dialog.defense_counsel_waived_checkBox)
+    mouse_click(getattr(fta_dialog, checkBox))
+    mouse_click(fta_dialog.create_entry_Button)
+    assert getattr(fta_dialog.entry_case_information.fta_conditions, model) == True
 
 
-def test_arrest_warrant_radius_box_update_model(qtbot, dialog):
-    mouse_click(dialog.defense_counsel_waived_checkBox)
-    enter_data(dialog.arrest_warrant_radius_box, "2")
-    mouse_click(dialog.create_entry_Button)
-    assert dialog.entry_case_information.fta_conditions.arrest_warrant_radius == "2 (Statewide)"
+def test_arrest_warrant_radius_box_update_model(qtbot, fta_dialog):
+    mouse_click(fta_dialog.defense_counsel_waived_checkBox)
+    enter_data(fta_dialog.arrest_warrant_radius_box, "2")
+    mouse_click(fta_dialog.create_entry_Button)
+    assert fta_dialog.entry_case_information.fta_conditions.arrest_warrant_radius == "2 (Statewide)"
 
 
-def test_set_bond_update_model(qtbot, dialog):
-    mouse_click(dialog.defense_counsel_waived_checkBox)
-    enter_data(dialog.bond_type_box, "Cash or Surety Bond")
-    enter_data(dialog.bond_amount_box, "$5,000")
-    mouse_click(dialog.create_entry_Button)
-    assert dialog.entry_case_information.fta_conditions.bond_type == "Cash or Surety Bond"
-    assert dialog.entry_case_information.fta_conditions.bond_amount == "$5,000"
+def test_set_bond_update_model(qtbot, fta_dialog):
+    mouse_click(fta_dialog.defense_counsel_waived_checkBox)
+    enter_data(fta_dialog.bond_type_box, "Cash or Surety Bond")
+    enter_data(fta_dialog.bond_amount_box, "$5,000")
+    mouse_click(fta_dialog.create_entry_Button)
+    assert fta_dialog.entry_case_information.fta_conditions.bond_type == "Cash or Surety Bond"
+    assert fta_dialog.entry_case_information.fta_conditions.bond_amount == "$5,000"
