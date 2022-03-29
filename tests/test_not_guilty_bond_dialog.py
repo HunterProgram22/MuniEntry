@@ -57,6 +57,7 @@ def test_specialized_docket_condition(qtbot, ngb_dialog):
     assert getattr(ngb_dialog, "specialized_docket_type_box").currentText() == "Mission (Veteran's) Court"
 
 
+###TEST MODEL###
 main_ngb_bond_conditions_model_test_list = [
     ("no_alcohol_drugs_checkBox", "no_alcohol_drugs"),
     ("alcohol_drugs_assessment_checkBox", "alcohol_drugs_assessment"),
@@ -74,5 +75,27 @@ def test_model_updated_if_conditions_checked(qtbot, ngb_dialog, checkBox, model)
     mouse_click(getattr(ngb_dialog, checkBox))
     mouse_click(ngb_dialog.create_entry_Button)
     assert getattr(ngb_dialog.entry_case_information.bond_conditions, model) == True
+
+
+def test_special_conditions_model_update():
+    pass
+
+
+def test_create_not_guilty_bond_entry(qtbot, main_window):
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+
+    def handle_dialog():
+        qtbot.addWidget(main_window.dialog)
+        mouse_click(main_window.dialog.close_dialog_Button)
+
+    QTimer.singleShot(200, handle_dialog)
+    mouse_click(main_window.NotGuiltyBondButton)
+    mouse_click(main_window.dialog.not_guilty_all_Button)
+    mouse_click(main_window.dialog.create_entry_Button)
+    for charge in main_window.dialog.entry_case_information.charges_list:
+        assert charge.plea == "Not Guilty"
+
 
 

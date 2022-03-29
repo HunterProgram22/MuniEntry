@@ -43,10 +43,6 @@ class AmendOffenseDetails:
 class BondConditions:
     """Conditions specific to a Not Guilty Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
-    # forfeit_bond: str = None
-    # issue_warrant: str = None
-    # forfeit_license: str = None
-    # vehicle_registration_block: str = None
     bond_type: str = None
     bond_amount: str = None
     no_contact: bool = False
