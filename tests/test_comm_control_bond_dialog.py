@@ -4,8 +4,8 @@ from conftest import mouse_click, enter_data
 
 
 @pytest.fixture
-def fop_dialog(qtbot, main_window):
-    """Fine Only Plea Dialog is fop_dialog"""
+def div_dialog(qtbot, main_window):
+    """Diversion Plea Dialog is div_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
 
@@ -14,9 +14,9 @@ def fop_dialog(qtbot, main_window):
         mouse_click(main_window.dialog.close_dialog_Button)
 
     QTimer.singleShot(100, close_dialog)
-    mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.ProbationViolationBondButton)
     return main_window.dialog
 
 
-def test_dialog_opens(fop_dialog):
-    assert fop_dialog.windowTitle() == "Fine Only Plea Case Information"
+def test_dialog_opens(div_dialog):
+    assert div_dialog.windowTitle() == "Community Control Violation Bond Case Information"
