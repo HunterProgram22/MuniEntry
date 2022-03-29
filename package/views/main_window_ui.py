@@ -343,7 +343,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
         self.arraignments_radioButton.setText(_translate("MainWindow", "Arraignments"))
         self.final_pretrial_radioButton.setText(_translate("MainWindow", "Final Pre-trials"))
-        self.slated_radioButton.setText(_translate("MainWindow", "Slated"))
+        self.slated_radioButton.setText(_translate("MainWindow", "Slated                                  "))
         self.NotGuiltyBondButton.setText(_translate("MainWindow", "Not Guilty / Bond"))
         self.JailCCPleaButton.setText(_translate("MainWindow", "Jail and Comm. Control Plea"))
         self.FineOnlyPleaButton.setText(_translate("MainWindow", "Fine Only Plea"))

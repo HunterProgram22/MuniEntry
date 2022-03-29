@@ -75,7 +75,6 @@ def test_model_updated_if_conditions_checked(qtbot, ngb_dialog, checkBox, model)
     mouse_click(ngb_dialog.defense_counsel_waived_checkBox)
     mouse_click(getattr(ngb_dialog, checkBox))
 
-
     def close_message():
         try:
             qtbot.addWidget(ngb_dialog.message_box)

@@ -20,6 +20,7 @@ def test_window_opens(qtbot, main_window):
 
 @pytest.mark.skip(reason="Requires manual interaction")
 def test_judicial_officer_required_warning(qtbot, main_window):
+    QTimer.singleShot(100, close_message)
     mouse_click(main_window.JailCCPleaButton)
 
 

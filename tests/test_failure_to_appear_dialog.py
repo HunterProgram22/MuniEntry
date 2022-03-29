@@ -1,4 +1,5 @@
 import pytest
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from conftest import mouse_click, enter_data
 
@@ -55,6 +56,16 @@ all_fta_checkbox_conditions_model_test_list = [
 def test_model_updated_if_conditions_checked(qtbot, fta_dialog, checkBox, model):
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     mouse_click(getattr(fta_dialog, checkBox))
+
+    def close_message():
+        try:
+            qtbot.addWidget(fta_dialog.message_box)
+            mouse_click(fta_dialog.message_box.button(QtWidgets.QMessageBox.Ok))
+        except AttributeError:
+            pass
+
+    QTimer.singleShot(100, close_message)
+
     mouse_click(fta_dialog.create_entry_Button)
     assert getattr(fta_dialog.entry_case_information.fta_conditions, model) == True
 
@@ -62,6 +73,16 @@ def test_model_updated_if_conditions_checked(qtbot, fta_dialog, checkBox, model)
 def test_arrest_warrant_radius_box_update_model(qtbot, fta_dialog):
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     enter_data(fta_dialog.arrest_warrant_radius_box, "2")
+
+    def close_message():
+        try:
+            qtbot.addWidget(fta_dialog.message_box)
+            mouse_click(fta_dialog.message_box.button(QtWidgets.QMessageBox.Ok))
+        except AttributeError:
+            pass
+
+    QTimer.singleShot(100, close_message)
+
     mouse_click(fta_dialog.create_entry_Button)
     assert fta_dialog.entry_case_information.fta_conditions.arrest_warrant_radius == "2 (Statewide)"
 
@@ -70,6 +91,15 @@ def test_set_bond_update_model(qtbot, fta_dialog):
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     enter_data(fta_dialog.bond_type_box, "Cash or Surety Bond")
     enter_data(fta_dialog.bond_amount_box, "$5,000")
+
+    def close_message():
+        try:
+            qtbot.addWidget(fta_dialog.message_box)
+            mouse_click(fta_dialog.message_box.button(QtWidgets.QMessageBox.Ok))
+        except AttributeError:
+            pass
+
+    QTimer.singleShot(100, close_message)
     mouse_click(fta_dialog.create_entry_Button)
     assert fta_dialog.entry_case_information.fta_conditions.bond_type == "Cash or Surety Bond"
     assert fta_dialog.entry_case_information.fta_conditions.bond_amount == "$5,000"
