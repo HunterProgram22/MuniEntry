@@ -1,13 +1,11 @@
 import pytest
 from PyQt5.QtCore import QTimer
-from PyQt5 import QtCore, QtWidgets
-from pytestqt.plugin import QtBot
 from conftest import mouse_click, enter_data
 
 
 @pytest.fixture
 def fta_dialog(qtbot, main_window):
-    """Failure To Appear Dialog = fta_dialog"""
+    """Failure To Appear Dialog is fta_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
 
@@ -22,7 +20,7 @@ def fta_dialog(qtbot, main_window):
     return main_window.dialog
 
 
-def test_dialog_opens(qtbot, fta_dialog):
+def test_dialog_opens(fta_dialog):
     assert fta_dialog.windowTitle() == "Failure To Appear Case Information"
 
 
