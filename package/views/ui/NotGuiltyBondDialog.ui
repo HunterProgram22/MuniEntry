@@ -454,7 +454,7 @@ border-color: rgb(0, 0, 0);</string>
              <item row="3" column="0">
               <widget class="QCheckBox" name="custodial_supervision_checkBox">
                <property name="text">
-                <string>Custodial Supervision</string>
+                <string>Custodial Supervision                          </string>
                </property>
               </widget>
              </item>
@@ -467,7 +467,7 @@ border-color: rgb(0, 0, 0);</string>
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>No Contact Restrictions</string>
+                <string>No Contact Restrictions                         </string>
                </property>
               </widget>
              </item>
@@ -480,7 +480,7 @@ border-color: rgb(0, 0, 0);</string>
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Other Conditions</string>
+                <string>Other Conditions                          </string>
                </property>
               </widget>
              </item>
