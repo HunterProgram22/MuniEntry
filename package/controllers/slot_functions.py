@@ -60,11 +60,11 @@ class BaseDialogSlotFunctions(object):
             doc.save(SAVE_PATH + docname)
             startfile(SAVE_PATH + docname)
         except PermissionError:
-            message = RequiredBox(
+            self.dialog.message_box = RequiredBox(
                 "An entry for this case is already open in Word."
                 " You must close the Word document first."
             )
-            message.exec()
+            self.dialog.message_box.exec()
 
     def set_document_name(self):
         """Returns a name for the document in the format CaseNumber_TemplateName.docx

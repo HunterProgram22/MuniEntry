@@ -1,4 +1,5 @@
 import pytest
+from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
 from conftest import mouse_click, enter_data
 
@@ -73,6 +74,16 @@ def test_model_updated_if_conditions_checked(qtbot, ngb_dialog, checkBox, model)
     """This is a test for the checkbox conditions of the model BondConditions."""
     mouse_click(ngb_dialog.defense_counsel_waived_checkBox)
     mouse_click(getattr(ngb_dialog, checkBox))
+
+
+    def close_message():
+        try:
+            qtbot.addWidget(ngb_dialog.message_box)
+            mouse_click(ngb_dialog.message_box.button(QtWidgets.QMessageBox.Ok))
+        except AttributeError:
+            pass
+
+    QTimer.singleShot(100, close_message)
     mouse_click(ngb_dialog.create_entry_Button)
     assert getattr(ngb_dialog.entry_case_information.bond_conditions, model) == True
 
@@ -90,7 +101,7 @@ def test_create_not_guilty_bond_entry(qtbot, main_window):
         qtbot.addWidget(main_window.dialog)
         mouse_click(main_window.dialog.close_dialog_Button)
 
-    QTimer.singleShot(200, handle_dialog)
+    QTimer.singleShot(150, handle_dialog)
     mouse_click(main_window.NotGuiltyBondButton)
     mouse_click(main_window.dialog.not_guilty_all_Button)
     mouse_click(main_window.dialog.create_entry_Button)
