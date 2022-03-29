@@ -7,7 +7,7 @@ from conftest import mouse_click, enter_data
 
 @pytest.fixture
 def fta_dialog(qtbot, main_window):
-    """Failure To Appear Dialog"""
+    """Failure To Appear Dialog = fta_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
 

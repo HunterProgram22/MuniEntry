@@ -8,7 +8,7 @@ from conftest import mouse_click, enter_data
 
 @pytest.fixture
 def ngb_dialog(qtbot, main_window):
-    """Not Guilty Bond Dialog"""
+    """Not Guilty Bond Dialog = ngb_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
 
