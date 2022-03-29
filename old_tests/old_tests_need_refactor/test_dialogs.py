@@ -1,5 +1,5 @@
 import pytest
-from tests.old_tests.conftest import mouse_click, enter_data
+from old_tests.conftest import mouse_click, enter_data
 
 
 
