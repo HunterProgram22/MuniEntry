@@ -10,8 +10,6 @@ def fta_dialog(qtbot, main_window):
     mouse_click(main_window.arraignments_radioButton)
 
     def handle_dialog():
-        while main_window.dialog is None:
-            qApp.processEvents()
         qtbot.addWidget(main_window.dialog)
         mouse_click(main_window.dialog.close_dialog_Button)
 

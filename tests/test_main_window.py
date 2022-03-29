@@ -35,8 +35,6 @@ def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_t
     mouse_click(main_window.arraignments_radioButton)
 
     def handle_dialog():
-        while main_window.dialog is None:
-            qApp.processEvents()
         qtbot.addWidget(main_window.dialog)
         mouse_click(main_window.dialog.close_dialog_Button)
 
@@ -53,8 +51,6 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
 
     def handle_dialog():
-        while main_window.dialog is None:
-            qApp.processEvents()
         qtbot.addWidget(main_window.dialog)
         mouse_click(main_window.dialog.close_dialog_Button)
 
