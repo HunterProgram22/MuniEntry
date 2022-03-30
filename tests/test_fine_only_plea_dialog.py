@@ -56,3 +56,9 @@ def test_court_costs_due_date(fop_dialog):
     fop_dialog.ability_to_pay_box.setCurrentText("within 90 days")
     ninety = set_future_date(90, "Tuesday")
     assert fop_dialog.balance_due_date.date() == TODAY + timedelta(days=ninety)
+
+
+def test_credit_for_jail_shows_box_if_checked(fop_dialog):
+    assert fop_dialog.jail_time_credit_box.isHidden()
+    mouse_click(fop_dialog.credit_for_jail_checkBox)
+    assert fop_dialog.jail_time_credit_box.isHidden() == False
