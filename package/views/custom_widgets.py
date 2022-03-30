@@ -235,12 +235,7 @@ class ChargeGridAmendButton(QPushButton):
         self.setText("Amend")
         self.setObjectName("charge_grid_amend_Button")
         self.setFocusPolicy(QtCore.Qt.NoFocus)
-
         self.released.connect(self.dialog.functions.start_amend_offense_dialog)
-        self.released.connect(self.print_location)
-
-    def print_location(self):
-        print(self.column_index)
 
 
 class AlliedCheckbox(QCheckBox):
