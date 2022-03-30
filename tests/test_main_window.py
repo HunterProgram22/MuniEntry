@@ -66,3 +66,22 @@ def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button
     mouse_click(getattr(main_window_noclose, case_list_button))
     enter_data(getattr(main_window_noclose, case_list_box), case_number)
     assert getattr(main_window_noclose, case_list_box).currentText() == case_number
+
+
+daily_case_list_appearance_reasons = [
+    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignment_cases_box", "arraignment", "FineOnlyPleaButton"),
+    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
+    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "change of plea", "JailCCPleaButton"),
+    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "change of plea", "JailCCPleaButton"),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "trial to court", "JailCCPleaButton"),
+    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", "preliminary community control violation hearing", "ProbationViolationBondButton"),
+]
+
+
+@pytest.mark.parametrize("case_list_button, case_number, case_list_box, appearance_reason, entry_button", daily_case_list_appearance_reasons)
+def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, case_number, case_list_box, appearance_reason, entry_button):
+    mouse_click(main_window.bunner_radioButton)
+    mouse_click(getattr(main_window, case_list_button))
+    enter_data(getattr(main_window, case_list_box), case_number)
+    mouse_click(getattr(main_window, entry_button))
+    assert main_window.dialog.appearance_reason_box.currentText() == appearance_reason
