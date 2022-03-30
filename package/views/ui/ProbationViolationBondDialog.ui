@@ -345,7 +345,7 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>preliminary community control violation hearing</string>
+                 <string>Preliminary Community Control Violation Hearing</string>
                 </property>
                </item>
                <item>
@@ -712,17 +712,12 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
-                 <string/>
+                 <string>Defendant stipulates probable cause exists</string>
                 </property>
                </item>
                <item>
                 <property name="text">
                  <string>Court finds probable cause</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Defendant waives probable cause finding</string>
                 </property>
                </item>
                <item>
