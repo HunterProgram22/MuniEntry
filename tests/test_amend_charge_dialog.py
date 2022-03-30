@@ -52,3 +52,38 @@ def test_amend_charge_works_all_dialogs(qtbot, main_window, test_input):
 
 def test_add_charge_dialog_opens(amend_charge_dialog):
     assert amend_charge_dialog.windowTitle() == "Amend Charge"
+
+
+def test_amend_charge_dialog_loads_empty(amend_charge_dialog):
+    assert amend_charge_dialog.statute_choice_box.currentText() == ""
+    assert amend_charge_dialog.offense_choice_box.currentText() == ""
+    assert amend_charge_dialog.degree_choice_box.currentText() == ""
+
+
+def test_if_checking_freeform_clears_fields(amend_charge_dialog):
+    enter_data(amend_charge_dialog.offense_choice_box, "A")
+    mouse_click(amend_charge_dialog.freeform_entry_checkBox)
+    assert amend_charge_dialog.statute_choice_box.currentText() == ""
+    assert amend_charge_dialog.offense_choice_box.currentText() == ""
+    assert amend_charge_dialog.degree_choice_box.currentText() == ""
+
+
+def test_if_clear_field_button_clears(amend_charge_dialog):
+    enter_data(amend_charge_dialog.offense_choice_box, "A")
+    mouse_click(amend_charge_dialog.clear_fields_Button)
+    assert amend_charge_dialog.statute_choice_box.currentText() == ""
+    assert amend_charge_dialog.offense_choice_box.currentText() == ""
+    assert amend_charge_dialog.degree_choice_box.currentText() == ""
+
+
+def test_if_checking_freeform_makes_editable(amend_charge_dialog):
+    mouse_click(amend_charge_dialog.freeform_entry_checkBox)
+    assert amend_charge_dialog.statute_choice_box.isEditable()
+    assert amend_charge_dialog.offense_choice_box.isEditable()
+
+
+def test_if_checking_freeform_twice_makes_uneditable(amend_charge_dialog):
+    mouse_click(amend_charge_dialog.freeform_entry_checkBox)
+    mouse_click(amend_charge_dialog.freeform_entry_checkBox)
+    assert amend_charge_dialog.statute_choice_box.isEditable() == False
+    assert amend_charge_dialog.offense_choice_box.isEditable() == False

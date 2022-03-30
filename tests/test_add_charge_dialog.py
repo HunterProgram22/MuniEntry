@@ -83,4 +83,3 @@ def test_if_checking_freeform_twice_makes_uneditable(add_charge_dialog):
     mouse_click(add_charge_dialog.freeform_entry_checkBox)
     assert add_charge_dialog.statute_choice_box.isEditable() == False
     assert add_charge_dialog.offense_choice_box.isEditable() == False
-

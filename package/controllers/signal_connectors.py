@@ -69,6 +69,7 @@ class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_statute_and_offense_boxes(dialog)
         dialog.clear_fields_Button.released.connect(dialog.functions.clear_amend_charge_fields)
         dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense_process)
+        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):

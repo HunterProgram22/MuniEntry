@@ -276,6 +276,20 @@ class BaseDialogSlotFunctions(object):
                     getattr(self.dialog, condition_field).setEnabled(False)
                     getattr(self.dialog, condition_field).setHidden(True)
 
+    def set_freeform_entry(self):
+        if self.dialog.freeform_entry_checkBox.isChecked():
+            self.dialog.statute_choice_box.setEditable(True)
+            self.dialog.offense_choice_box.setEditable(True)
+            self.dialog.statute_choice_box.clearEditText()
+            self.dialog.offense_choice_box.clearEditText()
+            self.dialog.degree_choice_box.setCurrentText("")
+        else:
+            self.dialog.statute_choice_box.setEditable(False)
+            self.dialog.offense_choice_box.setEditable(False)
+            self.dialog.statute_choice_box.setCurrentText("")
+            self.dialog.offense_choice_box.setCurrentText("")
+            self.dialog.degree_choice_box.setCurrentText("")
+
 
 class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
@@ -314,19 +328,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
             return None
         return sql_query_offense_type(key)
 
-    def set_freeform_entry(self):
-        if self.dialog.freeform_entry_checkBox.isChecked():
-            self.dialog.statute_choice_box.setEditable(True)
-            self.dialog.offense_choice_box.setEditable(True)
-            self.dialog.statute_choice_box.clearEditText()
-            self.dialog.offense_choice_box.clearEditText()
-            self.dialog.degree_choice_box.setCurrentText("")
-        else:
-            self.dialog.statute_choice_box.setEditable(False)
-            self.dialog.offense_choice_box.setEditable(False)
-            self.dialog.statute_choice_box.setCurrentText("")
-            self.dialog.offense_choice_box.setCurrentText("")
-            self.dialog.degree_choice_box.setCurrentText("")
+
 
     def close_event(self):
         self.dialog.charges_database.close()
@@ -339,8 +341,9 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.main_dialog = dialog.main_dialog
 
     def clear_amend_charge_fields(self):
-        self.dialog.statute_choice_box.clearEditText()
-        self.dialog.offense_choice_box.clearEditText()
+        self.dialog.statute_choice_box.setCurrentText("")
+        self.dialog.offense_choice_box.setCurrentText("")
+        self.dialog.degree_choice_box.setCurrentText("")
 
     def amend_offense_process(self):
         """Adds the data entered for the amended offense to the AmendOffenseDetails
