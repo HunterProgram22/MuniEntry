@@ -60,6 +60,7 @@ class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_statute_and_offense_boxes(dialog)
         dialog.clear_fields_Button.released.connect(dialog.functions.clear_add_charge_fields)
         dialog.add_charge_Button.released.connect(dialog.functions.add_charge_process)
+        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
 class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
@@ -68,6 +69,7 @@ class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_statute_and_offense_boxes(dialog)
         dialog.clear_fields_Button.released.connect(dialog.functions.clear_amend_charge_fields)
         dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense_process)
+        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
 class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
@@ -109,6 +111,7 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
+        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)

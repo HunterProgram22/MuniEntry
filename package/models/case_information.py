@@ -43,10 +43,6 @@ class AmendOffenseDetails:
 class BondConditions:
     """Conditions specific to a Not Guilty Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
-    # forfeit_bond: str = None
-    # issue_warrant: str = None
-    # forfeit_license: str = None
-    # vehicle_registration_block: str = None
     bond_type: str = None
     bond_amount: str = None
     no_contact: bool = False
@@ -445,15 +441,21 @@ class CriminalCaseInformation:
     diversion: object = field(default_factory=Diversion)
     community_control: object = field(default_factory=CommunityControl)
     jail_terms: object = field(default_factory=JailTerms)
+
+    bond_conditions: object = field(default_factory=BondConditions)
+
     no_contact: object = field(default_factory=NoContact)
     custodial_supervision: object = field(default_factory=CustodialSupervision)
-    bond_conditions: object = field(default_factory=BondConditions)
-    community_service: object = field(default_factory=CommunityService)
-    license_suspension: object = field(default_factory=LicenseSuspension)
-    other_conditions: object = field(default_factory=OtherConditions)
     domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
     admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
     vehicle_seizure: object = field(default_factory=VehicleSeizure)
+
+    other_conditions: object = field(default_factory=OtherConditions)
+
+    community_service: object = field(default_factory=CommunityService)
+    license_suspension: object = field(default_factory=LicenseSuspension)
+
+
     victim_notification: object = field(default_factory=VictimNotification)
     impoundment: object = field(default_factory=Impoundment)
 

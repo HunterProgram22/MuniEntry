@@ -5,8 +5,10 @@ from datetime import date, timedelta
 def set_future_date(days_to_add, weekday_due_date):
     """This is a general helper function that will accept the numbers of days to
     add to the current date and set a new date.
+
     :days_to_add: A string from the view.
-    :next_day: The next day of the week to set the date after the days to add.
+
+    :weekday_due_date: The next day of the week to set the date after the days to add.
     For example 0 days sets it to the next Monday after the added days, 1 sets
     it to the next Tuesday after the added days, etc."""
     future_date = date.today() + timedelta(days_to_add)
