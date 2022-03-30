@@ -30,6 +30,22 @@ def test_add_charge_dialog_loads_empty(add_charge_dialog):
     assert add_charge_dialog.degree_choice_box.currentText() == ""
 
 
+def test_if_checking_freeform_clears_fields(add_charge_dialog):
+    enter_data(add_charge_dialog.offense_choice_box, "A")
+    mouse_click(add_charge_dialog.freeform_entry_checkBox)
+    assert add_charge_dialog.statute_choice_box.currentText() == ""
+    assert add_charge_dialog.offense_choice_box.currentText() == ""
+    assert add_charge_dialog.degree_choice_box.currentText() == ""
+
+
+def test_if_clear_field_button_clears(add_charge_dialog):
+    enter_data(add_charge_dialog.offense_choice_box, "A")
+    mouse_click(add_charge_dialog.clear_fields_Button)
+    assert add_charge_dialog.statute_choice_box.currentText() == ""
+    assert add_charge_dialog.offense_choice_box.currentText() == ""
+    assert add_charge_dialog.degree_choice_box.currentText() == ""
+
+
 def test_if_checking_freeform_makes_editable(add_charge_dialog):
     mouse_click(add_charge_dialog.freeform_entry_checkBox)
     assert add_charge_dialog.statute_choice_box.isEditable()

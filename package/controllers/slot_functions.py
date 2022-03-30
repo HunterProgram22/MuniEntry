@@ -317,9 +317,15 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         if self.dialog.freeform_entry_checkBox.isChecked():
             self.dialog.statute_choice_box.setEditable(True)
             self.dialog.offense_choice_box.setEditable(True)
+            self.dialog.statute_choice_box.clearEditText()
+            self.dialog.offense_choice_box.clearEditText()
+            self.dialog.degree_choice_box.setCurrentText("")
         else:
             self.dialog.statute_choice_box.setEditable(False)
             self.dialog.offense_choice_box.setEditable(False)
+            self.dialog.statute_choice_box.setCurrentText("")
+            self.dialog.offense_choice_box.setCurrentText("")
+            self.dialog.degree_choice_box.setCurrentText("")
 
     def close_event(self):
         self.dialog.charges_database.close()
