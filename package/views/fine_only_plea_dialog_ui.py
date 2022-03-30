@@ -333,7 +333,6 @@ class Ui_FineOnlyPleaDialog(object):
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
         self.defendant_first_name_lineEdit = QtWidgets.QLineEdit(self.case_name_Frame)
-        self.defendant_first_name_lineEdit.setMaximumSize(QtCore.QSize(500, 16777215))
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 0, 1, 1, 1)

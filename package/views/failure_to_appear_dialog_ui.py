@@ -102,7 +102,6 @@ class Ui_FailureToAppearDialog(object):
         self.case_number_lineEdit.setObjectName("case_number_lineEdit")
         self.gridLayout.addWidget(self.case_number_lineEdit, 1, 3, 1, 1)
         self.defendant_first_name_lineEdit = QtWidgets.QLineEdit(self.case_name_Frame)
-        self.defendant_first_name_lineEdit.setMaximumSize(QtCore.QSize(500, 16777215))
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 0, 1, 1, 1)
