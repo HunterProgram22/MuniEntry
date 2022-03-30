@@ -9,12 +9,6 @@ def fta_dialog(qtbot, main_window):
     """Failure To Appear Dialog is fta_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
-
-    def close_dialog():
-        qtbot.addWidget(main_window.dialog)
-        mouse_click(main_window.dialog.close_dialog_Button)
-
-    QTimer.singleShot(100, close_dialog)
     mouse_click(main_window.FailureToAppearButton)
     return main_window.dialog
 

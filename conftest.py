@@ -32,4 +32,19 @@ def main_window(qtbot):
     daily_case_list_database = open_daily_case_list_db_connection()
     window = Window(daily_case_list_database)
     qtbot.addWidget(window)
+
+    def close_main_dialog():
+        qtbot.addWidget(window.dialog)
+        mouse_click(window.dialog.close_dialog_Button)
+
+    QTimer.singleShot(100, close_main_dialog)
     return window
+
+
+@pytest.fixture
+def main_window_noclose(qtbot):
+    daily_case_list_database = open_daily_case_list_db_connection()
+    window = Window(daily_case_list_database)
+    qtbot.addWidget(window)
+    return window
+

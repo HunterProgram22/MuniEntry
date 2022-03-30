@@ -265,7 +265,7 @@ font-weight: bold;</string>
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="editable">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -358,7 +358,7 @@ font-weight: bold;</string>
          <string notr="true">background-color: rgb(255, 255, 255);</string>
         </property>
         <property name="editable">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
