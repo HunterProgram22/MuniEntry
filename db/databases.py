@@ -217,7 +217,13 @@ def return_data_from_excel(excel_file):
         case_number = worksheet.cell(row=row, column=1)
         defendant_last_name = worksheet.cell(row=row, column=3)
         defendant_first_name = worksheet.cell(row=row, column=4)
-        offense = worksheet.cell(row=row, column=5)
+
+        if worksheet.cell(row=row, column=5).value is None:
+            worksheet.cell(row=row, column=5).value = "No Data"
+            offense = worksheet.cell(row=row, column=5)
+        else:
+            offense = worksheet.cell(row=row, column=5)
+
         if worksheet.cell(row=row, column=6).value is None:
             worksheet.cell(row=row, column=6).value = "No Data"
             statute = worksheet.cell(row=row, column=6)
