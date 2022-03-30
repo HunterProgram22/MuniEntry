@@ -6,7 +6,8 @@ from conftest import mouse_click, enter_data
 
 @pytest.fixture
 def add_charge_dialog(qtbot, main_window):
-    """Add Charge Dialog is add_charge_dialog"""
+    """Add Charge Dialog is add_charge_dialog. Uses the Jail Dialog
+    as that is the most common."""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.JailCCPleaButton)
