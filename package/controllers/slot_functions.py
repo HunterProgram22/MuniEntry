@@ -313,6 +313,14 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
             return None
         return sql_query_offense_type(key)
 
+    def set_freeform_entry(self):
+        if self.dialog.freeform_entry_checkBox.isChecked():
+            self.dialog.statute_choice_box.setEditable(True)
+            self.dialog.offense_choice_box.setEditable(True)
+        else:
+            self.dialog.statute_choice_box.setEditable(False)
+            self.dialog.offense_choice_box.setEditable(False)
+
     def close_event(self):
         self.dialog.charges_database.close()
         self.close_window()

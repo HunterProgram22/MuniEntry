@@ -19,5 +19,20 @@ def add_charge_dialog(qtbot, main_window):
     mouse_click(main_window.dialog.add_charge_Button)
     return main_window.dialog.popup_dialog
 
-def test_dialog_opens(add_charge_dialog):
+
+def test_add_charge_dialog_opens(add_charge_dialog):
     assert add_charge_dialog.windowTitle() == "Add Charge"
+
+
+def test_if_checking_freeform_makes_editable(add_charge_dialog):
+    mouse_click(add_charge_dialog.freeform_entry_checkBox)
+    assert add_charge_dialog.statute_choice_box.isEditable()
+    assert add_charge_dialog.offense_choice_box.isEditable()
+
+
+def test_if_checking_freeform_twice_makes_uneditable(add_charge_dialog):
+    mouse_click(add_charge_dialog.freeform_entry_checkBox)
+    mouse_click(add_charge_dialog.freeform_entry_checkBox)
+    assert add_charge_dialog.statute_choice_box.isEditable() == False
+    assert add_charge_dialog.offense_choice_box.isEditable() == False
+

@@ -60,7 +60,7 @@ class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_statute_and_offense_boxes(dialog)
         dialog.clear_fields_Button.released.connect(dialog.functions.clear_add_charge_fields)
         dialog.add_charge_Button.released.connect(dialog.functions.add_charge_process)
-        # dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
+        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
 class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
