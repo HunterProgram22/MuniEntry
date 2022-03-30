@@ -20,6 +20,31 @@ def add_charge_dialog(qtbot, main_window):
     return main_window.dialog.popup_dialog
 
 
+all_add_charge_dialogs_test_list = [
+    "FineOnlyPleaButton",
+    "JailCCPleaButton",
+    "NotGuiltyBondButton",
+    "DiversionButton",
+]
+
+@pytest.mark.parametrize("test_input", all_add_charge_dialogs_test_list)
+def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
+    """Tests to make sure the Add Charge button opens the Add Charge Dialog for any
+    Main Entry Dialog that has an Add Charge button."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    dialog_button = getattr(main_window, test_input)
+    mouse_click(dialog_button)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
+
+    QTimer.singleShot(100, close_popup_dialog)
+    mouse_click(main_window.dialog.add_charge_Button)
+    assert main_window.dialog.popup_dialog.windowTitle() == "Add Charge"
+
+
 def test_add_charge_dialog_opens(add_charge_dialog):
     assert add_charge_dialog.windowTitle() == "Add Charge"
 
