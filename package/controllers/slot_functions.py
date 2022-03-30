@@ -284,8 +284,9 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
 
     @logger.catch
     def clear_add_charge_fields(self):
-        self.dialog.statute_choice_box.clearEditText()
-        self.dialog.offense_choice_box.clearEditText()
+        self.dialog.statute_choice_box.setCurrentText("")
+        self.dialog.offense_choice_box.setCurrentText("")
+        self.dialog.degree_choice_box.setCurrentText("")
 
     @logger.catch
     def add_charge_process(self):
