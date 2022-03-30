@@ -12,8 +12,10 @@ def ngb_dialog(qtbot, main_window):
     mouse_click(main_window.NotGuiltyBondButton)
     return main_window.dialog
 
+
 def test_dialog_opens(ngb_dialog):
     assert ngb_dialog.windowTitle() == "Not Guilty Bond Case Information"
+
 
 ###TEST VIEW###
 all_ngb_bond_checkbox_conditions_test_list = [
@@ -31,6 +33,7 @@ all_ngb_bond_checkbox_conditions_test_list = [
     "no_contact_checkBox",
     "other_conditions_checkBox",
 ]
+
 
 @pytest.mark.parametrize("checkBox", all_ngb_bond_checkbox_conditions_test_list)
 def test_all_checkbox_conditions(qtbot, ngb_dialog, checkBox):
