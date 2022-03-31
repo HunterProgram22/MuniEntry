@@ -22,9 +22,8 @@ DATABASE_TABLE_LIST = [
 
 
 class CaseSQLRetriever(ABC):
-
     @abstractmethod
-    def get_case_data(self):
+    def query_case_data(self):
         raise NotImplementedError
 
     @abstractmethod
@@ -46,45 +45,45 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     :case_table: The string name of the daily case list box that the case is selected from. This
     is passed to allow for certain options in the view to be changed based on which case list
     is selected. TODO: This can be refactored somehow."""
+
     def __init__(self, case_number, case_table):
         self.case_number = case_number
         self.case_table = case_table
         self.database = open_daily_case_list_db_connection()
         self.case = CriminalCaseInformation()
-        self.get_case_data()
+        self.query_case_data()
+        self.load_data_into_case()
+        self.query.finish()
 
-    def get_case_data(self):
+    def query_case_data(self):
         """Query database based on cms_case number to return the data to load for the dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
-        key = self.case_number
-        query = QSqlQuery(self.database)
         query_string = f"""
             SELECT *
             FROM {self.case_table}
-            WHERE case_number = '{key}'
+            WHERE case_number = '{self.case_number}'
             """
-        query.prepare(query_string)
-        query.bindValue(key, key)
-        query.exec()
-        self.load_data_into_case(query)
-        query.finish()
+        self.query = QSqlQuery(self.database)
+        self.query.prepare(query_string)
+        self.query.bindValue(self.case_number, self.case_number)
+        self.query.exec()
 
-    def load_data_into_case(self, query):
+    def load_data_into_case(self):
         case_number = None
-        while query.next():
+        while self.query.next():
             if case_number is None:
-                self.case.case_number = query.value(1)
+                self.case.case_number = self.query.value(1)
                 case_number = self.case.case_number
-                self.case.defendant.last_name = query.value(2).title()
-                self.case.defendant.first_name = query.value(3).title()
-                self.case.fra_in_file = query.value(7)
-                self.case.defense_counsel = f"{query.value(10).title()} {query.value(9).title()}"
-                self.case.defense_counsel_type = query.value(11)
-            offense = self.clean_offense_name(query.value(4))
+                self.case.defendant.last_name = self.query.value(2).title()
+                self.case.defendant.first_name = self.query.value(3).title()
+                self.case.fra_in_file = self.query.value(7)
+                self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
+                self.case.defense_counsel_type = self.query.value(11)
+            offense = self.clean_offense_name(self.query.value(4))
             offense = offense.rstrip()
-            statute = query.value(5)
-            degree = query.value(6)
-            moving_bool = query.value(8)
+            statute = self.query.value(5)
+            degree = self.query.value(6)
+            moving_bool = self.query.value(8)
             new_charge = (offense, statute, degree, moving_bool)
             self.case.charges_list.append(new_charge)
 
@@ -143,23 +142,23 @@ def extract_data(case_data):
     wb_name = DB_PATH + wb_name
     wb = load_workbook(wb_name)
     page = wb.active
-    case_number = case_data.get('case_number')
-    judicial_officer = case_data.get('judicial_officer').last_name
-    charges_list = case_data.get('charges_list')
+    case_number = case_data.get("case_number")
+    judicial_officer = case_data.get("judicial_officer").last_name
+    charges_list = case_data.get("charges_list")
     max_row = page.max_row
     max_row = max_row + 1
     for index, charge in enumerate(charges_list):
-        page.cell(row=max_row+index, column=1, value=case_number)
-        page.cell(row=max_row+index, column=2, value=judicial_officer)
-        page.cell(row=max_row+index, column=3, value=charge.get('offense'))
-        page.cell(row=max_row+index, column=4, value=charge.get('statute'))
-        page.cell(row=max_row+index, column=5, value=charge.get('degree'))
-        page.cell(row=max_row+index, column=6, value=charge.get('plea'))
-        page.cell(row=max_row+index, column=7, value=charge.get('finding'))
-        page.cell(row=max_row+index, column=8, value=charge.get('fines_amount'))
-        page.cell(row=max_row+index, column=9, value=charge.get('fines_suspended'))
-        page.cell(row=max_row+index, column=10, value=charge.get('jail_days'))
-        page.cell(row=max_row+index, column=11, value=charge.get('jail_days_suspended'))
+        page.cell(row=max_row + index, column=1, value=case_number)
+        page.cell(row=max_row + index, column=2, value=judicial_officer)
+        page.cell(row=max_row + index, column=3, value=charge.get("offense"))
+        page.cell(row=max_row + index, column=4, value=charge.get("statute"))
+        page.cell(row=max_row + index, column=5, value=charge.get("degree"))
+        page.cell(row=max_row + index, column=6, value=charge.get("plea"))
+        page.cell(row=max_row + index, column=7, value=charge.get("finding"))
+        page.cell(row=max_row + index, column=8, value=charge.get("fines_amount"))
+        page.cell(row=max_row + index, column=9, value=charge.get("fines_suspended"))
+        page.cell(row=max_row + index, column=10, value=charge.get("jail_days"))
+        page.cell(row=max_row + index, column=11, value=charge.get("jail_days_suspended"))
     try:
         wb.save(filename=wb_name)
     except PermissionError:
@@ -195,7 +194,9 @@ def create_statute_list():
 def create_daily_cases_list(database, table):
     conn = sqlite3.connect(DB_PATH + database)
     cursor = conn.cursor()
-    cursor.execute(f"SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}")
+    cursor.execute(
+        f"SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}"
+    )
     cases_list = cursor.fetchall()
     clean_cases_list = []
     for i in cases_list:
@@ -273,18 +274,19 @@ def return_data_from_excel(excel_file):
         else:
             def_atty_type = worksheet.cell(row=row, column=12)
 
-        case = (case_number.value,
-                defendant_last_name.value,
-                defendant_first_name.value,
-                offense.value,
-                statute.value,
-                degree.value,
-                fra_in_file.value,
-                moving_bool.value,
-                def_atty_last_name.value,
-                def_atty_first_name.value,
-                def_atty_type.value,
-                )
+        case = (
+            case_number.value,
+            defendant_last_name.value,
+            defendant_first_name.value,
+            offense.value,
+            statute.value,
+            degree.value,
+            fra_in_file.value,
+            moving_bool.value,
+            def_atty_last_name.value,
+            def_atty_first_name.value,
+            def_atty_type.value,
+        )
         data.append(case)
     return data
 
@@ -351,9 +353,19 @@ def main():
         insert_data_query.prepare(insert_table_sql_string(table))
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
-        for case_number, defendant_last_name, defendant_first_name, offense, \
-                statute, degree, fra_in_file, moving_bool, def_atty_last_name,\
-                def_atty_first_name, def_atty_type in data_from_table:
+        for (
+            case_number,
+            defendant_last_name,
+            defendant_first_name,
+            offense,
+            statute,
+            degree,
+            fra_in_file,
+            moving_bool,
+            def_atty_last_name,
+            def_atty_first_name,
+            def_atty_type,
+        ) in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
             insert_data_query.addBindValue(defendant_first_name)
@@ -376,5 +388,6 @@ if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
 else:
     from db import create_charges_table
+
     main()
     print("Imported Daily Case List Tables")
