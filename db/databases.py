@@ -45,13 +45,8 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
     :case_table: The string name of the daily case list box that the case is selected from. This
     is passed to allow for certain options in the view to be changed based on which case list
-    is selected. TODO: This can be refactored somehow.
-
-    :database: = database attribute in CriminalCaseSqlRetriever from databases.py
-    <- Window.daily_case_list_database from main_window.py $removed
-    <- daily_case_list_database from MuniEntry_app.py $removed
-    <- open_daily_case_list_db_connection() from db.databases.py [this module] TODO: This is circular"""
-    def __init__(self, case_number, case_table): #, database
+    is selected. TODO: This can be refactored somehow."""
+    def __init__(self, case_number, case_table):
         self.case_number = case_number
         self.case_table = case_table
         self.database = open_daily_case_list_db_connection()
