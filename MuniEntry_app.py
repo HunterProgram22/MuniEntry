@@ -26,8 +26,8 @@ def main():
     splash.show()
     print("Loading")
     QTimer.singleShot(2000, splash.close)
-    daily_case_list_database = open_daily_case_list_db_connection()
-    win = Window(daily_case_list_database)
+    # daily_case_list_database = open_daily_case_list_db_connection()
+    win = Window() # daily_case_list_database
     win.show()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())

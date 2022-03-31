@@ -23,9 +23,9 @@ from settings import ICON_PATH
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    def __init__(self, daily_case_list_database, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.daily_case_list_database = daily_case_list_database
+        # self.daily_case_list_database = daily_case_list_database
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
         self.create_main_window_dicts()
@@ -175,15 +175,14 @@ class Window(QMainWindow, Ui_MainWindow):
     @check_judicial_officer
     @check_case_list_selected
     def start_dialog_from_entry_button(self):
-        self.daily_case_list_database.open()
+        # self.daily_case_list_database.open()
         selected_case_list = self.database_table_dict.get(self.case_table)
         if selected_case_list.currentText() == "":
             self.case_to_load = CriminalCaseInformation()
         else:
             case_number = selected_case_list.currentText().split("- ")[1]
             self.case_to_load = CriminalCaseSQLRetriever(
-                case_number, self.case_table, self.daily_case_list_database
-            ).load_case()
+                case_number, self.case_table).load_case()
         self.dialog = self.dialog_dict[self.sender()](
             self.judicial_officer, self.case_to_load, self.case_table
         )

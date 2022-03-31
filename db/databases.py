@@ -47,13 +47,14 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     is passed to allow for certain options in the view to be changed based on which case list
     is selected. TODO: This can be refactored somehow.
 
-    :database: = Window.daily_case_list_database -> daily_case_list_database from MuniEntry_app.py
-    -> open_daily_case_list_db_connection() from db.databases [this module] TODO: This is circular"""
-    def __init__(self, case_number, case_table, database):
+    :database: = database attribute in CriminalCaseSqlRetriever from databases.py
+    <- Window.daily_case_list_database from main_window.py $removed
+    <- daily_case_list_database from MuniEntry_app.py $removed
+    <- open_daily_case_list_db_connection() from db.databases.py [this module] TODO: This is circular"""
+    def __init__(self, case_number, case_table): #, database
         self.case_number = case_number
         self.case_table = case_table
-        print(self.case_table)
-        self.database = database
+        self.database = open_daily_case_list_db_connection()
         self.case = CriminalCaseInformation()
         self.get_case_data()
 
