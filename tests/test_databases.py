@@ -6,9 +6,19 @@ from db.databases import CriminalCaseSQLRetriever
 
 @pytest.fixture
 def crim_sql_retriever():
-    return CriminalCaseSQLRetriever("12TEST34", "arraignments")
+    return CriminalCaseSQLRetriever("20TRC09471", "arraignments")
 
 
 def test_create_CriminalCaseSQLRetriever(crim_sql_retriever):
-    assert crim_sql_retriever.case_number == "12TEST34"
-    assert crim_sql_retriever.case_table == "arraignment"
+    assert crim_sql_retriever.case_number == "20TRC09471"
+    assert crim_sql_retriever.case_table == "arraignments"
+
+def test_get_case_data_works(crim_sql_retriever):
+    crim_sql_retriever.get_case_data()
+    case = crim_sql_retriever.case
+    assert case.case_number == "20TRC09471"
+    assert case.defendant.last_name == "Henderson"
+    assert case.defendant.first_name == "Chase"
+    assert case.fra_in_file == "U"
+    assert case.defense_counsel == "Chris Junga"
+    assert case.defense_counsel_type == "PD"
