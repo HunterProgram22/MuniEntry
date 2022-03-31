@@ -24,10 +24,6 @@ DATABASE_TABLE_LIST = [
 class CaseSQLRetriever(ABC):
 
     @abstractmethod
-    def set_case_type(self):
-        raise NotImplementedError
-
-    @abstractmethod
     def get_case_data(self):
         raise NotImplementedError
 
@@ -42,10 +38,21 @@ class CaseSQLRetriever(ABC):
 
 class CriminalCaseSQLRetriever(CaseSQLRetriever):
     """Class for getting case data from a SQL database and packaging it into an object to be
-    loaded into the application."""
+    loaded into the application.
+
+    :case_number: The selected case number from the case selected in the daily case lists box
+    on the main window of the application.
+
+    :case_table: The string name of the daily case list box that the case is selected from. This
+    is passed to allow for certain options in the view to be changed based on which case list
+    is selected. TODO: This can be refactored somehow.
+    
+    :database: = Window.daily_case_list_database -> daily_case_list_database from MuniEntry_app.py
+    -> open_daily_case_list_db_connection() from db.databases [this module] TODO: This is circular"""
     def __init__(self, case_number, case_table, database):
         self.case_number = case_number
         self.case_table = case_table
+        print(self.case_table)
         self.database = database
         self.case = CriminalCaseInformation()
         self.get_case_data()
