@@ -69,23 +69,27 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.query.exec()
 
     def load_data_into_case(self):
-        case_number = None
         while self.query.next():
-            if case_number is None:
-                self.case.case_number = self.query.value(1)
-                case_number = self.case.case_number
-                self.case.defendant.last_name = self.query.value(2).title()
-                self.case.defendant.first_name = self.query.value(3).title()
-                self.case.fra_in_file = self.query.value(7)
-                self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
-                self.case.defense_counsel_type = self.query.value(11)
-            offense = self.clean_offense_name(self.query.value(4))
-            offense = offense.rstrip()
-            statute = self.query.value(5)
-            degree = self.query.value(6)
-            moving_bool = self.query.value(8)
-            new_charge = (offense, statute, degree, moving_bool)
+            if self.case.case_number is None:
+                 self.load_case_information()
+            new_charge = self.load_charge()
             self.case.charges_list.append(new_charge)
+
+    def load_charge(self):
+        offense = self.clean_offense_name(self.query.value(4))
+        offense = offense.rstrip()
+        statute = self.query.value(5)
+        degree = self.query.value(6)
+        moving_bool = self.query.value(8)
+        return offense, statute, degree, moving_bool
+
+    def load_case_information(self):
+        self.case.case_number = self.query.value(1)
+        self.case.defendant.last_name = self.query.value(2).title()
+        self.case.defendant.first_name = self.query.value(3).title()
+        self.case.fra_in_file = self.query.value(7)
+        self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
+        self.case.defense_counsel_type = self.query.value(11)
 
     def clean_offense_name(self, offense):
         abbreviation_list = ["DUS", "OVI", "BMV"]
