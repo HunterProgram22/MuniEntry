@@ -390,8 +390,8 @@ def main():
             insert_data_query.addBindValue(def_atty_type)
             insert_data_query.exec()
 
-    con_daily_case_lists.close()
-    con_daily_case_lists.removeDatabase("QSQLITE")
+    # con_daily_case_lists.close()
+    # con_daily_case_lists.removeDatabase("QSQLITE")
     return None
 
 
