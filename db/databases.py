@@ -3,7 +3,6 @@ import sqlite3
 import sys
 from abc import ABC, abstractmethod
 import string
-import pdb
 
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
@@ -105,12 +104,12 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return self.case
 
 
-def open_db_connection(connection_name: str):
+def open_db_connection(connection_name: str) -> QSqlDatabase:
     return QSqlDatabase.database(connection_name, open=True)
 
 
-def close_db_connection(connection_name: str):
-    return QSqlDatabase.removeDatabase(connection_name)
+def close_db_connection(connection_name: str) -> None:
+    QSqlDatabase.removeDatabase(connection_name)
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
@@ -132,7 +131,7 @@ def check_if_db_open(database_name: str) -> None:
         print("Unable to connect to database")
         sys.exit(1)
 
-
+# PICK UP HERE - Also need to refactor close charges db in various modules. 
 
 def create_daily_case_list_tables(con_daily_case_lists):
     create_table_query = QSqlQuery(con_daily_case_lists)
