@@ -105,11 +105,17 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return self.case
 
 
+def open_charges_db_connection():
+    return QSqlDatabase.database("con_charges", open=True)
+
+
 def open_daily_case_list_db_connection():
     return QSqlDatabase.database("con_daily_case_lists", open=True)
 
 
-@logger.catch
+# TODO: Move create_charges_db_connection (from create_charges_table) to here
+
+
 def create_daily_case_list_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
     if os.path.exists(database_name):
@@ -140,14 +146,6 @@ def add_daily_case_lists_db(database_name):
     con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
     con_daily_case_lists.setDatabaseName(database_name)
     return con_daily_case_lists
-
-
-def open_charges_db_connection():
-    """The databases for the application are created upon import of the module, which is done
-    on application startup when base_dialog is imported into main. The connections to the databases
-    are created, but opening and closing is handled with init or close functions in controller dialogs."""
-    charges_database_connection = QSqlDatabase.database("con_charges", open=True)
-    return charges_database_connection
 
 
 def extract_data(case_data):
