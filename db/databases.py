@@ -113,6 +113,10 @@ def open_daily_case_list_db_connection():
     return QSqlDatabase.database("con_daily_case_lists", open=True)
 
 
+def close_daily_case_list_db_connection():
+    return QSqlDatabase.removeDatabase("con_daily_case_lists")
+
+
 # TODO: Move create_charges_db_connection (from create_charges_table) to here
 
 

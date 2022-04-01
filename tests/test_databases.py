@@ -10,6 +10,7 @@ from db.databases import (
     open_daily_case_list_db_connection,
     open_charges_db_connection,
     create_daily_case_list_db_connection,
+    close_daily_case_list_db_connection,
 )
 
 
@@ -49,12 +50,13 @@ def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
 
 def test_if_open_daily_case_list_db_connection_works():
     assert open_daily_case_list_db_connection().isOpen()
+    close_daily_case_list_db_connection()
 
 
 def test_if_open_charges_db_connection_works():
     assert open_charges_db_connection().isOpen()
 
 
-# def test_if_create_daily_case_list_db_connection_returns_db_instance():
-#     # con = create_daily_case_list_db_connection()
-#     assert isinstance(con, QSqlDatabase)
+def test_if_create_daily_case_list_db_connection_returns_db_instance():
+    con = create_daily_case_list_db_connection()
+    assert isinstance(con, QSqlDatabase)
