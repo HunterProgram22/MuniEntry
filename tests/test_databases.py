@@ -7,8 +7,6 @@ from conftest import mouse_click, enter_data
 from settings import CHARGES_DATABASE, DB_PATH
 from db.databases import (
     CriminalCaseSQLRetriever,
-    open_charges_db_connection,
-    close_charges_db_connection,
     open_db_connection,
     create_db_connection,
     close_db_connection,

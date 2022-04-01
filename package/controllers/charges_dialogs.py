@@ -38,8 +38,9 @@ class BaseChargeDialog(QDialog):
         self.load_statute_and_offense_choice_boxes()
 
     def set_database(self):
-        self.charges_database = open_charges_db_connection()
-        self.charges_database.open()
+        self.charges_database = open_db_connection("con_charges")
+        # self.charges_database = open_charges_db_connection()
+        # self.charges_database.open()
 
     def load_statute_and_offense_choice_boxes(self):
         """Loads the choice boxes and adds a blank item to set fields to blank on open."""

@@ -105,15 +105,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return self.case
 
 
-def open_charges_db_connection():
-    return QSqlDatabase.database("con_charges", open=True)
-
-
-def close_charges_db_connection():
-    return QSqlDatabase.removeDatabase("con_charges")
-
-
-
 def open_db_connection(connection_name: str):
     return QSqlDatabase.database(connection_name, open=True)
 
@@ -351,11 +342,7 @@ def delete_table_data_sql_string(table):
         """
 
 
-def main():
-    con_daily_case_lists = create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
-    create_daily_case_list_tables(con_daily_case_lists)
-    # con_daily_case_lists = create_daily_case_list_db_connection()
-
+def load_daily_case_list_data(con_daily_case_lists):
     for item in DATABASE_TABLE_LIST:
         excel_report = item[0]
         table = item[1]
@@ -369,17 +356,17 @@ def main():
         data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for (
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file,
-            moving_bool,
-            def_atty_last_name,
-            def_atty_first_name,
-            def_atty_type,
+                case_number,
+                defendant_last_name,
+                defendant_first_name,
+                offense,
+                statute,
+                degree,
+                fra_in_file,
+                moving_bool,
+                def_atty_last_name,
+                def_atty_first_name,
+                def_atty_type,
         ) in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
@@ -395,8 +382,10 @@ def main():
             insert_data_query.exec()
 
 
-    # con_daily_case_lists.close()
-    # con_daily_case_lists.removeDatabase("QSQLITE")
+def main():
+    con_daily_case_lists = create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_daily_case_list_tables(con_daily_case_lists)
+    load_daily_case_list_data(con_daily_case_lists)
     return None
 
 
