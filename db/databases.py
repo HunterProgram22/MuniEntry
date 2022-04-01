@@ -106,8 +106,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 
 def open_daily_case_list_db_connection():
-    daily_case_list_database_connection = QSqlDatabase.database("con_daily_case_lists", open=True)
-    return daily_case_list_database_connection
+    return QSqlDatabase.database("con_daily_case_lists", open=True)
 
 
 @logger.catch

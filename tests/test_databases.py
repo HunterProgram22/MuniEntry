@@ -1,7 +1,7 @@
 import pytest
 from conftest import mouse_click, enter_data
 
-from db.databases import CriminalCaseSQLRetriever
+from db.databases import CriminalCaseSQLRetriever, open_daily_case_list_db_connection
 
 
 @pytest.fixture
@@ -35,3 +35,7 @@ test_offense_list = [
 @pytest.mark.parametrize("test_input, expected_output", test_offense_list)
 def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
     assert crim_sql_retriever.clean_offense_name(test_input) == expected_output
+
+
+def test_if_open_daily_case_list_db_connection_works():
+    assert open_daily_case_list_db_connection().isOpen() == True
