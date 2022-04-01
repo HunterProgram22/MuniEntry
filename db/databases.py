@@ -75,14 +75,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             new_charge = self.load_charge()
             self.case.charges_list.append(new_charge)
 
-    def load_charge(self):
-        offense = self.clean_offense_name(self.query.value(4))
-        offense = offense.rstrip()
-        statute = self.query.value(5)
-        degree = self.query.value(6)
-        moving_bool = self.query.value(8)
-        return offense, statute, degree, moving_bool
-
     def load_case_information(self):
         self.case.case_number = self.query.value(1)
         self.case.defendant.last_name = self.query.value(2).title()
@@ -91,7 +83,17 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
         self.case.defense_counsel_type = self.query.value(11)
 
+    def load_charge(self):
+        offense = self.clean_offense_name(self.query.value(4))
+        offense = offense.rstrip()
+        statute = self.query.value(5)
+        degree = self.query.value(6)
+        moving_bool = self.query.value(8)
+        return offense, statute, degree, moving_bool
+
     def clean_offense_name(self, offense):
+        """Sets an offense name to title case, but leaves certain standard 3-letter
+        abbreviations in all caps."""
         abbreviation_list = ["DUS", "OVI", "BMV"]
         if offense[:3] in abbreviation_list:
             caps = offense[:3]
