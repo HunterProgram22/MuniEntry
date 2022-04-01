@@ -72,8 +72,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         while self.query.next():
             if self.case.case_number is None:
                  self.load_case_information()
-            new_charge = self.load_charge()
-            self.case.charges_list.append(new_charge)
+            self.load_charge_information()
 
     def load_case_information(self):
         self.case.case_number = self.query.value(1)
@@ -83,13 +82,13 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
         self.case.defense_counsel_type = self.query.value(11)
 
-    def load_charge(self):
+    def load_charge_information(self):
         offense = self.clean_offense_name(self.query.value(4))
-        offense = offense.rstrip()
         statute = self.query.value(5)
         degree = self.query.value(6)
         moving_bool = self.query.value(8)
-        return offense, statute, degree, moving_bool
+        charge = (offense, statute, degree, moving_bool)
+        self.case.charges_list.append(charge)
 
     def clean_offense_name(self, offense):
         """Sets an offense name to title case, but leaves certain standard 3-letter
@@ -97,10 +96,10 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         abbreviation_list = ["DUS", "OVI", "BMV"]
         if offense[:3] in abbreviation_list:
             caps = offense[:3]
-            remaining_offense = string.capwords(offense[3:])
+            remaining_offense = string.capwords(offense[3:]).rstrip()
             return f"{caps} {remaining_offense}"
         else:
-            return string.capwords(offense)
+            return string.capwords(offense).rstrip()
 
     def load_case(self):
         return self.case
