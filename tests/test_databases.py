@@ -7,10 +7,11 @@ from conftest import mouse_click, enter_data
 from settings import CHARGES_DATABASE, DB_PATH
 from db.databases import (
     CriminalCaseSQLRetriever,
-    open_daily_case_list_db_connection,
     open_charges_db_connection,
-    create_daily_case_list_db_connection,
-    close_daily_case_list_db_connection,
+    close_charges_db_connection,
+    open_db_connection,
+    create_db_connection,
+    close_db_connection,
 )
 
 
@@ -48,15 +49,23 @@ def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
     assert crim_sql_retriever.clean_offense_name(test_input) == expected_output
 
 
-def test_if_open_daily_case_list_db_connection_works():
-    assert open_daily_case_list_db_connection().isOpen()
-    close_daily_case_list_db_connection()
+db_connection_list = [
+    "con_daily_case_lists",
+    "con_charges",
+]
+
+@pytest.mark.parametrize("connection", db_connection_list)
+def test_open_db_connections(connection):
+    assert open_db_connection(connection).isOpen()
+    close_db_connection(connection)
 
 
-def test_if_open_charges_db_connection_works():
-    assert open_charges_db_connection().isOpen()
+db_name_list = [
+    (f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists"),
+    (f"{DB_PATH}charges.sqlite", "con_charges"),
+]
 
-
-def test_if_create_daily_case_list_db_connection_returns_db_instance():
-    con = create_daily_case_list_db_connection()
+@pytest.mark.parametrize("database_name, connection_name", db_name_list)
+def test_if_create_db_connection_returns_db_instance(database_name, connection_name):
+    con = create_db_connection(database_name, connection_name)
     assert isinstance(con, QSqlDatabase)

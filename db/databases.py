@@ -49,7 +49,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     def __init__(self, case_number, case_table):
         self.case_number = case_number
         self.case_table = case_table
-        self.database = open_daily_case_list_db_connection()
+        self.database = open_db_connection("con_daily_case_lists")
         self.case = CriminalCaseInformation()
         self.query_case_data()
         self.load_data_into_case()
@@ -109,34 +109,38 @@ def open_charges_db_connection():
     return QSqlDatabase.database("con_charges", open=True)
 
 
-def open_daily_case_list_db_connection():
-    return QSqlDatabase.database("con_daily_case_lists", open=True)
+def close_charges_db_connection():
+    return QSqlDatabase.removeDatabase("con_charges")
 
 
-def close_daily_case_list_db_connection():
-    return QSqlDatabase.removeDatabase("con_daily_case_lists")
+
+def open_db_connection(connection_name: str):
+    return QSqlDatabase.database(connection_name, open=True)
 
 
-# TODO: Move create_charges_db_connection (from create_charges_table) to here
+def close_db_connection(connection_name: str):
+    return QSqlDatabase.removeDatabase(connection_name)
 
 
-def create_daily_case_list_db_connection():
-    database_name = f"{DB_PATH}daily_case_lists.sqlite"
-    if os.path.exists(database_name):
-        db_connection = add_daily_case_lists_db(database_name)
-        check_if_db_open(db_connection)
-    else:
+def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
+    if not os.path.exists(database_name):
         print("The file does not exist")
-        db_connection = add_daily_case_lists_db(database_name)
-        check_if_db_open(db_connection)
-        create_daily_case_list_tables(db_connection)
+    db_connection = create_db(database_name, connection_name)
+    check_if_db_open(db_connection)
     return db_connection
 
 
-def check_if_db_open(database_name):
+def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
+    db_connection = QSqlDatabase.addDatabase("QSQLITE", connection_name)
+    db_connection.setDatabaseName(database_name)
+    return db_connection
+
+
+def check_if_db_open(database_name: str) -> None:
     if not database_name.open():
         print("Unable to connect to database")
         sys.exit(1)
+
 
 
 def create_daily_case_list_tables(con_daily_case_lists):
@@ -144,12 +148,6 @@ def create_daily_case_list_tables(con_daily_case_lists):
     for item in DATABASE_TABLE_LIST:
         table = item[1]
         create_table_query.exec(create_table_sql_string(table))
-
-
-def add_daily_case_lists_db(database_name):
-    con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
-    con_daily_case_lists.setDatabaseName(database_name)
-    return con_daily_case_lists
 
 
 def extract_data(case_data):
@@ -354,7 +352,9 @@ def delete_table_data_sql_string(table):
 
 
 def main():
-    con_daily_case_lists = create_daily_case_list_db_connection()
+    con_daily_case_lists = create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_daily_case_list_tables(con_daily_case_lists)
+    # con_daily_case_lists = create_daily_case_list_db_connection()
 
     for item in DATABASE_TABLE_LIST:
         excel_report = item[0]
@@ -393,6 +393,7 @@ def main():
             insert_data_query.addBindValue(def_atty_first_name)
             insert_data_query.addBindValue(def_atty_type)
             insert_data_query.exec()
+
 
     # con_daily_case_lists.close()
     # con_daily_case_lists.removeDatabase("QSQLITE")

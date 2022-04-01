@@ -44,13 +44,15 @@ def main():
         print("Unable to connect to database")
         sys.exit(1)
 
+
+
     # Create a query and execute it right away using .exec()
     createTableQuery = QSqlQuery(con_charges)
     createTableQuery.exec(
         """
         CREATE TABLE charges (
             id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-            offense VARCHAR(60) NOT NULL,
+            offense VARCHAR(60) UNIQUE NOT NULL,
             statute VARCHAR(50) NOT NULL,
             degree VARCHAR(50) NOT NULL,
             type VARCHAR(50) NOT NULL
