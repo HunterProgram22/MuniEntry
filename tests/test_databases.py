@@ -1,7 +1,13 @@
 import pytest
+from PyQt5.QtSql import QSqlDatabase
+
 from conftest import mouse_click, enter_data
 
-from db.databases import CriminalCaseSQLRetriever, open_daily_case_list_db_connection
+from db.databases import (
+    CriminalCaseSQLRetriever,
+    open_daily_case_list_db_connection,
+    create_daily_case_list_db_connection,
+)
 
 
 @pytest.fixture
@@ -32,6 +38,7 @@ test_offense_list = [
     ("BMV SUSPENSION", "BMV Suspension"),
 ]
 
+
 @pytest.mark.parametrize("test_input, expected_output", test_offense_list)
 def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
     assert crim_sql_retriever.clean_offense_name(test_input) == expected_output
@@ -39,3 +46,8 @@ def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
 
 def test_if_open_daily_case_list_db_connection_works():
     assert open_daily_case_list_db_connection().isOpen() == True
+
+
+def test_if_create_daily_case_list_db_connection_returns_db_instance():
+    con = create_daily_case_list_db_connection()
+    assert isinstance(con, QSqlDatabase)

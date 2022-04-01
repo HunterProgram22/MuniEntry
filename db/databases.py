@@ -113,23 +113,32 @@ def open_daily_case_list_db_connection():
 def create_daily_case_list_db_connection():
     database_name = f"{DB_PATH}daily_case_lists.sqlite"
     if os.path.exists(database_name):
-        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
-        con_daily_case_lists.setDatabaseName(database_name)
+        db_connection = add_daily_case_lists_db(database_name)
+        check_if_db_open(db_connection)
     else:
         print("The file does not exist")
-        con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
-        con_daily_case_lists.setDatabaseName(database_name)
-        if not con_daily_case_lists.open():
-            print("Unable to connect to database")
-            sys.exit(1)
-        else:
-            create_table_query = QSqlQuery(con_daily_case_lists)
-            for item in DATABASE_TABLE_LIST:
-                table = item[1]
-                create_table_query.exec(create_table_sql_string(table))
-    if not con_daily_case_lists.open():
+        db_connection = add_daily_case_lists_db(database_name)
+        check_if_db_open(db_connection)
+        create_daily_case_list_tables(db_connection)
+    return db_connection
+
+
+def check_if_db_open(database_name):
+    if not database_name.open():
         print("Unable to connect to database")
         sys.exit(1)
+
+
+def create_daily_case_list_tables(con_daily_case_lists):
+    create_table_query = QSqlQuery(con_daily_case_lists)
+    for item in DATABASE_TABLE_LIST:
+        table = item[1]
+        create_table_query.exec(create_table_sql_string(table))
+
+
+def add_daily_case_lists_db(database_name):
+    con_daily_case_lists = QSqlDatabase.addDatabase("QSQLITE", "con_daily_case_lists")
+    con_daily_case_lists.setDatabaseName(database_name)
     return con_daily_case_lists
 
 
