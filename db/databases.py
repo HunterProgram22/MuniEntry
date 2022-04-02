@@ -155,32 +155,19 @@ def insert_daily_case_list_sql_data(
 
 
 class CaseExcelRetriever:
-    def __init__(self, excel_file: str) -> None:
-        self.excel_file = excel_file
-        self.case_number: str = None
-        self.sub_case_number: str = None
+    def __init__(self) -> None:
+        self.case_number: str = "No Data"
+        self.sub_case_number: str = "No Data"
         self.defendant_last_name: str = "No Data"
         self.defendant_first_name: str = "No Data"
         self.offense: str = "No Data"
         self.statute: str = "No Data"
         self.degree: str = "No Data"
-        self.fra_in_file: str = "N/A"
+        self.fra_in_file: str = "U"
         self.moving_bool: bool = False
-        self.def_atty_last_name: str = "No Data"
-        self.def_atty_first_name: str = "No Data"
+        self.def_atty_last_name: str = ""
+        self.def_atty_first_name: str = ""
         self.def_atty_type: str = "No Data"
-
-    def load_case_data_from_excel(self):
-        workbook = load_workbook(self.excel_file)
-        worksheet = workbook.active
-        row_count = worksheet.max_row + 1
-        for row in range(2, row_count):
-
-            for col_name, col in excel_case_data_attributes.items():
-                print(col_name, col)
-                if worksheet.cell(row=row, column=col).value is None:
-                    worksheet.cell(row=row, column=col).value = "No Data"
-                X = worksheet.cell(row=row, column=col)
 
 
 def return_cases_data_from_excel(excel_file: str) -> list:
@@ -198,122 +185,32 @@ def return_cases_data_from_excel(excel_file: str) -> list:
     col_def_atty_type = 12
     data: list = []
 
+    workbook = load_workbook(excel_file)
+    ws = workbook.active
+    row_count = ws.max_row + 1
 
-    # workbook = load_workbook(excel_file)
-    # worksheet = workbook.active
-    # row_count = worksheet.max_row + 1
-    # for row in range(2, row_count):
-    #
-    #
-    #     for col_name, col in excel_case_data_attributes.items():
-    #         print(col_name, col)
-    #         if worksheet.cell(row=row, column=col).value is None:
-    #             worksheet.cell(row=row, column=col).value = "No Data"
-    #         X = worksheet.cell(row=row, column=col)
+    for row in range(2, row_count):
+        case = CaseExcelRetriever()
+        case.case_number = get_cell_value(ws, row, col_case_number)
+        case.defendant_last_name = get_cell_value(ws, row, col_defendant_last_name)
+        case.defendant_first_name = get_cell_value(ws, row, col_defendant_first_name)
+        case.offense = get_cell_value(ws, row, col_offense)
+        case.statute = get_cell_value(ws, row, col_statute)
+        case.degree = get_cell_value(ws, row, col_degree)
+        case.fra_in_file = get_cell_value(ws, row, col_fra_in_file)
+        case.moving_bool = get_cell_value(ws, row, col_moving_bool)
+        case.def_atty_last_name = get_cell_value(ws, row, col_def_atty_last_name)
+        case.def_atty_first_name = get_cell_value(ws, row, col_def_atty_first_name)
+        case.def_atty_type = get_cell_value(ws, row, col_def_atty_type)
+        data.append(case)
 
-
-    #
-    # case_number = worksheet.cell(row=row, column=1)
-    #
-    # if worksheet.cell(row=row, column=3).value is None:
-    #     worksheet.cell(row=row, column=3).value = "No Data"
-    #     defendant_last_name = worksheet.cell(row=row, column=3)
-    # else:
-    #     defendant_last_name = worksheet.cell(row=row, column=3)
-    #
-    # if worksheet.cell(row=row, column=4).value is None:
-    #     worksheet.cell(row=row, column=4).value = "No Data"
-    #     defendant_first_name = worksheet.cell(row=row, column=4)
-    # else:
-    #     defendant_first_name = worksheet.cell(row=row, column=4)
-    #
-    # if worksheet.cell(row=row, column=5).value is None:
-    #     worksheet.cell(row=row, column=5).value = "No Data"
-    #     offense = worksheet.cell(row=row, column=5)
-    # else:
-    #     offense = worksheet.cell(row=row, column=5)
-    #
-    # if worksheet.cell(row=row, column=6).value is None:
-    #     worksheet.cell(row=row, column=6).value = "No Data"
-    #     statute = worksheet.cell(row=row, column=6)
-    # else:
-    #     statute = worksheet.cell(row=row, column=6)
-    #
-    # if worksheet.cell(row=row, column=7).value is None:
-    #     worksheet.cell(row=row, column=7).value = "No Data"
-    #     degree = worksheet.cell(row=row, column=7)
-    # else:
-    #     degree = worksheet.cell(row=row, column=7)
-
-    # if worksheet.cell(row=row, column=8).value is None:
-    #     worksheet.cell(row=row, column=8).value = "U"
-    #     fra_in_file = worksheet.cell(row=row, column=8)
-    # else:
-    #     fra_in_file = worksheet.cell(row=row, column=8)
-    #
-    # if worksheet.cell(row=row, column=9).value is None:
-    #     worksheet.cell(row=row, column=9).value = "No Data"
-    #     moving_bool = worksheet.cell(row=row, column=9)
-    # elif worksheet.cell(row=row, column=9).value is False:
-    #     worksheet.cell(row=row, column=9).value = "False"
-    #     moving_bool = worksheet.cell(row=row, column=9)
-    # elif worksheet.cell(row=row, column=9).value is True:
-    #     worksheet.cell(row=row, column=9).value = "True"
-    #     moving_bool = worksheet.cell(row=row, column=9)
-    # else:
-    #     moving_bool = worksheet.cell(row=row, column=9)
-    #
-    # if worksheet.cell(row=row, column=10).value is None:
-    #     worksheet.cell(row=row, column=10).value = ""
-    #     def_atty_last_name = worksheet.cell(row=row, column=10)
-    # else:
-    #     def_atty_last_name = worksheet.cell(row=row, column=10)
-    #
-    # if worksheet.cell(row=row, column=11).value is None:
-    #     worksheet.cell(row=row, column=11).value = ""
-    #     def_atty_first_name = worksheet.cell(row=row, column=11)
-    # else:
-    #     def_atty_first_name = worksheet.cell(row=row, column=11)
-    #
-    # if worksheet.cell(row=row, column=12).value is None:
-    #     worksheet.cell(row=row, column=12).value = None
-    #     def_atty_type = worksheet.cell(row=row, column=12)
-    # else:
-    #     def_atty_type = worksheet.cell(row=row, column=12)
-    #
-    # case = (
-    #     case_number.value,
-    #     defendant_last_name.value,
-    #     defendant_first_name.value,
-    #     offense.value,
-    #     statute.value,
-    #     degree.value,
-    #     fra_in_file.value,
-    #     moving_bool.value,
-    #     def_atty_last_name.value,
-    #     def_atty_first_name.value,
-    #     def_atty_type.value,
-    # )
-    case = (
-        case_number.value,
-        defendant_last_name.value,
-        defendant_first_name.value,
-        offense.value,
-        statute.value,
-        degree.value,
-        fra_in_file.value,
-        moving_bool.value,
-        def_atty_last_name.value,
-        def_atty_first_name.value,
-        def_atty_type.value,
-    )
-
-    data.append(case)
-    print(data)
     return data
 
 
-
+def get_cell_value(ws, row, col):
+    if ws.cell(row=row, column=col).value is None:
+        return "No Data"
+    return ws.cell(row=row, column=col).value
 
 
 def delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name):

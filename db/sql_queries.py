@@ -14,14 +14,14 @@ def create_daily_case_list_tables_sql_query(table: str) -> str:
           degree VARCHAR(10) NOT NULL,
           fra_in_file VARCHAR(5) NOT NULL,
           moving_bool VARCHAR(15) NOT NULL,
-          def_atty_last_name VARCHAR (50),
-          def_atty_first_name VARCHAR (50),
+          def_atty_last_name VARCHAR (50) NOT NULL,
+          def_atty_first_name VARCHAR (50) NOT NULL,
           def_atty_type VARCHAR(5)
       )
       """
 
 
-def insert_daily_case_list_tables_sql_query(table: str, case: tuple) -> str:
+def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
     # Do not add comma to last value inserted
     return f"""
         INSERT INTO {table} (
@@ -38,17 +38,17 @@ def insert_daily_case_list_tables_sql_query(table: str, case: tuple) -> str:
             def_atty_type
         )
         VALUES (
-            '{case[0]}',
-            '{case[1]}',
-            '{case[2]}',
-            '{case[3]}',
-            '{case[4]}',
-            '{case[5]}',
-            '{case[6]}',
-            '{case[7]}',
-            '{case[8]}',
-            '{case[9]}',
-            '{case[10]}'
+            '{case.case_number}',
+            '{case.defendant_last_name}',
+            '{case.defendant_first_name}',
+            '{case.offense}',
+            '{case.statute}',
+            '{case.degree}',
+            '{case.fra_in_file}',
+            '{case.moving_bool}',
+            '{case.def_atty_last_name}',
+            '{case.def_atty_first_name}',
+            '{case.def_atty_type}'
         )
         """
 
