@@ -186,7 +186,7 @@ class BaseDialogSlotFunctions(object):
     def set_statute_and_offense(cls, key, dialog):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
-        charges_database = open_charges_db_connection()
+        charges_database = open_db_connection("con_charges")
         field = None
         if dialog.freeform_entry_checkBox.isChecked():
             return None

@@ -10,6 +10,7 @@ from db.databases import (
     open_db_connection,
     create_db_connection,
     close_db_connection,
+    check_if_db_open,
 )
 
 
@@ -67,3 +68,11 @@ db_name_list = [
 def test_if_create_db_connection_returns_db_instance(database_name, connection_name):
     con = create_db_connection(database_name, connection_name)
     assert isinstance(con, QSqlDatabase)
+
+
+@pytest.mark.parametrize("database_name, connection_name", db_name_list)
+def test_if_check_if_db_open_works(database_name, connection_name):
+    """This test may be unnecessary as test_open_db_connection uses a function that
+    runs this check."""
+    db_connection = open_db_connection(connection_name)
+    assert check_if_db_open(db_connection)

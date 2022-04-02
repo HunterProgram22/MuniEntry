@@ -6,7 +6,8 @@ from loguru import logger
 from openpyxl import load_workbook
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from settings import CHARGES_TABLE, CHARGES_DATABASE
+from db.databases import open_db_connection, create_db_connection
+from settings import CHARGES_TABLE, CHARGES_DATABASE, DB_PATH
 
 
 @logger.catch
@@ -30,19 +31,24 @@ def main():
     # Deletes existing database and creates a new one to ensure all old charges aren't duplicated in
     # the table. The try/except exists because if multiple instances open it can't access
     # the charges DB to remove it, it can only connect to it. 
-    try:
-        if os.path.exists(CHARGES_DATABASE):
-          os.remove(CHARGES_DATABASE)
-        else:
-          print("The file does not exist")
-    except PermissionError:
-        pass
-    con_charges = QSqlDatabase.addDatabase("QSQLITE", "con_charges")
-    con_charges.setDatabaseName(CHARGES_DATABASE)
+    # try:
+    #     if os.path.exists(CHARGES_DATABASE):
+    #       os.remove(CHARGES_DATABASE)
+    #     else:
+    #       print("The file does not exist")
+    # except PermissionError:
+    #     pass
 
-    if not con_charges.open():
-        print("Unable to connect to database")
-        sys.exit(1)
+
+    # con_charges = QSqlDatabase.addDatabase("QSQLITE", "con_charges")
+    # con_charges.setDatabaseName(CHARGES_DATABASE)
+
+    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
+    con_charges = open_db_connection("con_charges")
+
+    # if not con_charges.open():
+    #     print("Unable to connect to database")
+    #     sys.exit(1)
 
 
 

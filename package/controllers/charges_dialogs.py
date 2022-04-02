@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QDialog
 from db.databases import (
     create_statute_list,
     create_offense_list,
-    open_charges_db_connection,
+    open_db_connection,
 )
 from package.models.case_information import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog

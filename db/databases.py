@@ -6,7 +6,7 @@ import string
 
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
-from openpyxl import load_workbook
+from openpyxl import load_workbook # type: ignore
 from package.models.case_information import CriminalCaseInformation
 from settings import CHARGES_DATABASE, DB_PATH
 
@@ -105,7 +105,9 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
-    return QSqlDatabase.database(connection_name, open=True)
+    db_connection = QSqlDatabase.database(connection_name, open=True)
+    check_if_db_open(db_connection)
+    return db_connection
 
 
 def close_db_connection(connection_name: str) -> None:
@@ -114,9 +116,8 @@ def close_db_connection(connection_name: str) -> None:
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
     if not os.path.exists(database_name):
-        print("The file does not exist")
+        print("The file does not exist. Creating new database.")
     db_connection = create_db(database_name, connection_name)
-    check_if_db_open(db_connection)
     return db_connection
 
 
@@ -126,10 +127,11 @@ def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
     return db_connection
 
 
-def check_if_db_open(database_name: str) -> None:
-    if not database_name.open():
+def check_if_db_open(db_connection: QSqlDatabase) -> bool:
+    if not db_connection.isOpen():
         print("Unable to connect to database")
         sys.exit(1)
+    return True
 
 # PICK UP HERE - Also need to refactor close charges db in various modules.
 
@@ -382,7 +384,8 @@ def load_daily_case_list_data(con_daily_case_lists):
 
 
 def main():
-    con_daily_case_lists = create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     return None
