@@ -9,7 +9,7 @@ from db.databases import (
     CriminalCaseSQLRetriever,
     open_db_connection,
     create_db_connection,
-    close_db_connection,
+    remove_db_connection,
     check_if_db_open,
 )
 
@@ -56,7 +56,7 @@ db_connection_list = [
 @pytest.mark.parametrize("connection", db_connection_list)
 def test_open_db_connections(connection):
     assert open_db_connection(connection).isOpen()
-    close_db_connection(connection)
+    remove_db_connection(connection)
 
 
 db_name_list = [
@@ -75,4 +75,4 @@ def test_if_check_if_db_open_works(database_name, connection_name):
     """This test may be unnecessary as test_open_db_connection uses a function that
     runs this check."""
     db_connection = open_db_connection(connection_name)
-    assert check_if_db_open(db_connection)
+    assert check_if_db_open(db_connection, connection_name)

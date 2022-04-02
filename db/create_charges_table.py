@@ -27,32 +27,7 @@ def return_data_from_excel(excel_file):
     return data
 
 
-def main():
-    # Deletes existing database and creates a new one to ensure all old charges aren't duplicated in
-    # the table. The try/except exists because if multiple instances open it can't access
-    # the charges DB to remove it, it can only connect to it. 
-    # try:
-    #     if os.path.exists(CHARGES_DATABASE):
-    #       os.remove(CHARGES_DATABASE)
-    #     else:
-    #       print("The file does not exist")
-    # except PermissionError:
-    #     pass
-
-
-    # con_charges = QSqlDatabase.addDatabase("QSQLITE", "con_charges")
-    # con_charges.setDatabaseName(CHARGES_DATABASE)
-
-    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
-    con_charges = open_db_connection("con_charges")
-
-    # if not con_charges.open():
-    #     print("Unable to connect to database")
-    #     sys.exit(1)
-
-
-
-    # Create a query and execute it right away using .exec()
+def update_charges_db(con_charges):
     createTableQuery = QSqlQuery(con_charges)
     createTableQuery.exec(
         """
@@ -65,7 +40,6 @@ def main():
         )
         """
     )
-
     insertDataQuery = QSqlQuery(con_charges)
     insertDataQuery.prepare(
         """
@@ -78,13 +52,11 @@ def main():
         VALUES (?, ?, ?, ?)
         """
     )
-
     # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
     # https://python-forum.io/thread-11659.html
     # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
     data_from_table = return_data_from_excel(CHARGES_TABLE)
     # print(data_from_table)
-
     # Use .addBindValue() to insert data
     for offense, statute, degree, type in data_from_table:
         insertDataQuery.addBindValue(offense)
@@ -92,9 +64,13 @@ def main():
         insertDataQuery.addBindValue(degree)
         insertDataQuery.addBindValue(type)
         insertDataQuery.exec()
-
     con_charges.close()
-    con_charges.removeDatabase("QSQLITE")
+
+
+def main():
+    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
+    con_charges = open_db_connection("con_charges")
+    update_charges_db(con_charges)
     return None
 
 

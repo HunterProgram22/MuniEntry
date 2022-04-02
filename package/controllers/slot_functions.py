@@ -7,7 +7,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
-from db.databases import open_db_connection, extract_data # open_charges_db_connection
+from db.databases import open_db_connection, extract_data
 from db.sql_queries import sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCharge, AmendOffenseDetails
@@ -670,4 +670,3 @@ if __name__ == "__main__":
 else:
     print("Slot Functions imported")
     charges_database = open_db_connection("con_charges")
-    # charges_database = open_charges_db_connection()

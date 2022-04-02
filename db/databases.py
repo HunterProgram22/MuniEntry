@@ -106,17 +106,17 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
-    check_if_db_open(db_connection)
+    check_if_db_open(db_connection, connection_name)
     return db_connection
 
 
-def close_db_connection(connection_name: str) -> None:
+def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
     if not os.path.exists(database_name):
-        print("The file does not exist. Creating new database.")
+        print("The database does not exist. Creating new database.")
     db_connection = create_db(database_name, connection_name)
     return db_connection
 
@@ -127,9 +127,9 @@ def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
     return db_connection
 
 
-def check_if_db_open(db_connection: QSqlDatabase) -> bool:
+def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     if not db_connection.isOpen():
-        print("Unable to connect to database")
+        print(f"Unable to connect to {connection_name} database")
         sys.exit(1)
     return True
 
