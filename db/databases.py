@@ -8,7 +8,7 @@ from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from loguru import logger
 from openpyxl import load_workbook # type: ignore
 from package.models.case_information import CriminalCaseInformation
-from settings import CHARGES_DATABASE, DB_PATH
+from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE
 
 DATABASE_TABLE_LIST = [
     ("Arraignments.xlsx", "arraignments"),
@@ -215,7 +215,7 @@ def create_daily_cases_list(database, table):
     return clean_cases_list
 
 
-def return_data_from_excel(excel_file):
+def return_cases_data_from_excel(excel_file):
     data = []
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
@@ -354,7 +354,7 @@ def load_daily_case_list_data(con_daily_case_lists):
 
         insert_data_query = QSqlQuery(con_daily_case_lists)
         insert_data_query.prepare(insert_table_sql_string(table))
-        data_from_table = return_data_from_excel(f"{DB_PATH}{excel_report}")
+        data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for (
                 case_number,
@@ -383,18 +383,79 @@ def load_daily_case_list_data(con_daily_case_lists):
             insert_data_query.exec()
 
 
+def update_charges_db(con_charges):
+    createTableQuery = QSqlQuery(con_charges)
+    createTableQuery.exec(
+        """
+        CREATE TABLE charges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+            offense VARCHAR(60) UNIQUE NOT NULL,
+            statute VARCHAR(50) NOT NULL,
+            degree VARCHAR(50) NOT NULL,
+            type VARCHAR(50) NOT NULL
+        )
+        """
+    )
+    insertDataQuery = QSqlQuery(con_charges)
+    insertDataQuery.prepare(
+        """
+        INSERT INTO charges (
+            offense,
+            statute,
+            degree,
+            type
+        )
+        VALUES (?, ?, ?, ?)
+        """
+    )
+    # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
+    # https://python-forum.io/thread-11659.html
+    # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
+    data_from_table = return_charges_data_from_excel(CHARGES_TABLE)
+    # print(data_from_table)
+    # Use .addBindValue() to insert data
+    for offense, statute, degree, type in data_from_table:
+        insertDataQuery.addBindValue(offense)
+        insertDataQuery.addBindValue(statute)
+        insertDataQuery.addBindValue(degree)
+        insertDataQuery.addBindValue(type)
+        insertDataQuery.exec()
+    con_charges.close()
+
+
+def return_charges_data_from_excel(excel_file):
+    data = []
+    workbook = load_workbook(excel_file)
+    worksheet = workbook.active
+    max_row = worksheet.max_row
+    max_row = max_row + 1
+    for row in range(2, max_row):
+        offense = worksheet.cell(row=row, column=1)
+        statute = worksheet.cell(row=row, column=2)
+        degree = worksheet.cell(row=row, column=3)
+        type = worksheet.cell(row=row, column=4)
+        charge = (offense.value, statute.value, degree.value, type.value)
+        data.append(charge)
+    return data
+
+
 def main():
     create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
+
+    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
+    con_charges = open_db_connection("con_charges")
+    update_charges_db(con_charges)
+
     return None
 
 
 if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
 else:
-    from db import create_charges_table
-
     main()
     print("Imported Daily Case List Tables")
+
+
