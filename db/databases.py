@@ -4,20 +4,11 @@ import sys
 from abc import ABC, abstractmethod
 import string
 
+from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-from loguru import logger
-from openpyxl import load_workbook # type: ignore
-from package.models.case_information import CriminalCaseInformation
-from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE
 
-DATABASE_TABLE_LIST = [
-    ("Arraignments.xlsx", "arraignments"),
-    ("Slated.xlsx", "slated"),
-    ("Final_Pretrials.xlsx", "final_pretrials"),
-    ("Pleas.xlsx", "pleas"),
-    ("Trials_to_Court.xlsx", "trials_to_court"),
-    ("PCVH_FCVH.xlsx", "pcvh_fcvh"),
-]
+from package.models.case_information import CriminalCaseInformation
+from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE, DATABASE_TABLE_LIST
 
 
 class CaseSQLRetriever(ABC):
@@ -26,7 +17,7 @@ class CaseSQLRetriever(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def load_data_into_case(self, query):
+    def load_data_into_case(self):
         raise NotImplementedError
 
     @abstractmethod
@@ -45,16 +36,17 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     is passed to allow for certain options in the view to be changed based on which case list
     is selected. TODO: This can be refactored somehow."""
 
-    def __init__(self, case_number, case_table):
+    def __init__(self, case_number: str, case_table: str) -> None:
         self.case_number = case_number
         self.case_table = case_table
+        self.abbreviation_list = ["DUS", "OVI", "BMV"]
         self.database = open_db_connection("con_daily_case_lists")
         self.case = CriminalCaseInformation()
         self.query_case_data()
         self.load_data_into_case()
         self.query.finish()
 
-    def query_case_data(self):
+    def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
         query_string = f"""
@@ -67,13 +59,13 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
-    def load_data_into_case(self):
+    def load_data_into_case(self) -> None:
         while self.query.next():
             if self.case.case_number is None:
-                 self.load_case_information()
+                self.load_case_information()
             self.load_charge_information()
 
-    def load_case_information(self):
+    def load_case_information(self) -> None:
         self.case.case_number = self.query.value(1)
         self.case.defendant.last_name = self.query.value(2).title()
         self.case.defendant.first_name = self.query.value(3).title()
@@ -81,7 +73,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.case.defense_counsel = f"{self.query.value(10).title()} {self.query.value(9).title()}"
         self.case.defense_counsel_type = self.query.value(11)
 
-    def load_charge_information(self):
+    def load_charge_information(self) -> None:
         offense = self.clean_offense_name(self.query.value(4))
         statute = self.query.value(5)
         degree = self.query.value(6)
@@ -89,18 +81,16 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 
-    def clean_offense_name(self, offense):
+    def clean_offense_name(self, offense: str) -> str:
         """Sets an offense name to title case, but leaves certain standard 3-letter
         abbreviations in all caps."""
-        abbreviation_list = ["DUS", "OVI", "BMV"]
-        if offense[:3] in abbreviation_list:
+        if offense[:3] in self.abbreviation_list:
             caps = offense[:3]
             remaining_offense = string.capwords(offense[3:]).rstrip()
             return f"{caps} {remaining_offense}"
-        else:
-            return string.capwords(offense).rstrip()
+        return string.capwords(offense).rstrip()
 
-    def load_case(self):
+    def load_case(self) -> CriminalCaseInformation:
         return self.case
 
 
@@ -133,7 +123,7 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
         sys.exit(1)
     return True
 
-# PICK UP HERE - Also need to refactor close charges db in various modules.
+
 
 def create_daily_case_list_tables(con_daily_case_lists):
     create_table_query = QSqlQuery(con_daily_case_lists)
@@ -357,17 +347,17 @@ def load_daily_case_list_data(con_daily_case_lists):
         data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
         # Do not add comma to last value inserted
         for (
-                case_number,
-                defendant_last_name,
-                defendant_first_name,
-                offense,
-                statute,
-                degree,
-                fra_in_file,
-                moving_bool,
-                def_atty_last_name,
-                def_atty_first_name,
-                def_atty_type,
+            case_number,
+            defendant_last_name,
+            defendant_first_name,
+            offense,
+            statute,
+            degree,
+            fra_in_file,
+            moving_bool,
+            def_atty_last_name,
+            def_atty_first_name,
+            def_atty_type,
         ) in data_from_table:
             insert_data_query.addBindValue(case_number)
             insert_data_query.addBindValue(defendant_last_name)
@@ -408,7 +398,8 @@ def update_charges_db(con_charges):
         VALUES (?, ?, ?, ?)
         """
     )
-    # TO POPULATE A COMBO BOX http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
+    # TO POPULATE A COMBO BOX
+    # http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
     # https://python-forum.io/thread-11659.html
     # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
     data_from_table = return_charges_data_from_excel(CHARGES_TABLE)
@@ -457,5 +448,3 @@ if __name__ == "__main__":
 else:
     main()
     print("Imported Daily Case Lists and Charges Tables")
-
-
