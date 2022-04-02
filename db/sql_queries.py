@@ -19,9 +19,10 @@ def create_daily_case_list_tables_sql_query(table):
       """
 
 
-def insert_daily_case_list_tables_sql_query(table):
+def insert_daily_case_list_tables_sql_query(table, case):
+    # Do not add comma to last value inserted
     return f"""
-        INSERT INTO {table}(
+        INSERT INTO {table} (
             case_number,
             defendant_last_name,
             defendant_first_name,
@@ -34,7 +35,19 @@ def insert_daily_case_list_tables_sql_query(table):
             def_atty_first_name,
             def_atty_type
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (
+            '{case[0]}',
+            '{case[1]}',
+            '{case[2]}',
+            '{case[3]}',
+            '{case[4]}',
+            '{case[5]}',
+            '{case[6]}',
+            '{case[7]}',
+            '{case[8]}',
+            '{case[9]}',
+            '{case[10]}'
+        )
         """
 
 

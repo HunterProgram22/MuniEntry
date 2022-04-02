@@ -142,39 +142,99 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
 
 
+
+def return_cases_data_from_excel(excel_file: str):
+    data = []
+    workbook = load_workbook(excel_file)
+    worksheet = workbook.active
+    row_count = worksheet.max_row + 1
+    for row in range(2, row_count):
+        case_number = worksheet.cell(row=row, column=1)
+        defendant_last_name = worksheet.cell(row=row, column=3)
+        defendant_first_name = worksheet.cell(row=row, column=4)
+
+        if worksheet.cell(row=row, column=5).value is None:
+            worksheet.cell(row=row, column=5).value = "No Data"
+            offense = worksheet.cell(row=row, column=5)
+        else:
+            offense = worksheet.cell(row=row, column=5)
+
+        if worksheet.cell(row=row, column=6).value is None:
+            worksheet.cell(row=row, column=6).value = "No Data"
+            statute = worksheet.cell(row=row, column=6)
+        else:
+            statute = worksheet.cell(row=row, column=6)
+
+        if worksheet.cell(row=row, column=7).value is None:
+            worksheet.cell(row=row, column=7).value = "No Data"
+            degree = worksheet.cell(row=row, column=7)
+        else:
+            degree = worksheet.cell(row=row, column=7)
+
+        if worksheet.cell(row=row, column=8).value is None:
+            worksheet.cell(row=row, column=8).value = "U"
+            fra_in_file = worksheet.cell(row=row, column=8)
+        else:
+            fra_in_file = worksheet.cell(row=row, column=8)
+
+        if worksheet.cell(row=row, column=9).value is None:
+            worksheet.cell(row=row, column=9).value = "No Data"
+            moving_bool = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is False:
+            worksheet.cell(row=row, column=9).value = "False"
+            moving_bool = worksheet.cell(row=row, column=9)
+        elif worksheet.cell(row=row, column=9).value is True:
+            worksheet.cell(row=row, column=9).value = "True"
+            moving_bool = worksheet.cell(row=row, column=9)
+        else:
+            moving_bool = worksheet.cell(row=row, column=9)
+
+        if worksheet.cell(row=row, column=10).value is None:
+            worksheet.cell(row=row, column=10).value = ""
+            def_atty_last_name = worksheet.cell(row=row, column=10)
+        else:
+            def_atty_last_name = worksheet.cell(row=row, column=10)
+
+        if worksheet.cell(row=row, column=11).value is None:
+            worksheet.cell(row=row, column=11).value = ""
+            def_atty_first_name = worksheet.cell(row=row, column=11)
+        else:
+            def_atty_first_name = worksheet.cell(row=row, column=11)
+
+        if worksheet.cell(row=row, column=12).value is None:
+            worksheet.cell(row=row, column=12).value = None
+            def_atty_type = worksheet.cell(row=row, column=12)
+        else:
+            def_atty_type = worksheet.cell(row=row, column=12)
+
+        case = (
+            case_number.value,
+            defendant_last_name.value,
+            defendant_first_name.value,
+            offense.value,
+            statute.value,
+            degree.value,
+            fra_in_file.value,
+            moving_bool.value,
+            def_atty_last_name.value,
+            def_atty_first_name.value,
+            def_atty_type.value,
+        )
+        data.append(case)
+    return data
+
+
+
 def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
-    
-    insert_data_query = QSqlQuery(con_daily_case_lists)
-    insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name))
-    data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
-    # Do not add comma to last value inserted
-    for (
-        case_number,
-        defendant_last_name,
-        defendant_first_name,
-        offense,
-        statute,
-        degree,
-        fra_in_file,
-        moving_bool,
-        def_atty_last_name,
-        def_atty_first_name,
-        def_atty_type,
-    ) in data_from_table:
-        insert_data_query.addBindValue(case_number)
-        insert_data_query.addBindValue(defendant_last_name)
-        insert_data_query.addBindValue(defendant_first_name)
-        insert_data_query.addBindValue(offense)
-        insert_data_query.addBindValue(statute)
-        insert_data_query.addBindValue(degree)
-        insert_data_query.addBindValue(fra_in_file)
-        insert_data_query.addBindValue(moving_bool)
-        insert_data_query.addBindValue(def_atty_last_name)
-        insert_data_query.addBindValue(def_atty_first_name)
-        insert_data_query.addBindValue(def_atty_type)
+
+    cases_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
+    for case in cases_from_table:
+        insert_data_query = QSqlQuery(con_daily_case_lists)
+        insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name, case))
         insert_data_query.exec()
+
 
 
 def delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name):
@@ -256,85 +316,7 @@ def create_daily_cases_list(database, table):
     return clean_cases_list
 
 
-def return_cases_data_from_excel(excel_file):
-    data = []
-    workbook = load_workbook(excel_file)
-    worksheet = workbook.active
-    row_count = worksheet.max_row + 1
-    for row in range(2, row_count):
-        case_number = worksheet.cell(row=row, column=1)
-        defendant_last_name = worksheet.cell(row=row, column=3)
-        defendant_first_name = worksheet.cell(row=row, column=4)
 
-        if worksheet.cell(row=row, column=5).value is None:
-            worksheet.cell(row=row, column=5).value = "No Data"
-            offense = worksheet.cell(row=row, column=5)
-        else:
-            offense = worksheet.cell(row=row, column=5)
-
-        if worksheet.cell(row=row, column=6).value is None:
-            worksheet.cell(row=row, column=6).value = "No Data"
-            statute = worksheet.cell(row=row, column=6)
-        else:
-            statute = worksheet.cell(row=row, column=6)
-
-        if worksheet.cell(row=row, column=7).value is None:
-            worksheet.cell(row=row, column=7).value = "No Data"
-            degree = worksheet.cell(row=row, column=7)
-        else:
-            degree = worksheet.cell(row=row, column=7)
-
-        if worksheet.cell(row=row, column=8).value is None:
-            worksheet.cell(row=row, column=8).value = "U"
-            fra_in_file = worksheet.cell(row=row, column=8)
-        else:
-            fra_in_file = worksheet.cell(row=row, column=8)
-
-        if worksheet.cell(row=row, column=9).value is None:
-            worksheet.cell(row=row, column=9).value = "No Data"
-            moving_bool = worksheet.cell(row=row, column=9)
-        elif worksheet.cell(row=row, column=9).value is False:
-            worksheet.cell(row=row, column=9).value = "False"
-            moving_bool = worksheet.cell(row=row, column=9)
-        elif worksheet.cell(row=row, column=9).value is True:
-            worksheet.cell(row=row, column=9).value = "True"
-            moving_bool = worksheet.cell(row=row, column=9)
-        else:
-            moving_bool = worksheet.cell(row=row, column=9)
-
-        if worksheet.cell(row=row, column=10).value is None:
-            worksheet.cell(row=row, column=10).value = ""
-            def_atty_last_name = worksheet.cell(row=row, column=10)
-        else:
-            def_atty_last_name = worksheet.cell(row=row, column=10)
-
-        if worksheet.cell(row=row, column=11).value is None:
-            worksheet.cell(row=row, column=11).value = ""
-            def_atty_first_name = worksheet.cell(row=row, column=11)
-        else:
-            def_atty_first_name = worksheet.cell(row=row, column=11)
-
-        if worksheet.cell(row=row, column=12).value is None:
-            worksheet.cell(row=row, column=12).value = None
-            def_atty_type = worksheet.cell(row=row, column=12)
-        else:
-            def_atty_type = worksheet.cell(row=row, column=12)
-
-        case = (
-            case_number.value,
-            defendant_last_name.value,
-            defendant_first_name.value,
-            offense.value,
-            statute.value,
-            degree.value,
-            fra_in_file.value,
-            moving_bool.value,
-            def_atty_last_name.value,
-            def_atty_first_name.value,
-            def_atty_type.value,
-        )
-        data.append(case)
-    return data
 
 
 def update_charges_db(con_charges):
