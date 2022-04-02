@@ -1,4 +1,6 @@
-def create_daily_case_list_tables_sql_query(table):
+"""Module containing all sql queries used throughout the application."""
+
+def create_daily_case_list_tables_sql_query(table: str) -> str:
     """If changes are made to this create_table string then the old table must
     be deleted. No comma after last item."""
     return f"""
@@ -19,7 +21,7 @@ def create_daily_case_list_tables_sql_query(table):
       """
 
 
-def insert_daily_case_list_tables_sql_query(table, case):
+def insert_daily_case_list_tables_sql_query(table: str, case: tuple) -> str:
     # Do not add comma to last value inserted
     return f"""
         INSERT INTO {table} (
@@ -51,14 +53,14 @@ def insert_daily_case_list_tables_sql_query(table, case):
         """
 
 
-def delete_daily_case_list_tables_sql_query(table):
+def delete_daily_case_list_tables_sql_query(table: str) -> str:
     """This clears all data from the table."""
     return f"""
         DELETE FROM {table};
         """
 
 
-def select_case_data_sql_query(table, case_number):
+def select_case_data_sql_query(table: str, case_number: str) -> str:
     return f"""
             SELECT *
             FROM {table}

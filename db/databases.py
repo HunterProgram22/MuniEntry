@@ -142,7 +142,6 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
 
 
-
 def return_cases_data_from_excel(excel_file: str):
     data = []
     workbook = load_workbook(excel_file)
@@ -224,7 +223,6 @@ def return_cases_data_from_excel(excel_file: str):
     return data
 
 
-
 def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
@@ -234,7 +232,6 @@ def insert_daily_case_list_sql_data(
         insert_data_query = QSqlQuery(con_daily_case_lists)
         insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name, case))
         insert_data_query.exec()
-
 
 
 def delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name):
@@ -314,9 +311,6 @@ def create_daily_cases_list(database, table):
     conn.close()
     clean_cases_list.insert(0, None)
     return clean_cases_list
-
-
-
 
 
 def update_charges_db(con_charges):
