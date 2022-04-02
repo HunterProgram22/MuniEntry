@@ -131,7 +131,7 @@ def check_if_db_open(database_name: str) -> None:
         print("Unable to connect to database")
         sys.exit(1)
 
-# PICK UP HERE - Also need to refactor close charges db in various modules. 
+# PICK UP HERE - Also need to refactor close charges db in various modules.
 
 def create_daily_case_list_tables(con_daily_case_lists):
     create_table_query = QSqlQuery(con_daily_case_lists)
