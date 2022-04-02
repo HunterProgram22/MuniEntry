@@ -145,6 +145,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
 def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
+    
     insert_data_query = QSqlQuery(con_daily_case_lists)
     insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name))
     data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
