@@ -14,7 +14,7 @@ MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
 NONMOVING_COURT_COSTS = 108
 
-DATABASE_TABLE_LIST = [
+EXCEL_DAILY_CASE_LISTS = [
     ("Arraignments.xlsx", "arraignments"),
     ("Slated.xlsx", "slated"),
     ("Final_Pretrials.xlsx", "final_pretrials"),

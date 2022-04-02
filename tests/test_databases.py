@@ -4,7 +4,7 @@ import pytest
 from PyQt5.QtSql import QSqlDatabase
 
 from conftest import mouse_click, enter_data
-from settings import CHARGES_DATABASE, DB_PATH
+from settings import CHARGES_DATABASE, DB_PATH, EXCEL_DAILY_CASE_LISTS
 from db.databases import (
     CriminalCaseSQLRetriever,
     open_db_connection,
@@ -76,3 +76,7 @@ def test_if_check_if_db_open_works(database_name, connection_name):
     runs this check."""
     db_connection = open_db_connection(connection_name)
     assert check_if_db_open(db_connection, connection_name)
+
+
+def test_create_daily_case_list_tables():
+    assert len(EXCEL_DAILY_CASE_LISTS) == 6

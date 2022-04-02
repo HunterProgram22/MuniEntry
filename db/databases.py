@@ -4,11 +4,17 @@ import sys
 from abc import ABC, abstractmethod
 import string
 
+from db.sql_queries import (
+    create_daily_case_list_tables_sql_query,
+    insert_daily_case_list_tables_sql_query,
+    delete_daily_case_list_tables_sql_query,
+    select_case_data_sql_query,
+)
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
 from package.models.case_information import CriminalCaseInformation
-from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE, DATABASE_TABLE_LIST
+from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 
 
 class CaseSQLRetriever(ABC):
@@ -49,11 +55,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog.
         Current - Query.value(0) is id, then 1 is case_number, 2 is last_name, 3 is first_name."""
-        query_string = f"""
-            SELECT *
-            FROM {self.case_table}
-            WHERE case_number = '{self.case_number}'
-            """
+        query_string = select_case_data_sql_query(self.case_table, self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         self.query.bindValue(self.case_number, self.case_number)
@@ -124,12 +126,60 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     return True
 
 
+def create_daily_case_list_sql_tables(con_daily_case_lists: QSqlDatabase) -> None:
+    for item in EXCEL_DAILY_CASE_LISTS:
+        table_name: str
+        table_name = item[1]
+        QSqlQuery(con_daily_case_lists).exec(create_daily_case_list_tables_sql_query(table_name))
 
-def create_daily_case_list_tables(con_daily_case_lists):
-    create_table_query = QSqlQuery(con_daily_case_lists)
-    for item in DATABASE_TABLE_LIST:
-        table = item[1]
-        create_table_query.exec(create_table_sql_string(table))
+
+def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
+    for item in EXCEL_DAILY_CASE_LISTS:
+        excel_report: str
+        table_name: str
+        excel_report, table_name = item
+        delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name)
+        insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
+
+
+def insert_daily_case_list_sql_data(
+    con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
+) -> None:
+    insert_data_query = QSqlQuery(con_daily_case_lists)
+    insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name))
+    data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
+    # Do not add comma to last value inserted
+    for (
+        case_number,
+        defendant_last_name,
+        defendant_first_name,
+        offense,
+        statute,
+        degree,
+        fra_in_file,
+        moving_bool,
+        def_atty_last_name,
+        def_atty_first_name,
+        def_atty_type,
+    ) in data_from_table:
+        insert_data_query.addBindValue(case_number)
+        insert_data_query.addBindValue(defendant_last_name)
+        insert_data_query.addBindValue(defendant_first_name)
+        insert_data_query.addBindValue(offense)
+        insert_data_query.addBindValue(statute)
+        insert_data_query.addBindValue(degree)
+        insert_data_query.addBindValue(fra_in_file)
+        insert_data_query.addBindValue(moving_bool)
+        insert_data_query.addBindValue(def_atty_last_name)
+        insert_data_query.addBindValue(def_atty_first_name)
+        insert_data_query.addBindValue(def_atty_type)
+        insert_data_query.exec()
+
+
+def delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name):
+    delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
+    delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
+    delete_daily_case_list_table.exec()
 
 
 def extract_data(case_data):
@@ -286,93 +336,6 @@ def return_cases_data_from_excel(excel_file):
     return data
 
 
-def create_table_sql_string(table):
-    """If changes are made to this create_table string then the old table must
-    be deleted. No comma after last item."""
-    return f"""
-      CREATE TABLE {table} (
-          id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-          case_number VARCHAR(20) NOT NULL,
-          defendant_last_name VARCHAR(50) NOT NULL,
-          defendant_first_name VARCHAR(50) NOT NULL,
-          offense VARCHAR(80) NOT NULL,
-          statute VARCHAR(50) NOT NULL,
-          degree VARCHAR(10) NOT NULL,
-          fra_in_file VARCHAR(5) NOT NULL,
-          moving_bool VARCHAR(15) NOT NULL,
-          def_atty_last_name VARCHAR (50),
-          def_atty_first_name VARCHAR (50),
-          def_atty_type VARCHAR(5)
-      )
-      """
-
-
-def insert_table_sql_string(table):
-    return f"""
-        INSERT INTO {table}(
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file,
-            moving_bool,
-            def_atty_last_name,
-            def_atty_first_name,
-            def_atty_type
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """
-
-
-def delete_table_data_sql_string(table):
-    """This clears all data from the table."""
-    return f"""
-        DELETE FROM {table};
-        """
-
-
-def load_daily_case_list_data(con_daily_case_lists):
-    for item in DATABASE_TABLE_LIST:
-        excel_report = item[0]
-        table = item[1]
-
-        delete_old_data_query = QSqlQuery(con_daily_case_lists)
-        delete_old_data_query.prepare(delete_table_data_sql_string(table))
-        delete_old_data_query.exec()
-
-        insert_data_query = QSqlQuery(con_daily_case_lists)
-        insert_data_query.prepare(insert_table_sql_string(table))
-        data_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
-        # Do not add comma to last value inserted
-        for (
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file,
-            moving_bool,
-            def_atty_last_name,
-            def_atty_first_name,
-            def_atty_type,
-        ) in data_from_table:
-            insert_data_query.addBindValue(case_number)
-            insert_data_query.addBindValue(defendant_last_name)
-            insert_data_query.addBindValue(defendant_first_name)
-            insert_data_query.addBindValue(offense)
-            insert_data_query.addBindValue(statute)
-            insert_data_query.addBindValue(degree)
-            insert_data_query.addBindValue(fra_in_file)
-            insert_data_query.addBindValue(moving_bool)
-            insert_data_query.addBindValue(def_atty_last_name)
-            insert_data_query.addBindValue(def_atty_first_name)
-            insert_data_query.addBindValue(def_atty_type)
-            insert_data_query.exec()
-
-
 def update_charges_db(con_charges):
     createTableQuery = QSqlQuery(con_charges)
     createTableQuery.exec(
@@ -430,10 +393,25 @@ def return_charges_data_from_excel(excel_file):
     return data
 
 
+def sql_query_offense_type(key):
+    charges_database = open_db_connection("con_charges")
+    query = QSqlQuery(charges_database)
+    query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
+    query.bindValue(":key", key)
+    query.exec()
+    while query.next():
+        statute = query.value(2)
+        offense_type = query.value(4)
+        if statute == key:
+            query.finish()
+            charges_database.close()
+            return offense_type
+
+
 def main():
     create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    create_daily_case_list_tables(con_daily_case_lists)
+    create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
 
     create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
