@@ -78,5 +78,5 @@ def test_if_check_if_db_open_works(database_name, connection_name):
     assert check_if_db_open(db_connection, connection_name)
 
 
-def test_create_daily_case_list_tables():
+def test_create_daily_case_list_tables_exists():
     assert len(EXCEL_DAILY_CASE_LISTS) == 6
