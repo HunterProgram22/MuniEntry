@@ -12,6 +12,7 @@ from db.databases import (
     remove_db_connection,
     check_if_db_open,
     query_offense_statute_data,
+    query_daily_case_list_data,
 )
 
 
@@ -79,13 +80,31 @@ def test_if_check_if_db_open_works(database_name, connection_name):
     assert check_if_db_open(db_connection, connection_name)
 
 
-def test_create_daily_case_list_tables_exists():
+def test_total_daily_case_lists_is_six():
     assert len(EXCEL_DAILY_CASE_LISTS) == 6
 
 
-def test_create_offense_list_exists():
-    assert len(query_offense_statute_data("offense")) == 38
+query_list = [
+    "offense",
+    "statute",
+]
+
+@pytest.mark.parametrize("query", query_list)
+def test_query_offense_statute_data(query):
+    assert len(query_offense_statute_data(query)) == 38
 
 
-def test_create_statute_list_exists():
-    assert len(query_offense_statute_data("statute")) == 38
+daily_case_lists = [
+    ("arraignments", 12),
+    ("slated", 11),
+    ("final_pretrials", 10),
+    ("pleas", 12),
+    ("trials_to_court", 4),
+    ("pcvh_fcvh", 6),
+]
+
+@pytest.mark.parametrize("table, total_cases", daily_case_lists)
+def test_query_daily_case_list_data(table, total_cases):
+    """The assertion for total cases needs to be one more than the total cases in the
+    test/db cases table because a blank is inserted at the top of the list."""
+    assert len(query_daily_case_list_data(table)) == total_cases

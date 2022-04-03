@@ -2,7 +2,7 @@ from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
+from db.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
 from package.controllers.information_checkers import (
     check_judicial_officer,
     check_case_list_selected,
@@ -156,18 +156,18 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
         This does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "arraignments")
+            query_daily_case_list_data("daily_case_lists.sqlite", "arraignments")
         )
-        self.slated_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "slated"))
+        self.slated_cases_box.addItems(query_daily_case_list_data("daily_case_lists.sqlite", "slated"))
         self.final_pretrial_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "final_pretrials")
+            query_daily_case_list_data("daily_case_lists.sqlite", "final_pretrials")
         )
-        self.pleas_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "pleas"))
+        self.pleas_cases_box.addItems(query_daily_case_list_data("daily_case_lists.sqlite", "pleas"))
         self.trials_to_court_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "trials_to_court")
+            query_daily_case_list_data("daily_case_lists.sqlite", "trials_to_court")
         )
         self.pcvh_fcvh_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "pcvh_fcvh")
+            query_daily_case_list_data("daily_case_lists.sqlite", "pcvh_fcvh")
         )
 
     @logger.catch

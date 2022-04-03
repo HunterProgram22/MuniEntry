@@ -13,6 +13,7 @@ from db.sql_queries import (
     delete_daily_case_list_tables_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
+    select_distinct_def_last_def_first_case_number_sql_query,
 )
 from package.models.case_information import CriminalCaseInformation
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
@@ -153,6 +154,14 @@ def insert_daily_case_list_sql_data(
         insert_data_query.exec()
 
 
+def delete_existing_daily_case_list_sql_table(
+    con_daily_case_lists: QSqlDatabase, table_name: str
+) -> None:
+    delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
+    delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
+    delete_daily_case_list_table.exec()
+
+
 class CaseExcelRetriever:
     def __init__(self) -> None:
         self.case_number: str = "No Data"
@@ -218,19 +227,8 @@ def get_cell_value(ws: object, row: int, col: int) -> str:
     return ws.cell(row=row, column=col).value
 
 
-def delete_existing_daily_case_list_sql_table(
-    con_daily_case_lists: QSqlDatabase, table_name: str
-) -> None:
-    delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
-    delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
-    delete_daily_case_list_table.exec()
-
-
 def query_offense_statute_data(query_value: str) -> list:
-    if query_value == "offense":
-        query_int = 0
-    elif query_value == "statute":
-        query_int = 1
+    query_int = get_offense_statute_query_int(query_value)
     conn = open_db_connection("con_charges")
     query_string = select_distinct_offense_statute_sql_query()
     query = QSqlQuery(conn)
@@ -244,26 +242,30 @@ def query_offense_statute_data(query_value: str) -> list:
     return item_list
 
 
-# TODO: Pick up here
+def get_offense_statute_query_int(query_value: str) -> int:
+    if query_value == "offense":
+        return 0
+    if query_value == "statute":
+        return 1
 
 
-def create_daily_cases_list(database, table):
-    conn = sqlite3.connect(DB_PATH + database)
-    cursor = conn.cursor()
-    cursor.execute(
-        f"SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}"
-    )
-    cases_list = cursor.fetchall()
-    clean_cases_list = []
-    for i in cases_list:
-        last_name = i[0].title()
-        case_number = i[2]
+
+def query_daily_case_list_data(table: str) -> list:
+    conn = open_db_connection("con_daily_case_lists")
+    query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
+    query = QSqlQuery(conn)
+    query.prepare(query_string)
+    query.exec()
+    item_list = []
+    while query.next():
+        last_name = query.value(0).title()
+        case_number = query.value(2)
         name = f"{last_name} - {case_number}"
-        clean_cases_list.append(name)
-    clean_cases_list.sort()
+        item_list.append(name)
+    item_list.sort()
     conn.close()
-    clean_cases_list.insert(0, None)
-    return clean_cases_list
+    item_list.insert(0, None)
+    return item_list
 
 
 def update_charges_db(con_charges):
