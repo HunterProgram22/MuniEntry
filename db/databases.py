@@ -16,6 +16,7 @@ from db.sql_queries import (
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
+    select_statute_from_charges_for_offense_type_sql_query,
 )
 from package.models.case_information import CriminalCaseInformation
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
@@ -309,10 +310,12 @@ def return_charges_data_from_excel(excel_file: str) -> list:
     return data
 
 
-def sql_query_offense_type(key):
+def sql_query_offense_type(key: str) -> str:
+    """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
+    court costs. TODO: add for AmendChargeDialogSlotFunctions."""
     charges_database = open_db_connection("con_charges")
     query = QSqlQuery(charges_database)
-    query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
+    query.prepare(select_statute_from_charges_for_offense_type_sql_query())
     query.bindValue(":key", key)
     query.exec()
     while query.next():
@@ -324,7 +327,7 @@ def sql_query_offense_type(key):
             return offense_type
 
 
-def extract_data(case_data):
+def extract_data(case_data: dict) -> None:
     wb_name = "Case_Data.xlsx"
     wb_name = DB_PATH + wb_name
     wb = load_workbook(wb_name)

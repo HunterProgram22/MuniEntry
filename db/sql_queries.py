@@ -107,3 +107,9 @@ def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
     return f"""
     SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
     """
+
+
+def select_statute_from_charges_for_offense_type_sql_query() -> str:
+    return f"""
+    SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'
+    """
