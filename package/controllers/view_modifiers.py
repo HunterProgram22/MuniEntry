@@ -265,6 +265,7 @@ class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
         self.set_plea_trial_date()
         self.set_appearance_reason()
         self.set_bond_condition_boxes_to_no_scroll()
+        self.dialog.probable_cause_finding_box.__class__ = NoScrollComboBox
 
 
 class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
