@@ -433,7 +433,8 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
         from package.controllers.conditions_dialogs import AddConditionsDialog
 
         self.dialog.update_entry_case_information()
-        AddConditionsDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AddConditionsDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
 
 
 class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -445,7 +446,8 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
         from package.controllers.conditions_dialogs import AddCommunityControlDialog
 
         self.dialog.update_entry_case_information()
-        AddCommunityControlDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
 
 
 class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
