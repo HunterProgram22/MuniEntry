@@ -79,7 +79,7 @@ def insert_charges_sql_query(table: str, charge: object) -> str:
             '{charge.offense}',
             '{charge.statute}',
             '{charge.degree}',
-            '{charge.type}'
+            '{charge.offense_type}'
         )
     """
 

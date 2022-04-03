@@ -1,12 +1,16 @@
+"""Module containing all classes and functions related to creation and access to
+the databases used by the application."""
+
 from abc import ABC, abstractmethod
 import os
-import sqlite3
 import sys
 import string
 
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
+from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
+from package.models.case_information import CriminalCaseInformation
 from db.sql_queries import (
     create_daily_case_list_tables_sql_query,
     create_charges_table_sql_query,
@@ -18,8 +22,6 @@ from db.sql_queries import (
     select_distinct_def_last_def_first_case_number_sql_query,
     select_statute_from_charges_for_offense_type_sql_query,
 )
-from package.models.case_information import CriminalCaseInformation
-from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 
 
 class CaseSQLRetriever(ABC):
@@ -230,7 +232,6 @@ def get_cell_value(ws: object, row: int, col: int) -> str:
 
 
 def query_offense_statute_data(query_value: str) -> list:
-    query_int = get_offense_statute_query_int(query_value)
     conn = open_db_connection("con_charges")
     query_string = select_distinct_offense_statute_sql_query()
     query = QSqlQuery(conn)
@@ -238,17 +239,13 @@ def query_offense_statute_data(query_value: str) -> list:
     query.exec()
     item_list = []
     while query.next():
-        item_list.append(query.value(query_int))
+        if query_value == "offense":
+            item_list.append(query.value(0))
+        elif query_value == "statute":
+            item_list.append(query.value(1))
     item_list.sort()
     conn.close()
     return item_list
-
-
-def get_offense_statute_query_int(query_value: str) -> int:
-    if query_value == "offense":
-        return 0
-    if query_value == "statute":
-        return 1
 
 
 def query_daily_case_list_data(table: str) -> list:
@@ -265,7 +262,7 @@ def query_daily_case_list_data(table: str) -> list:
         item_list.append(name)
     item_list.sort()
     conn.close()
-    item_list.insert(0, None)
+    item_list.insert(0, "")
     return item_list
 
 
@@ -288,11 +285,11 @@ def load_charges_data(con_charges: QSqlDatabase) -> None:
 
 
 class Charge:
-    def __init__(self, offense: str, statute: str, degree: str, type: str) -> None:
+    def __init__(self, offense: str, statute: str, degree: str, offense_type: str) -> None:
         self.offense: str = offense
         self.statute: str = statute
         self.degree: str = degree
-        self.type: str = type
+        self.offense_type: str = offense_type
 
 
 def return_charges_data_from_excel(excel_file: str) -> list:
@@ -305,19 +302,22 @@ def return_charges_data_from_excel(excel_file: str) -> list:
         offense = worksheet.cell(row=row, column=1)
         statute = worksheet.cell(row=row, column=2)
         degree = worksheet.cell(row=row, column=3)
-        type = worksheet.cell(row=row, column=4)
-        data.append(Charge(offense.value, statute.value, degree.value, type.value))
+        offense_type = worksheet.cell(row=row, column=4)
+        data.append(Charge(offense.value, statute.value, degree.value, offense_type.value))
     return data
 
 
 def sql_query_offense_type(key: str) -> str:
     """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
-    court costs. TODO: add for AmendChargeDialogSlotFunctions."""
+    court costs. If no match is found this returns "Moving" which is the highest court cost, so if
+    the defendant is told the amount it should not be less than what it is owed.
+    TODO: add for AmendChargeDialogSlotFunctions."""
     charges_database = open_db_connection("con_charges")
     query = QSqlQuery(charges_database)
     query.prepare(select_statute_from_charges_for_offense_type_sql_query())
     query.bindValue(":key", key)
     query.exec()
+    offense_type = "Moving"
     while query.next():
         statute = query.value(2)
         offense_type = query.value(4)
@@ -325,6 +325,7 @@ def sql_query_offense_type(key: str) -> str:
             query.finish()
             charges_database.close()
             return offense_type
+    return offense_type
 
 
 def extract_data(case_data: dict) -> None:
@@ -366,8 +367,6 @@ def main():
     con_charges = open_db_connection("con_charges")
     create_charges_sql_table(con_charges)
     load_charges_data(con_charges)
-
-    return None
 
 
 if __name__ == "__main__":
