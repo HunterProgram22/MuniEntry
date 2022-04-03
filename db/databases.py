@@ -4,6 +4,9 @@ import sys
 from abc import ABC, abstractmethod
 import string
 
+from openpyxl import load_workbook  # type: ignore
+from PyQt5.QtSql import QSqlQuery, QSqlDatabase
+
 from db.sql_queries import (
     create_daily_case_list_tables_sql_query,
     insert_daily_case_list_tables_sql_query,
@@ -11,11 +14,8 @@ from db.sql_queries import (
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
 )
-from openpyxl import load_workbook  # type: ignore
-from PyQt5.QtSql import QSqlQuery, QSqlDatabase
-
 from package.models.case_information import CriminalCaseInformation
-from settings import CHARGES_DATABASE, DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
+from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 
 
 class CaseSQLRetriever(ABC):
@@ -163,7 +163,7 @@ class CaseExcelRetriever:
         self.statute: str = "No Data"
         self.degree: str = "No Data"
         self.fra_in_file: str = "U"
-        self.moving_bool: bool = False
+        self.moving_bool: str = "No Data"
         self.def_atty_last_name: str = ""
         self.def_atty_first_name: str = ""
         self.def_atty_type: str = "No Data"
@@ -210,7 +210,9 @@ def get_cell_value(ws: object, row: int, col: int) -> str:
     if ws.cell(row=row, column=col).value is None:
         if col == 8:  # fra_in_file
             return "U"
-        if col == 10 or 11:  # def_atty_last_name and def_atty_first_name
+        if col == 10:
+            return ""
+        if col == 11:  # def_atty_last_name and def_atty_first_name
             return ""
         return "No Data"
     return ws.cell(row=row, column=col).value
@@ -222,14 +224,6 @@ def delete_existing_daily_case_list_sql_table(
     delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
     delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
     delete_daily_case_list_table.exec()
-
-
-def create_offense_list() -> list:
-    return query_offense_statute_data("offense")
-
-
-def create_statute_list() -> list:
-    return query_offense_statute_data("statute")
 
 
 def query_offense_statute_data(query_value: str) -> list:
@@ -248,6 +242,9 @@ def query_offense_statute_data(query_value: str) -> list:
     item_list.sort()
     conn.close()
     return item_list
+
+
+# TODO: Pick up here
 
 
 def create_daily_cases_list(database, table):

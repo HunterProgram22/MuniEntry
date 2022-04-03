@@ -11,6 +11,7 @@ from db.databases import (
     create_db_connection,
     remove_db_connection,
     check_if_db_open,
+    query_offense_statute_data,
 )
 
 
@@ -80,3 +81,11 @@ def test_if_check_if_db_open_works(database_name, connection_name):
 
 def test_create_daily_case_list_tables_exists():
     assert len(EXCEL_DAILY_CASE_LISTS) == 6
+
+
+def test_create_offense_list_exists():
+    assert len(query_offense_statute_data("offense")) == 38
+
+
+def test_create_statute_list_exists():
+    assert len(query_offense_statute_data("statute")) == 38
