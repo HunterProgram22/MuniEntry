@@ -1,5 +1,6 @@
 """Module containing all sql queries used throughout the application."""
 
+
 def create_daily_case_list_tables_sql_query(table: str) -> str:
     """If changes are made to this create_table string then the old table must
     be deleted. No comma after last item."""
@@ -21,8 +22,20 @@ def create_daily_case_list_tables_sql_query(table: str) -> str:
       """
 
 
+def create_charges_table_sql_query() -> str:
+    return f"""
+            CREATE TABLE charges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+            offense VARCHAR(60) UNIQUE NOT NULL,
+            statute VARCHAR(50) NOT NULL,
+            degree VARCHAR(50) NOT NULL,
+            type VARCHAR(50) NOT NULL
+        )
+    """
+
+
 def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
-    # Do not add comma to last value inserted
+    # Do not add comma after last value inserted
     return f"""
         INSERT INTO {table} (
             case_number,
@@ -53,6 +66,24 @@ def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
         """
 
 
+def insert_charges_sql_query(table: str, charge: object) -> str:
+    # Do not add comma after last value inserted
+    return f"""
+            INSERT INTO {table} (
+            offense,
+            statute,
+            degree,
+            type
+        )
+        VALUES (
+            '{charge.offense}',
+            '{charge.statute}',
+            '{charge.degree}',
+            '{charge.type}'
+        )
+    """
+
+
 def delete_table_sql_query(table: str) -> str:
     """This clears all data from the table."""
     return f"""
@@ -75,16 +106,4 @@ def select_distinct_offense_statute_sql_query() -> str:
 def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
     return f"""
     SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
-    """
-
-
-def create_charges_table_sql_query() -> str:
-    return f"""
-            CREATE TABLE charges (
-            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-            offense VARCHAR(60) UNIQUE NOT NULL,
-            statute VARCHAR(50) NOT NULL,
-            degree VARCHAR(50) NOT NULL,
-            type VARCHAR(50) NOT NULL
-        )
     """

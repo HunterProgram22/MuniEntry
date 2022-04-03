@@ -1,7 +1,7 @@
+from abc import ABC, abstractmethod
 import os
 import sqlite3
 import sys
-from abc import ABC, abstractmethod
 import string
 
 from openpyxl import load_workbook  # type: ignore
@@ -9,12 +9,13 @@ from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
 from db.sql_queries import (
     create_daily_case_list_tables_sql_query,
+    create_charges_table_sql_query,
     insert_daily_case_list_tables_sql_query,
+    insert_charges_sql_query,
     delete_table_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
-    create_charges_table_sql_query,
 )
 from package.models.case_information import CriminalCaseInformation
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
@@ -143,6 +144,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         excel_report, table_name = item
         delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
+    con_daily_case_lists.close()
 
 
 def insert_daily_case_list_sql_data(
@@ -270,36 +272,29 @@ def create_charges_sql_table(con_charges: str) -> None:
     QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
+def insert_charges_sql_data(con_charges: QSqlDatabase, table_name: str) -> None:
+    charges_from_table = return_charges_data_from_excel(CHARGES_TABLE)
+    for charge in charges_from_table:
+        insert_data_query = QSqlQuery(con_charges)
+        insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
+        insert_data_query.exec()
 
-def load_charges_data(con_charges):
+
+def load_charges_data(con_charges: QSqlDatabase) -> None:
     delete_existing_sql_table(con_charges, "charges")
-
-    insertDataQuery = QSqlQuery(con_charges)
-    insertDataQuery.prepare(
-        """
-        INSERT INTO charges (
-            offense,
-            statute,
-            degree,
-            type
-        )
-        VALUES (?, ?, ?, ?)
-        """
-    )
-
-    data_from_table = return_charges_data_from_excel(CHARGES_TABLE)
-
-    for offense, statute, degree, type in data_from_table:
-        insertDataQuery.addBindValue(offense)
-        insertDataQuery.addBindValue(statute)
-        insertDataQuery.addBindValue(degree)
-        insertDataQuery.addBindValue(type)
-        insertDataQuery.exec()
+    insert_charges_sql_data(con_charges, "charges")
     con_charges.close()
 
 
+class Charge:
+    def __init__(self, offense: str, statute: str, degree: str, type: str) -> None:
+        self.offense: str = offense
+        self.statute: str = statute
+        self.degree: str = degree
+        self.type: str = type
 
-def return_charges_data_from_excel(excel_file):
+
+def return_charges_data_from_excel(excel_file: str) -> list:
     data = []
     workbook = load_workbook(excel_file)
     worksheet = workbook.active
@@ -310,8 +305,7 @@ def return_charges_data_from_excel(excel_file):
         statute = worksheet.cell(row=row, column=2)
         degree = worksheet.cell(row=row, column=3)
         type = worksheet.cell(row=row, column=4)
-        charge = (offense.value, statute.value, degree.value, type.value)
-        data.append(charge)
+        data.append(Charge(offense.value, statute.value, degree.value, type.value))
     return data
 
 
@@ -359,6 +353,7 @@ def extract_data(case_data):
 
 
 def main():
+
     create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_sql_tables(con_daily_case_lists)
