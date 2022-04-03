@@ -13,6 +13,10 @@ from db.databases import (
     check_if_db_open,
     query_offense_statute_data,
     query_daily_case_list_data,
+    create_charges_sql_table,
+    load_charges_data,
+    create_daily_case_list_sql_tables,
+    load_daily_case_list_data,
 )
 
 
@@ -110,5 +114,21 @@ def test_query_daily_case_list_data(table, total_cases):
     assert len(query_daily_case_list_data(table)) == total_cases
 
 
-def test_update_charges_db():
-    assert False
+def test_create_charges_db():
+    """This test uses the charges db in the test/db, also code below is copied
+    from the main() of databases.py - not ideal test."""
+    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
+    con_charges = open_db_connection("con_charges")
+    create_charges_sql_table(con_charges)
+    load_charges_data(con_charges)
+    assert isinstance(con_charges, QSqlDatabase)
+
+
+def test_create_daily_case_lists_db():
+    """This test uses the charges db in the test/db, also code below is copied
+    from the main() of databases.py - not ideal test."""
+    create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    con_daily_case_lists = open_db_connection("con_daily_case_lists")
+    create_daily_case_list_sql_tables(con_daily_case_lists)
+    load_daily_case_list_data(con_daily_case_lists)
+    assert isinstance(con_daily_case_lists, QSqlDatabase)
