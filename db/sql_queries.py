@@ -53,7 +53,7 @@ def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
         """
 
 
-def delete_daily_case_list_tables_sql_query(table: str) -> str:
+def delete_table_sql_query(table: str) -> str:
     """This clears all data from the table."""
     return f"""
         DELETE FROM {table};

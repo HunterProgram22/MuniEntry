@@ -10,7 +10,7 @@ from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from db.sql_queries import (
     create_daily_case_list_tables_sql_query,
     insert_daily_case_list_tables_sql_query,
-    delete_daily_case_list_tables_sql_query,
+    delete_table_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
@@ -141,7 +141,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         excel_report: str
         table_name: str
         excel_report, table_name = item
-        delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name)
+        delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
 
 
@@ -155,12 +155,10 @@ def insert_daily_case_list_sql_data(
         insert_data_query.exec()
 
 
-def delete_existing_daily_case_list_sql_table(
-    con_daily_case_lists: QSqlDatabase, table_name: str
-) -> None:
-    delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
-    delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
-    delete_daily_case_list_table.exec()
+def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> None:
+    delete_table = QSqlQuery(db_connection)
+    delete_table.prepare(delete_table_sql_query(table_name))
+    delete_table.exec()
 
 
 class CaseExcelRetriever:
@@ -268,10 +266,13 @@ def query_daily_case_list_data(table: str) -> list:
     return item_list
 
 
+def create_charges_sql_table(con_charges: str) -> None:
+    QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
-def update_charges_db(con_charges):
-    create_charges_sql_table(con_charges)
+
+def load_charges_data(con_charges):
+    delete_existing_sql_table(con_charges, "charges")
 
     insertDataQuery = QSqlQuery(con_charges)
     insertDataQuery.prepare(
@@ -285,13 +286,9 @@ def update_charges_db(con_charges):
         VALUES (?, ?, ?, ?)
         """
     )
-    # TO POPULATE A COMBO BOX
-    # http://www.voidynullness.net/blog/2013/02/05/qt-populate-combo-box-from-database-table/
-    # https://python-forum.io/thread-11659.html
-    # Create two tables one for alpha sort and one for num sort - defintely a better way to do this
+
     data_from_table = return_charges_data_from_excel(CHARGES_TABLE)
-    # print(data_from_table)
-    # Use .addBindValue() to insert data
+
     for offense, statute, degree, type in data_from_table:
         insertDataQuery.addBindValue(offense)
         insertDataQuery.addBindValue(statute)
@@ -300,9 +297,6 @@ def update_charges_db(con_charges):
         insertDataQuery.exec()
     con_charges.close()
 
-
-def create_charges_sql_table(con_charges: str) -> None:
-    QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
 def return_charges_data_from_excel(excel_file):
@@ -372,13 +366,14 @@ def main():
 
     create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
-    update_charges_db(con_charges)
+    create_charges_sql_table(con_charges)
+    load_charges_data(con_charges)
 
     return None
 
 
 if __name__ == "__main__":
-    print("Daily Case Lists and Charges Tables created directly from script")
+    print("Daily Case List Tables and Charges Table created directly from script")
 else:
     main()
-    print("Imported Daily Case Lists and Charges Tables")
+    print("Imported Daily Case List Tables and Charges Table")
