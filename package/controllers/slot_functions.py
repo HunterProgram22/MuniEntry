@@ -545,7 +545,8 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def set_field_enabled(self):
         """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
+        any additional fields that are required for that condition. TODO: Refactor so it doesn't have
+        to loop."""
         for item in self.dialog.condition_checkbox_list:
             (condition_checkbox, condition_field) = item
             if hasattr(self.dialog, condition_checkbox):
