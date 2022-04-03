@@ -207,8 +207,12 @@ def return_cases_data_from_excel(excel_file: str) -> list:
     return data
 
 
-def get_cell_value(ws, row, col):
+def get_cell_value(ws: object, row: int, col: int) -> str:
     if ws.cell(row=row, column=col).value is None:
+        if col == 8: # fra_in_file
+            return "U"
+        if col == 10 or 11: # def_atty_last_name and def_atty_first_name
+            return ""
         return "No Data"
     return ws.cell(row=row, column=col).value
 
