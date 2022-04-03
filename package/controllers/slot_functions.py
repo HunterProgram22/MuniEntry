@@ -7,10 +7,9 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
-from db.databases import open_charges_db_connection, extract_data
-from db.sql_queries import sql_query_offense_type
+from package.database_controllers.databases import open_db_connection, extract_data, sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
-from package.models.case_information import CriminalCharge, AmendOffenseDetails
+from package.models.case_information import CriminalCharge
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH
 
@@ -186,7 +185,7 @@ class BaseDialogSlotFunctions(object):
     def set_statute_and_offense(cls, key, dialog):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
-        charges_database = open_charges_db_connection()
+        charges_database = open_db_connection("con_charges")
         field = None
         if dialog.freeform_entry_checkBox.isChecked():
             return None
@@ -327,8 +326,6 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
         return sql_query_offense_type(key)
-
-
 
     def close_event(self):
         self.dialog.charges_database.close()
@@ -669,4 +666,4 @@ if __name__ == "__main__":
     print("Slot Functions ran directly")
 else:
     print("Slot Functions imported")
-    charges_database = open_charges_db_connection()
+    charges_database = open_db_connection("con_charges")

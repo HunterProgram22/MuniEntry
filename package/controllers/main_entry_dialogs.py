@@ -2,7 +2,7 @@
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
 
-from db.databases import open_charges_db_connection
+# from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.controllers.case_updaters import (
@@ -312,6 +312,8 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
 
 if __name__ == "__main__":
-    charges_database = open_charges_db_connection()
+    # charges_database = open_charges_db_connection()
+    pass
 else:
-    charges_database = open_charges_db_connection()
+    # charges_database = open_charges_db_connection()
+    pass

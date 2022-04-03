@@ -2,10 +2,9 @@
 main entry dialog when a charge needs to be added or amended."""
 from PyQt5.QtWidgets import QDialog
 
-from db.databases import (
-    create_statute_list,
-    create_offense_list,
-    open_charges_db_connection,
+from package.database_controllers.databases import (
+    query_offense_statute_data,
+    open_db_connection,
 )
 from package.models.case_information import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
@@ -38,13 +37,12 @@ class BaseChargeDialog(QDialog):
         self.load_statute_and_offense_choice_boxes()
 
     def set_database(self):
-        self.charges_database = open_charges_db_connection()
-        self.charges_database.open()
+        self.charges_database = open_db_connection("con_charges")
 
     def load_statute_and_offense_choice_boxes(self):
         """Loads the choice boxes and adds a blank item to set fields to blank on open."""
-        self.statute_choice_box.addItems(create_statute_list())
-        self.offense_choice_box.addItems(create_offense_list())
+        self.statute_choice_box.addItems(query_offense_statute_data("statute"))
+        self.offense_choice_box.addItems(query_offense_statute_data("offense"))
         self.statute_choice_box.insertItem(0, "")
         self.offense_choice_box.insertItem(0, "")
         self.degree_choice_box.insertItem(0, "")
