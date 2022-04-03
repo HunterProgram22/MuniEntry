@@ -125,6 +125,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
+        ("specialized_docket_checkBox", "specialized_docket_box"),
     ]
 
     def __init__(self, main_dialog, parent=None):

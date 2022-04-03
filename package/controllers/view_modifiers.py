@@ -322,6 +322,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         ("companion_cases_checkBox", "companion_cases_box"),
         ("companion_cases_checkBox", "jail_term_type_box"),
         ("companion_cases_checkBox", "consecutive_jail_days_label"),
+        ("specialized_docket_checkBox", "specialized_docket_box"),
     ]
 
     def __init__(self, dialog):
@@ -346,6 +347,7 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.dialog.community_control_community_service_hours_box.__class__ = NoScrollComboBox
         self.dialog.vehicle_impound_time_box.__class__ = NoScrollComboBox
         self.dialog.vehicle_impound_action_box.__class__ = NoScrollComboBox
+        self.dialog.specialized_docket_box.__class__ = NoScrollComboBox
 
 
 class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
