@@ -9,6 +9,7 @@ from db.sql_queries import (
     insert_daily_case_list_tables_sql_query,
     delete_daily_case_list_tables_sql_query,
     select_case_data_sql_query,
+    select_distinct_offense_statute_sql_query,
 )
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
@@ -145,13 +146,11 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
 def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
-
     cases_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
     for case in cases_from_table:
         insert_data_query = QSqlQuery(con_daily_case_lists)
         insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name, case))
         insert_data_query.exec()
-
 
 
 class CaseExcelRetriever:
@@ -209,72 +208,46 @@ def return_cases_data_from_excel(excel_file: str) -> list:
 
 def get_cell_value(ws: object, row: int, col: int) -> str:
     if ws.cell(row=row, column=col).value is None:
-        if col == 8: # fra_in_file
+        if col == 8:  # fra_in_file
             return "U"
-        if col == 10 or 11: # def_atty_last_name and def_atty_first_name
+        if col == 10 or 11:  # def_atty_last_name and def_atty_first_name
             return ""
         return "No Data"
     return ws.cell(row=row, column=col).value
 
 
-def delete_existing_daily_case_list_sql_table(con_daily_case_lists, table_name):
+def delete_existing_daily_case_list_sql_table(
+    con_daily_case_lists: QSqlDatabase, table_name: str
+) -> None:
     delete_daily_case_list_table = QSqlQuery(con_daily_case_lists)
     delete_daily_case_list_table.prepare(delete_daily_case_list_tables_sql_query(table_name))
     delete_daily_case_list_table.exec()
 
 
-def extract_data(case_data):
-    wb_name = "Case_Data.xlsx"
-    wb_name = DB_PATH + wb_name
-    wb = load_workbook(wb_name)
-    page = wb.active
-    case_number = case_data.get("case_number")
-    judicial_officer = case_data.get("judicial_officer").last_name
-    charges_list = case_data.get("charges_list")
-    max_row = page.max_row
-    max_row = max_row + 1
-    for index, charge in enumerate(charges_list):
-        page.cell(row=max_row + index, column=1, value=case_number)
-        page.cell(row=max_row + index, column=2, value=judicial_officer)
-        page.cell(row=max_row + index, column=3, value=charge.get("offense"))
-        page.cell(row=max_row + index, column=4, value=charge.get("statute"))
-        page.cell(row=max_row + index, column=5, value=charge.get("degree"))
-        page.cell(row=max_row + index, column=6, value=charge.get("plea"))
-        page.cell(row=max_row + index, column=7, value=charge.get("finding"))
-        page.cell(row=max_row + index, column=8, value=charge.get("fines_amount"))
-        page.cell(row=max_row + index, column=9, value=charge.get("fines_suspended"))
-        page.cell(row=max_row + index, column=10, value=charge.get("jail_days"))
-        page.cell(row=max_row + index, column=11, value=charge.get("jail_days_suspended"))
-    try:
-        wb.save(filename=wb_name)
-    except PermissionError:
-        pass
+def create_offense_list() -> list:
+    return query_offense_statute_data("offense")
 
 
-def create_offense_list():
-    conn = sqlite3.connect(CHARGES_DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT offense, statute FROM charges")
-    offense_list = cursor.fetchall()
-    clean_offense_list = []
-    for i in offense_list:
-        clean_offense_list.append(i[0])
-    clean_offense_list.sort()
+def create_statute_list() -> list:
+    return query_offense_statute_data("statute")
+
+
+def query_offense_statute_data(query_value: str) -> list:
+    if query_value == "offense":
+        query_int = 0
+    elif query_value == "statute":
+        query_int = 1
+    conn = open_db_connection("con_charges")
+    query_string = select_distinct_offense_statute_sql_query()
+    query = QSqlQuery(conn)
+    query.prepare(query_string)
+    query.exec()
+    item_list = []
+    while query.next():
+        item_list.append(query.value(query_int))
+    item_list.sort()
     conn.close()
-    return clean_offense_list
-
-
-def create_statute_list():
-    conn = sqlite3.connect(CHARGES_DATABASE)
-    cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT offense, statute FROM charges")
-    statute_list = cursor.fetchall()
-    clean_statute_list = []
-    for i in statute_list:
-        clean_statute_list.append(i[1])
-    clean_statute_list.sort()
-    conn.close()
-    return clean_statute_list
+    return item_list
 
 
 def create_daily_cases_list(database, table):
@@ -366,6 +339,34 @@ def sql_query_offense_type(key):
             query.finish()
             charges_database.close()
             return offense_type
+
+
+def extract_data(case_data):
+    wb_name = "Case_Data.xlsx"
+    wb_name = DB_PATH + wb_name
+    wb = load_workbook(wb_name)
+    page = wb.active
+    case_number = case_data.get("case_number")
+    judicial_officer = case_data.get("judicial_officer").last_name
+    charges_list = case_data.get("charges_list")
+    max_row = page.max_row
+    max_row = max_row + 1
+    for index, charge in enumerate(charges_list):
+        page.cell(row=max_row + index, column=1, value=case_number)
+        page.cell(row=max_row + index, column=2, value=judicial_officer)
+        page.cell(row=max_row + index, column=3, value=charge.get("offense"))
+        page.cell(row=max_row + index, column=4, value=charge.get("statute"))
+        page.cell(row=max_row + index, column=5, value=charge.get("degree"))
+        page.cell(row=max_row + index, column=6, value=charge.get("plea"))
+        page.cell(row=max_row + index, column=7, value=charge.get("finding"))
+        page.cell(row=max_row + index, column=8, value=charge.get("fines_amount"))
+        page.cell(row=max_row + index, column=9, value=charge.get("fines_suspended"))
+        page.cell(row=max_row + index, column=10, value=charge.get("jail_days"))
+        page.cell(row=max_row + index, column=11, value=charge.get("jail_days_suspended"))
+    try:
+        wb.save(filename=wb_name)
+    except PermissionError:
+        pass
 
 
 def main():

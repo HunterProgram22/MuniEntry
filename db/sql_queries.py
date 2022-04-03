@@ -66,3 +66,7 @@ def select_case_data_sql_query(table: str, case_number: str) -> str:
             FROM {table}
             WHERE case_number = '{case_number}'
             """
+
+
+def select_distinct_offense_statute_sql_query() -> str:
+    return f"""SELECT DISTINCT offense, statute FROM charges"""
