@@ -2,7 +2,7 @@
 main entry dialog when a charge needs to be added or amended."""
 from PyQt5.QtWidgets import QDialog
 
-from db.databases import (
+from package.database_controllers.databases import (
     query_offense_statute_data,
     open_db_connection,
 )

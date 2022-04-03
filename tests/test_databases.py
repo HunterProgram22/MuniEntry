@@ -1,11 +1,8 @@
-import os
-from os.path import exists
 import pytest
 from PyQt5.QtSql import QSqlDatabase
 
-from conftest import mouse_click, enter_data
-from settings import CHARGES_DATABASE, DB_PATH, EXCEL_DAILY_CASE_LISTS
-from db.databases import (
+from settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
+from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,
     open_db_connection,
     create_db_connection,

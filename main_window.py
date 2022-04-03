@@ -2,7 +2,7 @@ from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from db.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
+from package.database_controllers.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
 from package.controllers.information_checkers import (
     check_judicial_officer,
     check_case_list_selected,

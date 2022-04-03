@@ -11,7 +11,7 @@ from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from package.models.case_information import CriminalCaseInformation
-from db.sql_queries import (
+from package.database_controllers.sql_queries import (
     create_daily_case_list_tables_sql_query,
     create_charges_table_sql_query,
     insert_daily_case_list_tables_sql_query,
