@@ -156,18 +156,18 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
         This does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(
-            query_daily_case_list_data("daily_case_lists.sqlite", "arraignments")
+            query_daily_case_list_data("arraignments")
         )
-        self.slated_cases_box.addItems(query_daily_case_list_data("daily_case_lists.sqlite", "slated"))
+        self.slated_cases_box.addItems(query_daily_case_list_data("slated"))
         self.final_pretrial_cases_box.addItems(
-            query_daily_case_list_data("daily_case_lists.sqlite", "final_pretrials")
+            query_daily_case_list_data("final_pretrials")
         )
-        self.pleas_cases_box.addItems(query_daily_case_list_data("daily_case_lists.sqlite", "pleas"))
+        self.pleas_cases_box.addItems(query_daily_case_list_data("pleas"))
         self.trials_to_court_cases_box.addItems(
-            query_daily_case_list_data("daily_case_lists.sqlite", "trials_to_court")
+            query_daily_case_list_data("trials_to_court")
         )
         self.pcvh_fcvh_cases_box.addItems(
-            query_daily_case_list_data("daily_case_lists.sqlite", "pcvh_fcvh")
+            query_daily_case_list_data("pcvh_fcvh")
         )
 
     @logger.catch

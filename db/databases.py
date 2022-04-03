@@ -14,6 +14,7 @@ from db.sql_queries import (
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
+    create_charges_table_sql_query,
 )
 from package.models.case_information import CriminalCaseInformation
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
@@ -249,7 +250,6 @@ def get_offense_statute_query_int(query_value: str) -> int:
         return 1
 
 
-
 def query_daily_case_list_data(table: str) -> list:
     conn = open_db_connection("con_daily_case_lists")
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
@@ -268,19 +268,11 @@ def query_daily_case_list_data(table: str) -> list:
     return item_list
 
 
+
+
 def update_charges_db(con_charges):
-    createTableQuery = QSqlQuery(con_charges)
-    createTableQuery.exec(
-        """
-        CREATE TABLE charges (
-            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-            offense VARCHAR(60) UNIQUE NOT NULL,
-            statute VARCHAR(50) NOT NULL,
-            degree VARCHAR(50) NOT NULL,
-            type VARCHAR(50) NOT NULL
-        )
-        """
-    )
+    create_charges_sql_table(con_charges)
+
     insertDataQuery = QSqlQuery(con_charges)
     insertDataQuery.prepare(
         """
@@ -307,6 +299,10 @@ def update_charges_db(con_charges):
         insertDataQuery.addBindValue(type)
         insertDataQuery.exec()
     con_charges.close()
+
+
+def create_charges_sql_table(con_charges: str) -> None:
+    QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
 def return_charges_data_from_excel(excel_file):

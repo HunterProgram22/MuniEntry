@@ -76,3 +76,15 @@ def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
     return f"""
     SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
     """
+
+
+def create_charges_table_sql_query() -> str:
+    return f"""
+            CREATE TABLE charges (
+            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+            offense VARCHAR(60) UNIQUE NOT NULL,
+            statute VARCHAR(50) NOT NULL,
+            degree VARCHAR(50) NOT NULL,
+            type VARCHAR(50) NOT NULL
+        )
+    """

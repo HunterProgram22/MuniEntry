@@ -108,3 +108,7 @@ def test_query_daily_case_list_data(table, total_cases):
     """The assertion for total cases needs to be one more than the total cases in the
     test/db cases table because a blank is inserted at the top of the list."""
     assert len(query_daily_case_list_data(table)) == total_cases
+
+
+def test_update_charges_db():
+    assert False
