@@ -51,11 +51,11 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
 
 main_window_all_daily_case_lists = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignment_cases_box"),
+    ("arraignments_radioButton", "Coyan - 21TRC08121", "arraignment_cases_box"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box"),
+    ("final_pretrial_radioButton", "Ansley - 21TRC10217", "final_pretrial_cases_box"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box"),
+    ("trials_to_court_radioButton", "Borham - 17TRD22590", "trials_to_court_cases_box"),
     ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
 ]
 
