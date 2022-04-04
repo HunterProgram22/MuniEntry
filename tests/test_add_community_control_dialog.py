@@ -45,22 +45,22 @@ def test_dialog_opens(com_control_dialog):
 
 all_community_control_checkbox_conditions_test_list = [
     "daily_reporting_checkBox",
-    "community_control_not_within_500_feet_checkBox",
-    "community_control_no_contact_checkBox",
-    "house_arrest_checkBox",
-    "gps_exclusion_checkBox",
-    "alcohol_monitoring_checkBox",
+    # "community_control_not_within_500_feet_checkBox",
+    # "community_control_no_contact_checkBox",
+    # "house_arrest_checkBox",
+    # "gps_exclusion_checkBox",
+    # "alcohol_monitoring_checkBox",
     "interlock_vehicles_checkBox",
-    "community_control_community_service_checkBox",
+    # "community_control_community_service_checkBox",
     "antitheft_checkBox",
     "anger_management_checkBox",
     "alcohol_evaluation_checkBox",
     "domestic_violence_program_checkBox",
     "driver_intervention_program_checkBox",
     "mental_health_evaluation_checkBox",
-    "pay_restitution_checkBox",
-    "other_community_control_checkBox",
-    "specialized_docket_checkBox",
+    # "pay_restitution_checkBox",
+    # "other_community_control_checkBox",
+    # "specialized_docket_checkBox",
 ]
 
 @pytest.mark.parametrize("checkBox", all_community_control_checkbox_conditions_test_list)
