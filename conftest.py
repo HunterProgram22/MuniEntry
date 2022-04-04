@@ -29,8 +29,7 @@ def mouse_click(button):
 
 @pytest.fixture
 def main_window(qtbot):
-    daily_case_list_database = open_daily_case_list_db_connection()
-    window = Window(daily_case_list_database)
+    window = Window()
     qtbot.addWidget(window)
 
     def close_main_dialog():
@@ -43,8 +42,7 @@ def main_window(qtbot):
 
 @pytest.fixture
 def main_window_noclose(qtbot):
-    daily_case_list_database = open_daily_case_list_db_connection()
-    window = Window(daily_case_list_database)
+    window = Window()
     qtbot.addWidget(window)
     return window
 

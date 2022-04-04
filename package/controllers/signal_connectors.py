@@ -172,6 +172,7 @@ class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
         dialog.other_community_control_checkBox.toggled.connect(dialog.functions.set_field_enabled)
         dialog.alcohol_monitoring_checkBox.toggled.connect(dialog.functions.set_field_enabled)
         dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.set_field_enabled)
+        dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.set_field_enabled)
 
 
 class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnector):

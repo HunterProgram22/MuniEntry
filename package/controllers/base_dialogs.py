@@ -16,7 +16,7 @@ class BaseDialog(QDialog):
     """This class is a base class for all dialog windows. Every window must have a view loaded
     (modify view), slot functions created, and then the slot functions connected to signals."""
 
-    def __init__(self, parent=None):
+    def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.modify_view()
         self.create_dialog_slot_functions()
@@ -40,7 +40,7 @@ class BaseDialog(QDialog):
         slot functions class for that dialog."""
         raise NotImplementedError
 
-    def transfer_field_data_to_model(self, terms_object):
+    def transfer_field_data_to_model(self, terms_object: object) -> None:
         """Function that loops through a list of fields and transfers the data in the field
         to the appropriate model attribute. The function uses the appropriate pyqt method for
         the field type. Format of item in terms_list is a list of tuples (item[0] = model data,

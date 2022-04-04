@@ -223,6 +223,8 @@ class CommunityControl:
     gps_exclusion_radius: str = None
     gps_exclusion_location: str = None
     daily_reporting: bool = False
+    specialized_docket_ordered: bool = False
+    specialized_docket_type: str = None
     terms_list = [
         ("type_of_control", "community_control_type_of_control_box"),
         ("term_of_control", "community_control_term_of_control_box"),
@@ -252,6 +254,8 @@ class CommunityControl:
         ("gps_exclusion_radius", "gps_exclusion_radius_box"),
         ("gps_exclusion_location", "gps_exclusion_location_box"),
         ("daily_reporting", "daily_reporting_checkBox"),
+        ("specialized_docket_ordered", "specialized_docket_checkBox"),
+        ("specialized_docket_type", "specialized_docket_box"),
     ]
 
 

@@ -2,7 +2,7 @@ from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow
 
-from db.databases import create_daily_cases_list, CriminalCaseSQLRetriever
+from package.database_controllers.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
 from package.controllers.information_checkers import (
     check_judicial_officer,
     check_case_list_selected,
@@ -23,9 +23,8 @@ from settings import ICON_PATH
 
 
 class Window(QMainWindow, Ui_MainWindow):
-    def __init__(self, daily_case_list_database, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.daily_case_list_database = daily_case_list_database
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
         self.create_main_window_dicts()
@@ -157,33 +156,31 @@ class Window(QMainWindow, Ui_MainWindow):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
         This does not load the cms_case data for each cms_case."""
         self.arraignment_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "arraignments")
+            query_daily_case_list_data("arraignments")
         )
-        self.slated_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "slated"))
+        self.slated_cases_box.addItems(query_daily_case_list_data("slated"))
         self.final_pretrial_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "final_pretrials")
+            query_daily_case_list_data("final_pretrials")
         )
-        self.pleas_cases_box.addItems(create_daily_cases_list("daily_case_lists.sqlite", "pleas"))
+        self.pleas_cases_box.addItems(query_daily_case_list_data("pleas"))
         self.trials_to_court_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "trials_to_court")
+            query_daily_case_list_data("trials_to_court")
         )
         self.pcvh_fcvh_cases_box.addItems(
-            create_daily_cases_list("daily_case_lists.sqlite", "pcvh_fcvh")
+            query_daily_case_list_data("pcvh_fcvh")
         )
 
     @logger.catch
     @check_judicial_officer
     @check_case_list_selected
     def start_dialog_from_entry_button(self):
-        self.daily_case_list_database.open()
         selected_case_list = self.database_table_dict.get(self.case_table)
         if selected_case_list.currentText() == "":
             self.case_to_load = CriminalCaseInformation()
         else:
             case_number = selected_case_list.currentText().split("- ")[1]
             self.case_to_load = CriminalCaseSQLRetriever(
-                case_number, self.case_table, self.daily_case_list_database
-            ).load_case()
+                case_number, self.case_table).load_case()
         self.dialog = self.dialog_dict[self.sender()](
             self.judicial_officer, self.case_to_load, self.case_table
         )

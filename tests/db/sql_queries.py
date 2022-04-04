@@ -1,9 +1,9 @@
 from PyQt5.QtSql import QSqlQuery
 
-from db.databases import open_charges_db_connection
 
 def sql_query_offense_type(key):
-    charges_database = open_charges_db_connection()
+    charges_database = open_db_connection("con_charges")
+    # charges_database = open_charges_db_connection()
     query = QSqlQuery(charges_database)
     query.prepare("SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'")
     query.bindValue(":key", key)

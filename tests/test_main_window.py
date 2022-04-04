@@ -18,7 +18,7 @@ def test_window_opens(qtbot, main_window_noclose):
     the main_window fixture causes the next test to error because the window is closed
     when it runs."""
     main_window_noclose.show()
-    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.16.1"
+    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.17.0"
 
 
 @pytest.mark.skip(reason="Requires manual interaction")
@@ -51,11 +51,11 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
 
 main_window_all_daily_case_lists = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignment_cases_box"),
+    ("arraignments_radioButton", "Coyan - 21TRC08121", "arraignment_cases_box"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box"),
+    ("final_pretrial_radioButton", "Ansley - 21TRC10217", "final_pretrial_cases_box"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box"),
+    ("trials_to_court_radioButton", "Borham - 17TRD22590", "trials_to_court_cases_box"),
     ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
 ]
 
@@ -74,7 +74,7 @@ daily_case_list_appearance_reasons = [
     ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "change of plea", "JailCCPleaButton"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "change of plea", "JailCCPleaButton"),
     ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "trial to court", "JailCCPleaButton"),
-    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", "preliminary community control violation hearing", "ProbationViolationBondButton"),
+    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
 ]
 
 

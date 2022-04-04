@@ -367,6 +367,5 @@ def main():
 if __name__ == "__main__":
     print("Daily Case Lists created directly from script")
 else:
-    from db import create_charges_table
     main()
     print("Imported Daily Case List Tables")
