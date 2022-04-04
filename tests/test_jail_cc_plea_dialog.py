@@ -33,7 +33,7 @@ def jcp_multiple_charges(qtbot, main_window):
     return main_window.dialog
 
 
-def test_create_not_guilty_bond_entry(qtbot, jcp_multiple_charges):
+def test_create_jail_cc_plea_entry(qtbot, jcp_multiple_charges):
     enter_data(jcp_multiple_charges.case_number_lineEdit, "1")
     mouse_click(jcp_multiple_charges.create_entry_Button)
     for charge in jcp_multiple_charges.entry_case_information.charges_list:
