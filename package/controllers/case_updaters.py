@@ -312,6 +312,7 @@ class NotGuiltyGridModelUpdater(GridModelUpdater):
             charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
             charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
             charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
+            col += 1
 
 
 class FineOnlyGridModelUpdater(GridModelUpdater):
