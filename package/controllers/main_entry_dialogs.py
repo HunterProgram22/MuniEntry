@@ -203,10 +203,10 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
-    condition_checkbox_list = [
-        ("monitoring_checkBox", "monitoring_type_box"),
-        ("specialized_docket_checkBox", "specialized_docket_type_box"),
-    ]
+    condition_checkbox_dict = {
+        "monitoring_checkBox": ["monitoring_type_box"],
+        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+    }
 
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)

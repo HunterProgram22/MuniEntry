@@ -261,19 +261,20 @@ class BaseDialogSlotFunctions(object):
             self.dialog.jail_report_days_notes_box.setDisabled(False)
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
-    def set_field_enabled(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition."""
-        for item in self.dialog.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self.dialog, condition_checkbox):
-                if getattr(self.dialog, condition_checkbox).isChecked():
-                    getattr(self.dialog, condition_field).setEnabled(True)
-                    getattr(self.dialog, condition_field).setHidden(False)
-                    getattr(self.dialog, condition_field).setFocus(True)
-                else:
-                    getattr(self.dialog, condition_field).setEnabled(False)
-                    getattr(self.dialog, condition_field).setHidden(True)
+    def show_hide_checkbox_connected_fields(self):
+        """Gets list of boxes tied to condition checkbox and sets to show or hidden based on
+        whether the box is checked or not."""
+        checkbox = self.dialog.sender()
+        boxes = self.dialog.condition_checkbox_dict.get(checkbox.objectName())
+        for item in boxes:
+            if checkbox.isChecked():
+                getattr(self.dialog, item).setEnabled(True)
+                getattr(self.dialog, item).setHidden(False)
+                getattr(self.dialog, item).setFocus(True)
+            else:
+                getattr(self.dialog, item).setEnabled(False)
+                getattr(self.dialog, item).setHidden(True)
+
 
     def set_freeform_entry(self):
         if self.dialog.freeform_entry_checkBox.isChecked():
@@ -543,7 +544,7 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
                 getattr(self.dialog, condition_field).setEnabled(False)
                 getattr(self.dialog, condition_field).setHidden(True)
 
-    def set_field_enabled(self):
+    def show_hide_checkbox_connected_fields(self):
         """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
         any additional fields that are required for that condition. TODO: Refactor so it doesn't have
         to loop."""
