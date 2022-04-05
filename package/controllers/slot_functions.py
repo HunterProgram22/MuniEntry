@@ -538,7 +538,7 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def hide_boxes(self):
         """This method is called from modify_view as part of the init to hide all optional boxes on load."""
-        for item in self.dialog.condition_checkbox_list:
+        for item in self.dialog.condition_checkbox_dict:
             (condition_checkbox, condition_field) = item
             if hasattr(self.dialog, condition_checkbox):
                 getattr(self.dialog, condition_field).setEnabled(False)
