@@ -34,8 +34,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.button_state()  # This is called to set boxes all to hidden on load.
         self.judicial_officer = None
         self.case_to_load = None
-        self.FailureToAppearButton.setHidden(False)
-        self.ProbationViolationBondButton.setHidden(False)
 
     def create_main_window_dicts(self):
         """
