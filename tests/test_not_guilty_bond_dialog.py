@@ -88,7 +88,8 @@ def test_special_conditions_model_update():
     pass
 
 
-def test_create_not_guilty_bond_entry(qtbot, main_window):
+@pytest.fixture()
+def not_guilty_multiple_charges(qtbot, main_window):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
@@ -101,8 +102,26 @@ def test_create_not_guilty_bond_entry(qtbot, main_window):
     mouse_click(main_window.NotGuiltyBondButton)
     mouse_click(main_window.dialog.not_guilty_all_Button)
     mouse_click(main_window.dialog.create_entry_Button)
-    for charge in main_window.dialog.entry_case_information.charges_list:
+    return main_window.dialog
+
+
+def test_create_not_guilty_bond_entry(qtbot, not_guilty_multiple_charges):
+    for charge in not_guilty_multiple_charges.entry_case_information.charges_list:
         assert charge.plea == "Not Guilty"
 
 
+def test_model_update_multiple_charges(qtbot, not_guilty_multiple_charges):
+    charges = not_guilty_multiple_charges.entry_case_information.charges_list
+    assert charges[0].offense == "OVI Alcohol / Drugs 3rd"
+    assert charges[0].statute == "4511.19A1A***"
+    assert charges[0].degree == "UCM"
+    assert charges[0].plea == "Not Guilty"
+    assert charges[1].offense == "OVI Refusal 3rd/10yr Prior 20yr"
+    assert charges[1].statute == "4511.19A2***"
+    assert charges[1].degree == "UCM"
+    assert charges[1].plea == "Not Guilty"
+    assert charges[2].offense == "Driving In Marked Lanes"
+    assert charges[2].statute == "4511.33"
+    assert charges[2].degree == "MM"
+    assert charges[2].plea == "Not Guilty"
 

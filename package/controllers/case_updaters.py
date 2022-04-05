@@ -277,8 +277,8 @@ class GridModelUpdater:
 
     def update_model_with_plea_finding_grid_data(self):
         """This method updates any changes to the statute and degree that were made in the grid and
-        adds the plea that is entered for each charge. TODO: This should be refactored b/c dismissed does
-        not apply to Not Guilty - did a Hotfix to fix NotGuilty."""
+        adds the plea that is entered for each charge. TODO: This should be refactored b/c dismissed
+        does not apply to Not Guilty - did a Hotfix to fix NotGuilty."""
         col = 1
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
