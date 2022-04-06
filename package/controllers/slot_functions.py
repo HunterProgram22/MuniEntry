@@ -25,7 +25,6 @@ class BaseDialogSlotFunctions(object):
         self.dialog.popup_dialog = AddChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
-
     def start_amend_offense_dialog(self):
         from package.controllers.charges_dialogs import AmendChargeDialog
 
