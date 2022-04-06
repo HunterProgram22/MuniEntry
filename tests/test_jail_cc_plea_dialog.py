@@ -56,3 +56,16 @@ def test_model_update_multiple_charges(qtbot, jcp_multiple_charges):
     assert charges[2].statute == "4511.33"
     assert charges[2].degree == "MM"
     assert charges[2].plea == "Guilty"
+
+
+def test_offense_of_violence_box_checkable(qtbot, jcp_dialog):
+    mouse_click(jcp_dialog.offense_of_violence_checkBox)
+    assert jcp_dialog.offense_of_violence_checkBox.isChecked()
+    mouse_click(jcp_dialog.offense_of_violence_checkBox)
+    assert jcp_dialog.offense_of_violence_checkBox.isChecked() == False
+
+
+def test_offense_of_violence_box_checked_updates_model(qtbot, jcp_multiple_charges):
+    mouse_click(jcp_multiple_charges.offense_of_violence_checkBox)
+    mouse_click(jcp_multiple_charges.create_entry_Button)
+    assert jcp_multiple_charges.entry_case_information.offense_of_violence == True

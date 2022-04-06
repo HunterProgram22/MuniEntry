@@ -167,6 +167,7 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
         self.update_jail_time_credit()
         self.calculate_total_jail_days_to_serve()
         self.calculate_costs_and_fines()
+        self.update_offense_of_violence()
 
     def update_model_with_charge_grid_data(self):
         return JailCCGridModelUpdater(self.view, self.model)
@@ -207,6 +208,12 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
                 local_jail_days_suspended = 0
             total_jail_days_suspended = total_jail_days_suspended + local_jail_days_suspended
         return total_jail_days_suspended
+
+    def update_offense_of_violence(self):
+        if self.view.offense_of_violence_checkBox.isChecked():
+            self.model.offense_of_violence = True
+        else:
+            self.model.offense_of_violence = False
 
 
 class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
