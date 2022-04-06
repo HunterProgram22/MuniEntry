@@ -233,7 +233,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def create_dialog_slot_functions(self):
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
-        # self.functions.hide_boxes()
 
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)

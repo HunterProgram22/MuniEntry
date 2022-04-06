@@ -544,21 +544,6 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
                 getattr(self.dialog, condition_field).setEnabled(False)
                 getattr(self.dialog, condition_field).setHidden(True)
 
-    def show_hide_checkbox_connected_fields(self):
-        """Loops through the conditions_checkbox_list and if the box is checked for the condition it will show
-        any additional fields that are required for that condition. TODO: Refactor so it doesn't have
-        to loop."""
-        for item in self.dialog.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(self.dialog, condition_checkbox):
-                if getattr(self.dialog, condition_checkbox).isChecked():
-                    getattr(self.dialog, condition_field).setEnabled(True)
-                    getattr(self.dialog, condition_field).setHidden(False)
-                    getattr(self.dialog, condition_field).setFocus(True)
-                else:
-                    getattr(self.dialog, condition_field).setEnabled(False)
-                    getattr(self.dialog, condition_field).setHidden(True)
-
 
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):

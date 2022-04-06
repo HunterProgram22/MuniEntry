@@ -257,6 +257,8 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
         self.set_bond_condition_boxes_to_no_scroll()
         self.dialog.specialized_docket_type_box.__class__ = NoScrollComboBox
+        self.dialog.monitoring_type_box.setHidden(True)
+        self.dialog.specialized_docket_type_box.setHidden(True)
 
 
 class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
