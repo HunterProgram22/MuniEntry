@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1010</width>
-    <height>782</height>
+    <width>1098</width>
+    <height>815</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -168,14 +168,14 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>990</width>
-        <height>762</height>
+        <width>1078</width>
+        <height>795</height>
        </rect>
       </property>
       <property name="focusPolicy">
        <enum>Qt::StrongFocus</enum>
       </property>
-      <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0">
+      <layout class="QGridLayout" name="gridLayout_4" rowstretch="1,0,0,0" columnstretch="1,2,1">
        <item row="3" column="0">
         <widget class="QFrame" name="fra_frame">
          <property name="sizePolicy">
@@ -279,12 +279,15 @@ font-weight: bold;</string>
           <string notr="true">background-color: rgb(240, 240, 240);</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Box</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout">
+         <property name="lineWidth">
+          <number>2</number>
+         </property>
+         <layout class="QGridLayout" name="gridLayout" columnstretch="1,2,1,2,1">
           <item row="0" column="1">
            <widget class="QLineEdit" name="defendant_first_name_lineEdit">
             <property name="styleSheet">
@@ -488,6 +491,12 @@ background-color: rgb(255, 255, 255);</string>
           </item>
           <item row="3" column="0" colspan="5">
            <widget class="Line" name="line_2">
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -651,7 +660,7 @@ background-color: rgb(255, 255, 255);</string>
           <item row="1" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(170, 58, 63);</string>
+             <string notr="true">background-color: rgb(255, 96, 82);</string>
             </property>
             <property name="text">
              <string>Close Dialog</string>
@@ -692,10 +701,13 @@ background-color: rgb(255, 255, 255);</string>
           <string notr="true">background-color: rgb(240, 240, 240);</string>
          </property>
          <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+          <enum>QFrame::Box</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>2</number>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
@@ -1073,7 +1085,7 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="0,0,0,0,0,0,0,0,0,0" columnstretch="1,1,0">
           <item row="2" column="0" colspan="3">
            <widget class="QLabel" name="add_conditions_label">
             <property name="maximumSize">
@@ -1113,13 +1125,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QCheckBox" name="community_service_checkBox">
-            <property name="text">
-             <string>Community Service</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
            <widget class="QCheckBox" name="community_control_checkBox">
             <property name="text">
@@ -1141,13 +1146,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="0" colspan="3">
-           <widget class="QCheckBox" name="victim_notification_checkBox">
-            <property name="text">
-             <string>DV and Victim Notifications and Fingerprinting</string>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0">
            <widget class="QCheckBox" name="license_suspension_checkBox">
             <property name="text">
@@ -1155,7 +1153,14 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
+          <item row="6" column="1">
+           <widget class="QCheckBox" name="victim_notification_checkBox">
+            <property name="text">
+             <string>DV and Victim Notifications and Fingerprinting</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
            <widget class="QCheckBox" name="other_conditions_checkBox">
             <property name="enabled">
              <bool>true</bool>
@@ -1165,6 +1170,13 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Other</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QCheckBox" name="community_service_checkBox">
+            <property name="text">
+             <string>Community Service</string>
             </property>
            </widget>
           </item>
@@ -1190,7 +1202,6 @@ font-weight: bold;</string>
   <tabstop>community_control_checkBox</tabstop>
   <tabstop>license_suspension_checkBox</tabstop>
   <tabstop>impoundment_checkBox</tabstop>
-  <tabstop>community_service_checkBox</tabstop>
   <tabstop>in_jail_box</tabstop>
   <tabstop>jail_time_credit_box</tabstop>
   <tabstop>jail_time_credit_apply_box</tabstop>
