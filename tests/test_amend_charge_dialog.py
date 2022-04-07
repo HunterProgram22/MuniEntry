@@ -1,8 +1,7 @@
 import pytest
-from PyQt5 import QtWidgets
 
 from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click, enter_data
 
 
 @pytest.fixture
@@ -44,7 +43,7 @@ def test_amend_charge_works_all_dialogs(qtbot, main_window, test_input):
         qtbot.addWidget(main_window.dialog.popup_dialog)
         mouse_click(main_window.dialog.popup_dialog.amend_charge_Button)
 
-    QTimer.singleShot(100, close_popup_dialog)
+    QTimer.singleShot(50, close_popup_dialog)
     amend_button = main_window.dialog.charges_gridLayout.itemAtPosition(main_window.dialog.charges_gridLayout.row_amend_button, 2).widget()
     mouse_click(amend_button)
     assert main_window.dialog.popup_dialog.windowTitle() == "Amend Charge"

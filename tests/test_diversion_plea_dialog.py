@@ -1,6 +1,5 @@
 import pytest
-from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click
 
 
 @pytest.fixture

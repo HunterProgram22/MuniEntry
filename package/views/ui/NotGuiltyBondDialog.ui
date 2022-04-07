@@ -847,14 +847,14 @@ font-weight: bold;</string>
              <item row="3" column="0">
               <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
                <property name="text">
-                <string> Obtain alcohol/drug assessment. </string>
+                <string> Obtain alcohol/drug assessment                             </string>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
               <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
                <property name="text">
-                <string> No alcohol/drugs of abuse.</string>
+                <string> No alcohol/drugs of abuse                                   </string>
                </property>
               </widget>
              </item>
@@ -931,7 +931,7 @@ font-weight: bold;</string>
              <item row="6" column="1">
               <widget class="QCheckBox" name="specialized_docket_checkBox">
                <property name="text">
-                <string>Screen for Specialized Dockets:</string>
+                <string>Screen for Specialized Dockets:                           </string>
                </property>
               </widget>
              </item>
@@ -941,21 +941,21 @@ font-weight: bold;</string>
                 <enum>Qt::LeftToRight</enum>
                </property>
                <property name="text">
-                <string>Monitoring (GPS/Scram/Smart Start):</string>
+                <string>Monitoring (GPS/Scram/Smart Start):                    </string>
                </property>
               </widget>
              </item>
              <item row="3" column="1">
               <widget class="QCheckBox" name="mental_health_assessment_checkBox">
                <property name="text">
-                <string> Obtain mental health assessment.</string>
+                <string> Obtain mental health assessment                         </string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
               <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
                <property name="text">
-                <string> Alcohol Kiosk testing.</string>
+                <string> Alcohol Kiosk testing                                         </string>
                </property>
               </widget>
              </item>

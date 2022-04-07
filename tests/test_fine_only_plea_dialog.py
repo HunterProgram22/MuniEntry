@@ -1,21 +1,31 @@
 from datetime import date, timedelta
 
 import pytest
-from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click, enter_data, check_barkschat
 
 from package.controllers.helper_functions import set_future_date
 
 TODAY = date.today()
 
+@pytest.fixture
+def mock_entry(fop_dialog, monkeypatch):
+    def mock_create_entry():
+        return "Entry Created"
+    monkeypatch.setattr(fop_dialog.functions, 'create_entry', mock_create_entry)
+
 
 @pytest.fixture
 def fop_dialog(qtbot, main_window):
-    """Fine Only Plea Dialog is fop_dialog"""
-    mouse_click(main_window.hemmeter_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.dialog.no_contest_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, "Yes")
     return main_window.dialog
+
+
+
 
 
 def test_dialog_opens(fop_dialog):
@@ -64,44 +74,15 @@ def test_credit_for_jail_shows_box_if_checked(fop_dialog):
     assert fop_dialog.jail_time_credit_box.isHidden() == False
 
 
-
-@pytest.fixture()
-def fop_multiple_charges(qtbot, main_window):
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
-    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
-
-    def handle_dialog():
-        qtbot.addWidget(main_window.dialog)
-        mouse_click(main_window.dialog.close_dialog_Button)
-
-    QTimer.singleShot(100, handle_dialog)
-    mouse_click(main_window.FineOnlyPleaButton)
-    mouse_click(main_window.dialog.no_contest_all_Button)
-    enter_data(main_window.dialog.fra_in_court_box, "Yes")
-    return main_window.dialog
-
-
-def test_create_not_guilty_bond_entry(qtbot, fop_multiple_charges):
-    enter_data(fop_multiple_charges.case_number_lineEdit, "1")
-    mouse_click(fop_multiple_charges.create_entry_Button)
-    for charge in fop_multiple_charges.entry_case_information.charges_list:
+def test_create_fine_only_plea_entry(qtbot, fop_dialog, mock_entry):
+    mock_entry
+    mouse_click(fop_dialog.create_entry_Button)
+    for charge in fop_dialog.entry_case_information.charges_list:
         assert charge.plea == "No Contest"
 
 
-def test_model_update_multiple_charges(qtbot, fop_multiple_charges):
-    enter_data(fop_multiple_charges.case_number_lineEdit, "2")
-    mouse_click(fop_multiple_charges.create_entry_Button)
-    charges = fop_multiple_charges.entry_case_information.charges_list
-    assert charges[0].offense == "OVI Alcohol / Drugs 3rd"
-    assert charges[0].statute == "4511.19A1A***"
-    assert charges[0].degree == "UCM"
-    assert charges[0].plea == "No Contest"
-    assert charges[1].offense == "OVI Refusal 3rd/10yr Prior 20yr"
-    assert charges[1].statute == "4511.19A2***"
-    assert charges[1].degree == "UCM"
-    assert charges[1].plea == "No Contest"
-    assert charges[2].offense == "Driving In Marked Lanes"
-    assert charges[2].statute == "4511.33"
-    assert charges[2].degree == "MM"
-    assert charges[2].plea == "No Contest"
+def test_model_update_multiple_charges(qtbot, fop_dialog, mock_entry):
+    mock_entry
+    mouse_click(fop_dialog.create_entry_Button)
+    charges = fop_dialog.entry_case_information.charges_list
+    check_barkschat(charges, "No Contest")

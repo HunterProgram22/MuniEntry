@@ -1,4 +1,4 @@
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click, enter_data
 from package.controllers import AddSpecialBondConditionsDialog
 
 
