@@ -822,14 +822,14 @@ font-weight: bold;</string>
           <item row="1" column="0">
            <widget class="QCheckBox" name="license_suspension_checkBox">
             <property name="text">
-             <string>License Suspension</string>
+             <string>License Suspension           </string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="community_service_checkBox">
             <property name="text">
-             <string>Community Service</string>
+             <string>Community Service             </string>
             </property>
            </widget>
           </item>
@@ -855,7 +855,7 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Other                                  </string>
+             <string>Other                                                             </string>
             </property>
            </widget>
           </item>

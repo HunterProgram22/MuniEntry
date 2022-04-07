@@ -1,4 +1,4 @@
-from conftest import mouse_click
+from tests.conftest import mouse_click
 from package.controllers import AddConditionsDialog
 
 
