@@ -1,5 +1,6 @@
 import pytest
-from tests.conftest import mouse_click, enter_data
+from PyQt5 import QtCore
+from tests.conftest import mouse_click, enter_data, right_click
 
 
 main_window_all_button_test_list = [
@@ -84,3 +85,11 @@ def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, 
     enter_data(getattr(main_window, case_list_box), case_number)
     mouse_click(getattr(main_window, entry_button))
     assert main_window.dialog.appearance_reason_box.currentText() == appearance_reason
+
+
+def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
+    mouse_click(main_window_noclose.bunner_radioButton)
+    mouse_click(main_window_noclose.final_pretrial_radioButton)
+    enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
+    qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key_Delete)
+    assert len(main_window_noclose.final_pretrial_cases_box) == 9

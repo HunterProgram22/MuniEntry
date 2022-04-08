@@ -26,6 +26,9 @@ def enter_data(field, data: str):
 def mouse_click(button):
     return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
 
+def right_click(button):
+    return QtBot.mouseClick(button, QtCore.Qt.RightButton)
+
 
 @pytest.fixture
 def main_window(qtbot):
