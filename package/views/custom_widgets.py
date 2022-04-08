@@ -2,7 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit
+    QInputDialog, QDateEdit, QTimeEdit, QMenu
 from PyQt5 import QtGui
 
 from settings import ICON_PATH
@@ -86,6 +86,24 @@ class ExtendedComboBox(QComboBox):
         # connect signals
         self.lineEdit().textEdited[str].connect(self.pFilterModel.setFilterFixedString)
         self.completer.activated.connect(self.on_completer_activated)
+
+    def set_up(self):
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_menu)
+
+    def show_menu(self, pos):
+        menu = QMenu()
+        menu.addAction("Delete Case", self.delete_case)
+        menu.exec_(self.mapToGlobal(pos))
+
+    def delete_case(self):
+        index = self.currentIndex()
+        self.removeItem(index)
+
+    def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
+        super(ExtendedComboBox, self).keyPressEvent(event)
+        if event.key() == QtCore.Qt.Key_Delete:
+            self.delete_case()
 
     # on selection of an item from the completer, select the corresponding item from combobox
     def on_completer_activated(self, text):
@@ -172,8 +190,6 @@ class PleaComboBox(NoScrollComboBox):
         self.addItem("No Contest")
         self.addItem("Not Guilty")
         self.addItem("Dismissed")
-        # self.currentTextChanged.connect(
-        #   lambda plea, column=self.column: ChargesGrid.update_if_dismissed(plea, column))
 
 
 class FindingComboBox(NoScrollComboBox):

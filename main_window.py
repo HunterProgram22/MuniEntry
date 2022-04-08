@@ -1,6 +1,7 @@
 from loguru import logger
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow, QMenu
 
 from package.database_controllers.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
 from package.controllers.information_checkers import (
@@ -34,6 +35,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.button_state()  # This is called to set boxes all to hidden on load.
         self.judicial_officer = None
         self.case_to_load = None
+
 
     def create_main_window_dicts(self):
         """
@@ -93,11 +95,17 @@ class Window(QMainWindow, Ui_MainWindow):
         """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox
         class allows for auto-completion filtering when typing in the box."""
         self.arraignment_cases_box.__class__ = ExtendedComboBox
+        self.arraignment_cases_box.set_up()
         self.slated_cases_box.__class__ = ExtendedComboBox
+        self.slated_cases_box.set_up()
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
+        self.final_pretrial_cases_box.set_up()
         self.pleas_cases_box.__class__ = ExtendedComboBox
+        self.pleas_cases_box.set_up()
         self.trials_to_court_cases_box.__class__ = ExtendedComboBox
+        self.trials_to_court_cases_box.set_up()
         self.pcvh_fcvh_cases_box.__class__ = ExtendedComboBox
+        self.pcvh_fcvh_cases_box.set_up()
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
