@@ -12,10 +12,37 @@ def fop_dialog(qtbot, main_window):
     return main_window.dialog
 
 
+@pytest.fixture
+def bhd_dialog(qtbot, main_window):
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.BondHearingButton)
+    return main_window.dialog
+
+
+@pytest.mark.create_entry_test
+def test_create_bond_hearing_entry(qtbot, bhd_dialog):
+    enter_data(bhd_dialog.case_number_lineEdit, "bhd_test")
+
+    # Bond Conditions
+    mouse_click(bhd_dialog.no_alcohol_drugs_checkBox)
+    mouse_click(bhd_dialog.alcohol_drugs_assessment_checkBox)
+    mouse_click(bhd_dialog.monitoring_checkBox)
+    mouse_click(bhd_dialog.comply_protection_order_checkBox)
+    mouse_click(bhd_dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(bhd_dialog.mental_health_assessment_checkBox)
+    mouse_click(bhd_dialog.specialized_docket_checkBox)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(bhd_dialog.create_entry_Button)
+    assert bhd_dialog.entry_case_information.case_number == "21TRC05611bhd_test"
+
+
 @pytest.mark.create_entry_test
 def test_create_fine_only_entry(qtbot, fop_dialog):
-    """Tests selecting all options on Fine Only Dialog then creates an actual entry
-    to confirm everything works and is transferred to the entry."""
+    enter_data(fop_dialog.case_number_lineEdit, "fop_test")
+
     mouse_click(fop_dialog.no_contest_all_Button)
     mouse_click(fop_dialog.credit_for_jail_checkBox)
     enter_data(fop_dialog.jail_time_credit_box, "2")
@@ -35,5 +62,7 @@ def test_create_fine_only_entry(qtbot, fop_dialog):
 
     QTimer.singleShot(50, add_conditions)
     mouse_click(fop_dialog.add_conditions_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(fop_dialog.create_entry_Button)
-    assert fop_dialog.entry_case_information.case_number == "21TRC05611"
+    assert fop_dialog.entry_case_information.case_number == "21TRC05611fop_test"

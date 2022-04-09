@@ -54,7 +54,7 @@ def test_monitoring_condition(qtbot, ngb_dialog):
     mouse_click(getattr(ngb_dialog, "monitoring_checkBox"))
     enter_data(getattr(ngb_dialog, "monitoring_type_box"), "G")
     assert getattr(ngb_dialog, "monitoring_type_box").isHidden() == False
-    assert getattr(ngb_dialog, "monitoring_type_box").currentText() == "GPS Only"
+    assert getattr(ngb_dialog, "monitoring_type_box").currentText() == "GPS"
 
 
 def test_specialized_docket_condition(qtbot, ngb_dialog):
