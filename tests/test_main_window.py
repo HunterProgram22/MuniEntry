@@ -21,12 +21,14 @@ def test_window_opens(qtbot, main_window_noclose):
     assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.17.1"
 
 
-@pytest.mark.skip(reason="Requires manual interaction")
+@pytest.mark.manual
+@pytest.mark.skip(reason="Fails but tests if warning works")
 def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
-@pytest.mark.skip(reason="Requires manual interaction")
+@pytest.mark.manual
+@pytest.mark.skip(reason="Fails but tests if warning works")
 def test_daily_case_list_required_warning(qtbot, main_window):
     mouse_click(main_window.bunner_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)

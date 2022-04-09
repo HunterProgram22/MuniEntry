@@ -131,14 +131,17 @@ class BaseDialogViewModifier(object):
         self.dialog.bond_amount_box.__class__ = NoScrollComboBox
         self.dialog.monitoring_type_box.__class__ = NoScrollComboBox
 
-
     @classmethod
     def hide_boxes(cls, dialog):
         for item in cls.condition_checkbox_list:
             (condition_checkbox, condition_field) = item
             if hasattr(dialog, condition_checkbox):
-                getattr(dialog, condition_field).setEnabled(False)
-                getattr(dialog, condition_field).setHidden(True)
+                if getattr(dialog, condition_checkbox).isChecked():
+                    getattr(dialog, condition_field).setEnabled(True)
+                    getattr(dialog, condition_field).setHidden(False)
+                else:
+                    getattr(dialog, condition_field).setEnabled(False)
+                    getattr(dialog, condition_field).setHidden(True)
 
     def load_existing_data_to_dialog(self):
         CONDITIONS_CLASSES = [

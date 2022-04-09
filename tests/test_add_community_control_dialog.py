@@ -64,9 +64,27 @@ all_community_control_checkbox_conditions_test_list = [
 
 @pytest.mark.parametrize("checkBox", all_community_control_checkbox_conditions_test_list)
 def test_all_checkbox_conditions(qtbot, com_control_dialog_com_control_conditions, checkBox):
-    """This will fail for all checkboxes that have the slot_function set_field_enabled connected
-    to the toggle of the checkbox because it loops through all checkboxes and some by closing the
-    dialog they are deleted before it can complete. TODO: refactor set_field_enabled to be
-    specific to the checkbox without looping."""
     mouse_click(getattr(com_control_dialog_com_control_conditions, checkBox))
     assert getattr(com_control_dialog_com_control_conditions, checkBox).isChecked()
+
+
+@pytest.mark.manual
+@pytest.mark.parametrize("checkBox", all_community_control_checkbox_conditions_test_list)
+def test_if_conditions_hold_if_checked_dialog_closed_then_reopened(qtbot, main_window, checkBox):
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.final_pretrial_radioButton)
+    mouse_click(main_window.JailCCPleaButton)
+    mouse_click(main_window.dialog.community_control_checkBox)
+    mouse_click(main_window.dialog.add_conditions_Button)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.cancel_Button)
+
+
+    qtbot.addWidget(main_window.dialog.popup_dialog)
+    mouse_click(getattr(main_window.dialog.popup_dialog, checkBox))
+    mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+    QTimer.singleShot(100, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    assert getattr(main_window.dialog.popup_dialog, checkBox).isChecked()

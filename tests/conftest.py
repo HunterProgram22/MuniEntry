@@ -17,6 +17,15 @@ import MuniEntry_app
 from main_window import Window
 
 
+"""
+INSTRUCTIONS:
+
+Use pytest -m 'not manual' to skip tests that require manual interaction
+Use pytest -m 'not create_entry_test' to skip tests that open actual Word docx files
+
+"""
+
+
 def open_daily_case_list_db_connection():
     return QSqlDatabase.database("con_daily_case_lists", open=True)
 
