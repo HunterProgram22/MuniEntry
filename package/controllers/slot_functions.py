@@ -290,6 +290,17 @@ class BaseDialogSlotFunctions(object):
             self.dialog.degree_choice_box.setCurrentText("")
 
 
+    def show_bond_boxes(self, bond_mod_string):
+        if bond_mod_string == "request to modify bond is granted":
+            self.dialog.bond_frame.setHidden(False)
+            self.dialog.bond_conditions_frame.setHidden(False)
+            self.dialog.special_bond_conditions_frame.setHidden(False)
+        else:
+            self.dialog.bond_frame.setHidden(True)
+            self.dialog.bond_conditions_frame.setHidden(True)
+            self.dialog.special_bond_conditions_frame.setHidden(True)
+
+
 class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
@@ -542,6 +553,14 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
             if hasattr(self.dialog, condition_checkbox):
                 getattr(self.dialog, condition_field).setEnabled(False)
                 getattr(self.dialog, condition_field).setHidden(True)
+
+
+class BondHearingDialogSlotFunctions(NotGuiltyBondDialogSlotFunctions):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.show_bond_boxes("None")
+
+
 
 
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):

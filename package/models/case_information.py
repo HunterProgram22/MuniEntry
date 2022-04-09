@@ -55,6 +55,7 @@ class BondConditions:
     monitoring: bool = False
     monitoring_type: str = None
     comply_protection_order: bool = False
+    bond_modification_decision: str = None
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
@@ -67,6 +68,7 @@ class BondConditions:
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
         ("comply_protection_order", "comply_protection_order_checkBox"),
+        ("bond_modification_decision", "bond_modification_decision_box"),
     ]
 
 @dataclass

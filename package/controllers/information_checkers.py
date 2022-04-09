@@ -251,6 +251,58 @@ class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
                 return "Fail"
 
 
+class BondHearingDialogInfoChecker(BaseInfoChecker):
+    conditions_list = [
+        ("admin_license_suspension", "disposition", "Admin License Suspension"),
+        ("vehicle_seizure", "vehicle_make_model", "Vehicle Seizure"),
+        ("no_contact", "name", "No Contact"),
+        ("custodial_supervision", "supervisor", "Custodial Supervision"),
+        ("other_conditions", "terms", "Other Conditions"),
+    ]
+
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_bond_modification_decision",
+            "check_if_no_bond_amount",
+            "check_if_improper_bond_type",
+            "check_additional_conditions_ordered",
+            "check_domestic_violence_bond_condition",
+        ]
+        self.check_status = self.perform_check_list()
+
+    def check_if_no_bond_modification_decision(self):
+        if self.view.bond_modification_decision_box.currentText() == "":
+            message = (
+                "A decision on bond modification was not selected. "
+                "\n\nPlease select an option from the Decison on Bond box."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
+    def check_domestic_violence_bond_condition(self):
+        dv_bond_conditions_list = [
+            (
+                self.view.entry_case_information.domestic_violence_conditions.ordered,
+                self.view.entry_case_information.domestic_violence_conditions.vacate_residence,
+                self.view.entry_case_information.domestic_violence_conditions.surrender_weapons,
+                "Domestic Violence Restrictions",
+            ),
+        ]
+        for item in dv_bond_conditions_list:
+            if item[0] is True and item[1] is False and item[2] is False:
+                description = item[3]
+                message = RequiredBox(
+                    f"The Additional Condition {description} is checked, but "
+                    f"the details of the {description} have not been selected. "
+                    f"Click the Add Conditions button to add details, or uncheck the "
+                    f"{description} box if there is no {description} in this case."
+                )
+                message.exec()
+                return "Fail"
+
+
 class DiversionDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
         super().__init__(dialog)

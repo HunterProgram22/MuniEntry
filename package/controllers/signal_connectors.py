@@ -1,7 +1,7 @@
 """Module that contains SignalConnector classes. SignalConnector classes are called
 when a dialog is built and connect all of the interface objects (i.e. buttons,
 checkboxes, etc.) to the dialog."""
-from package.controllers.slot_functions import BaseDialogSlotFunctions
+from package.controllers.slot_functions import BaseDialogSlotFunctions, BondHearingDialogSlotFunctions
 
 
 class BaseDialogSignalConnector:
@@ -113,6 +113,22 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_main_dialog_common_signals(dialog)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
+        dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
+        dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.no_contact_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.custodial_supervision_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.other_conditions_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.vehicle_seizure_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.monitoring_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
+        dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
+
+
+class BondHearingDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals(dialog)
+        dialog.bond_modification_decision_box.currentTextChanged.connect(dialog.functions.show_bond_boxes)
         dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
         dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
