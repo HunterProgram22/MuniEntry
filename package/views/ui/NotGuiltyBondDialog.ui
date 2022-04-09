@@ -868,17 +868,22 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>SCRAM Only</string>
+                 <string>SCRAM - Court Pay</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>GPS Only</string>
+                 <string>SCRAM</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>Smart Start Only</string>
+                 <string>GPS</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Smart Start</string>
                 </property>
                </item>
                <item>
