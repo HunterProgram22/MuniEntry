@@ -423,7 +423,7 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QFormLayout" name="formLayout">
+         <layout class="QGridLayout" name="gridLayout_5">
           <item row="0" column="0">
            <widget class="QLabel" name="label_11">
             <property name="text">
@@ -431,36 +431,14 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="court_costs_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>Yes</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Waived</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>No</string>
-             </property>
-            </item>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
-             <string>Time to pay fines/costs:</string>
+             <string>Time to pay:</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="1" column="1" colspan="3">
            <widget class="QComboBox" name="ability_to_pay_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -490,11 +468,11 @@ font-weight: bold;</string>
           <item row="2" column="0">
            <widget class="QLabel" name="label_18">
             <property name="text">
-             <string>Fines/costs due date:</string>
+             <string>Due date:</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="2" column="1" colspan="3">
            <widget class="QDateEdit" name="balance_due_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
@@ -505,14 +483,14 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="3" column="0" colspan="3">
            <widget class="QCheckBox" name="credit_for_jail_checkBox">
             <property name="text">
              <string>Credit $50/day in jail</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
+          <item row="3" column="3">
            <widget class="QLineEdit" name="jail_time_credit_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -522,7 +500,34 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="0" column="1" colspan="3">
+           <widget class="QComboBox" name="court_costs_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>Yes</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Waived</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Imposed in companion case</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>No</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="4">
            <widget class="QPushButton" name="costs_and_fines_Button">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -935,7 +940,7 @@ font-weight: bold;</string>
           <item row="0" column="0">
            <widget class="QLabel" name="label_21">
             <property name="text">
-             <string>FRA shown in complaint/file:</string>
+             <string>FRA shown in complaint:</string>
             </property>
            </widget>
           </item>

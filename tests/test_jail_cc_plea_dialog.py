@@ -55,3 +55,18 @@ def test_offense_of_violence_box_checked_updates_model(qtbot, jcp_dialog, mock_e
     assert jcp_dialog.entry_case_information.offense_of_violence == True
 
 
+court_costs_test_list = [
+    "Yes",
+    "Waived",
+    "Imposed in companion case",
+    "No",
+]
+
+@pytest.mark.parametrize("costs_option", court_costs_test_list)
+def test_court_costs_selected_updates_model(qtbot, jcp_dialog, mock_entry, costs_option):
+    mock_entry
+    enter_data(jcp_dialog.court_costs_box, costs_option)
+    mouse_click(jcp_dialog.create_entry_Button)
+    assert jcp_dialog.entry_case_information.court_costs.ordered == costs_option
+
+
