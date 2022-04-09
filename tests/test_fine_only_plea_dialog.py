@@ -86,3 +86,18 @@ def test_model_update_multiple_charges(qtbot, fop_dialog, mock_entry):
     mouse_click(fop_dialog.create_entry_Button)
     charges = fop_dialog.entry_case_information.charges_list
     check_barkschat(charges, "No Contest")
+
+
+court_costs_test_list = [
+    "Yes",
+    "Waived",
+    "Imposed in companion case",
+    "No",
+]
+
+@pytest.mark.parametrize("costs_option", court_costs_test_list)
+def test_court_costs_selected_updates_model(qtbot, fop_dialog, mock_entry, costs_option):
+    mock_entry
+    enter_data(fop_dialog.court_costs_box, costs_option)
+    mouse_click(fop_dialog.create_entry_Button)
+    assert fop_dialog.entry_case_information.court_costs.ordered == costs_option
