@@ -33,6 +33,7 @@ def test_create_bond_hearing_entry(qtbot, bhd_dialog):
     mouse_click(bhd_dialog.alcohol_test_kiosk_checkBox)
     mouse_click(bhd_dialog.mental_health_assessment_checkBox)
     mouse_click(bhd_dialog.specialized_docket_checkBox)
+    bhd_dialog.bond_modification_decision_box.setCurrentText("request to modify bond is granted")
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(bhd_dialog.create_entry_Button)
