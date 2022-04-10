@@ -53,6 +53,7 @@ from package.controllers.information_checkers import (
 )
 from package.models.case_information import (
     BondConditions,
+    BondModificationConditions,
     CriminalCaseInformation,
     CommunityControlViolationBondConditions,
     FailureToAppearConditions,
@@ -340,7 +341,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         ]
         self.dialog_name = "Bond Hearing Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.bond_conditions = BondConditions()
+        self.entry_case_information.bond_conditions = BondModificationConditions()
 
     def modify_view(self) -> BondHearingDialogViewModifier:
         return BondHearingDialogViewModifier(self)
