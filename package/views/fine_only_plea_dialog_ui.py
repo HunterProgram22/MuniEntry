@@ -538,7 +538,7 @@ class Ui_FineOnlyPleaDialog(object):
         self.defense_counsel_type_box.setItemText(0, _translate("FineOnlyPleaDialog", "Public Defender"))
         self.defense_counsel_type_box.setItemText(1, _translate("FineOnlyPleaDialog", "Private Counsel"))
         self.defense_counsel_waived_checkBox.setText(_translate("FineOnlyPleaDialog", "Defendant waived right to counsel"))
-        self.label_24.setText(_translate("FineOnlyPleaDialog", "Additional Conditions"))
+        self.label_24.setText(_translate("FineOnlyPleaDialog", "ADDITIONAL CONDITIONS"))
         self.license_suspension_checkBox.setText(_translate("FineOnlyPleaDialog", "License Suspension           "))
         self.community_service_checkBox.setText(_translate("FineOnlyPleaDialog", "Community Service             "))
         self.add_conditions_Button.setText(_translate("FineOnlyPleaDialog", "Add Conditions"))

@@ -817,7 +817,7 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Additional Conditions</string>
+             <string>ADDITIONAL CONDITIONS</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
