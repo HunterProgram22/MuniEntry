@@ -303,7 +303,7 @@ font-weight: bold;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Bond Conditions</string>
+                <string>BOND CONDITIONS</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -678,7 +678,7 @@ background-color: rgb(255, 255, 255);</string>
                 </font>
                </property>
                <property name="text">
-                <string>Bond Amount</string>
+                <string>BOND</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -726,7 +726,7 @@ background-color: rgb(255, 255, 255);</string>
                 </font>
                </property>
                <property name="text">
-                <string>Probable Cause Finding</string>
+                <string>PROBABLE CAUSE FINDING</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>

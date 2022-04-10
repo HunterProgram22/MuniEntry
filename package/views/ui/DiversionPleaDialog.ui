@@ -161,9 +161,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-229</y>
+        <y>0</y>
         <width>973</width>
-        <height>991</height>
+        <height>1015</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,1,4,1">
@@ -300,6 +300,26 @@ background-color: rgb(255, 255, 255);</string>
            <widget class="Line" name="line_7">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="4">
+           <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>10</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>DIVERSION DETAILS</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
