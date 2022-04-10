@@ -100,49 +100,46 @@ class CaseModelUpdater:
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
-            try:
-                if isinstance(getattr(self.view, view_field), QComboBox):
-                    setattr(
-                        terms_object,
-                        model_attribute,
-                        getattr(self.view, view_field).currentText(),
-                    )
-                elif isinstance(getattr(self.view, view_field), QCheckBox):
-                    setattr(
-                        terms_object,
-                        model_attribute,
-                        getattr(self.view, view_field).isChecked(),
-                    )
-                elif isinstance(getattr(self.view, view_field), QRadioButton):
-                    setattr(
-                        terms_object,
-                        model_attribute,
-                        getattr(self.view, view_field).isChecked(),
-                    )
-                elif isinstance(getattr(self.view, view_field), QLineEdit):
-                    setattr(terms_object, model_attribute, getattr(self.view, view_field).text())
-                elif isinstance(getattr(self.view, view_field), QTextEdit):
-                    plain_text = getattr(self.view, view_field).toPlainText()
-                    try:
-                        if plain_text[-1] == ".":
-                            plain_text = plain_text[:-1]
-                    except IndexError:
-                        pass
-                    setattr(terms_object, model_attribute, plain_text)
-                elif isinstance(getattr(self.view, view_field), QDateEdit):
-                    setattr(
-                        terms_object,
-                        model_attribute,
-                        getattr(self.view, view_field).date().toString("MMMM dd, yyyy"),
-                    )
-                elif isinstance(getattr(self.view, view_field), QTimeEdit):
-                    setattr(
-                        terms_object,
-                        model_attribute,
-                        getattr(self.view, view_field).time().toString("hh:mm A"),
-                    )
-            except AttributeError:
-                pass
+            if isinstance(getattr(self.view, view_field), QComboBox):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).currentText(),
+                )
+            elif isinstance(getattr(self.view, view_field), QCheckBox):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).isChecked(),
+                )
+            elif isinstance(getattr(self.view, view_field), QRadioButton):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).isChecked(),
+                )
+            elif isinstance(getattr(self.view, view_field), QLineEdit):
+                setattr(terms_object, model_attribute, getattr(self.view, view_field).text())
+            elif isinstance(getattr(self.view, view_field), QTextEdit):
+                plain_text = getattr(self.view, view_field).toPlainText()
+                try:
+                    if plain_text[-1] == ".":
+                        plain_text = plain_text[:-1]
+                except IndexError:
+                    pass
+                setattr(terms_object, model_attribute, plain_text)
+            elif isinstance(getattr(self.view, view_field), QDateEdit):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).date().toString("MMMM dd, yyyy"),
+                )
+            elif isinstance(getattr(self.view, view_field), QTimeEdit):
+                setattr(
+                    terms_object,
+                    model_attribute,
+                    getattr(self.view, view_field).time().toString("hh:mm A"),
+                )
 
 
 class DiversionDialogCaseModelUpdater(CaseModelUpdater):

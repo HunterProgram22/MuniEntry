@@ -55,7 +55,6 @@ class BondConditions:
     monitoring: bool = False
     monitoring_type: str = None
     comply_protection_order: bool = False
-    bond_modification_decision: str = None
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
@@ -68,8 +67,19 @@ class BondConditions:
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
         ("comply_protection_order", "comply_protection_order_checkBox"),
-        ("bond_modification_decision", "bond_modification_decision_box"),
     ]
+
+
+@dataclass
+class BondModificationConditions(BondConditions):
+    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
+    the BondConditions list so appending bond modification does not alter the BondConditions
+    terms_list."""
+    bond_modification_decision: str = None
+    terms_list = BondConditions.terms_list.copy()
+    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
+
+
 
 @dataclass
 class CommunityControlViolationBondConditions:
