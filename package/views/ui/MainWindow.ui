@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>860</width>
-    <height>646</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -45,230 +45,17 @@ font-weight: bold;</string>
        <attribute name="title">
         <string>Crim/Traffic</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1,2,2,2,2,1,2,2,2,2,0" columnstretch="0,0,0">
+       <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,1,2,2,2,2,1,2,2,2,2,0,0" columnstretch="0,0,0">
         <property name="horizontalSpacing">
          <number>18</number>
         </property>
         <property name="verticalSpacing">
          <number>20</number>
         </property>
-        <item row="1" column="2">
-         <widget class="QRadioButton" name="kudela_radioButton">
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="hemmeter_radioButton">
           <property name="text">
-           <string>Magistrate Kudela</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="6" column="0">
-         <widget class="QRadioButton" name="pleas_radioButton">
-          <property name="text">
-           <string>Pleas and Motion/Oral Hearings</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QComboBox" name="pleas_cases_box">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QRadioButton" name="trials_to_court_radioButton">
-          <property name="text">
-           <string>Trials to Court and Jury Trials</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="7" column="1">
-         <widget class="QComboBox" name="trials_to_court_cases_box">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0" colspan="3">
-         <widget class="QLabel" name="label_3">
-          <property name="font">
-           <font>
-            <family>Palatino Linotype</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>true</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>DAILY CASE LISTS</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QRadioButton" name="pelanda_radioButton">
-          <property name="text">
-           <string>Magistrate Pelanda</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QComboBox" name="slated_cases_box">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="editable">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0" colspan="3">
-         <widget class="Line" name="line">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="lineWidth">
-           <number>2</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QComboBox" name="arraignment_cases_box">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 255);</string>
-          </property>
-          <property name="editable">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QRadioButton" name="arraignments_radioButton">
-          <property name="text">
-           <string>Arraignments</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label">
-          <property name="font">
-           <font>
-            <family>Palatino Linotype</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="text">
-           <string>JUDICIAL OFFICER:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="2">
-         <widget class="QPushButton" name="NotGuiltyBondButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>Not Guilty / Bond</string>
-          </property>
-         </widget>
-        </item>
-        <item row="10" column="0">
-         <widget class="QPushButton" name="FineOnlyPleaButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(85, 170, 127);</string>
-          </property>
-          <property name="text">
-           <string>Fine Only Plea</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QRadioButton" name="slated_radioButton">
-          <property name="text">
-           <string>Slated                                  </string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="4" column="2">
-         <widget class="QRadioButton" name="final_pretrial_radioButton">
-          <property name="text">
-           <string>Final Pre-trials</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup_2</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="11" column="0">
-         <widget class="QPushButton" name="JailCCPleaButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(85, 170, 127);</string>
-          </property>
-          <property name="text">
-           <string>Jail and Comm. Control Plea</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="bunner_radioButton">
-          <property name="text">
-           <string>Magistrate Bunner</string>
+           <string>Judge Hemmeter</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup</string>
@@ -298,18 +85,237 @@ font-weight: bold;</string>
           </attribute>
          </widget>
         </item>
-        <item row="0" column="1">
-         <widget class="QRadioButton" name="hemmeter_radioButton">
+        <item row="6" column="0">
+         <widget class="QRadioButton" name="pleas_radioButton">
           <property name="text">
-           <string>Judge Hemmeter</string>
+           <string>Pleas and Motion/Oral Hearings</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="6" column="1">
+         <widget class="QRadioButton" name="trials_to_court_radioButton">
+          <property name="text">
+           <string>Trials to Court and Jury Trials</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QRadioButton" name="kudela_radioButton">
+          <property name="text">
+           <string>Magistrate Kudela</string>
           </property>
           <attribute name="buttonGroup">
            <string notr="true">buttonGroup</string>
           </attribute>
          </widget>
         </item>
+        <item row="7" column="0">
+         <widget class="QComboBox" name="pleas_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QRadioButton" name="pelanda_radioButton">
+          <property name="text">
+           <string>Magistrate Pelanda</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
+          </property>
+          <property name="text">
+           <string>DAILY CASE LISTS</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="1">
+         <widget class="QComboBox" name="trials_to_court_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QComboBox" name="slated_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="editable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QRadioButton" name="arraignments_radioButton">
+          <property name="text">
+           <string>Arraignments</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QComboBox" name="arraignments_cases_box">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 255);</string>
+          </property>
+          <property name="editable">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="Line" name="line">
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
         <item row="11" column="2">
+         <widget class="QPushButton" name="NotGuiltyBondButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Not Guilty / Bond</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QRadioButton" name="slated_radioButton">
+          <property name="text">
+           <string>Slated                                  </string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>JUDICIAL OFFICER:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="11" column="0">
+         <widget class="QPushButton" name="FineOnlyPleaButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
+          </property>
+          <property name="text">
+           <string>Fine Only Plea</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="0">
+         <widget class="QPushButton" name="JailCCPleaButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
+          </property>
+          <property name="text">
+           <string>Jail and Comm. Control Plea</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="bunner_radioButton">
+          <property name="text">
+           <string>Magistrate Bunner</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QRadioButton" name="final_pretrial_radioButton">
+          <property name="text">
+           <string>Final Pre-trials</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="12" column="2">
          <widget class="QPushButton" name="ProbationViolationBondButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(255, 255, 127);</string>
           </property>
@@ -318,7 +324,7 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="9" column="0" colspan="3">
+        <item row="10" column="0" colspan="3">
          <widget class="QLabel" name="label_2">
           <property name="font">
            <font>
@@ -358,7 +364,39 @@ font-weight: bold;</string>
           </attribute>
          </widget>
         </item>
-        <item row="8" column="0" colspan="3">
+        <item row="11" column="1">
+         <widget class="QPushButton" name="FailureToAppearButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Failure to Appear</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="2">
+         <widget class="QPushButton" name="BondHearingButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Bond Modification/Revocation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="9" column="0" colspan="3">
          <widget class="Line" name="line_2">
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
@@ -371,17 +409,7 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="12" column="2">
-         <widget class="QPushButton" name="BondHearingButton">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>Bond Modification/Revocation</string>
-          </property>
-         </widget>
-        </item>
-        <item row="12" column="0">
+        <item row="13" column="0">
          <widget class="QPushButton" name="DiversionButton">
           <property name="minimumSize">
            <size>
@@ -397,13 +425,19 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
-        <item row="10" column="1">
-         <widget class="QPushButton" name="FailureToAppearButton">
+        <item row="8" column="2">
+         <widget class="QPushButton" name="reload_cases_Button">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
+           <string notr="true">background-color: rgb(160, 160, 160);</string>
           </property>
           <property name="text">
-           <string>Failure to Appear</string>
+           <string>Reload Cases</string>
           </property>
          </widget>
         </item>
@@ -745,7 +779,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
