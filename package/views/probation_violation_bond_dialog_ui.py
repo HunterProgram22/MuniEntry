@@ -340,14 +340,21 @@ class Ui_ProbationViolationBondDialog(object):
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.close_dialog_Button.setObjectName("close_dialog_Button")
-        self.gridLayout_10.addWidget(self.close_dialog_Button, 2, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.close_dialog_Button, 2, 1, 1, 1)
         self.create_entry_Button = QtWidgets.QPushButton(self.frame_8)
         self.create_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.create_entry_Button.setAutoDefault(False)
         self.create_entry_Button.setObjectName("create_entry_Button")
-        self.gridLayout_10.addWidget(self.create_entry_Button, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.create_entry_Button, 0, 1, 1, 1)
+        self.frame_2 = QtWidgets.QFrame(self.frame_8)
+        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_2.setObjectName("frame_2")
+        self.gridLayout_10.addWidget(self.frame_2, 0, 0, 1, 1)
+        self.gridLayout_10.setColumnStretch(0, 2)
+        self.gridLayout_10.setColumnStretch(1, 1)
         self.gridLayout_2.addWidget(self.frame_8, 4, 0, 1, 1)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.gridLayout_4.addWidget(self.scrollArea, 0, 0, 1, 1)
