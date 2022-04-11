@@ -1,4 +1,4 @@
-from conftest import mouse_click
+from tests.conftest import mouse_click
 from datetime import date
 
 

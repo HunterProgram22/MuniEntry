@@ -1,7 +1,6 @@
 import pytest
-from PyQt5 import QtWidgets
 from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click
 
 
 @pytest.fixture
@@ -16,7 +15,7 @@ def conditions_dialog(qtbot, main_window):
         qtbot.addWidget(main_window.dialog.popup_dialog)
         mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
 
-    QTimer.singleShot(100, close_popup_dialog)
+    QTimer.singleShot(50, close_popup_dialog)
     mouse_click(main_window.dialog.add_conditions_Button)
     return main_window.dialog.popup_dialog
 

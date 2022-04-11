@@ -12,6 +12,7 @@ from package.controllers.case_updaters import (
     DiversionDialogCaseModelUpdater,
     ProbationViolationBondDialogCaseModelUpdater,
     FailureToAppearDialogCaseModelUpdater,
+    BondHearingDialogCaseModelUpdater,
 )
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.signal_connectors import (
@@ -21,6 +22,7 @@ from package.controllers.signal_connectors import (
     NotGuiltyBondDialogSignalConnector,
     ProbationViolationBondDialogSignalConnector,
     FailureToAppearDialogSignalConnector,
+    BondHearingDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -29,6 +31,7 @@ from package.controllers.slot_functions import (
     NotGuiltyBondDialogSlotFunctions,
     ProbationViolationBondDialogSlotFunctions,
     FailureToAppearDialogSlotFunctions,
+    BondHearingDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -37,6 +40,7 @@ from package.controllers.view_modifiers import (
     NotGuiltyBondDialogViewModifier,
     ProbationViolationBondDialogViewModifier,
     FailureToAppearDialogViewModifier,
+    BondHearingDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -45,9 +49,11 @@ from package.controllers.information_checkers import (
     JailCCPleaDialogInfoChecker,
     ProbationViolationBondDialogInfoChecker,
     FailureToAppearDialogInfoChecker,
+    BondHearingDialogInfoChecker,
 )
 from package.models.case_information import (
     BondConditions,
+    BondModificationConditions,
     CriminalCaseInformation,
     CommunityControlViolationBondConditions,
     FailureToAppearConditions,
@@ -66,6 +72,7 @@ from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
+from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -203,10 +210,10 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
-    condition_checkbox_list = [
-        ("monitoring_checkBox", "monitoring_type_box"),
-        ("specialized_docket_checkBox", "specialized_docket_type_box"),
-    ]
+    condition_checkbox_dict = {
+        "monitoring_checkBox": ["monitoring_type_box"],
+        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+    }
 
     def __init__(self, judicial_officer, case=None, parent=None):
         super().__init__(judicial_officer, case, parent)
@@ -233,7 +240,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def create_dialog_slot_functions(self):
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
-        self.functions.hide_boxes()
 
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)
@@ -309,6 +315,52 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+
+
+class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
+    condition_checkbox_dict = {
+        "monitoring_checkBox": ["monitoring_type_box"],
+        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+    }
+
+    def __init__(self, judicial_officer: object, case: str = None, parent: object = None) -> None:
+        super().__init__(judicial_officer, case, parent)
+        self.additional_conditions_list = [
+            (
+                "admin_license_suspension_checkBox",
+                self.entry_case_information.admin_license_suspension,
+            ),
+            (
+                "domestic_violence_checkBox",
+                self.entry_case_information.domestic_violence_conditions,
+            ),
+            ("no_contact_checkBox", self.entry_case_information.no_contact),
+            ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ("vehicle_seizure_checkBox", self.entry_case_information.vehicle_seizure),
+        ]
+        self.dialog_name = "Bond Hearing Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.entry_case_information.bond_conditions = BondModificationConditions()
+
+    def modify_view(self) -> BondHearingDialogViewModifier:
+        return BondHearingDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self) -> None:
+        self.functions = BondHearingDialogSlotFunctions(self)
+
+    def connect_signals_to_slots(self) -> BondHearingDialogSignalConnector:
+        return BondHearingDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self) -> CmsNoChargeLoader:
+        return CmsNoChargeLoader(self)
+
+    def update_entry_case_information(self) -> BondHearingDialogCaseModelUpdater:
+        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
+        return BondHearingDialogCaseModelUpdater(self)
+
+    def perform_info_checks(self) -> None:
+        self.dialog_checks = BondHearingDialogInfoChecker(self)
 
 
 if __name__ == "__main__":

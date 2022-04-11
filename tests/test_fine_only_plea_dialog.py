@@ -1,21 +1,31 @@
 from datetime import date, timedelta
 
 import pytest
-from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from tests.conftest import mouse_click, enter_data, check_barkschat
 
 from package.controllers.helper_functions import set_future_date
 
 TODAY = date.today()
 
+@pytest.fixture
+def mock_entry(fop_dialog, monkeypatch):
+    def mock_create_entry():
+        return "Entry Created"
+    monkeypatch.setattr(fop_dialog.functions, 'create_entry', mock_create_entry)
+
 
 @pytest.fixture
 def fop_dialog(qtbot, main_window):
-    """Fine Only Plea Dialog is fop_dialog"""
-    mouse_click(main_window.hemmeter_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.dialog.no_contest_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, "Yes")
     return main_window.dialog
+
+
+
 
 
 def test_dialog_opens(fop_dialog):
@@ -62,3 +72,32 @@ def test_credit_for_jail_shows_box_if_checked(fop_dialog):
     assert fop_dialog.jail_time_credit_box.isHidden()
     mouse_click(fop_dialog.credit_for_jail_checkBox)
     assert fop_dialog.jail_time_credit_box.isHidden() == False
+
+
+def test_create_fine_only_plea_entry(qtbot, fop_dialog, mock_entry):
+    mock_entry
+    mouse_click(fop_dialog.create_entry_Button)
+    for charge in fop_dialog.entry_case_information.charges_list:
+        assert charge.plea == "No Contest"
+
+
+def test_model_update_multiple_charges(qtbot, fop_dialog, mock_entry):
+    mock_entry
+    mouse_click(fop_dialog.create_entry_Button)
+    charges = fop_dialog.entry_case_information.charges_list
+    check_barkschat(charges, "No Contest")
+
+
+court_costs_test_list = [
+    "Yes",
+    "Waived",
+    "Imposed in companion case",
+    "No",
+]
+
+@pytest.mark.parametrize("costs_option", court_costs_test_list)
+def test_court_costs_selected_updates_model(qtbot, fop_dialog, mock_entry, costs_option):
+    mock_entry
+    enter_data(fop_dialog.court_costs_box, costs_option)
+    mouse_click(fop_dialog.create_entry_Button)
+    assert fop_dialog.entry_case_information.court_costs.ordered == costs_option

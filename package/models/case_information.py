@@ -69,6 +69,18 @@ class BondConditions:
         ("comply_protection_order", "comply_protection_order_checkBox"),
     ]
 
+
+@dataclass
+class BondModificationConditions(BondConditions):
+    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
+    the BondConditions list so appending bond modification does not alter the BondConditions
+    terms_list."""
+    bond_modification_decision: str = None
+    terms_list = BondConditions.terms_list.copy()
+    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
+
+
+
 @dataclass
 class CommunityControlViolationBondConditions:
     """Conditions specific to a Community Control Violation Bond Dialog. They are an object
@@ -416,6 +428,7 @@ class CriminalCaseInformation:
     case_number: str = None
     plea_trial_date: str = None
     appearance_reason: str = None
+    offense_of_violence: bool = False
     sentencing_date: str = None
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None

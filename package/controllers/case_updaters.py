@@ -167,6 +167,7 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
         self.update_jail_time_credit()
         self.calculate_total_jail_days_to_serve()
         self.calculate_costs_and_fines()
+        self.update_offense_of_violence()
 
     def update_model_with_charge_grid_data(self):
         return JailCCGridModelUpdater(self.view, self.model)
@@ -208,6 +209,12 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
             total_jail_days_suspended = total_jail_days_suspended + local_jail_days_suspended
         return total_jail_days_suspended
 
+    def update_offense_of_violence(self):
+        if self.view.offense_of_violence_checkBox.isChecked():
+            self.model.offense_of_violence = True
+        else:
+            self.model.offense_of_violence = False
+
 
 class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
@@ -238,6 +245,16 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
 
     def update_model_with_charge_grid_data(self):
         return NotGuiltyGridModelUpdater(self.view, self.model)
+
+
+class BondHearingDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_bond_conditions()
+
+    def update_bond_conditions(self):
+        self.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
@@ -277,8 +294,8 @@ class GridModelUpdater:
 
     def update_model_with_plea_finding_grid_data(self):
         """This method updates any changes to the statute and degree that were made in the grid and
-        adds the plea that is entered for each charge. TODO: This should be refactored b/c dismissed does
-        not apply to Not Guilty - did a Hotfix to fix NotGuilty."""
+        adds the plea that is entered for each charge. TODO: This should be refactored b/c dismissed
+        does not apply to Not Guilty - did a Hotfix to fix NotGuilty."""
         col = 1
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:

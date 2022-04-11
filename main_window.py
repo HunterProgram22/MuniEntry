@@ -1,8 +1,15 @@
 from loguru import logger
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QMainWindow, QMenu
 
-from package.database_controllers.databases import query_daily_case_list_data, CriminalCaseSQLRetriever
+from package.database_controllers.databases import (
+    query_daily_case_list_data,
+    CriminalCaseSQLRetriever,
+    create_daily_case_list_sql_tables,
+    load_daily_case_list_data,
+    open_db_connection,
+)
 from package.controllers.information_checkers import (
     check_judicial_officer,
     check_case_list_selected,
@@ -14,6 +21,7 @@ from package.controllers.main_entry_dialogs import (
     NotGuiltyBondDialog,
     ProbationViolationBondDialog,
     FailureToAppearDialog,
+    BondHearingDialog,
 )
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
@@ -34,8 +42,6 @@ class Window(QMainWindow, Ui_MainWindow):
         self.button_state()  # This is called to set boxes all to hidden on load.
         self.judicial_officer = None
         self.case_to_load = None
-        self.FailureToAppearButton.setHidden(False)
-        self.ProbationViolationBondButton.setHidden(False)
 
     def create_main_window_dicts(self):
         """
@@ -56,7 +62,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.kudela_radioButton: JudicialOfficer("Justin", "Kudela", "Magistrate"),
             self.rohrer_radioButton: JudicialOfficer("Kyle", "Rohrer", "Judge"),
             self.hemmeter_radioButton: JudicialOfficer("Marianne", "Hemmeter", "Judge"),
-            self.kimbler_radioButton: JudicialOfficer("Guy", "Reece II", "Judge"),
         }
         self.dialog_dict = {
             self.FineOnlyPleaButton: FineOnlyPleaDialog,
@@ -65,6 +70,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.NotGuiltyBondButton: NotGuiltyBondDialog,
             self.FailureToAppearButton: FailureToAppearDialog,
             self.ProbationViolationBondButton: ProbationViolationBondDialog,
+            self.BondHearingButton: BondHearingDialog,
         }
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",
@@ -75,7 +81,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.pcvh_fcvh_radioButton: "pcvh_fcvh",
         }
         self.database_table_dict = {
-            "arraignments": self.arraignment_cases_box,
+            "arraignments": self.arraignments_cases_box,
             "slated": self.slated_cases_box,
             "final_pretrials": self.final_pretrial_cases_box,
             "pleas": self.pleas_cases_box,
@@ -83,7 +89,7 @@ class Window(QMainWindow, Ui_MainWindow):
             "pcvh_fcvh": self.pcvh_fcvh_cases_box,
         }
         self.button_state_dict = {
-            self.arraignments_radioButton: self.arraignment_cases_box,
+            self.arraignments_radioButton: self.arraignments_cases_box,
             self.slated_radioButton: self.slated_cases_box,
             self.final_pretrial_radioButton: self.final_pretrial_cases_box,
             self.pleas_radioButton: self.pleas_cases_box,
@@ -94,15 +100,22 @@ class Window(QMainWindow, Ui_MainWindow):
     def set_daily_case_lists_type(self):
         """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox
         class allows for auto-completion filtering when typing in the box."""
-        self.arraignment_cases_box.__class__ = ExtendedComboBox
+        self.arraignments_cases_box.__class__ = ExtendedComboBox
+        self.arraignments_cases_box.set_up()
         self.slated_cases_box.__class__ = ExtendedComboBox
+        self.slated_cases_box.set_up()
         self.final_pretrial_cases_box.__class__ = ExtendedComboBox
+        self.final_pretrial_cases_box.set_up()
         self.pleas_cases_box.__class__ = ExtendedComboBox
+        self.pleas_cases_box.set_up()
         self.trials_to_court_cases_box.__class__ = ExtendedComboBox
+        self.trials_to_court_cases_box.set_up()
         self.pcvh_fcvh_cases_box.__class__ = ExtendedComboBox
+        self.pcvh_fcvh_cases_box.set_up()
 
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
+        self.reload_cases_Button.released.connect(self.reload_case_lists)
         self.connect_daily_case_list_buttons()
         for key in self.daily_case_list_buttons:
             key.clicked.connect(self.set_case_list_table)
@@ -152,23 +165,30 @@ class Window(QMainWindow, Ui_MainWindow):
             if key.isChecked():
                 self.judicial_officer = value
 
+    def reload_case_lists(self):
+        """This method is connected to the reload cases button so that the databases are only
+        recreated on reload since the initial load of the application already loads the
+        databases."""
+        conn = open_db_connection("con_daily_case_lists")
+        create_daily_case_list_sql_tables(conn)
+        load_daily_case_list_data(conn)
+        self.load_case_lists()
+
     def load_case_lists(self):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
         This does not load the cms_case data for each cms_case."""
-        self.arraignment_cases_box.addItems(
-            query_daily_case_list_data("arraignments")
-        )
+        self.arraignments_cases_box.clear()
+        self.arraignments_cases_box.addItems(query_daily_case_list_data("arraignments"))
+        self.slated_cases_box.clear()
         self.slated_cases_box.addItems(query_daily_case_list_data("slated"))
-        self.final_pretrial_cases_box.addItems(
-            query_daily_case_list_data("final_pretrials")
-        )
+        self.final_pretrial_cases_box.clear()
+        self.final_pretrial_cases_box.addItems(query_daily_case_list_data("final_pretrials"))
+        self.pleas_cases_box.clear()
         self.pleas_cases_box.addItems(query_daily_case_list_data("pleas"))
-        self.trials_to_court_cases_box.addItems(
-            query_daily_case_list_data("trials_to_court")
-        )
-        self.pcvh_fcvh_cases_box.addItems(
-            query_daily_case_list_data("pcvh_fcvh")
-        )
+        self.trials_to_court_cases_box.clear()
+        self.trials_to_court_cases_box.addItems(query_daily_case_list_data("trials_to_court"))
+        self.pcvh_fcvh_cases_box.clear()
+        self.pcvh_fcvh_cases_box.addItems(query_daily_case_list_data("pcvh_fcvh"))
 
     @logger.catch
     @check_judicial_officer
@@ -179,8 +199,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.case_to_load = CriminalCaseInformation()
         else:
             case_number = selected_case_list.currentText().split("- ")[1]
-            self.case_to_load = CriminalCaseSQLRetriever(
-                case_number, self.case_table).load_case()
+            self.case_to_load = CriminalCaseSQLRetriever(case_number, self.case_table).load_case()
         self.dialog = self.dialog_dict[self.sender()](
             self.judicial_officer, self.case_to_load, self.case_table
         )

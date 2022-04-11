@@ -1,6 +1,6 @@
 import pytest
-from PyQt5.QtCore import QTimer
-from conftest import mouse_click, enter_data
+from PyQt5 import QtCore
+from tests.conftest import mouse_click, enter_data, right_click
 
 
 main_window_all_button_test_list = [
@@ -10,6 +10,7 @@ main_window_all_button_test_list = [
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("DiversionButton", "Diversion Plea Case Information"),
     ("ProbationViolationBondButton", "Community Control Violation Bond Case Information"),
+    ("BondHearingButton", "Bond Hearing Case Information")
 ]
 
 
@@ -18,15 +19,17 @@ def test_window_opens(qtbot, main_window_noclose):
     the main_window fixture causes the next test to error because the window is closed
     when it runs."""
     main_window_noclose.show()
-    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.17.0"
+    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.18.0"
 
 
-@pytest.mark.skip(reason="Requires manual interaction")
+@pytest.mark.manual
+@pytest.mark.skip(reason="Fails but tests if warning works")
 def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
-@pytest.mark.skip(reason="Requires manual interaction")
+@pytest.mark.manual
+@pytest.mark.skip(reason="Fails but tests if warning works")
 def test_daily_case_list_required_warning(qtbot, main_window):
     mouse_click(main_window.bunner_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
@@ -51,7 +54,7 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
 
 main_window_all_daily_case_lists = [
-    ("arraignments_radioButton", "Coyan - 21TRC08121", "arraignment_cases_box"),
+    ("arraignments_radioButton", "Coyan - 21TRC08121", "arraignments_cases_box"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
     ("final_pretrial_radioButton", "Ansley - 21TRC10217", "final_pretrial_cases_box"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
@@ -69,7 +72,7 @@ def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button
 
 
 daily_case_list_appearance_reasons = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignment_cases_box", "arraignment", "FineOnlyPleaButton"),
+    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", "arraignment", "FineOnlyPleaButton"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
     ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "change of plea", "JailCCPleaButton"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "change of plea", "JailCCPleaButton"),
@@ -85,3 +88,35 @@ def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, 
     enter_data(getattr(main_window, case_list_box), case_number)
     mouse_click(getattr(main_window, entry_button))
     assert main_window.dialog.appearance_reason_box.currentText() == appearance_reason
+
+
+def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
+    """This test uses the test databases so counts may differ if compared to main databases."""
+    mouse_click(main_window_noclose.bunner_radioButton)
+    mouse_click(main_window_noclose.final_pretrial_radioButton)
+    enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
+    qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key_Delete)
+    assert len(main_window_noclose.final_pretrial_cases_box) == 9
+
+
+daily_case_list_case_counts = [
+    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", 12, 11),
+    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", 11, 10),
+    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", 10, 9),
+    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", 12, 11),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 4, 3),
+    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 6, 5),
+]
+
+@pytest.mark.parametrize("case_list_button, case_number, case_list_box, initial_count, delete_count", daily_case_list_case_counts)
+def test_reload_case_lists(qtbot, main_window_noclose, case_list_button, case_list_box, case_number, initial_count, delete_count):
+    """This test uses the test databases so counts may differ if compared to main databases."""
+    mouse_click(main_window_noclose.rohrer_radioButton)
+    mouse_click(getattr(main_window_noclose, case_list_button))
+    enter_data(getattr(main_window_noclose, case_list_box), case_number)
+    assert len(getattr(main_window_noclose, case_list_box)) == initial_count
+    qtbot.keyPress(getattr(main_window_noclose, case_list_box), QtCore.Qt.Key_Delete)
+    assert len(getattr(main_window_noclose, case_list_box)) == delete_count
+    mouse_click(main_window_noclose.reload_cases_Button)
+    assert len(getattr(main_window_noclose, case_list_box)) == initial_count
+
