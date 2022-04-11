@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(860, 650)
+        MainWindow.resize(860, 700)
         MainWindow.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -380,7 +380,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.17.1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.18.0"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
         self.pleas_radioButton.setText(_translate("MainWindow", "Pleas and Motion/Oral Hearings"))
