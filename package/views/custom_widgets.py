@@ -13,6 +13,7 @@ ATTORNEY_LIST = [
     "Barshaunda Robinson",
     "Brandon Shroy",
     "Bryan Bowen",
+    "Carlos Crawford",
     "Chad Heald",
     "Chad Hemminger",
     "Chris Junga",

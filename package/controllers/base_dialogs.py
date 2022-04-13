@@ -1,14 +1,14 @@
 """The BaseDialogs modules contains common base classes from which other dialogs
 inherit."""
 from PyQt5.QtWidgets import (
-    QDialog,
-    QComboBox,
     QCheckBox,
-    QLineEdit,
-    QTextEdit,
+    QComboBox,
     QDateEdit,
-    QTimeEdit,
+    QDialog,
+    QLineEdit,
     QRadioButton,
+    QTextEdit,
+    QTimeEdit,
 )
 
 
