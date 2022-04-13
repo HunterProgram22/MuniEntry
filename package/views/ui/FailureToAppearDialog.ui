@@ -351,6 +351,16 @@ background-color: rgb(255, 255, 255);</string>
                </item>
                <item>
                 <property name="text">
+                 <string>final community control violation hearing</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>preliminary community control violation hearing</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>final pre-trial</string>
                 </property>
                </item>

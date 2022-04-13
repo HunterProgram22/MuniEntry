@@ -769,6 +769,51 @@ font-weight: bold;</string>
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>hemmeter_radioButton</tabstop>
+  <tabstop>rohrer_radioButton</tabstop>
+  <tabstop>bunner_radioButton</tabstop>
+  <tabstop>pelanda_radioButton</tabstop>
+  <tabstop>kudela_radioButton</tabstop>
+  <tabstop>arraignments_radioButton</tabstop>
+  <tabstop>slated_radioButton</tabstop>
+  <tabstop>final_pretrial_radioButton</tabstop>
+  <tabstop>pleas_radioButton</tabstop>
+  <tabstop>trials_to_court_radioButton</tabstop>
+  <tabstop>pcvh_fcvh_radioButton</tabstop>
+  <tabstop>reload_cases_Button</tabstop>
+  <tabstop>FineOnlyPleaButton</tabstop>
+  <tabstop>FailureToAppearButton</tabstop>
+  <tabstop>NotGuiltyBondButton</tabstop>
+  <tabstop>JailCCPleaButton</tabstop>
+  <tabstop>ProbationViolationBondButton</tabstop>
+  <tabstop>DiversionButton</tabstop>
+  <tabstop>BondHearingButton</tabstop>
+  <tabstop>FinalJudgmentEntryButton_11</tabstop>
+  <tabstop>arraignments_cases_box</tabstop>
+  <tabstop>slated_cases_box</tabstop>
+  <tabstop>final_pretrial_cases_box</tabstop>
+  <tabstop>pleas_cases_box</tabstop>
+  <tabstop>trials_to_court_cases_box</tabstop>
+  <tabstop>pcvh_fcvh_cases_box</tabstop>
+  <tabstop>FinalJudgmentEntryButton_12</tabstop>
+  <tabstop>MinorMisdemeanorTrafficButton_3</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>FinalJudgmentEntryButton_13</tabstop>
+  <tabstop>FinalJudgmentEntryButton_14</tabstop>
+  <tabstop>FinalJudgmentEntryButton_15</tabstop>
+  <tabstop>radioButton_4</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>radioButton_3</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>pushButton_4</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>pushButton_6</tabstop>
+  <tabstop>JurorPaymentButton</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>radioButton_5</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>
@@ -779,7 +824,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>
