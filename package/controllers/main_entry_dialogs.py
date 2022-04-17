@@ -13,6 +13,7 @@ from package.controllers.case_updaters import (
     ProbationViolationBondDialogCaseModelUpdater,
     FailureToAppearDialogCaseModelUpdater,
     BondHearingDialogCaseModelUpdater,
+    PleaOnlyDialogCaseModelUpdater,
 )
 from package.controllers.conditions_dialogs import AddJailOnlyDialog
 from package.controllers.signal_connectors import (
@@ -23,6 +24,7 @@ from package.controllers.signal_connectors import (
     ProbationViolationBondDialogSignalConnector,
     FailureToAppearDialogSignalConnector,
     BondHearingDialogSignalConnector,
+    PleaOnlyDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -32,6 +34,7 @@ from package.controllers.slot_functions import (
     ProbationViolationBondDialogSlotFunctions,
     FailureToAppearDialogSlotFunctions,
     BondHearingDialogSlotFunctions,
+    PleaOnlyDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -41,6 +44,7 @@ from package.controllers.view_modifiers import (
     ProbationViolationBondDialogViewModifier,
     FailureToAppearDialogViewModifier,
     BondHearingDialogViewModifier,
+    PleaOnlyDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -50,6 +54,7 @@ from package.controllers.information_checkers import (
     ProbationViolationBondDialogInfoChecker,
     FailureToAppearDialogInfoChecker,
     BondHearingDialogInfoChecker,
+    PleaOnlyDialogInfoChecker,
 )
 from package.models.case_information import (
     BondConditions,
@@ -61,6 +66,7 @@ from package.models.case_information import (
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
     JailChargesGrid,
+    PleaOnlyGrid,
     NoJailChargesGrid,
     NotGuiltyPleaGrid,
     DiversionChargesGrid,
@@ -72,6 +78,7 @@ from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
+from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
 
 
@@ -136,6 +143,32 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = DiversionDialogInfoChecker(self)
+
+
+class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = "Plea Only Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self):
+        return PleaOnlyDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = PleaOnlyDialogSlotFunctions(self)
+
+    def connect_signals_to_slots(self):
+        return PleaOnlyDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = PleaOnlyGrid
+        return CmsChargeLoader(self)
+
+    def update_entry_case_information(self):
+        return PleaOnlyDialogCaseModelUpdater(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = PleaOnlyDialogInfoChecker(self)
 
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):

@@ -83,6 +83,13 @@ class FineOnlyDialogSignalConnector(BaseDialogSignalConnector):
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.functions.set_fines_credit_for_jail_field)
 
 
+class PleaOnlyDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals(dialog)
+        self.connect_plea_all_button_signals(dialog)
+
+
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

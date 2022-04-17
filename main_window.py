@@ -22,6 +22,7 @@ from package.controllers.main_entry_dialogs import (
     ProbationViolationBondDialog,
     FailureToAppearDialog,
     BondHearingDialog,
+    PleaOnlyDialog,
 )
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
@@ -71,6 +72,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.FailureToAppearButton: FailureToAppearDialog,
             self.ProbationViolationBondButton: ProbationViolationBondDialog,
             self.BondHearingButton: BondHearingDialog,
+            self.PleaOnlyButton: PleaOnlyDialog,
         }
         self.daily_case_list_buttons = {
             self.arraignments_radioButton: "arraignments",
