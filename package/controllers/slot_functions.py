@@ -426,6 +426,11 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.close_window()
 
 
+class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+
 class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

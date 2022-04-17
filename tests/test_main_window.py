@@ -10,7 +10,8 @@ main_window_all_button_test_list = [
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("DiversionButton", "Diversion Plea Case Information"),
     ("ProbationViolationBondButton", "Community Control Violation Bond Case Information"),
-    ("BondHearingButton", "Bond Hearing Case Information")
+    ("BondHearingButton", "Bond Hearing Case Information"),
+    ("PleaOnlyButton", "Plea Future Sentencing Case Information"),
 ]
 
 

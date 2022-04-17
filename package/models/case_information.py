@@ -402,6 +402,18 @@ class CourtCosts:
 
 
 @dataclass
+class FutureSentencing:
+    prepare_psi: bool = False
+    set_restitution: bool = False
+    victim_appearance: bool = False
+    terms_list = [
+        ("prepare_psi", "prepare_psi_checkBox"),
+        ("set_restitution", "set_restitution_checkBox"),
+        ("victim_appearance", "victim_appearance_checkBox"),
+    ]
+
+
+@dataclass
 class VictimNotification:
     ordered: bool = False
     fingerprinting_ordered: bool = False
@@ -427,6 +439,7 @@ class CriminalCaseInformation:
     plea_trial_date: str = None
     appearance_reason: str = None
     offense_of_violence: bool = False
+    future_sentencing: object = field(default_factory=FutureSentencing)
     sentencing_date: str = None
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None

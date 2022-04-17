@@ -233,6 +233,20 @@ class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
         return FineOnlyGridModelUpdater(self.view, self.model)
 
 
+class PleaOnlyDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_model_with_charge_grid_data()
+        self.update_model_with_future_sentencing()
+
+    def update_model_with_charge_grid_data(self):
+        return PleaOnlyGridModelUpdater(self.view, self.model)
+
+    def update_model_with_future_sentencing(self):
+        self.transfer_view_data_to_model(self.model.future_sentencing)
+
+
 class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -330,6 +344,19 @@ class NotGuiltyGridModelUpdater(GridModelUpdater):
             charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
             charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
             col += 1
+
+
+class PleaOnlyGridModelUpdater(GridModelUpdater):
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_amend_button = 7
+    row_delete_button = 8
+
+    def __init__(self, view, model):
+        super().__init__(view, model)
+        self.update_model_with_plea_finding_grid_data()
 
 
 class FineOnlyGridModelUpdater(GridModelUpdater):

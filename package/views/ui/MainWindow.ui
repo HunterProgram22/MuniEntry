@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>0</width>
-    <height>0</height>
+    <width>860</width>
+    <height>700</height>
    </size>
   </property>
   <property name="font">
@@ -441,6 +441,16 @@ font-weight: bold;</string>
           </property>
          </widget>
         </item>
+        <item row="13" column="1">
+         <widget class="QPushButton" name="PleaOnlyButton">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(85, 170, 127);</string>
+          </property>
+          <property name="text">
+           <string>Plea Future Sentence Date</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="civilTab">
@@ -824,7 +834,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
