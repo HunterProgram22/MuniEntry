@@ -20,7 +20,7 @@ def test_window_opens(qtbot, main_window_noclose):
     the main_window fixture causes the next test to error because the window is closed
     when it runs."""
     main_window_noclose.show()
-    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.18.1"
+    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.19.0"
 
 
 @pytest.mark.manual
