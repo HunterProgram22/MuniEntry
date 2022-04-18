@@ -195,6 +195,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
 
     def create_dialog_slot_functions(self):
         self.functions = JailCCDialogSlotFunctions(self)
+        self.functions.show_companion_case_fields()
 
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)

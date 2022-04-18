@@ -387,18 +387,19 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         other required fields do not contain data. If currenlty in jail is no, but other days in
         jail is blank no warning is generated because a user may enter no for currently in jail,
         but there may not be jail time credit."""
-        if self.case_info.currently_in_jail == "Yes":
+        if self.case_info.jail_terms.currently_in_jail == "Yes":
             if self.check_if_days_in_jail_blank():
                 return "Fail"
             self.check_if_apply_jtc_blank()
-        elif self.case_info.days_in_jail != "":
-            if self.case_info.days_in_jail == 0:
+        elif self.case_info.jail_terms.days_in_jail != "":
+            if self.case_info.jail_terms.days_in_jail == 0:
                 return "Pass"
             self.check_if_currently_in_jail_blank()
             self.check_if_apply_jtc_blank()
 
     def check_if_days_in_jail_blank(self):
-        if self.case_info.days_in_jail == "":
+        print(self.case_info.jail_terms.days_in_jail)
+        if self.case_info.jail_terms.days_in_jail == "":
             message = RequiredBox(
                 f"The Jail Time Credit box indicates Defendant is in Jail, but "
                 f"the number of Days In Jail is blank. \n\nPlease enter the number of "
@@ -410,7 +411,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
         return False
 
     def check_if_currently_in_jail_blank(self):
-        if self.case_info.currently_in_jail == "":
+        if self.case_info.jail_terms.currently_in_jail == "":
             message = WarningBox(
                 f"The Days in Jail has been provided, but the Jail Time Credit "
                 f"does not indicate whether the Defendant is Currently In Jail. "
@@ -425,7 +426,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             self.view.in_jail_box.setCurrentText("Yes")
 
     def check_if_apply_jtc_blank(self):
-        if self.case_info.apply_jtc == "":
+        if self.case_info.jail_terms.apply_jtc == "":
             message = TwoChoiceQuestionBox(
                 f"The Days in Jail has been provided, but the Apply to JTC field is blank. "
                 f"\n\nPlease select whether to apply Jail Time Credit to Sentence or Costs and "
@@ -442,16 +443,16 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             self.view.jail_time_credit_apply_box.setCurrentText("Costs and Fines")
 
     def calculate_jail_days_credit(self):
-        if self.case_info.days_in_jail == "":
+        if self.case_info.jail_terms.days_in_jail == "":
             return 0
         else:
-            return int(self.case_info.days_in_jail)
+            return int(self.case_info.jail_terms.days_in_jail)
 
     def check_if_jail_days_suspended_greater_than_jail_imposed(self):
-        if self.case_info.total_jail_days_suspended > self.case_info.total_jail_days_imposed:
+        if self.case_info.jail_terms.total_jail_days_suspended > self.case_info.jail_terms.total_jail_days_imposed:
             message = RequiredBox(
-                f"The total number of jail days suspended is {self.case_info.total_jail_days_suspended} "
-                f"which is greater than the total jail days imposed of {self.case_info.total_jail_days_imposed}. "
+                f"The total number of jail days suspended is {self.case_info.jail_terms.total_jail_days_suspended} "
+                f"which is greater than the total jail days imposed of {self.case_info.jail_terms.total_jail_days_imposed}. "
                 f"Please correct."
             )
             message.exec()
@@ -460,16 +461,16 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
-            self.case_info.total_jail_days_imposed
-            > (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.jail_terms.total_jail_days_imposed
+            > (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
             and self.case_info.jail_terms.ordered is False
-            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
+            and (self.case_info.jail_terms.currently_in_jail == "No" or self.case_info.jail_terms.currently_in_jail == "")
             and self.case_info.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
-                f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is greater than the total "
-                f"jail days suspended of {self.case_info.total_jail_days_suspended} and the total jail time "
-                f"credit applied to the sentence of {self.case_info.days_in_jail}, and the Jail "
+                f"The total jail days imposed of {self.case_info.jail_terms.total_jail_days_imposed} is greater than the total "
+                f"jail days suspended of {self.case_info.jail_terms.total_jail_days_suspended} and the total jail time "
+                f"credit applied to the sentence of {self.case_info.jail_terms.days_in_jail}, and the Jail "
                 f"Reporting Terms have not been entered. \n\nDo you want to set the Jail "
                 f"Reporting Terms? \n\nPress 'Yes' to set Jail Reporting Terms. \n\nPress 'No' to "
                 f"open the entry with no Jail Reporting Terms. \n\nPress 'Cancel' to return to the "
@@ -490,15 +491,15 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
-            self.case_info.total_jail_days_imposed
-            == (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.jail_terms.total_jail_days_imposed
+            == (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
             and self.case_info.jail_terms.ordered is True
-            and (self.case_info.currently_in_jail == "No" or self.case_info.currently_in_jail == "")
+            and (self.case_info.jail_terms.currently_in_jail == "No" or self.case_info.jail_terms.currently_in_jail == "")
         ):
             message = WarningBox(
-                f"The total jail days imposed of {self.case_info.total_jail_days_imposed} is equal to the total jail "
-                f"days suspended of {self.case_info.total_jail_days_suspended} and total jail time credit of "
-                f"{self.case_info.days_in_jail}. The Defendant does not appear to have any jail "
+                f"The total jail days imposed of {self.case_info.jail_terms.total_jail_days_imposed} is equal to the total jail "
+                f"days suspended of {self.case_info.jail_terms.total_jail_days_suspended} and total jail time credit of "
+                f"{self.case_info.jail_terms.days_in_jail}. The Defendant does not appear to have any jail "
                 f"days left to serve but you set Jail Reporting Terms. \n\nAre you sure you want "
                 f"to set Jail Reporting Terms?"
             )
@@ -513,10 +514,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
-            self.case_info.total_jail_days_imposed
-            >= (self.case_info.total_jail_days_suspended + self.case_info.days_in_jail)
+            self.case_info.jail_terms.total_jail_days_imposed
+            >= (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
             and self.case_info.jail_terms.ordered is True
-            and self.case_info.currently_in_jail == "Yes"
+            and self.case_info.jail_terms.currently_in_jail == "Yes"
         ):
             message = WarningBox(
                 f"The Defendant is currently indicated as being in jail, "
@@ -527,12 +528,12 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
-            self.case_info.days_in_jail > self.case_info.total_jail_days_imposed
+            self.case_info.jail_terms.days_in_jail > self.case_info.jail_terms.total_jail_days_imposed
             and self.view.jail_time_credit_apply_box.currentText() == "Sentence"
         ):
             message = RequiredBox(
-                f"The Defendant is set to have {self.case_info.days_in_jail} days of jail time "
-                f"credit applied to a sentence, but a total of only {self.case_info.total_jail_days_imposed} are set "
+                f"The Defendant is set to have {self.case_info.jail_terms.days_in_jail} days of jail time "
+                f"credit applied to a sentence, but a total of only {self.case_info.jail_terms.total_jail_days_imposed} are set "
                 f"to be imposed in the case. The total jail day imposed is less than the jail time "
                 f"credit that is being applied to the sentence. \n\nPlease impose additional jails "
                 f"days or change the Apply JTC to box to 'Costs and Fines'."

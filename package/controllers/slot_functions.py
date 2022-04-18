@@ -457,6 +457,24 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
 
+    def show_companion_case_fields(self):
+        if self.dialog.add_companion_cases_checkBox.isChecked():
+            self.dialog.companion_cases_box.setHidden(False)
+            self.dialog.companion_cases_sentence_box.setHidden(False)
+            self.dialog.companion_cases_sentence_label.setHidden(False)
+        else:
+            self.dialog.companion_cases_box.setHidden(True)
+            self.dialog.companion_cases_sentence_box.setHidden(True)
+            self.dialog.companion_cases_sentence_label.setHidden(True)
+
+    @logger.catch
+    def start_add_jail_report_dialog(self):
+        from package.controllers.conditions_dialogs import AddJailOnlyDialog
+
+        self.dialog.update_entry_case_information()
+        self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
+
     @logger.catch
     def start_add_conditions_dialog(self):
         from package.controllers.conditions_dialogs import AddCommunityControlDialog

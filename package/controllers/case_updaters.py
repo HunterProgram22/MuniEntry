@@ -173,9 +173,12 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
         return JailCCGridModelUpdater(self.view, self.model)
 
     def update_jail_time_credit(self):
-        self.model.currently_in_jail = self.view.in_jail_box.currentText()
-        self.model.days_in_jail = self.set_jail_time_credit()
-        self.model.apply_jtc = self.view.jail_time_credit_apply_box.currentText()
+        self.model.jail_terms.currently_in_jail = self.view.in_jail_box.currentText()
+        self.model.jail_terms.days_in_jail = self.set_jail_time_credit()
+        self.model.jail_terms.apply_jtc = self.view.jail_time_credit_apply_box.currentText()
+        self.model.jail_terms.companion_cases_exist = self.view.add_companion_cases_checkBox.isChecked()
+        self.model.jail_terms.companion_cases_numbers = self.view.companion_cases_box.text()
+        self.model.jail_terms.companion_cases_sentence_type = self.view.companion_cases_sentence_box.currentText()
 
     def set_jail_time_credit(self):
         if self.view.jail_time_credit_box.text() == "":
@@ -183,10 +186,10 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
         return int(self.view.jail_time_credit_box.text())
 
     def calculate_total_jail_days_to_serve(self):
-        self.model.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
-        self.model.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
-        self.model.total_jail_days_to_serve = int(self.model.total_jail_days_imposed) - int(
-            self.model.total_jail_days_suspended
+        self.model.jail_terms.total_jail_days_imposed = self.calculate_total_jail_days_imposed()
+        self.model.jail_terms.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
+        self.model.jail_terms.total_jail_days_to_serve = int(self.model.jail_terms.total_jail_days_imposed) - int(
+            self.model.jail_terms.total_jail_days_suspended
         )
 
     def calculate_total_jail_days_imposed(self):
@@ -227,7 +230,7 @@ class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
 
     def update_jail_time_credit_for_fines(self):
         self.model.fines_and_costs_jail_credit = self.view.credit_for_jail_checkBox.isChecked()
-        self.model.days_in_jail = self.view.jail_time_credit_box.text()
+        self.model.fine_jail_days = self.view.jail_time_credit_box.text()
 
     def update_model_with_charge_grid_data(self):
         return FineOnlyGridModelUpdater(self.view, self.model)
