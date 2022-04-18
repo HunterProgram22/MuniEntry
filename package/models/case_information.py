@@ -80,7 +80,6 @@ class BondModificationConditions(BondConditions):
     terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
 
 
-
 @dataclass
 class CommunityControlViolationBondConditions:
     """Conditions specific to a Community Control Violation Bond Dialog. They are an object
@@ -337,17 +336,28 @@ class JailTerms:
     jail_term_type: str = None
     jail_sentence_execution_type: str = None
     companion_cases_exist: bool = False
-    companion_case_numbers: str = None
+    companion_cases_numbers: str = None
+    companion_cases_sentence_type: str = None
+    currently_in_jail: str = None
+    days_in_jail: str = None
+    apply_jtc: str = None
+    total_jail_days_imposed: int = None
+    total_jail_days_suspended: int = None
+    total_jail_days_to_serve: int = None
     terms_list = [
         ("report_type", "report_type_box"),
         ("report_date", "report_date_box"),
         ("report_time", "report_time_box"),
-        ("jail_term_type", "jail_term_type_box"),
+#        ("jail_term_type", "jail_term_type_box"),
         ("jail_sentence_execution_type", "jail_sentence_execution_type_box"),
         ("jail_report_days_notes", "jail_report_days_notes_box"),
-        ("companion_case_numbers", "companion_cases_box"),
-        ("companion_cases_exist", "companion_cases_checkBox"),
+#       ("companion_case_numbers", "companion_cases_box"),
+#       ("companion_cases_exist", "companion_cases_checkBox"),
+#       ("currently_in_jail", "in_jail_box"),
+#       ("days_in_jail", "jail_time_credit_box"),
+#       ("apply_jtc", "jail_time_credit_apply_box"),
     ]
+
 
 
 @dataclass
@@ -402,15 +412,25 @@ class CourtCosts:
 
 
 @dataclass
+class FutureSentencing:
+    prepare_psi: bool = False
+    set_restitution: bool = False
+    victim_appearance: bool = False
+    terms_list = [
+        ("prepare_psi", "prepare_psi_checkBox"),
+        ("set_restitution", "set_restitution_checkBox"),
+        ("victim_appearance", "victim_appearance_checkBox"),
+    ]
+
+
+@dataclass
 class VictimNotification:
     ordered: bool = False
     fingerprinting_ordered: bool = False
-    firearm_prohibition: bool = False
     victim_reparation_notice: bool = False
     victim_prosecutor_notice: bool = False
     terms_list = [
         ("fingerprinting_ordered", "fingerprinting_checkBox"),
-        ("firearm_prohibition", "firearm_prohibition_checkBox"),
         ("victim_reparation_notice", "victim_reparation_checkBox"),
         ("victim_prosecutor_notice", "victim_prosecutor_notification_checkBox"),
     ]
@@ -421,14 +441,14 @@ class CriminalCaseInformation:
     """This object stores all the information for a cms_case both at inception and
     as it is populated through the application.
     TODO: Should also still refactor amend_offense_details to object of dataclass.
-    :days_in_jail: - this is jail time credit but it is not part of jail commitment because
-    it can be applied to fines if no jail days imposed.
+    :fine_jail_days: - this is not part of jail terms because it is for fine only plea for credit.
     """
     judicial_officer: object = None
     case_number: str = None
     plea_trial_date: str = None
     appearance_reason: str = None
     offense_of_violence: bool = False
+    future_sentencing: object = field(default_factory=FutureSentencing)
     sentencing_date: str = None
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None
@@ -437,17 +457,12 @@ class CriminalCaseInformation:
     fra_in_file: bool = None
     fra_in_court: bool = None
     fines_and_costs_jail_credit: bool = False
-    currently_in_jail: str = None
-    days_in_jail: int = 0
-    apply_jtc: str = None
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
+    fine_jail_days: str = None
     total_fines: int = 0
     total_fines_suspended: int = 0
-    total_jail_days_imposed: int = None
-    total_jail_days_suspended: int = None
-    total_jail_days_to_serve: int = None
 
     cc_violation_probable_cause: str = None
     cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)

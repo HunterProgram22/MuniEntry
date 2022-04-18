@@ -51,6 +51,10 @@ Bond_Hearing_Template = Template(
     "Bond_Hearing_Template.docx",
 )
 
+Plea_Only_Template = Template(
+    "Plea Only Entry",
+    "Plea_Only_Template.docx",
+)
 
 TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
@@ -60,4 +64,5 @@ TEMPLATE_DICT = {
     "Probation Violation Bond Dialog": Probation_Violation_Bond_Template,
     "Failure To Appear Dialog": Failure_To_Appear_Template,
     "Bond Hearing Dialog": Bond_Hearing_Template,
+    "Plea Only Dialog": Plea_Only_Template,
 }

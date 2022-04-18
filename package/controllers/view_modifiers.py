@@ -67,8 +67,6 @@ class BaseDialogViewModifier(object):
         self.dialog.report_date_box.__class__ = NoScrollDateEdit
         self.dialog.report_time_box.__class__ = NoScrollTimeEdit
         self.dialog.jail_sentence_execution_type_box.__class__ = NoScrollComboBox
-        self.dialog.jail_term_type_box.__class__ = NoScrollComboBox
-
 
     def set_conditions_case_information_banner(self):
         column = self.dialog.charges_gridLayout.columnCount() + 1
@@ -218,6 +216,13 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
         self.set_balance_due_date()
         self.set_court_cost_and_fra_boxes_to_no_scroll()
+
+
+class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):

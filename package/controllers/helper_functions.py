@@ -2,26 +2,18 @@
 from datetime import date, timedelta
 
 
-def set_future_date(days_to_add, weekday_due_date):
-    """This is a general helper function that will accept the numbers of days to
-    add to the current date and set a new date.
-
-    :days_to_add: A string from the view.
-
-    :weekday_due_date: The next day of the week to set the date after the days to add.
-    For example 0 days sets it to the next Monday after the added days, 1 sets
-    it to the next Tuesday after the added days, etc."""
-    future_date = date.today() + timedelta(days_to_add)
+def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
+    """Accepts the number of days to add and a day of the week that will be added on to the
+    number of days for the future court date that is to be set."""
     today = date.today()
+    future_date = today + timedelta(days_to_add)
     future_date = next_court_day(future_date, weekday_due_date)
-    total_days_to_add = (future_date - today).days
-    return total_days_to_add
+    return (future_date - today).days
 
 
-def next_court_day(future_date, weekday_due_date):
-    """This function returns the number of days to add to today to set
-    the actual date needed. If it is 1 it would be Tuesday, 3 would
-    be Wednesday, etc."""
+def next_court_day(future_date: date, weekday_due_date: str) -> date:
+    """Returns a date object that is the total number of days plus the days required to be
+    added to get to the next specified court date"""
     weekday_convert_dict = {
         "Monday": 0,
         "Tuesday": 1,
@@ -29,7 +21,7 @@ def next_court_day(future_date, weekday_due_date):
         "Thursday": 3,
         "Friday": 4,
     }
-    weekday = weekday_convert_dict.get(weekday_due_date)
+    weekday = weekday_convert_dict.get(weekday_due_date, 0)
     days_ahead = weekday - future_date.weekday()
     if days_ahead <= 0:  # Target day already happened this week
         days_ahead += 7

@@ -27,7 +27,6 @@ def test_dialog_opens(jcp_dialog):
 
 def test_create_jail_cc_plea_entry(qtbot, jcp_dialog, mock_entry):
     mock_entry
-    enter_data(jcp_dialog.case_number_lineEdit, "1")
     mouse_click(jcp_dialog.create_entry_Button)
     for charge in jcp_dialog.entry_case_information.charges_list:
         assert charge.plea == "Guilty"
@@ -35,7 +34,6 @@ def test_create_jail_cc_plea_entry(qtbot, jcp_dialog, mock_entry):
 
 def test_model_update_multiple_charges(qtbot, jcp_dialog, mock_entry):
     mock_entry
-    enter_data(jcp_dialog.case_number_lineEdit, "2")
     mouse_click(jcp_dialog.create_entry_Button)
     charges = jcp_dialog.entry_case_information.charges_list
     check_barkschat(charges, "Guilty")
