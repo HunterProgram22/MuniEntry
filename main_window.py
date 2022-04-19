@@ -1,7 +1,7 @@
 from loguru import logger
-from PyQt5 import QtGui
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QMenu
+from PyQt5.QtWidgets import QMainWindow, QMenu, QWidget
 
 from package.database_controllers.databases import (
     query_daily_case_list_data,
@@ -36,6 +36,12 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
+        self.crimTab = CrimTab(self)
+
+
+class CrimTab(QWidget):
+    def __init__(self, parent: QWidget = None) -> None:
+        super().__init__(parent)
         self.create_main_window_dicts()
         self.set_daily_case_lists_type()
         self.connect_signals_to_slots()
