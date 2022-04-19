@@ -398,7 +398,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             self.check_if_apply_jtc_blank()
 
     def check_if_days_in_jail_blank(self):
-        print(self.case_info.jail_terms.days_in_jail)
         if self.case_info.jail_terms.days_in_jail == "":
             message = RequiredBox(
                 f"The Jail Time Credit box indicates Defendant is in Jail, but "
