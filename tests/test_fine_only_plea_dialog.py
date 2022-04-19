@@ -25,9 +25,6 @@ def fop_dialog(qtbot, main_window):
     return main_window.dialog
 
 
-
-
-
 def test_dialog_opens(fop_dialog):
     assert fop_dialog.windowTitle() == "Fine Only Plea Case Information"
 

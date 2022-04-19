@@ -9,15 +9,15 @@ class CmsNoChargeLoader:
     def __init__(self, dialog: QDialog) -> None:
         self.dialog = dialog
         self.cms_case = dialog.cms_case
-        self.load_cms_data()
+        if self.cms_case.case_number is not None:
+            self.load_cms_data()
 
     def load_cms_data(self) -> None:
-        """Loads the date from CMS if it exists, if no case is selected then no action is taken."""
-        if self.cms_case.case_number is not None:
-            self.set_case_number()
-            self.set_defendant_name()
-            self.set_defense_counsel_name()
-            self.set_defense_counsel_type()
+        """Loads the case management system data to the dialog."""
+        self.set_case_number()
+        self.set_defendant_name()
+        self.set_defense_counsel_name()
+        self.set_defense_counsel_type()
 
     def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
@@ -48,12 +48,10 @@ class CmsChargeLoader(CmsNoChargeLoader):
         super().__init__(dialog)
 
     def load_cms_data(self):
-        if self.cms_case.case_number is not None:
-            self.set_case_number()
-            self.set_defendant_name()
-            self.set_defense_counsel_name()
-            self.set_defense_counsel_type()
-            self.add_cms_criminal_charges_to_entry_case_information()
+        """Calls the CmsNoChargeLoader load_cms_data method to load all case information, then
+        loads the charge information for the case."""
+        super().load_cms_data()
+        self.add_cms_criminal_charges_to_entry_case_information()
 
     def add_cms_criminal_charges_to_entry_case_information(self):
         """Loads the data from the cms_case object that is created from the sql
