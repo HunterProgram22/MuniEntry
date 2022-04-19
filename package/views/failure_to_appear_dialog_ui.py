@@ -225,7 +225,7 @@ class Ui_FailureToAppearDialog(object):
         font.setWeight(75)
         self.bond_amount_box.setFont(font)
         self.bond_amount_box.setStyleSheet("background-color: rgb(255, 255, 255);")
-        self.bond_amount_box.setEditable(False)
+        self.bond_amount_box.setEditable(True)
         self.bond_amount_box.setObjectName("bond_amount_box")
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
