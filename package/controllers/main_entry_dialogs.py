@@ -38,7 +38,6 @@ from package.controllers.slot_functions import (
     PleaOnlyDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
-    SchedulingEntryDialogViewModifier,
     DiversionDialogViewModifier,
     JailCCDialogViewModifier,
     FineOnlyDialogViewModifier,
@@ -82,7 +81,6 @@ from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolati
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
-from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -401,20 +399,6 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
 
 
-class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
-    def __init__(self, parent: object = None):
-        super().__init__(parent)
-        self.dialog_name = "Scheduling Entry"
-
-    def modify_view(self):
-        return SchedulingEntryDialogViewModifier(self)
-
-    def create_dialog_slot_functions(self) -> None:
-        pass
-
-    def connect_signals_to_slots(self) -> BondHearingDialogSignalConnector:
-        pass
-    
 
 if __name__ == "__main__":
     # charges_database = open_charges_db_connection()

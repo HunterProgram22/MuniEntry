@@ -23,8 +23,8 @@ from package.controllers.main_entry_dialogs import (
     FailureToAppearDialog,
     BondHearingDialog,
     PleaOnlyDialog,
-    SchedulingEntryDialog,
 )
+from package.controllers.sched_entry_dialogs import SchedulingEntryDialog
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
