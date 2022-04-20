@@ -395,3 +395,8 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
 
     def set_domestic_violence_surrender_weapons_default_date(self):
         self.dialog.domestic_violence_surrender_weapons_dateBox.setDate(TODAY)
+
+
+class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+       super().__init__(dialog)

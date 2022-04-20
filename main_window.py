@@ -1,7 +1,7 @@
 from loguru import logger
-from PyQt5 import QtGui, QtWidgets
+from PyQt5 import QtGui
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QMainWindow, QMenu, QWidget
+from PyQt5.QtWidgets import QMainWindow, QMenu
 
 from package.database_controllers.databases import (
     query_daily_case_list_data,
@@ -23,6 +23,7 @@ from package.controllers.main_entry_dialogs import (
     FailureToAppearDialog,
     BondHearingDialog,
     PleaOnlyDialog,
+    SchedulingEntryDialog,
 )
 from package.models.case_information import CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
@@ -36,12 +37,6 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
-        self.crimTab = CrimTab(self)
-
-
-class CrimTab(QWidget):
-    def __init__(self, parent: QWidget = None) -> None:
-        super().__init__(parent)
         self.create_main_window_dicts()
         self.set_daily_case_lists_type()
         self.connect_signals_to_slots()
@@ -124,6 +119,7 @@ class CrimTab(QWidget):
     def connect_signals_to_slots(self):
         self.menu_file_exit.triggered.connect(self.close)
         self.reload_cases_Button.released.connect(self.reload_case_lists)
+        self.schedulingEntryButton.released.connect(self.start_scheduling_entry)
         self.connect_daily_case_list_buttons()
         for key in self.daily_case_list_buttons:
             key.clicked.connect(self.set_case_list_table)
@@ -211,4 +207,8 @@ class CrimTab(QWidget):
         self.dialog = self.dialog_dict[self.sender()](
             self.judicial_officer, self.case_to_load, self.case_table
         )
+        self.dialog.exec()
+
+    def start_scheduling_entry(self):
+        self.dialog = SchedulingEntryDialog()
         self.dialog.exec()

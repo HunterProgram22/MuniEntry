@@ -559,96 +559,90 @@ font-weight: bold;</string>
        <attribute name="title">
         <string>Scheduling</string>
        </attribute>
-       <widget class="QWidget" name="">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>9</y>
-          <width>821</width>
-          <height>161</height>
-         </rect>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_15">
-           <property name="font">
-            <font>
-             <family>Palatino Linotype</family>
-             <pointsize>11</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Staff Member:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" colspan="2">
-          <widget class="QRadioButton" name="radioButton_12">
-           <property name="text">
-            <string>Assignment Commissioner Dattilo</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3" colspan="2">
-          <widget class="QRadioButton" name="radioButton_15">
-           <property name="text">
-            <string>Assignment Commissioner Travis</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QRadioButton" name="radioButton_13">
-           <property name="text">
-            <string>No Signature</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2" colspan="2">
-          <widget class="QLabel" name="label_16">
-           <property name="font">
-            <font>
-             <family>Palatino Linotype</family>
-             <pointsize>11</pointsize>
-             <weight>75</weight>
-             <italic>false</italic>
-             <bold>true</bold>
-             <underline>true</underline>
-            </font>
-           </property>
-           <property name="text">
-            <string>SCHEDULING ENTRIES</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0" colspan="2">
-          <widget class="QPushButton" name="schedulingEntryButton">
-           <property name="text">
-            <string>Scheduling Entry</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2" colspan="2">
-          <widget class="QPushButton" name="pushButton_13">
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4" colspan="2">
-          <widget class="QPushButton" name="pushButton_12">
-           <property name="text">
-            <string>PushButton</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout_5">
+        <item row="0" column="0">
+         <layout class="QGridLayout" name="gridLayout_8">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_15">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Staff Member:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" colspan="2">
+           <widget class="QRadioButton" name="ac_dattilo_radioButton">
+            <property name="text">
+             <string>Assignment Commissioner Dattilo</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3" colspan="2">
+           <widget class="QRadioButton" name="ac_patterson_radioButton">
+            <property name="text">
+             <string>Assignment Commissioner Patterson</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="5">
+           <widget class="QRadioButton" name="radioButton_13">
+            <property name="text">
+             <string>No Signature</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2" colspan="2">
+           <widget class="QLabel" name="label_16">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>SCHEDULING ENTRIES</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QPushButton" name="schedulingEntryButton">
+            <property name="text">
+             <string>Scheduling Entry</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2" colspan="2">
+           <widget class="QPushButton" name="pushButton_13">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4" colspan="2">
+           <widget class="QPushButton" name="pushButton_12">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="adminTab">
        <attribute name="title">
