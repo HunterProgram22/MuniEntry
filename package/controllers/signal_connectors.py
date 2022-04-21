@@ -12,7 +12,7 @@ class BaseDialogSignalConnector:
         dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
         dialog.create_entry_Button.released.connect(dialog.functions.create_entry_process)
         dialog.close_dialog_Button.released.connect(dialog.functions.close_dialog)
-        dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
+#        dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
 
     def connect_fra_signals(self, dialog):
         dialog.fra_in_file_box.currentTextChanged.connect(dialog.functions.set_fra_in_file)

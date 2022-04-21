@@ -6,19 +6,25 @@ from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 from PyQt5.QtCore import QDate
 
 from package.controllers.helper_functions import set_future_date
+from package.models.scheduling_information import SchedulingCaseInformation
+from package.controllers.signal_connectors import BaseDialogSignalConnector
+from package.controllers.slot_functions import BaseDialogSlotFunctions
+
+
 TODAY = QDate.currentDate()
 
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def __init__(self, parent: object = None):
         super().__init__(parent)
         self.dialog_name = "Scheduling Entry"
+        self.entry_case_information = SchedulingCaseInformation()
         self.update_speedy_trial_date()
 
     def modify_view(self):
         return SchedulingEntryDialogViewModifier(self)
 
     def create_dialog_slot_functions(self) -> None:
-        pass
+        self.functions = BaseDialogSlotFunctions(self)
 
     def connect_signals_to_slots(self) -> None:
         self.arrest_summons_date_box.dateChanged.connect(self.update_speedy_trial_date)
@@ -26,6 +32,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.days_in_jail_lineEdit.textChanged.connect(self.update_speedy_trial_date)
         self.continuance_days_lineEdit.textChanged.connect(self.update_speedy_trial_date)
         self.trial_dateEdit.dateChanged.connect(self.update_scheduled_dates)
+        return SchedulingEntryDialogSignalConnector(self)
 
     def update_scheduled_dates(self):
         final_pretrial_date = self.trial_dateEdit.date().addDays(-2)
@@ -70,6 +77,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
             continuance_days = int(self.continuance_days_lineEdit.text())
         return continuance_days
 
+
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -78,3 +86,8 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.arrest_summons_date_box.setDate(TODAY)
 
+
+class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals(dialog)

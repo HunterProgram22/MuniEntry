@@ -67,6 +67,12 @@ class BaseDialogSlotFunctions(object):
             )
             self.dialog.message_box.exec()
 
+    def create_entry_process(self):
+        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
+        update_info_and_perform_checks method."""
+        if self.update_info_and_perform_checks() == "Pass":
+            self.create_entry()
+
     def set_document_name(self):
         """Returns a name for the document in the format CaseNumber_TemplateName.docx
         (i.e. 21CRB1234_Crim_Traffic Judgment Entry.docx"""
@@ -99,12 +105,6 @@ class BaseDialogSlotFunctions(object):
             "within 90 days": 90,
         }
         return pay_date_dict.get(days_to_add_string)
-
-    def create_entry_process(self):
-        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
-        update_info_and_perform_checks method."""
-        if self.update_info_and_perform_checks() == "Pass":
-            self.create_entry()
 
     @logger.catch
     def update_info_and_perform_checks(self):
