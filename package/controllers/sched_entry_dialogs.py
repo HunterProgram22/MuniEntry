@@ -24,11 +24,13 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.arrest_summons_date_box.dateChanged.connect(self.update_speedy_trial_date)
         self.highest_charge_box.currentIndexChanged.connect(self.update_speedy_trial_date)
         self.days_in_jail_lineEdit.textChanged.connect(self.update_speedy_trial_date)
+        self.continuance_days_lineEdit.textChanged.connect(self.update_speedy_trial_date)
 
     def update_speedy_trial_date(self):
         speedy_trial_days = self.get_speedy_trial_days()
         days_in_jail = self.get_days_in_jail()
-        speedy_trial_days = speedy_trial_days - days_in_jail
+        continuance_days = self.get_continuance_days()
+        speedy_trial_days = speedy_trial_days - (days_in_jail + continuance_days)
         speedy_trial_date = self.arrest_summons_date_box.date().addDays(speedy_trial_days)
         speedy_trial_date = speedy_trial_date.toString("MMMM dd, yyyy")
         self.speedy_trial_date_label.setText(speedy_trial_date)
@@ -53,6 +55,13 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         else:
             days_in_jail = int(self.days_in_jail_lineEdit.text())
         return 3*days_in_jail
+
+    def get_continuance_days(self) -> int:
+        if self.continuance_days_lineEdit.text() == "":
+            continuance_days = 0
+        else:
+            continuance_days = int(self.continuance_days_lineEdit.text())
+        return continuance_days
 
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):

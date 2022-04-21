@@ -475,10 +475,24 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0" colspan="2">
+             <item row="5" column="0" colspan="2">
               <widget class="Line" name="line">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>Defendant must be brought to trial no later than:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLabel" name="speedy_trial_date_label">
+               <property name="text">
+                <string>Speedy Trial Date</string>
                </property>
               </widget>
              </item>
@@ -489,17 +503,17 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_13">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_15">
                <property name="text">
-                <string>Defendant must be brought to trial no later than:</string>
+                <string>Continuance Days</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
-              <widget class="QLabel" name="speedy_trial_date_label">
-               <property name="text">
-                <string>Speedy Trial Date</string>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="continuance_days_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -521,10 +535,24 @@ background-color: rgb(255, 255, 255);</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_4">
+             <item row="6" column="1">
+              <widget class="QTimeEdit" name="timeEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QRadioButton" name="judge_hemmeter_radioButton">
                <property name="text">
-                <string>Jury Trial Date</string>
+                <string>Judge Hemmeter</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QRadioButton" name="judge_rohrer_radioButton">
+               <property name="text">
+                <string>Judge Rohrer</string>
                </property>
               </widget>
              </item>
@@ -548,42 +576,21 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>Telephonic Pretrial Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Final Pretrial Time:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
+             <item row="3" column="1">
               <widget class="QDateEdit" name="dateEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
-              <widget class="QDateEdit" name="dateEdit_2">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_9">
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_7">
                <property name="text">
-                <string>Final Pretrial Date:</string>
+                <string>Final Pretrial Time:</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
+             <item row="7" column="1">
               <widget class="QDateEdit" name="dateEdit_3">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -591,9 +598,30 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QTimeEdit" name="timeEdit">
+              <widget class="QDateEdit" name="dateEdit_2">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Final Pretrial Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Telephonic Pretrial Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Jury Trial Date</string>
                </property>
               </widget>
              </item>
