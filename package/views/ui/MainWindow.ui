@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>860</width>
+    <width>979</width>
     <height>700</height>
    </rect>
   </property>
@@ -35,11 +35,11 @@ selection-color: rgb(0, 0, 0);
 font-weight: bold;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout" rowstretch="0">
+   <layout class="QGridLayout" name="gridLayout_5">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="crimTab">
        <attribute name="title">
@@ -453,6 +453,91 @@ font-weight: bold;</string>
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="schedulingTab">
+       <attribute name="title">
+        <string>Scheduling</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="4" column="2">
+         <widget class="QPushButton" name="schedulingEntryButton">
+          <property name="text">
+           <string>Scheduling Entry</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QPushButton" name="pushButton_12">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QRadioButton" name="ac_dattilo_radioButton">
+          <property name="text">
+           <string>Assignment Commissioner Dattilo</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioButton_13">
+          <property name="text">
+           <string>No Signature</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_15">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Staff Member:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QPushButton" name="pushButton_13">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QLabel" name="label_16">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
+          </property>
+          <property name="text">
+           <string>SCHEDULING ENTRIES</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QRadioButton" name="ac_patterson_radioButton">
+          <property name="text">
+           <string>Assignment Commissioner Patterson</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="civilTab">
        <attribute name="title">
         <string>Civil</string>
@@ -552,95 +637,6 @@ font-weight: bold;</string>
            <string>Entry</string>
           </property>
          </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="schedulingTab">
-       <attribute name="title">
-        <string>Scheduling</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_5">
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_8">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_15">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Staff Member:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1" colspan="2">
-           <widget class="QRadioButton" name="ac_dattilo_radioButton">
-            <property name="text">
-             <string>Assignment Commissioner Dattilo</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="3" colspan="2">
-           <widget class="QRadioButton" name="ac_patterson_radioButton">
-            <property name="text">
-             <string>Assignment Commissioner Patterson</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="5">
-           <widget class="QRadioButton" name="radioButton_13">
-            <property name="text">
-             <string>No Signature</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2" colspan="2">
-           <widget class="QLabel" name="label_16">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>SCHEDULING ENTRIES</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QPushButton" name="schedulingEntryButton">
-            <property name="text">
-             <string>Scheduling Entry</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2" colspan="2">
-           <widget class="QPushButton" name="pushButton_13">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4" colspan="2">
-           <widget class="QPushButton" name="pushButton_12">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
         </item>
        </layout>
       </widget>
@@ -787,7 +783,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>860</width>
+     <width>979</width>
      <height>27</height>
     </rect>
    </property>
@@ -923,7 +919,7 @@ font-weight: bold;</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

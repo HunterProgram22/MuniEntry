@@ -25,6 +25,13 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.highest_charge_box.currentIndexChanged.connect(self.update_speedy_trial_date)
         self.days_in_jail_lineEdit.textChanged.connect(self.update_speedy_trial_date)
         self.continuance_days_lineEdit.textChanged.connect(self.update_speedy_trial_date)
+        self.trial_dateEdit.dateChanged.connect(self.update_scheduled_dates)
+
+    def update_scheduled_dates(self):
+        final_pretrial_date = self.trial_dateEdit.date().addDays(-2)
+        self.final_pretrial_dateEdit.setDate(final_pretrial_date)
+        pretrial_date = self.final_pretrial_dateEdit.date().addDays(-30)
+        self.pretrial_dateEdit.setDate(pretrial_date)
 
     def update_speedy_trial_date(self):
         speedy_trial_days = self.get_speedy_trial_days()
@@ -67,4 +74,7 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
+        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.arrest_summons_date_box.setDate(TODAY)
+
