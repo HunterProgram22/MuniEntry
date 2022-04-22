@@ -54,7 +54,7 @@ class BaseDialogSlotFunctions(object):
         """Loads the proper template and creates the entry."""
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
-        extract_data(case_data)
+        # extract_data(case_data)
         doc.render(case_data)
         docname = self.set_document_name()
         try:

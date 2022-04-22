@@ -56,6 +56,11 @@ Plea_Only_Template = Template(
     "Plea_Only_Template.docx",
 )
 
+Scheduling_Entry_Template = Template(
+    "Scheduling Entry",
+    "Scheduling_Entry_Template.docx",
+)
+
 TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
@@ -65,4 +70,5 @@ TEMPLATE_DICT = {
     "Failure To Appear Dialog": Failure_To_Appear_Template,
     "Bond Hearing Dialog": Bond_Hearing_Template,
     "Plea Only Dialog": Plea_Only_Template,
+    "Scheduling Entry Dialog": Scheduling_Entry_Template,
 }

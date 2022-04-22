@@ -3,20 +3,23 @@ from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
+from package.models.template_types import TEMPLATE_DICT
+
 from PyQt5.QtCore import QDate
 
 from package.controllers.helper_functions import set_future_date
 from package.models.scheduling_information import SchedulingCaseInformation
 from package.controllers.signal_connectors import BaseDialogSignalConnector
 from package.controllers.slot_functions import BaseDialogSlotFunctions
-
+from package.controllers.case_updaters import CaseModelUpdater
 
 TODAY = QDate.currentDate()
 
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def __init__(self, parent: object = None):
         super().__init__(parent)
-        self.dialog_name = "Scheduling Entry"
+        self.dialog_name = "Scheduling Entry Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
         self.update_speedy_trial_date()
 
@@ -28,7 +31,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
 
     def connect_signals_to_slots(self) -> None:
         self.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
-        self.create_entry_Button.released.connect(self.functions.create_entry_process)
+        self.create_entry_Button.released.connect(self.functions.create_entry)
         self.close_dialog_Button.released.connect(self.functions.close_dialog)
         self.arrest_summons_date_box.dateChanged.connect(self.update_speedy_trial_date)
         self.highest_charge_box.currentIndexChanged.connect(self.update_speedy_trial_date)
@@ -80,6 +83,9 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
             continuance_days = int(self.continuance_days_lineEdit.text())
         return continuance_days
 
+    def update_entry_case_information(self):
+        return SchedulingEntryDialogCaseModelUpdater(self)
+
 
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
@@ -93,3 +99,28 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
 class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
+
+
+class SchedulingEntryDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+
+    def update_model_with_case_information_frame_data(self):
+        """Calls the methods that update all model with all fields in the case information (top
+        frame) in all main entry dialogs."""
+        self.set_case_number_and_date()
+        self.set_party_information()
+        self.set_defense_counsel_information()
+
+    def set_case_number_and_date(self):
+        self.model.case_number = self.view.case_number_lineEdit.text()
+        self.model.plea_trial_date = self.view.plea_trial_date.date().toString("MMMM dd, yyyy")
+
+    def set_party_information(self):
+        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
+        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
+
+    def set_defense_counsel_information(self):
+        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
+        self.model.defense_counsel_type = self.view.defense_counsel_type_box.currentText()
