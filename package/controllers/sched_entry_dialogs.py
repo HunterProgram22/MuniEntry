@@ -27,6 +27,9 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.functions = BaseDialogSlotFunctions(self)
 
     def connect_signals_to_slots(self) -> None:
+        self.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
+        self.create_entry_Button.released.connect(self.functions.create_entry_process)
+        self.close_dialog_Button.released.connect(self.functions.close_dialog)
         self.arrest_summons_date_box.dateChanged.connect(self.update_speedy_trial_date)
         self.highest_charge_box.currentIndexChanged.connect(self.update_speedy_trial_date)
         self.days_in_jail_lineEdit.textChanged.connect(self.update_speedy_trial_date)
@@ -90,4 +93,3 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
 class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
