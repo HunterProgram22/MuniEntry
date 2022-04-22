@@ -52,6 +52,7 @@ class BaseDialogSlotFunctions(object):
 
     def create_entry(self):
         """Loads the proper template and creates the entry."""
+        self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
         # extract_data(case_data)

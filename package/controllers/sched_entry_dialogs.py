@@ -112,6 +112,7 @@ class SchedulingEntryDialogCaseModelUpdater(CaseModelUpdater):
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
+        self.set_scheduling_dates()
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()
@@ -124,3 +125,9 @@ class SchedulingEntryDialogCaseModelUpdater(CaseModelUpdater):
     def set_defense_counsel_information(self):
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
         self.model.defense_counsel_type = self.view.defense_counsel_type_box.currentText()
+
+    def set_scheduling_dates(self):
+        self.model.trial_date = self.view.trial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()

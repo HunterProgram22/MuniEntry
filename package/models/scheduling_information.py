@@ -10,6 +10,7 @@ class SchedulingCaseInformation:
     defense_counsel: str = None
     defense_counsel_type: str = None
     trial_date: str = None
+    pretrial_date: str = None
     final_pretrial_date: str = None
     final_pretrial_time: str = None
 
