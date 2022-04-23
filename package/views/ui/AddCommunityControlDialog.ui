@@ -1393,89 +1393,28 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="19" column="2">
-           <widget class="QLineEdit" name="pay_restitution_to_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="placeholderText">
-             <string>Restitution to Person/Entity</string>
-            </property>
-           </widget>
-          </item>
-          <item row="21" column="0">
+          <item row="22" column="0">
            <widget class="QCheckBox" name="interlock_vehicles_checkBox">
             <property name="text">
              <string>Only operate vehicles with certified ignition interlock</string>
             </property>
            </widget>
           </item>
-          <item row="19" column="0">
-           <widget class="QComboBox" name="alcohol_monitoring_time_box">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>15 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>30 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>45 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>60 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>75 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>90 days</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>180 days</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="22" column="2">
+          <item row="23" column="2">
            <widget class="Line" name="line_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="22" column="0">
+          <item row="23" column="0">
            <widget class="Line" name="line_4">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
            </widget>
           </item>
-          <item row="23" column="0">
+          <item row="24" column="0">
            <widget class="QLabel" name="cs_label">
             <property name="font">
              <font>
@@ -1498,17 +1437,7 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="21" column="2">
-           <widget class="QLineEdit" name="pay_restitution_amount_box">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="placeholderText">
-             <string>Restitution Amount</string>
-            </property>
-           </widget>
-          </item>
-          <item row="23" column="2">
+          <item row="24" column="2">
            <widget class="QLabel" name="label_12">
             <property name="font">
              <font>
@@ -1531,21 +1460,21 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="24" column="0">
+          <item row="25" column="0">
            <widget class="QCheckBox" name="community_control_community_service_checkBox">
             <property name="text">
              <string>Community Service required                                       </string>
             </property>
            </widget>
           </item>
-          <item row="24" column="2">
+          <item row="25" column="2">
            <widget class="QCheckBox" name="other_community_control_checkBox">
             <property name="text">
              <string>Other Community Control Conditions:</string>
             </property>
            </widget>
           </item>
-          <item row="25" column="0">
+          <item row="26" column="0">
            <widget class="QComboBox" name="community_control_community_service_hours_box">
             <property name="minimumSize">
              <size>
@@ -1586,7 +1515,7 @@ background-color: rgb(255, 255, 255);</string>
             </item>
            </widget>
           </item>
-          <item row="25" column="2">
+          <item row="26" column="2">
            <widget class="QLineEdit" name="other_community_control_conditions_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -1765,7 +1694,7 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1" rowspan="22">
+          <item row="4" column="1" rowspan="23">
            <widget class="Line" name="line_6">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1871,10 +1800,81 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
-          <item row="18" column="0">
-           <widget class="QCheckBox" name="scram_court_pay_checkBox">
+          <item row="19" column="0">
+           <widget class="QCheckBox" name="alcohol_monitoring_court_pay_checkBox">
             <property name="text">
              <string>SCRAM is Court Pay</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0">
+           <widget class="QComboBox" name="alcohol_monitoring_time_box">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string>15 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>30 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>45 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>60 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>75 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>90 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>180 days</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="19" column="2">
+           <widget class="QLineEdit" name="pay_restitution_to_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Restitution to Person/Entity</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="2">
+           <widget class="QLineEdit" name="pay_restitution_amount_box">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="placeholderText">
+             <string>Restitution Amount</string>
             </property>
            </widget>
           </item>
