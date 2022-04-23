@@ -36,6 +36,11 @@ Not_Guilty_Bond_Template = Template(
     "Not_Guilty_Bond_Template.docx",
 )
 
+No_Plea_Bond_Template = Template(
+    "No Plea Bond Entry",
+    "No_Plea_Bond_Template.docx",
+)
+
 Probation_Violation_Bond_Template = Template(
     "Probation Violation Bond Entry",
     "Probation_Violation_Bond_Template.docx",
@@ -61,6 +66,7 @@ TEMPLATE_DICT = {
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
     "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
+    "No Plea Bond Dialog": No_Plea_Bond_Template,
     "Probation Violation Bond Dialog": Probation_Violation_Bond_Template,
     "Failure To Appear Dialog": Failure_To_Appear_Template,
     "Bond Hearing Dialog": Bond_Hearing_Template,

@@ -578,6 +578,27 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
                 getattr(self.dialog, condition_field).setHidden(True)
 
 
+class NoPleaBondDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def start_add_special_bond_conditions_dialog(self):
+        from package.controllers.conditions_dialogs import (
+            AddSpecialBondConditionsDialog,
+        )
+
+        self.dialog.update_entry_case_information()
+        AddSpecialBondConditionsDialog(self.dialog).exec()
+
+    def hide_boxes(self):
+        """This method is called from modify_view as part of the init to hide all optional boxes on load."""
+        for item in self.dialog.condition_checkbox_dict:
+            (condition_checkbox, condition_field) = item
+            if hasattr(self.dialog, condition_checkbox):
+                getattr(self.dialog, condition_field).setEnabled(False)
+                getattr(self.dialog, condition_field).setHidden(True)
+
+
 class BondHearingDialogSlotFunctions(NotGuiltyBondDialogSlotFunctions):
     def __init__(self, dialog):
         super().__init__(dialog)
