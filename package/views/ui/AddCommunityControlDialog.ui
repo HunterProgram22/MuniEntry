@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-1070</y>
+        <y>0</y>
         <width>1105</width>
         <height>1934</height>
        </rect>
@@ -1485,11 +1485,26 @@ background-color: rgb(255, 255, 255);</string>
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="editable">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <item>
              <property name="text">
               <string>1 mile</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.5 mile</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>0.25 mile</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>500 feet</string>
              </property>
             </item>
             <item>
