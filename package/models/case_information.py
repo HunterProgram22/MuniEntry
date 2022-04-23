@@ -213,6 +213,7 @@ class CommunityControl:
     no_contact_with_ordered: bool = False
     no_contact_with_person: str = None
     alcohol_monitoring: bool = False
+    alcohol_monitoring_court_pay: bool = False
     alcohol_monitoring_time: str = None
     house_arrest: bool = False
     house_arrest_time: str = None
@@ -244,6 +245,7 @@ class CommunityControl:
         ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
         ("no_contact_with_person", "community_control_no_contact_with_box"),
         ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+        ("alcohol_monitoring_court_pay", "alcohol_monitoring_court_pay_checkBox"),
         ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
         ("house_arrest", "house_arrest_checkBox"),
         ("house_arrest_time", "house_arrest_time_box"),
