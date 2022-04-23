@@ -416,7 +416,9 @@ class FutureSentencing:
     prepare_psi: bool = False
     set_restitution: bool = False
     victim_appearance: bool = False
+    plea_only_bond: str = None
     terms_list = [
+        ("plea_only_bond", "plea_only_bond_type_box"),
         ("prepare_psi", "prepare_psi_checkBox"),
         ("set_restitution", "set_restitution_checkBox"),
         ("victim_appearance", "victim_appearance_checkBox"),
