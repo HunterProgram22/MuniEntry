@@ -223,6 +223,7 @@ class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date()
         self.set_appearance_reason()
+        self.dialog.plea_only_bond_type_box.__class__ = NoScrollComboBox
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
