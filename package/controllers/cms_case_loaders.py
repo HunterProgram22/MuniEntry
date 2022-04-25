@@ -1,33 +1,37 @@
 """Module for loading the CMS case data into the main_entry_dialog view."""
+from __future__ import annotations
 from package.models.case_information import CriminalCharge
 
 
 class CmsNoChargeLoader:
-    def __init__(self, dialog):
+    """Class for Loading CMS data when there are no charges that need to be loaded for the dialog.
+    This is for dialogs with no ChargeGrid."""
+    def __init__(self, dialog: QDialog) -> None:
         self.dialog = dialog
         self.cms_case = dialog.cms_case
-        self.load_cms_data()
-
-    def load_cms_data(self):
         if self.cms_case.case_number is not None:
-            self.set_case_number()
-            self.set_defendant_name()
-            self.set_defense_counsel_name()
-            self.set_defense_counsel_type()
+            self.load_cms_data()
 
-    def set_case_number(self):
+    def load_cms_data(self) -> None:
+        """Loads the case management system data to the dialog."""
+        self.set_case_number()
+        self.set_defendant_name()
+        self.set_defense_counsel_name()
+        self.set_defense_counsel_type()
+
+    def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
 
-    def set_defendant_name(self):
+    def set_defendant_name(self) -> None:
         self.dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
         self.dialog.defendant_last_name_lineEdit.setText(self.cms_case.defendant.last_name)
 
-    def set_defense_counsel_name(self):
+    def set_defense_counsel_name(self) -> None:
         if self.cms_case.defense_counsel is not None:
             self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
             self.dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
 
-    def set_defense_counsel_type(self):
+    def set_defense_counsel_type(self) -> None:
         if self.cms_case.defense_counsel_type == "PD":
             self.dialog.defense_counsel_type_box.setCurrentText("Public Defender")
         elif self.cms_case.defense_counsel.strip() == "":
@@ -37,22 +41,17 @@ class CmsNoChargeLoader:
 
 
 class CmsChargeLoader(CmsNoChargeLoader):
-    """Uses the cms_case number selected to get the cms_case object from main_window and
-    load cms_case data."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.cms_case = dialog.cms_case
+    """Class for Loading CMS data when the charges in a case need to be loaded for the dialog.
+    This is for dialogs with a Charge Grid, but no FRA (insurance) information."""
+    def __init__(self, dialog: QDialog) -> None:
         self.criminal_charge = None
-        self.load_cms_data()
+        super().__init__(dialog)
 
     def load_cms_data(self):
-        if self.cms_case.case_number is not None:
-            self.set_case_number()
-            self.set_defendant_name()
-            self.set_defense_counsel_name()
-            self.set_defense_counsel_type()
-            self.add_cms_criminal_charges_to_entry_case_information()
+        """Calls the CmsNoChargeLoader load_cms_data method to load all case information, then
+        loads the charge information for the case."""
+        super().load_cms_data()
+        self.add_cms_criminal_charges_to_entry_case_information()
 
     def add_cms_criminal_charges_to_entry_case_information(self):
         """Loads the data from the cms_case object that is created from the sql

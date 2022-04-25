@@ -26,6 +26,8 @@ from package.controllers.main_entry_dialogs import (
     PleaOnlyDialog,
     NoPleaBondDialog,
 )
+from package.controllers.sched_entry_dialogs import SchedulingEntryDialog
+from package.models.case_information import CriminalCaseInformation
 from package.models.case_information import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
@@ -113,6 +115,13 @@ class Window(QMainWindow, Ui_MainWindow):
     def connect_signals_to_slots(self) -> None:
         self.menu_file_exit.triggered.connect(self.close)
         self.reload_cases_Button.released.connect(self.reload_case_lists)
+        self.schedulingEntryButton.released.connect(self.start_scheduling_entry)
+        self.connect_daily_case_list_buttons()
+        for key in self.daily_case_list_buttons:
+            key.clicked.connect(self.set_case_list_table)
+        for key in self.dialog_dict:
+            key.pressed.connect(self.start_dialog_from_entry_button)
+        for key in self.judicial_officer_dict:
         for key in self.radio_buttons_case_lists_dict:
             key.toggled.connect(self.show_hide_daily_case_lists)
         for key in self.daily_case_list_buttons_dict:
@@ -189,4 +198,8 @@ class Window(QMainWindow, Ui_MainWindow):
         self.dialog = self.dialog_buttons_dict[self.sender()](
             self.judicial_officer, self.cms_case_data, self.case_table
         )
+        self.dialog.exec()
+
+    def start_scheduling_entry(self):
+        self.dialog = SchedulingEntryDialog()
         self.dialog.exec()

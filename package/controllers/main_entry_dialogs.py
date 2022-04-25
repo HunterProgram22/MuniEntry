@@ -1,6 +1,7 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtWidgets import QDialog
 
 # from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
@@ -447,6 +448,8 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = BondHearingDialogInfoChecker(self)
+
+
 
 
 if __name__ == "__main__":
