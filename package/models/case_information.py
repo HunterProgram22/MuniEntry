@@ -5,12 +5,13 @@ from package.models.party_types import Defendant
 
 
 @dataclass
-class CaseLoadData:
-    """This object is used to store data from the daily case list databases that is loaded. The data can
-    then be passed to the specific dialog selected and will be transferred to cms_case information."""
+class CmsCaseInformation:
+    """Stores the data that is loaded from the Case Management System so that it can be loaded
+    into the Dialog view."""
     case_number: str = None
-    defendant_last_name: str = None
-    defendant_first_name: str = None
+    defendant: object = field(default_factory=Defendant)
+    defense_counsel: str = None
+    defense_counsel_type: str = None
     charges_list: list = field(default_factory=list)
     fra_in_file: str = None
 
