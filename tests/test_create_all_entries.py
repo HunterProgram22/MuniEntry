@@ -5,6 +5,7 @@ from tests.conftest import mouse_click, enter_data, check_barkschat
 
 @pytest.fixture
 def fop_dialog(qtbot, main_window):
+    "Fine Only Plea Dialog"
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
@@ -14,11 +15,41 @@ def fop_dialog(qtbot, main_window):
 
 @pytest.fixture
 def bhd_dialog(qtbot, main_window):
+    "Bond Hearing Dialog"
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.BondHearingButton)
     return main_window.dialog
+
+
+@pytest.fixture
+def npb_dialog(qtbot, main_window):
+    "No Plea Bond Dialog"
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.NoPleaBondButton)
+    return main_window.dialog
+
+
+@pytest.mark.create_entry_test
+def test_create_no_plea_bond_entry(qtbot, npb_dialog):
+    enter_data(npb_dialog.case_number_lineEdit, "npb_test")
+
+    # Bond Conditions
+    mouse_click(npb_dialog.no_alcohol_drugs_checkBox)
+    mouse_click(npb_dialog.alcohol_drugs_assessment_checkBox)
+    mouse_click(npb_dialog.monitoring_checkBox)
+    mouse_click(npb_dialog.comply_protection_order_checkBox)
+    mouse_click(npb_dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(npb_dialog.mental_health_assessment_checkBox)
+    mouse_click(npb_dialog.specialized_docket_checkBox)
+    npb_dialog.appearance_reason_box.setCurrentText("was arrested on a warrant for failure to appear")
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(npb_dialog.create_entry_Button)
+    assert npb_dialog.entry_case_information.case_number == "21TRC05611npb_test"
 
 
 @pytest.mark.create_entry_test

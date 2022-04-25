@@ -10,7 +10,7 @@ from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
-from package.models.case_information import CriminalCaseInformation
+from package.models.case_information import CmsCaseInformation
 from package.database_controllers.sql_queries import (
     create_daily_case_list_tables_sql_query,
     create_charges_table_sql_query,
@@ -45,16 +45,15 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     :case_number: The selected case number from the case selected in the daily case lists box
     on the main window of the application.
 
-    :case_table: The string name of the daily case list box that the case is selected from. This
-    is passed to allow for certain options in the view to be changed based on which case list
-    is selected. TODO: This can be refactored somehow."""
+    :case_table: The string name of the daily case list box that the case is selected from. Used
+    to select the table in the database from which to obtain the case."""
 
     def __init__(self, case_number: str, case_table: str) -> None:
         self.case_number = case_number
         self.case_table = case_table
         self.abbreviation_list = ["DUS", "OVI", "BMV"]
         self.database = open_db_connection("con_daily_case_lists")
-        self.case = CriminalCaseInformation()
+        self.case = CmsCaseInformation()
         self.query_case_data()
         self.load_data_into_case()
         self.query.finish()
@@ -99,7 +98,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             return f"{caps} {remaining_offense}"
         return string.capwords(offense).rstrip()
 
-    def load_case(self) -> CriminalCaseInformation:
+    def load_case(self) -> CmsCaseInformation:
         return self.case
 
 
@@ -354,6 +353,8 @@ def extract_data(case_data: dict) -> None:
         wb.save(filename=wb_name)
     except PermissionError:
         pass
+
+
 
 
 def main():

@@ -241,12 +241,12 @@ class PleaOnlyDialogCaseModelUpdater(CaseModelUpdater):
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()
         self.update_model_with_charge_grid_data()
-        self.update_model_with_future_sentencing()
+        self.update_model_with_future_sentencing_and_bond()
 
     def update_model_with_charge_grid_data(self):
         return PleaOnlyGridModelUpdater(self.view, self.model)
 
-    def update_model_with_future_sentencing(self):
+    def update_model_with_future_sentencing_and_bond(self):
         self.transfer_view_data_to_model(self.model.future_sentencing)
 
 
@@ -262,6 +262,16 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
 
     def update_model_with_charge_grid_data(self):
         return NotGuiltyGridModelUpdater(self.view, self.model)
+
+
+class NoPleaBondDialogCaseModelUpdater(CaseModelUpdater):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.update_model_with_case_information_frame_data()
+        self.update_bond_conditions()
+
+    def update_bond_conditions(self):
+        self.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class BondHearingDialogCaseModelUpdater(CaseModelUpdater):

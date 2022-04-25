@@ -223,6 +223,7 @@ class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
         super().__init__(dialog)
         self.set_plea_trial_date()
         self.set_appearance_reason()
+        self.dialog.plea_only_bond_type_box.__class__ = NoScrollComboBox
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
@@ -260,6 +261,17 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
 
 
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_plea_trial_date()
+        self.set_appearance_reason()
+        self.set_bond_condition_boxes_to_no_scroll()
+        self.dialog.specialized_docket_type_box.__class__ = NoScrollComboBox
+        self.dialog.monitoring_type_box.setHidden(True)
+        self.dialog.specialized_docket_type_box.setHidden(True)
+
+
+class NoPleaBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_plea_trial_date()

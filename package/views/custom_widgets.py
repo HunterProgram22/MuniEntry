@@ -4,36 +4,27 @@ from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
     QInputDialog, QDateEdit, QTimeEdit, QMenu
 from PyQt5 import QtGui
+from openpyxl import load_workbook  # type: ignore
 
-from settings import ICON_PATH
+from settings import ICON_PATH, DB_PATH
 
 
-ATTORNEY_LIST = [
-    "",
-    "Barshaunda Robinson",
-    "Brandon Shroy",
-    "Bryan Bowen",
-    "Carlos Crawford",
-    "Chad Heald",
-    "Chad Hemminger",
-    "Chris Junga",
-    "Chris Soon",
-    "Darren Meade",
-    "David Johnson",
-    "Edward Itayim",
-    "Eric Brehm",
-    "Garrett Smith",
-    "Jeff Uhrich",
-    "Jeffrey Burkam",
-    "John Lloyd",
-    "Hillary Santiago-Burgos",
-    "Lois Palau",
-    "Michael Lerner",
-    "Robert Krapenc",
-    "Samuel Shamansky",
-    "Tod Brininger",
-    "S Welt",
-]
+def return_attorney_data_from_excel(excel_file: str) -> list:
+    data = []
+    workbook = load_workbook(excel_file)
+    worksheet = workbook.active
+    max_row = worksheet.max_row
+    max_row = max_row + 1
+    for row in range(2, max_row):
+        attorney_first_name = worksheet.cell(row=row, column=1)
+        attorney_last_name = worksheet.cell(row=row, column=2)
+        attorney_full_name = f"{attorney_first_name.value} {attorney_last_name.value}"
+        data.append(attorney_full_name)
+    return data
+
+
+ATTORNEY_LIST = return_attorney_data_from_excel(f"{DB_PATH}Attorneys.xlsx")
+
 
 class NoScrollComboBox(QComboBox):
     def __init__(self, parent=None):

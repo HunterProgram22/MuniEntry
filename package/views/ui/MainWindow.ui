@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.19.0</string>
+   <string>MuniEntry - ver 0.20.0</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -308,22 +308,6 @@ font-weight: bold;</string>
           </attribute>
          </widget>
         </item>
-        <item row="12" column="2">
-         <widget class="QPushButton" name="ProbationViolationBondButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>Prelim. Probation Violation / Bond</string>
-          </property>
-         </widget>
-        </item>
         <item row="10" column="0" colspan="3">
          <widget class="QLabel" name="label_2">
           <property name="font">
@@ -376,23 +360,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(255, 255, 127);</string>
           </property>
           <property name="text">
-           <string>Failure to Appear</string>
-          </property>
-         </widget>
-        </item>
-        <item row="13" column="2">
-         <widget class="QPushButton" name="BondHearingButton">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 255, 127);</string>
-          </property>
-          <property name="text">
-           <string>Bond Modification/Revocation</string>
+           <string>Failed to Appear / Issue Warrant</string>
           </property>
          </widget>
         </item>
@@ -448,6 +416,48 @@ font-weight: bold;</string>
           </property>
           <property name="text">
            <string>Plea Future Sentence Date</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="1">
+         <widget class="QPushButton" name="BondHearingButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Bond Modification / Revocation</string>
+          </property>
+         </widget>
+        </item>
+        <item row="13" column="2">
+         <widget class="QPushButton" name="ProbationViolationBondButton">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Prelim. Probation Violation / Bond</string>
+          </property>
+         </widget>
+        </item>
+        <item row="12" column="2">
+         <widget class="QPushButton" name="NoPleaBondButton">
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(255, 255, 127);</string>
+          </property>
+          <property name="text">
+           <string>Appear on Warrant (No Plea) / Bond</string>
           </property>
          </widget>
         </item>
@@ -796,9 +806,7 @@ font-weight: bold;</string>
   <tabstop>FailureToAppearButton</tabstop>
   <tabstop>NotGuiltyBondButton</tabstop>
   <tabstop>JailCCPleaButton</tabstop>
-  <tabstop>ProbationViolationBondButton</tabstop>
   <tabstop>DiversionButton</tabstop>
-  <tabstop>BondHearingButton</tabstop>
   <tabstop>FinalJudgmentEntryButton_11</tabstop>
   <tabstop>arraignments_cases_box</tabstop>
   <tabstop>slated_cases_box</tabstop>
