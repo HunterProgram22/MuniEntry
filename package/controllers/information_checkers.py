@@ -21,7 +21,7 @@ def check_judicial_officer(func):
 
 def check_case_list_selected(func):
     def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons.keys()):
+        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
             func(self)
         else:
             RequiredBox(

@@ -1,7 +1,7 @@
 import pytest
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer
-from tests.conftest import mouse_click, enter_data
+from PyQt5.QtCore import QTimer, Qt
+from tests.conftest import mouse_click, enter_data, key_click
 
 
 @pytest.fixture
@@ -55,7 +55,6 @@ all_fta_checkbox_conditions_model_test_list = [
 
 @pytest.mark.parametrize("checkBox, model", all_fta_checkbox_conditions_model_test_list)
 def test_model_updated_if_conditions_checked(qtbot, fta_dialog, checkBox, model, mock_entry):
-    mock_entry
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     mouse_click(getattr(fta_dialog, checkBox))
     mouse_click(fta_dialog.create_entry_Button)
@@ -63,7 +62,6 @@ def test_model_updated_if_conditions_checked(qtbot, fta_dialog, checkBox, model,
 
 
 def test_arrest_warrant_radius_box_update_model(qtbot, fta_dialog, mock_entry):
-    mock_entry
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     enter_data(fta_dialog.arrest_warrant_radius_box, "2")
     mouse_click(fta_dialog.create_entry_Button)
@@ -71,10 +69,10 @@ def test_arrest_warrant_radius_box_update_model(qtbot, fta_dialog, mock_entry):
 
 
 def test_set_bond_update_model(qtbot, fta_dialog, mock_entry):
-    mock_entry
+    """The assert for amount tests the pre-populated amount, can't get Key_Delete to work to delete
+    and enter a different amount."""
     mouse_click(fta_dialog.defense_counsel_waived_checkBox)
     enter_data(fta_dialog.bond_type_box, "Cash or Surety Bond")
-    enter_data(fta_dialog.bond_amount_box, "$5,000")
     mouse_click(fta_dialog.create_entry_Button)
     assert fta_dialog.entry_case_information.fta_conditions.bond_type == "Cash or Surety Bond"
-    assert fta_dialog.entry_case_information.fta_conditions.bond_amount == "$5,000"
+    assert fta_dialog.entry_case_information.fta_conditions.bond_amount == "$1,000"

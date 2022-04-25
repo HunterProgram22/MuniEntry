@@ -35,6 +35,9 @@ def enter_data(field, data: str):
 def mouse_click(button):
     return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
 
+def key_click(field, key):
+    return QtBot.keyClick(field, key)
+
 def right_click(button):
     return QtBot.mouseClick(button, QtCore.Qt.RightButton)
 
