@@ -13,6 +13,7 @@ class SchedulingCaseInformation:
     pretrial_date: str = None
     final_pretrial_date: str = None
     final_pretrial_time: str = None
+    pretrial_scheduled: bool = True
 
 
     def get_case_information(self):

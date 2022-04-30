@@ -61,9 +61,14 @@ Plea_Only_Template = Template(
     "Plea_Only_Template.docx",
 )
 
-Scheduling_Entry_Template = Template(
-    "Scheduling Entry",
-    "Scheduling_Entry_Template.docx",
+Scheduling_Entry_Template_Rohrer = Template(
+    "Rohrer Scheduling Entry",
+    "Scheduling_Entry_Template_Rohrer.docx",
+)
+
+Scheduling_Entry_Template_Hemmeter = Template(
+    "Hemmeter Scheduling Entry",
+    "Scheduling_Entry_Template_Hemmeter.docx",
 )
 
 TEMPLATE_DICT = {
@@ -76,5 +81,6 @@ TEMPLATE_DICT = {
     "Failure To Appear Dialog": Failure_To_Appear_Template,
     "Bond Hearing Dialog": Bond_Hearing_Template,
     "Plea Only Dialog": Plea_Only_Template,
-    "Scheduling Entry Dialog": Scheduling_Entry_Template,
+    "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
+    "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
 }

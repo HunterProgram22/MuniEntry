@@ -17,7 +17,10 @@ class CmsNoChargeLoader:
         self.set_case_number()
         self.set_defendant_name()
         self.set_defense_counsel_name()
-        self.set_defense_counsel_type()
+        try:
+            self.set_defense_counsel_type()
+        except AttributeError:
+            pass
 
     def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)

@@ -115,13 +115,9 @@ class Window(QMainWindow, Ui_MainWindow):
     def connect_signals_to_slots(self) -> None:
         self.menu_file_exit.triggered.connect(self.close)
         self.reload_cases_Button.released.connect(self.reload_case_lists)
-        self.schedulingEntryButton.released.connect(self.start_scheduling_entry)
-        self.connect_daily_case_list_buttons()
-        for key in self.daily_case_list_buttons:
-            key.clicked.connect(self.set_case_list_table)
-        for key in self.dialog_dict:
-            key.pressed.connect(self.start_dialog_from_entry_button)
-        for key in self.judicial_officer_dict:
+        self.tabWidget.tabBarClicked.connect(self.show_hide_judicial_officers)
+        self.rohrer_schedulingEntryButton.released.connect(self.start_scheduling_entry)
+        self.hemmeter_schedulingEntryButton.released.connect(self.start_scheduling_entry)
         for key in self.radio_buttons_case_lists_dict:
             key.toggled.connect(self.show_hide_daily_case_lists)
         for key in self.daily_case_list_buttons_dict:
@@ -130,6 +126,15 @@ class Window(QMainWindow, Ui_MainWindow):
             key.clicked.connect(self.set_judicial_officer)
         for key in self.dialog_buttons_dict:
             key.pressed.connect(self.start_dialog_from_entry_button)
+
+    def show_hide_judicial_officers(self):
+        """The tab that is clicked is the current widget at the time when another tab is clicked
+        so the logic for setHidden is flipped - the judicial officer frame is setHidden(False)
+        when it needs to be shown. TODO: Refactor/fix."""
+        if self.crimTab is self.tabWidget.currentWidget():
+            self.judicial_officer_frame.setHidden(True)
+        elif self.schedulingTab is self.tabWidget.currentWidget():
+            self.judicial_officer_frame.setHidden(False)
 
     def load_case_lists(self) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
@@ -196,10 +201,20 @@ class Window(QMainWindow, Ui_MainWindow):
         selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
         self.cms_case_data = self.set_case_to_load(selected_case_table)
         self.dialog = self.dialog_buttons_dict[self.sender()](
-            self.judicial_officer, self.cms_case_data, self.case_table
+            self.judicial_officer, cms_case=self.cms_case_data, case_table=self.case_table
         )
         self.dialog.exec()
 
+    @check_case_list_selected
     def start_scheduling_entry(self):
-        self.dialog = SchedulingEntryDialog()
+        selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
+        dialog_name = self.set_scheduling_dialog_name()
+        self.cms_case_data = self.set_case_to_load(selected_case_table)
+        self.dialog = SchedulingEntryDialog(dialog_name=dialog_name, cms_case=self.cms_case_data, case_table=self.case_table)
         self.dialog.exec()
+
+    def set_scheduling_dialog_name(self) -> str:
+        if self.sender().objectName() == "rohrer_schedulingEntryButton":
+            return  "Rohrer Scheduling Entry"
+        if self.sender().objectName() == "hemmeter_schedulingEntryButton":
+            return "Hemmeter Scheduling Entry"
