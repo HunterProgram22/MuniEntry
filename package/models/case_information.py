@@ -454,6 +454,7 @@ class CriminalCaseInformation:
     case_number: str = None
     plea_trial_date: str = None
     appearance_reason: str = None
+    victim_statements: bool = False
     offense_of_violence: bool = False
     future_sentencing: object = field(default_factory=FutureSentencing)
     sentencing_date: str = None

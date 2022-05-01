@@ -168,6 +168,7 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
         self.calculate_total_jail_days_to_serve()
         self.calculate_costs_and_fines()
         self.update_offense_of_violence()
+        self.update_victim_statements()
 
     def update_model_with_charge_grid_data(self):
         return JailCCGridModelUpdater(self.view, self.model)
@@ -217,6 +218,12 @@ class JailCCDialogCaseModelUpdater(CaseModelUpdater):
             self.model.offense_of_violence = True
         else:
             self.model.offense_of_violence = False
+
+    def update_victim_statements(self):
+        if self.view.victim_statements_checkBox.isChecked():
+            self.model.victim_statements = True
+        else:
+            self.model.victim_statements = False
 
 
 class FineOnlyDialogCaseModelUpdater(CaseModelUpdater):
