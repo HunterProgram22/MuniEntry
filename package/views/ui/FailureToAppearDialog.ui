@@ -672,52 +672,35 @@ font-weight: bold;</string>
                <property name="verticalSpacing">
                 <number>16</number>
                </property>
-               <item row="0" column="0">
-                <widget class="QCheckBox" name="arrest_warrant_checkBox">
-                 <property name="text">
-                  <string>Issue Warrant for Arrest forthwith</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
+               <item row="1" column="1">
                 <widget class="QCheckBox" name="non_resident_license_checkBox">
                  <property name="text">
                   <string>Defendant has Non-Resident Violator compact state OL</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="arrest_warrant_radius_label">
-                 <property name="text">
-                  <string>Warrant Radius:</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
+               <item row="4" column="1">
                 <widget class="QCheckBox" name="supplemental_summons_checkBox">
                  <property name="text">
                   <string>Clerk issue supplemental summons by regular mail</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
+               <item row="4" column="0">
                 <widget class="QCheckBox" name="bond_forfeited_checkBox">
                  <property name="text">
                   <string>Bond forfeited, hearing date vacated</string>
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
+               <item row="5" column="0">
                 <widget class="QCheckBox" name="set_no_trial_checkBox">
                  <property name="text">
                   <string>Set no trial until Defendant appears</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0">
+               <item row="6" column="0">
                 <widget class="QCheckBox" name="operator_license_checkBox">
                  <property name="text">
                   <string>Forfeit Defendant OL/CDL/permit</string>
@@ -725,20 +708,20 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="QCheckBox" name="registration_block_checkBox">
-                 <property name="text">
-                  <string>Defendant Vehicle Registration is blocked absent compliance in 30 days</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
                 <widget class="QCheckBox" name="proof_of_service_checkBox">
                  <property name="text">
                   <string>Absent proof of service of warrant/summons in 28 days case closed subject to reopen</string>
                  </property>
                 </widget>
                </item>
-               <item row="2" column="0">
+               <item row="6" column="1">
+                <widget class="QCheckBox" name="registration_block_checkBox">
+                 <property name="text">
+                  <string>Defendant Vehicle Registration is blocked absent compliance in 30 days</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
                 <widget class="QComboBox" name="arrest_warrant_radius_box">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -763,6 +746,30 @@ font-weight: bold;</string>
                    <string>5 (Delaware county only)</string>
                   </property>
                  </item>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QCheckBox" name="surety_appear_checkBox">
+                 <property name="text">
+                  <string>Surety to appear and show cause to avoid judgment</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QCheckBox" name="arrest_warrant_checkBox">
+                 <property name="text">
+                  <string>Issue Warrant for Arrest forthwith</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="arrest_warrant_radius_label">
+                 <property name="text">
+                  <string>Warrant Radius:</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
                 </widget>
                </item>
               </layout>
