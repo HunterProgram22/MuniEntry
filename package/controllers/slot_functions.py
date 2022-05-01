@@ -606,8 +606,6 @@ class BondHearingDialogSlotFunctions(NotGuiltyBondDialogSlotFunctions):
         self.show_bond_boxes("None")
 
 
-
-
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
