@@ -64,11 +64,11 @@ def main_window_noclose(qtbot):
 
 def check_barkschat(charges, plea):
     assert charges[0].offense == "OVI Alcohol / Drugs 3rd"
-    assert charges[0].statute == "4511.19A1A***"
+    assert charges[0].statute == "4511.19A1A"
     assert charges[0].degree == "UCM"
     assert charges[0].plea == plea
     assert charges[1].offense == "OVI Refusal 3rd/10yr Prior 20yr"
-    assert charges[1].statute == "4511.19A2***"
+    assert charges[1].statute == "4511.19A2"
     assert charges[1].degree == "UCM"
     assert charges[1].plea == plea
     assert charges[2].offense == "Driving In Marked Lanes"
