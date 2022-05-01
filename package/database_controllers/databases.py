@@ -84,11 +84,15 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
     def load_charge_information(self) -> None:
         offense = self.clean_offense_name(self.query.value(4))
-        statute = self.query.value(5)
+        statute = self.clean_statute_name(self.query.value(5))
         degree = self.query.value(6)
         moving_bool = self.query.value(8)
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
+
+    def clean_statute_name(self, statute: str) -> str:
+        """Removes trailing asteriks that are part of CMS data."""
+        return statute.rstrip('*')
 
     def clean_offense_name(self, offense: str) -> str:
         """Sets an offense name to title case, but leaves certain abbreviations and removes
