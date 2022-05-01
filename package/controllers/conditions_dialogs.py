@@ -100,7 +100,6 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         ("license_suspension_checkBox", "license_suspension_frame"),
         ("community_service_checkBox", "community_service_frame"),
         ("community_control_checkBox", "community_control_frame"),
-        ("jail_checkBox", "jail_commitment_frame"),
         ("impoundment_checkBox", "impoundment_frame"),
         ("victim_notification_checkBox", "victim_notification_frame"),
     ]
