@@ -199,7 +199,6 @@ class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)
         self.connect_community_service_days_update(dialog)
-        self.connect_jail_frame_signals(dialog)
         self.connect_community_control_dialog_specific_signals(dialog)
 
     def connect_community_control_dialog_specific_signals(self, dialog):

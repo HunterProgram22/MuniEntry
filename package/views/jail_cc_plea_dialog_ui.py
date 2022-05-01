@@ -640,7 +640,7 @@ class Ui_JailCCPleaDialog(object):
         self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service"))
         self.add_conditions_label.setText(_translate("JailCCPleaDialog", "ADDITIONAL CONDITIONS"))
         self.add_conditions_Button.setText(_translate("JailCCPleaDialog", "Add Additional Conditions"))
-        self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other"))
+        self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other                                "))
         self.companion_cases_sentence_label.setText(_translate("JailCCPleaDialog", "Companion Case Jail Time Served:"))
         self.companion_cases_sentence_box.setItemText(0, _translate("JailCCPleaDialog", "consecutively"))
         self.companion_cases_sentence_box.setItemText(1, _translate("JailCCPleaDialog", "concurrently"))
