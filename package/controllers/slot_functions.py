@@ -52,9 +52,10 @@ class BaseDialogSlotFunctions(object):
 
     def create_entry(self):
         """Loads the proper template and creates the entry."""
+        self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
-        extract_data(case_data)
+        # extract_data(case_data)
         doc.render(case_data)
         docname = self.set_document_name()
         try:
@@ -66,6 +67,12 @@ class BaseDialogSlotFunctions(object):
                 " You must close the Word document first."
             )
             self.dialog.message_box.exec()
+
+    def create_entry_process(self):
+        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
+        update_info_and_perform_checks method."""
+        if self.update_info_and_perform_checks() == "Pass":
+            self.create_entry()
 
     def set_document_name(self):
         """Returns a name for the document in the format CaseNumber_TemplateName.docx
@@ -99,12 +106,6 @@ class BaseDialogSlotFunctions(object):
             "within 90 days": 90,
         }
         return pay_date_dict.get(days_to_add_string)
-
-    def create_entry_process(self):
-        """The info_checks variable is either "Pass" or "Fail" based on the checks performed by the
-        update_info_and_perform_checks method."""
-        if self.update_info_and_perform_checks() == "Pass":
-            self.create_entry()
 
     @logger.catch
     def update_info_and_perform_checks(self):
@@ -603,8 +604,6 @@ class BondHearingDialogSlotFunctions(NotGuiltyBondDialogSlotFunctions):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.show_bond_boxes("None")
-
-
 
 
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):

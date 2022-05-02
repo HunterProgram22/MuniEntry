@@ -1,6 +1,7 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtWidgets import QDialog
 
 # from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import BaseDialog
@@ -255,8 +256,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         "specialized_docket_checkBox": ["specialized_docket_type_box"],
     }
 
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -306,8 +307,8 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         "specialized_docket_checkBox": ["specialized_docket_type_box"],
     }
 
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -347,8 +348,8 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
 
 
 class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
         self.dialog_name = "Probation Violation Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
@@ -374,8 +375,8 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
 
 
 class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
-    def __init__(self, judicial_officer, case=None, parent=None):
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
         self.dialog_name = "Failure To Appear Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
@@ -409,8 +410,8 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         "specialized_docket_checkBox": ["specialized_docket_type_box"],
     }
 
-    def __init__(self, judicial_officer: object, case: str = None, parent: object = None) -> None:
-        super().__init__(judicial_officer, case, parent)
+    def __init__(self, judicial_officer: object, cms_case: str = None, case_table:str = None, parent: object = None) -> None:
+        super().__init__(judicial_officer, cms_case, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -447,6 +448,8 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = BondHearingDialogInfoChecker(self)
+
+
 
 
 if __name__ == "__main__":

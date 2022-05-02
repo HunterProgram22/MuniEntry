@@ -100,7 +100,6 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         ("license_suspension_checkBox", "license_suspension_frame"),
         ("community_service_checkBox", "community_service_frame"),
         ("community_control_checkBox", "community_control_frame"),
-        ("jail_checkBox", "jail_commitment_frame"),
         ("impoundment_checkBox", "impoundment_frame"),
         ("victim_notification_checkBox", "victim_notification_frame"),
     ]
@@ -113,7 +112,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         "community_control_community_service_checkBox": ["community_control_community_service_hours_box"],
         "other_community_control_checkBox": ["other_community_control_conditions_box"],
         "alcohol_monitoring_checkBox": ["alcohol_monitoring_time_box"],
-        "pay_restitution_checkBox": ["pay_restitution_amount_box", "pay_restitution_to_box"],
+        "pay_restitution_checkBox": ["pay_restitution_to_box", "pay_restitution_amount_box"],
         "companion_cases_checkBox": ["companion_cases_box", "jail_term_type_box", "consecutive_jail_days_label"],
         "specialized_docket_checkBox": ["specialized_docket_box"],
     }

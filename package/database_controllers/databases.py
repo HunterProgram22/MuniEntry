@@ -51,7 +51,8 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     def __init__(self, case_number: str, case_table: str) -> None:
         self.case_number = case_number
         self.case_table = case_table
-        self.abbreviation_list = ["DUS", "OVI", "BMV"]
+        self.abbreviation_list = ["DUS", "OVI", "BMV", "FRA", "OL"]
+        self.delete_word_list = ["UCM", "M1", "M2", "M3", "M4", "MM", "PETTY"]
         self.database = open_db_connection("con_daily_case_lists")
         self.case = CmsCaseInformation()
         self.query_case_data()
@@ -83,20 +84,37 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
     def load_charge_information(self) -> None:
         offense = self.clean_offense_name(self.query.value(4))
-        statute = self.query.value(5)
+        statute = self.clean_statute_name(self.query.value(5))
         degree = self.query.value(6)
         moving_bool = self.query.value(8)
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 
+    def clean_statute_name(self, statute: str) -> str:
+        """Removes trailing asteriks that are part of CMS data."""
+        return statute.rstrip('*')
+
     def clean_offense_name(self, offense: str) -> str:
-        """Sets an offense name to title case, but leaves certain standard 3-letter
-        abbreviations in all caps."""
-        if offense[:3] in self.abbreviation_list:
-            caps = offense[:3]
-            remaining_offense = string.capwords(offense[3:]).rstrip()
-            return f"{caps} {remaining_offense}"
-        return string.capwords(offense).rstrip()
+        """Sets an offense name to title case, but leaves certain abbreviations and removes
+        degree of charge if in offense name."""
+        offense_word_list = offense.split()
+        clean_offense_word_list = []
+        for word in offense_word_list:
+            if word == "OMVI":
+                clean_offense_word_list.append("OVI")
+                continue
+            elif word == "FRA/JUDGMENT":
+                clean_offense_word_list.append("FRA / Judgment")
+                continue
+            elif word in self.abbreviation_list:
+                clean_offense_word_list.append(word)
+                continue
+            elif word in self.delete_word_list:
+                continue
+            else:
+                clean_offense_word_list.append(word.capitalize())
+        clean_offense = ' '.join([str(word) for word in clean_offense_word_list])
+        return clean_offense
 
     def load_case(self) -> CmsCaseInformation:
         return self.case

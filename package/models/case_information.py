@@ -179,6 +179,7 @@ class FailureToAppearConditions:
     arrest_warrant: bool = False
     arrest_warrant_radius: str = None
     set_no_trial: bool = False
+    surety_appear: bool = False
     bond_forfeited: bool = False
     forfeit_license: bool = False
     non_resident_license: bool = False
@@ -192,6 +193,7 @@ class FailureToAppearConditions:
         ("arrest_warrant", "arrest_warrant_checkBox"),
         ("arrest_warrant_radius", "arrest_warrant_radius_box"),
         ("set_no_trial", "set_no_trial_checkBox"),
+        ("surety_appear", "surety_appear_checkBox"),
         ("set_bond", "set_bond_checkBox"),
         ("bond_forfeited", "bond_forfeited_checkBox"),
         ("forfeit_license", "operator_license_checkBox"),
@@ -452,6 +454,7 @@ class CriminalCaseInformation:
     case_number: str = None
     plea_trial_date: str = None
     appearance_reason: str = None
+    victim_statements: bool = False
     offense_of_violence: bool = False
     future_sentencing: object = field(default_factory=FutureSentencing)
     sentencing_date: str = None

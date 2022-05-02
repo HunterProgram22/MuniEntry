@@ -366,10 +366,6 @@ class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
         self.set_community_service_default_view()
         self.load_existing_data_to_dialog()
         self.hide_boxes(dialog) # Class method needs dialog ? TODO: Fix
-        self.set_jail_report_default_view()
-        self.set_report_date_view()
-        self.set_report_days_notes_box()
-        self.set_jail_commitment_boxes_to_no_scroll()
         self.set_community_control_dialog_boxes_to_no_scroll()
 
     def set_community_control_dialog_boxes_to_no_scroll(self):
@@ -407,3 +403,4 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
 
     def set_domestic_violence_surrender_weapons_default_date(self):
         self.dialog.domestic_violence_surrender_weapons_dateBox.setDate(TODAY)
+
