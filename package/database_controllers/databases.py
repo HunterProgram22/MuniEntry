@@ -52,7 +52,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.case_number = case_number
         self.case_table = case_table
         self.abbreviation_list = ["DUS", "OVI", "BMV", "FRA", "OL"]
-        self.delete_word_list = ["UCM", "M1", "M2", "M3", "M4", "MM"]
+        self.delete_word_list = ["UCM", "M1", "M2", "M3", "M4", "MM", "PETTY"]
         self.database = open_db_connection("con_daily_case_lists")
         self.case = CmsCaseInformation()
         self.query_case_data()
