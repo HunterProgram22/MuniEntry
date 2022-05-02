@@ -70,7 +70,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.functions = SchedulingEntryDialogSlotFunctions(self)
 
     def connect_signals_to_slots(self) -> None:
-       return SchedulingEntryDialogSignalConnector(self)
+        return SchedulingEntryDialogSignalConnector(self)
 
     def update_entry_case_information(self):
         return SchedulingEntryDialogCaseModelUpdater(self)

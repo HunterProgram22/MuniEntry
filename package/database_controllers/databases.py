@@ -103,6 +103,9 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
             if word == "OMVI":
                 clean_offense_word_list.append("OVI")
                 continue
+            elif word == "FRA/JUDGMENT":
+                clean_offense_word_list.append("FRA / Judgment")
+                continue
             elif word in self.abbreviation_list:
                 clean_offense_word_list.append(word)
                 continue
