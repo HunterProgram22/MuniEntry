@@ -268,7 +268,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="3">
-              <widget class="QDateEdit" name="plea_trial_date">
+              <widget class="NoScrollDateEdit" name="plea_trial_date">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
@@ -398,7 +398,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QDateEdit" name="arrest_summons_date_box">
+              <widget class="NoScrollDateEdit" name="arrest_summons_date_box">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -416,7 +416,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="highest_charge_box">
+              <widget class="NoScrollComboBox" name="highest_charge_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -533,7 +533,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="8" column="1">
-              <widget class="QComboBox" name="final_pretrial_time_box">
+              <widget class="NoScrollComboBox" name="final_pretrial_time_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -660,7 +660,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="9" column="1">
-              <widget class="QDateEdit" name="pretrial_dateEdit">
+              <widget class="NoScrollDateEdit" name="pretrial_dateEdit">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -678,7 +678,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QDateEdit" name="trial_dateEdit">
+              <widget class="NoScrollDateEdit" name="trial_dateEdit">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -710,7 +710,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QDateEdit" name="final_pretrial_dateEdit">
+              <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -794,6 +794,18 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>

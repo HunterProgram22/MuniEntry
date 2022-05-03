@@ -125,7 +125,7 @@ class Ui_SchedulingEntryDialog(object):
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 1, 1, 1, 1)
-        self.plea_trial_date = QtWidgets.QDateEdit(self.case_name_Frame)
+        self.plea_trial_date = NoScrollDateEdit(self.case_name_Frame)
         self.plea_trial_date.setFocusPolicy(QtCore.Qt.NoFocus)
         self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
@@ -191,7 +191,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_11.setAlignment(QtCore.Qt.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.gridLayout_6.addWidget(self.label_11, 0, 0, 1, 2)
-        self.arrest_summons_date_box = QtWidgets.QDateEdit(self.frame_6)
+        self.arrest_summons_date_box = NoScrollDateEdit(self.frame_6)
         self.arrest_summons_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.arrest_summons_date_box.setCalendarPopup(True)
@@ -200,7 +200,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_10 = QtWidgets.QLabel(self.frame_6)
         self.label_10.setObjectName("label_10")
         self.gridLayout_6.addWidget(self.label_10, 3, 0, 1, 1)
-        self.highest_charge_box = QtWidgets.QComboBox(self.frame_6)
+        self.highest_charge_box = NoScrollComboBox(self.frame_6)
         self.highest_charge_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.highest_charge_box.setObjectName("highest_charge_box")
         self.highest_charge_box.addItem("")
@@ -253,7 +253,7 @@ class Ui_SchedulingEntryDialog(object):
         self.buttonGroup.setObjectName("buttonGroup")
         self.buttonGroup.addButton(self.four_week_pretrial_radioButton)
         self.gridLayout_5.addWidget(self.four_week_pretrial_radioButton, 2, 0, 1, 1)
-        self.final_pretrial_time_box = QtWidgets.QComboBox(self.frame_5)
+        self.final_pretrial_time_box = NoScrollComboBox(self.frame_5)
         self.final_pretrial_time_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.final_pretrial_time_box.setObjectName("final_pretrial_time_box")
         self.final_pretrial_time_box.addItem("")
@@ -295,7 +295,7 @@ class Ui_SchedulingEntryDialog(object):
         self.two_week_pretrial_radioButton.setObjectName("two_week_pretrial_radioButton")
         self.buttonGroup.addButton(self.two_week_pretrial_radioButton)
         self.gridLayout_5.addWidget(self.two_week_pretrial_radioButton, 2, 1, 1, 1)
-        self.pretrial_dateEdit = QtWidgets.QDateEdit(self.frame_5)
+        self.pretrial_dateEdit = NoScrollDateEdit(self.frame_5)
         self.pretrial_dateEdit.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.pretrial_dateEdit.setCalendarPopup(True)
@@ -304,7 +304,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_7 = QtWidgets.QLabel(self.frame_5)
         self.label_7.setObjectName("label_7")
         self.gridLayout_5.addWidget(self.label_7, 8, 0, 1, 1)
-        self.trial_dateEdit = QtWidgets.QDateEdit(self.frame_5)
+        self.trial_dateEdit = NoScrollDateEdit(self.frame_5)
         self.trial_dateEdit.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.trial_dateEdit.setCalendarPopup(True)
@@ -319,7 +319,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_4 = QtWidgets.QLabel(self.frame_5)
         self.label_4.setObjectName("label_4")
         self.gridLayout_5.addWidget(self.label_4, 5, 0, 1, 1)
-        self.final_pretrial_dateEdit = QtWidgets.QDateEdit(self.frame_5)
+        self.final_pretrial_dateEdit = NoScrollDateEdit(self.frame_5)
         self.final_pretrial_dateEdit.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.final_pretrial_dateEdit.setCalendarPopup(True)
@@ -420,3 +420,4 @@ class Ui_SchedulingEntryDialog(object):
         self.label_16.setText(_translate("SchedulingEntryDialog", "PRETRIAL TIME"))
         self.close_dialog_Button.setText(_translate("SchedulingEntryDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("SchedulingEntryDialog", "Open Entry"))
+from .custom_widgets import NoScrollComboBox, NoScrollDateEdit

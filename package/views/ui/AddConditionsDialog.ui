@@ -199,7 +199,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="license_type_box">
+           <widget class="NoScrollComboBox" name="license_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -238,7 +238,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QDateEdit" name="license_suspension_date_box">
+           <widget class="NoScrollDateEdit" name="license_suspension_date_box">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -263,7 +263,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="term_of_suspension_box">
+           <widget class="NoScrollComboBox" name="term_of_suspension_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -395,7 +395,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QComboBox" name="community_service_days_to_complete_box">
+           <widget class="NoScrollComboBox" name="community_service_days_to_complete_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -439,7 +439,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QDateEdit" name="community_service_date_to_complete_box">
+           <widget class="NoScrollDateEdit" name="community_service_date_to_complete_box">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -457,7 +457,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="community_service_hours_ordered_box">
+           <widget class="NoScrollComboBox" name="community_service_hours_ordered_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);
 </string>
@@ -666,6 +666,18 @@ background-color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
  <slots>

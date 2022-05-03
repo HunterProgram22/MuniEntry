@@ -439,7 +439,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="1" colspan="3">
-           <widget class="QComboBox" name="ability_to_pay_box">
+           <widget class="NoScrollComboBox" name="ability_to_pay_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -473,7 +473,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="1" colspan="3">
-           <widget class="QDateEdit" name="balance_due_date">
+           <widget class="NoScrollDateEdit" name="balance_due_date">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -501,7 +501,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="1" colspan="3">
-           <widget class="QComboBox" name="court_costs_box">
+           <widget class="NoScrollComboBox" name="court_costs_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -594,7 +594,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QComboBox" name="appearance_reason_box">
+           <widget class="NoScrollComboBox" name="appearance_reason_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -643,7 +643,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="0" column="3">
-           <widget class="QDateEdit" name="plea_trial_date">
+           <widget class="NoScrollDateEdit" name="plea_trial_date">
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
@@ -651,22 +651,8 @@ background-color: rgb(255, 255, 255);</string>
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
             </property>
-            <property name="minimumDate">
-             <date>
-              <year>2021</year>
-              <month>1</month>
-              <day>1</day>
-             </date>
-            </property>
             <property name="calendarPopup">
              <bool>true</bool>
-            </property>
-            <property name="date">
-             <date>
-              <year>2021</year>
-              <month>1</month>
-              <day>1</day>
-             </date>
             </property>
            </widget>
           </item>
@@ -732,7 +718,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="defense_counsel_name_box">
+           <widget class="NoScrollComboBox" name="defense_counsel_name_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -742,7 +728,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="2">
-           <widget class="QComboBox" name="defense_counsel_type_box">
+           <widget class="NoScrollComboBox" name="defense_counsel_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -957,7 +943,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
-           <widget class="QComboBox" name="fra_in_court_box">
+           <widget class="NoScrollComboBox" name="fra_in_court_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -979,7 +965,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="0" colspan="2">
-           <widget class="QComboBox" name="fra_in_file_box">
+           <widget class="NoScrollComboBox" name="fra_in_file_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -1009,6 +995,18 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>

@@ -82,21 +82,11 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
         self.dialog = dialog
         self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
-        self.set_view_boxes_to_no_scroll()
 
     def set_view_dates(self):
         self.dialog.arrest_summons_date_box.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.plea_trial_date.setDate(TODAY)
-
-    def set_view_boxes_to_no_scroll(self):
-        self.dialog.plea_trial_date.__class__ = NoScrollDateEdit
-        self.dialog.pretrial_dateEdit.__class__ = NoScrollDateEdit
-        self.dialog.final_pretrial_dateEdit.__class__ = NoScrollDateEdit
-        self.dialog.trial_dateEdit.__class__ = NoScrollDateEdit
-        self.dialog.arrest_summons_date_box.__class__ = NoScrollDateEdit
-        self.dialog.final_pretrial_time_box.__class__ = NoScrollComboBox
-        self.dialog.highest_charge_box.__class__ = NoScrollComboBox
 
 
 class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
