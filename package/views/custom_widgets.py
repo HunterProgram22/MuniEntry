@@ -1,5 +1,5 @@
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
     QInputDialog, QDateEdit, QTimeEdit, QMenu
@@ -22,7 +22,7 @@ def return_attorney_data_from_excel(excel_file: str) -> list:
         data.append(attorney_full_name)
     return data
 
-
+TODAY = QtCore.QDate.currentDate()
 ATTORNEY_LIST = return_attorney_data_from_excel(f"{DB_PATH}Attorneys.xlsx")
 
 
@@ -40,6 +40,7 @@ class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super(QDateEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setDate(TODAY)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:

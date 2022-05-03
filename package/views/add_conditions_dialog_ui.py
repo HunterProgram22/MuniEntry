@@ -89,7 +89,7 @@ class Ui_AddConditionsDialog(object):
         self.label_9 = QtWidgets.QLabel(self.license_suspension_frame)
         self.label_9.setObjectName("label_9")
         self.gridLayout_2.addWidget(self.label_9, 1, 0, 1, 1)
-        self.license_type_box = QtWidgets.QComboBox(self.license_suspension_frame)
+        self.license_type_box = NoScrollComboBox(self.license_suspension_frame)
         self.license_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.license_type_box.setEditable(False)
         self.license_type_box.setObjectName("license_type_box")
@@ -103,7 +103,7 @@ class Ui_AddConditionsDialog(object):
         self.label_18 = QtWidgets.QLabel(self.license_suspension_frame)
         self.label_18.setObjectName("label_18")
         self.gridLayout_2.addWidget(self.label_18, 2, 0, 1, 1)
-        self.license_suspension_date_box = QtWidgets.QDateEdit(self.license_suspension_frame)
+        self.license_suspension_date_box = NoScrollDateEdit(self.license_suspension_frame)
         self.license_suspension_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.license_suspension_date_box.setCalendarPopup(True)
@@ -115,7 +115,7 @@ class Ui_AddConditionsDialog(object):
         self.label_21 = QtWidgets.QLabel(self.license_suspension_frame)
         self.label_21.setObjectName("label_21")
         self.gridLayout_2.addWidget(self.label_21, 3, 0, 1, 1)
-        self.term_of_suspension_box = QtWidgets.QComboBox(self.license_suspension_frame)
+        self.term_of_suspension_box = NoScrollComboBox(self.license_suspension_frame)
         self.term_of_suspension_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.term_of_suspension_box.setObjectName("term_of_suspension_box")
         self.term_of_suspension_box.addItem("")
@@ -171,7 +171,7 @@ class Ui_AddConditionsDialog(object):
         self.label = QtWidgets.QLabel(self.community_service_frame)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 1, 2, 1, 1)
-        self.community_service_days_to_complete_box = QtWidgets.QComboBox(self.community_service_frame)
+        self.community_service_days_to_complete_box = NoScrollComboBox(self.community_service_frame)
         self.community_service_days_to_complete_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.community_service_days_to_complete_box.setObjectName("community_service_days_to_complete_box")
         self.community_service_days_to_complete_box.addItem("")
@@ -184,7 +184,7 @@ class Ui_AddConditionsDialog(object):
         self.label_22 = QtWidgets.QLabel(self.community_service_frame)
         self.label_22.setObjectName("label_22")
         self.gridLayout.addWidget(self.label_22, 1, 4, 1, 1)
-        self.community_service_date_to_complete_box = QtWidgets.QDateEdit(self.community_service_frame)
+        self.community_service_date_to_complete_box = NoScrollDateEdit(self.community_service_frame)
         self.community_service_date_to_complete_box.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
         self.community_service_date_to_complete_box.setCalendarPopup(True)
@@ -193,7 +193,7 @@ class Ui_AddConditionsDialog(object):
         self.label_15 = QtWidgets.QLabel(self.community_service_frame)
         self.label_15.setObjectName("label_15")
         self.gridLayout.addWidget(self.label_15, 1, 0, 1, 1)
-        self.community_service_hours_ordered_box = QtWidgets.QComboBox(self.community_service_frame)
+        self.community_service_hours_ordered_box = NoScrollComboBox(self.community_service_frame)
         self.community_service_hours_ordered_box.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "")
         self.community_service_hours_ordered_box.setEditable(True)
@@ -340,3 +340,4 @@ class Ui_AddConditionsDialog(object):
         self.label_14.setText(_translate("AddConditionsDialog", "Finding:"))
         self.label_19.setText(_translate("AddConditionsDialog", "Statute:"))
         self.label_28.setText(_translate("AddConditionsDialog", "Other Conditions"))
+from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
