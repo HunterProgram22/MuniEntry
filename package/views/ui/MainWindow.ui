@@ -37,7 +37,7 @@ font-weight: bold;</string>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,2,1,3">
+     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,1,1,0,2">
       <item row="2" column="0">
        <layout class="QGridLayout" name="gridLayout_3">
         <item row="5" column="2">
@@ -84,7 +84,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QComboBox" name="pleas_cases_box">
+         <widget class="ExtendedComboBox" name="pleas_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -115,7 +115,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="4" column="1">
-         <widget class="QComboBox" name="trials_to_court_cases_box">
+         <widget class="ExtendedComboBox" name="trials_to_court_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -125,7 +125,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="4" column="2">
-         <widget class="QComboBox" name="pcvh_fcvh_cases_box">
+         <widget class="ExtendedComboBox" name="pcvh_fcvh_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -135,7 +135,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="2" column="0">
-         <widget class="QComboBox" name="arraignments_cases_box">
+         <widget class="ExtendedComboBox" name="arraignments_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -155,7 +155,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="2" column="1">
-         <widget class="QComboBox" name="slated_cases_box">
+         <widget class="ExtendedComboBox" name="slated_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -168,7 +168,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="2" column="2">
-         <widget class="QComboBox" name="final_pretrial_cases_box">
+         <widget class="ExtendedComboBox" name="final_pretrial_cases_box">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -256,7 +256,23 @@ font-weight: bold;</string>
         </item>
        </layout>
       </item>
-      <item row="4" column="0">
+      <item row="1" column="0">
+       <widget class="Line" name="line">
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="midLineWidth">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
          <number>0</number>
@@ -442,22 +458,6 @@ font-weight: bold;</string>
         </widget>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="Line" name="line">
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="midLineWidth">
-         <number>1</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
       <item row="3" column="0">
        <widget class="Line" name="line_2">
         <property name="frameShadow">
@@ -468,6 +468,32 @@ font-weight: bold;</string>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>250</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Palatino Linotype</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+          <underline>true</underline>
+         </font>
+        </property>
+        <property name="text">
+         <string>ENTRIES</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -561,6 +587,13 @@ font-weight: bold;</string>
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ExtendedComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>FineOnlyPleaButton</tabstop>
   <tabstop>FailureToAppearButton</tabstop>

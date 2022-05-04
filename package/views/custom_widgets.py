@@ -64,6 +64,8 @@ class ExtendedComboBox(QComboBox):
         super(ExtendedComboBox, self).__init__(parent)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setEditable(True)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_menu)
 
         # add a filter model to filter matching items
         self.pFilterModel = QSortFilterProxyModel(self)
@@ -79,10 +81,6 @@ class ExtendedComboBox(QComboBox):
         # connect signals
         self.lineEdit().textEdited[str].connect(self.pFilterModel.setFilterFixedString)
         self.completer.activated.connect(self.on_completer_activated)
-
-    def set_up(self):
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(self.show_menu)
 
     def show_menu(self, pos):
         menu = QMenu()
