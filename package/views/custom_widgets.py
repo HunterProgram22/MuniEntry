@@ -2,7 +2,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit, QMenu
+    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
@@ -126,18 +126,21 @@ class DefenseCounselComboBox(NoScrollComboBox):
             self.addItem(attorney)
 
 
-class StatuteLineEdit(QLineEdit):
+class StatuteLineEdit(QLabel):
     def __init__(self, statute=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
+        super(QLabel, self).__init__(parent)
         self.set_up_widget(statute)
 
     def set_up_widget(self, statute):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        # self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("statute_lineEdit")
-        self.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.setText(statute)
+        # self.setFocusPolicy(QtCore.Qt.ClickFocus)
+        url_statute = statute[:7]
+        url_link = f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        self.setText(url_link)
+        self.setOpenExternalLinks(True)
 
 
 class DegreeComboBox(NoScrollComboBox):
