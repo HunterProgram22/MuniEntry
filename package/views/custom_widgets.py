@@ -134,11 +134,13 @@ class StatuteLineEdit(QLabel):
     def set_up_widget(self, statute):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
-        # self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("statute_lineEdit")
-        # self.setFocusPolicy(QtCore.Qt.ClickFocus)
-        url_statute = statute[:7]
-        url_link = f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        statute_index = statute.find('.')
+        if statute_index == 4:
+            url_statute = statute[:(statute_index+3)]
+            url_link = f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        else:
+            url_link = f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
         self.setText(url_link)
         self.setOpenExternalLinks(True)
 
