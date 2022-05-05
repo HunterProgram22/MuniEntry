@@ -1,3 +1,5 @@
+import re
+
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
 from PyQt5.QtGui import QIntValidator, QFont
@@ -142,12 +144,22 @@ class StatuteLineEdit(QLabel):
         self.setOpenExternalLinks(True)
 
     def set_url_link(self, statute: str) -> str:
-        statute_index = statute.find('.')
-        if statute_index == 4:
-            url_statute = statute[:(statute_index + 3)]
+        seven_digit_stat = "\d\d\d\d.\d\d\d"
+        six_digit_stat = "\d\d\d\d.\d\d"
+        five_digit_stat = "\d\d\d.\d\d"
+        url_statute = re.search(seven_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
             return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
-        else:
+        url_statute = re.search(six_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        url_statute = re.search(five_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
             return f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
+        return f"<a href=\'https://www.google.com/\'>{statute}</a>"
 
 
 class DegreeComboBox(NoScrollComboBox):
