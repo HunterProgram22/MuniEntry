@@ -1,6 +1,6 @@
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
     QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel
 from PyQt5 import QtGui
@@ -129,6 +129,8 @@ class DefenseCounselComboBox(NoScrollComboBox):
 class StatuteLineEdit(QLabel):
     def __init__(self, statute: str=None, parent=None):
         super(QLabel, self).__init__(parent)
+        self.setStyleSheet("font: bold 'Palatino Linotype';"
+                           "font-size: 10pt")
         self.set_up_widget(statute)
 
     def set_up_widget(self, statute: str):
