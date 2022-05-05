@@ -144,9 +144,13 @@ class StatuteLineEdit(QLabel):
         self.setOpenExternalLinks(True)
 
     def set_url_link(self, statute: str) -> str:
+        admin_code = "\d\d\d\d.\d\d-"
         seven_digit_stat = "\d\d\d\d.\d\d\d"
         six_digit_stat = "\d\d\d\d.\d\d"
         five_digit_stat = "\d\d\d.\d\d"
+        url_statute = re.search(admin_code, statute)
+        if url_statute is not None:
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code\'>{statute}</a>"
         url_statute = re.search(seven_digit_stat, statute)
         if url_statute is not None:
             url_statute = url_statute.group()
