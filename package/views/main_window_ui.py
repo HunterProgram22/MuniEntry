@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.21.0"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.21.1"))
         self.reload_cases_Button.setText(_translate("MainWindow", "Reload Cases"))
         self.final_pretrial_radioButton.setText(_translate("MainWindow", "Final Pre-trials"))
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
