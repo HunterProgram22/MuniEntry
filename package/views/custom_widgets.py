@@ -127,22 +127,25 @@ class DefenseCounselComboBox(NoScrollComboBox):
 
 
 class StatuteLineEdit(QLabel):
-    def __init__(self, statute=None, parent=None):
+    def __init__(self, statute: str=None, parent=None):
         super(QLabel, self).__init__(parent)
         self.set_up_widget(statute)
 
-    def set_up_widget(self, statute):
+    def set_up_widget(self, statute: str):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setObjectName("statute_lineEdit")
-        statute_index = statute.find('.')
-        if statute_index == 4:
-            url_statute = statute[:(statute_index+3)]
-            url_link = f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
-        else:
-            url_link = f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
+        url_link = self.set_url_link(statute)
         self.setText(url_link)
         self.setOpenExternalLinks(True)
+
+    def set_url_link(self, statute: str) -> str:
+        statute_index = statute.find('.')
+        if statute_index == 4:
+            url_statute = statute[:(statute_index + 3)]
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        else:
+            return f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
 
 
 class DegreeComboBox(NoScrollComboBox):
