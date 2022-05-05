@@ -152,7 +152,6 @@ class BaseDialogViewModifier(object):
             ("no_contact_checkBox", "no_contact"),
             ("custodial_supervision_checkBox", "custodial_supervision"),
             ("community_control_checkBox", "community_control"),
-            ("jail_checkBox", "jail_terms"),
             ("impoundment_checkBox", "impoundment"),
             ("victim_notification_checkBox", "victim_notification"),
         ]
