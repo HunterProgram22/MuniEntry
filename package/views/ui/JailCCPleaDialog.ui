@@ -603,7 +603,7 @@ font-weight: bold;</string>
           <item row="1" column="0">
            <widget class="QCheckBox" name="community_control_checkBox">
             <property name="text">
-             <string>Community Control              </string>
+             <string>Community Control    </string>
             </property>
            </widget>
           </item>
@@ -669,7 +669,7 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Other                                          </string>
+             <string>Other                                             </string>
             </property>
            </widget>
           </item>
