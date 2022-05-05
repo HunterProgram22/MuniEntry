@@ -648,10 +648,6 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.transfer_field_data_to_model(
                 self.main_dialog.entry_case_information.community_control
             )
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(
-                self.main_dialog.entry_case_information.jail_terms
-            )
         if self.main_dialog.impoundment_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(
                 self.main_dialog.entry_case_information.impoundment
