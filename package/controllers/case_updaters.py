@@ -13,6 +13,7 @@ from PyQt5.QtWidgets import (
     QRadioButton,
 )
 
+from package.views.custom_widgets import StatuteLineEdit
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
@@ -334,7 +335,7 @@ class GridModelUpdater:
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
                 col += 1
-            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
+            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().get_text()
             charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
             charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
             if self.grid.itemAtPosition(self.row_plea, col).widget().currentText() == "Dismissed":
@@ -360,7 +361,7 @@ class NotGuiltyGridModelUpdater(GridModelUpdater):
         for charge in self.model.charges_list:
             while self.grid.itemAtPosition(self.row_offense, col) is None:
                 col += 1
-            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().text()
+            charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().get_text()
             charge.degree = self.grid.itemAtPosition(self.row_degree, col).widget().currentText()
             charge.plea = self.grid.itemAtPosition(self.row_plea, col).widget().currentText()
             col += 1
