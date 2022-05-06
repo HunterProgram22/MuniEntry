@@ -114,49 +114,18 @@ class CaseModelUpdater:
                 "NoScrollDateEdit": "date",
                 "NoScrollTimeEdit": "time",
             }
-            setattr(terms_object, model_attribute, getattr(view, data_type_access_dict.get(key))())
+            #TODO: Put date to string and time to string in widget.
+            if key == "NoScrollDateEdit":
+                date = getattr(view, data_type_access_dict.get(key))()
+                date = date.toString("MMMM dd, yyyy")
+                setattr(terms_object, model_attribute, date)
+            elif key == "NoScrollTimeEdit":
+                time = getattr(view, data_type_access_dict.get(key))()
+                time = time.toString("hh:mm A")
+                setattr(terms_object, model_attribute, date)
+            else:
+                setattr(terms_object, model_attribute, getattr(view, data_type_access_dict.get(key))())
             print(getattr(terms_object, model_attribute))
-            #
-            # if isinstance(getattr(self.view, view_field), QComboBox):
-            #     setattr(
-            #         terms_object,
-            #         model_attribute,
-            #         getattr(self.view, view_field).currentText(),
-            #     )
-            # elif isinstance(getattr(self.view, view_field), QCheckBox):
-            #     setattr(
-            #         terms_object,
-            #         model_attribute,
-            #         getattr(self.view, view_field).isChecked(),
-            #     )
-            # elif isinstance(getattr(self.view, view_field), QRadioButton):
-            #     setattr(
-            #         terms_object,
-            #         model_attribute,
-            #         getattr(self.view, view_field).isChecked(),
-            #     )
-            # elif isinstance(getattr(self.view, view_field), QLineEdit):
-            #     setattr(terms_object, model_attribute, getattr(self.view, view_field).text())
-            # elif isinstance(getattr(self.view, view_field), QTextEdit):
-            #     plain_text = getattr(self.view, view_field).toPlainText()
-            #     try:
-            #         if plain_text[-1] == ".":
-            #             plain_text = plain_text[:-1]
-            #     except IndexError:
-            #         pass
-            #     setattr(terms_object, model_attribute, plain_text)
-            # elif isinstance(getattr(self.view, view_field), QDateEdit):
-            #     setattr(
-            #         terms_object,
-            #         model_attribute,
-            #         getattr(self.view, view_field).date().toString("MMMM dd, yyyy"),
-            #     )
-            # elif isinstance(getattr(self.view, view_field), QTimeEdit):
-            #     setattr(
-            #         terms_object,
-            #         model_attribute,
-            #         getattr(self.view, view_field).time().toString("hh:mm A"),
-            #     )
 
 
 class DiversionDialogCaseModelUpdater(CaseModelUpdater):
