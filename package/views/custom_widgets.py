@@ -144,21 +144,29 @@ class StatuteLineEdit(QLabel):
         self.setOpenExternalLinks(True)
 
     def set_url_link(self, statute: str) -> str:
-        admin_code = "\d\d\d\d.\d\d-"
-        seven_digit_stat = "\d\d\d\d.\d\d\d"
-        six_digit_stat = "\d\d\d\d.\d\d"
-        five_digit_stat = "\d\d\d.\d\d"
+        admin_code = "\d\d\d\d.\d\d-\d-\d\d"
         url_statute = re.search(admin_code, statute)
         if url_statute is not None:
-            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code\'>{statute}</a>"
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        admin_code_two = "\d\d\d\d.\d\d-\d\d-\d\d"
+        url_statute = re.search(admin_code_two, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        seven_digit_stat = "\d\d\d\d.\d\d\d"
         url_statute = re.search(seven_digit_stat, statute)
         if url_statute is not None:
             url_statute = url_statute.group()
             return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        six_digit_stat = "\d\d\d\d.\d\d"
         url_statute = re.search(six_digit_stat, statute)
         if url_statute is not None:
             url_statute = url_statute.group()
             return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        five_digit_stat = "\d\d\d.\d\d"
         url_statute = re.search(five_digit_stat, statute)
         if url_statute is not None:
             url_statute = url_statute.group()
