@@ -1,8 +1,10 @@
+import re
+
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit, QMenu
+    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
@@ -126,18 +128,50 @@ class DefenseCounselComboBox(NoScrollComboBox):
             self.addItem(attorney)
 
 
-class StatuteLineEdit(QLineEdit):
-    def __init__(self, statute=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
+class StatuteLineEdit(QLabel):
+    def __init__(self, statute: str=None, parent=None):
+        super(QLabel, self).__init__(parent)
+        self.setStyleSheet("font: bold 'Palatino Linotype';"
+                           "font-size: 10pt")
         self.set_up_widget(statute)
 
-    def set_up_widget(self, statute):
+    def set_up_widget(self, statute: str):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("statute_lineEdit")
-        self.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.setText(statute)
+        url_link = self.set_url_link(statute)
+        self.setText(url_link)
+        self.setOpenExternalLinks(True)
+
+    def set_url_link(self, statute: str) -> str:
+        admin_code = "\d\d\d\d.\d\d-\d-\d\d"
+        url_statute = re.search(admin_code, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        admin_code_two = "\d\d\d\d.\d\d-\d\d-\d\d"
+        url_statute = re.search(admin_code_two, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        seven_digit_stat = "\d\d\d\d.\d\d\d"
+        url_statute = re.search(seven_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        six_digit_stat = "\d\d\d\d.\d\d"
+        url_statute = re.search(six_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        five_digit_stat = "\d\d\d.\d\d"
+        url_statute = re.search(five_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
+        return f"<a href=\'https://www.google.com/\'>{statute}</a>"
 
 
 class DegreeComboBox(NoScrollComboBox):
