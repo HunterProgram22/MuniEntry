@@ -134,6 +134,12 @@ class StatuteLineEdit(QLabel):
         self.setStyleSheet("font: bold 'Palatino Linotype';"
                            "font-size: 10pt")
         self.set_up_widget(statute)
+        self.statute = statute
+
+    def get_text(self) -> str:
+        """This method exists to return the string of the statute that is used in the entry
+        as opposed to the text that is displayed which is a hyperlink."""
+        return self.statute
 
     def set_up_widget(self, statute: str):
         self.setMinimumSize(QtCore.QSize(200, 0))
