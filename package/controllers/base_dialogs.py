@@ -50,47 +50,18 @@ class BaseDialog(QDialog):
             (model_attribute, view_field) = item
             if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
                 continue
-            elif isinstance(getattr(self, view_field), QComboBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).currentText(),
-                )
-            elif isinstance(getattr(self, view_field), QCheckBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self, view_field), QRadioButton):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self, view_field), QLineEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).text())
-            elif isinstance(getattr(self, view_field), QTextEdit):
-                plain_text = getattr(self, view_field).toPlainText()
-                try:
-                    if plain_text[-1] == ".":
-                        plain_text = plain_text[:-1]
-                except IndexError:
-                    pass
-                setattr(terms_object, model_attribute, plain_text)
-            elif isinstance(getattr(self, view_field), QDateEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).date().toString("MMMM dd, yyyy"),
-                )
-            elif isinstance(getattr(self, view_field), QTimeEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).time().toString("hh:mm A"),
-                )
-
+            key = getattr(self.view, view_field).__class__.__name__
+            view = getattr(self.view, view_field)
+            setattr(terms_object, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
+            # if isinstance(getattr(self, view_field), QTextEdit):
+            #     plain_text = getattr(self, view_field).toPlainText()
+            #     try:
+            #         if plain_text[-1] == ".":
+            #             plain_text = plain_text[:-1]
+            #     except IndexError:
+            #         pass
+            #     setattr(terms_object, model_attribute, plain_text)
+            #
 
 if __name__ == "__main__":
     print("Base Dialogs ran directly")
