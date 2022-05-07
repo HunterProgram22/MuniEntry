@@ -44,6 +44,9 @@ class NoScrollDateEdit(QDateEdit):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setDate(TODAY)
 
+    def get_date(self) -> str:
+        return self.date().toString("MMMM dd, yyyy")
+
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
             event.ignore()
@@ -53,6 +56,9 @@ class NoScrollTimeEdit(QTimeEdit):
     def __init__(self, parent=None):
         super(QTimeEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def get_time(self) -> str:
+        return self.time().toString("hh:mm A")
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:

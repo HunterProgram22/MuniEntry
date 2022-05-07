@@ -94,15 +94,11 @@ class CaseModelUpdater:
         return total_fines_suspended
 
     def transfer_view_data_to_model(self, terms_object):
-        """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate model attribute. The function uses the appropriate pyqt method for
-        the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)."""
+        """Loops through a model's terms list to transfer data from the view to the model using
+        the appropriate method for the view widget."""
         terms_list = getattr(terms_object, "terms_list")
-        print(terms_list)
         for item in terms_list:
             (model_attribute, view_field) = item
-            print(getattr(self.view, view_field).__class__.__name__)
             key = getattr(self.view, view_field).__class__.__name__
             view = getattr(self.view, view_field)
             data_type_access_dict = {
@@ -111,21 +107,10 @@ class CaseModelUpdater:
                 "QRadioButton": "isChecked",
                 "QLineEdit": "text",
                 "QTextEdit": "toPlainText",
-                "NoScrollDateEdit": "date",
-                "NoScrollTimeEdit": "time",
+                "NoScrollDateEdit": "get_date",
+                "NoScrollTimeEdit": "get_time",
             }
-            #TODO: Put date to string and time to string in widget.
-            if key == "NoScrollDateEdit":
-                date = getattr(view, data_type_access_dict.get(key))()
-                date = date.toString("MMMM dd, yyyy")
-                setattr(terms_object, model_attribute, date)
-            elif key == "NoScrollTimeEdit":
-                time = getattr(view, data_type_access_dict.get(key))()
-                time = time.toString("hh:mm A")
-                setattr(terms_object, model_attribute, date)
-            else:
-                setattr(terms_object, model_attribute, getattr(view, data_type_access_dict.get(key))())
-            print(getattr(terms_object, model_attribute))
+            setattr(terms_object, model_attribute, getattr(view, data_type_access_dict.get(key))())
 
 
 class DiversionDialogCaseModelUpdater(CaseModelUpdater):
