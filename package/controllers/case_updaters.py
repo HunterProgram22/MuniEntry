@@ -16,6 +16,16 @@ from PyQt5.QtWidgets import (
 from package.views.custom_widgets import StatuteLineEdit
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
+WIDGET_TYPE_ACCESS_DICT = {
+    "QComboBox": "currentText",
+    "QCheckBox": "isChecked",
+    "QRadioButton": "isChecked",
+    "QLineEdit": "text",
+    "QTextEdit": "toPlainText",
+    "NoScrollDateEdit": "get_date",
+    "NoScrollTimeEdit": "get_time",
+}
+
 
 class CaseModelUpdater:
     """Base class that contains methods used by subclasses and is called by a main
@@ -101,16 +111,7 @@ class CaseModelUpdater:
             (model_attribute, view_field) = item
             key = getattr(self.view, view_field).__class__.__name__
             view = getattr(self.view, view_field)
-            data_type_access_dict = {
-                "QComboBox": "currentText",
-                "QCheckBox": "isChecked",
-                "QRadioButton": "isChecked",
-                "QLineEdit": "text",
-                "QTextEdit": "toPlainText",
-                "NoScrollDateEdit": "get_date",
-                "NoScrollTimeEdit": "get_time",
-            }
-            setattr(terms_object, model_attribute, getattr(view, data_type_access_dict.get(key))())
+            setattr(terms_object, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
 
 
 class DiversionDialogCaseModelUpdater(CaseModelUpdater):
