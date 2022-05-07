@@ -2,29 +2,10 @@
 Each main dialog class has a subclass that governs what
 is updated for the main class. The classes take the data from the view (GUI) and transfer
 it to the appropriate model object."""
-from PyQt5.QtWidgets import (
-    QDialog,
-    QComboBox,
-    QCheckBox,
-    QLineEdit,
-    QTextEdit,
-    QDateEdit,
-    QTimeEdit,
-    QRadioButton,
-)
 
-from package.views.custom_widgets import StatuteLineEdit
-from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
-WIDGET_TYPE_ACCESS_DICT = {
-    "NoScrollComboBox": "currentText",
-    "QCheckBox": "isChecked",
-    "QRadioButton": "isChecked",
-    "QLineEdit": "text",
-    "QTextEdit": "toPlainText",
-    "NoScrollDateEdit": "get_date",
-    "NoScrollTimeEdit": "get_time",
-}
+from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS, \
+    WIDGET_TYPE_ACCESS_DICT
 
 
 class CaseModelUpdater:
