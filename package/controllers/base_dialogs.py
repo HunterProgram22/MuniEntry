@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import (
     QTextEdit,
     QTimeEdit,
 )
-
+from settings import WIDGET_TYPE_ACCESS_DICT
 
 class BaseDialog(QDialog):
     """This class is a base class for all dialog windows. Every window must have a view loaded
@@ -41,27 +41,17 @@ class BaseDialog(QDialog):
         raise NotImplementedError
 
     def transfer_field_data_to_model(self, terms_object: object) -> None:
-        """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate model attribute. The function uses the appropriate pyqt method for
-        the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)."""
+        """Loops through a model's terms list to transfer data from the view to the model using
+        the appropriate method for the view widget. This uses just self to get key and view. The
+        version transfer_view_data_to_model uses self.view to get key and view. TODO: combine and
+        refactor both into one."""
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
-            if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
-                continue
-            key = getattr(self.view, view_field).__class__.__name__
-            view = getattr(self.view, view_field)
+            key = getattr(self, view_field).__class__.__name__
+            view = getattr(self, view_field)
             setattr(terms_object, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
-            # if isinstance(getattr(self, view_field), QTextEdit):
-            #     plain_text = getattr(self, view_field).toPlainText()
-            #     try:
-            #         if plain_text[-1] == ".":
-            #             plain_text = plain_text[:-1]
-            #     except IndexError:
-            #         pass
-            #     setattr(terms_object, model_attribute, plain_text)
-            #
+
 
 if __name__ == "__main__":
     print("Base Dialogs ran directly")

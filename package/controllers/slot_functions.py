@@ -636,10 +636,6 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.transfer_field_data_to_model(
                 self.main_dialog.entry_case_information.community_service
             )
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.dialog.transfer_field_data_to_model(
-                self.main_dialog.entry_case_information.license_suspension
-            )
         if self.main_dialog.other_conditions_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(
                 self.main_dialog.entry_case_information.other_conditions
@@ -647,6 +643,10 @@ class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
         if self.main_dialog.community_control_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(
                 self.main_dialog.entry_case_information.community_control
+            )
+        if self.main_dialog.license_suspension_checkBox.isChecked():
+            self.dialog.transfer_field_data_to_model(
+                self.main_dialog.entry_case_information.license_suspension
             )
         if self.main_dialog.impoundment_checkBox.isChecked():
             self.dialog.transfer_field_data_to_model(

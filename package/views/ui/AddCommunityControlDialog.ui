@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-708</y>
+        <y>-824</y>
         <width>1105</width>
-        <height>1708</height>
+        <height>1692</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -1095,7 +1095,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QDateEdit" name="license_suspension_date_box">
+           <widget class="NoScrollDateEdit" name="license_suspension_date_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>

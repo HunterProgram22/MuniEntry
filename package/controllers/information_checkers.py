@@ -304,7 +304,6 @@ class NoPleaBondDialogInfoChecker(BaseInfoChecker):
                 return "Fail"
 
 
-
 class BondHearingDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
         ("admin_license_suspension", "disposition", "Admin License Suspension"),
@@ -402,9 +401,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        # self.total_jail_days = self.calculate_total_jail_days()
-        # self.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
-        # self.total_jail_days_credit = self.calculate_jail_days_credit()
         self.case_info = self.view.entry_case_information
         self.dialog_check_list = [
             "check_defense_counsel",
