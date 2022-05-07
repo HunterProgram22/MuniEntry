@@ -17,7 +17,7 @@ from package.views.custom_widgets import StatuteLineEdit
 from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
 
 WIDGET_TYPE_ACCESS_DICT = {
-    "QComboBox": "currentText",
+    "NoScrollComboBox": "currentText",
     "QCheckBox": "isChecked",
     "QRadioButton": "isChecked",
     "QLineEdit": "text",
