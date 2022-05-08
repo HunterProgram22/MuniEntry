@@ -118,11 +118,11 @@ class BaseDialogViewModifier:
             if hasattr(self.dialog.main_dialog, condition_checkbox):
                 if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
                     model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
-                    self.transfer_model_data_to_condition_dialog_fields(model_class)
+                    self.transfer_model_data_to_view(model_class)
                 else:
                     continue
 
-    def transfer_model_data_to_condition_dialog_fields(self, model_class):
+    def transfer_model_data_to_view(self, model_class):
         """Loops through the terms_list for a model and loads data into the view of the dialog on
         load. This is to allow for previously entered data to be shown if a user comes back to
         the dialog after having previously entered data."""
@@ -130,17 +130,7 @@ class BaseDialogViewModifier:
         for (model_attribute, view_field) in terms_list:
             key = getattr(self.dialog, view_field).__class__.__name__
             view = getattr(self.dialog, view_field)
-            if key == "NoScrollTimeEdit":
-                time_str = getattr(model_class, model_attribute)
-                if time_str is None:
-                    time_str = QtCore.QTime(8, 30, 0)
-                else:
-                    hour, minutes = time_str.split(":")
-                    minutes = minutes[:2]
-                    time_str = QtCore.QTime(int(hour), int(minutes), 0)
-                view.setTime(time_str)
-            else:
-                getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
+            getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
 
 
 class AddChargeDialogViewModifier(BaseDialogViewModifier):

@@ -2,7 +2,7 @@ import re
 import datetime
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime, QTime
 from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
     QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel, QDateTimeEdit
@@ -49,13 +49,11 @@ class NoScrollDateEdit(QDateEdit):
     def get_date(self) -> str:
         return self.date().toString("MMMM dd, yyyy")
 
-    def set_date(self, date_str: str) -> QDateTime:
-        print(date_str)
+    def set_date(self, date_str: str) -> QDate:
         if date_str is None:
             date_str = TODAY_STRING
-        date_object = self.setDateTime(self.dateTimeFromText(date_str))
-        print(date_object)
-        return date_object
+        date_str = QDate.fromString(date_str, "MMMM dd, yyyy")
+        return self.setDate(date_str,)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
@@ -70,9 +68,12 @@ class NoScrollTimeEdit(QTimeEdit):
     def get_time(self) -> str:
         return self.time().toString("hh:mm A")
 
-    def set_time(self, time: str) -> datetime:
-        format = "%H:%M %p"
-        return datetime.datetime.strptime(time, format)
+    def set_time(self, time_str: str) -> QTime:
+        if time_str is None:
+            time_str = "08:30 AM"
+        time_str = QTime.fromString(time_str, "hh:mm A")
+        return self.setTime(time_str)
+
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
