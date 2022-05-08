@@ -1,10 +1,11 @@
 import re
+import datetime
 
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime
 from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel
+    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel, QDateTimeEdit
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
@@ -25,6 +26,7 @@ def return_attorney_data_from_excel(excel_file: str) -> list:
     return data
 
 TODAY = QtCore.QDate.currentDate()
+TODAY_STRING = TODAY.toString("MMMM dd, yyyy")
 ATTORNEY_LIST = return_attorney_data_from_excel(f"{DB_PATH}Attorneys.xlsx")
 
 
@@ -47,6 +49,14 @@ class NoScrollDateEdit(QDateEdit):
     def get_date(self) -> str:
         return self.date().toString("MMMM dd, yyyy")
 
+    def set_date(self, date_str: str) -> QDateTime:
+        print(date_str)
+        if date_str is None:
+            date_str = TODAY_STRING
+        date_object = self.setDateTime(self.dateTimeFromText(date_str))
+        print(date_object)
+        return date_object
+
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
             event.ignore()
@@ -59,6 +69,10 @@ class NoScrollTimeEdit(QTimeEdit):
 
     def get_time(self) -> str:
         return self.time().toString("hh:mm A")
+
+    def set_time(self, time: str) -> datetime:
+        format = "%H:%M %p"
+        return datetime.datetime.strptime(time, format)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:

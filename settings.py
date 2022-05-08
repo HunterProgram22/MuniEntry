@@ -22,6 +22,7 @@ EXCEL_DAILY_CASE_LISTS = [
     ("Trials_to_Court.xlsx", "trials_to_court"),
     ("PCVH_FCVH.xlsx", "pcvh_fcvh"),
 ]
+
 WIDGET_TYPE_ACCESS_DICT = {
     "NoScrollComboBox": "currentText",
     "QCheckBox": "isChecked",
@@ -30,4 +31,14 @@ WIDGET_TYPE_ACCESS_DICT = {
     "QTextEdit": "toPlainText",
     "NoScrollDateEdit": "get_date",
     "NoScrollTimeEdit": "get_time",
+}
+
+WIDGET_TYPE_SET_DICT = {
+    "NoScrollComboBox": "setCurrentText",
+    "QCheckBox": "setChecked",
+    "QRadioButton": "setChecked",
+    "QLineEdit": "setText",
+    "QTextEdit": "setPlainText",
+    "NoScrollDateEdit": "set_date",
+    "NoScrollTimeEdit": "set_time",
 }
