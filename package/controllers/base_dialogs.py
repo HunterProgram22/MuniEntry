@@ -1,16 +1,7 @@
-"""The BaseDialogs modules contains common base classes from which other dialogs
-inherit."""
-from PyQt5.QtWidgets import (
-    QCheckBox,
-    QComboBox,
-    QDateEdit,
-    QDialog,
-    QLineEdit,
-    QRadioButton,
-    QTextEdit,
-    QTimeEdit,
-)
+"""The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+from PyQt5.QtWidgets import QDialog
 
+from settings import WIDGET_TYPE_ACCESS_DICT
 
 class BaseDialog(QDialog):
     """This class is a base class for all dialog windows. Every window must have a view loaded
@@ -40,56 +31,14 @@ class BaseDialog(QDialog):
         slot functions class for that dialog."""
         raise NotImplementedError
 
-    def transfer_field_data_to_model(self, terms_object: object) -> None:
-        """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate model attribute. The function uses the appropriate pyqt method for
-        the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)."""
+    def transfer_view_data_to_model(self, terms_object: object) -> None:
+        """Loops through a model's terms list to transfer data from the view to the model using
+        the appropriate method for the view widget."""
         terms_list = getattr(terms_object, "terms_list")
-        for item in terms_list:
-            (model_attribute, view_field) = item
-            if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
-                continue
-            elif isinstance(getattr(self, view_field), QComboBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).currentText(),
-                )
-            elif isinstance(getattr(self, view_field), QCheckBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self, view_field), QRadioButton):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self, view_field), QLineEdit):
-                setattr(terms_object, model_attribute, getattr(self, view_field).text())
-            elif isinstance(getattr(self, view_field), QTextEdit):
-                plain_text = getattr(self, view_field).toPlainText()
-                try:
-                    if plain_text[-1] == ".":
-                        plain_text = plain_text[:-1]
-                except IndexError:
-                    pass
-                setattr(terms_object, model_attribute, plain_text)
-            elif isinstance(getattr(self, view_field), QDateEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).date().toString("MMMM dd, yyyy"),
-                )
-            elif isinstance(getattr(self, view_field), QTimeEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self, view_field).time().toString("hh:mm A"),
-                )
+        for (model_attribute, view_field) in terms_list:
+            key = getattr(self, view_field).__class__.__name__
+            view = getattr(self, view_field)
+            setattr(terms_object, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
 
 
 if __name__ == "__main__":

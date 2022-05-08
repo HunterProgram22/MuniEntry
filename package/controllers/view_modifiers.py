@@ -2,7 +2,7 @@
 after the setupUI is called. This class makes changes to the view that are outside the the specific
 view file. Modifications to the view are placed in the ViewModifier class so that they don't need to
 be updated each time a view file is recompiled through the pyuic5 command."""
-import datetime
+import datetime, time
 
 from PyQt5 import QtCore
 from PyQt5 import QtGui
@@ -10,6 +10,7 @@ from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, \
     QTimeEdit, QRadioButton
 
+from settings import WIDGET_TYPE_SET_DICT
 from package.controllers.helper_functions import set_future_date
 
 
@@ -110,46 +111,26 @@ class BaseDialogViewModifier:
             ("community_control_checkBox", "community_control"),
             ("impoundment_checkBox", "impoundment"),
             ("victim_notification_checkBox", "victim_notification"),
+            ("jail_checkBox", "jail_terms"),
         ]
         for item in CONDITIONS_CLASSES:
             (condition_checkbox, model_class) = item
             if hasattr(self.dialog.main_dialog, condition_checkbox):
                 if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
                     model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
-                    self.transfer_model_data_to_condition_dialog_fields(model_class)
+                    self.transfer_model_data_to_view(model_class)
                 else:
                     continue
 
-    def transfer_model_data_to_condition_dialog_fields(self, model_class):
+    def transfer_model_data_to_view(self, model_class):
+        """Loops through the terms_list for a model and loads data into the view of the dialog on
+        load. This is to allow for previously entered data to be shown if a user comes back to
+        the dialog after having previously entered data."""
         terms_list = getattr(model_class, "terms_list")
-        for item in terms_list:
-            (model_attribute, view_field) = item
-            if view_field == "other_conditions_checkBox": # TODO: This exists to address OtherConditions using ordered in terms list
-                continue
-            if isinstance(getattr(self.dialog, view_field), QComboBox):
-                getattr(self.dialog, view_field).setCurrentText(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QCheckBox):
-                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QRadioButton):
-                getattr(self.dialog, view_field).setChecked(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QLineEdit):
-                getattr(self.dialog, view_field).setText(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QTextEdit):
-                getattr(self.dialog, view_field).setPlainText(getattr(model_class, model_attribute))
-            elif isinstance(getattr(self.dialog, view_field), QDateEdit):
-                try:
-                    format = "%B %d, %Y"
-                    date = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
-                    getattr(self.dialog, view_field).setDate(date)
-                except TypeError:
-                    pass
-            elif isinstance(getattr(self.dialog, view_field), QTimeEdit):
-                try:
-                    format = "%H:%M %p"
-                    time = datetime.datetime.strptime(getattr(model_class, model_attribute), format)
-                    getattr(self.dialog, view_field).setTime(time)
-                except TypeError:
-                    pass
+        for (model_attribute, view_field) in terms_list:
+            key = getattr(self.dialog, view_field).__class__.__name__
+            view = getattr(self.dialog, view_field)
+            getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
 
 
 class AddChargeDialogViewModifier(BaseDialogViewModifier):
@@ -257,6 +238,7 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
         after getting the warning."""
         super().__init__(dialog)
         self.set_conditions_case_information_banner()
+        self.load_existing_data_to_dialog()
         self.hide_boxes(dialog)  # Class method needs dialog ? TODO: Fix
         self.set_report_date_view()
         self.set_report_days_notes_box()

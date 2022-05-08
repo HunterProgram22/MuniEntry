@@ -2,19 +2,10 @@
 Each main dialog class has a subclass that governs what
 is updated for the main class. The classes take the data from the view (GUI) and transfer
 it to the appropriate model object."""
-from PyQt5.QtWidgets import (
-    QDialog,
-    QComboBox,
-    QCheckBox,
-    QLineEdit,
-    QTextEdit,
-    QDateEdit,
-    QTimeEdit,
-    QRadioButton,
-)
 
-from package.views.custom_widgets import StatuteLineEdit
-from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS
+
+from settings import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, NONMOVING_COURT_COSTS, \
+    WIDGET_TYPE_ACCESS_DICT
 
 
 class CaseModelUpdater:
@@ -93,55 +84,6 @@ class CaseModelUpdater:
             total_fines_suspended = total_fines_suspended + int(local_charge_fines_suspended)
         return total_fines_suspended
 
-    def transfer_view_data_to_model(self, terms_object):
-        """Function that loops through a list of fields and transfers the data in the field
-        to the appropriate model attribute. The function uses the appropriate pyqt method for
-        the field type. Format of item in terms_list is a list of tuples (item[0] = model data,
-        item[1] = view field that contains the data)."""
-        terms_list = getattr(terms_object, "terms_list")
-        for item in terms_list:
-            (model_attribute, view_field) = item
-            if isinstance(getattr(self.view, view_field), QComboBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self.view, view_field).currentText(),
-                )
-            elif isinstance(getattr(self.view, view_field), QCheckBox):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self.view, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self.view, view_field), QRadioButton):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self.view, view_field).isChecked(),
-                )
-            elif isinstance(getattr(self.view, view_field), QLineEdit):
-                setattr(terms_object, model_attribute, getattr(self.view, view_field).text())
-            elif isinstance(getattr(self.view, view_field), QTextEdit):
-                plain_text = getattr(self.view, view_field).toPlainText()
-                try:
-                    if plain_text[-1] == ".":
-                        plain_text = plain_text[:-1]
-                except IndexError:
-                    pass
-                setattr(terms_object, model_attribute, plain_text)
-            elif isinstance(getattr(self.view, view_field), QDateEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self.view, view_field).date().toString("MMMM dd, yyyy"),
-                )
-            elif isinstance(getattr(self.view, view_field), QTimeEdit):
-                setattr(
-                    terms_object,
-                    model_attribute,
-                    getattr(self.view, view_field).time().toString("hh:mm A"),
-                )
-
 
 class DiversionDialogCaseModelUpdater(CaseModelUpdater):
     def __init__(self, dialog):
@@ -151,9 +93,9 @@ class DiversionDialogCaseModelUpdater(CaseModelUpdater):
         self.update_case_information()
 
     def update_case_information(self):
-        self.transfer_view_data_to_model(self.model.diversion)
+        self.view.transfer_view_data_to_model(self.model.diversion)
         self.model.diversion.program_name = self.model.diversion.get_program_name()
-        self.transfer_view_data_to_model(self.model.other_conditions)
+        self.view.transfer_view_data_to_model(self.model.other_conditions)
 
     def update_model_with_charge_grid_data(self):
         return DiversionGridModelUpdater(self.view, self.model)
@@ -255,7 +197,7 @@ class PleaOnlyDialogCaseModelUpdater(CaseModelUpdater):
         return PleaOnlyGridModelUpdater(self.view, self.model)
 
     def update_model_with_future_sentencing_and_bond(self):
-        self.transfer_view_data_to_model(self.model.future_sentencing)
+        self.view.transfer_view_data_to_model(self.model.future_sentencing)
 
 
 class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
@@ -266,7 +208,7 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.transfer_view_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
     def update_model_with_charge_grid_data(self):
         return NotGuiltyGridModelUpdater(self.view, self.model)
@@ -279,7 +221,7 @@ class NoPleaBondDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.transfer_view_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class BondHearingDialogCaseModelUpdater(CaseModelUpdater):
@@ -289,7 +231,7 @@ class BondHearingDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.transfer_view_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
@@ -299,7 +241,7 @@ class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
         self.update_fta_conditions()
 
     def update_fta_conditions(self):
-        self.transfer_view_data_to_model(self.model.fta_conditions)
+        self.view.transfer_view_data_to_model(self.model.fta_conditions)
 
 
 class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
@@ -315,7 +257,7 @@ class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
     def update_bond_conditions(self):
         """This uses a cc_bond_conditions instead of bond_conditions because a separate model
         was created. TODO: Refactor models"""
-        self.transfer_view_data_to_model(self.model.cc_bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.cc_bond_conditions)
 
 
 class GridModelUpdater:

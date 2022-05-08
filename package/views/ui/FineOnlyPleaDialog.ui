@@ -846,7 +846,7 @@ font-weight: bold;</string>
              <enum>Qt::StrongFocus</enum>
             </property>
             <property name="text">
-             <string>Other                                                             </string>
+             <string>Other                                                      </string>
             </property>
            </widget>
           </item>

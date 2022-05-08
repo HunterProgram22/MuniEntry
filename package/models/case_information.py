@@ -372,7 +372,7 @@ class OtherConditions:
     ordered: bool = False
     terms: str = None
     terms_list = [
-        ("ordered", "other_conditions_checkBox"),
+        # ("ordered", "other_conditions_checkBox"),
         ("terms", "other_conditions_textEdit"),
     ]
 

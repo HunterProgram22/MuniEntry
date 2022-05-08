@@ -77,7 +77,7 @@ class Ui_AddCommunityControlDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1105, 1708))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -824, 1105, 1692))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -476,7 +476,7 @@ class Ui_AddCommunityControlDialog(object):
         self.label_18 = QtWidgets.QLabel(self.license_suspension_frame)
         self.label_18.setObjectName("label_18")
         self.gridLayout_2.addWidget(self.label_18, 2, 0, 1, 1)
-        self.license_suspension_date_box = QtWidgets.QDateEdit(self.license_suspension_frame)
+        self.license_suspension_date_box = NoScrollDateEdit(self.license_suspension_frame)
         self.license_suspension_date_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.license_suspension_date_box.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
