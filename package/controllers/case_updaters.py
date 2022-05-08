@@ -93,9 +93,9 @@ class DiversionDialogCaseModelUpdater(CaseModelUpdater):
         self.update_case_information()
 
     def update_case_information(self):
-        self.view.transfer_field_data_to_model(self.model.diversion)
+        self.view.transfer_view_data_to_model(self.model.diversion)
         self.model.diversion.program_name = self.model.diversion.get_program_name()
-        self.view.transfer_field_data_to_model(self.model.other_conditions)
+        self.view.transfer_view_data_to_model(self.model.other_conditions)
 
     def update_model_with_charge_grid_data(self):
         return DiversionGridModelUpdater(self.view, self.model)
@@ -197,7 +197,7 @@ class PleaOnlyDialogCaseModelUpdater(CaseModelUpdater):
         return PleaOnlyGridModelUpdater(self.view, self.model)
 
     def update_model_with_future_sentencing_and_bond(self):
-        self.view.transfer_field_data_to_model(self.model.future_sentencing)
+        self.view.transfer_view_data_to_model(self.model.future_sentencing)
 
 
 class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
@@ -208,7 +208,7 @@ class NotGuiltyBondDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.view.transfer_field_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
     def update_model_with_charge_grid_data(self):
         return NotGuiltyGridModelUpdater(self.view, self.model)
@@ -221,7 +221,7 @@ class NoPleaBondDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.view.transfer_field_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class BondHearingDialogCaseModelUpdater(CaseModelUpdater):
@@ -231,7 +231,7 @@ class BondHearingDialogCaseModelUpdater(CaseModelUpdater):
         self.update_bond_conditions()
 
     def update_bond_conditions(self):
-        self.view.transfer_field_data_to_model(self.model.bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.bond_conditions)
 
 
 class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
@@ -241,7 +241,7 @@ class FailureToAppearDialogCaseModelUpdater(CaseModelUpdater):
         self.update_fta_conditions()
 
     def update_fta_conditions(self):
-        self.view.transfer_field_data_to_model(self.model.fta_conditions)
+        self.view.transfer_view_data_to_model(self.model.fta_conditions)
 
 
 class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
@@ -257,7 +257,7 @@ class ProbationViolationBondDialogCaseModelUpdater(CaseModelUpdater):
     def update_bond_conditions(self):
         """This uses a cc_bond_conditions instead of bond_conditions because a separate model
         was created. TODO: Refactor models"""
-        self.view.transfer_field_data_to_model(self.model.cc_bond_conditions)
+        self.view.transfer_view_data_to_model(self.model.cc_bond_conditions)
 
 
 class GridModelUpdater:

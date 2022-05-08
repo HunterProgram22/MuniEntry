@@ -40,11 +40,9 @@ class BaseDialog(QDialog):
         slot functions class for that dialog."""
         raise NotImplementedError
 
-    def transfer_field_data_to_model(self, terms_object: object) -> None:
+    def transfer_view_data_to_model(self, terms_object: object) -> None:
         """Loops through a model's terms list to transfer data from the view to the model using
-        the appropriate method for the view widget. This uses just self to get key and view. The
-        version transfer_view_data_to_model uses self.view to get key and view. TODO: combine and
-        refactor both into one."""
+        the appropriate method for the view widget."""
         terms_list = getattr(terms_object, "terms_list")
         for item in terms_list:
             (model_attribute, view_field) = item
