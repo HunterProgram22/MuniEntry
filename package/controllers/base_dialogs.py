@@ -1,15 +1,6 @@
-"""The BaseDialogs modules contains common base classes from which other dialogs
-inherit."""
-from PyQt5.QtWidgets import (
-    QCheckBox,
-    QComboBox,
-    QDateEdit,
-    QDialog,
-    QLineEdit,
-    QRadioButton,
-    QTextEdit,
-    QTimeEdit,
-)
+"""The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+from PyQt5.QtWidgets import QDialog
+
 from settings import WIDGET_TYPE_ACCESS_DICT
 
 class BaseDialog(QDialog):
@@ -44,8 +35,7 @@ class BaseDialog(QDialog):
         """Loops through a model's terms list to transfer data from the view to the model using
         the appropriate method for the view widget."""
         terms_list = getattr(terms_object, "terms_list")
-        for item in terms_list:
-            (model_attribute, view_field) = item
+        for (model_attribute, view_field) in terms_list:
             key = getattr(self, view_field).__class__.__name__
             view = getattr(self, view_field)
             setattr(terms_object, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
