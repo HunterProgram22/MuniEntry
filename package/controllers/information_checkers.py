@@ -164,10 +164,11 @@ class BaseInfoChecker(object):
                 return "Fail"
 
     def check_if_no_bond_amount(self):
-        if (
-            self.view.bond_type_box.currentText() != "Recognizance (OR) Bond"
-            and self.view.bond_amount_box.currentText() == "None (OR Bond)"
-        ):
+        if (self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
+            or self.view.bond_type_box.currentText() == "Continue Existing Bond"
+            or self.view.bond_type_box.currentText() == "No Bond"):
+            return "Pass"
+        elif self.view.bond_amount_box.currentText() == "None":
             message = (
                 "A bond type requiring a bond amount was selected, but a bond amount was "
                 "not selected. \n\nPlease specify the bond amount."
@@ -177,13 +178,15 @@ class BaseInfoChecker(object):
 
     def check_if_improper_bond_type(self):
         if (
-            self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
-            and self.view.bond_amount_box.currentText() != "None (OR Bond)"
+            (self.view.bond_type_box.currentText() == "Recognizance (OR) Bond"
+            or self.view.bond_type_box.currentText() == "Continue Existing Bond"
+            or self.view.bond_type_box.currentText() == "No Bond")
+            and self.view.bond_amount_box.currentText() != "None"
         ):
             message = (
-                "A Recognizance (OR) Bond was selected but a bond amount other than "
-                "None(OR Bond) was chosen. \n\nPlease either change bond type to 10% "
-                "or Cash or Surety, or set bond amount to None (OR Bond)."
+                f"{self.view.bond_type_box.currentText()} was selected but a bond amount other than "
+                f"None was chosen. \n\nPlease either change bond type to 10% Deposit Bond,"
+                f"or a Cash or Surety Bond, or set bond amount to None."
             )
             RequiredBox(message).exec()
             return "Fail"
@@ -304,7 +307,6 @@ class NoPleaBondDialogInfoChecker(BaseInfoChecker):
                 return "Fail"
 
 
-
 class BondHearingDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
         ("admin_license_suspension", "disposition", "Admin License Suspension"),
@@ -402,9 +404,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        # self.total_jail_days = self.calculate_total_jail_days()
-        # self.total_jail_days_suspended = self.calculate_total_jail_days_suspended()
-        # self.total_jail_days_credit = self.calculate_jail_days_credit()
         self.case_info = self.view.entry_case_information
         self.dialog_check_list = [
             "check_defense_counsel",
@@ -491,7 +490,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return int(self.case_info.jail_terms.days_in_jail)
 
     def check_if_jail_days_suspended_greater_than_jail_imposed(self):
-        if self.case_info.jail_terms.total_jail_days_suspended > self.case_info.jail_terms.total_jail_days_imposed:
+        if (
+            self.case_info.jail_terms.total_jail_days_suspended
+            > self.case_info.jail_terms.total_jail_days_imposed
+        ):
             message = RequiredBox(
                 f"The total number of jail days suspended is {self.case_info.jail_terms.total_jail_days_suspended} "
                 f"which is greater than the total jail days imposed of {self.case_info.jail_terms.total_jail_days_imposed}. "
@@ -504,9 +506,15 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_if_jail_days_imposed_greater_than_suspended_and_credit(self):
         if (
             self.case_info.jail_terms.total_jail_days_imposed
-            > (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
+            > (
+                self.case_info.jail_terms.total_jail_days_suspended
+                + self.case_info.jail_terms.days_in_jail
+            )
             and self.case_info.jail_terms.ordered is False
-            and (self.case_info.jail_terms.currently_in_jail == "No" or self.case_info.jail_terms.currently_in_jail == "")
+            and (
+                self.case_info.jail_terms.currently_in_jail == "No"
+                or self.case_info.jail_terms.currently_in_jail == ""
+            )
             and self.case_info.community_control.driver_intervention_program is False
         ):
             message = JailWarningBox(
@@ -534,9 +542,15 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_if_jail_days_equals_suspended_and_imposed_days(self):
         if (
             self.case_info.jail_terms.total_jail_days_imposed
-            == (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
+            == (
+                self.case_info.jail_terms.total_jail_days_suspended
+                + self.case_info.jail_terms.days_in_jail
+            )
             and self.case_info.jail_terms.ordered is True
-            and (self.case_info.jail_terms.currently_in_jail == "No" or self.case_info.jail_terms.currently_in_jail == "")
+            and (
+                self.case_info.jail_terms.currently_in_jail == "No"
+                or self.case_info.jail_terms.currently_in_jail == ""
+            )
         ):
             message = WarningBox(
                 f"The total jail days imposed of {self.case_info.jail_terms.total_jail_days_imposed} is equal to the total jail "
@@ -557,7 +571,10 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
     def check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered(self):
         if (
             self.case_info.jail_terms.total_jail_days_imposed
-            >= (self.case_info.jail_terms.total_jail_days_suspended + self.case_info.jail_terms.days_in_jail)
+            >= (
+                self.case_info.jail_terms.total_jail_days_suspended
+                + self.case_info.jail_terms.days_in_jail
+            )
             and self.case_info.jail_terms.ordered is True
             and self.case_info.jail_terms.currently_in_jail == "Yes"
         ):
@@ -570,7 +587,8 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
     def check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed(self):
         if (
-            self.case_info.jail_terms.days_in_jail > self.case_info.jail_terms.total_jail_days_imposed
+            self.case_info.jail_terms.days_in_jail
+            > self.case_info.jail_terms.total_jail_days_imposed
             and self.view.jail_time_credit_apply_box.currentText() == "Sentence"
         ):
             message = RequiredBox(
@@ -585,7 +603,6 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
 
 
 class ProbationViolationBondDialogInfoChecker(BaseInfoChecker):
-
     def __init__(self, dialog):
         self.view = dialog
         self.dialog_check_list = [
@@ -597,7 +614,6 @@ class ProbationViolationBondDialogInfoChecker(BaseInfoChecker):
 
 
 class FailureToAppearDialogInfoChecker(BaseInfoChecker):
-
     def __init__(self, dialog):
         self.view = dialog
         self.dialog_check_list = [

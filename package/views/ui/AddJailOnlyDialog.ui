@@ -317,7 +317,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QDateEdit" name="report_date_box">
+           <widget class="NoScrollDateEdit" name="report_date_box">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -328,7 +328,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QComboBox" name="report_type_box">
+           <widget class="NoScrollComboBox" name="report_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -357,7 +357,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="5" column="1">
-           <widget class="QComboBox" name="jail_sentence_execution_type_box">
+           <widget class="NoScrollComboBox" name="jail_sentence_execution_type_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -411,19 +411,16 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QTimeEdit" name="report_time_box">
+           <widget class="NoScrollTimeEdit" name="report_time_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
-            <property name="dateTime">
-             <datetime>
+            <property name="time">
+             <time>
               <hour>8</hour>
               <minute>30</minute>
               <second>0</second>
-              <year>2000</year>
-              <month>1</month>
-              <day>1</day>
-             </datetime>
+             </time>
             </property>
            </widget>
           </item>
@@ -462,6 +459,23 @@ background-color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollTimeEdit</class>
+   <extends>QTimeEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>report_type_box</tabstop>
   <tabstop>report_date_box</tabstop>

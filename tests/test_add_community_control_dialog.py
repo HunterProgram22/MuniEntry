@@ -78,13 +78,12 @@ def test_if_conditions_hold_if_checked_dialog_closed_then_reopened(qtbot, main_w
     mouse_click(main_window.dialog.add_conditions_Button)
 
     def close_popup_dialog():
-        qtbot.addWidget(main_window.dialog.popup_dialog)
-        mouse_click(main_window.dialog.popup_dialog.cancel_Button)
-
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
 
     qtbot.addWidget(main_window.dialog.popup_dialog)
     mouse_click(getattr(main_window.dialog.popup_dialog, checkBox))
-    mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
     QTimer.singleShot(100, close_popup_dialog)
+    mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
     mouse_click(main_window.dialog.add_conditions_Button)
+    qtbot.addWidget(main_window.dialog.popup_dialog)
     assert getattr(main_window.dialog.popup_dialog, checkBox).isChecked()

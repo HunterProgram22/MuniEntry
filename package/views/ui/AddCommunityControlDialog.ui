@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-824</y>
         <width>1105</width>
-        <height>1708</height>
+        <height>1692</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -315,7 +315,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="11" column="0">
-           <widget class="QComboBox" name="house_arrest_time_box">
+           <widget class="NoScrollComboBox" name="house_arrest_time_box">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -386,7 +386,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="13" column="2">
-           <widget class="QComboBox" name="specialized_docket_box">
+           <widget class="NoScrollComboBox" name="specialized_docket_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -408,7 +408,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="13" column="0">
-           <widget class="QComboBox" name="gps_exclusion_radius_box">
+           <widget class="NoScrollComboBox" name="gps_exclusion_radius_box">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -570,7 +570,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="26" column="0">
-           <widget class="QComboBox" name="community_control_community_service_hours_box">
+           <widget class="NoScrollComboBox" name="community_control_community_service_hours_box">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -710,7 +710,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QComboBox" name="community_control_term_of_control_box">
+           <widget class="NoScrollComboBox" name="community_control_term_of_control_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -758,7 +758,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QComboBox" name="community_control_type_of_control_box">
+           <widget class="NoScrollComboBox" name="community_control_type_of_control_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -903,7 +903,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="18" column="0">
-           <widget class="QComboBox" name="alcohol_monitoring_time_box">
+           <widget class="NoScrollComboBox" name="alcohol_monitoring_time_box">
             <property name="minimumSize">
              <size>
               <width>200</width>
@@ -1053,7 +1053,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="license_type_box">
+           <widget class="NoScrollComboBox" name="license_type_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1095,7 +1095,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QDateEdit" name="license_suspension_date_box">
+           <widget class="NoScrollDateEdit" name="license_suspension_date_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1123,7 +1123,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="term_of_suspension_box">
+           <widget class="NoScrollComboBox" name="term_of_suspension_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1330,7 +1330,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QComboBox" name="vehicle_impound_time_box">
+           <widget class="NoScrollComboBox" name="vehicle_impound_time_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1372,7 +1372,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QComboBox" name="vehicle_impound_action_box">
+           <widget class="NoScrollComboBox" name="vehicle_impound_action_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1537,7 +1537,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="3">
-           <widget class="QComboBox" name="community_service_days_to_complete_box">
+           <widget class="NoScrollComboBox" name="community_service_days_to_complete_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1577,7 +1577,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QComboBox" name="community_service_hours_ordered_box">
+           <widget class="NoScrollComboBox" name="community_service_hours_ordered_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1622,7 +1622,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="1" column="5">
-           <widget class="QDateEdit" name="community_service_date_to_complete_box">
+           <widget class="NoScrollDateEdit" name="community_service_date_to_complete_box">
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
@@ -1658,6 +1658,18 @@ background-color: rgb(255, 255, 255);</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>community_control_type_of_control_box</tabstop>
   <tabstop>community_control_term_of_control_box</tabstop>

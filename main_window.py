@@ -1,6 +1,5 @@
 """Module containing the Main Window of the application."""
 from typing import Type
-from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QMainWindow, QDialog, QComboBox
 
@@ -37,13 +36,11 @@ from settings import ICON_PATH
 
 class Window(QMainWindow, Ui_MainWindow):
     """The main window of the application that is the launching point for all dialogs."""
-
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
         self.create_main_window_dicts()
-        self.set_daily_case_lists_type()
         self.connect_signals_to_slots()
         self.load_case_lists()
         self.show_hide_daily_case_lists()
@@ -95,22 +92,6 @@ class Window(QMainWindow, Ui_MainWindow):
             self.trials_to_court_radioButton: self.trials_to_court_cases_box,
             self.pcvh_fcvh_radioButton: self.pcvh_fcvh_cases_box,
         }
-
-    def set_daily_case_lists_type(self) -> None:
-        """Sets the daily cases lists to the custom widget ExtendedComboBox. The ExtendedComboBox
-        class allows for auto-completion filtering when typing in the box."""
-        self.arraignments_cases_box.__class__ = ExtendedComboBox
-        self.arraignments_cases_box.set_up()
-        self.slated_cases_box.__class__ = ExtendedComboBox
-        self.slated_cases_box.set_up()
-        self.final_pretrial_cases_box.__class__ = ExtendedComboBox
-        self.final_pretrial_cases_box.set_up()
-        self.pleas_cases_box.__class__ = ExtendedComboBox
-        self.pleas_cases_box.set_up()
-        self.trials_to_court_cases_box.__class__ = ExtendedComboBox
-        self.trials_to_court_cases_box.set_up()
-        self.pcvh_fcvh_cases_box.__class__ = ExtendedComboBox
-        self.pcvh_fcvh_cases_box.set_up()
 
     def connect_signals_to_slots(self) -> None:
         self.menu_file_exit.triggered.connect(self.close)
@@ -191,7 +172,6 @@ class Window(QMainWindow, Ui_MainWindow):
         case_number = selected_case_table.currentText().split("- ")[1]
         return CriminalCaseSQLRetriever(case_number, self.case_table).load_case()
 
-    @logger.catch
     @check_judicial_officer
     @check_case_list_selected
     def start_dialog_from_entry_button(self) -> None:

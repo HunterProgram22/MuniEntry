@@ -1,8 +1,11 @@
+import re
+import datetime
+
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime, QTime
+from PyQt5.QtGui import QIntValidator, QFont
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit, QMenu
+    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel, QDateTimeEdit
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
@@ -22,7 +25,8 @@ def return_attorney_data_from_excel(excel_file: str) -> list:
         data.append(attorney_full_name)
     return data
 
-
+TODAY = QtCore.QDate.currentDate()
+TODAY_STRING = TODAY.toString("MMMM dd, yyyy")
 ATTORNEY_LIST = return_attorney_data_from_excel(f"{DB_PATH}Attorneys.xlsx")
 
 
@@ -40,6 +44,16 @@ class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super(QDateEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setDate(TODAY)
+
+    def get_date(self) -> str:
+        return self.date().toString("MMMM dd, yyyy")
+
+    def set_date(self, date_str: str) -> QDate:
+        if date_str is None:
+            date_str = TODAY_STRING
+        date_str = QDate.fromString(date_str, "MMMM dd, yyyy")
+        return self.setDate(date_str,)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
@@ -50,6 +64,16 @@ class NoScrollTimeEdit(QTimeEdit):
     def __init__(self, parent=None):
         super(QTimeEdit, self).__init__(parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+    def get_time(self) -> str:
+        return self.time().toString("hh:mm A")
+
+    def set_time(self, time_str: str) -> QTime:
+        if time_str is None:
+            time_str = "08:30 AM"
+        time_str = QTime.fromString(time_str, "hh:mm A")
+        return self.setTime(time_str)
+
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
@@ -63,6 +87,8 @@ class ExtendedComboBox(QComboBox):
         super(ExtendedComboBox, self).__init__(parent)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setEditable(True)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_menu)
 
         # add a filter model to filter matching items
         self.pFilterModel = QSortFilterProxyModel(self)
@@ -78,10 +104,6 @@ class ExtendedComboBox(QComboBox):
         # connect signals
         self.lineEdit().textEdited[str].connect(self.pFilterModel.setFilterFixedString)
         self.completer.activated.connect(self.on_completer_activated)
-
-    def set_up(self):
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.customContextMenuRequested.connect(self.show_menu)
 
     def show_menu(self, pos):
         menu = QMenu()
@@ -127,18 +149,56 @@ class DefenseCounselComboBox(NoScrollComboBox):
             self.addItem(attorney)
 
 
-class StatuteLineEdit(QLineEdit):
-    def __init__(self, statute=None, parent=None):
-        super(QLineEdit, self).__init__(parent)
+class StatuteLineEdit(QLabel):
+    def __init__(self, statute: str=None, parent=None):
+        super(QLabel, self).__init__(parent)
+        self.setStyleSheet("font: bold 'Palatino Linotype';"
+                           "font-size: 10pt")
         self.set_up_widget(statute)
+        self.statute = statute
 
-    def set_up_widget(self, statute):
+    def get_text(self) -> str:
+        """This method exists to return the string of the statute that is used in the entry
+        as opposed to the text that is displayed which is a hyperlink."""
+        return self.statute
+
+    def set_up_widget(self, statute: str):
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setObjectName("statute_lineEdit")
-        self.setFocusPolicy(QtCore.Qt.ClickFocus)
-        self.setText(statute)
+        url_link = self.set_url_link(statute)
+        self.setText(url_link)
+        self.setOpenExternalLinks(True)
+
+    def set_url_link(self, statute: str) -> str:
+        admin_code = "\d\d\d\d.\d\d-\d-\d\d"
+        url_statute = re.search(admin_code, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        admin_code_two = "\d\d\d\d.\d\d-\d\d-\d\d"
+        url_statute = re.search(admin_code_two, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            url_statute = url_statute.replace('.', ':')
+            return f"<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>"
+        seven_digit_stat = "\d\d\d\d.\d\d\d"
+        url_statute = re.search(seven_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        six_digit_stat = "\d\d\d\d.\d\d"
+        url_statute = re.search(six_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>"
+        five_digit_stat = "\d\d\d.\d\d"
+        url_statute = re.search(five_digit_stat, statute)
+        if url_statute is not None:
+            url_statute = url_statute.group()
+            return f"<a href=\'https://library.municode.com/oh\'>{statute}</a>"
+        return f"<a href=\'https://www.google.com/\'>{statute}</a>"
 
 
 class DegreeComboBox(NoScrollComboBox):
