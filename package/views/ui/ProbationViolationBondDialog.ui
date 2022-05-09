@@ -601,12 +601,7 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
-                 <string>None (No Bond)</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>None (OR Bond)</string>
+                 <string>None</string>
                 </property>
                </item>
                <item>

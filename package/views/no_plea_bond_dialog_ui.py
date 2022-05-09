@@ -453,7 +453,7 @@ class Ui_NoPleaBondDialog(object):
         self.bond_type_box.setItemText(1, _translate("NoPleaBondDialog", "10% Deposit, Cash or Surety Bond"))
         self.bond_type_box.setItemText(2, _translate("NoPleaBondDialog", "Cash or Surety Bond"))
         self.label_8.setText(_translate("NoPleaBondDialog", "Bond Type:"))
-        self.bond_amount_box.setItemText(0, _translate("NoPleaBondDialog", "None (OR Bond)"))
+        self.bond_amount_box.setItemText(0, _translate("NoPleaBondDialog", "None"))
         self.bond_amount_box.setItemText(1, _translate("NoPleaBondDialog", "$1,000"))
         self.bond_amount_box.setItemText(2, _translate("NoPleaBondDialog", "$1,500"))
         self.bond_amount_box.setItemText(3, _translate("NoPleaBondDialog", "$2,000"))

@@ -126,8 +126,7 @@ class BaseDialogViewModifier:
         """Loops through the terms_list for a model and loads data into the view of the dialog on
         load. This is to allow for previously entered data to be shown if a user comes back to
         the dialog after having previously entered data."""
-        terms_list = getattr(model_class, "terms_list")
-        for (model_attribute, view_field) in terms_list:
+        for (model_attribute, view_field) in model_class.terms_list:
             key = getattr(self.dialog, view_field).__class__.__name__
             view = getattr(self.dialog, view_field)
             getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))

@@ -119,6 +119,7 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
+        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.show_hide_bond_conditions)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)

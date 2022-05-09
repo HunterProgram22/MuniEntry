@@ -771,7 +771,7 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>None (OR Bond)</string>
+                 <string>None</string>
                 </property>
                </item>
                <item>

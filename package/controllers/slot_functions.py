@@ -519,7 +519,7 @@ class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def set_if_no_bond(self, dialog):
         if self.dialog.bond_type_box.currentText() == "No Bond":
-            self.dialog.bond_amount_box.setCurrentText("None (No Bond)")
+            self.dialog.bond_amount_box.setCurrentText("None")
 
 
 class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -577,6 +577,14 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
             if hasattr(self.dialog, condition_checkbox):
                 getattr(self.dialog, condition_field).setEnabled(False)
                 getattr(self.dialog, condition_field).setHidden(True)
+
+    def show_hide_bond_conditions(self):
+        if self.dialog.bond_type_box.currentText() == "Continue Existing Bond":
+            self.dialog.bond_conditions_frame.setHidden(True)
+            self.dialog.special_bond_conditions_frame.setHidden(True)
+        else:
+            self.dialog.bond_conditions_frame.setHidden(False)
+            self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
 class NoPleaBondDialogSlotFunctions(BaseDialogSlotFunctions):
