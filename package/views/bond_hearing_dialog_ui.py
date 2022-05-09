@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/BondHearingDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\BondHearingDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -435,7 +435,7 @@ class Ui_BondHearingDialog(object):
         self.alcohol_test_kiosk_checkBox.setText(_translate("BondHearingDialog", " Alcohol Kiosk testing                                         "))
         self.comply_protection_order_checkBox.setText(_translate("BondHearingDialog", " Comply with Terms of Protection Order"))
         self.label_8.setText(_translate("BondHearingDialog", "Bond Type:"))
-        self.bond_amount_box.setItemText(0, _translate("BondHearingDialog", "None (OR Bond)"))
+        self.bond_amount_box.setItemText(0, _translate("BondHearingDialog", "None"))
         self.bond_amount_box.setItemText(1, _translate("BondHearingDialog", "$1,000"))
         self.bond_amount_box.setItemText(2, _translate("BondHearingDialog", "$1,500"))
         self.bond_amount_box.setItemText(3, _translate("BondHearingDialog", "$2,000"))

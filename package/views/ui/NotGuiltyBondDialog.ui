@@ -391,7 +391,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QFrame" name="frame_2">
+           <widget class="QFrame" name="special_bond_conditions_frame">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);
 border-color: rgb(0, 0, 0);</string>
@@ -719,6 +719,11 @@ font-weight: bold;</string>
                  <string>Cash or Surety Bond</string>
                 </property>
                </item>
+               <item>
+                <property name="text">
+                 <string>Continue Existing Bond</string>
+                </property>
+               </item>
               </widget>
              </item>
              <item row="1" column="0">
@@ -747,7 +752,7 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>None (OR Bond)</string>
+                 <string>None</string>
                 </property>
                </item>
                <item>
@@ -816,7 +821,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="3" column="0" colspan="2">
-           <widget class="QFrame" name="frame_7">
+           <widget class="QFrame" name="bond_conditions_frame">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
             </property>
