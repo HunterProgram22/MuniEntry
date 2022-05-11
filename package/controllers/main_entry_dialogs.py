@@ -275,6 +275,18 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.dialog_name = "Not Guilty Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
+        self.set_all_pleas_to_not_guilty()
+
+    def set_all_pleas_to_not_guilty(self):
+        """Sets all pleas to not guilty at load just like hitting not guilty all button."""
+        for column in range(1, self.charges_gridLayout.columnCount()):
+            if (
+                self.charges_gridLayout.itemAtPosition(self.charges_gridLayout.row_offense, column)
+                is not None
+            ):
+                self.charges_gridLayout.itemAtPosition(
+                    self.charges_gridLayout.row_plea, column
+                ).widget().setCurrentText("Not Guilty")
 
     def modify_view(self):
         return NotGuiltyBondDialogViewModifier(self)
@@ -380,7 +392,9 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         self.dialog_name = "Failure To Appear Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
-        if self.case_table == "final_pretrials": # Ovverides the set_appearance_reason in ViewModifier
+        if (
+            self.case_table == "final_pretrials"
+        ):  # Ovverides the set_appearance_reason in ViewModifier
             self.appearance_reason_box.setCurrentText("final pre-trial")
 
     def modify_view(self):
@@ -410,7 +424,13 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         "specialized_docket_checkBox": ["specialized_docket_type_box"],
     }
 
-    def __init__(self, judicial_officer: object, cms_case: str = None, case_table:str = None, parent: object = None) -> None:
+    def __init__(
+        self,
+        judicial_officer: object,
+        cms_case: str = None,
+        case_table: str = None,
+        parent: object = None,
+    ) -> None:
         super().__init__(judicial_officer, cms_case, parent)
         self.additional_conditions_list = [
             (
@@ -448,8 +468,6 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = BondHearingDialogInfoChecker(self)
-
-
 
 
 if __name__ == "__main__":
