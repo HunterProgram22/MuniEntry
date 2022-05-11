@@ -92,7 +92,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 
     def clean_statute_name(self, statute: str) -> str:
         """Removes trailing asteriks that are part of CMS data."""
-        return statute.rstrip('*')
+        return statute.rstrip("*")
 
     def clean_offense_name(self, offense: str) -> str:
         """Sets an offense name to title case, but leaves certain abbreviations and removes
@@ -113,7 +113,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
                 continue
             else:
                 clean_offense_word_list.append(word.capitalize())
-        clean_offense = ' '.join([str(word) for word in clean_offense_word_list])
+        clean_offense = " ".join([str(word) for word in clean_offense_word_list])
         return clean_offense
 
     def load_case(self) -> CmsCaseInformation:
@@ -171,9 +171,20 @@ def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
     cases_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
+    insert_data_query = QSqlQuery(con_daily_case_lists)
+    insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name))
     for case in cases_from_table:
-        insert_data_query = QSqlQuery(con_daily_case_lists)
-        insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name, case))
+        insert_data_query.addBindValue(case.case_number)
+        insert_data_query.addBindValue(case.defendant_last_name)
+        insert_data_query.addBindValue(case.defendant_first_name)
+        insert_data_query.addBindValue(case.offense)
+        insert_data_query.addBindValue(case.statute)
+        insert_data_query.addBindValue(case.degree)
+        insert_data_query.addBindValue(case.fra_in_file)
+        insert_data_query.addBindValue(case.moving_bool)
+        insert_data_query.addBindValue(case.def_atty_last_name)
+        insert_data_query.addBindValue(case.def_atty_first_name)
+        insert_data_query.addBindValue(case.def_atty_type)
         insert_data_query.exec()
 
 
@@ -371,8 +382,6 @@ def extract_data(case_data: dict) -> None:
         wb.save(filename=wb_name)
     except PermissionError:
         pass
-
-
 
 
 def main():

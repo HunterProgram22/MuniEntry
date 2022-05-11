@@ -34,7 +34,7 @@ def create_charges_table_sql_query() -> str:
     """
 
 
-def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
+def insert_daily_case_list_tables_sql_query(table: str) -> str:
     # Do not add comma after last value inserted
     return f"""
         INSERT INTO {table} (
@@ -50,19 +50,7 @@ def insert_daily_case_list_tables_sql_query(table: str, case: object) -> str:
             def_atty_first_name,
             def_atty_type
         )
-        VALUES (
-            '{case.case_number}',
-            '{case.defendant_last_name}',
-            '{case.defendant_first_name}',
-            '{case.offense}',
-            '{case.statute}',
-            '{case.degree}',
-            '{case.fra_in_file}',
-            '{case.moving_bool}',
-            '{case.def_atty_last_name}',
-            '{case.def_atty_first_name}',
-            '{case.def_atty_type}'
-        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
 
 
