@@ -21,11 +21,18 @@ from package.database_controllers.databases import (
 def crim_sql_retriever():
     return CriminalCaseSQLRetriever("20TRC09471", "arraignments")
 
+@pytest.fixture
+def crim_sql_special_character():
+    return CriminalCaseSQLRetriever("21CRB01597", "arraignments")
+
 
 def test_create_CriminalCaseSQLRetriever(crim_sql_retriever):
     assert crim_sql_retriever.case_number == "20TRC09471"
     assert crim_sql_retriever.case_table == "arraignments"
 
+def test_special_character_create_CriminalCaseSQLRetriever(crim_sql_special_character):
+    assert crim_sql_special_character.case_number == "21CRB01597"
+    assert crim_sql_special_character.case_table == "arraignments"
 
 def test_get_case_data_works(crim_sql_retriever):
     case = crim_sql_retriever.case
@@ -37,6 +44,17 @@ def test_get_case_data_works(crim_sql_retriever):
     assert case.defense_counsel_type == "PD"
     assert len(case.charges_list) == 5
     assert case.charges_list[0][0] == "OVI Alcohol / Drugs 1st"
+
+def test_get_case_data_special_character(crim_sql_special_character):
+    case = crim_sql_special_character.case
+    assert case.case_number == "21CRB01597"
+    assert case.defendant.last_name == "O'Reilly"
+    assert case.defendant.first_name == "Jacob"
+    assert case.fra_in_file == "U"
+    assert case.defense_counsel == "Chase Mallory"
+    assert case.defense_counsel_type == "No Data"
+    assert len(case.charges_list) == 1
+    assert case.charges_list[0][0] == "Possession Of Marihuana"
 
 
 test_offense_list = [
