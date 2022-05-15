@@ -1,20 +1,15 @@
-from datetime import date, timedelta, datetime
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
-from package.controllers.helper_functions import set_future_date, next_court_day
 
 from package.models.template_types import TEMPLATE_DICT
 
-from package.views.custom_widgets import NoScrollComboBox, NoScrollDateEdit, NoScrollTimeEdit
-
 from PyQt5.QtCore import QDate
 
-from package.controllers.helper_functions import set_future_date
 from package.models.scheduling_information import SchedulingCaseInformation
 from package.controllers.signal_connectors import BaseDialogSignalConnector
 from package.controllers.slot_functions import BaseDialogSlotFunctions
-from package.controllers.case_updaters import CaseModelUpdater
+from package.updaters.general_updaters import CaseInformationUpdater
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 
 TODAY = QDate.currentDate()
@@ -73,7 +68,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         return SchedulingEntryDialogSignalConnector(self)
 
     def update_entry_case_information(self):
-        return SchedulingEntryDialogCaseModelUpdater(self)
+        return SchedulingEntryDialogCaseInformationUpdater(self)
 
 
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
@@ -204,7 +199,7 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
         return continuance_days
 
 
-class SchedulingEntryDialogCaseModelUpdater(CaseModelUpdater):
+class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()

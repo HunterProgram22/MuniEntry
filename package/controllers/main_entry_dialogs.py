@@ -1,23 +1,19 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog
 
 # from db.databases import open_charges_db_connection
-from package.controllers.base_dialogs import BaseDialog
+from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
-from package.controllers.case_updaters import (
-    JailCCDialogCaseModelUpdater,
-    FineOnlyDialogCaseModelUpdater,
-    NotGuiltyBondDialogCaseModelUpdater,
-    NoPleaBondDialogCaseModelUpdater,
-    DiversionDialogCaseModelUpdater,
-    ProbationViolationBondDialogCaseModelUpdater,
-    FailureToAppearDialogCaseModelUpdater,
-    BondHearingDialogCaseModelUpdater,
-    PleaOnlyDialogCaseModelUpdater,
+from package.updaters.grid_case_updaters import (
+    JailCCDialogUpdater,
+    FineOnlyDialogUpdater,
+    NotGuiltyBondDialogUpdater,
+    DiversionDialogUpdater,
+    PleaOnlyDialogUpdater,
 )
-from package.controllers.conditions_dialogs import AddJailOnlyDialog
+from package.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater, \
+    BondHearingDialogUpdater, FailureToAppearDialogUpdater, \
+    ProbationViolationBondDialogUpdater
 from package.controllers.signal_connectors import (
     DiversionDialogSignalConnector,
     JailCCDialogSignalConnector,
@@ -65,7 +61,6 @@ from package.controllers.information_checkers import (
 from package.models.case_information import (
     BondConditions,
     BondModificationConditions,
-    CriminalCaseInformation,
     CommunityControlViolationBondConditions,
     FailureToAppearConditions,
 )
@@ -77,7 +72,6 @@ from package.controllers.charges_grids import (
     NotGuiltyPleaGrid,
     DiversionChargesGrid,
 )
-from package.views.custom_widgets import DefenseCounselComboBox, NoScrollComboBox
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
@@ -87,40 +81,6 @@ from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolati
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
-
-
-class CriminalBaseDialog(BaseDialog):
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        self.case_table = case_table
-        super().__init__(parent)
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
-        self.load_cms_data_to_view()
-        self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
-        self.defense_counsel_name_box.load_attorneys()
-        self.appearance_reason_box.__class__ = NoScrollComboBox
-        self.defense_counsel_type_box.__class__ = NoScrollComboBox
-        self.criminal_charge = None
-        self.popup_dialog = None
-
-    def load_cms_data_to_view(self):
-        raise NotImplementedError
-
-    def update_entry_case_information(self):
-        raise NotImplementedError
-
-    def perform_info_checks(self):
-        raise NotImplementedError
-
-    # TO BE REFACTORED #
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
-        self.defense_counsel_name_box.setFocus()
-
-    def start_jail_only_dialog(self):
-        self.update_entry_case_information()
-        AddJailOnlyDialog(self).exec()
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
@@ -146,7 +106,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return DiversionDialogCaseModelUpdater(self)
+        return DiversionDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = DiversionDialogInfoChecker(self)
@@ -172,7 +132,7 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         return CmsChargeLoader(self)
 
     def update_entry_case_information(self):
-        return PleaOnlyDialogCaseModelUpdater(self)
+        return PleaOnlyDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = PleaOnlyDialogInfoChecker(self)
@@ -212,7 +172,7 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return JailCCDialogCaseModelUpdater(self)
+        return JailCCDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = JailCCPleaDialogInfoChecker(self)
@@ -244,7 +204,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return FineOnlyDialogCaseModelUpdater(self)
+        return FineOnlyDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = FineOnlyDialogInfoChecker(self)
@@ -290,8 +250,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return CmsChargeLoader(self)
 
     def update_entry_case_information(self):
-        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
-        return NotGuiltyBondDialogCaseModelUpdater(self)
+        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        return NotGuiltyBondDialogUpdater(self)
 
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_charge_only_to_grid(self)
@@ -337,8 +297,8 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         return NoPleaBondDialogSignalConnector(self)
 
     def update_entry_case_information(self):
-        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
-        return NoPleaBondDialogCaseModelUpdater(self)
+        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        return NoPleaBondDialogUpdater(self)
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -368,7 +328,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
-        return ProbationViolationBondDialogCaseModelUpdater(self)
+        return ProbationViolationBondDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = ProbationViolationBondDialogInfoChecker(self)
@@ -398,7 +358,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
-        return FailureToAppearDialogCaseModelUpdater(self)
+        return FailureToAppearDialogUpdater(self)
 
     def perform_info_checks(self):
         self.dialog_checks = FailureToAppearDialogInfoChecker(self)
@@ -442,14 +402,12 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
     def load_cms_data_to_view(self) -> CmsNoChargeLoader:
         return CmsNoChargeLoader(self)
 
-    def update_entry_case_information(self) -> BondHearingDialogCaseModelUpdater:
-        """Calls the dialog specific CaseModelUpdater in the case_updaters.py module."""
-        return BondHearingDialogCaseModelUpdater(self)
+    def update_entry_case_information(self) -> BondHearingDialogUpdater:
+        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        return BondHearingDialogUpdater(self)
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = BondHearingDialogInfoChecker(self)
-
-
 
 
 if __name__ == "__main__":

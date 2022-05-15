@@ -534,7 +534,7 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             return "Pass"
         elif message_response == QMessageBox.Yes:
             self.view.jail_checkBox.setChecked(True)
-            self.view.start_jail_only_dialog()
+            self.view.functions.start_add_jail_report_dialog()
             return "Pass"
         elif message_response == QMessageBox.Cancel:
             return "Fail"

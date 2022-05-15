@@ -91,6 +91,10 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     def connect_signals_to_slots(self):
         return AddJailOnlyDialogSignalConnector(self)
 
+    def start_jail_only_dialog(self):
+        self.update_entry_case_information()
+        AddJailOnlyDialog(self).exec()
+
 
 class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     """The 'secondary' conditions dialog for the Jail CC Plea Dialog."""
