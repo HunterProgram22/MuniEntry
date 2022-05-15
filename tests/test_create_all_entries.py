@@ -42,6 +42,13 @@ def bhd_dialog(qtbot, main_window):
 
 
 @pytest.fixture
+def ngb_dialog(qtbot, main_window):
+    "Not Guilty Bond Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.NotGuiltyBondButton)
+    return main_window.dialog
+
+@pytest.fixture
 def npb_dialog(qtbot, main_window):
     "No Plea Bond Dialog"
     entry_dialog(qtbot, main_window)
@@ -114,6 +121,27 @@ def test_create_fine_only_entry(qtbot, fop_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(fop_dialog.create_entry_Button)
     assert fop_dialog.entry_case_information.case_number == "21TRC05611fop_test"
+
+
+@pytest.mark.create_entry_test
+def test_create_not_guilty_bond_entry(qtbot, ngb_dialog):
+    enter_data(ngb_dialog.case_number_lineEdit, "ngb_test")
+
+    mouse_click(ngb_dialog.not_guilty_all_Button)
+    enter_data(ngb_dialog.bond_type_box, "Cash or Surety Bond")
+    enter_data(ngb_dialog.bond_amount_box, "$5,000")
+
+    mouse_click(ngb_dialog.no_alcohol_drugs_checkBox)
+    mouse_click(ngb_dialog.alcohol_drugs_assessment_checkBox)
+    mouse_click(ngb_dialog.monitoring_checkBox)
+    mouse_click(ngb_dialog.comply_protection_order_checkBox)
+    mouse_click(ngb_dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(ngb_dialog.mental_health_assessment_checkBox)
+    mouse_click(ngb_dialog.specialized_docket_checkBox)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(ngb_dialog.create_entry_Button)
+    assert ngb_dialog.entry_case_information.case_number == "21TRC05611ngb_test"
 
 
 @pytest.mark.create_entry_test

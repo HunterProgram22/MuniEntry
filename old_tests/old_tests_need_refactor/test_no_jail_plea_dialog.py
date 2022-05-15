@@ -1,7 +1,7 @@
 import pytest
 from old_tests.conftest import mouse_click
 from datetime import date, timedelta
-from package.controllers.case_updaters import FineOnlyGridModelUpdater
+from package.updaters import FineOnlyGridModelUpdater
 
 TODAY = date.today()
 
