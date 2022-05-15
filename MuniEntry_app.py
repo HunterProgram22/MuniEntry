@@ -19,13 +19,13 @@ logger.add("./resources/logs/Error_log_{time}.log")
 
 @logger.catch
 def main():
+    print("Loading")
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(ICON_PATH + 'gavel.png'))
     splash.show()
-    print("Loading")
-    QTimer.singleShot(2000, splash.close)
     win = load_window()
     win.show()
+    splash.close()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
 
