@@ -12,7 +12,6 @@ from PyQt5.QtSql import QSqlDatabase
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 from PyQt5.QtCore import QTimer
 
-from main_window import Window
 from settings import ICON_PATH
 
 logger.add("./resources/logs/Error_log_{time}.log")
@@ -25,10 +24,15 @@ def main():
     splash.show()
     print("Loading")
     QTimer.singleShot(2000, splash.close)
-    win = Window()
+    win = load_window()
     win.show()
     print(QSqlDatabase.connectionNames())
     sys.exit(app.exec())
+
+def load_window():
+    from main_window import Window
+
+    return Window()
 
 
 if __name__ == "__main__":
