@@ -17,7 +17,7 @@ logger.add('./resources/logs/Error_log_{time}.log')
 
 
 def load_window():
-    """The main window is loaded as a seperate function to improve application load time."""
+    """The main window is loaded as a separate function to improve application load time."""
     from main_window import Window
 
     return Window()
