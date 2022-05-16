@@ -1,0 +1,76 @@
+from .custom_widgets import NoScrollComboBox as NoScrollComboBox, NoScrollDateEdit as NoScrollDateEdit
+from typing import Any
+
+class Ui_FineOnlyPleaDialog:
+    verticalLayout: Any
+    scrollArea: Any
+    scrollAreaWidgetContents_2: Any
+    gridLayout_2: Any
+    frame: Any
+    verticalLayout_2: Any
+    gridLayout_3: Any
+    no_contest_all_Button: Any
+    charges_gridLayout: Any
+    statute_label: Any
+    allied_label: Any
+    plea_label: Any
+    degree_label: Any
+    finding_label: Any
+    offense_label: Any
+    fines_suspended_label: Any
+    label_5: Any
+    fines_label: Any
+    amend_row_label: Any
+    dismissed_label: Any
+    guilty_all_Button: Any
+    add_charge_Button: Any
+    line: Any
+    frame_5: Any
+    gridLayout_5: Any
+    label_11: Any
+    label_9: Any
+    ability_to_pay_box: Any
+    label_18: Any
+    balance_due_date: Any
+    credit_for_jail_checkBox: Any
+    jail_time_credit_box: Any
+    court_costs_box: Any
+    costs_and_fines_Button: Any
+    case_name_Frame: Any
+    gridLayout: Any
+    label: Any
+    cancel_Button: Any
+    appearance_reason_box: Any
+    label_3: Any
+    defendant_last_name_lineEdit: Any
+    plea_trial_date: Any
+    label_26: Any
+    label_2: Any
+    case_number_lineEdit: Any
+    label_4: Any
+    defendant_first_name_lineEdit: Any
+    clear_fields_case_Button: Any
+    label_8: Any
+    defense_counsel_name_box: Any
+    defense_counsel_type_box: Any
+    defense_counsel_waived_checkBox: Any
+    line_2: Any
+    frame_6: Any
+    gridLayout_4: Any
+    label_24: Any
+    license_suspension_checkBox: Any
+    community_service_checkBox: Any
+    add_conditions_Button: Any
+    other_conditions_checkBox: Any
+    frame_2: Any
+    gridLayout_6: Any
+    close_dialog_Button: Any
+    create_entry_Button: Any
+    fra_frame: Any
+    formLayout_2: Any
+    label_22: Any
+    label_21: Any
+    fra_in_court_box: Any
+    fra_in_file_box: Any
+    def setupUi(self, FineOnlyPleaDialog) -> None: ...
+    def retranslateUi(self, FineOnlyPleaDialog) -> None: ...

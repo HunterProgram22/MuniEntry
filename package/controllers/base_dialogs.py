@@ -1,15 +1,15 @@
 """The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+from typing import Any
+
 from PyQt5.QtWidgets import QDialog
+from package.models.case_information import CriminalCaseInformation
+from package.views.custom_widgets import DefenseCounselComboBox, NoScrollComboBox
 
 from settings import WIDGET_TYPE_ACCESS_DICT
 
 
 class BaseDialog(QDialog):
-    """This class is a base class for all dialog windows.
-
-    Every window must have a view loaded (modify view), slot functions created, and then the slot
-    functions connected to signals.
-    """
+    """This class is a base class for all dialog windows."""
 
     def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
@@ -18,37 +18,55 @@ class BaseDialog(QDialog):
         self.connect_signals_to_slots()
 
     def modify_view(self):
-        """This method calls the self.setupUI method to setup the UI, then runs other file setup.
-
-        Place items in this returned class that can't be added directly in QtDesigner (or are
-        more easily added later) so that they don't need to be changed in the view file each
-        time pyuic5 is run.
-        """
         raise NotImplementedError
 
     def create_dialog_slot_functions(self):
-        """This method calls the class that contains all functions for the dialog.
-
-        Each dialog has functions tied to certain slots (i.e. buttons, checkboxes, etc.) the
-        functions are placed in a class and returned to the main dialog so that they can be
-        connected to the signals."""
         raise NotImplementedError
 
     def connect_signals_to_slots(self):
-        """Each dialog has its own signal connector class that connects the signals to the
-        slot functions class for that dialog."""
         raise NotImplementedError
 
-    def transfer_view_data_to_model(self, model_class: object) -> None:
-        """Loops through a model's terms list to transfer data from the view to the model using
-        the appropriate method for the view widget."""
+    def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
+        """Takes data in the view fields and transfers to appropriate model class attribute.
+
+        Method loops through all items in terms list which are maps of a model attribute to
+        a view field. The appropriate transfer method is obtained from the WIDGET_TYPE_ACCESS_DICT
+
+        Args:
+            model_class: A dataclass object that has a terms_list attribute mapping
+                view fields to model attributes.
+        """
         for (model_attribute, view_field) in model_class.terms_list:
             key = getattr(self, view_field).__class__.__name__
             view = getattr(self, view_field)
             setattr(model_class, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
 
 
-if __name__ == "__main__":
-    print("Base Dialogs ran directly")
-else:
-    print("Base Dialogs imported")
+class CriminalBaseDialog(BaseDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        self.case_table = case_table
+        super().__init__(parent)
+        self.judicial_officer = judicial_officer
+        self.cms_case = cms_case
+        self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
+        self.load_cms_data_to_view()
+        self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
+        self.defense_counsel_name_box.load_attorneys()
+        self.appearance_reason_box.__class__ = NoScrollComboBox
+        self.defense_counsel_type_box.__class__ = NoScrollComboBox
+        self.criminal_charge = None
+        self.popup_dialog = None
+
+    def load_cms_data_to_view(self):
+        raise NotImplementedError
+
+    def update_entry_case_information(self):
+        raise NotImplementedError
+
+    def perform_info_checks(self):
+        raise NotImplementedError
+
+    # TO BE REFACTORED #
+    def add_charge_to_grid(self):
+        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.defense_counsel_name_box.setFocus()

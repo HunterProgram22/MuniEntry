@@ -1,0 +1,67 @@
+from .custom_widgets import NoScrollComboBox as NoScrollComboBox, NoScrollDateEdit as NoScrollDateEdit
+from typing import Any
+
+class Ui_AddSpecialBondConditionsDialog:
+    gridLayout: Any
+    frame: Any
+    gridLayout_5: Any
+    scrollArea: Any
+    scrollAreaWidgetContents: Any
+    gridLayout_11: Any
+    admin_license_suspension_frame: Any
+    gridLayout_7: Any
+    label_24: Any
+    label_9: Any
+    admin_license_suspension_objection_box: Any
+    label_21: Any
+    admin_license_suspension_disposition_box: Any
+    label: Any
+    admin_license_suspension_explanation_box: Any
+    frame_7: Any
+    gridLayout_10: Any
+    add_conditions_Button: Any
+    cancel_Button: Any
+    custodial_supervision_frame: Any
+    gridLayout_9: Any
+    custodial_supervision_supervisor_box: Any
+    label_6: Any
+    label_29: Any
+    other_conditions_frame: Any
+    gridLayout_3: Any
+    label_28: Any
+    other_conditions_textEdit: Any
+    vehicle_seizure_frame: Any
+    gridLayout_8: Any
+    label_4: Any
+    vehicle_make_model_box: Any
+    label_3: Any
+    vehicle_license_plate_box: Any
+    tow_to_residence_checkBox: Any
+    motion_to_return_vehicle_checkBox: Any
+    label_8: Any
+    state_opposes_box: Any
+    label_7: Any
+    disposition_motion_to_return_box: Any
+    label_27: Any
+    banner_frame: Any
+    gridLayout_4: Any
+    charges_gridLayout: Any
+    label_19: Any
+    offense_label_1: Any
+    no_contact_frame: Any
+    gridLayout_6: Any
+    label_5: Any
+    no_contact_name_box: Any
+    label_25: Any
+    domestic_violence_frame: Any
+    gridLayout_2: Any
+    label_26: Any
+    label_2: Any
+    domestic_violence_exclusive_possession_to_box: Any
+    domestic_violence_surrender_weapons_checkBox: Any
+    domestic_violence_surrender_weapons_dateBox: Any
+    domestic_violence_vacate_checkBox: Any
+    domestic_violence_residence_box: Any
+    frame_2: Any
+    def setupUi(self, AddSpecialBondConditionsDialog) -> None: ...
+    def retranslateUi(self, AddSpecialBondConditionsDialog) -> None: ...

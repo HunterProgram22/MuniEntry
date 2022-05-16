@@ -31,7 +31,7 @@ from package.models.case_information import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import ExtendedComboBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH
+from settings import ICON_PATH, VERSION_NUMBER
 
 
 class Window(QMainWindow, Ui_MainWindow):
@@ -40,6 +40,7 @@ class Window(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.setupUi(self)  # The self argument that is called is MainWindow
         self.setWindowIcon(QtGui.QIcon(f"{ICON_PATH}gavel.ico"))
+        self.setWindowTitle(f"MuniEntry - Version {VERSION_NUMBER}")
         self.create_main_window_dicts()
         self.connect_signals_to_slots()
         self.load_case_lists()

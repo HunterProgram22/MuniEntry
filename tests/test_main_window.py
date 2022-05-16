@@ -1,5 +1,6 @@
 import pytest
 from PyQt5 import QtCore
+from settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data, right_click
 
 
@@ -21,7 +22,7 @@ def test_window_opens(qtbot, main_window_noclose):
     the main_window fixture causes the next test to error because the window is closed
     when it runs."""
     main_window_noclose.show()
-    assert main_window_noclose.windowTitle() == "MuniEntry - ver 0.22.2"
+    assert main_window_noclose.windowTitle() == f"MuniEntry - Version {VERSION_NUMBER}"
 
 
 @pytest.mark.manual

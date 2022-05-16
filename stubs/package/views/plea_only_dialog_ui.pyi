@@ -1,0 +1,61 @@
+from .custom_widgets import NoScrollComboBox as NoScrollComboBox, NoScrollDateEdit as NoScrollDateEdit
+from typing import Any
+
+class Ui_PleaOnlyDialog:
+    gridLayout_2: Any
+    frame_4: Any
+    gridLayout_4: Any
+    scrollArea: Any
+    scrollAreaWidgetContents: Any
+    gridLayout_8: Any
+    create_entry_Button: Any
+    case_name_Frame: Any
+    gridLayout: Any
+    label: Any
+    plea_trial_date: Any
+    defendant_first_name_lineEdit: Any
+    defense_counsel_name_box: Any
+    defense_counsel_type_box: Any
+    defense_counsel_waived_checkBox: Any
+    defendant_last_name_lineEdit: Any
+    cancel_Button: Any
+    label_26: Any
+    label_3: Any
+    clear_fields_case_Button: Any
+    label_2: Any
+    label_11: Any
+    case_number_lineEdit: Any
+    label_24: Any
+    appearance_reason_box: Any
+    line_2: Any
+    frame_2: Any
+    gridLayout_7: Any
+    plea_only_bond_type_box: Any
+    label_7: Any
+    label_4: Any
+    frame: Any
+    verticalLayout_2: Any
+    gridLayout_3: Any
+    no_contest_all_Button: Any
+    charges_gridLayout: Any
+    offense_label: Any
+    label_6: Any
+    amend_row_label: Any
+    dismissed_label: Any
+    degree_label: Any
+    finding_label: Any
+    statute_label: Any
+    plea_label: Any
+    allied_label: Any
+    guilty_all_Button: Any
+    add_charge_Button: Any
+    line: Any
+    close_dialog_Button: Any
+    frame_5: Any
+    gridLayout_5: Any
+    set_restitution_checkBox: Any
+    label_5: Any
+    prepare_psi_checkBox: Any
+    victim_appearance_checkBox: Any
+    def setupUi(self, PleaOnlyDialog) -> None: ...
+    def retranslateUi(self, PleaOnlyDialog) -> None: ...
