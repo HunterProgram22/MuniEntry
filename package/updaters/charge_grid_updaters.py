@@ -28,7 +28,6 @@ class BaseGridUpdater(object):
         for charge in self.model.charges_list:
             col = self.set_charge_grid_column(col)
             charge.statute = self.grid.itemAtPosition(self.row_statute, col).widget().get_text()
-            print(charge.statute)
             col += 1
 
     def update_model_with_degree_data(self) -> None:
