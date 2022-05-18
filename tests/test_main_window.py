@@ -1,5 +1,6 @@
 import pytest
 from PyQt5 import QtCore
+
 from settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data, right_click
 
