@@ -14,7 +14,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from main_window import Window
+from main_window import MainWindow
 
 
 """
@@ -44,7 +44,7 @@ def right_click(button):
 
 @pytest.fixture
 def main_window(qtbot):
-    window = Window()
+    window = MainWindow()
     qtbot.addWidget(window)
 
     def close_main_dialog():
@@ -57,7 +57,7 @@ def main_window(qtbot):
 
 @pytest.fixture
 def main_window_noclose(qtbot):
-    window = Window()
+    window = MainWindow()
     qtbot.addWidget(window)
     return window
 
