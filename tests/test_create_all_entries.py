@@ -48,6 +48,7 @@ def ngb_dialog(qtbot, main_window):
     mouse_click(main_window.NotGuiltyBondButton)
     return main_window.dialog
 
+
 @pytest.fixture
 def npb_dialog(qtbot, main_window):
     "No Plea Bond Dialog"
@@ -210,3 +211,18 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(jcp_dialog.create_entry_Button)
     assert jcp_dialog.entry_case_information.case_number == "21TRC05611jcp_test"
+
+
+@pytest.mark.create_entry_test
+def test_create_div_entry(qtbot, div_dialog):
+    enter_data(div_dialog.case_number_lineEdit, "div_test")
+    mouse_click(div_dialog.marijuana_diversion_radioButton)
+    mouse_click(div_dialog.diversion_jail_imposed_checkBox)
+    mouse_click(div_dialog.other_conditions_checkBox)
+    enter_data(div_dialog.other_conditions_textEdit, "Be good or else!")
+    mouse_click(div_dialog.guilty_all_Button)
+    enter_data(div_dialog.fra_in_court_box, "Yes")
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(div_dialog.create_entry_Button)
+    assert div_dialog.entry_case_information.case_number == "21TRC05611div_test"
