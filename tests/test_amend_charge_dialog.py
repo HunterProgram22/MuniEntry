@@ -10,7 +10,7 @@ def amend_charge_dialog(qtbot, main_window):
     is the most common."""
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.final_pretrial_radioButton)
-    enter_data(main_window.final_pretrial_cases_box, "H")
+    enter_data(main_window.final_pretrial_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.JailCCPleaButton)
 
     def close_popup_dialog():
@@ -27,6 +27,7 @@ all_amend_charge_dialogs_test_list = [
     "FineOnlyPleaButton",
     "JailCCPleaButton",
     "DiversionButton",
+    "PleaOnlyButton",
 ]
 
 @pytest.mark.parametrize("test_input", all_amend_charge_dialogs_test_list)
@@ -35,7 +36,7 @@ def test_amend_charge_works_all_dialogs(qtbot, main_window, test_input):
     Main Entry Dialog that has an Amend Charge button."""
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.final_pretrial_radioButton)
-    enter_data(main_window.final_pretrial_cases_box, "H")
+    enter_data(main_window.final_pretrial_cases_box, "Barkschat - 21TRC05611")
     dialog_button = getattr(main_window, test_input)
     mouse_click(dialog_button)
 
