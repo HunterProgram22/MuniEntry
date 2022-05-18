@@ -163,10 +163,11 @@ class StatuteLineEdit(QLabel):
         return self.statute
 
     def set_up_widget(self, statute: str):
+        self.statute = statute
         self.setMinimumSize(QtCore.QSize(200, 0))
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setObjectName("statute_lineEdit")
-        url_link = self.set_url_link(statute)
+        url_link = self.set_url_link(self.statute)
         self.setText(url_link)
         self.setOpenExternalLinks(True)
 

@@ -395,7 +395,7 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
                 )
                 self.main_dialog.charges_gridLayout.itemAtPosition(
                     self.main_dialog.charges_gridLayout.row_statute, columns
-                ).widget().setText(self.dialog.statute_choice_box.currentText())
+                ).widget().set_up_widget(self.dialog.statute_choice_box.currentText())
                 self.main_dialog.charges_gridLayout.itemAtPosition(
                     self.main_dialog.charges_gridLayout.row_degree, columns
                 ).widget().setCurrentText(self.dialog.degree_choice_box.currentText())
