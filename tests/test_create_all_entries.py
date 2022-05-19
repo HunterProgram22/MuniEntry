@@ -41,11 +41,19 @@ def bhd_dialog(qtbot, main_window):
     return main_window.dialog
 
 
+
 @pytest.fixture
 def ngb_dialog(qtbot, main_window):
     "Not Guilty Bond Dialog"
     entry_dialog(qtbot, main_window)
     mouse_click(main_window.NotGuiltyBondButton)
+    return main_window.dialog
+
+@pytest.fixture
+def fta_dialog(qtbot, main_window):
+    "Failure to Appear / Issue Warrant Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.FailureToAppearButton)
     return main_window.dialog
 
 
@@ -54,6 +62,22 @@ def npb_dialog(qtbot, main_window):
     "No Plea Bond Dialog"
     entry_dialog(qtbot, main_window)
     mouse_click(main_window.NoPleaBondButton)
+    return main_window.dialog
+
+
+@pytest.fixture
+def pfs_dialog(qtbot, main_window):
+    "Plea Future Sentence Date Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.PleaOnlyButton)
+    return main_window.dialog
+
+
+@pytest.fixture
+def pve_dialog(qtbot, main_window):
+    "Preliminary Probation Violation Bond Entry"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.ProbationViolationBondButton)
     return main_window.dialog
 
 
@@ -77,7 +101,7 @@ def test_create_no_plea_bond_entry(qtbot, npb_dialog):
 
 
 @pytest.mark.create_entry_test
-def test_create_bond_hearing_entry(qtbot, bhd_dialog):
+def test_create_bond_modification_entry(qtbot, bhd_dialog):
     enter_data(bhd_dialog.case_number_lineEdit, "bhd_test")
 
     # Bond Conditions
@@ -214,7 +238,7 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
 
 
 @pytest.mark.create_entry_test
-def test_create_div_entry(qtbot, div_dialog):
+def test_create_diversion_entry(qtbot, div_dialog):
     enter_data(div_dialog.case_number_lineEdit, "div_test")
     mouse_click(div_dialog.marijuana_diversion_radioButton)
     mouse_click(div_dialog.diversion_jail_imposed_checkBox)
@@ -226,3 +250,51 @@ def test_create_div_entry(qtbot, div_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(div_dialog.create_entry_Button)
     assert div_dialog.entry_case_information.case_number == "21TRC05611div_test"
+
+
+@pytest.mark.create_entry_test
+def test_create_failure_to_appear_entry(qtbot, fta_dialog):
+    enter_data(fta_dialog.case_number_lineEdit, "fta_test")
+    mouse_click(fta_dialog.arrest_warrant_checkBox)
+    mouse_click(fta_dialog.bond_forfeited_checkBox)
+    mouse_click(fta_dialog.set_no_trial_checkBox)
+    mouse_click(fta_dialog.operator_license_checkBox)
+    mouse_click(fta_dialog.surety_appear_checkBox)
+    mouse_click(fta_dialog.non_resident_license_checkBox)
+    mouse_click(fta_dialog.supplemental_summons_checkBox)
+    mouse_click(fta_dialog.proof_of_service_checkBox)
+    mouse_click(fta_dialog.registration_block_checkBox)
+    mouse_click(fta_dialog.set_bond_checkBox)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(fta_dialog.create_entry_Button)
+    assert fta_dialog.entry_case_information.case_number == "21TRC05611fta_test"
+
+
+@pytest.mark.create_entry_test
+def test_create_plea_future_sentence_entry(qtbot, pfs_dialog):
+    enter_data(pfs_dialog.case_number_lineEdit, "plea_only_test")
+    mouse_click(pfs_dialog.guilty_all_Button)
+    mouse_click(pfs_dialog.prepare_psi_checkBox)
+    mouse_click(pfs_dialog.set_restitution_checkBox)
+    mouse_click(pfs_dialog.victim_appearance_checkBox)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(pfs_dialog.create_entry_Button)
+    assert pfs_dialog.entry_case_information.case_number == "21TRC05611plea_only_test"
+
+@pytest.mark.create_entry_test
+def test_create_prelim_probation_violation_entry(qtbot, pve_dialog):
+    enter_data(pve_dialog.case_number_lineEdit, "probation_violation_test")
+    enter_data(pve_dialog.bond_type_box, "Cash or Surety Bond")
+    enter_data(pve_dialog.bond_amount_box, "$2,500")
+    mouse_click(pve_dialog.no_alcohol_drugs_checkBox)
+    mouse_click(pve_dialog.comply_protection_order_checkBox)
+    mouse_click(pve_dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(pve_dialog.monitoring_checkBox)
+    mouse_click(pve_dialog.cc_violation_other_conditions_checkBox)
+    enter_data(pve_dialog.cc_violation_other_conditions_terms_box, "Don't be bad!")
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(pve_dialog.create_entry_Button)
+    assert pve_dialog.entry_case_information.case_number == "21TRC05611probation_violation_test"
