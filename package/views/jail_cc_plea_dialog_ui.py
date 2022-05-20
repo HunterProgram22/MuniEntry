@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/JailCCPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -74,7 +74,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1061, 877))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1061, 875))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -144,7 +144,7 @@ class Ui_JailCCPleaDialog(object):
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 4, 1, 1, 1)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
@@ -646,7 +646,7 @@ class Ui_JailCCPleaDialog(object):
         self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service"))
         self.add_conditions_label.setText(_translate("JailCCPleaDialog", "ADDITIONAL CONDITIONS"))
         self.add_conditions_Button.setText(_translate("JailCCPleaDialog", "Add Additional Conditions"))
-        self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other                                             "))
+        self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other                                              "))
         self.companion_cases_sentence_label.setText(_translate("JailCCPleaDialog", "Companion Case Jail Time Served:"))
         self.companion_cases_sentence_box.setItemText(0, _translate("JailCCPleaDialog", "consecutively"))
         self.companion_cases_sentence_box.setItemText(1, _translate("JailCCPleaDialog", "concurrently"))
@@ -685,4 +685,4 @@ class Ui_JailCCPleaDialog(object):
         self.label_17.setText(_translate("JailCCPleaDialog", "Fines:"))
         self.label_7.setText(_translate("JailCCPleaDialog", "Allied:"))
         self.label_25.setText(_translate("JailCCPleaDialog", "Dismissed:"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

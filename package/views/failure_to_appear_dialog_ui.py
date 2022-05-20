@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\FailureToAppearDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/FailureToAppearDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -122,7 +122,7 @@ class Ui_FailureToAppearDialog(object):
         self.defense_counsel_waived_checkBox = QtWidgets.QCheckBox(self.case_name_Frame)
         self.defense_counsel_waived_checkBox.setObjectName("defense_counsel_waived_checkBox")
         self.gridLayout.addWidget(self.defense_counsel_waived_checkBox, 2, 3, 1, 1)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -394,4 +394,4 @@ class Ui_FailureToAppearDialog(object):
         self.surety_appear_checkBox.setText(_translate("FailureToAppearDialog", "Surety to appear and show cause to avoid judgment"))
         self.arrest_warrant_checkBox.setText(_translate("FailureToAppearDialog", "Issue Warrant for Arrest forthwith"))
         self.arrest_warrant_radius_label.setText(_translate("FailureToAppearDialog", "Warrant Radius:"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

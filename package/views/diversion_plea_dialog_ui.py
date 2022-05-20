@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\DiversionPleaDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/DiversionPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -72,7 +72,7 @@ class Ui_DiversionPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, -253, 973, 1015))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 973, 1015))
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -336,7 +336,7 @@ class Ui_DiversionPleaDialog(object):
         self.defense_counsel_type_box.addItem("")
         self.defense_counsel_type_box.addItem("")
         self.gridLayout.addWidget(self.defense_counsel_type_box, 2, 2, 1, 1)
-        self.defense_counsel_name_box = NoScrollComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -520,4 +520,4 @@ class Ui_DiversionPleaDialog(object):
         self.fra_in_court_box.setItemText(2, _translate("DiversionPleaDialog", "No"))
         self.create_entry_Button.setText(_translate("DiversionPleaDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("DiversionPleaDialog", "Close Dialog"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

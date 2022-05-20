@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\FineOnlyPleaDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/FineOnlyPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -345,7 +345,7 @@ class Ui_FineOnlyPleaDialog(object):
         self.label_8 = QtWidgets.QLabel(self.case_name_Frame)
         self.label_8.setObjectName("label_8")
         self.gridLayout.addWidget(self.label_8, 3, 0, 1, 1)
-        self.defense_counsel_name_box = NoScrollComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -542,7 +542,7 @@ class Ui_FineOnlyPleaDialog(object):
         self.license_suspension_checkBox.setText(_translate("FineOnlyPleaDialog", "License Suspension           "))
         self.community_service_checkBox.setText(_translate("FineOnlyPleaDialog", "Community Service             "))
         self.add_conditions_Button.setText(_translate("FineOnlyPleaDialog", "Add Conditions"))
-        self.other_conditions_checkBox.setText(_translate("FineOnlyPleaDialog", "Other                                                             "))
+        self.other_conditions_checkBox.setText(_translate("FineOnlyPleaDialog", "Other                                                      "))
         self.close_dialog_Button.setText(_translate("FineOnlyPleaDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("FineOnlyPleaDialog", "Open Entry"))
         self.label_22.setText(_translate("FineOnlyPleaDialog", "FRA shown in court:"))
@@ -553,4 +553,4 @@ class Ui_FineOnlyPleaDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("FineOnlyPleaDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("FineOnlyPleaDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("FineOnlyPleaDialog", "No"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

@@ -2,9 +2,9 @@
 from typing import Any
 
 from PyQt5.QtWidgets import QDialog
+
 from package.models.case_information import CriminalCaseInformation
 from package.views.custom_widgets import DefenseCounselComboBox, NoScrollComboBox
-
 from settings import WIDGET_TYPE_ACCESS_DICT
 
 
@@ -17,13 +17,13 @@ class BaseDialog(QDialog):
         self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
 
-    def modify_view(self):
+    def modify_view(self) -> None:
         raise NotImplementedError
 
-    def create_dialog_slot_functions(self):
+    def create_dialog_slot_functions(self) -> None:
         raise NotImplementedError
 
-    def connect_signals_to_slots(self):
+    def connect_signals_to_slots(self) -> None:
         raise NotImplementedError
 
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
@@ -39,21 +39,22 @@ class BaseDialog(QDialog):
         for (model_attribute, view_field) in model_class.terms_list:
             key = getattr(self, view_field).__class__.__name__
             view = getattr(self, view_field)
-            setattr(model_class, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key))())
+            setattr(model_class, model_attribute, getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))())
 
 
 class CriminalBaseDialog(BaseDialog):
+    """The base class for all criminal and traffic main entry dialogs."""
+
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        """The call to super() is after the setting of self.case_table because the case table
+        is used to setup the view of the dialog."""
         self.case_table = case_table
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
         self.load_cms_data_to_view()
-        self.defense_counsel_name_box.__class__ = DefenseCounselComboBox
         self.defense_counsel_name_box.load_attorneys()
-        self.appearance_reason_box.__class__ = NoScrollComboBox
-        self.defense_counsel_type_box.__class__ = NoScrollComboBox
         self.criminal_charge = None
         self.popup_dialog = None
 

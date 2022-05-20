@@ -161,7 +161,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-253</y>
+        <y>0</y>
         <width>973</width>
         <height>1015</height>
        </rect>
@@ -661,7 +661,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="NoScrollComboBox" name="defense_counsel_name_box">
+           <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -928,6 +928,11 @@ background-color: rgb(255, 255, 255);</string>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
    <header>.custom_widgets</header>
   </customwidget>

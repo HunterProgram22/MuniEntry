@@ -803,7 +803,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="NoScrollComboBox" name="defense_counsel_name_box">
+              <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -895,6 +895,11 @@ font-weight: bold;</string>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
    <header>.custom_widgets</header>
   </customwidget>

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\NotGuiltyBondDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/NotGuiltyBondDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -111,7 +111,7 @@ class Ui_NotGuiltyBondDialog(object):
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 0, 1, 1, 1)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -553,4 +553,4 @@ class Ui_NotGuiltyBondDialog(object):
         self.mental_health_assessment_checkBox.setText(_translate("NotGuiltyBondDialog", " Obtain mental health assessment                         "))
         self.alcohol_test_kiosk_checkBox.setText(_translate("NotGuiltyBondDialog", " Alcohol Kiosk testing                                         "))
         self.comply_protection_order_checkBox.setText(_translate("NotGuiltyBondDialog", " Comply with Terms of Protection Order"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
