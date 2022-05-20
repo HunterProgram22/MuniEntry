@@ -248,7 +248,7 @@ class VictimNotification:
 
 class CriminalCaseInformation:
     judicial_officer: object
-    case_number: str
+    case_number: str = ...
     plea_trial_date: str
     appearance_reason: str
     victim_statements: bool
