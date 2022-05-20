@@ -27,7 +27,7 @@ class AmendOffenseDetails:
     original_charge: str
     amended_charge: str
     motion_disposition: str
-    def __init__(self, original_charge, amended_charge, motion_disposition) -> None: ...
+    def __init__(self, original_charge=None, amended_charge=None, motion_disposition=None) -> None: ...
 
 class BondConditions:
     bond_type: str
