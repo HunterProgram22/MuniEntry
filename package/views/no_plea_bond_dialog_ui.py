@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\NoPleaBondDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/NoPleaBondDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -111,7 +111,7 @@ class Ui_NoPleaBondDialog(object):
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 0, 1, 1, 1)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -463,4 +463,4 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.setItemText(7, _translate("NoPleaBondDialog", "$5,000"))
         self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$10,000"))
         self.label_5.setText(_translate("NoPleaBondDialog", "BOND"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

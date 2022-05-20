@@ -18,7 +18,7 @@ logger.add('./resources/logs/Error_log_{time}.log')
 
 def load_window():
     """The main window is loaded as a separate function to improve application load time."""
-    from main_window import Window
+    from main_window import MainWindow
 
     return MainWindow()
 
@@ -33,8 +33,8 @@ def main():
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>', Qt.AlignBottom | Qt.AlignCenter,
     )
     win = load_window()
-    win.show()
     splash.showMessage('<h1>Databases Connected</h1>', Qt.AlignBottom | Qt.AlignCenter)
+    win.show()
     splash.close()
     sys.exit(app.exec())
 
