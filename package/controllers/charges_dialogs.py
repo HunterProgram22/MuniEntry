@@ -1,14 +1,9 @@
-"""The charges dialogs module contains 'secondary' dialogs that are opened from a
-main entry dialog when a charge needs to be added or amended."""
+"""Secondary dialogs opened from a main entry dialog when a charge needs to be added or amended."""
+from typing import TypeVar
+
 from PyQt5.QtWidgets import QDialog
 
-from package.database_controllers.databases import (
-    query_offense_statute_data,
-    open_db_connection,
-)
-from package.models.case_information import AmendOffenseDetails
-from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
-from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.signal_connectors import (
     AddChargeDialogSignalConnector,
     AmendChargeDialogSignalConnector,
@@ -21,68 +16,80 @@ from package.controllers.view_modifiers import (
     AddChargeDialogViewModifier,
     AmendChargeDialogViewModifier,
 )
+from package.database_controllers.databases import (
+    open_db_connection,
+    query_offense_statute_data,
+)
+from package.models.case_information import AmendOffenseDetails
+from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
+from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
+
+CBD = TypeVar('CBD', bound=CriminalBaseDialog)
 
 
 class BaseChargeDialog(QDialog):
-    """The Base Charge Dialog loads the statutes and offenses from the database as
-    both subclasses require access to the statutes and offenses."""
+    """The Base Charge Dialog loads the statutes and offenses from the database."""
 
-    def __init__(self, main_dialog, parent=None):
+    def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.main_dialog = main_dialog
-        self.set_database()
+        self.charges_database = open_db_connection('con_charges')
         self.modify_view()
         self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
-        self.load_statute_and_offense_choice_boxes()
+        self.load_offense_choice_boxes()
+        self.load_statute_choice_boxes()
+        self.set_offense_statute_degree_choice_boxes_to_blank()
 
-    def set_database(self):
-        self.charges_database = open_db_connection("con_charges")
+    def load_offense_choice_boxes(self) -> None:
+        self.offense_choice_box.addItems(query_offense_statute_data('offense'))
+        self.offense_choice_box.insertItem(0, '')
 
-    def load_statute_and_offense_choice_boxes(self):
-        """Loads the choice boxes and adds a blank item to set fields to blank on open."""
-        self.statute_choice_box.addItems(query_offense_statute_data("statute"))
-        self.offense_choice_box.addItems(query_offense_statute_data("offense"))
-        self.statute_choice_box.insertItem(0, "")
-        self.offense_choice_box.insertItem(0, "")
-        self.degree_choice_box.insertItem(0, "")
-        self.statute_choice_box.setCurrentText("")
-        self.offense_choice_box.setCurrentText("")
-        self.degree_choice_box.setCurrentText("")
+    def load_statute_choice_boxes(self) -> None:
+        self.statute_choice_box.addItems(query_offense_statute_data('statute'))
+        self.statute_choice_box.insertItem(0, '')
+
+    def set_offense_statute_degree_choice_boxes_to_blank(self) -> None:
+        """Degree choices are loaded in the view, so do not need to be loaded in this method."""
+        self.offense_choice_box.setCurrentText('')
+        self.statute_choice_box.setCurrentText('')
+        self.degree_choice_box.insertItem(0, '')
+        self.degree_choice_box.setCurrentText('')
 
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
-    """This class does not need its own init method since it usess the BaseChargeDialog
-    init method."""
+    """Class does not need its own init method since it uses the BaseChargeDialog init method."""
 
-    def modify_view(self):
+    def modify_view(self) -> AddChargeDialogViewModifier:
         return AddChargeDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self):
+    def create_dialog_slot_functions(self) -> AddChargeDialogSlotFunctions:
         return AddChargeDialogSlotFunctions(self)
 
-    def connect_signals_to_slots(self):
+    def connect_signals_to_slots(self) -> AddChargeDialogSignalConnector:
         return AddChargeDialogSignalConnector(self)
 
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
-    """The amend charge dialog class takes the charge that is being amended and updates
-    both the view and the charge in the entry_case_information (model data). In
-    AmendChargeDialogSlotFunctions it adds the charge to an amended charge list for use
-    in the template of the dialog."""
+    """Updates the charge that is being amended.
 
-    def __init__(self, main_dialog, parent=None):
+    Updates the view and the charge in the entry_case_information (model data). In
+    AmendChargeDialogSlotFunctions it adds the charge to an amended charge list for use
+    in the template of the dialog.
+    """
+
+    def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(main_dialog, parent)
         self.amend_offense_details = AmendOffenseDetails()
         self.charge = self.sender().charge
         self.current_offense_name = self.sender().charge.offense
         self.original_charge_label.setText(self.current_offense_name)
 
-    def modify_view(self):
+    def modify_view(self) -> AmendChargeDialogViewModifier:
         return AmendChargeDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self):
+    def create_dialog_slot_functions(self) -> AmendChargeDialogSlotFunctions:
         return AmendChargeDialogSlotFunctions(self)
 
-    def connect_signals_to_slots(self):
+    def connect_signals_to_slots(self) -> AmendChargeDialogSignalConnector:
         return AmendChargeDialogSignalConnector(self)
