@@ -290,7 +290,6 @@ class BaseDialogSlotFunctions(object):
             self.dialog.offense_choice_box.setCurrentText("")
             self.dialog.degree_choice_box.setCurrentText("")
 
-
     def show_bond_boxes(self, bond_mod_string):
         if bond_mod_string == "request to modify bond is granted":
             self.dialog.bond_frame.setHidden(False)

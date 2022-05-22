@@ -235,6 +235,8 @@ class CommunityControl:
     community_control_community_service: bool = False
     community_control_community_service_hours: str = None
     gps_exclusion: bool = False
+    gps_court_pay: bool = False
+    gps_prior_to_release: bool = False
     gps_exclusion_radius: str = None
     gps_exclusion_location: str = None
     daily_reporting: bool = False
@@ -267,6 +269,8 @@ class CommunityControl:
         ("community_control_community_service", "community_control_community_service_checkBox"),
         ("community_control_community_service_hours", "community_control_community_service_hours_box"),
         ("gps_exclusion", "gps_exclusion_checkBox"),
+        ("gps_court_pay", "gps_court_pay_checkBox"),
+        ("gps_prior_to_release", "gps_prior_to_release_checkBox"),
         ("gps_exclusion_radius", "gps_exclusion_radius_box"),
         ("gps_exclusion_location", "gps_exclusion_location_box"),
         ("daily_reporting", "daily_reporting_checkBox"),
