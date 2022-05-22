@@ -49,6 +49,7 @@ def ngb_dialog(qtbot, main_window):
     mouse_click(main_window.NotGuiltyBondButton)
     return main_window.dialog
 
+
 @pytest.fixture
 def fta_dialog(qtbot, main_window):
     "Failure to Appear / Issue Warrant Dialog"
@@ -70,6 +71,14 @@ def pfs_dialog(qtbot, main_window):
     "Plea Future Sentence Date Dialog"
     entry_dialog(qtbot, main_window)
     mouse_click(main_window.PleaOnlyButton)
+    return main_window.dialog
+
+
+@pytest.fixture
+def leap_dialog(qtbot, main_window):
+    "LEAP Admission Plea Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.LeapAdmissionButton)
     return main_window.dialog
 
 
@@ -272,6 +281,16 @@ def test_create_failure_to_appear_entry(qtbot, fta_dialog):
 
 
 @pytest.mark.create_entry_test
+def test_leap_admission_plea_entry(qtbot, leap_dialog):
+    enter_data(leap_dialog.case_number_lineEdit, "leap_admission_test")
+    mouse_click(leap_dialog.guilty_all_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(leap_dialog.create_entry_Button)
+    assert leap_dialog.entry_case_information.case_number == "21TRC05611leap_admission_test"
+
+
+@pytest.mark.create_entry_test
 def test_create_plea_future_sentence_entry(qtbot, pfs_dialog):
     enter_data(pfs_dialog.case_number_lineEdit, "plea_only_test")
     mouse_click(pfs_dialog.guilty_all_Button)
@@ -282,6 +301,7 @@ def test_create_plea_future_sentence_entry(qtbot, pfs_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(pfs_dialog.create_entry_Button)
     assert pfs_dialog.entry_case_information.case_number == "21TRC05611plea_only_test"
+
 
 @pytest.mark.create_entry_test
 def test_create_prelim_probation_violation_entry(qtbot, pve_dialog):

@@ -17,12 +17,12 @@ class Template:
 
 
 Fine_Only_Plea_Final_Judgment_Template = Template(
-    "Crim_Traffic Judgment Entry",
+    "Fine Only Judgment Entry",
     "Fine_Only_Plea_Final_Judgment_Template.docx",
 )
 
 Jail_CC_Plea_Final_Judgment_Template = Template(
-    "Crim_Traffic Judgment Entry",
+    "Jail CC Judgment Entry",
     "Jail_Plea_Final_Judgment_Template.docx",
 )
 
@@ -61,6 +61,11 @@ Plea_Only_Template = Template(
     "Plea_Only_Template.docx",
 )
 
+Leap_Admission_Plea_Template = Template(
+    "LEAP Admission Plea Entry",
+    "Leap_Admission_Plea_Template.docx",
+)
+
 Scheduling_Entry_Template_Rohrer = Template(
     "Rohrer Scheduling Entry",
     "Scheduling_Entry_Template_Rohrer.docx",
@@ -70,6 +75,8 @@ Scheduling_Entry_Template_Hemmeter = Template(
     "Hemmeter Scheduling Entry",
     "Scheduling_Entry_Template_Hemmeter.docx",
 )
+
+
 
 TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
@@ -81,6 +88,7 @@ TEMPLATE_DICT = {
     "Failure To Appear Dialog": Failure_To_Appear_Template,
     "Bond Hearing Dialog": Bond_Hearing_Template,
     "Plea Only Dialog": Plea_Only_Template,
+    "Leap Admission Plea Dialog": Leap_Admission_Plea_Template,
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
 }

@@ -126,6 +126,12 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
 
 
+class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.set_appearance_reason()
+
+
 class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

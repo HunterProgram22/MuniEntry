@@ -117,6 +117,48 @@ class NotGuiltyPleaGrid(ChargesGrid):
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
 
 
+class LeapAdmissionPleaGrid(ChargesGrid):
+    row_dismissed_box = 3
+    row_plea = 4
+    row_amend_button = 5
+    row_delete_button = 6
+
+    def add_charge_only_to_grid(self, dialog):
+        """The column is set to the one more than the current number of columns because
+        a new charge is being added."""
+        charge = self.get_last_charge_in_charges_list(dialog)
+        column = self.columnCount() + 1
+        self.addWidget(QLabel(charge.offense), self.row_offense, column)
+        self.addWidget(StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(
+            DismissedCheckbox(column, dialog), self.row_dismissed_box, column
+        )
+        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(
+            ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
+        )
+        self.addWidget(
+            ChargeGridDeleteButton(column, charge, dialog),
+            self.row_delete_button,
+            column,
+        )
+
+    def set_all_pleas(self):
+        """Overrides the base set_all_pleas because LEAP does not have findings set."""
+        plea = self.set_plea()
+        for column in range(1, self.columnCount()):
+            if self.itemAtPosition(self.row_offense, column) is not None:
+                if (
+                    self.itemAtPosition(self.row_dismissed_box, column)
+                    .widget()
+                    .isChecked()
+                ):
+                    continue
+                self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
+
+
+
 class PleaOnlyGrid(ChargesGrid):
     row_dismissed_box = 3
     row_allied_box = 4

@@ -168,6 +168,16 @@ class BaseInfoChecker(object):
             return "Fail"
 
 
+class LeapAdmissionPleaDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_plea_entered",
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class PleaOnlyDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
         super().__init__(dialog)
