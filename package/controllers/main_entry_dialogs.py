@@ -95,6 +95,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.dialog_name = "Diversion Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
+        self.functions.show_restitution_boxes()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)

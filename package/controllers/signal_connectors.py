@@ -89,6 +89,7 @@ class LeapAdmissionPleaDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_plea_all_button_signals(dialog)
         dialog.time_to_complete_box.currentTextChanged.connect(dialog.functions.set_leap_sentencing_date)
 
+
 class PleaOnlyDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -119,6 +120,7 @@ class DiversionDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_plea_all_button_signals(dialog)
         self.connect_fra_signals(dialog)
         dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.functions.show_jail_report_date_box)
+        dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.show_restitution_boxes)
         dialog.other_conditions_checkBox.toggled.connect(dialog.functions.show_other_conditions_box)
 
 

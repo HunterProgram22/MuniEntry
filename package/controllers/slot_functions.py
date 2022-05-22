@@ -448,6 +448,7 @@ class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
         }
         return leap_sentence_date_dict.get(days_to_add_string)
 
+
 class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
@@ -526,6 +527,18 @@ class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.diversion_jail_report_date_box.setHidden(True)
             self.dialog.diversion_jail_report_date_label.setHidden(True)
             self.dialog.jail_report_date_note_label.setHidden(True)
+
+    def show_restitution_boxes(self):
+        if self.dialog.pay_restitution_checkBox.isChecked():
+            self.dialog.pay_restitution_to_box.setHidden(False)
+            self.dialog.pay_restitution_amount_box.setHidden(False)
+            self.dialog.pay_restitution_to_label.setHidden(False)
+            self.dialog.pay_restitution_amount_label.setHidden(False)
+        else:
+            self.dialog.pay_restitution_to_box.setHidden(True)
+            self.dialog.pay_restitution_amount_box.setHidden(True)
+            self.dialog.pay_restitution_to_label.setHidden(True)
+            self.dialog.pay_restitution_amount_label.setHidden(True)
 
 
 class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):

@@ -388,6 +388,9 @@ class Diversion:
     program_name: str = None
     diversion_fine_pay_date: str = None
     diversion_jail_report_date: str = None
+    restitution_ordered: bool = False
+    pay_restitution_to: str = None
+    pay_restitution_amount: str = None
     terms_list = [
         ("marijuana_diversion", "marijuana_diversion_radioButton"),
         ("theft_diversion", "theft_diversion_radioButton"),
@@ -395,6 +398,9 @@ class Diversion:
         ("jail_imposed", "diversion_jail_imposed_checkBox"),
         ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
         ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+        ("restitution_ordered", "pay_restitution_checkBox"),
+        ("pay_restitution_to", "pay_restitution_to_box"),
+        ("pay_restitution_amount", "pay_restitution_amount_box"),
     ]
 
     def get_program_name(self):

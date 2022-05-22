@@ -361,17 +361,43 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="NoPleaBondButton">
+          <item row="3" column="1">
+           <widget class="QPushButton" name="PleaOnlyButton">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 127);</string>
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
             <property name="text">
-             <string>Appear on Warrant (No Plea) / Bond</string>
+             <string>Plea Future Sentence Date</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item row="2" column="0">
+           <widget class="QPushButton" name="LeapAdmissionButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>LEAP Admission Plea</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QPushButton" name="DiversionButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>Diversion Plea</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
            <widget class="QPushButton" name="BondHearingButton">
             <property name="minimumSize">
              <size>
@@ -387,17 +413,7 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="PleaOnlyButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
-            </property>
-            <property name="text">
-             <string>Plea Future Sentence Date</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
+          <item row="1" column="2">
            <widget class="QPushButton" name="ProbationViolationBondButton">
             <property name="minimumSize">
              <size>
@@ -413,29 +429,13 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="LeapAdmissionButton">
+          <item row="2" column="2">
+           <widget class="QPushButton" name="NoPleaBondButton">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
+             <string notr="true">background-color: rgb(255, 255, 127);</string>
             </property>
             <property name="text">
-             <string>LEAP Admission Plea</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="DiversionButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
-            </property>
-            <property name="text">
-             <string>Diversion Plea</string>
+             <string>Appear on Warrant (No Plea) / Bond</string>
             </property>
            </widget>
           </item>
