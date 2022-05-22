@@ -15,6 +15,7 @@ main_window_all_button_test_list = [
     ("BondHearingButton", "Bond Hearing Case Information"),
     ("PleaOnlyButton", "Plea Future Sentencing Case Information"),
     ("NoPleaBondButton", "No Plea Bond Case Information"),
+    ("LeapAdmissionButton", "LEAP Admission Plea Case Information"),
 ]
 
 

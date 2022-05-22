@@ -427,6 +427,27 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.close_window()
 
 
+class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+    def set_leap_sentencing_date(self, days_to_add_string):
+        """Sets the sentencing date to the Monday after the number of days added."""
+        if days_to_add_string == "forthwith":
+            self.dialog.sentencing_date.setDate(QDate.currentDate())
+        else:
+            days_to_add = self.get_days_to_add(days_to_add_string)
+            total_days_to_add = set_future_date(days_to_add, "Monday")
+            self.dialog.sentencing_date.setDate(
+                QDate.currentDate().addDays(total_days_to_add)
+            )
+
+    def get_days_to_add(self, days_to_add_string):
+        leap_sentence_date_dict = {
+            "120 days": 120,
+        }
+        return leap_sentence_date_dict.get(days_to_add_string)
+
 class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

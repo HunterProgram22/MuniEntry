@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LeapPleaLongDialog</class>
- <widget class="QDialog" name="LeapPleaLongDialog">
+ <class>LeapAdmissionPleaDialog</class>
+ <widget class="QDialog" name="LeapAdmissionPleaDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -132,7 +132,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Leap Plea Case Information</string>
+   <string>LEAP Admission Plea Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -196,7 +196,7 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QFormLayout" name="formLayout">
+            <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
               <widget class="QLabel" name="label_10">
                <property name="text">
@@ -205,7 +205,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="0" column="1">
-              <widget class="QComboBox" name="time_to_complete_box">
+              <widget class="NoScrollComboBox" name="time_to_complete_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -229,7 +229,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QDateEdit" name="sentencing_date">
+              <widget class="NoScrollDateEdit" name="sentencing_date">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -256,8 +256,67 @@ font-weight: bold;</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0" colspan="2">
+             <item row="1" column="0" colspan="3">
+              <widget class="Line" name="line">
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="lineWidth">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="add_charge_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(62, 146, 255);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Add Charge</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QPushButton" name="no_contest_all_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>No Contest All</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="guilty_all_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Guilty All</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="3">
               <layout class="QGridLayout" name="charges_gridLayout">
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="0">
                 <widget class="QLabel" name="offense_label_1">
                  <property name="font">
@@ -277,33 +336,10 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_4">
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
                <item row="3" column="0">
                 <widget class="QLabel" name="label_5">
                  <property name="text">
                   <string>Dismissed:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_21">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Degree:</string>
                  </property>
                 </widget>
                </item>
@@ -339,47 +375,30 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_21">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Degree:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
               </layout>
-             </item>
-             <item row="2" column="0">
-              <widget class="QPushButton" name="add_charge_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(62, 146, 255);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Add Charge</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QPushButton" name="guilty_all_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Guilty All</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="2">
-              <widget class="Line" name="line">
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <property name="lineWidth">
-                <number>2</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -515,29 +534,15 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="0" column="3">
-              <widget class="QDateEdit" name="plea_trial_date">
+              <widget class="NoScrollDateEdit" name="plea_trial_date">
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
-               <property name="minimumDate">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
-               </property>
                <property name="calendarPopup">
                 <bool>true</bool>
-               </property>
-               <property name="date">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
                </property>
               </widget>
              </item>
@@ -562,7 +567,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QComboBox" name="appearance_reason_box">
+              <widget class="NoScrollComboBox" name="appearance_reason_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -576,25 +581,10 @@ font-weight: bold;</string>
                  <string>change of plea</string>
                 </property>
                </item>
-               <item>
-                <property name="text">
-                 <string>trial to court</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>jury trial</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>LEAP sentencing</string>
-                </property>
-               </item>
               </widget>
              </item>
              <item row="2" column="2">
-              <widget class="QComboBox" name="defense_counsel_type_box">
+              <widget class="NoScrollComboBox" name="defense_counsel_type_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -625,7 +615,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="defense_counsel_name_box">
+              <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -666,6 +656,23 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>NoScrollDateEdit</class>
+   <extends>QDateEdit</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>DefenseCounselComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
