@@ -73,6 +73,21 @@ class NotGuiltyGridModelUpdater(BaseGridUpdater):
         self.update_model_with_plea_data()
 
 
+class LeapAdmissionPleaGridModelUpdater(BaseGridUpdater):
+    """Class for Leap Admission Plea Dialog that sets rows for charges grid."""
+
+    row_dismissed_box = 3
+    row_plea = 4
+    row_amend_button = 5
+    row_delete_button = 6
+
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+        self.update_model_with_statute_data()
+        self.update_model_with_degree_data()
+        self.update_model_with_plea_data()
+
+
 class PleaOnlyGridModelUpdater(BaseGridUpdater):
     """Class for Plea Only Dialog that sets rows for charges grid."""
 

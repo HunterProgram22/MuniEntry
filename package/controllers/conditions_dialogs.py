@@ -69,12 +69,18 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
 
 class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     """This 'secondary' dialog is called from a warning message if the
-    user forgot to set jail time."""
+    user forgot to set jail time.
+
+    The conditions_checkbox_dict is called by the BaseDialogSlotFunctions
+    show_hide_checkbox_connected_fields to hide boxes on load that are optional.
+    """
 
     condition_checkbox_dict = {
-        "companion_cases_checkBox": ["companion_cases_box",
-                                     "jail_term_type_box",
-                                     "consecutive_jail_days_label"],
+        "companion_cases_checkBox": [
+            "companion_cases_box",
+            "jail_term_type_box",
+            "consecutive_jail_days_label",
+        ],
     }
 
     def __init__(self, main_dialog, parent=None):
@@ -97,7 +103,11 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
 
 
 class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
-    """The 'secondary' conditions dialog for the Jail CC Plea Dialog."""
+    """The 'secondary' conditions dialog for the Jail CC Plea Dialog.
+
+    The conditions_checkbox_dict is called by the BaseDialogSlotFunctions
+    to hide boxes on load that are optional.
+    """
 
     CONDITIONS_FRAMES = [
         ("other_conditions_checkBox", "other_conditions_frame"),
@@ -109,18 +119,28 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     ]
 
     condition_checkbox_dict = {
-        "gps_exclusion_checkBox": ["gps_exclusion_radius_box", "gps_exclusion_location_box"],
-        "community_control_not_within_500_feet_checkBox": ["community_control_not_within_500_feet_person_box"],
+        "gps_exclusion_checkBox": [
+            "gps_exclusion_radius_box",
+            "gps_exclusion_location_box",
+        ],
+        "community_control_not_within_500_feet_checkBox": [
+            "community_control_not_within_500_feet_person_box"
+        ],
         "community_control_no_contact_checkBox": ["community_control_no_contact_with_box"],
         "house_arrest_checkBox": ["house_arrest_time_box"],
-        "community_control_community_service_checkBox": ["community_control_community_service_hours_box"],
+        "community_control_community_service_checkBox": [
+            "community_control_community_service_hours_box"
+        ],
         "other_community_control_checkBox": ["other_community_control_conditions_box"],
         "alcohol_monitoring_checkBox": ["alcohol_monitoring_time_box"],
         "pay_restitution_checkBox": ["pay_restitution_to_box", "pay_restitution_amount_box"],
-        "companion_cases_checkBox": ["companion_cases_box", "jail_term_type_box", "consecutive_jail_days_label"],
+        "companion_cases_checkBox": [
+            "companion_cases_box",
+            "jail_term_type_box",
+            "consecutive_jail_days_label",
+        ],
         "specialized_docket_checkBox": ["specialized_docket_box"],
     }
-
 
     def __init__(self, main_dialog, parent=None):
         self.charges_list = main_dialog.entry_case_information.charges_list

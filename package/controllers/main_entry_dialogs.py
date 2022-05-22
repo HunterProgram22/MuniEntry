@@ -1,7 +1,6 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 
-# from db.databases import open_charges_db_connection
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.updaters.grid_case_updaters import (
@@ -10,6 +9,7 @@ from package.updaters.grid_case_updaters import (
     NotGuiltyBondDialogUpdater,
     DiversionDialogUpdater,
     PleaOnlyDialogUpdater,
+    LeapAdmissionPleaDialogUpdater,
 )
 from package.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater, \
     BondHearingDialogUpdater, FailureToAppearDialogUpdater, \
@@ -24,6 +24,7 @@ from package.controllers.signal_connectors import (
     FailureToAppearDialogSignalConnector,
     BondHearingDialogSignalConnector,
     PleaOnlyDialogSignalConnector,
+    LeapAdmissionPleaDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -35,6 +36,7 @@ from package.controllers.slot_functions import (
     FailureToAppearDialogSlotFunctions,
     BondHearingDialogSlotFunctions,
     PleaOnlyDialogSlotFunctions,
+    LeapAdmissionPleaDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -46,6 +48,7 @@ from package.controllers.view_modifiers import (
     FailureToAppearDialogViewModifier,
     BondHearingDialogViewModifier,
     PleaOnlyDialogViewModifier,
+    LeapAdmissionPleaDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -57,6 +60,7 @@ from package.controllers.information_checkers import (
     FailureToAppearDialogInfoChecker,
     BondHearingDialogInfoChecker,
     PleaOnlyDialogInfoChecker,
+    LeapAdmissionPleaDialogInfoChecker,
 )
 from package.models.case_information import (
     BondConditions,
@@ -68,6 +72,7 @@ from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
     JailChargesGrid,
     PleaOnlyGrid,
+    LeapAdmissionPleaGrid,
     NoJailChargesGrid,
     NotGuiltyPleaGrid,
     DiversionChargesGrid,
@@ -81,6 +86,7 @@ from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolati
 from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
+from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
@@ -89,6 +95,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.dialog_name = "Diversion Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.diversion.ordered = True
+        self.functions.show_restitution_boxes()
 
     def modify_view(self):
         return DiversionDialogViewModifier(self)
@@ -428,6 +435,33 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = BondHearingDialogInfoChecker(self)
+
+
+class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = "Leap Admission Plea Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.functions.set_leap_sentencing_date("120 days")
+
+    def modify_view(self) -> LeapAdmissionPleaDialogViewModifier:
+        return LeapAdmissionPleaDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self) -> None:
+        self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
+
+    def connect_signals_to_slots(self) -> LeapAdmissionPleaDialogSignalConnector:
+        return LeapAdmissionPleaDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self) -> CmsChargeLoader:
+        self.charges_gridLayout.__class__ = LeapAdmissionPleaGrid
+        return CmsChargeLoader(self)
+
+    def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
+        return LeapAdmissionPleaDialogUpdater(self)
+
+    def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
+        self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
 
 
 if __name__ == "__main__":

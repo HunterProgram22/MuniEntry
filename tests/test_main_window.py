@@ -1,5 +1,6 @@
 import pytest
 from PyQt5 import QtCore
+
 from settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data, right_click
 
@@ -14,6 +15,7 @@ main_window_all_button_test_list = [
     ("BondHearingButton", "Bond Hearing Case Information"),
     ("PleaOnlyButton", "Plea Future Sentencing Case Information"),
     ("NoPleaBondButton", "No Plea Bond Case Information"),
+    ("LeapAdmissionButton", "LEAP Admission Plea Case Information"),
 ]
 
 

@@ -8,30 +8,6 @@ from package.views.custom_widgets import (
 )
 
 
-# InfoChecker Wrappers
-def check_judicial_officer(func):
-    def wrapper(self):
-        if self.judicial_officer is None:
-            RequiredBox("You must select a judicial officer.").exec()
-        else:
-            func(self)
-
-    return wrapper
-
-
-def check_case_list_selected(func):
-    def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
-            func(self)
-        else:
-            RequiredBox(
-                "You must select a case list to load. If loading a "
-                "blank template choose any case list and leave dropdown menu blank."
-            ).exec()
-
-    return wrapper
-
-
 class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
 
@@ -190,6 +166,16 @@ class BaseInfoChecker(object):
             )
             RequiredBox(message).exec()
             return "Fail"
+
+
+class LeapAdmissionPleaDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_plea_entered",
+        ]
+        self.check_status = self.perform_check_list()
 
 
 class PleaOnlyDialogInfoChecker(BaseInfoChecker):

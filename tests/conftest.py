@@ -14,7 +14,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 import MuniEntry_app
-from main_window import Window
+from main_window import MainWindow
 
 
 """
@@ -44,7 +44,7 @@ def right_click(button):
 
 @pytest.fixture
 def main_window(qtbot):
-    window = Window()
+    window = MainWindow()
     qtbot.addWidget(window)
 
     def close_main_dialog():
@@ -57,9 +57,93 @@ def main_window(qtbot):
 
 @pytest.fixture
 def main_window_noclose(qtbot):
-    window = Window()
+    window = MainWindow()
     qtbot.addWidget(window)
     return window
+
+
+@pytest.fixture
+def conditions_dialog(qtbot, main_window):
+    """This is the fixture for the add conditions dialog on the the Fine Only main dialog."""
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.FineOnlyPleaButton)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    return main_window.dialog.popup_dialog
+
+
+@pytest.fixture
+def fop_dialog(qtbot, main_window):
+    mouse_click(main_window.pelanda_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.dialog.no_contest_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, "Yes")
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    return main_window.dialog
+
+
+@pytest.fixture
+def jcp_dialog(qtbot, main_window):
+    mouse_click(main_window.bunner_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.JailCCPleaButton)
+    mouse_click(main_window.dialog.guilty_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, "Yes")
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    return main_window.dialog
+
+
+@pytest.fixture
+def com_control_dialog(qtbot, main_window):
+    """Add Community Control for Jail CC Plea Dialog."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.final_pretrial_radioButton)
+    mouse_click(main_window.JailCCPleaButton)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    return main_window.dialog.popup_dialog
+
+
+@pytest.fixture
+def com_control_dialog_com_control_conditions(qtbot, main_window):
+    """Add Community Control is comcontrol_dialog. Uses the Jail Dialog
+    as the main dialog because that is required."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.final_pretrial_radioButton)
+    mouse_click(main_window.JailCCPleaButton)
+    mouse_click(main_window.dialog.community_control_checkBox)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    return main_window.dialog.popup_dialog
 
 
 def check_barkschat(charges, plea):
@@ -75,4 +159,6 @@ def check_barkschat(charges, plea):
     assert charges[2].statute == "4511.33"
     assert charges[2].degree == "MM"
     assert charges[2].plea == plea
+
+
 
