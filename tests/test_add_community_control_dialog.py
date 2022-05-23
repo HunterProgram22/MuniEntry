@@ -56,12 +56,12 @@ def test_if_conditions_hold_if_checked_dialog_closed_then_reopened(qtbot, main_w
 
 
 all_conditions_checkbox_test_list = [
+    ("community_control_checkBox", "community_control_frame"),
+    ("community_service_checkBox", "community_service_frame"),
     ("license_suspension_checkBox", "license_suspension_frame"),
-    ("community_service_checkBox", "community_service_frame"),
-    ("other_conditions_checkBox", "other_conditions_frame"),
-    ("community_service_checkBox", "community_service_frame"),
-    ("impoundment_checkBox", "impoundment_frame"),
     ("victim_notification_checkBox", "victim_notification_frame"),
+    ("impoundment_checkBox", "impoundment_frame"),
+    ("other_conditions_checkBox", "other_conditions_frame"),
 ]
 
 @pytest.mark.parametrize("checkBox, frame", all_conditions_checkbox_test_list)
