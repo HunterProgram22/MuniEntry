@@ -11,7 +11,7 @@ from package.database_controllers.databases import open_db_connection, extract_d
 from package.controllers.helper_functions import set_future_date
 from package.models.case_information import CriminalCharge
 from package.views.custom_widgets import RequiredBox
-from settings import SAVE_PATH
+from settings import SAVE_PATH, TEMPLATE_PATH
 
 
 class BaseDialogSlotFunctions(object):
@@ -54,12 +54,17 @@ class BaseDialogSlotFunctions(object):
         """Loads the proper template and creates the entry."""
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
+        court_costs_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Court_Costs_Template.docx')
         case_data = self.dialog.entry_case_information.get_case_information()
-        # extract_data(case_data)
+        case_data['court_costs_subdoc'] = court_costs_subdoc
+
+        doc.render(case_data)
+        doc.reset_replacements()
         doc.render(case_data)
         docname = self.set_document_name()
         try:
             doc.save(SAVE_PATH + docname)
+
             startfile(SAVE_PATH + docname)
         except PermissionError:
             self.dialog.message_box = RequiredBox(
