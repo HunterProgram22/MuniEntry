@@ -58,12 +58,17 @@ class BaseDialogSlotFunctions(object):
         case_data = self.dialog.entry_case_information.get_case_information()
         case_data['court_costs_subdoc'] = court_costs_subdoc
 
-        doc.render(case_data)
-        doc.reset_replacements()
+        # Load first doc by pulling necessary subdocs to create main doc
         doc.render(case_data)
         docname = self.set_document_name()
+        doc.save(SAVE_PATH + docname)
+
+        # Render main doc with the subdoc parts already loaded
+        doc_two = DocxTemplate(SAVE_PATH + docname)
+        doc_two.render(case_data)
+        docname = self.set_document_name()
         try:
-            doc.save(SAVE_PATH + docname)
+            doc_two.save(SAVE_PATH + docname)
 
             startfile(SAVE_PATH + docname)
         except PermissionError:
