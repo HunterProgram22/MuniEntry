@@ -53,10 +53,13 @@ class BaseDialogSlotFunctions(object):
     def create_entry(self):
         """Loads the proper template and creates the entry."""
         self.dialog.update_entry_case_information()
-        doc = DocxTemplate(self.dialog.template.template_path)
+        # doc = DocxTemplate(self.dialog.template.template_path)
+        doc = DocxTemplate(TEMPLATE_PATH + 'Base_Template.docx')
         court_costs_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Court_Costs_Template.docx')
+        service_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Service_Template.docx')
         case_data = self.dialog.entry_case_information.get_case_information()
         case_data['court_costs_subdoc'] = court_costs_subdoc
+        case_data['service_subdoc'] = service_subdoc
 
         # Load first doc by pulling necessary subdocs to create main doc
         doc.render(case_data)
