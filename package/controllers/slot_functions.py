@@ -251,7 +251,6 @@ class BaseDialogSlotFunctions(object):
                 getattr(self.dialog, item).setEnabled(False)
                 getattr(self.dialog, item).setHidden(True)
 
-
     def set_freeform_entry(self):
         if self.dialog.freeform_entry_checkBox.isChecked():
             self.dialog.statute_choice_box.setEditable(True)
