@@ -3,7 +3,7 @@ from os import startfile
 
 from docxtpl import DocxTemplate
 from package.views.custom_widgets import RequiredBox
-from settings import SAVE_PATH, TEMPLATE_PATH
+from settings import SAVE_PATH, TEMPLATE_PATH, SUBDOC_PATH
 
 
 class TemplateBuilder(object):
@@ -25,11 +25,12 @@ class TemplateBuilder(object):
         # base_template = DocxTemplate(self.dialog.template.template_path)
         base_template = DocxTemplate(TEMPLATE_PATH + 'Base_Template.docx')
 
-        case_data = self.get_subdoc_templates(base_template)
+        subdoc_data = self.get_subdoc_templates(base_template)
 
-        base_templatename = self.build_base_template(base_template, case_data)
+        base_templatename = self.build_base_template(base_template, subdoc_data)
 
         # Render main base_template with the subbase_template parts already loaded
+        case_data = self.dialog.entry_case_information.get_case_information()
         doc_two = DocxTemplate(SAVE_PATH + base_templatename)
         doc_two.render(case_data)
         docname = self.set_document_name()
@@ -52,15 +53,33 @@ class TemplateBuilder(object):
         return base_templatename
 
     def get_subdoc_templates(self, doc):
-        court_costs_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Court_Costs_Template.docx')
-        service_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Service_Template.docx')
-        charge_grid_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Charge_Grid_Template.docx')
-        caption_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Criminal_Caption_Template.docx')
-        document_title_subdoc = doc.new_subdoc(TEMPLATE_PATH + 'Document_Title_Template.docx')
-        case_data = self.dialog.entry_case_information.get_case_information()
-        case_data['court_costs_subdoc'] = court_costs_subdoc
-        case_data['service_subdoc'] = service_subdoc
-        case_data['charge_grid_subdoc'] = charge_grid_subdoc
-        case_data['caption_subdoc'] = caption_subdoc
-        case_data['document_title_subdoc'] = document_title_subdoc
-        return case_data
+        court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
+        service_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Service_Template.docx')
+        charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Charge_Grid_Template.docx')
+        caption_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Criminal_Caption_Template.docx')
+        document_title_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Document_Title_Template.docx')
+        signature_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Signature_Template.docx')
+        magistrate_notice_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Magistrate_Notice_Template.docx')
+        appearance_reason = self.dialog.entry_case_information.appearance_reason
+        appearance_reason_template = self.get_appearance_reason_template(appearance_reason)
+        appearance_reason_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{appearance_reason_template}')
+        judicial_officer = self.dialog.entry_case_information.judicial_officer
+        subdoc_data = {
+            'judicial_officer': judicial_officer,
+            'appearance_reason': appearance_reason,
+            'appearance_reason_subdoc': appearance_reason_subdoc,
+            'court_costs_subdoc': court_costs_subdoc,
+            'service_subdoc': service_subdoc,
+            'charge_grid_subdoc': charge_grid_subdoc,
+            'caption_subdoc': caption_subdoc,
+            'document_title_subdoc': document_title_subdoc,
+            'signature_subdoc': signature_subdoc,
+            'magistrate_notice_subdoc': magistrate_notice_subdoc,
+        }
+        return subdoc_data
+
+    def get_appearance_reason_template(self, appearance_reason):
+        if appearance_reason == 'LEAP Sentencing':
+            return 'Leap_Sentencing_Appearance_Template.docx'
+        if appearance_reason == 'arraignment':
+            return 'Arraignment_Appearance_Template.docx'

@@ -8,6 +8,7 @@ VERSION_NUMBER = '0.23.0'
 PATH = str(pathlib.Path().absolute())
 
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
+SUBDOC_PATH = f'{PATH}\\resources\\templates\\subdocs\\'
 SAVE_PATH = fr'{PATH}\resources\saved\\'
 DB_PATH = fr'{PATH}\db\\'
 ICON_PATH = fr'{PATH}\icons\\'
