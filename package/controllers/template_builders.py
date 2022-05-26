@@ -54,6 +54,7 @@ class TemplateBuilder(object):
 
     def get_subdoc_templates(self, doc):
         court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
+        financial_responsibilty_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Financial_Responsibility_Template.docx')
         service_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Service_Template.docx')
         charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Charge_Grid_Template.docx')
         caption_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Criminal_Caption_Template.docx')
@@ -64,10 +65,15 @@ class TemplateBuilder(object):
         appearance_reason_template = self.get_appearance_reason_template(appearance_reason)
         appearance_reason_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{appearance_reason_template}')
         judicial_officer = self.dialog.entry_case_information.judicial_officer
+        other_conditions = self.dialog.entry_case_information.other_conditions
+        additional_conditions_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Additional_Conditions_Template.docx')
         subdoc_data = {
             'judicial_officer': judicial_officer,
+            'other_conditions': other_conditions,
+            'additional_conditions_subdoc': additional_conditions_subdoc,
             'appearance_reason': appearance_reason,
             'appearance_reason_subdoc': appearance_reason_subdoc,
+            'financial_responsibility_subdoc': financial_responsibilty_subdoc,
             'court_costs_subdoc': court_costs_subdoc,
             'service_subdoc': service_subdoc,
             'charge_grid_subdoc': charge_grid_subdoc,
