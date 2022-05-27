@@ -12,18 +12,21 @@ class TemplateBuilder(object):
         self.dialog.update_entry_case_information()
         self.case_data = self.dialog.entry_case_information.get_case_information()
         self.create_entry()
+        self.save_entry()
+        self.open_entry()
 
     def create_entry(self):
-        base_templatename = self.build_base_template()
+        self.base_templatename = self.build_base_template()
+        self.case_entry = DocxTemplate(f'{SAVE_PATH}{self.base_templatename}')
+        self.case_entry.render(self.case_data)
 
-        # Render main base_template with the subbase_template parts already loaded
-        case_entry = DocxTemplate(SAVE_PATH + base_templatename)
-        case_entry.render(self.case_data)
-        docname = self.set_document_name()
+    def save_entry(self):
+        self.case_entry_docname = self.set_document_name()
+        self.case_entry.save(f'{SAVE_PATH}{self.case_entry_docname}')
+
+    def open_entry(self):
         try:
-            case_entry.save(SAVE_PATH + docname)
-
-            startfile(SAVE_PATH + docname)
+            startfile(SAVE_PATH + self.case_entry_docname)
         except PermissionError:
             self.dialog.message_box = RequiredBox(
                 "An entry for this case is already open in Word."
@@ -31,9 +34,8 @@ class TemplateBuilder(object):
             )
             self.dialog.message_box.exec()
 
-    def set_document_name(self):
-        """Returns a name for the document in the format CaseNumber_TemplateName.docx
-        (i.e. 21CRB1234_Crim_Traffic Judgment Entry.docx"""
+    def set_document_name(self) -> str:
+        """Returns a name for the document in the format CaseNumber_TemplateName.docx"""
         return f"{self.dialog.entry_case_information.case_number}_{self.dialog.template.template_name}.docx"
 
     def build_base_template(self):
