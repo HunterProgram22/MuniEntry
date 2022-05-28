@@ -40,7 +40,7 @@ class TemplateBuilder(object):
         self.case_entry = DocxTemplate(self.base_template)
         self.case_entry.render(self.case_data)
 
-    def save_case_entry(self):
+    def save_case_entry(self) -> None:
         try:
             self.case_entry_docname = self.set_document_name()
             self.case_entry_name = f'{SAVE_PATH}{self.case_entry_docname}'
@@ -53,7 +53,7 @@ class TemplateBuilder(object):
             )
             self.dialog.message_box.exec()
 
-    def open_case_entry(self):
+    def open_case_entry(self) -> None:
         try:
             startfile(self.case_entry_name)
         except PermissionError:
@@ -68,7 +68,7 @@ class TemplateBuilder(object):
         return f"{self.dialog.entry_case_information.case_number}_{self.dialog.template.template_name}.docx"
 
 
-    def set_subdoc_templates(self, doc):
+    def set_subdoc_templates(self, doc: DocxTemplate) -> dict:
         judicial_officer = self.dialog.entry_case_information.judicial_officer
         court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
         financial_responsibilty_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Financial_Responsibility_Template.docx')
@@ -98,7 +98,7 @@ class TemplateBuilder(object):
 
     def get_appearance_reason_template(self):
         appearance_reason = self.dialog.entry_case_information.appearance_reason
-        if appearance_reason == 'LEAP Sentencing':
+        if appearance_reason == 'LEAP sentencing':
             return 'Leap_Sentencing_Appearance_Template.docx'
         if appearance_reason == 'arraignment':
             return 'Arraignment_Appearance_Template.docx'
