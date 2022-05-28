@@ -32,6 +32,11 @@ Jail_CC_Plea_Final_Judgment_Template = Template(
     "Jail_Plea_Final_Judgment_Template.docx",
 )
 
+Trial_Sentencing_Template = Template(
+    "Trial Judgment Entry",
+    "Trial_Sentencing_Template.docx",
+)
+
 Diversion_Template = Template(
     "Diversion Judgment Entry",
     "Diversion_Template.docx",
@@ -87,6 +92,7 @@ Scheduling_Entry_Template_Hemmeter = Template(
 TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
+    "Trial Sentencing Dialog": Trial_Sentencing_Template,
     "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
     "No Plea Bond Dialog": No_Plea_Bond_Template,

@@ -41,7 +41,7 @@ class ChargesGrid(QGridLayout):
     def get_last_charge_in_charges_list(self, dialog):
         return dialog.entry_case_information.charges_list[-1]
 
-    def set_plea(self):
+    def get_button_name(self) -> str:
         """Returns a copy of the label of the specific plea all button (i.e. "Guilty
         All" is returned as "Guilty")."""
         return self.sender().text().strip(" All")
@@ -65,7 +65,7 @@ class ChargesGrid(QGridLayout):
         """This method after setting all pleas calls the set_all_findings. In the Not
         Guilty Plea Grid the method is overriden to not call the set_all_findings
         because there are no findings to be set with a Not Guilty plea."""
-        plea = self.set_plea()
+        plea = self.get_button_name()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 if (
@@ -111,7 +111,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
     def set_all_pleas(self):
         """This method overrides the ChargesGrid set_all_pleas because there are no
         findings to be added for a Not Guilty plea."""
-        plea = self.set_plea()
+        plea = self.get_button_name()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
@@ -146,7 +146,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
 
     def set_all_pleas(self):
         """Overrides the base set_all_pleas because LEAP does not have findings set."""
-        plea = self.set_plea()
+        plea = self.get_button_name()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 if (
@@ -156,7 +156,6 @@ class LeapAdmissionPleaGrid(ChargesGrid):
                 ):
                     continue
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
-
 
 
 class PleaOnlyGrid(ChargesGrid):
@@ -259,6 +258,25 @@ class JailChargesGrid(NoJailChargesGrid):
             self.row_delete_button,
             column,
         )
+
+    def set_all_findings(self):
+        self.trial_finding = self.get_button_name()
+        for column in range(1, self.columnCount()):
+            if self.itemAtPosition(self.row_offense, column) is not None:
+                if (
+                        self.itemAtPosition(self.row_dismissed_box, column)
+                                .widget()
+                                .isChecked()
+                ):
+                    continue
+                if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
+                    self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
+                        "Guilty - Allied Offense"
+                    )
+                else:
+                    self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
+                       self.trial_finding
+                )
 
 
 class DiversionChargesGrid(JailChargesGrid):

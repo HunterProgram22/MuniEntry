@@ -74,6 +74,10 @@ class TrialSentencingDialogUpdater(JailCCDialogUpdater):
     def __init__(self, dialog: CBD) -> None:
         super().__init__(dialog)
 
+    def update_case_information(self) -> CaseInformationUpdater:
+        self.model.victim_statements = self.dialog.victim_statements_checkBox.isChecked()
+        return CaseInformationUpdater(self.dialog)
+
     def update_model_with_charge_grid_data(self) -> TrialSentencingGridModelUpdater:
         return TrialSentencingGridModelUpdater(self.dialog)
 
