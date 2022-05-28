@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>JailCCPleaDialog</class>
- <widget class="QDialog" name="JailCCPleaDialog">
+ <class>TrialSentencingDialog</class>
+ <widget class="QDialog" name="TrialSentencingDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -135,7 +135,7 @@
    <enum>Qt::NoFocus</enum>
   </property>
   <property name="windowTitle">
-   <string>Jail Community Control Plea Case Information</string>
+   <string>Trial Sentencing Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -305,21 +305,6 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>arraignment</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>change of plea</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>sentencing only</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>trial to court</string>
              </property>
             </item>
@@ -397,13 +382,6 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="text">
              <string>Clear Fields</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QCheckBox" name="offense_of_violence_checkBox">
-            <property name="text">
-             <string>Offense of Violence                                    </string>
             </property>
            </widget>
           </item>
@@ -1022,7 +1000,7 @@ font-weight: bold;</string>
           <item>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="2" column="1">
-             <widget class="QPushButton" name="no_contest_all_Button">
+             <widget class="QPushButton" name="not_guilty_all_Button">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -1036,7 +1014,7 @@ font-weight: bold;</string>
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>
               <property name="text">
-               <string>No Contest All</string>
+               <string>Not Guilty All</string>
               </property>
              </widget>
             </item>
@@ -1213,18 +1191,9 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QLabel" name="plea_label_1">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>10</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                 </font>
-                </property>
+               <widget class="QLabel" name="label_15">
                 <property name="text">
-                 <string>Plea:</string>
+                 <string>Tried To:</string>
                 </property>
                </widget>
               </item>

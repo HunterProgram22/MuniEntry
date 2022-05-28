@@ -275,7 +275,6 @@ class BaseDialogSlotFunctions(object):
                 getattr(self.dialog, item).setEnabled(False)
                 getattr(self.dialog, item).setHidden(True)
 
-
     def set_freeform_entry(self):
         if self.dialog.freeform_entry_checkBox.isChecked():
             self.dialog.statute_choice_box.setEditable(True)
@@ -453,7 +452,6 @@ class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
 
-
 class LeapSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
@@ -525,6 +523,16 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
         self.dialog.popup_dialog.exec()
+
+
+class TrialSentencingDialogSlotFunctions(JailCCDialogSlotFunctions):
+    """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
+
+    The only difference between dialogs is the template used and the charge grid does not
+    have a plea field.
+    """
+    def __init__(self, dialog):
+        super().__init__(dialog)
 
 
 class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
