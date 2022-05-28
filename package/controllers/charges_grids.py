@@ -101,7 +101,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(DegreeComboBox(charge.degree), self.row_degree, column)
-        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(PleaComboBox(column, dialog), self.row_plea, column)
         self.addWidget(
             ChargeGridDeleteButton(column, charge, dialog),
             self.row_delete_button,
@@ -134,7 +134,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
         self.addWidget(
             DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
-        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(PleaComboBox(column, dialog), self.row_plea, column)
         self.addWidget(
             ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
         )
@@ -178,7 +178,7 @@ class PleaOnlyGrid(ChargesGrid):
             DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
         self.addWidget(AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(PleaComboBox(column, dialog), self.row_plea, column)
         self.addWidget(FindingComboBox(), self.row_finding, column)
         self.addWidget(
             ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
@@ -212,7 +212,7 @@ class NoJailChargesGrid(ChargesGrid):
             DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
         self.addWidget(AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(PleaComboBox(column, dialog), self.row_plea, column)
         self.addWidget(FindingComboBox(), self.row_finding, column)
         self.addWidget(FineLineEdit(charge.offense), self.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
@@ -244,7 +244,7 @@ class JailChargesGrid(NoJailChargesGrid):
             DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
         self.addWidget(AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(PleaComboBox(column), self.row_plea, column)
+        self.addWidget(PleaComboBox(column, dialog), self.row_plea, column)
         self.addWidget(FindingComboBox(), self.row_finding, column)
         self.addWidget(FineLineEdit(charge.offense), self.row_fine, column)
         self.addWidget(FineSuspendedLineEdit(), self.row_fine_suspended, column)
