@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1033, 750)
-        MainWindow.setMinimumSize(QtCore.QSize(860, 700))
+        MainWindow.setMinimumSize(QtCore.QSize(900, 720))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -311,7 +311,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.22.2"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.24.0"))
         self.reload_cases_Button.setText(_translate("MainWindow", "Reload Cases"))
         self.final_pretrial_radioButton.setText(_translate("MainWindow", "Final Pre-trials"))
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
