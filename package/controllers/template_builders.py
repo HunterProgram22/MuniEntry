@@ -69,22 +69,29 @@ class TemplateBuilder(object):
 
     def set_subdoc_templates(self, doc: DocxTemplate) -> dict:
         judicial_officer = self.dialog.entry_case_information.judicial_officer
-        court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
-        financial_responsibilty_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Financial_Responsibility_Template.docx')
-        service_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Service_Template.docx')
-
-        charge_grid_template = self.get_charge_grid_template()
-        charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{charge_grid_template}')
 
         caption_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Criminal_Caption_Template.docx')
+
         document_title_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Document_Title_Template.docx')
-        signature_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Signature_Template.docx')
-        magistrate_notice_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Magistrate_Notice_Template.docx')
 
         appearance_reason_template = self.get_appearance_reason_template()
         appearance_reason_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{appearance_reason_template}')
 
+        charge_grid_template = self.get_charge_grid_template()
+        charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{charge_grid_template}')
+
+        court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
+
         additional_conditions_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Additional_Conditions_Template.docx')
+
+        financial_responsibilty_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Financial_Responsibility_Template.docx')
+
+        signature_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Signature_Template.docx')
+
+        magistrate_notice_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Magistrate_Notice_Template.docx')
+
+        service_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Service_Template.docx')
+
         subdoc_dict = {
             'judicial_officer': self.dialog.entry_case_information.judicial_officer,
             'additional_conditions_subdoc': additional_conditions_subdoc,
@@ -106,6 +113,8 @@ class TemplateBuilder(object):
             return 'Fine_Only_Charge_Grid_Template.docx'
         if dialog_name == 'Jail CC Plea Dialog':
             return 'Jail_Charge_Grid_Template.docx'
+        if dialog_name == 'Not Guilty Bond Dialog':
+            return 'Plea_Only_Charge_Grid_Template.docx'
 
     def get_appearance_reason_template(self):
         appearance_reason = self.dialog.entry_case_information.appearance_reason
@@ -113,3 +122,9 @@ class TemplateBuilder(object):
             return 'Leap_Sentencing_Appearance_Template.docx'
         if appearance_reason == 'arraignment':
             return 'Arraignment_Appearance_Template.docx'
+
+
+class NotGuiltyTemplateBuilder(TemplateBuilder):
+    def __init__(self):
+        super().__init__()
+        self.base_template_name = 'Base_Template.docx'
