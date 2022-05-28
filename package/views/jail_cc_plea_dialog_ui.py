@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\JailCCPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -137,7 +137,6 @@ class Ui_JailCCPleaDialog(object):
         self.appearance_reason_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.appearance_reason_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.appearance_reason_box.setObjectName("appearance_reason_box")
-        self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
@@ -621,7 +620,6 @@ class Ui_JailCCPleaDialog(object):
         self.appearance_reason_box.setItemText(2, _translate("JailCCPleaDialog", "sentencing only"))
         self.appearance_reason_box.setItemText(3, _translate("JailCCPleaDialog", "trial to court"))
         self.appearance_reason_box.setItemText(4, _translate("JailCCPleaDialog", "jury trial"))
-        self.appearance_reason_box.setItemText(5, _translate("JailCCPleaDialog", "LEAP sentencing"))
         self.label_2.setText(_translate("JailCCPleaDialog", "Def. Last Name:"))
         self.label_26.setText(_translate("JailCCPleaDialog", "Date:"))
         self.clear_fields_case_Button.setText(_translate("JailCCPleaDialog", "Clear Fields"))
