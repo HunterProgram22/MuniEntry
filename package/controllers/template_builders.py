@@ -44,7 +44,6 @@ class TemplateBuilder(object):
         try:
             self.case_entry_docname = self.set_document_name()
             self.case_entry_name = f'{SAVE_PATH}{self.case_entry_docname}'
-            print(self.case_entry_name)
             self.case_entry.save(self.case_entry_name)
         except PermissionError:
             self.dialog.message_box = RequiredBox(
@@ -73,13 +72,18 @@ class TemplateBuilder(object):
         court_costs_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Court_Costs_Template.docx')
         financial_responsibilty_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Financial_Responsibility_Template.docx')
         service_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Service_Template.docx')
-        charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Charge_Grid_Template.docx')
+
+        charge_grid_template = self.get_charge_grid_template()
+        charge_grid_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{charge_grid_template}')
+
         caption_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Criminal_Caption_Template.docx')
         document_title_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Document_Title_Template.docx')
         signature_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Signature_Template.docx')
         magistrate_notice_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Magistrate_Notice_Template.docx')
+
         appearance_reason_template = self.get_appearance_reason_template()
         appearance_reason_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}{appearance_reason_template}')
+
         additional_conditions_subdoc = doc.new_subdoc(f'{SUBDOC_PATH}Additional_Conditions_Template.docx')
         subdoc_dict = {
             'judicial_officer': self.dialog.entry_case_information.judicial_officer,
@@ -95,6 +99,13 @@ class TemplateBuilder(object):
             'magistrate_notice_subdoc': magistrate_notice_subdoc,
         }
         return subdoc_dict
+
+    def get_charge_grid_template(self):
+        dialog_name = self.dialog.dialog_name
+        if dialog_name == 'Fine Only Plea Dialog':
+            return 'Fine_Only_Charge_Grid_Template.docx'
+        if dialog_name == 'Jail CC Plea Dialog':
+            return 'Jail_Charge_Grid_Template.docx'
 
     def get_appearance_reason_template(self):
         appearance_reason = self.dialog.entry_case_information.appearance_reason
