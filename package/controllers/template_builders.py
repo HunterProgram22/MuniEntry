@@ -11,13 +11,15 @@ class TemplateBuilder(object):
         self.dialog = dialog.dialog
         self.dialog.update_entry_case_information()
         self.case_data = self.dialog.entry_case_information.get_case_information()
-        self.base_template_name = 'Base_Template.docx'
+        self.base_template_name = 'Base_No_Conditions_Template.docx'
         self.base_template = self.build_base_template()
         self.create_case_entry()
         self.save_case_entry()
         self.open_case_entry()
 
     def build_base_template(self) -> str:
+        """Returns the string template path of the base template after it renders and saves
+        the template."""
         template = DocxTemplate(f'{TEMPLATE_PATH}{self.base_template_name}')
         subdoc_dict = self.set_subdoc_templates(template)
         doc_name = self.set_document_name()
