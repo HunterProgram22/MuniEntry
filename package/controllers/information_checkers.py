@@ -1,5 +1,6 @@
 """Module that contains various data checks that are ran when a user creates an entry."""
 from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QDate
 from package.views.custom_widgets import (
     WarningBox,
     RequiredBox,
@@ -7,6 +8,7 @@ from package.views.custom_widgets import (
     JailWarningBox,
 )
 
+TODAY = QDate.currentDate()
 
 class BaseInfoChecker(object):
     """Class that checks dialog to make sure the appropriate information is entered."""
@@ -167,6 +169,15 @@ class BaseInfoChecker(object):
             RequiredBox(message).exec()
             return "Fail"
 
+    def check_if_leap_plea_date_is_today(self):
+        if self.view.leap_plea_date.date() == TODAY:
+            message = (
+                "The Leap Plea Date is Today, but must be a date prior to Today. Please enter"
+                "a date in the Leap Plea Date box prior to today."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
 
 class LeapAdmissionPleaDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
@@ -219,6 +230,7 @@ class LeapSentencingDialogInfoChecker(BaseInfoChecker):
         super().__init__(dialog)
         self.dialog_check_list = [
             "check_defense_counsel",
+            "check_if_leap_plea_date_is_today",
             "check_if_no_plea_entered",
             "check_if_no_finding_entered",
             "check_insurance",
