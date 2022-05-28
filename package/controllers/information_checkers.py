@@ -208,6 +208,25 @@ class FineOnlyDialogInfoChecker(BaseInfoChecker):
         self.check_status = self.perform_check_list()
 
 
+class LeapSentencingDialogInfoChecker(BaseInfoChecker):
+    conditions_list = [
+        ("license_suspension", "license_type", "License Suspension"),
+        ("community_service", "hours_of_service", "Community Service"),
+        ("other_conditions", "terms", "Other Conditions"),
+    ]
+
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_no_plea_entered",
+            "check_if_no_finding_entered",
+            "check_insurance",
+            "check_additional_conditions_ordered",
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class NotGuiltyBondDialogInfoChecker(BaseInfoChecker):
     conditions_list = [
         ("admin_license_suspension", "disposition", "Admin License Suspension"),

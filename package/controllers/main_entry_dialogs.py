@@ -10,6 +10,7 @@ from package.updaters.grid_case_updaters import (
     DiversionDialogUpdater,
     PleaOnlyDialogUpdater,
     LeapAdmissionPleaDialogUpdater,
+    LeapSentencingDialogUpdater,
 )
 from package.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater, \
     BondHearingDialogUpdater, FailureToAppearDialogUpdater, \
@@ -25,6 +26,7 @@ from package.controllers.signal_connectors import (
     BondHearingDialogSignalConnector,
     PleaOnlyDialogSignalConnector,
     LeapAdmissionPleaDialogSignalConnector,
+    LeapSentencingDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -37,6 +39,7 @@ from package.controllers.slot_functions import (
     BondHearingDialogSlotFunctions,
     PleaOnlyDialogSlotFunctions,
     LeapAdmissionPleaDialogSlotFunctions,
+    LeapSentencingDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -62,6 +65,7 @@ from package.controllers.information_checkers import (
     BondHearingDialogInfoChecker,
     PleaOnlyDialogInfoChecker,
     LeapAdmissionPleaDialogInfoChecker,
+    LeapSentencingDialogInfoChecker,
 )
 from package.models.case_information import (
     BondConditions,
@@ -234,21 +238,21 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         return LeapSentencingDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
-        self.functions = FineOnlyDialogSlotFunctions(self)
+        self.functions = LeapSentencingDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
 
     def connect_signals_to_slots(self):
-        return FineOnlyDialogSignalConnector(self)
+        return LeapSentencingDialogSignalConnector(self)
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         return CmsFraLoader(self)
 
     def update_entry_case_information(self):
-        return FineOnlyDialogUpdater(self)
+        return LeapSentencingDialogUpdater(self)
 
     def perform_info_checks(self):
-        self.dialog_checks = FineOnlyDialogInfoChecker(self)
+        self.dialog_checks = LeapSentencingDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
