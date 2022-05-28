@@ -328,11 +328,6 @@ background-color: rgb(255, 255, 255);</string>
               <string>jury trial</string>
              </property>
             </item>
-            <item>
-             <property name="text">
-              <string>LEAP sentencing</string>
-             </property>
-            </item>
            </widget>
           </item>
           <item row="2" column="1">

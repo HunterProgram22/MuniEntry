@@ -463,6 +463,7 @@ class CriminalCaseInformation:
     judicial_officer: object = None
     case_number: str = None
     plea_trial_date: str = None
+    leap_plea_date: str = None
     leap_sentencing_date: str = None
     appearance_reason: str = None
     victim_statements: bool = False

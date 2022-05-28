@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FineOnlyPleaDialog</class>
- <widget class="QDialog" name="FineOnlyPleaDialog">
+ <class>LeapSentencingDialog</class>
+ <widget class="QDialog" name="LeapSentencingDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -132,7 +132,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Fine Only Plea Case Information</string>
+   <string>LEAP Sentencing Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -600,22 +600,7 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <item>
              <property name="text">
-              <string>arraignment</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>change of plea</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>trial to court</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>jury trial</string>
+              <string>LEAP sentencing</string>
              </property>
             </item>
            </widget>
@@ -756,6 +741,24 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="3">
+           <widget class="NoScrollDateEdit" name="leap_plea_date">
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+            </property>
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>LEAP Plea Date:</string>
             </property>
            </widget>
           </item>

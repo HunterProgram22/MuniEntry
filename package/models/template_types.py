@@ -16,9 +16,15 @@ class Template:
         self.template_path = TEMPLATE_PATH + template_path
 
 
+
 Fine_Only_Plea_Final_Judgment_Template = Template(
     "Fine Only Judgment Entry",
     "Fine_Only_Plea_Final_Judgment_Template.docx",
+)
+
+Leap_Sentencing_Template = Template(
+    "Leap Sentencing Judgment Entry",
+    "Leap_Sentencing_Template.docx",
 )
 
 Jail_CC_Plea_Final_Judgment_Template = Template(
@@ -89,6 +95,7 @@ TEMPLATE_DICT = {
     "Bond Hearing Dialog": Bond_Hearing_Template,
     "Plea Only Dialog": Plea_Only_Template,
     "Leap Admission Plea Dialog": Leap_Admission_Plea_Template,
+    "Leap Sentencing Dialog": Leap_Sentencing_Template,
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
 }

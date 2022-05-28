@@ -90,6 +90,14 @@ def pve_dialog(qtbot, main_window):
     return main_window.dialog
 
 
+@pytest.fixture
+def leap_sentence_dialog(qtbot, main_window):
+    "Leap Sentencing Entry"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.LeapSentencingButton)
+    return main_window.dialog
+
+
 @pytest.mark.create_entry_test
 def test_create_no_plea_bond_entry(qtbot, npb_dialog):
     enter_data(npb_dialog.case_number_lineEdit, "npb_test")
@@ -126,6 +134,36 @@ def test_create_bond_modification_entry(qtbot, bhd_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(bhd_dialog.create_entry_Button)
     assert bhd_dialog.entry_case_information.case_number == "21TRC05611bhd_test"
+
+
+@pytest.mark.create_entry_test
+def test_create_leap_sentencing_entry(qtbot, leap_sentence_dialog):
+    enter_data(leap_sentence_dialog.case_number_lineEdit, "leap_sentencing_test")
+
+    enter_data(leap_sentence_dialog.leap_plea_date, "5/1/2022")
+    mouse_click(leap_sentence_dialog.no_contest_all_Button)
+    mouse_click(leap_sentence_dialog.credit_for_jail_checkBox)
+    enter_data(leap_sentence_dialog.jail_time_credit_box, "2")
+    enter_data(leap_sentence_dialog.fra_in_court_box, "Yes")
+
+    mouse_click(leap_sentence_dialog.license_suspension_checkBox)
+    mouse_click(leap_sentence_dialog.community_service_checkBox)
+    mouse_click(leap_sentence_dialog.other_conditions_checkBox)
+
+    def add_conditions():
+        qtbot.addWidget(leap_sentence_dialog.popup_dialog)
+        enter_data(leap_sentence_dialog.popup_dialog.term_of_suspension_box, "12 months")
+        enter_data(leap_sentence_dialog.popup_dialog.community_service_hours_ordered_box, "50")
+        enter_data(leap_sentence_dialog.popup_dialog.community_service_days_to_complete_box, "60")
+        enter_data(leap_sentence_dialog.popup_dialog.other_conditions_textEdit, "Stay away from Big Bird!")
+        mouse_click(leap_sentence_dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, add_conditions)
+    mouse_click(leap_sentence_dialog.add_conditions_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(leap_sentence_dialog.create_entry_Button)
+    assert leap_sentence_dialog.entry_case_information.case_number == "21TRC05611leap_sentencing_test"
 
 
 @pytest.mark.create_entry_test

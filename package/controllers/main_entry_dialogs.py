@@ -10,6 +10,7 @@ from package.updaters.grid_case_updaters import (
     DiversionDialogUpdater,
     PleaOnlyDialogUpdater,
     LeapAdmissionPleaDialogUpdater,
+    LeapSentencingDialogUpdater,
 )
 from package.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater, \
     BondHearingDialogUpdater, FailureToAppearDialogUpdater, \
@@ -25,6 +26,7 @@ from package.controllers.signal_connectors import (
     BondHearingDialogSignalConnector,
     PleaOnlyDialogSignalConnector,
     LeapAdmissionPleaDialogSignalConnector,
+    LeapSentencingDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -37,6 +39,7 @@ from package.controllers.slot_functions import (
     BondHearingDialogSlotFunctions,
     PleaOnlyDialogSlotFunctions,
     LeapAdmissionPleaDialogSlotFunctions,
+    LeapSentencingDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -49,6 +52,7 @@ from package.controllers.view_modifiers import (
     BondHearingDialogViewModifier,
     PleaOnlyDialogViewModifier,
     LeapAdmissionPleaDialogViewModifier,
+    LeapSentencingDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -61,6 +65,7 @@ from package.controllers.information_checkers import (
     BondHearingDialogInfoChecker,
     PleaOnlyDialogInfoChecker,
     LeapAdmissionPleaDialogInfoChecker,
+    LeapSentencingDialogInfoChecker,
 )
 from package.models.case_information import (
     BondConditions,
@@ -87,6 +92,7 @@ from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
 from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
+from package.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
@@ -215,6 +221,38 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = FineOnlyDialogInfoChecker(self)
+
+
+class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.additional_conditions_list = [
+            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
+            ("community_service_checkBox", self.entry_case_information.community_service),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+        ]
+        self.dialog_name = "Leap Sentencing Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self):
+        return LeapSentencingDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = LeapSentencingDialogSlotFunctions(self)
+        self.functions.set_fines_credit_for_jail_field()
+
+    def connect_signals_to_slots(self):
+        return LeapSentencingDialogSignalConnector(self)
+
+    def load_cms_data_to_view(self):
+        self.charges_gridLayout.__class__ = NoJailChargesGrid
+        return CmsFraLoader(self)
+
+    def update_entry_case_information(self):
+        return LeapSentencingDialogUpdater(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = LeapSentencingDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
