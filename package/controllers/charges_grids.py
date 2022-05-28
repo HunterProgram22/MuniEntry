@@ -1,3 +1,4 @@
+from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from package.views.custom_widgets import (
@@ -61,6 +62,7 @@ class ChargesGrid(QGridLayout):
                 break
             column += 1
 
+    @logger.catch
     def set_all_pleas(self):
         """This method after setting all pleas calls the set_all_findings. In the Not
         Guilty Plea Grid the method is overriden to not call the set_all_findings
@@ -78,6 +80,7 @@ class ChargesGrid(QGridLayout):
                 self.set_all_findings(column)
         self.set_cursor_to_fine_line_edit()
 
+    @logger.catch
     def set_all_findings(self, column):
         if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
             self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
@@ -259,7 +262,7 @@ class JailChargesGrid(NoJailChargesGrid):
             column,
         )
 
-    def set_all_findings(self):
+    def set_all_trial_findings(self):
         self.trial_finding = self.get_button_name()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:

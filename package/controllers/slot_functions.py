@@ -535,7 +535,7 @@ class TrialSentencingDialogSlotFunctions(JailCCDialogSlotFunctions):
         super().__init__(dialog)
 
     def set_all_findings_process(self):
-        self.dialog.charges_gridLayout.set_all_findings()
+        self.dialog.charges_gridLayout.set_all_trial_findings()
 
 
 class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):

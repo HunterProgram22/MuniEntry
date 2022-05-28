@@ -226,7 +226,7 @@ class DegreeComboBox(NoScrollComboBox):
 
 
 class PleaComboBox(NoScrollComboBox):
-    def __init__(self, column, dialog, parent=None):
+    def __init__(self, column, dialog=None, parent=None):
         super(NoScrollComboBox, self).__init__(parent)
         self.column = column
         self.dialog = dialog
