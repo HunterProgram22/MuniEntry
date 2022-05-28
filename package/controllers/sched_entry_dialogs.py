@@ -90,7 +90,7 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog = dialog
         self.functions = dialog.functions
         self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
+        self.dialog.create_entry_Button.released.connect(self.functions.create_case_entry)
         self.dialog.close_dialog_Button.released.connect(self.functions.close_dialog)
         self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.set_speedy_trial_date_label)
         self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.update_all_scheduled_dates)

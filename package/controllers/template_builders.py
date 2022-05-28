@@ -7,24 +7,34 @@ from settings import SAVE_PATH, TEMPLATE_PATH, SUBDOC_PATH
 
 
 class TemplateBuilder(object):
-    def __init__(self, dialog):
+    def __init__(self, dialog: object) -> None:
         self.dialog = dialog.dialog
         self.dialog.update_entry_case_information()
         self.case_data = self.dialog.entry_case_information.get_case_information()
-        self.create_entry()
-        self.save_entry()
-        self.open_entry()
+        self.base_template_name = 'Base_Template.docx'
+        self.base_template = self.build_base_template()
+        self.create_case_entry()
+        self.save_case_entry()
+        self.open_case_entry()
 
-    def create_entry(self):
-        self.base_templatename = self.build_base_template()
-        self.case_entry = DocxTemplate(f'{SAVE_PATH}{self.base_templatename}')
+    def build_base_template(self) -> str:
+        template = DocxTemplate(f'{TEMPLATE_PATH}{self.base_template_name}')
+        subdoc_dict = self.set_subdoc_templates(template)
+        doc_name = self.set_document_name()
+        template.render(subdoc_dict)
+        template_path = f'{SAVE_PATH}{doc_name}'
+        template.save(template_path)
+        return template_path
+
+    def create_case_entry(self) -> None:
+        self.case_entry = DocxTemplate(self.base_template)
         self.case_entry.render(self.case_data)
 
-    def save_entry(self):
+    def save_case_entry(self):
         self.case_entry_docname = self.set_document_name()
         self.case_entry.save(f'{SAVE_PATH}{self.case_entry_docname}')
 
-    def open_entry(self):
+    def open_case_entry(self):
         try:
             startfile(SAVE_PATH + self.case_entry_docname)
         except PermissionError:
@@ -38,14 +48,6 @@ class TemplateBuilder(object):
         """Returns a name for the document in the format CaseNumber_TemplateName.docx"""
         return f"{self.dialog.entry_case_information.case_number}_{self.dialog.template.template_name}.docx"
 
-    def build_base_template(self):
-        # Load first base_template by pulling necessary subbase_templates to create main base_template
-        base_template = DocxTemplate(TEMPLATE_PATH + 'Base_Template.docx')
-        subdoc_dict = self.set_subdoc_templates(base_template)
-        base_template.render(subdoc_dict)
-        base_templatename = self.set_document_name()
-        base_template.save(SAVE_PATH + base_templatename)
-        return base_templatename
 
     def set_subdoc_templates(self, doc):
         judicial_officer = self.dialog.entry_case_information.judicial_officer
