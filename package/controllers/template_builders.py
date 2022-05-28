@@ -25,7 +25,15 @@ class TemplateBuilder(object):
         doc_name = self.set_document_name()
         template.render(subdoc_dict)
         template_path = f'{SAVE_PATH}{doc_name}'
-        template.save(template_path)
+        try:
+            template.save(template_path)
+        except PermissionError:
+            self.dialog.message_box = RequiredBox(
+                "An entry for this case is already open in Word."
+                " You must close the Word document first."
+            )
+            self.dialog.message_box.exec()
+
         return template_path
 
     def create_case_entry(self) -> None:
@@ -33,12 +41,21 @@ class TemplateBuilder(object):
         self.case_entry.render(self.case_data)
 
     def save_case_entry(self):
-        self.case_entry_docname = self.set_document_name()
-        self.case_entry.save(f'{SAVE_PATH}{self.case_entry_docname}')
+        try:
+            self.case_entry_docname = self.set_document_name()
+            self.case_entry_name = f'{SAVE_PATH}{self.case_entry_docname}'
+            print(self.case_entry_name)
+            self.case_entry.save(self.case_entry_name)
+        except PermissionError:
+            self.dialog.message_box = RequiredBox(
+                "An entry for this case is already open in Word."
+                " You must close the Word document first."
+            )
+            self.dialog.message_box.exec()
 
     def open_case_entry(self):
         try:
-            startfile(SAVE_PATH + self.case_entry_docname)
+            startfile(self.case_entry_name)
         except PermissionError:
             self.dialog.message_box = RequiredBox(
                 "An entry for this case is already open in Word."

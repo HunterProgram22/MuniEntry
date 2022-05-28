@@ -7,9 +7,9 @@ VERSION_NUMBER = '0.23.0'
 # not properly terminated.
 PATH = str(pathlib.Path().absolute())
 
-TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
+TEMPLATE_PATH = f'{PATH}\\resources\\templates\\'
 SUBDOC_PATH = f'{PATH}\\resources\\templates\\subdocs\\'
-SAVE_PATH = fr'{PATH}\resources\saved\\'
+SAVE_PATH = f'{PATH}\\resources\\saved\\'
 DB_PATH = fr'{PATH}\db\\'
 ICON_PATH = fr'{PATH}\icons\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
