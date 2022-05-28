@@ -17,6 +17,7 @@ main_window_all_button_test_list = [
     ("NoPleaBondButton", "No Plea Bond Case Information"),
     ("LeapAdmissionButton", "LEAP Admission Plea Case Information"),
     ("LeapSentencingButton", "LEAP Sentencing Case Information"),
+    ("TrialSentencingButton", "Trial Sentencing Case Information"),
 ]
 
 
@@ -29,13 +30,13 @@ def test_window_opens(qtbot, main_window_noclose):
 
 
 @pytest.mark.manual
-@pytest.mark.skip(reason="Fails but tests if warning works")
+@pytest.mark.skip(reason="Works but requires manual interaction")
 def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
 @pytest.mark.manual
-@pytest.mark.skip(reason="Fails but tests if warning works")
+@pytest.mark.skip(reason="Works but requires manual interaction")
 def test_daily_case_list_required_warning(qtbot, main_window):
     mouse_click(main_window.bunner_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)

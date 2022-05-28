@@ -124,6 +124,24 @@ class JailCCDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
 
 
+class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals(dialog)
+        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
+        dialog.guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
+        dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
+        self.connect_fra_signals(dialog)
+        self.connect_court_cost_signals(dialog)
+        self.connect_main_dialog_additional_condition_signals(dialog)
+        dialog.jail_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.add_companion_cases_checkBox.toggled.connect(dialog.functions.show_companion_case_fields)
+        dialog.community_control_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.impoundment_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.victim_notification_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
+        dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
+
+
 class DiversionDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

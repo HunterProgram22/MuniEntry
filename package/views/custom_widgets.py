@@ -226,9 +226,10 @@ class DegreeComboBox(NoScrollComboBox):
 
 
 class PleaComboBox(NoScrollComboBox):
-    def __init__(self, column, parent=None):
+    def __init__(self, column, dialog=None, parent=None):
         super(NoScrollComboBox, self).__init__(parent)
         self.column = column
+        self.dialog = dialog
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -238,11 +239,16 @@ class PleaComboBox(NoScrollComboBox):
         self.setEditable(False)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setObjectName("plea_choice_box")
-        self.addItem("")
-        self.addItem("Guilty")
-        self.addItem("No Contest")
-        self.addItem("Not Guilty")
-        self.addItem("Dismissed")
+        if self.dialog.objectName() == 'TrialSentencingDialog':
+            self.addItem('Court')
+            self.addItem('Jury')
+            self.addItem('Dismissed')
+        else:
+            self.addItem("")
+            self.addItem("Guilty")
+            self.addItem("No Contest")
+            self.addItem("Not Guilty")
+            self.addItem("Dismissed")
 
 
 class FindingComboBox(NoScrollComboBox):

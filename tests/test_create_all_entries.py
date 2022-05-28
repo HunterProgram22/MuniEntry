@@ -26,6 +26,14 @@ def jcp_dialog(qtbot, main_window):
 
 
 @pytest.fixture
+def trial_sentencing_dialog(qtbot, main_window):
+    "Trial Sentencing Entry"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.TrialSentencingButton)
+    return main_window.dialog
+
+
+@pytest.fixture
 def div_dialog(qtbot, main_window):
     "Diversion Plea"
     entry_dialog(qtbot, main_window)
@@ -282,6 +290,73 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(jcp_dialog.create_entry_Button)
     assert jcp_dialog.entry_case_information.case_number == "21TRC05611jcp_test"
+
+
+@pytest.mark.create_entry_test
+def test_trial_sentencing_entry(qtbot, trial_sentencing_dialog):
+    enter_data(trial_sentencing_dialog.case_number_lineEdit, "trial_sentencing")
+
+    mouse_click(trial_sentencing_dialog.guilty_all_Button)
+    enter_data(trial_sentencing_dialog.fra_in_court_box, "Yes")
+
+    mouse_click(trial_sentencing_dialog.license_suspension_checkBox)
+    mouse_click(trial_sentencing_dialog.community_service_checkBox)
+    mouse_click(trial_sentencing_dialog.other_conditions_checkBox)
+    mouse_click(trial_sentencing_dialog.community_control_checkBox)
+    mouse_click(trial_sentencing_dialog.victim_notification_checkBox)
+    mouse_click(trial_sentencing_dialog.impoundment_checkBox)
+
+    def add_conditions():
+        qtbot.addWidget(trial_sentencing_dialog.popup_dialog)
+        mouse_click(trial_sentencing_dialog.popup_dialog.als_terminated_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.remedial_driving_class_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.term_of_suspension_box, "12 months")
+        enter_data(trial_sentencing_dialog.popup_dialog.community_service_hours_ordered_box, "50")
+        enter_data(trial_sentencing_dialog.popup_dialog.community_service_days_to_complete_box, "60")
+        mouse_click(trial_sentencing_dialog.popup_dialog.daily_reporting_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.other_conditions_textEdit, "Stay away from Big Bird!")
+        mouse_click(trial_sentencing_dialog.popup_dialog.community_control_not_within_500_feet_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.community_control_not_within_500_feet_person_box, "Justin Kudela")
+        mouse_click(trial_sentencing_dialog.popup_dialog.community_control_no_contact_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.community_control_no_contact_with_box, "John Smith")
+        mouse_click(trial_sentencing_dialog.popup_dialog.house_arrest_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.house_arrest_time_box, "15 days")
+        mouse_click(trial_sentencing_dialog.popup_dialog.gps_exclusion_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.gps_exclusion_radius_box, "1 mile")
+        enter_data(trial_sentencing_dialog.popup_dialog.gps_exclusion_location_box, "1773 Little Bear Loop")
+        mouse_click(trial_sentencing_dialog.popup_dialog.antitheft_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.alcohol_evaluation_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.anger_management_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.domestic_violence_program_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.driver_intervention_program_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.mental_health_evaluation_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.specialized_docket_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_time_box, "30 days")
+        mouse_click(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_court_pay_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.interlock_vehicles_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.pay_restitution_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.pay_restitution_amount_box, "4,000")
+        enter_data(trial_sentencing_dialog.popup_dialog.pay_restitution_to_box, "Meijer")
+        mouse_click(trial_sentencing_dialog.popup_dialog.community_control_community_service_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.community_control_community_service_hours_box, "100 hours")
+        mouse_click(trial_sentencing_dialog.popup_dialog.other_community_control_checkBox)
+        enter_data(trial_sentencing_dialog.popup_dialog.other_community_control_conditions_box, "Pick up trash")
+        enter_data(trial_sentencing_dialog.popup_dialog.vehicle_make_model_box, "2017 Acura MDX")
+        enter_data(trial_sentencing_dialog.popup_dialog.vehicle_license_plate_box, "EAF 4253")
+        enter_data(trial_sentencing_dialog.popup_dialog.vehicle_impound_time_box, "60 days")
+        enter_data(trial_sentencing_dialog.popup_dialog.vehicle_impound_action_box, "have its vehicle IT tags seized and sent to the BMV")
+        mouse_click(trial_sentencing_dialog.popup_dialog.fingerprinting_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.victim_prosecutor_notification_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.victim_reparation_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, add_conditions)
+    mouse_click(trial_sentencing_dialog.add_conditions_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(trial_sentencing_dialog.create_entry_Button)
+    assert trial_sentencing_dialog.entry_case_information.case_number == "21TRC05611trial_sentencing"
 
 
 @pytest.mark.create_entry_test

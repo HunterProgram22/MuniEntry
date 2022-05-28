@@ -12,8 +12,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>860</width>
-    <height>700</height>
+    <width>900</width>
+    <height>720</height>
    </size>
   </property>
   <property name="font">
@@ -26,7 +26,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MuniEntry - ver 0.22.2</string>
+   <string>MuniEntry - ver 0.24.0</string>
   </property>
   <property name="styleSheet">
    <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -425,7 +425,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
             <property name="text">
-             <string>Plea Future Sentence Date</string>
+             <string>Plea Only Future Sentence Date</string>
             </property>
            </widget>
           </item>
@@ -446,6 +446,16 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>LEAP Admission Plea</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="TrialSentencingButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>Jury Trial / Trial to Court Sentencing</string>
             </property>
            </widget>
           </item>

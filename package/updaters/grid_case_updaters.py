@@ -5,6 +5,7 @@ from package.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
     FineOnlyGridModelUpdater,
     JailCCGridModelUpdater,
+    TrialSentencingGridModelUpdater,
     NotGuiltyGridModelUpdater,
     PleaOnlyGridModelUpdater,
     LeapAdmissionPleaGridModelUpdater,
@@ -65,6 +66,20 @@ class JailCCDialogUpdater(BaseDialogUpdater):
 
     def update_jail_data(self) -> JailDataUpdater:
         return JailDataUpdater(self.dialog)
+
+
+class TrialSentencingDialogUpdater(JailCCDialogUpdater):
+    """Inherits from Jail Updater because only difference is lack of a plea field."""
+
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        self.model.victim_statements = self.dialog.victim_statements_checkBox.isChecked()
+        return CaseInformationUpdater(self.dialog)
+
+    def update_model_with_charge_grid_data(self) -> TrialSentencingGridModelUpdater:
+        return TrialSentencingGridModelUpdater(self.dialog)
 
 
 class FineOnlyDialogUpdater(BaseDialogUpdater):

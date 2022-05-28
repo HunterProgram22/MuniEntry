@@ -210,5 +210,11 @@ class JailCCGridModelUpdater(FineOnlyGridModelUpdater):
         return charge.jail_days_suspended
 
 
+class TrialSentencingGridModelUpdater(JailCCGridModelUpdater):
+    """Overrides parts of the JailCCGridModelUpdater to account for Tried To field instead of plea
+    field."""
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+
 class DiversionGridModelUpdater(JailCCGridModelUpdater):
     """Extends JailCCGridModelUpdater, but not additional actions performed."""

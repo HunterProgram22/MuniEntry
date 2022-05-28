@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1033, 750)
-        MainWindow.setMinimumSize(QtCore.QSize(860, 700))
+        MainWindow.setMinimumSize(QtCore.QSize(900, 720))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -208,6 +208,10 @@ class Ui_MainWindow(object):
         self.LeapAdmissionButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.LeapAdmissionButton.setObjectName("LeapAdmissionButton")
         self.gridLayout_2.addWidget(self.LeapAdmissionButton, 2, 1, 1, 1)
+        self.TrialSentencingButton = QtWidgets.QPushButton(self.crimTab)
+        self.TrialSentencingButton.setStyleSheet("background-color: rgb(85, 170, 127);")
+        self.TrialSentencingButton.setObjectName("TrialSentencingButton")
+        self.gridLayout_2.addWidget(self.TrialSentencingButton, 1, 1, 1, 1)
         self.gridLayout_2.setColumnStretch(0, 1)
         self.gridLayout_2.setColumnStretch(1, 1)
         self.gridLayout_2.setColumnStretch(2, 1)
@@ -311,7 +315,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.22.2"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MuniEntry - ver 0.24.0"))
         self.reload_cases_Button.setText(_translate("MainWindow", "Reload Cases"))
         self.final_pretrial_radioButton.setText(_translate("MainWindow", "Final Pre-trials"))
         self.label_3.setText(_translate("MainWindow", "DAILY CASE LISTS"))
@@ -334,9 +338,10 @@ class Ui_MainWindow(object):
         self.JailCCPleaButton.setText(_translate("MainWindow", "Jail and Comm. Control Plea"))
         self.BondHearingButton.setText(_translate("MainWindow", "Bond Modification / Revocation"))
         self.DiversionButton.setText(_translate("MainWindow", "Diversion Plea"))
-        self.PleaOnlyButton.setText(_translate("MainWindow", "Plea Future Sentence Date"))
+        self.PleaOnlyButton.setText(_translate("MainWindow", "Plea Only Future Sentence Date"))
         self.LeapSentencingButton.setText(_translate("MainWindow", "LEAP Sentencing"))
         self.LeapAdmissionButton.setText(_translate("MainWindow", "LEAP Admission Plea"))
+        self.TrialSentencingButton.setText(_translate("MainWindow", "Jury Trial / Trial to Court Sentencing"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.crimTab), _translate("MainWindow", "Crim/Traffic"))
         self.pushButton_12.setText(_translate("MainWindow", "PushButton"))
         self.rohrer_schedulingEntryButton.setText(_translate("MainWindow", "Rohrer Scheduling Entry"))
