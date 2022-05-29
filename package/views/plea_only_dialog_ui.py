@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/PleaOnlyDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\PleaOnlyDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -171,6 +171,7 @@ class Ui_PleaOnlyDialog(object):
         self.appearance_reason_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.appearance_reason_box.setEditable(True)
         self.appearance_reason_box.setObjectName("appearance_reason_box")
+        self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
@@ -396,8 +397,9 @@ class Ui_PleaOnlyDialog(object):
         self.label_11.setText(_translate("PleaOnlyDialog", "Appearance Reason:"))
         self.label_24.setText(_translate("PleaOnlyDialog", "Def. Counsel:"))
         self.appearance_reason_box.setItemText(0, _translate("PleaOnlyDialog", "arraignment"))
-        self.appearance_reason_box.setItemText(1, _translate("PleaOnlyDialog", "motion hearing"))
-        self.appearance_reason_box.setItemText(2, _translate("PleaOnlyDialog", "warrant for failure to appear"))
+        self.appearance_reason_box.setItemText(1, _translate("PleaOnlyDialog", "a change of plea"))
+        self.appearance_reason_box.setItemText(2, _translate("PleaOnlyDialog", "motion hearing"))
+        self.appearance_reason_box.setItemText(3, _translate("PleaOnlyDialog", "warrant for failure to appear"))
         self.plea_only_bond_type_box.setItemText(0, _translate("PleaOnlyDialog", "OR Bond"))
         self.plea_only_bond_type_box.setItemText(1, _translate("PleaOnlyDialog", "Continue Existing Bond"))
         self.label_7.setText(_translate("PleaOnlyDialog", "Bond:"))
