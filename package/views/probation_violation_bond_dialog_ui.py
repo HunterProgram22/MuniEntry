@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/ProbationViolationBondDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\ProbationViolationBondDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -186,8 +186,6 @@ class Ui_ProbationViolationBondDialog(object):
         self.appearance_reason_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.appearance_reason_box.setEditable(True)
         self.appearance_reason_box.setObjectName("appearance_reason_box")
-        self.appearance_reason_box.addItem("")
-        self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 4, 1, 1, 2)
@@ -392,9 +390,7 @@ class Ui_ProbationViolationBondDialog(object):
         self.label_11.setText(_translate("ProbationViolationBondDialog", "Appearance Reason:"))
         self.label_2.setText(_translate("ProbationViolationBondDialog", "Def. Last Name:"))
         self.appearance_reason_box.setItemText(0, _translate("ProbationViolationBondDialog", "Preliminary Community Control Violation Hearing"))
-        self.appearance_reason_box.setItemText(1, _translate("ProbationViolationBondDialog", "arraignment"))
-        self.appearance_reason_box.setItemText(2, _translate("ProbationViolationBondDialog", "motion hearing"))
-        self.appearance_reason_box.setItemText(3, _translate("ProbationViolationBondDialog", "warrant for failure to appear"))
+        self.appearance_reason_box.setItemText(1, _translate("ProbationViolationBondDialog", "warrant for failure to appear"))
         self.cancel_Button.setText(_translate("ProbationViolationBondDialog", "Cancel"))
         self.clear_fields_case_Button.setText(_translate("ProbationViolationBondDialog", "Clear Fields"))
         self.label_3.setText(_translate("ProbationViolationBondDialog", "Case Number:"))
