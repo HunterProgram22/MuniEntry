@@ -605,17 +605,7 @@ background-color: rgb(255, 255, 255);</string>
             </item>
             <item>
              <property name="text">
-              <string>change of plea</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>trial to court</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>jury trial</string>
+              <string>a change of plea</string>
              </property>
             </item>
            </widget>

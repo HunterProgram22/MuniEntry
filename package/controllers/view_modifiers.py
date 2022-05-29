@@ -29,9 +29,9 @@ class BaseDialogViewModifier:
 
     def set_appearance_reason(self):
         if self.dialog.case_table == "final_pretrials":
-            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
         elif self.dialog.case_table == "pleas":
-            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
         elif self.dialog.case_table == "trials_to_court":
             self.dialog.appearance_reason_box.setCurrentText("trial to court")
 
