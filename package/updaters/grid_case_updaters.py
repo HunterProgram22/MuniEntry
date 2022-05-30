@@ -168,6 +168,7 @@ class PleaOnlyDialogUpdater(BaseDialogUpdater):
         self.update_model_with_future_sentencing_and_bond()
 
     def update_case_information(self) -> CaseInformationUpdater:
+        self.model.offense_of_violence = self.dialog.offense_of_violence_checkBox.isChecked()
         return CaseInformationUpdater(self.dialog)
 
     def update_model_with_charge_grid_data(self) -> PleaOnlyGridModelUpdater:
