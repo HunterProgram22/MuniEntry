@@ -33,7 +33,7 @@ class BaseDialogViewModifier:
         elif self.dialog.case_table == "pleas":
             self.dialog.appearance_reason_box.setCurrentText("a change of plea")
         elif self.dialog.case_table == "trials_to_court":
-            self.dialog.appearance_reason_box.setCurrentText("trial to court")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
 
     def set_case_information_banner(self):
         self.dialog.defendant_name_label.setText(
