@@ -1,8 +1,6 @@
 """A module containing common variables used throughout the application."""
 import pathlib
 
-VERSION_NUMBER = '0.23.0'
-
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
 # not properly terminated.
 PATH = str(pathlib.Path().absolute())
@@ -14,7 +12,7 @@ ICON_PATH = fr'{PATH}\icons\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
-VERSION_NUMBER = '0.24.0'
+VERSION_NUMBER = '0.25.0'
 
 MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
