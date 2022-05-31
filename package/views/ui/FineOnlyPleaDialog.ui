@@ -608,6 +608,11 @@ background-color: rgb(255, 255, 255);</string>
               <string>a change of plea</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>sentencing</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="2">
