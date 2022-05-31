@@ -161,7 +161,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-172</y>
+        <y>0</y>
         <width>973</width>
         <height>1073</height>
        </rect>
@@ -645,21 +645,6 @@ background-color: rgb(255, 255, 255);</string>
             <item>
              <property name="text">
               <string>change of plea</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>trial to court</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>jury trial</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LEAP sentencing</string>
              </property>
             </item>
            </widget>

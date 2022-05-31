@@ -5,6 +5,7 @@ from package.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
     FineOnlyGridModelUpdater,
     JailCCGridModelUpdater,
+    TrialSentencingGridModelUpdater,
     NotGuiltyGridModelUpdater,
     PleaOnlyGridModelUpdater,
     LeapAdmissionPleaGridModelUpdater,
@@ -67,6 +68,20 @@ class JailCCDialogUpdater(BaseDialogUpdater):
         return JailDataUpdater(self.dialog)
 
 
+class TrialSentencingDialogUpdater(JailCCDialogUpdater):
+    """Inherits from Jail Updater because only difference is lack of a plea field."""
+
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        self.model.victim_statements = self.dialog.victim_statements_checkBox.isChecked()
+        return CaseInformationUpdater(self.dialog)
+
+    def update_model_with_charge_grid_data(self) -> TrialSentencingGridModelUpdater:
+        return TrialSentencingGridModelUpdater(self.dialog)
+
+
 class FineOnlyDialogUpdater(BaseDialogUpdater):
     """Updater for Fine Only Dialog - contains a charge grid."""
 
@@ -95,6 +110,38 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
         self.model.fine_jail_days = self.dialog.jail_time_credit_box.text()
 
 
+class LeapSentencingDialogUpdater(BaseDialogUpdater):
+    """Updater for Leap Sentencing Dialog - contains a charge grid."""
+
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+        self.update_model_with_charge_grid_data()
+        self.update_court_costs()
+        self.update_fines()
+        self.update_jail_time_credit_for_fines()
+        self.update_leap_plea_date()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)
+
+    def update_model_with_charge_grid_data(self) -> FineOnlyGridModelUpdater:
+        return FineOnlyGridModelUpdater(self.dialog)
+
+    def update_court_costs(self) -> CourtCostsUpdater:
+        return CourtCostsUpdater(self.dialog)
+
+    def update_fines(self) -> FinesUpdater:
+        return FinesUpdater(self.dialog)
+
+    def update_jail_time_credit_for_fines(self) -> None:
+        self.model.fines_and_costs_jail_credit = self.dialog.credit_for_jail_checkBox.isChecked()
+        self.model.fine_jail_days = self.dialog.jail_time_credit_box.text()
+
+    def update_leap_plea_date(self):
+        self.model.leap_plea_date = self.dialog.leap_plea_date.get_date()
+
+
 class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
     """Updater for LEAP Admission Plea Dialog - contains a charge grid."""
 
@@ -121,6 +168,7 @@ class PleaOnlyDialogUpdater(BaseDialogUpdater):
         self.update_model_with_future_sentencing_and_bond()
 
     def update_case_information(self) -> CaseInformationUpdater:
+        self.model.offense_of_violence = self.dialog.offense_of_violence_checkBox.isChecked()
         return CaseInformationUpdater(self.dialog)
 
     def update_model_with_charge_grid_data(self) -> PleaOnlyGridModelUpdater:

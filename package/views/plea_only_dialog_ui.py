@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/PleaOnlyDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\PleaOnlyDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -174,6 +174,7 @@ class Ui_PleaOnlyDialog(object):
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
+        self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 4, 1, 1, 1)
         self.line_2 = QtWidgets.QFrame(self.case_name_Frame)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -181,6 +182,9 @@ class Ui_PleaOnlyDialog(object):
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setObjectName("line_2")
         self.gridLayout.addWidget(self.line_2, 3, 0, 1, 5)
+        self.offense_of_violence_checkBox = QtWidgets.QCheckBox(self.case_name_Frame)
+        self.offense_of_violence_checkBox.setObjectName("offense_of_violence_checkBox")
+        self.gridLayout.addWidget(self.offense_of_violence_checkBox, 4, 2, 1, 1)
         self.gridLayout.setColumnStretch(0, 1)
         self.gridLayout.setColumnStretch(1, 2)
         self.gridLayout.setColumnStretch(2, 1)
@@ -396,8 +400,10 @@ class Ui_PleaOnlyDialog(object):
         self.label_11.setText(_translate("PleaOnlyDialog", "Appearance Reason:"))
         self.label_24.setText(_translate("PleaOnlyDialog", "Def. Counsel:"))
         self.appearance_reason_box.setItemText(0, _translate("PleaOnlyDialog", "arraignment"))
-        self.appearance_reason_box.setItemText(1, _translate("PleaOnlyDialog", "motion hearing"))
-        self.appearance_reason_box.setItemText(2, _translate("PleaOnlyDialog", "warrant for failure to appear"))
+        self.appearance_reason_box.setItemText(1, _translate("PleaOnlyDialog", "a change of plea"))
+        self.appearance_reason_box.setItemText(2, _translate("PleaOnlyDialog", "motion hearing"))
+        self.appearance_reason_box.setItemText(3, _translate("PleaOnlyDialog", "warrant for failure to appear"))
+        self.offense_of_violence_checkBox.setText(_translate("PleaOnlyDialog", "Offense of Violence"))
         self.plea_only_bond_type_box.setItemText(0, _translate("PleaOnlyDialog", "OR Bond"))
         self.plea_only_bond_type_box.setItemText(1, _translate("PleaOnlyDialog", "Continue Existing Bond"))
         self.label_7.setText(_translate("PleaOnlyDialog", "Bond:"))

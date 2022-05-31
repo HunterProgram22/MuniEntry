@@ -418,16 +418,6 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>arraignment</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>motion hearing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
                  <string>warrant for failure to appear</string>
                 </property>
                </item>

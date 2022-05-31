@@ -29,11 +29,11 @@ class BaseDialogViewModifier:
 
     def set_appearance_reason(self):
         if self.dialog.case_table == "final_pretrials":
-            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
         elif self.dialog.case_table == "pleas":
-            self.dialog.appearance_reason_box.setCurrentText("change of plea")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
         elif self.dialog.case_table == "trials_to_court":
-            self.dialog.appearance_reason_box.setCurrentText("trial to court")
+            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
 
     def set_case_information_banner(self):
         self.dialog.defendant_name_label.setText(
@@ -126,6 +126,11 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
 
 
+class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+
+
 class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -142,6 +147,11 @@ class JailCCDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_appearance_reason()
+
+
+class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):

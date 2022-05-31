@@ -16,6 +16,8 @@ main_window_all_button_test_list = [
     ("PleaOnlyButton", "Plea Future Sentencing Case Information"),
     ("NoPleaBondButton", "No Plea Bond Case Information"),
     ("LeapAdmissionButton", "LEAP Admission Plea Case Information"),
+    ("LeapSentencingButton", "LEAP Sentencing Case Information"),
+    ("TrialSentencingButton", "Trial Sentencing Case Information"),
 ]
 
 
@@ -28,13 +30,13 @@ def test_window_opens(qtbot, main_window_noclose):
 
 
 @pytest.mark.manual
-@pytest.mark.skip(reason="Fails but tests if warning works")
+@pytest.mark.skip(reason="Works but requires manual interaction")
 def test_judicial_officer_required_warning(qtbot, main_window):
     mouse_click(main_window.JailCCPleaButton)
 
 
 @pytest.mark.manual
-@pytest.mark.skip(reason="Fails but tests if warning works")
+@pytest.mark.skip(reason="Works but requires manual interaction")
 def test_daily_case_list_required_warning(qtbot, main_window):
     mouse_click(main_window.bunner_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
@@ -79,9 +81,9 @@ def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button
 daily_case_list_appearance_reasons = [
     ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", "arraignment", "FineOnlyPleaButton"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "change of plea", "JailCCPleaButton"),
-    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "change of plea", "JailCCPleaButton"),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "trial to court", "JailCCPleaButton"),
+    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "a change of plea", "JailCCPleaButton"),
     ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
 ]
 

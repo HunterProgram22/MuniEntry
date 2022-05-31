@@ -379,6 +379,11 @@ background-color: rgb(255, 255, 255);</string>
                </item>
                <item>
                 <property name="text">
+                 <string>a change of plea</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>motion hearing</string>
                 </property>
                </item>
@@ -399,6 +404,13 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QCheckBox" name="offense_of_violence_checkBox">
+               <property name="text">
+                <string>Offense of Violence</string>
                </property>
               </widget>
              </item>

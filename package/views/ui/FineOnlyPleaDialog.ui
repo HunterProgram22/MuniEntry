@@ -605,22 +605,12 @@ background-color: rgb(255, 255, 255);</string>
             </item>
             <item>
              <property name="text">
-              <string>change of plea</string>
+              <string>a change of plea</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>trial to court</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>jury trial</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>LEAP sentencing</string>
+              <string>sentencing</string>
              </property>
             </item>
            </widget>

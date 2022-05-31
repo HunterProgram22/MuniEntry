@@ -28,6 +28,9 @@ all_amend_charge_dialogs_test_list = [
     "JailCCPleaButton",
     "DiversionButton",
     "PleaOnlyButton",
+    "LeapSentencingButton",
+    "LeapAdmissionButton",
+    "TrialSentencingButton",
 ]
 
 @pytest.mark.parametrize("test_input", all_amend_charge_dialogs_test_list)

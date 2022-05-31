@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/FineOnlyPleaDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\FineOnlyPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -301,8 +301,6 @@ class Ui_FineOnlyPleaDialog(object):
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
-        self.appearance_reason_box.addItem("")
-        self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 5, 1, 1, 1)
         self.label_3 = QtWidgets.QLabel(self.case_name_Frame)
         self.label_3.setObjectName("label_3")
@@ -525,10 +523,8 @@ class Ui_FineOnlyPleaDialog(object):
         self.label.setText(_translate("FineOnlyPleaDialog", "Def. First Name:"))
         self.cancel_Button.setText(_translate("FineOnlyPleaDialog", "Cancel"))
         self.appearance_reason_box.setItemText(0, _translate("FineOnlyPleaDialog", "arraignment"))
-        self.appearance_reason_box.setItemText(1, _translate("FineOnlyPleaDialog", "change of plea"))
-        self.appearance_reason_box.setItemText(2, _translate("FineOnlyPleaDialog", "trial to court"))
-        self.appearance_reason_box.setItemText(3, _translate("FineOnlyPleaDialog", "jury trial"))
-        self.appearance_reason_box.setItemText(4, _translate("FineOnlyPleaDialog", "LEAP sentencing"))
+        self.appearance_reason_box.setItemText(1, _translate("FineOnlyPleaDialog", "a change of plea"))
+        self.appearance_reason_box.setItemText(2, _translate("FineOnlyPleaDialog", "sentencing"))
         self.label_3.setText(_translate("FineOnlyPleaDialog", "Case Number:"))
         self.label_26.setText(_translate("FineOnlyPleaDialog", "Date:"))
         self.label_2.setText(_translate("FineOnlyPleaDialog", "Def. Last Name:"))
