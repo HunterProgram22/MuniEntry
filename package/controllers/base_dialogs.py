@@ -74,10 +74,14 @@ class CriminalBaseDialog(BaseDialog):
         # self.entry_case_information.judicial_officer = self.judicial_officer
 
         ####
+        self.load_entry_case_information_model()
         self.load_cms_data_to_view()
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
         self.popup_dialog = None
+
+    def load_entry_case_information_model(self):
+        raise NotImplementedError
 
     def load_cms_data_to_view(self) -> None:
         raise NotImplementedError

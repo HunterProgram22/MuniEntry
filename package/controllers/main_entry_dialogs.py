@@ -1,7 +1,7 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 
-from package.models.case_model import LeapEntryCaseInformation
+from package.models.case_information import LeapEntryCaseInformation
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.updaters.grid_case_updaters import (
@@ -522,15 +522,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
 class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        ####
-        self.entry_case_information = LeapEntryCaseInformation()
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        ####
-
-        self.entry_case_information.judicial_officer = self.judicial_officer
-
-
-        ####
         self.dialog_name = "Leap Admission Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date("120 days")
@@ -543,6 +535,10 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
 
     def connect_signals_to_slots(self) -> LeapAdmissionPleaDialogSignalConnector:
         return LeapAdmissionPleaDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = LeapEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> CmsChargeLoader:
         self.charges_gridLayout.__class__ = LeapAdmissionPleaGrid
