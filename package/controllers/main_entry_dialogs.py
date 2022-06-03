@@ -1,6 +1,7 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 
+from package.models.case_model import LeapEntryCaseInformation
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.updaters.grid_case_updaters import (
@@ -522,6 +523,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.entry_case_information = LeapEntryCaseInformation(self.judicial_officer)
         self.dialog_name = "Leap Admission Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date("120 days")
