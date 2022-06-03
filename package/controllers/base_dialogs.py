@@ -5,8 +5,8 @@ from typing import Any
 
 from PyQt5.QtWidgets import QDialog
 
-from package.models.case_model import CriminalCaseInformation
-from package.models.case_information import CmsCaseInformation # , CriminalCaseInformation
+# from package.models.case_model import CriminalCaseInformation
+from package.models.case_information import CmsCaseInformation, CriminalCaseInformation
 from package.models.party_types import JudicialOfficer
 from settings import WIDGET_TYPE_ACCESS_DICT
 
@@ -70,8 +70,8 @@ class CriminalBaseDialog(BaseDialog):
         self.cms_case = cms_case
         ####
 
-        self.entry_case_information = CriminalCaseInformation()
-        self.entry_case_information.judicial_officer = self.judicial_officer
+        # self.entry_case_information = CriminalCaseInformation()
+        # self.entry_case_information.judicial_officer = self.judicial_officer
 
         ####
         self.load_cms_data_to_view()

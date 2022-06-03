@@ -454,67 +454,105 @@ class VictimNotification:
 
 
 @dataclass
-class CriminalCaseInformation:
-    """This object stores all the information for a cms_case both at inception and
-    as it is populated through the application.
-    TODO: Should also still refactor amend_offense_details to object of dataclass.
-    :fine_jail_days: - this is not part of jail terms because it is for fine only plea for credit.
-    """
-    judicial_officer: object = None
+class CaseInformation(object):
     case_number: str = None
-    plea_trial_date: str = None
-    leap_plea_date: str = None
-    leap_sentencing_date: str = None
-    appearance_reason: str = None
-    victim_statements: bool = False
-    offense_of_violence: bool = False
-    future_sentencing: object = field(default_factory=FutureSentencing)
-    sentencing_date: str = None
-    defendant: object = field(default_factory=Defendant)
-    defense_counsel: str = None
-    defense_counsel_type: str = None
-    defense_counsel_waived: bool = False
-    fra_in_file: bool = None
-    fra_in_court: bool = None
-    fines_and_costs_jail_credit: bool = False
-    charges_list: list = field(default_factory=list)
-    amended_charges_list: list = field(default_factory=list)
-    amend_offense_details: object = None
-    fine_jail_days: str = None
-    total_fines: int = 0
-    total_fines_suspended: int = 0
-
-    cc_violation_probable_cause: str = None
-    cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
-
-    fta_conditions: object = field(default_factory=FailureToAppearConditions)
-
-    court_costs: object = field(default_factory=CourtCosts)
-    diversion: object = field(default_factory=Diversion)
-    community_control: object = field(default_factory=CommunityControl)
-    jail_terms: object = field(default_factory=JailTerms)
-
-    bond_conditions: object = field(default_factory=BondConditions)
-
-    no_contact: object = field(default_factory=NoContact)
-    custodial_supervision: object = field(default_factory=CustodialSupervision)
-    domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
-    admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
-    vehicle_seizure: object = field(default_factory=VehicleSeizure)
-
-    other_conditions: object = field(default_factory=OtherConditions)
-
-    community_service: object = field(default_factory=CommunityService)
-    license_suspension: object = field(default_factory=LicenseSuspension)
-
-
-    victim_notification: object = field(default_factory=VictimNotification)
-    impoundment: object = field(default_factory=Impoundment)
-
-    def add_charge_to_list(self, charge):
-        self.charges_list.append(charge)
 
     def get_case_information(self):
         """Returns a dictionary with all of cms_case information required
         to populate an entry."""
         return asdict(self)
+
+
+@dataclass
+class CriminalCaseInformation(CaseInformation):
+    judicial_officer: object = None
+    plea_trial_date: str = None
+    appearance_reason: str = None
+    plaintiff: str = "State of Ohio"
+    defendant: object = field(default_factory=Defendant)
+
+    defense_counsel: str = None
+    defense_counsel_type: str = None
+    defense_counsel_waived: bool = False
+
+    charges_list: list = field(default_factory=list)
+    amended_charges_list: list = field(default_factory=list)
+    amend_offense_details: object = None
+
+    def add_charge_to_list(self, charge):
+        print('charge appended')
+        self.charges_list.append(charge)
+
+
+@dataclass
+class LeapEntryCaseInformation(CriminalCaseInformation):
+    leap_plea_date: str = None
+    leap_sentencing_date: str = None
+
+
+#
+# @dataclass
+# class CriminalCaseInformation:
+#     """This object stores all the information for a cms_case both at inception and
+#     as it is populated through the application.
+#     TODO: Should also still refactor amend_offense_details to object of dataclass.
+#     :fine_jail_days: - this is not part of jail terms because it is for fine only plea for credit.
+#     """
+#     judicial_officer: object = None
+#     case_number: str = None
+#     plea_trial_date: str = None
+#     leap_plea_date: str = None
+#     leap_sentencing_date: str = None
+#     appearance_reason: str = None
+#     victim_statements: bool = False
+#     offense_of_violence: bool = False
+#     future_sentencing: object = field(default_factory=FutureSentencing)
+#     sentencing_date: str = None
+#     defendant: object = field(default_factory=Defendant)
+#     defense_counsel: str = None
+#     defense_counsel_type: str = None
+#     defense_counsel_waived: bool = False
+#     fra_in_file: bool = None
+#     fra_in_court: bool = None
+#     fines_and_costs_jail_credit: bool = False
+#     charges_list: list = field(default_factory=list)
+#     amended_charges_list: list = field(default_factory=list)
+#     amend_offense_details: object = None
+#     fine_jail_days: str = None
+#     total_fines: int = 0
+#     total_fines_suspended: int = 0
+#
+#     cc_violation_probable_cause: str = None
+#     cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
+#
+#     fta_conditions: object = field(default_factory=FailureToAppearConditions)
+#
+#     court_costs: object = field(default_factory=CourtCosts)
+#     diversion: object = field(default_factory=Diversion)
+#     community_control: object = field(default_factory=CommunityControl)
+#     jail_terms: object = field(default_factory=JailTerms)
+#
+#     bond_conditions: object = field(default_factory=BondConditions)
+#
+#     no_contact: object = field(default_factory=NoContact)
+#     custodial_supervision: object = field(default_factory=CustodialSupervision)
+#     domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
+#     admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
+#     vehicle_seizure: object = field(default_factory=VehicleSeizure)
+#
+#     other_conditions: object = field(default_factory=OtherConditions)
+#
+#     community_service: object = field(default_factory=CommunityService)
+#     license_suspension: object = field(default_factory=LicenseSuspension)
+#
+#
+#     victim_notification: object = field(default_factory=VictimNotification)
+#     impoundment: object = field(default_factory=Impoundment)
+#
+#     def add_charge_to_list(self, charge):
+#         self.charges_list.append(charge)
+#
+#     def get_case_information(self):
+#         """Returns a dictionary with all of cms_case information required
+#         to populate an entry."""
+#         return asdict(self)

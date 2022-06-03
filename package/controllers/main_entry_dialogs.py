@@ -522,11 +522,13 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 
 class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        ####
+        self.entry_case_information = LeapEntryCaseInformation()
         super().__init__(judicial_officer, cms_case, case_table, parent)
         ####
 
-        self.entry_case_information = LeapEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
+
 
         ####
         self.dialog_name = "Leap Admission Plea Dialog"

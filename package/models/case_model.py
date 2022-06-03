@@ -3,21 +3,6 @@ from dataclasses import dataclass, field, asdict
 from package.models.party_types import Defendant
 
 
-@dataclass
-class CriminalCharge:
-    """Class for keeping track of all information that is specific to each
-    individual charge in a cms_case."""
-    offense: str = None
-    statute: str = None
-    degree: str = None
-    plea: str = None
-    type: str = None
-    finding: str = None
-    fines_amount: str = None
-    fines_suspended: str = None
-    jail_days: str = None
-    jail_days_suspended: str = None
-
 
 @dataclass
 class CaseInformation(object):
@@ -28,8 +13,6 @@ class CaseInformation(object):
         to populate an entry."""
         return asdict(self)
 
-    def add_charge_to_list(self, charge):
-        self.charges_list.append(charge)
 
 
 @dataclass
@@ -48,6 +31,9 @@ class CriminalCaseInformation(CaseInformation):
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
 
+    def add_charge_to_list(self, charge):
+        print('charge appended')
+        self.charges_list.append(charge)
 
 @dataclass
 class LeapEntryCaseInformation(CriminalCaseInformation):
