@@ -451,6 +451,10 @@ class CriminalCaseInformation(CaseInformation):
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
 
+    fra_in_file: bool = None
+    fra_in_court: bool = None
+    court_costs: object = field(default_factory=CourtCosts)
+
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
 
@@ -461,8 +465,6 @@ class CriminalCaseInformation(CaseInformation):
 #     offense_of_violence: bool = False
 #     future_sentencing: object = field(default_factory=FutureSentencing)
 #     sentencing_date: str = None
-#     fra_in_file: bool = None
-#     fra_in_court: bool = None
 #     fines_and_costs_jail_credit: bool = False
 #     fine_jail_days: str = None
 #     total_fines: int = 0
@@ -471,8 +473,6 @@ class CriminalCaseInformation(CaseInformation):
 #     cc_violation_probable_cause: str = None
 #     cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
 #
-#     court_costs: object = field(default_factory=CourtCosts)
-#     diversion: object = field(default_factory=Diversion)
 #     community_control: object = field(default_factory=CommunityControl)
 #     jail_terms: object = field(default_factory=JailTerms)
 #
@@ -544,3 +544,7 @@ class LeapEntryCaseInformation(CriminalCaseInformation):
     leap_sentencing_date: str = None
 
 
+@dataclass
+class DiversionEntryCaseInformation(CriminalCaseInformation):
+    diversion: object = field(default_factory=Diversion)
+    other_conditions: object = field(default_factory=OtherConditions)

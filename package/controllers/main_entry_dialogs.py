@@ -5,6 +5,7 @@ from package.models.case_information import (
     LeapEntryCaseInformation,
     CriminalCaseInformation,
     FailureToAppearEntryCaseInformation,
+    DiversionEntryCaseInformation,
 )
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
@@ -114,7 +115,6 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = "Diversion Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.diversion.ordered = True
         self.functions.show_restitution_boxes()
 
     def modify_view(self):
@@ -129,8 +129,9 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         return DiversionDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = CriminalCaseInformation()
+        self.entry_case_information = DiversionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
+        self.entry_case_information.diversion.ordered = True
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = DiversionChargesGrid
