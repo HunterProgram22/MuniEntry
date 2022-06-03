@@ -351,40 +351,6 @@ class OtherConditions:
     ]
 
 
-@dataclass
-class Diversion:
-    """Dataclass for tracking diversion programs."""
-    ordered: bool = False
-    marijuana_diversion: bool = False
-    theft_diversion: bool = False
-    other_diversion: bool = False
-    jail_imposed: bool = False
-    program_name: str = None
-    diversion_fine_pay_date: str = None
-    diversion_jail_report_date: str = None
-    restitution_ordered: bool = False
-    pay_restitution_to: str = None
-    pay_restitution_amount: str = None
-    terms_list = [
-        ("marijuana_diversion", "marijuana_diversion_radioButton"),
-        ("theft_diversion", "theft_diversion_radioButton"),
-        ("other_diversion", "other_diversion_radioButton"),
-        ("jail_imposed", "diversion_jail_imposed_checkBox"),
-        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
-        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
-        ("restitution_ordered", "pay_restitution_checkBox"),
-        ("pay_restitution_to", "pay_restitution_to_box"),
-        ("pay_restitution_amount", "pay_restitution_amount_box"),
-    ]
-
-    def get_program_name(self):
-        if self.marijuana_diversion is True:
-            return "Marijuana Diversion Program"
-        if self.theft_diversion is True:
-            return "Theft Diversion Program"
-        if self.other_diversion is True:
-            return "Prosecutor Diversion Program"
-
 
 @dataclass
 class CourtCosts:
@@ -491,14 +457,6 @@ class CriminalCaseInformation(CaseInformation):
 #
 #     victim_notification: object = field(default_factory=VictimNotification)
 #     impoundment: object = field(default_factory=Impoundment)
-#
-#     def add_charge_to_list(self, charge):
-#         self.charges_list.append(charge)
-#
-#     def get_case_information(self):
-#         """Returns a dictionary with all of cms_case information required
-#         to populate an entry."""
-#         return asdict(self)
 
 
 @dataclass
@@ -542,6 +500,41 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 class LeapEntryCaseInformation(CriminalCaseInformation):
     leap_plea_date: str = None
     leap_sentencing_date: str = None
+
+
+@dataclass
+class Diversion:
+    """Dataclass for tracking diversion programs."""
+    ordered: bool = False
+    marijuana_diversion: bool = False
+    theft_diversion: bool = False
+    other_diversion: bool = False
+    jail_imposed: bool = False
+    program_name: str = None
+    diversion_fine_pay_date: str = None
+    diversion_jail_report_date: str = None
+    restitution_ordered: bool = False
+    pay_restitution_to: str = None
+    pay_restitution_amount: str = None
+    terms_list = [
+        ("marijuana_diversion", "marijuana_diversion_radioButton"),
+        ("theft_diversion", "theft_diversion_radioButton"),
+        ("other_diversion", "other_diversion_radioButton"),
+        ("jail_imposed", "diversion_jail_imposed_checkBox"),
+        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+        ("restitution_ordered", "pay_restitution_checkBox"),
+        ("pay_restitution_to", "pay_restitution_to_box"),
+        ("pay_restitution_amount", "pay_restitution_amount_box"),
+    ]
+
+    def get_program_name(self):
+        if self.marijuana_diversion is True:
+            return "Marijuana Diversion Program"
+        if self.theft_diversion is True:
+            return "Theft Diversion Program"
+        if self.other_diversion is True:
+            return "Prosecutor Diversion Program"
 
 
 @dataclass
