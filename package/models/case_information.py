@@ -174,36 +174,6 @@ class CommunityService:
     ]
 
 
-@dataclass
-class FailureToAppearConditions:
-    arrest_warrant: bool = False
-    arrest_warrant_radius: str = None
-    set_no_trial: bool = False
-    surety_appear: bool = False
-    bond_forfeited: bool = False
-    forfeit_license: bool = False
-    non_resident_license: bool = False
-    proof_of_service: bool = False
-    supplemental_summons: bool = False
-    registration_block: bool = False
-    set_bond: bool = False
-    bond_type: str = None
-    bond_amount: str = None
-    terms_list = [
-        ("arrest_warrant", "arrest_warrant_checkBox"),
-        ("arrest_warrant_radius", "arrest_warrant_radius_box"),
-        ("set_no_trial", "set_no_trial_checkBox"),
-        ("surety_appear", "surety_appear_checkBox"),
-        ("set_bond", "set_bond_checkBox"),
-        ("bond_forfeited", "bond_forfeited_checkBox"),
-        ("forfeit_license", "operator_license_checkBox"),
-        ("non_resident_license", "non_resident_license_checkBox"),
-        ("proof_of_service", "proof_of_service_checkBox"),
-        ("supplemental_summons", "supplemental_summons_checkBox"),
-        ("registration_block", "registration_block_checkBox"),
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
-    ]
 
 
 @dataclass
@@ -453,6 +423,8 @@ class VictimNotification:
     ]
 
 
+####### Working Area #####
+
 @dataclass
 class CaseInformation(object):
     case_number: str = None
@@ -480,52 +452,24 @@ class CriminalCaseInformation(CaseInformation):
     amend_offense_details: object = None
 
     def add_charge_to_list(self, charge):
-        print('charge appended')
         self.charges_list.append(charge)
 
 
-@dataclass
-class LeapEntryCaseInformation(CriminalCaseInformation):
-    leap_plea_date: str = None
-    leap_sentencing_date: str = None
-
-
-#
 # @dataclass
-# class CriminalCaseInformation:
-#     """This object stores all the information for a cms_case both at inception and
-#     as it is populated through the application.
-#     TODO: Should also still refactor amend_offense_details to object of dataclass.
-#     :fine_jail_days: - this is not part of jail terms because it is for fine only plea for credit.
-#     """
-#     judicial_officer: object = None
-#     case_number: str = None
-#     plea_trial_date: str = None
-#     leap_plea_date: str = None
-#     leap_sentencing_date: str = None
-#     appearance_reason: str = None
+# class CriminalCaseInformation(CaseInformation):
 #     victim_statements: bool = False
 #     offense_of_violence: bool = False
 #     future_sentencing: object = field(default_factory=FutureSentencing)
 #     sentencing_date: str = None
-#     defendant: object = field(default_factory=Defendant)
-#     defense_counsel: str = None
-#     defense_counsel_type: str = None
-#     defense_counsel_waived: bool = False
 #     fra_in_file: bool = None
 #     fra_in_court: bool = None
 #     fines_and_costs_jail_credit: bool = False
-#     charges_list: list = field(default_factory=list)
-#     amended_charges_list: list = field(default_factory=list)
-#     amend_offense_details: object = None
 #     fine_jail_days: str = None
 #     total_fines: int = 0
 #     total_fines_suspended: int = 0
 #
 #     cc_violation_probable_cause: str = None
 #     cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
-#
-#     fta_conditions: object = field(default_factory=FailureToAppearConditions)
 #
 #     court_costs: object = field(default_factory=CourtCosts)
 #     diversion: object = field(default_factory=Diversion)
@@ -545,7 +489,6 @@ class LeapEntryCaseInformation(CriminalCaseInformation):
 #     community_service: object = field(default_factory=CommunityService)
 #     license_suspension: object = field(default_factory=LicenseSuspension)
 #
-#
 #     victim_notification: object = field(default_factory=VictimNotification)
 #     impoundment: object = field(default_factory=Impoundment)
 #
@@ -556,3 +499,48 @@ class LeapEntryCaseInformation(CriminalCaseInformation):
 #         """Returns a dictionary with all of cms_case information required
 #         to populate an entry."""
 #         return asdict(self)
+
+
+@dataclass
+class FailureToAppearConditions:
+    arrest_warrant: bool = False
+    arrest_warrant_radius: str = None
+    set_no_trial: bool = False
+    surety_appear: bool = False
+    bond_forfeited: bool = False
+    forfeit_license: bool = False
+    non_resident_license: bool = False
+    proof_of_service: bool = False
+    supplemental_summons: bool = False
+    registration_block: bool = False
+    set_bond: bool = False
+    bond_type: str = None
+    bond_amount: str = None
+    terms_list = [
+        ("arrest_warrant", "arrest_warrant_checkBox"),
+        ("arrest_warrant_radius", "arrest_warrant_radius_box"),
+        ("set_no_trial", "set_no_trial_checkBox"),
+        ("surety_appear", "surety_appear_checkBox"),
+        ("set_bond", "set_bond_checkBox"),
+        ("bond_forfeited", "bond_forfeited_checkBox"),
+        ("forfeit_license", "operator_license_checkBox"),
+        ("non_resident_license", "non_resident_license_checkBox"),
+        ("proof_of_service", "proof_of_service_checkBox"),
+        ("supplemental_summons", "supplemental_summons_checkBox"),
+        ("registration_block", "registration_block_checkBox"),
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+    ]
+
+
+@dataclass
+class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
+    fta_conditions: object = field(default_factory=FailureToAppearConditions)
+
+
+@dataclass
+class LeapEntryCaseInformation(CriminalCaseInformation):
+    leap_plea_date: str = None
+    leap_sentencing_date: str = None
+
+

@@ -68,12 +68,6 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        ####
-
-        # self.entry_case_information = CriminalCaseInformation()
-        # self.entry_case_information.judicial_officer = self.judicial_officer
-
-        ####
         self.load_entry_case_information_model()
         self.load_cms_data_to_view()
         self.defense_counsel_name_box.load_attorneys()
