@@ -1,24 +1,25 @@
 """Module containing all data structures for everything at the moment."""
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 
 from package.models.conditions_models import (
-    DomesticViolenceBondConditions,
     AdminLicenseSuspensionConditions,
-    NoContact,
-    CustodialSupervision,
-    CommunityService,
-    CommunityControl,
-    VehicleSeizure,
-    Impoundment,
-    LicenseSuspension,
-    JailTerms,
-    OtherConditions,
-    CourtCosts,
-    FutureSentencing,
-    VictimNotification,
     BondConditions,
-    FailureToAppearConditions,
+    CommunityControl,
+    CommunityControlViolationBondConditions,
+    CommunityService,
+    CourtCosts,
+    CustodialSupervision,
     Diversion,
+    DomesticViolenceBondConditions,
+    FailureToAppearConditions,
+    FutureSentencing,
+    Impoundment,
+    JailTerms,
+    LicenseSuspension,
+    NoContact,
+    OtherConditions,
+    VehicleSeizure,
+    VictimNotification,
 )
 from package.models.party_types import Defendant
 
@@ -148,33 +149,6 @@ class NoPleaBondEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
 @dataclass
 class PleaOnlyEntryCaseInformation(CriminalCaseInformation):
     future_sentencing: object = field(default_factory=FutureSentencing)
-
-
-@dataclass
-class CommunityControlViolationBondConditions:
-    """Conditions specific to a Community Control Violation Bond Dialog. They are an object
-    that is then part of CriminalCaseInformation."""
-
-    bond_type: str = None
-    bond_amount: str = None
-    no_alcohol_drugs: bool = False
-    alcohol_test_kiosk: bool = False
-    monitoring: bool = False
-    monitoring_type: str = None
-    comply_protection_order: bool = False
-    cc_violation_other_conditions_ordered: bool = False
-    cc_violation_other_conditions_terms: str = None
-    terms_list = [
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
-        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
-        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
-        ("monitoring", "monitoring_checkBox"),
-        ("monitoring_type", "monitoring_type_box"),
-        ("comply_protection_order", "comply_protection_order_checkBox"),
-        ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
-        ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
-    ]
 
 
 @dataclass

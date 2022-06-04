@@ -90,11 +90,8 @@ from package.controllers.information_checkers import (
     LeapSentencingDialogInfoChecker,
     TrialSentencingDialogInfoChecker,
 )
-from package.models.case_information import (
-    CommunityControlViolationBondConditions,
-)
 from package.models.conditions_models import BondConditions, BondModificationConditions, \
-    FailureToAppearConditions
+    FailureToAppearConditions, CommunityControlViolationBondConditions
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
     JailChargesGrid,
