@@ -388,17 +388,6 @@ class TrialSentencingEntryCaseInformation(JailCCEntryCaseInformation):
     pass
 
 
-# @dataclass
-# class CriminalCaseInformation(CaseInformation):
-#     victim_statements: bool = False
-#     sentencing_date: str = None
-#
-#     community_control: object = field(default_factory=CommunityControl)
-#     jail_terms: object = field(default_factory=JailTerms)
-#
-#     victim_notification: object = field(default_factory=VictimNotification)
-#     impoundment: object = field(default_factory=Impoundment)
-
 @dataclass
 class BondConditions:
     """Conditions specific to a Not Guilty Bond Dialog. They are an object
@@ -538,6 +527,11 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 @dataclass
 class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     leap_sentencing_date: str = None
+
+
+@dataclass
+class LeapSentencingEntryCaseInformation(FineOnlyEntryCaseInformation):
+    leap_plea_date: str = None
 
 
 @dataclass
