@@ -91,11 +91,10 @@ from package.controllers.information_checkers import (
     TrialSentencingDialogInfoChecker,
 )
 from package.models.case_information import (
-    BondConditions,
-    BondModificationConditions,
     CommunityControlViolationBondConditions,
-    FailureToAppearConditions,
 )
+from package.models.conditions_models import BondConditions, BondModificationConditions, \
+    FailureToAppearConditions
 from package.models.template_types import TEMPLATE_DICT
 from package.controllers.charges_grids import (
     JailChargesGrid,
