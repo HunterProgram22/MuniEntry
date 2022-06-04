@@ -362,6 +362,17 @@ class CriminalCaseInformation(CaseInformation):
         self.charges_list.append(charge)
 
 
+@dataclass
+class FineOnlyEntryCaseInformation(CriminalCaseInformation):
+    fines_and_costs_jail_credit: bool = False
+    fine_jail_days: str = None
+    total_fines: int = 0
+    total_fines_suspended: int = 0
+    community_service: object = field(default_factory=CommunityService)
+    license_suspension: object = field(default_factory=LicenseSuspension)
+    other_conditions: object = field(default_factory=OtherConditions)
+
+
 # @dataclass
 # class CriminalCaseInformation(CaseInformation):
 #     victim_statements: bool = False

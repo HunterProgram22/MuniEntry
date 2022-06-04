@@ -2,6 +2,7 @@
 from PyQt5.QtGui import QIntValidator
 
 from package.models.case_information import (
+    FineOnlyEntryCaseInformation,
     LeapAdmissionEntryCaseInformation,
     CriminalCaseInformation,
     CommunityControlViolationEntryCaseInformation,
@@ -287,7 +288,7 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         return FineOnlyDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = CriminalCaseInformation()
+        self.entry_case_information = FineOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
