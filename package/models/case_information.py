@@ -40,47 +40,6 @@ class AmendOffenseDetails:
     motion_disposition: str = "granted"
 
 
-@dataclass
-class BondConditions:
-    """Conditions specific to a Not Guilty Bond Dialog. They are an object
-    that is then part of CriminalCaseInformation."""
-    bond_type: str = None
-    bond_amount: str = None
-    no_contact: bool = False
-    no_alcohol_drugs: bool = False
-    alcohol_drugs_assessment: bool = False
-    mental_health_assessment: bool = False
-    alcohol_test_kiosk: bool = False
-    specialized_docket: bool = False
-    specialized_docket_type: str = None
-    monitoring: bool = False
-    monitoring_type: str = None
-    comply_protection_order: bool = False
-    terms_list = [
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
-        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
-        ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
-        ("mental_health_assessment", "mental_health_assessment_checkBox"),
-        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
-        ("specialized_docket", "specialized_docket_checkBox"),
-        ("specialized_docket_type", "specialized_docket_type_box"),
-        ("monitoring", "monitoring_checkBox"),
-        ("monitoring_type", "monitoring_type_box"),
-        ("comply_protection_order", "comply_protection_order_checkBox"),
-    ]
-
-
-@dataclass
-class BondModificationConditions(BondConditions):
-    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
-    the BondConditions list so appending bond modification does not alter the BondConditions
-    terms_list."""
-    bond_modification_decision: str = None
-    terms_list = BondConditions.terms_list.copy()
-    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
-
-
 
 
 @dataclass
@@ -415,20 +374,51 @@ class CriminalCaseInformation(CaseInformation):
 #     community_control: object = field(default_factory=CommunityControl)
 #     jail_terms: object = field(default_factory=JailTerms)
 #
-#
-#     no_contact: object = field(default_factory=NoContact)
-#     custodial_supervision: object = field(default_factory=CustodialSupervision)
-#     domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
-#     admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
-#     vehicle_seizure: object = field(default_factory=VehicleSeizure)
-#
-#     other_conditions: object = field(default_factory=OtherConditions)
-#
 #     community_service: object = field(default_factory=CommunityService)
 #     license_suspension: object = field(default_factory=LicenseSuspension)
 #
 #     victim_notification: object = field(default_factory=VictimNotification)
 #     impoundment: object = field(default_factory=Impoundment)
+
+@dataclass
+class BondConditions:
+    """Conditions specific to a Not Guilty Bond Dialog. They are an object
+    that is then part of CriminalCaseInformation."""
+    bond_type: str = None
+    bond_amount: str = None
+    no_contact: bool = False
+    no_alcohol_drugs: bool = False
+    alcohol_drugs_assessment: bool = False
+    mental_health_assessment: bool = False
+    alcohol_test_kiosk: bool = False
+    specialized_docket: bool = False
+    specialized_docket_type: str = None
+    monitoring: bool = False
+    monitoring_type: str = None
+    comply_protection_order: bool = False
+    terms_list = [
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
+        ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
+        ("mental_health_assessment", "mental_health_assessment_checkBox"),
+        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("specialized_docket", "specialized_docket_checkBox"),
+        ("specialized_docket_type", "specialized_docket_type_box"),
+        ("monitoring", "monitoring_checkBox"),
+        ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
+    ]
+
+
+@dataclass
+class BondModificationConditions(BondConditions):
+    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
+    the BondConditions list so appending bond modification does not alter the BondConditions
+    terms_list."""
+    bond_modification_decision: str = None
+    terms_list = BondConditions.terms_list.copy()
+    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
 
 
 @dataclass
