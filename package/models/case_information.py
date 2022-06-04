@@ -373,20 +373,23 @@ class FineOnlyEntryCaseInformation(CriminalCaseInformation):
     other_conditions: object = field(default_factory=OtherConditions)
 
 
+@dataclass
+class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
+    victim_statements: bool = False
+    sentencing_date: str = None
+    community_control: object = field(default_factory=CommunityControl)
+    jail_terms: object = field(default_factory=JailTerms)
+    victim_notification: object = field(default_factory=VictimNotification)
+    impoundment: object = field(default_factory=Impoundment)
+
+
 # @dataclass
 # class CriminalCaseInformation(CaseInformation):
 #     victim_statements: bool = False
 #     sentencing_date: str = None
-#     fines_and_costs_jail_credit: bool = False
-#     fine_jail_days: str = None
-#     total_fines: int = 0
-#     total_fines_suspended: int = 0
 #
 #     community_control: object = field(default_factory=CommunityControl)
 #     jail_terms: object = field(default_factory=JailTerms)
-#
-#     community_service: object = field(default_factory=CommunityService)
-#     license_suspension: object = field(default_factory=LicenseSuspension)
 #
 #     victim_notification: object = field(default_factory=VictimNotification)
 #     impoundment: object = field(default_factory=Impoundment)
