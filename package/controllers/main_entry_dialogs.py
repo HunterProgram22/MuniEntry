@@ -10,6 +10,7 @@ from package.models.case_information import (
     PleaOnlyEntryCaseInformation,
     NotGuiltyBondEntryCaseInformation,
     BondHearingEntryCaseInformation,
+    NoPleaBondEntryCaseInformation,
 )
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
@@ -443,7 +444,7 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         return NoPleaBondDialogUpdater(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = CriminalCaseInformation()
+        self.entry_case_information = NoPleaBondEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
