@@ -1,6 +1,21 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 
+from package.models.case_information import (
+    FineOnlyEntryCaseInformation,
+    JailCCEntryCaseInformation,
+    TrialSentencingEntryCaseInformation,
+    LeapAdmissionEntryCaseInformation,
+    LeapSentencingEntryCaseInformation,
+    CriminalCaseInformation,
+    CommunityControlViolationEntryCaseInformation,
+    FailureToAppearEntryCaseInformation,
+    DiversionEntryCaseInformation,
+    PleaOnlyEntryCaseInformation,
+    NotGuiltyBondEntryCaseInformation,
+    BondHearingEntryCaseInformation,
+    NoPleaBondEntryCaseInformation,
+)
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
 from package.updaters.grid_case_updaters import (
@@ -13,9 +28,12 @@ from package.updaters.grid_case_updaters import (
     LeapSentencingDialogUpdater,
     TrialSentencingDialogUpdater,
 )
-from package.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater, \
-    BondHearingDialogUpdater, FailureToAppearDialogUpdater, \
-    ProbationViolationBondDialogUpdater
+from package.updaters.no_grid_case_updaters import (
+    NoPleaBondDialogUpdater,
+    BondHearingDialogUpdater,
+    FailureToAppearDialogUpdater,
+    ProbationViolationBondDialogUpdater,
+)
 from package.controllers.signal_connectors import (
     DiversionDialogSignalConnector,
     JailCCDialogSignalConnector,
@@ -106,7 +124,6 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = "Diversion Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.diversion.ordered = True
         self.functions.show_restitution_boxes()
 
     def modify_view(self):
@@ -119,6 +136,11 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 
     def connect_signals_to_slots(self):
         return DiversionDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = DiversionEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+        self.entry_case_information.diversion.ordered = True
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = DiversionChargesGrid
@@ -145,6 +167,10 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
 
     def connect_signals_to_slots(self):
         return PleaOnlyDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = PleaOnlyEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = PleaOnlyGrid
@@ -186,6 +212,10 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def connect_signals_to_slots(self):
         return JailCCDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = JailCCEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = JailChargesGrid
         return CmsFraLoader(self)
@@ -224,6 +254,10 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
     def connect_signals_to_slots(self):
         return TrialSentencingDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = TrialSentencingEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = JailChargesGrid
         return CmsFraLoader(self)
@@ -256,6 +290,10 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def connect_signals_to_slots(self):
         return FineOnlyDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = FineOnlyEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NoJailChargesGrid
         return CmsFraLoader(self)
@@ -287,6 +325,10 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
 
     def connect_signals_to_slots(self):
         return LeapSentencingDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = LeapSentencingEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NoJailChargesGrid
@@ -346,6 +388,10 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def connect_signals_to_slots(self):
         return NotGuiltyBondDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = NotGuiltyBondEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self):
         self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
         return CmsChargeLoader(self)
@@ -401,6 +447,10 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
         return NoPleaBondDialogUpdater(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = NoPleaBondEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
 
@@ -424,6 +474,10 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
 
     def connect_signals_to_slots(self):
         return ProbationViolationBondDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = CommunityControlViolationEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -456,6 +510,10 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
     def connect_signals_to_slots(self):
         return FailureToAppearDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = FailureToAppearEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -508,6 +566,10 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
     def connect_signals_to_slots(self) -> BondHearingDialogSignalConnector:
         return BondHearingDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = BondHearingEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self) -> CmsNoChargeLoader:
         return CmsNoChargeLoader(self)
 
@@ -535,6 +597,10 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def connect_signals_to_slots(self) -> LeapAdmissionPleaDialogSignalConnector:
         return LeapAdmissionPleaDialogSignalConnector(self)
 
+    def load_entry_case_information_model(self):
+        self.entry_case_information = LeapAdmissionEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
     def load_cms_data_to_view(self) -> CmsChargeLoader:
         self.charges_gridLayout.__class__ = LeapAdmissionPleaGrid
         return CmsChargeLoader(self)
@@ -547,8 +613,6 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
 
 
 if __name__ == "__main__":
-    # charges_database = open_charges_db_connection()
     pass
 else:
-    # charges_database = open_charges_db_connection()
     pass
