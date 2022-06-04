@@ -2,7 +2,7 @@
 from PyQt5.QtGui import QIntValidator
 
 from package.models.case_information import (
-    LeapEntryCaseInformation,
+    LeapAdmissionEntryCaseInformation,
     CriminalCaseInformation,
     FailureToAppearEntryCaseInformation,
     DiversionEntryCaseInformation,
@@ -589,7 +589,7 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         return LeapAdmissionPleaDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = LeapEntryCaseInformation()
+        self.entry_case_information = LeapAdmissionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> CmsChargeLoader:

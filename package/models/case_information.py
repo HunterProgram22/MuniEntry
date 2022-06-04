@@ -497,8 +497,7 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
-class LeapEntryCaseInformation(CriminalCaseInformation):
-    leap_plea_date: str = None
+class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     leap_sentencing_date: str = None
 
 
