@@ -383,6 +383,11 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
     impoundment: object = field(default_factory=Impoundment)
 
 
+@dataclass
+class TrialSentencingEntryCaseInformation(JailCCEntryCaseInformation):
+    pass
+
+
 # @dataclass
 # class CriminalCaseInformation(CaseInformation):
 #     victim_statements: bool = False

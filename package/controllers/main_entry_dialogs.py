@@ -4,6 +4,7 @@ from PyQt5.QtGui import QIntValidator
 from package.models.case_information import (
     FineOnlyEntryCaseInformation,
     JailCCEntryCaseInformation,
+    TrialSentencingEntryCaseInformation,
     LeapAdmissionEntryCaseInformation,
     CriminalCaseInformation,
     CommunityControlViolationEntryCaseInformation,
@@ -253,7 +254,7 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         return TrialSentencingDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = CriminalCaseInformation()
+        self.entry_case_information = TrialSentencingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self):
