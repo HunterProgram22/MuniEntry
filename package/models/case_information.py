@@ -389,6 +389,8 @@ class CriminalCaseInformation(CaseInformation):
     defense_counsel_type: str = None
     defense_counsel_waived: bool = False
 
+    offense_of_violence: bool = False
+
     charges_list: list = field(default_factory=list)
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
@@ -404,14 +406,11 @@ class CriminalCaseInformation(CaseInformation):
 # @dataclass
 # class CriminalCaseInformation(CaseInformation):
 #     victim_statements: bool = False
-#     offense_of_violence: bool = False
-#     future_sentencing: object = field(default_factory=FutureSentencing)
 #     sentencing_date: str = None
 #     fines_and_costs_jail_credit: bool = False
 #     fine_jail_days: str = None
 #     total_fines: int = 0
 #     total_fines_suspended: int = 0
-#
 #
 #     community_control: object = field(default_factory=CommunityControl)
 #     jail_terms: object = field(default_factory=JailTerms)
@@ -431,6 +430,12 @@ class CriminalCaseInformation(CaseInformation):
 #
 #     victim_notification: object = field(default_factory=VictimNotification)
 #     impoundment: object = field(default_factory=Impoundment)
+
+
+@dataclass
+class PleaOnlyEntryCaseInformation(CriminalCaseInformation):
+    future_sentencing: object = field(default_factory=FutureSentencing)
+
 
 @dataclass
 class CommunityControlViolationBondConditions:
