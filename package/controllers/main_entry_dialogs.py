@@ -9,6 +9,7 @@ from package.models.case_information import (
     DiversionEntryCaseInformation,
     PleaOnlyEntryCaseInformation,
     NotGuiltyBondEntryCaseInformation,
+    BondHearingEntryCaseInformation,
 )
 from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
@@ -561,7 +562,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         return BondHearingDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = CriminalCaseInformation()
+        self.entry_case_information = BondHearingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> CmsNoChargeLoader:

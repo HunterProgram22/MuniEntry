@@ -443,6 +443,11 @@ class NotGuiltyBondEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
+class BondHearingEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
+    pass
+
+
+@dataclass
 class PleaOnlyEntryCaseInformation(CriminalCaseInformation):
     future_sentencing: object = field(default_factory=FutureSentencing)
 
