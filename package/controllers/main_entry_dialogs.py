@@ -1,16 +1,17 @@
 """The module that contains the main classes for creating an entry dialog."""
 from PyQt5.QtGui import QIntValidator
 
-from package.models.case_information import (
+from package.models.case_information.sentencing_entries import (
     FineOnlyEntryCaseInformation,
     JailCCEntryCaseInformation,
     TrialSentencingEntryCaseInformation,
-    LeapAdmissionEntryCaseInformation,
     LeapSentencingEntryCaseInformation,
-    CriminalCaseInformation,
+    DiversionEntryCaseInformation,
+)
+from package.models.case_information.plea_entries import (
+    LeapAdmissionEntryCaseInformation,
     CommunityControlViolationEntryCaseInformation,
     FailureToAppearEntryCaseInformation,
-    DiversionEntryCaseInformation,
     PleaOnlyEntryCaseInformation,
     NotGuiltyBondEntryCaseInformation,
     BondHearingEntryCaseInformation,
