@@ -43,10 +43,6 @@ class CriminalCaseInformation(object):
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
 
-    fra_in_file: bool = None
-    fra_in_court: bool = None
-    court_costs: object = field(default_factory=CourtCosts)
-
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
 
@@ -57,7 +53,16 @@ class CriminalCaseInformation(object):
 
 
 @dataclass
-class FineOnlyEntryCaseInformation(CriminalCaseInformation):
+class CriminalSentencingCaseInformation(CriminalCaseInformation):
+    fra_in_file: bool = None
+    fra_in_court: bool = None
+    court_costs: object = field(default_factory=CourtCosts)
+
+
+# Sentencing Entries
+# Includes FRA and Court Court Costs
+@dataclass
+class FineOnlyEntryCaseInformation(CriminalSentencingCaseInformation):
     fines_and_costs_jail_credit: bool = False
     fine_jail_days: str = None
     total_fines: int = 0
@@ -65,6 +70,17 @@ class FineOnlyEntryCaseInformation(CriminalCaseInformation):
     community_service: object = field(default_factory=CommunityService)
     license_suspension: object = field(default_factory=LicenseSuspension)
     other_conditions: object = field(default_factory=OtherConditions)
+
+
+@dataclass
+class DiversionEntryCaseInformation(CriminalSentencingCaseInformation):
+    diversion: object = field(default_factory=Diversion)
+    other_conditions: object = field(default_factory=OtherConditions)
+
+
+@dataclass
+class LeapSentencingEntryCaseInformation(FineOnlyEntryCaseInformation):
+    leap_plea_date: str = None
 
 
 @dataclass
@@ -82,6 +98,8 @@ class TrialSentencingEntryCaseInformation(JailCCEntryCaseInformation):
     pass
 
 
+# Plea Entries
+# Does not include FRA and Court Costs
 @dataclass
 class NotGuiltyBondEntryCaseInformation(CriminalCaseInformation):
     bond_conditions: object = field(default_factory=BondConditions)
@@ -123,13 +141,3 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     leap_sentencing_date: str = None
 
-
-@dataclass
-class LeapSentencingEntryCaseInformation(FineOnlyEntryCaseInformation):
-    leap_plea_date: str = None
-
-
-@dataclass
-class DiversionEntryCaseInformation(CriminalCaseInformation):
-    diversion: object = field(default_factory=Diversion)
-    other_conditions: object = field(default_factory=OtherConditions)
