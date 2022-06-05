@@ -25,56 +25,8 @@ from package.models.party_types import Defendant
 
 
 @dataclass
-class CmsCaseInformation:
-    """Stores the data that is loaded from the Case Management System so that it can be loaded
-    into the Dialog view."""
-
+class CriminalCaseInformation(object):
     case_number: str = None
-    defendant: object = field(default_factory=Defendant)
-    defense_counsel: str = None
-    defense_counsel_type: str = None
-    charges_list: list = field(default_factory=list)
-    fra_in_file: str = None
-
-
-@dataclass
-class CriminalCharge:
-    """Class for keeping track of all information that is specific to each
-    individual charge in a cms_case."""
-
-    offense: str = None
-    statute: str = None
-    degree: str = None
-    plea: str = None
-    type: str = None
-    finding: str = None
-    fines_amount: str = None
-    fines_suspended: str = None
-    jail_days: str = None
-    jail_days_suspended: str = None
-
-
-@dataclass
-class AmendOffenseDetails:
-    """TODO: This should be refactored to a pure function most likely."""
-
-    original_charge: str = None
-    amended_charge: str = None
-    motion_disposition: str = "granted"
-
-
-@dataclass
-class CaseInformation(object):
-    case_number: str = None
-
-    def get_case_information(self):
-        """Returns a dictionary with all of cms_case information required
-        to populate an entry."""
-        return asdict(self)
-
-
-@dataclass
-class CriminalCaseInformation(CaseInformation):
     judicial_officer: object = None
     plea_trial_date: str = None
     appearance_reason: str = None
@@ -98,6 +50,10 @@ class CriminalCaseInformation(CaseInformation):
     def add_charge_to_list(self, charge):
         self.charges_list.append(charge)
 
+    def get_case_information(self):
+        """Returns a dictionary with all of cms_case information required
+        to populate an entry."""
+        return asdict(self)
 
 @dataclass
 class FineOnlyEntryCaseInformation(CriminalCaseInformation):

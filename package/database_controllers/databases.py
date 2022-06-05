@@ -10,7 +10,7 @@ from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
-from package.models.case_information import CmsCaseInformation
+from package.models.cms_models import CmsCaseInformation
 from package.database_controllers.sql_queries import (
     create_daily_case_list_tables_sql_query,
     create_charges_table_sql_query,
