@@ -1,17 +1,20 @@
+"""Contains all dataclasses for entries that do not contain FRA or Court Costs."""
 from dataclasses import dataclass, field
 
-from package.models.case_information.criminal_case_information import CriminalCaseInformation
+from package.models.case_information.criminal_case_information import (
+    CriminalCaseInformation,
+)
 from package.models.conditions_models import (
+    AdminLicenseSuspensionConditions,
     BondConditions,
-    NoContact,
+    CommunityControlViolationBondConditions,
     CustodialSupervision,
     DomesticViolenceBondConditions,
-    AdminLicenseSuspensionConditions,
-    VehicleSeizure,
-    OtherConditions,
-    FutureSentencing,
-    CommunityControlViolationBondConditions,
     FailureToAppearConditions,
+    FutureSentencing,
+    NoContact,
+    OtherConditions,
+    VehicleSeizure,
 )
 
 

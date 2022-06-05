@@ -25,10 +25,10 @@ class CriminalCaseInformation(object):
     amended_charges_list: list = field(default_factory=list)
     amend_offense_details: object = None
 
-    def add_charge_to_list(self, charge):
+    def add_charge_to_list(self, charge) -> None:
         self.charges_list.append(charge)
 
-    def get_case_information(self):
+    def get_case_information(self) -> dict:
         """Returns a dictionary with all case information.
 
         Keys of the dict are variable names and are used in templates to populate the values
