@@ -55,6 +55,7 @@ class CriminalCaseInformation(object):
         to populate an entry."""
         return asdict(self)
 
+
 @dataclass
 class FineOnlyEntryCaseInformation(CriminalCaseInformation):
     fines_and_costs_jail_credit: bool = False
