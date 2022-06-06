@@ -24,16 +24,10 @@ class NotGuiltyBondEntryCaseInformation(CriminalCaseInformation):
 class BondHearingEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
     """General case information data variables and data for bond hearing entry."""
 
-    def __init__(self):
-        """Only inherits no new attributes."""
-
 
 @dataclass
 class NoPleaBondEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
     """General case information data variables and data for no plea bond entry."""
-
-    def __init__(self):
-        """Only inherits no new attributes."""
 
 
 @dataclass
