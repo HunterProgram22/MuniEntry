@@ -143,6 +143,7 @@ class MainWindowViewModifier(object):
             self.main_window.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
+            self.main_window.landefeld_radioButton: JudicialOfficer('David', 'Landefeld', 'Judge'),
         }
         self.main_window.dialog_buttons_dict = {
             self.main_window.FineOnlyPleaButton: med.FineOnlyPleaDialog,
