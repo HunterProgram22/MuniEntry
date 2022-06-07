@@ -209,27 +209,6 @@ font-weight: bold;</string>
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="4" column="1">
-            <widget class="QRadioButton" name="pelanda_radioButton">
-             <property name="text">
-              <string>Magistrate Pelanda</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="0">
-            <widget class="QRadioButton" name="bunner_radioButton">
-             <property name="text">
-              <string>Magistrate Bunner</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QRadioButton" name="kudela_radioButton">
-             <property name="text">
-              <string>Magistrate Kudela</string>
-             </property>
-            </widget>
-           </item>
            <item row="3" column="0">
             <widget class="QLabel" name="judicial_officer_label">
              <property name="font">
@@ -246,10 +225,24 @@ font-weight: bold;</string>
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QRadioButton" name="hemmeter_radioButton">
+           <item row="4" column="2">
+            <widget class="QRadioButton" name="kudela_radioButton">
              <property name="text">
-              <string>Judge Hemmeter</string>
+              <string>Magistrate Kudela</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QRadioButton" name="bunner_radioButton">
+             <property name="text">
+              <string>Magistrate Bunner</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QRadioButton" name="pelanda_radioButton">
+             <property name="text">
+              <string>Magistrate Pelanda</string>
              </property>
             </widget>
            </item>
@@ -257,6 +250,20 @@ font-weight: bold;</string>
             <widget class="QRadioButton" name="rohrer_radioButton">
              <property name="text">
               <string>Judge Rohrer</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QRadioButton" name="hemmeter_radioButton">
+             <property name="text">
+              <string>Judge Hemmeter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QRadioButton" name="landefeld_radioButton">
+             <property name="text">
+              <string>Judge Landefeld</string>
              </property>
             </widget>
            </item>

@@ -1,6 +1,6 @@
 """Module that contains the updaters for the different charge grids used by dialogs."""
 
-from package.models.case_information import CriminalCharge
+from package.models.criminal_charge_models import CriminalCharge
 from package.updaters.base_updaters import CBD
 
 

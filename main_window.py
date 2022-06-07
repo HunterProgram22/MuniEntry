@@ -14,7 +14,7 @@ from package.database_controllers.databases import (
     open_db_connection,
     query_daily_case_list_data,
 )
-from package.models.case_information import CmsCaseInformation
+from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
@@ -143,6 +143,7 @@ class MainWindowViewModifier(object):
             self.main_window.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
+            self.main_window.landefeld_radioButton: JudicialOfficer('David', 'Landefeld', 'Judge'),
         }
         self.main_window.dialog_buttons_dict = {
             self.main_window.FineOnlyPleaButton: med.FineOnlyPleaDialog,

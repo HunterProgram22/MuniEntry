@@ -1,6 +1,6 @@
 """Module for loading the CMS case data into the main_entry_dialog view."""
 from __future__ import annotations
-from package.models.case_information import CriminalCharge
+from package.models.criminal_charge_models import CriminalCharge
 
 
 class CmsNoChargeLoader:

@@ -5,7 +5,7 @@ from typing import Any
 
 from PyQt5.QtWidgets import QDialog
 
-from package.models.case_information import CmsCaseInformation, CriminalCaseInformation
+from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from settings import WIDGET_TYPE_ACCESS_DICT
 
@@ -67,11 +67,14 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        self.entry_case_information = CriminalCaseInformation(self.judicial_officer)
+        self.load_entry_case_information_model()
         self.load_cms_data_to_view()
         self.defense_counsel_name_box.load_attorneys()
         self.criminal_charge = None
         self.popup_dialog = None
+
+    def load_entry_case_information_model(self):
+        raise NotImplementedError
 
     def load_cms_data_to_view(self) -> None:
         raise NotImplementedError

@@ -1,110 +1,5 @@
-"""Module containing all data structures for everything at the moment."""
-from dataclasses import dataclass, field, asdict
-
-from package.models.party_types import Defendant
-
-
-@dataclass
-class CmsCaseInformation:
-    """Stores the data that is loaded from the Case Management System so that it can be loaded
-    into the Dialog view."""
-    case_number: str = None
-    defendant: object = field(default_factory=Defendant)
-    defense_counsel: str = None
-    defense_counsel_type: str = None
-    charges_list: list = field(default_factory=list)
-    fra_in_file: str = None
-
-
-@dataclass
-class CriminalCharge:
-    """Class for keeping track of all information that is specific to each
-    individual charge in a cms_case."""
-    offense: str = None
-    statute: str = None
-    degree: str = None
-    plea: str = None
-    type: str = None
-    finding: str = None
-    fines_amount: str = None
-    fines_suspended: str = None
-    jail_days: str = None
-    jail_days_suspended: str = None
-
-
-@dataclass
-class AmendOffenseDetails:
-    """TODO: This should be refactored to a pure function most likely."""
-    original_charge: str = None
-    amended_charge: str = None
-    motion_disposition: str = "granted"
-
-
-@dataclass
-class BondConditions:
-    """Conditions specific to a Not Guilty Bond Dialog. They are an object
-    that is then part of CriminalCaseInformation."""
-    bond_type: str = None
-    bond_amount: str = None
-    no_contact: bool = False
-    no_alcohol_drugs: bool = False
-    alcohol_drugs_assessment: bool = False
-    mental_health_assessment: bool = False
-    alcohol_test_kiosk: bool = False
-    specialized_docket: bool = False
-    specialized_docket_type: str = None
-    monitoring: bool = False
-    monitoring_type: str = None
-    comply_protection_order: bool = False
-    terms_list = [
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
-        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
-        ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
-        ("mental_health_assessment", "mental_health_assessment_checkBox"),
-        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
-        ("specialized_docket", "specialized_docket_checkBox"),
-        ("specialized_docket_type", "specialized_docket_type_box"),
-        ("monitoring", "monitoring_checkBox"),
-        ("monitoring_type", "monitoring_type_box"),
-        ("comply_protection_order", "comply_protection_order_checkBox"),
-    ]
-
-
-@dataclass
-class BondModificationConditions(BondConditions):
-    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
-    the BondConditions list so appending bond modification does not alter the BondConditions
-    terms_list."""
-    bond_modification_decision: str = None
-    terms_list = BondConditions.terms_list.copy()
-    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
-
-
-@dataclass
-class CommunityControlViolationBondConditions:
-    """Conditions specific to a Community Control Violation Bond Dialog. They are an object
-    that is then part of CriminalCaseInformation."""
-    bond_type: str = None
-    bond_amount: str = None
-    no_alcohol_drugs: bool = False
-    alcohol_test_kiosk: bool = False
-    monitoring: bool = False
-    monitoring_type: str = None
-    comply_protection_order: bool = False
-    cc_violation_other_conditions_ordered: bool = False
-    cc_violation_other_conditions_terms: str = None
-    terms_list = [
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
-        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
-        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
-        ("monitoring", "monitoring_checkBox"),
-        ("monitoring_type", "monitoring_type_box"),
-        ("comply_protection_order", "comply_protection_order_checkBox"),
-        ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
-        ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
-    ]
+"""Module containing data structures for conditions that are part of Case Information models."""
+from dataclasses import dataclass
 
 
 @dataclass
@@ -171,38 +66,6 @@ class CommunityService:
         ("hours_of_service", "community_service_hours_ordered_box"),
         ("days_to_complete_service", "community_service_days_to_complete_box"),
         ("due_date_for_service", "community_service_date_to_complete_box"),
-    ]
-
-
-@dataclass
-class FailureToAppearConditions:
-    arrest_warrant: bool = False
-    arrest_warrant_radius: str = None
-    set_no_trial: bool = False
-    surety_appear: bool = False
-    bond_forfeited: bool = False
-    forfeit_license: bool = False
-    non_resident_license: bool = False
-    proof_of_service: bool = False
-    supplemental_summons: bool = False
-    registration_block: bool = False
-    set_bond: bool = False
-    bond_type: str = None
-    bond_amount: str = None
-    terms_list = [
-        ("arrest_warrant", "arrest_warrant_checkBox"),
-        ("arrest_warrant_radius", "arrest_warrant_radius_box"),
-        ("set_no_trial", "set_no_trial_checkBox"),
-        ("surety_appear", "surety_appear_checkBox"),
-        ("set_bond", "set_bond_checkBox"),
-        ("bond_forfeited", "bond_forfeited_checkBox"),
-        ("forfeit_license", "operator_license_checkBox"),
-        ("non_resident_license", "non_resident_license_checkBox"),
-        ("proof_of_service", "proof_of_service_checkBox"),
-        ("supplemental_summons", "supplemental_summons_checkBox"),
-        ("registration_block", "registration_block_checkBox"),
-        ("bond_type", "bond_type_box"),
-        ("bond_amount", "bond_amount_box"),
     ]
 
 
@@ -368,7 +231,6 @@ class JailTerms:
     ]
 
 
-
 @dataclass
 class OtherConditions:
     """Class for keeping track of other conditions that are tied to
@@ -379,41 +241,6 @@ class OtherConditions:
         # ("ordered", "other_conditions_checkBox"),
         ("terms", "other_conditions_textEdit"),
     ]
-
-
-@dataclass
-class Diversion:
-    """Dataclass for tracking diversion programs."""
-    ordered: bool = False
-    marijuana_diversion: bool = False
-    theft_diversion: bool = False
-    other_diversion: bool = False
-    jail_imposed: bool = False
-    program_name: str = None
-    diversion_fine_pay_date: str = None
-    diversion_jail_report_date: str = None
-    restitution_ordered: bool = False
-    pay_restitution_to: str = None
-    pay_restitution_amount: str = None
-    terms_list = [
-        ("marijuana_diversion", "marijuana_diversion_radioButton"),
-        ("theft_diversion", "theft_diversion_radioButton"),
-        ("other_diversion", "other_diversion_radioButton"),
-        ("jail_imposed", "diversion_jail_imposed_checkBox"),
-        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
-        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
-        ("restitution_ordered", "pay_restitution_checkBox"),
-        ("pay_restitution_to", "pay_restitution_to_box"),
-        ("pay_restitution_amount", "pay_restitution_amount_box"),
-    ]
-
-    def get_program_name(self):
-        if self.marijuana_diversion is True:
-            return "Marijuana Diversion Program"
-        if self.theft_diversion is True:
-            return "Theft Diversion Program"
-        if self.other_diversion is True:
-            return "Prosecutor Diversion Program"
 
 
 @dataclass
@@ -454,67 +281,135 @@ class VictimNotification:
 
 
 @dataclass
-class CriminalCaseInformation:
-    """This object stores all the information for a cms_case both at inception and
-    as it is populated through the application.
-    TODO: Should also still refactor amend_offense_details to object of dataclass.
-    :fine_jail_days: - this is not part of jail terms because it is for fine only plea for credit.
-    """
-    judicial_officer: object = None
-    case_number: str = None
-    plea_trial_date: str = None
-    leap_plea_date: str = None
-    leap_sentencing_date: str = None
-    appearance_reason: str = None
-    victim_statements: bool = False
-    offense_of_violence: bool = False
-    future_sentencing: object = field(default_factory=FutureSentencing)
-    sentencing_date: str = None
-    defendant: object = field(default_factory=Defendant)
-    defense_counsel: str = None
-    defense_counsel_type: str = None
-    defense_counsel_waived: bool = False
-    fra_in_file: bool = None
-    fra_in_court: bool = None
-    fines_and_costs_jail_credit: bool = False
-    charges_list: list = field(default_factory=list)
-    amended_charges_list: list = field(default_factory=list)
-    amend_offense_details: object = None
-    fine_jail_days: str = None
-    total_fines: int = 0
-    total_fines_suspended: int = 0
-
-    cc_violation_probable_cause: str = None
-    cc_bond_conditions: object = field(default_factory=CommunityControlViolationBondConditions)
-
-    fta_conditions: object = field(default_factory=FailureToAppearConditions)
-
-    court_costs: object = field(default_factory=CourtCosts)
-    diversion: object = field(default_factory=Diversion)
-    community_control: object = field(default_factory=CommunityControl)
-    jail_terms: object = field(default_factory=JailTerms)
-
-    bond_conditions: object = field(default_factory=BondConditions)
-
-    no_contact: object = field(default_factory=NoContact)
-    custodial_supervision: object = field(default_factory=CustodialSupervision)
-    domestic_violence_conditions: object = field(default_factory=DomesticViolenceBondConditions)
-    admin_license_suspension: object = field(default_factory=AdminLicenseSuspensionConditions)
-    vehicle_seizure: object = field(default_factory=VehicleSeizure)
-
-    other_conditions: object = field(default_factory=OtherConditions)
-
-    community_service: object = field(default_factory=CommunityService)
-    license_suspension: object = field(default_factory=LicenseSuspension)
+class BondConditions:
+    """Conditions specific to a Not Guilty Bond Dialog. They are an object
+    that is then part of CriminalCaseInformation."""
+    bond_type: str = None
+    bond_amount: str = None
+    no_contact: bool = False
+    no_alcohol_drugs: bool = False
+    alcohol_drugs_assessment: bool = False
+    mental_health_assessment: bool = False
+    alcohol_test_kiosk: bool = False
+    specialized_docket: bool = False
+    specialized_docket_type: str = None
+    monitoring: bool = False
+    monitoring_type: str = None
+    comply_protection_order: bool = False
+    terms_list = [
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
+        ("alcohol_drugs_assessment", "alcohol_drugs_assessment_checkBox"),
+        ("mental_health_assessment", "mental_health_assessment_checkBox"),
+        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("specialized_docket", "specialized_docket_checkBox"),
+        ("specialized_docket_type", "specialized_docket_type_box"),
+        ("monitoring", "monitoring_checkBox"),
+        ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
+    ]
 
 
-    victim_notification: object = field(default_factory=VictimNotification)
-    impoundment: object = field(default_factory=Impoundment)
+@dataclass
+class BondModificationConditions(BondConditions):
+    """Adds the attribute for bond modification to bond conditions. The terms_list is a copy of
+    the BondConditions list so appending bond modification does not alter the BondConditions
+    terms_list."""
+    bond_modification_decision: str = None
+    terms_list = BondConditions.terms_list.copy()
+    terms_list.append(("bond_modification_decision", "bond_modification_decision_box"))
 
-    def add_charge_to_list(self, charge):
-        self.charges_list.append(charge)
 
-    def get_case_information(self):
-        """Returns a dictionary with all of cms_case information required
-        to populate an entry."""
-        return asdict(self)
+@dataclass
+class FailureToAppearConditions:
+    arrest_warrant: bool = False
+    arrest_warrant_radius: str = None
+    set_no_trial: bool = False
+    surety_appear: bool = False
+    bond_forfeited: bool = False
+    forfeit_license: bool = False
+    non_resident_license: bool = False
+    proof_of_service: bool = False
+    supplemental_summons: bool = False
+    registration_block: bool = False
+    set_bond: bool = False
+    bond_type: str = None
+    bond_amount: str = None
+    terms_list = [
+        ("arrest_warrant", "arrest_warrant_checkBox"),
+        ("arrest_warrant_radius", "arrest_warrant_radius_box"),
+        ("set_no_trial", "set_no_trial_checkBox"),
+        ("surety_appear", "surety_appear_checkBox"),
+        ("set_bond", "set_bond_checkBox"),
+        ("bond_forfeited", "bond_forfeited_checkBox"),
+        ("forfeit_license", "operator_license_checkBox"),
+        ("non_resident_license", "non_resident_license_checkBox"),
+        ("proof_of_service", "proof_of_service_checkBox"),
+        ("supplemental_summons", "supplemental_summons_checkBox"),
+        ("registration_block", "registration_block_checkBox"),
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+    ]
+
+
+@dataclass
+class Diversion:
+    """Dataclass for tracking diversion programs."""
+    ordered: bool = False
+    marijuana_diversion: bool = False
+    theft_diversion: bool = False
+    other_diversion: bool = False
+    jail_imposed: bool = False
+    program_name: str = None
+    diversion_fine_pay_date: str = None
+    diversion_jail_report_date: str = None
+    restitution_ordered: bool = False
+    pay_restitution_to: str = None
+    pay_restitution_amount: str = None
+    terms_list = [
+        ("marijuana_diversion", "marijuana_diversion_radioButton"),
+        ("theft_diversion", "theft_diversion_radioButton"),
+        ("other_diversion", "other_diversion_radioButton"),
+        ("jail_imposed", "diversion_jail_imposed_checkBox"),
+        ("diversion_fine_pay_date", "diversion_fine_pay_date_box"),
+        ("diversion_jail_report_date", "diversion_jail_report_date_box"),
+        ("restitution_ordered", "pay_restitution_checkBox"),
+        ("pay_restitution_to", "pay_restitution_to_box"),
+        ("pay_restitution_amount", "pay_restitution_amount_box"),
+    ]
+
+    def get_program_name(self):
+        if self.marijuana_diversion is True:
+            return "Marijuana Diversion Program"
+        if self.theft_diversion is True:
+            return "Theft Diversion Program"
+        if self.other_diversion is True:
+            return "Prosecutor Diversion Program"
+
+
+@dataclass
+class CommunityControlViolationBondConditions:
+    """Conditions specific to a Community Control Violation Bond Dialog. They are an object
+    that is then part of CriminalCaseInformation."""
+
+    bond_type: str = None
+    bond_amount: str = None
+    no_alcohol_drugs: bool = False
+    alcohol_test_kiosk: bool = False
+    monitoring: bool = False
+    monitoring_type: str = None
+    comply_protection_order: bool = False
+    cc_violation_other_conditions_ordered: bool = False
+    cc_violation_other_conditions_terms: str = None
+    terms_list = [
+        ("bond_type", "bond_type_box"),
+        ("bond_amount", "bond_amount_box"),
+        ("no_alcohol_drugs", "no_alcohol_drugs_checkBox"),
+        ("alcohol_test_kiosk", "alcohol_test_kiosk_checkBox"),
+        ("monitoring", "monitoring_checkBox"),
+        ("monitoring_type", "monitoring_type_box"),
+        ("comply_protection_order", "comply_protection_order_checkBox"),
+        ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
+        ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
+    ]

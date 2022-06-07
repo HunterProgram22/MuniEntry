@@ -1,0 +1,16 @@
+from dataclasses import dataclass, field
+
+from package.models.party_types import Defendant
+
+
+@dataclass
+class CmsCaseInformation:
+    """Stores the data that is loaded from the Case Management System so that it can be loaded
+    into the Dialog view."""
+
+    case_number: str = None
+    defendant: object = field(default_factory=Defendant)
+    defense_counsel: str = None
+    defense_counsel_type: str = None
+    charges_list: list = field(default_factory=list)
+    fra_in_file: str = None
