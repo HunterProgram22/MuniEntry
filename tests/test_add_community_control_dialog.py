@@ -33,7 +33,7 @@ def test_all_checkbox_conditions(qtbot, com_control_dialog_com_control_condition
     assert getattr(com_control_dialog_com_control_conditions, checkBox).isChecked()
 
 
-@pytest.mark.skip
+# @pytest.mark.skip
 @pytest.mark.parametrize("checkBox", all_community_control_checkbox_conditions_test_list)
 def test_if_conditions_hold_if_checked_dialog_closed_then_reopened(qtbot, main_window, checkBox):
     """These tests are being skipped because they require manual interaction TODO: fix"""

@@ -20,7 +20,7 @@ from package.database_controllers.databases import (
     open_db_connection,
     query_offense_statute_data,
 )
-from package.models.case_information import AmendOffenseDetails
+from package.models.criminal_charge_models import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
 

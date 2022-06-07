@@ -9,7 +9,7 @@ from PyQt5.QtCore import QDate
 from package.views.custom_widgets import InfoBox
 from package.database_controllers.databases import open_db_connection, extract_data, sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
-from package.models.case_information import CriminalCharge
+from package.models.criminal_charge_models import CriminalCharge
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH
 
