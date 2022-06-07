@@ -8,29 +8,6 @@ from package.models.case_information.criminal_case_information import (
 
 
 @dataclass
-class NotGuiltyBondEntryCaseInformation(CriminalCaseInformation):
-    """General case information data variables and data for not guilty plea entry."""
-
-    bond_conditions: object = field(default_factory=cm.BondConditions)
-    no_contact: object = field(default_factory=cm.NoContact)
-    custodial_supervision: object = field(default_factory=cm.CustodialSupervision)
-    domestic_violence_conditions: object = field(default_factory=cm.DomesticViolenceBondConditions)
-    admin_license_suspension: object = field(default_factory=cm.AdminLicenseSuspensionConditions)
-    vehicle_seizure: object = field(default_factory=cm.VehicleSeizure)
-    other_conditions: object = field(default_factory=cm.OtherConditions)
-
-
-@dataclass
-class BondHearingEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
-    """General case information data variables and data for bond hearing entry."""
-
-
-@dataclass
-class NoPleaBondEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
-    """General case information data variables and data for no plea bond entry."""
-
-
-@dataclass
 class PleaOnlyEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables and data for plea only entry."""
 
@@ -57,3 +34,26 @@ class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables and data for Leap Admission entry."""
 
     leap_sentencing_date: str = None
+
+
+@dataclass
+class NotGuiltyBondEntryCaseInformation(CriminalCaseInformation):
+    """General case information data variables and data for not guilty plea entry."""
+
+    bond_conditions: object = field(default_factory=cm.BondConditions)
+    no_contact: object = field(default_factory=cm.NoContact)
+    custodial_supervision: object = field(default_factory=cm.CustodialSupervision)
+    domestic_violence_conditions: object = field(default_factory=cm.DomesticViolenceBondConditions)
+    admin_license_suspension: object = field(default_factory=cm.AdminLicenseSuspensionConditions)
+    vehicle_seizure: object = field(default_factory=cm.VehicleSeizure)
+    other_conditions: object = field(default_factory=cm.OtherConditions)
+
+
+@dataclass
+class BondHearingEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
+    """General case information data variables and data for bond hearing entry."""
+
+
+@dataclass
+class NoPleaBondEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
+    """General case information data variables and data for no plea bond entry."""
