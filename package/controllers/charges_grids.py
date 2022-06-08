@@ -6,14 +6,15 @@ from package.views import custom_widgets as cw
 
 
 class ChargesGrid(QGridLayout):
-    """The base format of the charges grid that is used when a main_entry_dialog needs
-    to display and interact with charges in a case. The ChargesGrid subclasses the
-    QGridLayout and provides methods for manipulating the grid. Each main_entry_dialog
-    that has a ChargesGrid has a specific subclassed version that is set by changing
-    the class of the QGridLayout to the class of the specific subclassed ChargesGrid.
-    This avoids having to initialize the grid during the setupUI method called by the
-    main_entry_dialog classes modify_view method. The class is set prior to
-    loading the case data during the main_entry_dialog load_cms_data_to_view method."""
+    """The base format of the charges_gridLayout used for a main_entry_dialog.
+
+    The ChargesGrid subclasses the QGridLayout and provides methods for manipulating the grid.
+    Each main_entry_dialog that has a ChargesGrid (self.charges_gridLayout) has a specific
+    subclassed version that is set by changing the class of the QGridLayout to the class of
+    the specific subclassed ChargesGrid. This avoids having to initialize the grid during the
+    setupUI method called by the main_entry_dialog classes modify_view method. The class is
+    set prior to loading the case data during the main_entry_dialog load_cms_data_to_view method.
+    """
 
     row_offense = 0
     row_statute = 1
@@ -31,14 +32,15 @@ class ChargesGrid(QGridLayout):
         return dialog.entry_case_information.charges_list[-1]
 
     def get_add_column(self) -> int:
-        """Returns one more than the total number of columns because charge is being added as
-        a new column."""
+        """Returns one more than total columns so a new column is used to add items."""
         return self.columnCount() + 1
 
-    def get_button_name(self) -> str:
-        """Returns a copy of the label of the specific plea all button (i.e. "Guilty
-        All" is returned as "Guilty")."""
-        return self.sender().text().strip(" All")
+    def get_plea(self) -> str:
+        """Returns copy of the label of the plea button after stripping " All" from end.
+
+        Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
+        """
+        return self.sender().text().replace(' All', '')
 
     def set_cursor_to_fine_line_edit(self):
         """Sets the cursor to the first non-dismissed charge's fine box."""
@@ -60,7 +62,7 @@ class ChargesGrid(QGridLayout):
         """This method after setting all pleas calls the set_all_findings. In the Not
         Guilty Plea Grid the method is overriden to not call the set_all_findings
         because there are no findings to be set with a Not Guilty plea."""
-        plea = self.get_button_name()
+        plea = self.get_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 if (
@@ -105,7 +107,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
     def set_all_pleas(self):
         """This method overrides the ChargesGrid set_all_pleas because there are no
         findings to be added for a Not Guilty plea."""
-        plea = self.get_button_name()
+        plea = self.get_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
@@ -140,7 +142,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
 
     def set_all_pleas(self):
         """Overrides the base set_all_pleas because LEAP does not have findings set."""
-        plea = self.get_button_name()
+        plea = self.get_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 if (
@@ -250,7 +252,7 @@ class JailChargesGrid(NoJailChargesGrid):
         )
 
     def set_all_trial_findings(self):
-        self.trial_finding = self.get_button_name()
+        self.trial_finding = self.get_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
                 if (
