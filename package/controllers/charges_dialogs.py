@@ -39,7 +39,7 @@ class BaseChargeDialog(QDialog):
         self.connect_signals_to_slots()
         self.load_offense_choice_boxes()
         self.load_statute_choice_boxes()
-        self.set_offense_statute_degree_choice_boxes_to_blank()
+        self.set_offense_statute_degree_boxes_to_blank()
 
     def load_offense_choice_boxes(self) -> None:
         self.offense_choice_box.addItems(query_offense_statute_data('offense'))
@@ -49,7 +49,7 @@ class BaseChargeDialog(QDialog):
         self.statute_choice_box.addItems(query_offense_statute_data('statute'))
         self.statute_choice_box.insertItem(0, '')
 
-    def set_offense_statute_degree_choice_boxes_to_blank(self) -> None:
+    def set_offense_statute_degree_boxes_to_blank(self) -> None:
         """Degree choices are loaded in the view, so do not need to be loaded in this method."""
         self.offense_choice_box.setCurrentText('')
         self.statute_choice_box.setCurrentText('')
