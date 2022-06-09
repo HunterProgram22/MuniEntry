@@ -42,20 +42,28 @@ class ChargesGrid(QGridLayout):
         """
         return self.sender().text().replace(' All', '')
 
-    def set_cursor_to_fine_line_edit(self):
-        """Sets the cursor to the first non-dismissed charge's fine box."""
+    def check_if_column_empty(self, column: int) -> bool:
+        if self.itemAtPosition(0, column) is None:
+            return True
+
+    def check_if_charge_dismissed(self, column: int) -> bool:
+        if self.itemAtPosition(ChargesGrid.row_dismissed_box, column).widget().isChecked():
+            return True
+
+    def set_cursor_to_first_fine_box(self) -> None:
+        """Sets the cursor to the first non-dismissed charge's fine box.
+
+        Range starts at 1 instead of 0 because 1st column is grid labels.
+        """
         for column in range(1, self.columnCount()):
-            if self.itemAtPosition(ChargesGrid.row_fine, column) is not None:
-                if (
-                    self.itemAtPosition(ChargesGrid.row_dismissed_box, column)
-                    .widget()
-                    .isChecked()
-                ):
-                    column += 1
-                    continue
-                self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
-                break
-            column += 1
+            if self.check_if_column_empty(column):
+                column += 1
+                continue
+            if self.check_if_charge_dismissed(column):
+                column += 1
+                continue
+            self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
+            break
 
     @logger.catch
     def set_all_pleas(self):
@@ -73,7 +81,7 @@ class ChargesGrid(QGridLayout):
                     continue
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
                 self.set_all_findings(column)
-        self.set_cursor_to_fine_line_edit()
+        self.set_cursor_to_first_fine_box()
 
     @logger.catch
     def set_all_findings(self, column):
