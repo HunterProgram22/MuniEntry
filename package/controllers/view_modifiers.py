@@ -159,6 +159,7 @@ class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
 class DiversionDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.DiversionChargesGrid
         self.set_appearance_reason()
         self.set_diversion_fine_pay_date_box()
         self.set_diversion_jail_report_date_box()

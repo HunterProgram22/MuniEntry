@@ -123,8 +123,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.show_restitution_boxes()
 
-    def modify_view(self):
-        return DiversionDialogViewModifier(self)
+    def modify_view(self) -> None:
+        DiversionDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = DiversionDialogSlotFunctions(self)
@@ -139,9 +139,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.entry_case_information.judicial_officer = self.judicial_officer
         self.entry_case_information.diversion.ordered = True
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = DiversionChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return DiversionDialogUpdater(self)
