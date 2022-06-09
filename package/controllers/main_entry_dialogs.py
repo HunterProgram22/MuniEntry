@@ -197,8 +197,8 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         if self.case_table == "slated":
             self.in_jail_box.setCurrentText("Yes")
 
-    def modify_view(self):
-        return JailCCDialogViewModifier(self)
+    def modify_view(self) -> None:
+        JailCCDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = JailCCDialogSlotFunctions(self)
@@ -211,9 +211,8 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         self.entry_case_information = JailCCEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = JailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return JailCCDialogUpdater(self)
