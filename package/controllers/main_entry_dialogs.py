@@ -155,8 +155,8 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         self.dialog_name = "Plea Only Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return PleaOnlyDialogViewModifier(self)
+    def modify_view(self) -> None:
+        PleaOnlyDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = PleaOnlyDialogSlotFunctions(self)
@@ -168,9 +168,8 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         self.entry_case_information = PleaOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = PleaOnlyGrid
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self):
         return PleaOnlyDialogUpdater(self)
