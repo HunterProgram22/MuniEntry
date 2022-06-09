@@ -82,14 +82,14 @@ class BaseDialogSlotFunctions(object):
             f"_{self.dialog.template.template_name}.docx"
         )
 
-    def set_plea_and_findings_process(self):
-        """TODO: Currently REFACTORING in charges_grids then update comment.
-
-        Calls the dialog specific method to set all the pleas based on the plea
-        all button that is pressed (i.e. "Guilty All"). For Guilty and No Contest the
-        charges_gridLayout specific method will also set the finding."""
-        self.dialog.charges_gridLayout.set_all_pleas()
-        self.dialog.charges_gridLayout.set_all_findings()
+    # def set_plea_and_findings_process(self):
+    #     """TODO: Currently REFACTORING in charges_grids then update comment.
+    #
+    #     Calls the dialog specific method to set all the pleas based on the plea
+    #     all button that is pressed (i.e. "Guilty All"). For Guilty and No Contest the
+    #     charges_gridLayout specific method will also set the finding."""
+    #     self.dialog.charges_gridLayout.set_all_pleas()
+    #     self.dialog.charges_gridLayout.set_all_findings()
 
     def set_fines_costs_pay_date(self, days_to_add_string):
         """Sets the sentencing date to the Tuesday after the number of days added."""

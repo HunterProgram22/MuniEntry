@@ -53,14 +53,13 @@ class ChargesGrid(QGridLayout):
     def set_cursor_to_first_fine_box(self) -> None:
         """Sets the cursor to the first non-dismissed charge's fine box.
 
-        Range starts at 1 instead of 0 because 1st column is grid labels.
+        Column is immediately incremented because 1st column is grid labels.
         """
-        for column in range(1, self.columnCount()):
+        for column in range(0, self.columnCount()):
+            column += 1
             if self.check_if_column_empty(column):
-                column += 1
                 continue
             if self.check_if_charge_dismissed(column):
-                column += 1
                 continue
             self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
             break
@@ -72,23 +71,21 @@ class ChargesGrid(QGridLayout):
         because there are no findings to be set with a Not Guilty plea.
         """
         plea = self.get_plea()
-        for column in range(1, self.columnCount()):
+        for column in range(0, self.columnCount()):
+            column += 1
             if self.check_if_column_empty(column):
-                column += 1
                 continue
             if self.check_if_charge_dismissed(column):
-                column += 1
                 continue
             self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
         self.set_cursor_to_first_fine_box()
 
     def set_all_findings(self):
-        for column in range(1, self.columnCount()):
+        for column in range(0, self.columnCount()):
+            column += 1
             if self.check_if_column_empty(column):
-                column += 1
                 continue
             if self.check_if_charge_dismissed(column):
-                column += 1
                 continue
             if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
                 self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
@@ -197,7 +194,7 @@ class PleaOnlyGrid(ChargesGrid):
         )
 
 
-class NoJailChargesGrid(ChargesGrid):
+class FineOnlyChargesGrid(ChargesGrid):
     row_dismissed_box = 3
     row_allied_box = 4
     row_plea = 5
@@ -231,7 +228,7 @@ class NoJailChargesGrid(ChargesGrid):
         )
 
 
-class JailChargesGrid(NoJailChargesGrid):
+class JailChargesGrid(FineOnlyChargesGrid):
     row_jail_days = 9
     row_jail_days_suspended = 10
     row_amend_button = 11

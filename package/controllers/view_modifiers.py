@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, 
 
 from settings import WIDGET_TYPE_SET_DICT
 from package.controllers.helper_functions import set_future_date
+from package.controllers import charges_grids as cg
 
 
 TODAY = QtCore.QDate.currentDate()
@@ -123,6 +124,7 @@ class AmendChargeDialogViewModifier(BaseDialogViewModifier):
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargesGrid
         self.set_appearance_reason()
 
 
