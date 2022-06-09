@@ -65,34 +65,39 @@ class ChargesGrid(QGridLayout):
             self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
             break
 
-    @logger.catch
     def set_all_pleas(self):
-        """This method after setting all pleas calls the set_all_findings. In the Not
-        Guilty Plea Grid the method is overriden to not call the set_all_findings
-        because there are no findings to be set with a Not Guilty plea."""
+        """This method after setting all pleas calls the set_all_findings.
+
+        In the Not Guilty Plea Grid the method is overriden to not call the set_all_findings
+        because there are no findings to be set with a Not Guilty plea.
+        """
         plea = self.get_plea()
         for column in range(1, self.columnCount()):
-            if self.itemAtPosition(self.row_offense, column) is not None:
-                if (
-                    self.itemAtPosition(self.row_dismissed_box, column)
-                    .widget()
-                    .isChecked()
-                ):
-                    continue
-                self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
-                self.set_all_findings(column)
+            if self.check_if_column_empty(column):
+                column += 1
+                continue
+            if self.check_if_charge_dismissed(column):
+                column += 1
+                continue
+            self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
         self.set_cursor_to_first_fine_box()
 
-    @logger.catch
-    def set_all_findings(self, column):
-        if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
-            self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                "Guilty - Allied Offense"
-            )
-        else:
-            self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                "Guilty"
-            )
+    def set_all_findings(self):
+        for column in range(1, self.columnCount()):
+            if self.check_if_column_empty(column):
+                column += 1
+                continue
+            if self.check_if_charge_dismissed(column):
+                column += 1
+                continue
+            if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
+                self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
+                    "Guilty - Allied Offense"
+                )
+            else:
+                self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
+                    "Guilty"
+                )
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
