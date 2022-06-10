@@ -578,8 +578,8 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date("120 days")
 
-    def modify_view(self) -> LeapAdmissionPleaDialogViewModifier:
-        return LeapAdmissionPleaDialogViewModifier(self)
+    def modify_view(self) -> None:
+        LeapAdmissionPleaDialogViewModifier(self)
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
@@ -591,9 +591,8 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.entry_case_information = LeapAdmissionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self) -> CmsChargeLoader:
-        self.charges_gridLayout.__class__ = LeapAdmissionPleaGrid
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
         return LeapAdmissionPleaDialogUpdater(self)

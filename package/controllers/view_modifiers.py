@@ -137,6 +137,7 @@ class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
 class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.LeapAdmissionPleaGrid
         self.set_appearance_reason()
 
 
