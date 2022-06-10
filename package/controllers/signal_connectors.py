@@ -135,8 +135,8 @@ class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_main_dialog_common_signals(dialog)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
 
-        dialog.guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
-        dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
+        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_findings)
+        dialog.not_guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_findings)
 
         self.connect_fra_signals(dialog)
         self.connect_court_cost_signals(dialog)
