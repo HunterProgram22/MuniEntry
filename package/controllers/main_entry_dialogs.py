@@ -370,9 +370,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
                     self.charges_gridLayout.row_plea, column
                 ).widget().setCurrentText("Not Guilty")
 
-    def modify_view(self):
+    def modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
-        self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
 
     def create_dialog_slot_functions(self):
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
@@ -384,8 +383,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.entry_case_information = NotGuiltyBondEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self):
         """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""

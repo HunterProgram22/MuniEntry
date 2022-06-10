@@ -184,6 +184,7 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.NotGuiltyPleaGrid
         self.set_appearance_reason()
         self.dialog.monitoring_type_box.setHidden(True)
         self.dialog.specialized_docket_type_box.setHidden(True)
