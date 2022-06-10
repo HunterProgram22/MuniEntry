@@ -92,12 +92,22 @@ class ChargesGrid(QGridLayout):
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
+    """Charge Grid for NotGuiltyPleaBond Dialog.
+
+    The dialog does not enter a finding, so the grid is only 5 rows total and the rows are
+    renumbered accordingly for this class.
+    """
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
     row_plea = 3
     row_delete_button = 4
 
     def add_charge_only_to_grid(self, dialog):
+        """The column for adding a charge is 1 more than the current columnCount."""
+        column = self.columnCount() + 1
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
