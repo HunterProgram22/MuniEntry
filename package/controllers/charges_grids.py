@@ -81,7 +81,6 @@ class ChargesGrid(QGridLayout):
         self.set_cursor_to_first_fine_box()
 
     def set_all_findings(self):
-        finding = self.get_plea() # Rename function or create new function
         for column in range(0, self.columnCount()):
             column += 1
             if self.check_if_column_empty(column):
@@ -93,7 +92,7 @@ class ChargesGrid(QGridLayout):
                     "Guilty - Allied Offense"
                 )
             else:
-                self.itemAtPosition(self.row_finding, column).widget().setCurrentText(finding)
+                self.itemAtPosition(self.row_finding, column).widget().setCurrentText("Guilty")
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
@@ -161,6 +160,21 @@ class LeapAdmissionPleaGrid(ChargesGrid):
                 ):
                     continue
                 self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
+
+    def set_all_findings(self):
+        pass
+        # for column in range(0, self.columnCount()):
+        #     column += 1
+        #     if self.check_if_column_empty(column):
+        #         continue
+        #     if self.check_if_charge_dismissed(column):
+        #         continue
+        #     # if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
+        #     #     self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
+        #     #         "Guilty - Allied Offense"
+        #     #     )
+        #     # else:
+        #     self.itemAtPosition(self.row_finding, column).widget().setCurrentText("Guilty")
 
 
 class PleaOnlyGrid(ChargesGrid):
