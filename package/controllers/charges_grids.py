@@ -27,10 +27,6 @@ class ChargesGrid(QGridLayout):
     row_amend_button = 9
     row_delete_button = 10
 
-    def get_add_column(self) -> int:
-        """Returns one more than total columns so a new column is used to add items."""
-        return self.columnCount() + 1
-
     def get_plea(self) -> str:
         """Returns copy of the label of the plea button after stripping ' All' from end.
 
@@ -92,7 +88,7 @@ class ChargesGrid(QGridLayout):
             if self.check_if_allied_offense(column):
                 finding_box.setCurrentText('Guilty - Allied Offense')
             else:
-                finding_box.setCurrentText("Guilty")
+                finding_box.setCurrentText('Guilty')
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
@@ -101,7 +97,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
 
     def add_charge_only_to_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.get_add_column()
+        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
@@ -131,7 +127,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.get_add_column()
+        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
@@ -172,7 +168,7 @@ class PleaOnlyGrid(ChargesGrid):
 
     def add_charge_only_to_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.get_add_column()
+        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
@@ -204,7 +200,7 @@ class FineOnlyChargesGrid(ChargesGrid):
 
     def add_charge_only_to_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.get_add_column()
+        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
@@ -236,7 +232,7 @@ class JailChargesGrid(FineOnlyChargesGrid):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.get_add_column()
+        column = self.columnCount() + 1 # Add 1 because adding new column
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
