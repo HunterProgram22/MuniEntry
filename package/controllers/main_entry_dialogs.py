@@ -238,8 +238,8 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.dialog_name = "Trial Sentencing Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return TrialSentencingDialogViewModifier(self)
+    def modify_view(self) -> None:
+        TrialSentencingDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = TrialSentencingDialogSlotFunctions(self)
@@ -252,9 +252,8 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.entry_case_information = TrialSentencingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = JailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return TrialSentencingDialogUpdater(self)
@@ -309,8 +308,8 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.dialog_name = "Leap Sentencing Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return LeapSentencingDialogViewModifier(self)
+    def modify_view(self) -> None:
+        LeapSentencingDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = LeapSentencingDialogSlotFunctions(self)
@@ -323,9 +322,8 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.entry_case_information = LeapSentencingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = FineOnlyChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return LeapSentencingDialogUpdater(self)

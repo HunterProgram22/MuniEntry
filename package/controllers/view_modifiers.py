@@ -131,6 +131,7 @@ class FineOnlyDialogViewModifier(BaseDialogViewModifier):
 class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargesGrid
 
 
 class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
@@ -156,6 +157,7 @@ class JailCCDialogViewModifier(BaseDialogViewModifier):
 class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):
