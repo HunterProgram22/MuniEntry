@@ -1,5 +1,4 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
-from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from package.views import custom_widgets as cw
@@ -28,15 +27,12 @@ class ChargesGrid(QGridLayout):
     row_amend_button = 9
     row_delete_button = 10
 
-    def get_last_charge_in_charges_list(self, dialog):
-        return dialog.entry_case_information.charges_list[-1]
-
     def get_add_column(self) -> int:
         """Returns one more than total columns so a new column is used to add items."""
         return self.columnCount() + 1
 
     def get_plea(self) -> str:
-        """Returns copy of the label of the plea button after stripping " All" from end.
+        """Returns copy of the label of the plea button after stripping ' All' from end.
 
         Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
         """
@@ -47,7 +43,7 @@ class ChargesGrid(QGridLayout):
             return True
 
     def check_if_charge_dismissed(self, column: int) -> bool:
-        if self.itemAtPosition(ChargesGrid.row_dismissed_box, column).widget().isChecked():
+        if self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked():
             return True
 
     def set_cursor_to_first_fine_box(self) -> None:
@@ -61,7 +57,7 @@ class ChargesGrid(QGridLayout):
                 continue
             if self.check_if_charge_dismissed(column):
                 continue
-            self.itemAtPosition(ChargesGrid.row_fine, column).widget().setFocus()
+            self.itemAtPosition(self.row_fine, column).widget().setFocus()
             break
 
     def set_all_pleas(self):
@@ -100,7 +96,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
     row_delete_button = 4
 
     def add_charge_only_to_grid(self, dialog):
-        charge = self.get_last_charge_in_charges_list(dialog)
+        charge = dialog.entry_case_information.charges_list[-1]
         column = self.get_add_column()
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
@@ -130,7 +126,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
-        charge = self.get_last_charge_in_charges_list(dialog)
+        charge = dialog.entry_case_information.charges_list[-1]
         column = self.get_add_column()
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
@@ -171,7 +167,7 @@ class PleaOnlyGrid(ChargesGrid):
     row_delete_button = 8
 
     def add_charge_only_to_grid(self, dialog):
-        charge = self.get_last_charge_in_charges_list(dialog)
+        charge = dialog.entry_case_information.charges_list[-1]
         column = self.get_add_column()
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
@@ -203,7 +199,7 @@ class FineOnlyChargesGrid(ChargesGrid):
     row_delete_button = 10
 
     def add_charge_only_to_grid(self, dialog):
-        charge = self.get_last_charge_in_charges_list(dialog)
+        charge = dialog.entry_case_information.charges_list[-1]
         column = self.get_add_column()
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
@@ -235,7 +231,7 @@ class JailChargesGrid(FineOnlyChargesGrid):
     def add_charge_only_to_grid(self, dialog):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
-        charge = self.get_last_charge_in_charges_list(dialog)
+        charge = dialog.entry_case_information.charges_list[-1]
         column = self.get_add_column()
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
