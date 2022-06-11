@@ -1,22 +1,8 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
+from package.controllers.helper_functions import attribute_check
 from package.views import custom_widgets as cw
-
-
-def attribute_check(func, *args, **kwargs):
-    """Wrapper to check if an attribute exists.
-
-    Skips the check if the attribute does not exist.
-    """
-
-    def wrapper(*args, **kwargs):
-        try:
-            func(*args, **kwargs)
-        except AttributeError:
-            pass
-
-    return wrapper
 
 
 class ChargesGrid(QGridLayout):
@@ -47,21 +33,18 @@ class ChargesGrid(QGridLayout):
 
         Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
         """
-        return self.sender().text().replace(" All", "")
+        return self.sender().text().replace(' All', '')
 
     def check_if_column_empty(self, column: int) -> bool:
-        if self.itemAtPosition(0, column) is None:
-            return True
+        return bool(self.itemAtPosition(0, column) is None)
 
     @attribute_check
     def check_if_charge_dismissed(self, column: int) -> bool:
-        if self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked():
-            return True
+        return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
 
     @attribute_check
     def check_if_allied_offense(self, column: int) -> bool:
-        if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
-            return True
+        return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
 
     @attribute_check
     def set_cursor_to_first_fine_box(self) -> None:
@@ -104,9 +87,9 @@ class ChargesGrid(QGridLayout):
             if self.check_if_charge_dismissed(column):
                 continue
             if self.check_if_allied_offense(column):
-                finding_box.setCurrentText("Guilty - Allied Offense")
+                finding_box.setCurrentText('Guilty - Allied Offense')
             else:
-                finding_box.setCurrentText("Guilty")
+                finding_box.setCurrentText('Guilty')
 
     def add_charge_to_grid(self, charge, column):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
@@ -297,7 +280,7 @@ class JailChargesGrid(FineOnlyChargesGrid):
                     continue
                 if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
                     self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                        "Guilty - Allied Offense"
+                        'Guilty - Allied Offense'
                     )
                 else:
                     self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
@@ -306,13 +289,15 @@ class JailChargesGrid(FineOnlyChargesGrid):
 
 
 class DiversionChargesGrid(JailChargesGrid):
-    """The Diversion main_entry_dialog currently uses the same ChargesGrid as the
-    JailChargesGrid. This class is created and the ChargesGrid for Diversion is
+    """The Diversion Dialog currently uses the same ChargesGrid as the JailChargesGrid.
+
+    This class is created and the ChargesGrid for Diversion is
     assigned to to this class of grid for consistency and in case there is a need for
-    specific changes in the fututre."""
+    specific changes in the fututre.
+    """
 
 
-if __name__ == "__main__":
-    print("Charges Grids ran directly")
+if __name__ == '__main__':
+    print('Charge Grids ran directly')
 else:
-    print("Charges Grids imported")
+    print('Charge Grids Imported')
