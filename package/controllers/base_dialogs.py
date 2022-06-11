@@ -87,5 +87,5 @@ class CriminalBaseDialog(BaseDialog):
 
     # TO BE REFACTORED #
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()

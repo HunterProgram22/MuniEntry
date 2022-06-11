@@ -391,7 +391,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         return NotGuiltyBondDialogUpdater(self)
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()
 
     def perform_info_checks(self):

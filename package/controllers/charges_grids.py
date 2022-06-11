@@ -4,6 +4,20 @@ from PyQt5.QtWidgets import QGridLayout, QLabel
 from package.views import custom_widgets as cw
 
 
+def attribute_check(func, *args, **kwargs):
+    """Wrapper to check if an attribute exists.
+
+    Skips the check if the attribute does not exist.
+    """
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except AttributeError:
+            pass
+
+    return wrapper
+
+
 class ChargesGrid(QGridLayout):
     """The base format of the charges_gridLayout used for a main_entry_dialog.
 
@@ -38,14 +52,17 @@ class ChargesGrid(QGridLayout):
         if self.itemAtPosition(0, column) is None:
             return True
 
+    @attribute_check
     def check_if_charge_dismissed(self, column: int) -> bool:
         if self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked():
             return True
 
+    @attribute_check
     def check_if_allied_offense(self, column: int) -> bool:
         if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
             return True
 
+    @attribute_check
     def set_cursor_to_first_fine_box(self) -> None:
         """Sets the cursor to the first non-dismissed charge's fine box.
 
@@ -90,6 +107,19 @@ class ChargesGrid(QGridLayout):
             else:
                 finding_box.setCurrentText('Guilty')
 
+    def add_charge_to_grid(self, charge, column):
+        """Adds three required charge fields - offense, statute and degree - to the charge grid."""
+        self.addWidget(QLabel(charge.offense), self.row_offense, column)
+        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+
+    def add_delete_button_to_grid(self, charge, column, dialog):
+        self.addWidget(cw.ChargeGridDeleteButton(column, charge, dialog), self.row_delete_button,
+                       column)
+
+    def add_plea_box_to_grid(self, column, dialog):
+        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
+
 
 class NotGuiltyPleaGrid(ChargesGrid):
     """Charge Grid for NotGuiltyPleaBond Dialog.
@@ -104,27 +134,16 @@ class NotGuiltyPleaGrid(ChargesGrid):
     row_plea = 3
     row_delete_button = 4
 
-    def add_charge_only_to_grid(self, dialog):
-        """The column for adding a charge is 1 more than the current columnCount."""
+    def add_fields_to_charges_grid(self, dialog):
+        """Adds the fields required for the NotGuiltyPleaGrid.
+
+        Required fields: offense, statute, degree, plea, delete button.
+        """
         column = self.columnCount() + 1
         charge = dialog.entry_case_information.charges_list[-1]
-        self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
-        self.addWidget(
-            cw.ChargeGridDeleteButton(column, charge, dialog),
-            self.row_delete_button,
-            column,
-        )
-
-    def set_all_pleas(self):
-        """This method overrides the ChargesGrid set_all_pleas because there are no
-        findings to be added for a Not Guilty plea."""
-        plea = self.get_plea()
-        for column in range(1, self.columnCount()):
-            if self.itemAtPosition(self.row_offense, column) is not None:
-                self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
+        self.add_charge_to_grid(charge, column)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_delete_button_to_grid(charge, column, dialog)
 
 
 class LeapAdmissionPleaGrid(ChargesGrid):
@@ -133,14 +152,12 @@ class LeapAdmissionPleaGrid(ChargesGrid):
     row_amend_button = 5
     row_delete_button = 6
 
-    def add_charge_only_to_grid(self, dialog):
+    def add_fields_to_charges_grid(self, dialog):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1 # Add 1 because adding new column
-        self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.add_charge_to_grid(charge, column)
         self.addWidget(
             cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
@@ -176,12 +193,10 @@ class PleaOnlyGrid(ChargesGrid):
     row_amend_button = 7
     row_delete_button = 8
 
-    def add_charge_only_to_grid(self, dialog):
+    def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1 # Add 1 because adding new column
-        self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.add_charge_to_grid(charge, column)
         self.addWidget(
             cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
@@ -208,12 +223,10 @@ class FineOnlyChargesGrid(ChargesGrid):
     row_amend_button = 9
     row_delete_button = 10
 
-    def add_charge_only_to_grid(self, dialog):
+    def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1 # Add 1 because adding new column
-        self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.add_charge_to_grid(charge, column)
         self.addWidget(
             cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
@@ -238,14 +251,12 @@ class JailChargesGrid(FineOnlyChargesGrid):
     row_amend_button = 11
     row_delete_button = 12
 
-    def add_charge_only_to_grid(self, dialog):
+    def add_fields_to_charges_grid(self, dialog):
         """The column is set to the one more than the current number of columns because
         a new charge is being added."""
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1 # Add 1 because adding new column
-        self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.add_charge_to_grid(charge, column)
         self.addWidget(
             cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
         )
