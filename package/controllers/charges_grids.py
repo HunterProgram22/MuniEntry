@@ -9,6 +9,7 @@ def attribute_check(func, *args, **kwargs):
 
     Skips the check if the attribute does not exist.
     """
+
     def wrapper(*args, **kwargs):
         try:
             func(*args, **kwargs)
@@ -46,7 +47,7 @@ class ChargesGrid(QGridLayout):
 
         Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
         """
-        return self.sender().text().replace(' All', '')
+        return self.sender().text().replace(" All", "")
 
     def check_if_column_empty(self, column: int) -> bool:
         if self.itemAtPosition(0, column) is None:
@@ -103,9 +104,9 @@ class ChargesGrid(QGridLayout):
             if self.check_if_charge_dismissed(column):
                 continue
             if self.check_if_allied_offense(column):
-                finding_box.setCurrentText('Guilty - Allied Offense')
+                finding_box.setCurrentText("Guilty - Allied Offense")
             else:
-                finding_box.setCurrentText('Guilty')
+                finding_box.setCurrentText("Guilty")
 
     def add_charge_to_grid(self, charge, column):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
@@ -113,12 +114,31 @@ class ChargesGrid(QGridLayout):
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
 
-    def add_delete_button_to_grid(self, charge, column, dialog):
-        self.addWidget(cw.ChargeGridDeleteButton(column, charge, dialog), self.row_delete_button,
-                       column)
+    def add_delete_button_to_grid(self, column, charge, dialog):
+        self.addWidget(
+            cw.ChargeGridDeleteButton(column, charge, dialog),
+            self.row_delete_button,
+            column,
+        )
 
     def add_plea_box_to_grid(self, column, dialog):
         self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
+
+    def add_amend_button_to_grid(self, column, charge, dialog):
+        self.addWidget(
+            cw.ChargeGridAmendButton(column, charge, dialog),
+            self.row_amend_button,
+            column,
+        )
+
+    def add_dismissed_checkbox_to_grid(self, column, dialog):
+        self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
+
+    def add_finding_box_to_grid(self, column):
+        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
+
+    def add_allied_checkbox_to_grid(self, column, dialog):
+        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
 
 
 class NotGuiltyPleaGrid(ChargesGrid):
@@ -143,49 +163,50 @@ class NotGuiltyPleaGrid(ChargesGrid):
         charge = dialog.entry_case_information.charges_list[-1]
         self.add_charge_to_grid(charge, column)
         self.add_plea_box_to_grid(column, dialog)
-        self.add_delete_button_to_grid(charge, column, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
 
 
 class LeapAdmissionPleaGrid(ChargesGrid):
+    """Charge Grid for LeapAdmissionPlea Dialog.
+
+    The dialog does not enter a finding, but does allow for dismissal and amending of charges so
+    the rows are renumbered accordingly for this class.
+    """
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
     row_dismissed_box = 3
     row_plea = 4
     row_amend_button = 5
     row_delete_button = 6
 
     def add_fields_to_charges_grid(self, dialog):
-        """The column is set to the one more than the current number of columns because
-        a new charge is being added."""
-        charge = dialog.entry_case_information.charges_list[-1]
-        column = self.columnCount() + 1 # Add 1 because adding new column
-        self.add_charge_to_grid(charge, column)
-        self.addWidget(
-            cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
-        )
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
-        self.addWidget(
-            cw.ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
-        )
-        self.addWidget(
-            cw.ChargeGridDeleteButton(column, charge, dialog),
-            self.row_delete_button,
-            column,
-        )
+        """Adds the fields required for the NotGuiltyPleaGrid.
 
-    def set_all_pleas(self):
-        """Overrides the base set_all_pleas because LEAP does not have findings set."""
-        plea = self.get_plea()
-        for column in range(1, self.columnCount()):
-            if self.itemAtPosition(self.row_offense, column) is not None:
-                if (
-                    self.itemAtPosition(self.row_dismissed_box, column)
-                    .widget()
-                    .isChecked()
-                ):
-                    continue
-                self.itemAtPosition(self.row_plea, column).widget().setCurrentText(plea)
+        Required fields: offense, statute, degree, dismissed checkbox, plea, amend button,
+        delete button.
+        """
+        charge = dialog.entry_case_information.charges_list[-1]
+        column = self.columnCount() + 1
+        self.add_charge_to_grid(charge, column)
+        self.add_dismissed_checkbox_to_grid(column, dialog)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_amend_button_to_grid(column, charge, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
 
 
 class PleaOnlyGrid(ChargesGrid):
+    """Charge Grid for the PleaOnly Dialog.
+
+    The dialog has a plea and finding, but no sentencing fields (fines and jail days)
+    it does allow for dismissal and amending of charges so the rows are renumbered
+    accordingly for this class.
+    """
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
     row_dismissed_box = 3
     row_allied_box = 4
     row_plea = 5
@@ -195,25 +216,25 @@ class PleaOnlyGrid(ChargesGrid):
 
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.columnCount() + 1 # Add 1 because adding new column
+        column = self.columnCount() + 1
         self.add_charge_to_grid(charge, column)
-        self.addWidget(
-            cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
-        )
-        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
-        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
-        self.addWidget(
-            cw.ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
-        )
-        self.addWidget(
-            cw.ChargeGridDeleteButton(column, charge, dialog),
-            self.row_delete_button,
-            column,
-        )
+        self.add_dismissed_checkbox_to_grid(column, dialog)
+        self.add_allied_checkbox_to_grid(column, dialog)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_finding_box_to_grid(column)
+        self.add_amend_button_to_grid(column, charge, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
 
 
 class FineOnlyChargesGrid(ChargesGrid):
+    """Charge Grid for the FineOnly Dialog.
+
+    The dialog has all fields, except for jail term boxes.
+    """
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
     row_dismissed_box = 3
     row_allied_box = 4
     row_plea = 5
@@ -225,66 +246,59 @@ class FineOnlyChargesGrid(ChargesGrid):
 
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.columnCount() + 1 # Add 1 because adding new column
+        column = self.columnCount() + 1
         self.add_charge_to_grid(charge, column)
-        self.addWidget(
-            cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
-        )
-        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
-        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
+        self.add_dismissed_checkbox_to_grid(column, dialog)
+        self.add_allied_checkbox_to_grid(column, dialog)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_finding_box_to_grid(column)
+        self.add_fine_boxes_to_grid(charge, column)
+        self.add_amend_button_to_grid(column, charge, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
+
+    def add_fine_boxes_to_grid(self, charge, column):
         self.addWidget(cw.FineLineEdit(charge.offense), self.row_fine, column)
         self.addWidget(cw.FineSuspendedLineEdit(), self.row_fine_suspended, column)
-        self.addWidget(
-            cw.ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
-        )
-        self.addWidget(
-            cw.ChargeGridDeleteButton(column, charge, dialog),
-            self.row_delete_button,
-            column,
-        )
 
 
 class JailChargesGrid(FineOnlyChargesGrid):
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_dismissed_box = 3
+    row_allied_box = 4
+    row_plea = 5
+    row_finding = 6
+    row_fine = 7
+    row_fine_suspended = 8
     row_jail_days = 9
     row_jail_days_suspended = 10
     row_amend_button = 11
     row_delete_button = 12
 
     def add_fields_to_charges_grid(self, dialog):
-        """The column is set to the one more than the current number of columns because
-        a new charge is being added."""
         charge = dialog.entry_case_information.charges_list[-1]
-        column = self.columnCount() + 1 # Add 1 because adding new column
+        column = self.columnCount() + 1
         self.add_charge_to_grid(charge, column)
-        self.addWidget(
-            cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column
-        )
-        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
-        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
-        self.addWidget(cw.FineLineEdit(charge.offense), self.row_fine, column)
-        self.addWidget(cw.FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.add_dismissed_checkbox_to_grid(column, dialog)
+        self.add_allied_checkbox_to_grid(column, dialog)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_finding_box_to_grid(column)
+        self.add_fine_boxes_to_grid(charge, column)
+        self.add_jail_boxes_to_grid(charge, column)
+        self.add_amend_button_to_grid(column, charge, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
+
+    def add_jail_boxes_to_grid(self, charge, column):
         self.addWidget(cw.JailLineEdit(charge.offense), self.row_jail_days, column)
         self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
-        self.addWidget(
-            cw.ChargeGridAmendButton(column, charge, dialog), self.row_amend_button, column
-        )
-        self.addWidget(
-            cw.ChargeGridDeleteButton(column, charge, dialog),
-            self.row_delete_button,
-            column,
-        )
 
     def set_all_trial_findings(self):
         self.trial_finding = self.get_plea()
         for column in range(1, self.columnCount()):
             if self.itemAtPosition(self.row_offense, column) is not None:
-                if (
-                        self.itemAtPosition(self.row_dismissed_box, column)
-                                .widget()
-                                .isChecked()
-                ):
+                if self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked():
                     continue
                 if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
                     self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
@@ -292,8 +306,8 @@ class JailChargesGrid(FineOnlyChargesGrid):
                     )
                 else:
                     self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                       self.trial_finding
-                )
+                        self.trial_finding
+                    )
 
 
 class DiversionChargesGrid(JailChargesGrid):
