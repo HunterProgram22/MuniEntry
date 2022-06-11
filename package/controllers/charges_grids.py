@@ -5,7 +5,7 @@ from package.controllers.helper_functions import attribute_check
 from package.views import custom_widgets as cw
 
 
-class ChargeGrid(QGridLayout):
+class BaseChargeGrid(QGridLayout):
     """The base format of the charges_gridLayout used for a main_entry_dialog.
 
     The ChargesGrid subclasses the QGridLayout and provides methods for manipulating the grid.
@@ -15,13 +15,6 @@ class ChargeGrid(QGridLayout):
     setupUI method called by the main_entry_dialog classes modify_view method. The class is
     set prior to loading the case data during the main_entry_dialog load_cms_data_to_view method.
     """
-
-    def get_plea(self) -> str:
-        """Returns copy of the label of the plea button after stripping ' All' from end.
-
-        Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
-        """
-        return self.sender().text().replace(' All', '')
 
     def check_if_column_empty(self, column: int) -> bool:
         return bool(self.itemAtPosition(0, column) is None)
@@ -33,6 +26,13 @@ class ChargeGrid(QGridLayout):
     @attribute_check
     def check_if_allied_offense(self, column: int) -> bool:
         return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
+
+    def get_plea(self) -> str:
+        """Returns copy of the label of the plea button after stripping ' All' from end.
+
+        Ex. "Guilty All" button is returned as "Guilty" to be used as the plea.
+        """
+        return self.sender().text().replace(' All', '')
 
     def set_all_pleas(self):
         """Sets the plea for all charges based on the button pressed.
@@ -48,6 +48,40 @@ class ChargeGrid(QGridLayout):
             if self.check_if_charge_dismissed(column):
                 continue
             plea_box.setCurrentText(plea)
+
+    def set_all_findings(self):
+        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            finding_box = self.itemAtPosition(self.row_finding, column).widget()
+            if self.check_if_charge_dismissed(column):
+                continue
+            if self.check_if_allied_offense(column):
+                finding_box.setCurrentText('Guilty - Allied Offense')
+            else:
+                finding_box.setCurrentText('Guilty')
+        self.set_cursor_to_first_fine_box()
+
+    @attribute_check
+    def set_cursor_to_first_fine_box(self) -> None:
+        """Sets the cursor to the first non-dismissed charge's fine box.
+
+        Column is immediately incremented because 1st column is grid labels.
+        """
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            if self.check_if_charge_dismissed(column):
+                continue
+            self.itemAtPosition(self.row_fine, column).widget().setFocus()
+            break
+
+
+class ChargeGridBuilder(BaseChargeGrid):
+    """The class contains all the methods used to build a charge grid."""
 
     def add_charge_to_grid(self, charge, column):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
@@ -75,8 +109,14 @@ class ChargeGrid(QGridLayout):
     def add_dismissed_checkbox_to_grid(self, column, dialog):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
+    def add_finding_box_to_grid(self, column):
+        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
 
-class NotGuiltyPleaGrid(ChargeGrid):
+    def add_allied_checkbox_to_grid(self, column, dialog):
+        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
+
+
+class NotGuiltyPleaGrid(ChargeGridBuilder):
     """Charge Grid for NotGuiltyPleaBond Dialog.
 
     The dialog does not enter a finding, so the grid is only 5 rows total and the rows are
@@ -97,46 +137,7 @@ class NotGuiltyPleaGrid(ChargeGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class ChargeFindingGrid(ChargeGrid):
-
-    @attribute_check
-    def set_cursor_to_first_fine_box(self) -> None:
-        """Sets the cursor to the first non-dismissed charge's fine box.
-
-        Column is immediately incremented because 1st column is grid labels.
-        """
-        for column in range(0, self.columnCount()):
-            column += 1
-            if self.check_if_column_empty(column):
-                continue
-            if self.check_if_charge_dismissed(column):
-                continue
-            self.itemAtPosition(self.row_fine, column).widget().setFocus()
-            break
-
-    def set_all_findings(self):
-        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
-        for column in range(0, self.columnCount()):
-            column += 1
-            if self.check_if_column_empty(column):
-                continue
-            finding_box = self.itemAtPosition(self.row_finding, column).widget()
-            if self.check_if_charge_dismissed(column):
-                continue
-            if self.check_if_allied_offense(column):
-                finding_box.setCurrentText('Guilty - Allied Offense')
-            else:
-                finding_box.setCurrentText('Guilty')
-        self.set_cursor_to_first_fine_box()
-
-    def add_finding_box_to_grid(self, column):
-        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
-
-    def add_allied_checkbox_to_grid(self, column, dialog):
-        self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
-
-
-class LeapAdmissionPleaGrid(ChargeFindingGrid):
+class LeapAdmissionPleaGrid(ChargeGridBuilder):
     """Charge Grid for LeapAdmissionPlea Dialog.
 
     The dialog does not enter a finding, but does allow for dismissal and amending of charges so
@@ -161,7 +162,7 @@ class LeapAdmissionPleaGrid(ChargeFindingGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class PleaOnlyGrid(ChargeFindingGrid):
+class PleaOnlyGrid(ChargeGridBuilder):
     """Charge Grid for the PleaOnly Dialog.
 
     The dialog has a plea and finding, but no sentencing fields (fines and jail days)
@@ -191,7 +192,7 @@ class PleaOnlyGrid(ChargeFindingGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class FineOnlyChargeGrid(ChargeFindingGrid):
+class FineOnlyChargeGrid(ChargeGridBuilder):
     """Charge Grid for the FineOnly Dialog.
 
     The dialog has all fields, except for jail term boxes.
