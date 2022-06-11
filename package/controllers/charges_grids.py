@@ -76,6 +76,27 @@ class ChargeGrid(QGridLayout):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
 
+class NotGuiltyPleaGrid(ChargeGrid):
+    """Charge Grid for NotGuiltyPleaBond Dialog.
+
+    The dialog does not enter a finding, so the grid is only 5 rows total and the rows are
+    renumbered accordingly for this class.
+    """
+
+    row_offense = 0
+    row_statute = 1
+    row_degree = 2
+    row_plea = 3
+    row_delete_button = 4
+
+    def add_fields_to_charges_grid(self, dialog):
+        column = self.columnCount() + 1
+        charge = dialog.entry_case_information.charges_list[-1]
+        self.add_charge_to_grid(charge, column)
+        self.add_plea_box_to_grid(column, dialog)
+        self.add_delete_button_to_grid(column, charge, dialog)
+
+
 class ChargeFindingGrid(ChargeGrid):
 
     @attribute_check
@@ -113,27 +134,6 @@ class ChargeFindingGrid(ChargeGrid):
 
     def add_allied_checkbox_to_grid(self, column, dialog):
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
-
-
-class NotGuiltyPleaGrid(ChargeGrid):
-    """Charge Grid for NotGuiltyPleaBond Dialog.
-
-    The dialog does not enter a finding, so the grid is only 5 rows total and the rows are
-    renumbered accordingly for this class.
-    """
-
-    row_offense = 0
-    row_statute = 1
-    row_degree = 2
-    row_plea = 3
-    row_delete_button = 4
-
-    def add_fields_to_charges_grid(self, dialog):
-        column = self.columnCount() + 1
-        charge = dialog.entry_case_information.charges_list[-1]
-        self.add_charge_to_grid(charge, column)
-        self.add_plea_box_to_grid(column, dialog)
-        self.add_delete_button_to_grid(column, charge, dialog)
 
 
 class LeapAdmissionPleaGrid(ChargeFindingGrid):
@@ -276,15 +276,6 @@ class JailChargesGrid(FineOnlyChargeGrid):
                 finding_box.setCurrentText('Guilty - Allied Offense')
             else:
                 finding_box.setCurrentText(trial_finding)
-
-
-class DiversionChargesGrid(JailChargesGrid):
-    """The Diversion Dialog currently uses the same ChargesGrid as the JailChargesGrid.
-
-    This class is created and the ChargesGrid for Diversion is
-    assigned to to this class of grid for consistency and in case there is a need for
-    specific changes in the fututre.
-    """
 
 
 if __name__ == '__main__':

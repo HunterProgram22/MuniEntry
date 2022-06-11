@@ -100,7 +100,6 @@ from package.controllers.charges_grids import (
     LeapAdmissionPleaGrid,
     FineOnlyChargeGrid,
     NotGuiltyPleaGrid,
-    DiversionChargesGrid,
 )
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
