@@ -155,10 +155,6 @@ class NotGuiltyPleaGrid(ChargesGrid):
     row_delete_button = 4
 
     def add_fields_to_charges_grid(self, dialog):
-        """Adds the fields required for the NotGuiltyPleaGrid.
-
-        Required fields: offense, statute, degree, plea, delete button.
-        """
         column = self.columnCount() + 1
         charge = dialog.entry_case_information.charges_list[-1]
         self.add_charge_to_grid(charge, column)
@@ -182,11 +178,6 @@ class LeapAdmissionPleaGrid(ChargesGrid):
     row_delete_button = 6
 
     def add_fields_to_charges_grid(self, dialog):
-        """Adds the fields required for the NotGuiltyPleaGrid.
-
-        Required fields: offense, statute, degree, dismissed checkbox, plea, amend button,
-        delete button.
-        """
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
         self.add_charge_to_grid(charge, column)
@@ -262,6 +253,10 @@ class FineOnlyChargesGrid(ChargesGrid):
 
 
 class JailChargesGrid(FineOnlyChargesGrid):
+    """Charge Grid for the FineOnly Dialog.
+
+    The dialog has all fields.
+    """
 
     row_offense = 0
     row_statute = 1
