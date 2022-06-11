@@ -5,7 +5,7 @@ from package.controllers.helper_functions import attribute_check
 from package.views import custom_widgets as cw
 
 
-class ChargesGrid(QGridLayout):
+class ChargeGrid(QGridLayout):
     """The base format of the charges_gridLayout used for a main_entry_dialog.
 
     The ChargesGrid subclasses the QGridLayout and provides methods for manipulating the grid.
@@ -15,18 +15,6 @@ class ChargesGrid(QGridLayout):
     setupUI method called by the main_entry_dialog classes modify_view method. The class is
     set prior to loading the case data during the main_entry_dialog load_cms_data_to_view method.
     """
-
-    row_offense = 0
-    row_statute = 1
-    row_degree = 2
-    row_dismissed_box = 3
-    row_allied_box = 4
-    row_plea = 5
-    row_finding = 6
-    row_fine = 7
-    row_fine_suspended = 8
-    row_amend_button = 9
-    row_delete_button = 10
 
     def get_plea(self) -> str:
         """Returns copy of the label of the plea button after stripping ' All' from end.
@@ -46,21 +34,6 @@ class ChargesGrid(QGridLayout):
     def check_if_allied_offense(self, column: int) -> bool:
         return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
 
-    @attribute_check
-    def set_cursor_to_first_fine_box(self) -> None:
-        """Sets the cursor to the first non-dismissed charge's fine box.
-
-        Column is immediately incremented because 1st column is grid labels.
-        """
-        for column in range(0, self.columnCount()):
-            column += 1
-            if self.check_if_column_empty(column):
-                continue
-            if self.check_if_charge_dismissed(column):
-                continue
-            self.itemAtPosition(self.row_fine, column).widget().setFocus()
-            break
-
     def set_all_pleas(self):
         """Sets the plea for all charges based on the button pressed.
 
@@ -75,21 +48,6 @@ class ChargesGrid(QGridLayout):
             if self.check_if_charge_dismissed(column):
                 continue
             plea_box.setCurrentText(plea)
-        self.set_cursor_to_first_fine_box()
-
-    def set_all_findings(self):
-        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
-        for column in range(0, self.columnCount()):
-            column += 1
-            if self.check_if_column_empty(column):
-                continue
-            finding_box = self.itemAtPosition(self.row_finding, column).widget()
-            if self.check_if_charge_dismissed(column):
-                continue
-            if self.check_if_allied_offense(column):
-                finding_box.setCurrentText('Guilty - Allied Offense')
-            else:
-                finding_box.setCurrentText('Guilty')
 
     def add_charge_to_grid(self, charge, column):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
@@ -117,6 +75,39 @@ class ChargesGrid(QGridLayout):
     def add_dismissed_checkbox_to_grid(self, column, dialog):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
+
+class ChargeFindingGrid(ChargeGrid):
+
+    @attribute_check
+    def set_cursor_to_first_fine_box(self) -> None:
+        """Sets the cursor to the first non-dismissed charge's fine box.
+
+        Column is immediately incremented because 1st column is grid labels.
+        """
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            if self.check_if_charge_dismissed(column):
+                continue
+            self.itemAtPosition(self.row_fine, column).widget().setFocus()
+            break
+
+    def set_all_findings(self):
+        """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            finding_box = self.itemAtPosition(self.row_finding, column).widget()
+            if self.check_if_charge_dismissed(column):
+                continue
+            if self.check_if_allied_offense(column):
+                finding_box.setCurrentText('Guilty - Allied Offense')
+            else:
+                finding_box.setCurrentText('Guilty')
+        self.set_cursor_to_first_fine_box()
+
     def add_finding_box_to_grid(self, column):
         self.addWidget(cw.FindingComboBox(), self.row_finding, column)
 
@@ -124,7 +115,7 @@ class ChargesGrid(QGridLayout):
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
 
 
-class NotGuiltyPleaGrid(ChargesGrid):
+class NotGuiltyPleaGrid(ChargeGrid):
     """Charge Grid for NotGuiltyPleaBond Dialog.
 
     The dialog does not enter a finding, so the grid is only 5 rows total and the rows are
@@ -145,7 +136,7 @@ class NotGuiltyPleaGrid(ChargesGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class LeapAdmissionPleaGrid(ChargesGrid):
+class LeapAdmissionPleaGrid(ChargeFindingGrid):
     """Charge Grid for LeapAdmissionPlea Dialog.
 
     The dialog does not enter a finding, but does allow for dismissal and amending of charges so
@@ -170,7 +161,7 @@ class LeapAdmissionPleaGrid(ChargesGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class PleaOnlyGrid(ChargesGrid):
+class PleaOnlyGrid(ChargeFindingGrid):
     """Charge Grid for the PleaOnly Dialog.
 
     The dialog has a plea and finding, but no sentencing fields (fines and jail days)
@@ -200,7 +191,7 @@ class PleaOnlyGrid(ChargesGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
-class FineOnlyChargesGrid(ChargesGrid):
+class FineOnlyChargeGrid(ChargeFindingGrid):
     """Charge Grid for the FineOnly Dialog.
 
     The dialog has all fields, except for jail term boxes.
@@ -235,7 +226,7 @@ class FineOnlyChargesGrid(ChargesGrid):
         self.addWidget(cw.FineSuspendedLineEdit(), self.row_fine_suspended, column)
 
 
-class JailChargesGrid(FineOnlyChargesGrid):
+class JailChargesGrid(FineOnlyChargeGrid):
     """Charge Grid for the FineOnly Dialog.
 
     The dialog has all fields.
@@ -273,19 +264,18 @@ class JailChargesGrid(FineOnlyChargesGrid):
         self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
 
     def set_all_trial_findings(self):
-        self.trial_finding = self.get_plea()
-        for column in range(1, self.columnCount()):
-            if self.itemAtPosition(self.row_offense, column) is not None:
-                if self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked():
-                    continue
-                if self.itemAtPosition(self.row_allied_box, column).widget().isChecked():
-                    self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                        'Guilty - Allied Offense'
-                    )
-                else:
-                    self.itemAtPosition(self.row_finding, column).widget().setCurrentText(
-                        self.trial_finding
-                    )
+        trial_finding = self.get_plea()
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            finding_box = self.itemAtPosition(self.row_finding, column).widget()
+            if self.check_if_charge_dismissed(column):
+                continue
+            if self.check_if_allied_offense(column):
+                finding_box.setCurrentText('Guilty - Allied Offense')
+            else:
+                finding_box.setCurrentText(trial_finding)
 
 
 class DiversionChargesGrid(JailChargesGrid):

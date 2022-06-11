@@ -98,7 +98,7 @@ from package.controllers.charges_grids import (
     JailChargesGrid,
     PleaOnlyGrid,
     LeapAdmissionPleaGrid,
-    FineOnlyChargesGrid,
+    FineOnlyChargeGrid,
     NotGuiltyPleaGrid,
     DiversionChargesGrid,
 )

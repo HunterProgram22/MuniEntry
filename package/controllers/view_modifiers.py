@@ -124,14 +124,14 @@ class AmendChargeDialogViewModifier(BaseDialogViewModifier):
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargesGrid
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
         self.set_appearance_reason()
 
 
 class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargesGrid
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
 class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
