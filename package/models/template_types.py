@@ -27,6 +27,11 @@ Leap_Sentencing_Template = Template(
     "Leap_Sentencing_Template.docx",
 )
 
+Sentencing_Only_Template = Template(
+    "Sentencing Judgment Entry",
+    "Sentencing_Only_Template.docx",
+)
+
 Jail_CC_Plea_Final_Judgment_Template = Template(
     "Jail CC Judgment Entry",
     "Jail_Plea_Final_Judgment_Template.docx",
@@ -93,6 +98,7 @@ TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
     "Trial Sentencing Dialog": Trial_Sentencing_Template,
+    "Sentencing Only Dialog": Sentencing_Only_Template,
     "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
     "No Plea Bond Dialog": No_Plea_Bond_Template,

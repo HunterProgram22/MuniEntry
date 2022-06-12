@@ -57,5 +57,12 @@ class JailCCEntryCaseInformation(FineOnlyEntryCaseInformation):
 
 
 @dataclass
+class SentencingOnlyEntryCaseInformation(JailCCEntryCaseInformation):
+    """General case information data variables for Sentencing Only entry."""
+
+    plea_date: str = None
+
+
+@dataclass
 class TrialSentencingEntryCaseInformation(JailCCEntryCaseInformation):
     """General case information data variables and data for trial sentencing entry."""

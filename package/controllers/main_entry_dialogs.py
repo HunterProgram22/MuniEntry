@@ -7,6 +7,7 @@ from package.models.case_information.sentencing_entries import (
     TrialSentencingEntryCaseInformation,
     LeapSentencingEntryCaseInformation,
     DiversionEntryCaseInformation,
+    SentencingOnlyEntryCaseInformation,
 )
 from package.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
@@ -28,6 +29,7 @@ from package.updaters.grid_case_updaters import (
     LeapAdmissionPleaDialogUpdater,
     LeapSentencingDialogUpdater,
     TrialSentencingDialogUpdater,
+    SentencingOnlyDialogUpdater,
 )
 from package.updaters.no_grid_case_updaters import (
     NoPleaBondDialogUpdater,
@@ -48,6 +50,7 @@ from package.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
     LeapSentencingDialogSignalConnector,
     TrialSentencingDialogSignalConnector,
+    SentencingOnlyDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -62,6 +65,7 @@ from package.controllers.slot_functions import (
     LeapAdmissionPleaDialogSlotFunctions,
     LeapSentencingDialogSlotFunctions,
     TrialSentencingDialogSlotFunctions,
+    SentencingOnlyDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -76,6 +80,7 @@ from package.controllers.view_modifiers import (
     LeapAdmissionPleaDialogViewModifier,
     LeapSentencingDialogViewModifier,
     TrialSentencingDialogViewModifier,
+    SentencingOnlyDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -90,6 +95,7 @@ from package.controllers.information_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
     LeapSentencingDialogInfoChecker,
     TrialSentencingDialogInfoChecker,
+    SentencingOnlyDialogInfoChecker,
 )
 from package.models.conditions_models import BondConditions, BondModificationConditions, \
     FailureToAppearConditions, CommunityControlViolationBondConditions
@@ -113,6 +119,7 @@ from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
 from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 from package.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
 from package.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
+from package.views.sentencing_only_dialog_ui import Ui_SentencingOnlyDialog
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
@@ -329,6 +336,44 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = LeapSentencingDialogInfoChecker(self)
+
+
+class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.additional_conditions_list = [
+            ("community_control_checkBox", self.entry_case_information.community_control),
+            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
+            ("community_service_checkBox", self.entry_case_information.community_service),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ("jail_checkBox", self.entry_case_information.jail_terms),
+            ("impoundment_checkBox", self.entry_case_information.impoundment),
+            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
+        ]
+        self.dialog_name = "Sentencing Only Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self) -> None:
+        SentencingOnlyDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = SentencingOnlyDialogSlotFunctions(self)
+
+    def connect_signals_to_slots(self):
+        return SentencingOnlyDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = SentencingOnlyEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
+
+    def update_entry_case_information(self):
+        return SentencingOnlyDialogUpdater(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = SentencingOnlyDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):

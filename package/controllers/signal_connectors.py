@@ -133,6 +133,11 @@ class JailCCDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
 
 
+class SentencingOnlyDialogSignalConnector(JailCCDialogSignalConnector):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+
+
 class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
