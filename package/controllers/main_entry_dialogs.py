@@ -376,7 +376,6 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
         self.dialog_checks = SentencingOnlyDialogInfoChecker(self)
 
 
-
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     condition_checkbox_dict = {
         "monitoring_checkBox": ["monitoring_type_box"],
