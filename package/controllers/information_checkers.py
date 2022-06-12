@@ -178,6 +178,15 @@ class BaseInfoChecker(object):
             RequiredBox(message).exec()
             return "Fail"
 
+    def check_if_plea_date_is_today(self):
+        if self.view.plea_date.date() == TODAY:
+            message = (
+                "The Plea Date is Today, but must be a date prior to Today. Please enter"
+                "a date in the Plea Date box prior to today."
+            )
+            RequiredBox(message).exec()
+            return "Fail"
+
 
 class LeapAdmissionPleaDialogInfoChecker(BaseInfoChecker):
     def __init__(self, dialog):
@@ -617,6 +626,37 @@ class JailCCPleaDialogInfoChecker(BaseInfoChecker):
             )
             message.exec()
             return "Fail"
+
+
+class SentencingOnlyDialogInfoChecker(JailCCPleaDialogInfoChecker):
+    """Inherits from the JailCCPleaDialogInfoChecker because all checks except for plea check
+    are the same."""
+    conditions_list = [
+        ("license_suspension", "license_type", "License Suspension"),
+        ("community_service", "hours_of_service", "Community Service"),
+        ("other_conditions", "terms", "Other Conditions"),
+        ("community_control", "term_of_control", "Community Control"),
+        ("impoundment", "vehicle_make_model", "Immobilize/Impound"),
+    ]
+
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.case_info = self.view.entry_case_information
+        self.dialog_check_list = [
+            "check_defense_counsel",
+            "check_if_plea_date_is_today",
+            "check_if_no_finding_entered",
+            "check_insurance",
+            "check_additional_conditions_ordered",
+            "check_dv_and_victim_notifications_ordered",
+            "check_if_jail_days_suspended_greater_than_jail_imposed",
+            "check_jail_time_credit_fields",
+            "check_if_jail_days_imposed_greater_than_suspended_and_credit",
+            "check_if_jail_days_equals_suspended_and_imposed_days",
+            "check_if_jails_days_left_and_defendant_in_jail_and_reporting_ordered",
+            "check_if_jtc_applied_to_sentence_is_greater_than_jail_imposed",
+        ]
+        self.check_status = self.perform_check_list()
 
 
 class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):

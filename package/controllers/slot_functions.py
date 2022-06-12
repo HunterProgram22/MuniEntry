@@ -519,6 +519,16 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
+class SentencingOnlyDialogSlotFunctions(JailCCDialogSlotFunctions):
+    """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
+
+        The only difference between dialogs is the template has a plea date field.
+        """
+
+    def __init__(self, dialog):
+        super().__init__(dialog)
+
+
 class TrialSentencingDialogSlotFunctions(JailCCDialogSlotFunctions):
     """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
 

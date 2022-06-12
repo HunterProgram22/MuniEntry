@@ -68,6 +68,16 @@ class JailCCDialogUpdater(BaseDialogUpdater):
         return JailDataUpdater(self.dialog)
 
 
+class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
+    """Inherits from Jail Updater because only difference is adds a plea date."""
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+        self.update_plea_date()
+
+    def update_plea_date(self):
+        self.model.plea_date = self.dialog.plea_date.get_date()
+
+
 class TrialSentencingDialogUpdater(JailCCDialogUpdater):
     """Inherits from Jail Updater because only difference is lack of a plea field."""
 
