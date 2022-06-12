@@ -158,6 +158,7 @@ class MainWindowViewModifier(object):
             self.main_window.LeapSentencingButton: med.LeapSentencingDialog,
             self.main_window.TrialSentencingButton: med.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: med.SentencingOnlyDialog,
+            self.main_window.FreeformEntryButton: med.FreeformDialog,
         }
         self.main_window.daily_case_list_buttons_dict = {
             self.main_window.arraignments_radioButton: 'arraignments',

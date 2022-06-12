@@ -68,3 +68,14 @@ class ProbationViolationBondDialogUpdater(BaseDialogUpdater):
 
     def update_bond_conditions(self) -> None:
         self.dialog.transfer_view_data_to_model(self.model.cc_bond_conditions)
+
+
+class FreeformDialogUpdater(BaseDialogUpdater):
+    """Updater for Freeform Dialog - no charge grid."""
+
+    def __init__(self, dialog: CBD) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)

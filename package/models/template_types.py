@@ -67,6 +67,11 @@ Failure_To_Appear_Template = Template(
     "Failure_To_Appear_Template.docx",
 )
 
+Freeform_Entry_Template = Template(
+    "Freeform Entry",
+    "Freeform_Entry_Template.docx",
+)
+
 Bond_Hearing_Template = Template(
     "Bond Hearing Entry",
     "Bond_Hearing_Template.docx",
@@ -110,4 +115,5 @@ TEMPLATE_DICT = {
     "Leap Sentencing Dialog": Leap_Sentencing_Template,
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
+    "Freeform Entry Dialog": Freeform_Entry_Template,
 }
