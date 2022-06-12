@@ -331,6 +331,46 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.dialog_checks = LeapSentencingDialogInfoChecker(self)
 
 
+class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.additional_conditions_list = [
+            ("community_control_checkBox", self.entry_case_information.community_control),
+            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
+            ("community_service_checkBox", self.entry_case_information.community_service),
+            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ("jail_checkBox", self.entry_case_information.jail_terms),
+            ("impoundment_checkBox", self.entry_case_information.impoundment),
+            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
+        ]
+        self.dialog_name = "Sentencing Only Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self) -> None:
+        LeapSentencingDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = LeapSentencingDialogSlotFunctions(self)
+        self.functions.set_fines_credit_for_jail_field()
+
+    def connect_signals_to_slots(self):
+        return LeapSentencingDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = LeapSentencingEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
+
+    def update_entry_case_information(self):
+        return LeapSentencingDialogUpdater(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = LeapSentencingDialogInfoChecker(self)
+
+
+
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     condition_checkbox_dict = {
         "monitoring_checkBox": ["monitoring_type_box"],
