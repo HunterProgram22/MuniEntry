@@ -76,6 +76,10 @@ class FreeformDialogUpdater(BaseDialogUpdater):
     def __init__(self, dialog: CBD) -> None:
         super().__init__(dialog)
         self.update_case_information()
+        self.update_entry_content()
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
+
+    def update_entry_content(self):
+        self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
