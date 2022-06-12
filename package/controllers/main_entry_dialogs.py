@@ -98,9 +98,8 @@ from package.controllers.charges_grids import (
     JailChargesGrid,
     PleaOnlyGrid,
     LeapAdmissionPleaGrid,
-    NoJailChargesGrid,
+    FineOnlyChargeGrid,
     NotGuiltyPleaGrid,
-    DiversionChargesGrid,
 )
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
@@ -123,8 +122,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.show_restitution_boxes()
 
-    def modify_view(self):
-        return DiversionDialogViewModifier(self)
+    def modify_view(self) -> None:
+        DiversionDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = DiversionDialogSlotFunctions(self)
@@ -139,9 +138,8 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.entry_case_information.judicial_officer = self.judicial_officer
         self.entry_case_information.diversion.ordered = True
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = DiversionChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return DiversionDialogUpdater(self)
@@ -156,8 +154,8 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         self.dialog_name = "Plea Only Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return PleaOnlyDialogViewModifier(self)
+    def modify_view(self) -> None:
+        PleaOnlyDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = PleaOnlyDialogSlotFunctions(self)
@@ -169,9 +167,8 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         self.entry_case_information = PleaOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = PleaOnlyGrid
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self):
         return PleaOnlyDialogUpdater(self)
@@ -199,8 +196,8 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         if self.case_table == "slated":
             self.in_jail_box.setCurrentText("Yes")
 
-    def modify_view(self):
-        return JailCCDialogViewModifier(self)
+    def modify_view(self) -> None:
+        JailCCDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = JailCCDialogSlotFunctions(self)
@@ -213,9 +210,8 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         self.entry_case_information = JailCCEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = JailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return JailCCDialogUpdater(self)
@@ -241,8 +237,8 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.dialog_name = "Trial Sentencing Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return TrialSentencingDialogViewModifier(self)
+    def modify_view(self) -> None:
+        TrialSentencingDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = TrialSentencingDialogSlotFunctions(self)
@@ -255,9 +251,8 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.entry_case_information = TrialSentencingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = JailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return TrialSentencingDialogUpdater(self)
@@ -277,8 +272,8 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         self.dialog_name = "Fine Only Plea Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return FineOnlyDialogViewModifier(self)
+    def modify_view(self) -> None:
+        FineOnlyDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = FineOnlyDialogSlotFunctions(self)
@@ -291,9 +286,8 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         self.entry_case_information = FineOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = NoJailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return FineOnlyDialogUpdater(self)
@@ -313,8 +307,8 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.dialog_name = "Leap Sentencing Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self):
-        return LeapSentencingDialogViewModifier(self)
+    def modify_view(self) -> None:
+        LeapSentencingDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = LeapSentencingDialogSlotFunctions(self)
@@ -327,9 +321,8 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.entry_case_information = LeapSentencingEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = NoJailChargesGrid
-        return CmsFraLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsFraLoader(self)
 
     def update_entry_case_information(self):
         return LeapSentencingDialogUpdater(self)
@@ -376,8 +369,8 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
                     self.charges_gridLayout.row_plea, column
                 ).widget().setCurrentText("Not Guilty")
 
-    def modify_view(self):
-        return NotGuiltyBondDialogViewModifier(self)
+    def modify_view(self) -> None:
+        NotGuiltyBondDialogViewModifier(self)
 
     def create_dialog_slot_functions(self):
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
@@ -389,16 +382,15 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.entry_case_information = NotGuiltyBondEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self):
-        self.charges_gridLayout.__class__ = NotGuiltyPleaGrid
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self):
         """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
         return NotGuiltyBondDialogUpdater(self)
 
     def add_charge_to_grid(self):
-        self.charges_gridLayout.add_charge_only_to_grid(self)
+        self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()
 
     def perform_info_checks(self):
@@ -585,8 +577,8 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date("120 days")
 
-    def modify_view(self) -> LeapAdmissionPleaDialogViewModifier:
-        return LeapAdmissionPleaDialogViewModifier(self)
+    def modify_view(self) -> None:
+        LeapAdmissionPleaDialogViewModifier(self)
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
@@ -598,9 +590,8 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.entry_case_information = LeapAdmissionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self) -> CmsChargeLoader:
-        self.charges_gridLayout.__class__ = LeapAdmissionPleaGrid
-        return CmsChargeLoader(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
 
     def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
         return LeapAdmissionPleaDialogUpdater(self)

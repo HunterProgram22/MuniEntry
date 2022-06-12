@@ -20,8 +20,13 @@ class BaseDialogSignalConnector:
 
     def connect_plea_all_button_signals(self, dialog):
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
-        dialog.no_contest_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
+        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
+        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_findings)
+        dialog.no_contest_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
+        dialog.no_contest_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_findings)
+
+    def connect_not_guilty_all_button(self, dialog):
+        dialog.not_guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
 
     def connect_court_cost_signals(self, dialog):
         dialog.ability_to_pay_box.currentTextChanged.connect(dialog.functions.set_fines_costs_pay_date)
@@ -95,9 +100,13 @@ class LeapSentencingDialogSignalConnector(BaseDialogSignalConnector):
 
 class LeapAdmissionPleaDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
+        """The plea all buttons are connected directly because the base dialog method also connects
+        findings and a Leap Admission Plea does not have findings."""
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
-        self.connect_plea_all_button_signals(dialog)
+        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
+        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
+        dialog.no_contest_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
         dialog.time_to_complete_box.currentTextChanged.connect(dialog.functions.set_leap_sentencing_date)
 
 
@@ -129,8 +138,8 @@ class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
-        dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_all_findings_process)
+        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_trial_findings)
+        dialog.not_guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_trial_findings)
         self.connect_fra_signals(dialog)
         self.connect_court_cost_signals(dialog)
         self.connect_main_dialog_additional_condition_signals(dialog)
@@ -157,9 +166,9 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
+        self.connect_not_guilty_all_button(dialog)
         dialog.bond_type_box.currentTextChanged.connect(dialog.functions.show_hide_bond_conditions)
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.not_guilty_all_Button.pressed.connect(dialog.functions.set_plea_and_findings_process)
         dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
         dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
         dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)

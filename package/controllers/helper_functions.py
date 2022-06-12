@@ -26,3 +26,18 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
     if days_ahead <= 0:  # Target day already happened this week
         days_ahead += 7
     return future_date + timedelta(days_ahead)
+
+
+def attribute_check(func):
+    """Wrapper to check if an attribute exists.
+
+    Skips the check if the attribute does not exist.
+    """
+
+    def wrapper(*args, **kwargs):
+        try:
+            func(*args, **kwargs)
+        except AttributeError:
+            pass
+
+    return wrapper

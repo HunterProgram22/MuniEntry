@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, 
 
 from settings import WIDGET_TYPE_SET_DICT
 from package.controllers.helper_functions import set_future_date
+from package.controllers import charges_grids as cg
 
 
 TODAY = QtCore.QDate.currentDate()
@@ -123,40 +124,48 @@ class AmendChargeDialogViewModifier(BaseDialogViewModifier):
 class FineOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
         self.set_appearance_reason()
 
 
 class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
 class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.LeapAdmissionPleaGrid
         self.set_appearance_reason()
 
 
 class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.PleaOnlyGrid
         self.set_appearance_reason()
 
 
 class JailCCDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
         self.set_appearance_reason()
 
 
 class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
 class DiversionDialogViewModifier(BaseDialogViewModifier):
+    """Diversion uses the JailCharges Grid because all aspects of the grid are the same."""
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
         self.set_appearance_reason()
         self.set_diversion_fine_pay_date_box()
         self.set_diversion_jail_report_date_box()
@@ -177,6 +186,7 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
 class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.dialog.charges_gridLayout.__class__ = cg.NotGuiltyPleaGrid
         self.set_appearance_reason()
         self.dialog.monitoring_type_box.setHidden(True)
         self.dialog.specialized_docket_type_box.setHidden(True)
