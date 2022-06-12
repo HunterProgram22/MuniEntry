@@ -34,7 +34,7 @@ class BaseChargeGrid(QGridLayout):
         """
         return self.sender().text().replace(' All', '')
 
-    def set_all_pleas(self):
+    def set_all_pleas(self) -> None:
         """Sets the plea for all charges based on the button pressed.
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
@@ -49,7 +49,7 @@ class BaseChargeGrid(QGridLayout):
                 continue
             plea_box.setCurrentText(plea)
 
-    def set_all_findings(self):
+    def set_all_findings(self) -> None:
         """Sets the findings for all charges to either Guilty or Guilty - Allied Offense."""
         for column in range(0, self.columnCount()):
             column += 1
@@ -83,7 +83,7 @@ class BaseChargeGrid(QGridLayout):
 class ChargeGridBuilder(BaseChargeGrid):
     """The class contains all the methods used to build a charge grid."""
 
-    def add_charge_to_grid(self, charge, column):
+    def add_charge_to_grid(self, column, charge):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
@@ -132,7 +132,7 @@ class NotGuiltyPleaGrid(ChargeGridBuilder):
     def add_fields_to_charges_grid(self, dialog):
         column = self.columnCount() + 1
         charge = dialog.entry_case_information.charges_list[-1]
-        self.add_charge_to_grid(charge, column)
+        self.add_charge_to_grid(column, charge)
         self.add_plea_box_to_grid(column, dialog)
         self.add_delete_button_to_grid(column, charge, dialog)
 
@@ -155,7 +155,7 @@ class LeapAdmissionPleaGrid(ChargeGridBuilder):
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
-        self.add_charge_to_grid(charge, column)
+        self.add_charge_to_grid(column, charge)
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
         self.add_amend_button_to_grid(column, charge, dialog)
@@ -183,7 +183,7 @@ class PleaOnlyGrid(ChargeGridBuilder):
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
-        self.add_charge_to_grid(charge, column)
+        self.add_charge_to_grid(column, charge)
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
@@ -213,7 +213,7 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
-        self.add_charge_to_grid(charge, column)
+        self.add_charge_to_grid(column, charge)
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
@@ -250,7 +250,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
     def add_fields_to_charges_grid(self, dialog):
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
-        self.add_charge_to_grid(charge, column)
+        self.add_charge_to_grid(column, charge)
         self.add_dismissed_checkbox_to_grid(column, dialog)
         self.add_allied_checkbox_to_grid(column, dialog)
         self.add_plea_box_to_grid(column, dialog)
