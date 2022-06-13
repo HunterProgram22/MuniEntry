@@ -169,7 +169,7 @@ font-weight: bold;</string>
         <x>0</x>
         <y>0</y>
         <width>1061</width>
-        <height>877</height>
+        <height>875</height>
        </rect>
       </property>
       <property name="focusPolicy">
@@ -311,11 +311,6 @@ background-color: rgb(255, 255, 255);</string>
             <item>
              <property name="text">
               <string>a change of plea</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>sentencing</string>
              </property>
             </item>
            </widget>

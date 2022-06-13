@@ -13,6 +13,7 @@ from package.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
     CommunityControlViolationEntryCaseInformation,
     FailureToAppearEntryCaseInformation,
+    FreeformEntryCaseInformation,
     PleaOnlyEntryCaseInformation,
     NotGuiltyBondEntryCaseInformation,
     BondHearingEntryCaseInformation,
@@ -35,6 +36,7 @@ from package.updaters.no_grid_case_updaters import (
     NoPleaBondDialogUpdater,
     BondHearingDialogUpdater,
     FailureToAppearDialogUpdater,
+    FreeformDialogUpdater,
     ProbationViolationBondDialogUpdater,
 )
 from package.controllers.signal_connectors import (
@@ -51,6 +53,7 @@ from package.controllers.signal_connectors import (
     LeapSentencingDialogSignalConnector,
     TrialSentencingDialogSignalConnector,
     SentencingOnlyDialogSignalConnector,
+    FreeformDialogSignalConnector,
 )
 from package.controllers.slot_functions import (
     DiversionDialogSlotFunctions,
@@ -66,6 +69,7 @@ from package.controllers.slot_functions import (
     LeapSentencingDialogSlotFunctions,
     TrialSentencingDialogSlotFunctions,
     SentencingOnlyDialogSlotFunctions,
+    FreeformDialogSlotFunctions,
 )
 from package.controllers.view_modifiers import (
     DiversionDialogViewModifier,
@@ -81,6 +85,7 @@ from package.controllers.view_modifiers import (
     LeapSentencingDialogViewModifier,
     TrialSentencingDialogViewModifier,
     SentencingOnlyDialogViewModifier,
+    FreeformDialogViewModifier,
 )
 from package.controllers.information_checkers import (
     FineOnlyDialogInfoChecker,
@@ -90,6 +95,7 @@ from package.controllers.information_checkers import (
     JailCCPleaDialogInfoChecker,
     ProbationViolationBondDialogInfoChecker,
     FailureToAppearDialogInfoChecker,
+    FreeformDialogInfoChecker,
     BondHearingDialogInfoChecker,
     PleaOnlyDialogInfoChecker,
     LeapAdmissionPleaDialogInfoChecker,
@@ -120,6 +126,7 @@ from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDial
 from package.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
 from package.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 from package.views.sentencing_only_dialog_ui import Ui_SentencingOnlyDialog
+from package.views.freeform_dialog_ui import Ui_FreeformEntryDialog
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
@@ -557,6 +564,35 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
     def perform_info_checks(self):
         self.dialog_checks = FailureToAppearDialogInfoChecker(self)
+
+
+class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+        super().__init__(judicial_officer, cms_case, parent)
+        self.dialog_name = "Freeform Entry Dialog"
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self):
+        return FreeformDialogViewModifier(self)
+
+    def create_dialog_slot_functions(self):
+        self.functions = FreeformDialogSlotFunctions(self)
+
+    def connect_signals_to_slots(self):
+        return FreeformDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = FreeformEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
+    def load_cms_data_to_view(self):
+        return CmsNoChargeLoader(self)
+
+    def update_entry_case_information(self):
+        return FreeformDialogUpdater(self)
+
+    def perform_info_checks(self):
+        self.dialog_checks = FreeformDialogInfoChecker(self)
 
 
 class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):

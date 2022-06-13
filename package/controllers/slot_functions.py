@@ -591,6 +591,11 @@ class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.bond_amount_box.setCurrentText("None")
 
 
+class FreeformDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+
 class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

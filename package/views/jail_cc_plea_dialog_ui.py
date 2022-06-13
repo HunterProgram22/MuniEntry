@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/JailCCPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -137,7 +137,6 @@ class Ui_JailCCPleaDialog(object):
         self.appearance_reason_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.appearance_reason_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.appearance_reason_box.setObjectName("appearance_reason_box")
-        self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 4, 1, 1, 1)
@@ -615,7 +614,6 @@ class Ui_JailCCPleaDialog(object):
         self.label_27.setText(_translate("JailCCPleaDialog", "Appearance Reason:"))
         self.appearance_reason_box.setItemText(0, _translate("JailCCPleaDialog", "arraignment"))
         self.appearance_reason_box.setItemText(1, _translate("JailCCPleaDialog", "a change of plea"))
-        self.appearance_reason_box.setItemText(2, _translate("JailCCPleaDialog", "sentencing"))
         self.label_2.setText(_translate("JailCCPleaDialog", "Def. Last Name:"))
         self.label_26.setText(_translate("JailCCPleaDialog", "Date:"))
         self.clear_fields_case_Button.setText(_translate("JailCCPleaDialog", "Clear Fields"))
@@ -634,10 +632,10 @@ class Ui_JailCCPleaDialog(object):
         self.label_18.setText(_translate("JailCCPleaDialog", "Due date:"))
         self.costs_and_fines_Button.setText(_translate("JailCCPleaDialog", "Show Costs/Fines"))
         self.victim_notification_checkBox.setText(_translate("JailCCPleaDialog", "Fingerprinting and Victim Notification"))
-        self.impoundment_checkBox.setText(_translate("JailCCPleaDialog", "Immobilize/Impound"))
-        self.community_control_checkBox.setText(_translate("JailCCPleaDialog", "Community Control    "))
-        self.license_suspension_checkBox.setText(_translate("JailCCPleaDialog", "License Suspension"))
-        self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service"))
+        self.impoundment_checkBox.setText(_translate("JailCCPleaDialog", "Immobilize/Impound               "))
+        self.community_control_checkBox.setText(_translate("JailCCPleaDialog", "Community Control                     "))
+        self.license_suspension_checkBox.setText(_translate("JailCCPleaDialog", "License Suspension                  "))
+        self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service                   "))
         self.add_conditions_label.setText(_translate("JailCCPleaDialog", "ADDITIONAL CONDITIONS"))
         self.add_conditions_Button.setText(_translate("JailCCPleaDialog", "Add Additional Conditions"))
         self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other                                              "))

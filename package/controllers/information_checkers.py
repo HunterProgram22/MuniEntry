@@ -707,3 +707,12 @@ class FailureToAppearDialogInfoChecker(BaseInfoChecker):
             "check_defense_counsel",
         ]
         self.check_status = self.perform_check_list()
+
+
+class FreeformDialogInfoChecker(BaseInfoChecker):
+    def __init__(self, dialog):
+        self.view = dialog
+        self.dialog_check_list = [
+            "check_defense_counsel",
+        ]
+        self.check_status = self.perform_check_list()

@@ -225,6 +225,11 @@ class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
 
 
+class FreeformDialogViewModifier(BaseDialogViewModifier):
+    def __init__(self, dialog):
+        super().__init__(dialog)
+
+
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
