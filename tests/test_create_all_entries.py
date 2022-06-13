@@ -106,6 +106,14 @@ def leap_sentence_dialog(qtbot, main_window):
 
 
 @pytest.fixture
+def freeform_dialog(qtbot, main_window):
+    "Freeform Entry"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.FreeformEntryButton)
+    return main_window.dialog
+
+
+@pytest.fixture
 def sentencing_only_dialog(qtbot, main_window):
     "Sentencing Only Entry"
     entry_dialog(qtbot, main_window)
@@ -453,6 +461,14 @@ def test_create_diversion_entry(qtbot, div_dialog):
     mouse_click(div_dialog.create_entry_Button)
     assert div_dialog.entry_case_information.case_number == "21TRC05611div_test"
 
+
+@pytest.mark.create_entry_test
+def test_create_freeform_entry(qtbot, freeform_dialog):
+    enter_data(freeform_dialog.case_number_lineEdit, "freeform_test")
+    enter_data(freeform_dialog.entry_content_textEdit, "The Detroit Lions Rock!")
+
+    mouse_click(freeform_dialog.create_entry_Button)
+    assert freeform_dialog.entry_case_information.case_number == "21TRC05611freeform_test"
 
 @pytest.mark.create_entry_test
 def test_create_failure_to_appear_entry(qtbot, fta_dialog):
