@@ -12,7 +12,7 @@ ICON_PATH = fr'{PATH}\icons\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
-VERSION_NUMBER = '0.26.0'
+VERSION_NUMBER = '0.27.0'
 
 MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
@@ -38,7 +38,7 @@ WIDGET_TYPE_ACCESS_DICT = {
     'NoScrollTimeEdit': 'get_time',
 }
 
-# Dictionary that provides teh name of the method to set the data in the widget.
+# Dictionary that provides the name of the method to set the data in the widget.
 WIDGET_TYPE_SET_DICT = {
     'NoScrollComboBox': 'setCurrentText',
     'QCheckBox': 'setChecked',
