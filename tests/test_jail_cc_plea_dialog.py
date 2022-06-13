@@ -66,5 +66,3 @@ def test_court_costs_selected_updates_model(qtbot, jcp_dialog, mock_entry, costs
     enter_data(jcp_dialog.court_costs_box, costs_option)
     mouse_click(jcp_dialog.create_entry_Button)
     assert jcp_dialog.entry_case_information.court_costs.ordered == costs_option
-
-

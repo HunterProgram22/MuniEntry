@@ -101,6 +101,23 @@ def jcp_dialog(qtbot, main_window):
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.JailCCPleaButton)
+    mouse_click(main_window.dialog.no_contest_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, "Yes")
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    return main_window.dialog
+
+
+@pytest.fixture
+def sentencing_only_dialog(qtbot, main_window):
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.SentencingOnlyButton)
     mouse_click(main_window.dialog.guilty_all_Button)
     enter_data(main_window.dialog.fra_in_court_box, "Yes")
 

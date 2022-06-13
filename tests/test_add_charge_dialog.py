@@ -29,6 +29,7 @@ all_add_charge_dialogs_test_list = [
     "LeapSentencingButton",
     "LeapAdmissionButton",
     "TrialSentencingButton",
+    "SentencingOnlyButton",
 ]
 
 @pytest.mark.parametrize("test_input", all_add_charge_dialogs_test_list)
