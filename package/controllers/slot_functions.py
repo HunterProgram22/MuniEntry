@@ -82,12 +82,6 @@ class BaseDialogSlotFunctions(object):
             f"_{self.dialog.template.template_name}.docx"
         )
 
-    def set_plea_and_findings_process(self):
-        """Calls the dialog specific method to set all the pleas based on the plea
-        all button that is pressed (i.e. "Guilty All"). For Guilty and No Contest the
-        charges_gridLayout specific method will also set the finding."""
-        self.dialog.charges_gridLayout.set_all_pleas()
-
     def set_fines_costs_pay_date(self, days_to_add_string):
         """Sets the sentencing date to the Tuesday after the number of days added."""
         if days_to_add_string == "forthwith":
@@ -525,6 +519,16 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
+class SentencingOnlyDialogSlotFunctions(JailCCDialogSlotFunctions):
+    """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
+
+        The only difference between dialogs is the template has a plea date field.
+        """
+
+    def __init__(self, dialog):
+        super().__init__(dialog)
+
+
 class TrialSentencingDialogSlotFunctions(JailCCDialogSlotFunctions):
     """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
 
@@ -585,6 +589,11 @@ class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
     def set_if_no_bond(self, dialog):
         if self.dialog.bond_type_box.currentText() == "No Bond":
             self.dialog.bond_amount_box.setCurrentText("None")
+
+
+class FreeformDialogSlotFunctions(BaseDialogSlotFunctions):
+    def __init__(self, dialog):
+        self.dialog = dialog
 
 
 class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):

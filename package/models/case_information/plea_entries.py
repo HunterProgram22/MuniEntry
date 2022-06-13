@@ -30,6 +30,13 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
+class FreeformEntryCaseInformation(CriminalCaseInformation):
+    """General case information data variables for freeform entry."""
+
+    entry_content_text: str = None
+
+
+@dataclass
 class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables and data for Leap Admission entry."""
 

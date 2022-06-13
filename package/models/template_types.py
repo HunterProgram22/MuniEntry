@@ -27,6 +27,11 @@ Leap_Sentencing_Template = Template(
     "Leap_Sentencing_Template.docx",
 )
 
+Sentencing_Only_Template = Template(
+    "Sentencing Judgment Entry",
+    "Sentencing_Only_Template.docx",
+)
+
 Jail_CC_Plea_Final_Judgment_Template = Template(
     "Jail CC Judgment Entry",
     "Jail_Plea_Final_Judgment_Template.docx",
@@ -62,6 +67,11 @@ Failure_To_Appear_Template = Template(
     "Failure_To_Appear_Template.docx",
 )
 
+Freeform_Entry_Template = Template(
+    "Freeform Entry",
+    "Freeform_Entry_Template.docx",
+)
+
 Bond_Hearing_Template = Template(
     "Bond Hearing Entry",
     "Bond_Hearing_Template.docx",
@@ -93,6 +103,7 @@ TEMPLATE_DICT = {
     "Fine Only Plea Dialog": Fine_Only_Plea_Final_Judgment_Template,
     "Jail CC Plea Dialog": Jail_CC_Plea_Final_Judgment_Template,
     "Trial Sentencing Dialog": Trial_Sentencing_Template,
+    "Sentencing Only Dialog": Sentencing_Only_Template,
     "Diversion Plea Dialog": Diversion_Template,
     "Not Guilty Bond Dialog": Not_Guilty_Bond_Template,
     "No Plea Bond Dialog": No_Plea_Bond_Template,
@@ -104,4 +115,5 @@ TEMPLATE_DICT = {
     "Leap Sentencing Dialog": Leap_Sentencing_Template,
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
+    "Freeform Entry Dialog": Freeform_Entry_Template,
 }

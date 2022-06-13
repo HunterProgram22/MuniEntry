@@ -272,11 +272,11 @@ class FindingComboBox(NoScrollComboBox):
 
 
 class ChargeGridDeleteButton(QPushButton):
-    def __init__(self, column_index, charge, dialog, parent=None):
+    def __init__(self, column, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
-        self.column_index = column_index
-        self.dialog = dialog
+        self.column_index = column
         self.charge = charge
+        self.dialog = dialog
         self.set_up_widget()
 
     def set_up_widget(self):
@@ -298,11 +298,11 @@ class ChargeGridDeleteButton(QPushButton):
 
 
 class ChargeGridAmendButton(QPushButton):
-    def __init__(self, column_index, charge, dialog, parent=None):
+    def __init__(self, column, charge, dialog, parent=None):
         super(QPushButton, self).__init__(parent)
-        self.column_index = column_index
-        self.dialog = dialog
+        self.column_index = column
         self.charge = charge
+        self.dialog = dialog
         self.set_up_widget()
 
     def set_up_widget(self):

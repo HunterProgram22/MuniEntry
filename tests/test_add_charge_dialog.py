@@ -29,6 +29,7 @@ all_add_charge_dialogs_test_list = [
     "LeapSentencingButton",
     "LeapAdmissionButton",
     "TrialSentencingButton",
+    "SentencingOnlyButton",
 ]
 
 @pytest.mark.parametrize("test_input", all_add_charge_dialogs_test_list)
@@ -47,6 +48,7 @@ def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
     QTimer.singleShot(50, close_popup_dialog)
     mouse_click(main_window.dialog.add_charge_Button)
     assert main_window.dialog.popup_dialog.windowTitle() == "Add Charge"
+    assert main_window.dialog.charges_gridLayout.columnCount() == 3
 
 
 def test_add_charge_dialog_opens(add_charge_dialog):
