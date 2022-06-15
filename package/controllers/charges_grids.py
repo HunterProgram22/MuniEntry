@@ -25,11 +25,11 @@ class BaseChargeGrid(QGridLayout):
     def check_if_column_empty(self, column: int) -> bool:
         return bool(self.itemAtPosition(0, column) is None)
 
-    @attribute_check
+    # @attribute_check
     def check_if_charge_dismissed(self, column: int) -> bool:
         return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
 
-    @attribute_check
+    # @attribute_check
     def check_if_allied_offense(self, column: int) -> bool:
         return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
 
