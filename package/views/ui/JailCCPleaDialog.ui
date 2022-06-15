@@ -576,7 +576,7 @@ font-weight: bold;</string>
           <item row="5" column="0">
            <widget class="QCheckBox" name="impoundment_checkBox">
             <property name="text">
-             <string>Immobilize/Impound               </string>
+             <string>Immobilize/Impound                         </string>
             </property>
            </widget>
           </item>
@@ -590,14 +590,14 @@ font-weight: bold;</string>
           <item row="3" column="0">
            <widget class="QCheckBox" name="license_suspension_checkBox">
             <property name="text">
-             <string>License Suspension                  </string>
+             <string>License Suspension                           </string>
             </property>
            </widget>
           </item>
           <item row="2" column="0">
            <widget class="QCheckBox" name="community_service_checkBox">
             <property name="text">
-             <string>Community Service                   </string>
+             <string>Community Service                        </string>
             </property>
            </widget>
           </item>
