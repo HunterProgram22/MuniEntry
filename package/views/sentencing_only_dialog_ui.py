@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/SentencingOnlyDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\SentencingOnlyDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -111,6 +111,9 @@ class Ui_SentencingOnlyDialog(object):
         self.ability_to_pay_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.ability_to_pay_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.ability_to_pay_box.setObjectName("ability_to_pay_box")
+        self.ability_to_pay_box.addItem("")
+        self.ability_to_pay_box.addItem("")
+        self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
@@ -621,6 +624,9 @@ class Ui_SentencingOnlyDialog(object):
         self.ability_to_pay_box.setItemText(1, _translate("SentencingOnlyDialog", "within 30 days"))
         self.ability_to_pay_box.setItemText(2, _translate("SentencingOnlyDialog", "within 60 days"))
         self.ability_to_pay_box.setItemText(3, _translate("SentencingOnlyDialog", "within 90 days"))
+        self.ability_to_pay_box.setItemText(4, _translate("SentencingOnlyDialog", "while on the OVI Docket"))
+        self.ability_to_pay_box.setItemText(5, _translate("SentencingOnlyDialog", "while on Mission Court"))
+        self.ability_to_pay_box.setItemText(6, _translate("SentencingOnlyDialog", "while on the Mental Health Docket"))
         self.label_18.setText(_translate("SentencingOnlyDialog", "Due date:"))
         self.costs_and_fines_Button.setText(_translate("SentencingOnlyDialog", "Show Costs/Fines"))
         self.victim_notification_checkBox.setText(_translate("SentencingOnlyDialog", "Fingerprinting and Victim Notification"))

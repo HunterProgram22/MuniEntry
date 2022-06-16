@@ -6,6 +6,12 @@ from package.updaters.base_updaters import CBD, BaseDialogUpdater
 from settings import CRIMINAL_COURT_COSTS, MOVING_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
+SPECIAL_DOCKETS_COSTS = [
+    'while on the OVI Docket',
+    'while on Mission Court',
+    'while on the Mental Health Docket',
+]
+
 class CaseInformationUpdater(BaseDialogUpdater):
     """Updates the model data with the case information fram (top frame on dialogs)."""
 
@@ -34,8 +40,15 @@ class CourtCostsUpdater(BaseDialogUpdater):
         super().__init__(dialog)
         self.model.court_costs.ordered = self.dialog.court_costs_box.currentText()
         self.model.court_costs.ability_to_pay_time = self.dialog.ability_to_pay_box.currentText()
-        self.model.court_costs.balance_due_date = self.dialog.balance_due_date.get_date()
+        self.model.court_costs.balance_due_date = self.set_balance_due_date()
         self.model.court_costs.amount = self.calculate_court_costs()
+
+    def set_balance_due_date(self) -> str:
+        """Sets the balance due date to the name of the specialized docket or specific due date."""
+        if self.dialog.ability_to_pay_box.currentText() in SPECIAL_DOCKETS_COSTS:
+            return self.dialog.ability_to_pay_box.currentText()
+        else:
+            return self.dialog.balance_due_date.get_date()
 
     def calculate_court_costs(self) -> int:
         court_costs = 0

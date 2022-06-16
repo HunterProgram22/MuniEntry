@@ -25,13 +25,17 @@ class BaseChargeGrid(QGridLayout):
     def check_if_column_empty(self, column: int) -> bool:
         return bool(self.itemAtPosition(0, column) is None)
 
-    @attribute_check
     def check_if_charge_dismissed(self, column: int) -> bool:
-        return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
+        try:
+            return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
+        except AttributeError:
+            pass
 
-    @attribute_check
     def check_if_allied_offense(self, column: int) -> bool:
-        return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
+        try:
+            return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
+        except AttributeError:
+            pass
 
     def get_plea(self) -> str:
         """Returns copy of the label of the plea button after stripping ' All' from end.

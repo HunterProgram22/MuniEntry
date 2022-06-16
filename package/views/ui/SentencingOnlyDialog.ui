@@ -269,6 +269,21 @@ font-weight: bold;</string>
               <string>within 90 days</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>while on the OVI Docket</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>while on Mission Court</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>while on the Mental Health Docket</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="2" column="0">
