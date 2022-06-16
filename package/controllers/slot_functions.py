@@ -13,6 +13,11 @@ from package.models.criminal_charge_models import CriminalCharge
 from package.views.custom_widgets import RequiredBox
 from settings import SAVE_PATH
 
+SPECIAL_DOCKETS_COSTS = [
+    'while on the OVI Docket',
+    'while on Mission Court',
+    'while on the Mental Health Docket',
+]
 
 class BaseDialogSlotFunctions(object):
     def __init__(self, dialog):
@@ -85,8 +90,12 @@ class BaseDialogSlotFunctions(object):
     def set_fines_costs_pay_date(self, days_to_add_string):
         """Sets the sentencing date to the Tuesday after the number of days added."""
         if days_to_add_string == "forthwith":
+            self.dialog.balance_due_date.setHidden(False)
             self.dialog.balance_due_date.setDate(QDate.currentDate())
+        elif days_to_add_string in SPECIAL_DOCKETS_COSTS:
+            self.dialog.balance_due_date.setHidden(True)
         else:
+            self.dialog.balance_due_date.setHidden(False)
             days_to_add = self.get_days_to_add(days_to_add_string)
             total_days_to_add = set_future_date(days_to_add, "Tuesday")
             self.dialog.balance_due_date.setDate(

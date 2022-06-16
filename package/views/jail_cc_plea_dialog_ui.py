@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'package\views\ui\JailCCPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -74,7 +74,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1061, 877))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1061, 875))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -219,6 +219,9 @@ class Ui_JailCCPleaDialog(object):
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
+        self.ability_to_pay_box.addItem("")
+        self.ability_to_pay_box.addItem("")
+        self.ability_to_pay_box.addItem("")
         self.gridLayout_5.addWidget(self.ability_to_pay_box, 1, 1, 1, 1)
         self.label_18 = QtWidgets.QLabel(self.costs_frame)
         self.label_18.setObjectName("label_18")
@@ -241,6 +244,8 @@ class Ui_JailCCPleaDialog(object):
         self.costs_and_fines_Button.setFlat(False)
         self.costs_and_fines_Button.setObjectName("costs_and_fines_Button")
         self.gridLayout_5.addWidget(self.costs_and_fines_Button, 3, 0, 1, 2)
+        self.gridLayout_5.setColumnStretch(0, 1)
+        self.gridLayout_5.setColumnStretch(1, 2)
         self.gridLayout_4.addWidget(self.costs_frame, 2, 0, 1, 1)
         self.frame_6 = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -578,9 +583,9 @@ class Ui_JailCCPleaDialog(object):
         self.gridLayout_3.addWidget(self.line, 1, 0, 1, 3)
         self.verticalLayout_2.addLayout(self.gridLayout_3)
         self.gridLayout_4.addWidget(self.frame, 1, 0, 1, 3)
-        self.gridLayout_4.setColumnStretch(0, 1)
+        self.gridLayout_4.setColumnStretch(0, 2)
         self.gridLayout_4.setColumnStretch(1, 2)
-        self.gridLayout_4.setColumnStretch(2, 2)
+        self.gridLayout_4.setColumnStretch(2, 3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.verticalLayout.addWidget(self.scrollArea)
 
@@ -629,13 +634,16 @@ class Ui_JailCCPleaDialog(object):
         self.ability_to_pay_box.setItemText(1, _translate("JailCCPleaDialog", "within 30 days"))
         self.ability_to_pay_box.setItemText(2, _translate("JailCCPleaDialog", "within 60 days"))
         self.ability_to_pay_box.setItemText(3, _translate("JailCCPleaDialog", "within 90 days"))
+        self.ability_to_pay_box.setItemText(4, _translate("JailCCPleaDialog", "while on the OVI Docket"))
+        self.ability_to_pay_box.setItemText(5, _translate("JailCCPleaDialog", "while on Mission Court"))
+        self.ability_to_pay_box.setItemText(6, _translate("JailCCPleaDialog", "while on the Mental Health Docket"))
         self.label_18.setText(_translate("JailCCPleaDialog", "Due date:"))
         self.costs_and_fines_Button.setText(_translate("JailCCPleaDialog", "Show Costs/Fines"))
         self.victim_notification_checkBox.setText(_translate("JailCCPleaDialog", "Fingerprinting and Victim Notification"))
-        self.impoundment_checkBox.setText(_translate("JailCCPleaDialog", "Immobilize/Impound               "))
+        self.impoundment_checkBox.setText(_translate("JailCCPleaDialog", "Immobilize/Impound                         "))
         self.community_control_checkBox.setText(_translate("JailCCPleaDialog", "Community Control                     "))
-        self.license_suspension_checkBox.setText(_translate("JailCCPleaDialog", "License Suspension                  "))
-        self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service                   "))
+        self.license_suspension_checkBox.setText(_translate("JailCCPleaDialog", "License Suspension                           "))
+        self.community_service_checkBox.setText(_translate("JailCCPleaDialog", "Community Service                        "))
         self.add_conditions_label.setText(_translate("JailCCPleaDialog", "ADDITIONAL CONDITIONS"))
         self.add_conditions_Button.setText(_translate("JailCCPleaDialog", "Add Additional Conditions"))
         self.other_conditions_checkBox.setText(_translate("JailCCPleaDialog", "Other                                              "))

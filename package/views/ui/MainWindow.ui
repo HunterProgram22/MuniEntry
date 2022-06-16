@@ -37,7 +37,7 @@ font-weight: bold;</string>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,1,1,0,2,0,0">
+     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,1,1,0,2">
       <item row="0" column="0">
        <layout class="QGridLayout" name="judicial_officer_gridLayout">
         <item row="0" column="0">
@@ -338,6 +338,12 @@ font-weight: bold;</string>
           </property>
           <item row="3" column="1">
            <widget class="QPushButton" name="LeapAdmissionButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
@@ -436,6 +442,12 @@ font-weight: bold;</string>
           </item>
           <item row="2" column="1">
            <widget class="QPushButton" name="PleaOnlyButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
@@ -478,6 +490,12 @@ font-weight: bold;</string>
           </item>
           <item row="7" column="1">
            <widget class="QPushButton" name="LeapSentencingButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
@@ -488,6 +506,12 @@ font-weight: bold;</string>
           </item>
           <item row="1" column="2">
            <widget class="QPushButton" name="NoPleaBondButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 127);</string>
             </property>
@@ -518,6 +542,12 @@ font-weight: bold;</string>
           </item>
           <item row="5" column="1">
            <widget class="QPushButton" name="TrialSentencingButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
@@ -600,6 +630,12 @@ font-weight: bold;</string>
           </item>
           <item row="6" column="1">
            <widget class="QPushButton" name="SentencingOnlyButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
@@ -630,6 +666,12 @@ font-weight: bold;</string>
           </item>
           <item row="5" column="0">
            <widget class="QPushButton" name="FreeformEntryButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 127);</string>
             </property>

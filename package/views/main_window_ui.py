@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package/views/ui/MainWindow.ui'
+# Form implementation generated from reading ui file 'package\views\ui\MainWindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -177,6 +177,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setVerticalSpacing(12)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.LeapAdmissionButton = QtWidgets.QPushButton(self.crimTab)
+        self.LeapAdmissionButton.setMinimumSize(QtCore.QSize(120, 30))
         self.LeapAdmissionButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.LeapAdmissionButton.setObjectName("LeapAdmissionButton")
         self.gridLayout_2.addWidget(self.LeapAdmissionButton, 3, 1, 1, 1)
@@ -220,6 +221,7 @@ class Ui_MainWindow(object):
         self.JailCCPleaButton.setObjectName("JailCCPleaButton")
         self.gridLayout_2.addWidget(self.JailCCPleaButton, 2, 0, 1, 1)
         self.PleaOnlyButton = QtWidgets.QPushButton(self.crimTab)
+        self.PleaOnlyButton.setMinimumSize(QtCore.QSize(120, 30))
         self.PleaOnlyButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.PleaOnlyButton.setObjectName("PleaOnlyButton")
         self.gridLayout_2.addWidget(self.PleaOnlyButton, 2, 1, 1, 1)
@@ -234,10 +236,12 @@ class Ui_MainWindow(object):
         self.FineOnlyPleaButton.setObjectName("FineOnlyPleaButton")
         self.gridLayout_2.addWidget(self.FineOnlyPleaButton, 1, 0, 1, 1)
         self.LeapSentencingButton = QtWidgets.QPushButton(self.crimTab)
+        self.LeapSentencingButton.setMinimumSize(QtCore.QSize(120, 30))
         self.LeapSentencingButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.LeapSentencingButton.setObjectName("LeapSentencingButton")
         self.gridLayout_2.addWidget(self.LeapSentencingButton, 7, 1, 1, 1)
         self.NoPleaBondButton = QtWidgets.QPushButton(self.crimTab)
+        self.NoPleaBondButton.setMinimumSize(QtCore.QSize(120, 30))
         self.NoPleaBondButton.setStyleSheet("background-color: rgb(255, 255, 127);")
         self.NoPleaBondButton.setObjectName("NoPleaBondButton")
         self.gridLayout_2.addWidget(self.NoPleaBondButton, 1, 2, 1, 1)
@@ -254,6 +258,7 @@ class Ui_MainWindow(object):
         self.label_5.setObjectName("label_5")
         self.gridLayout_2.addWidget(self.label_5, 4, 1, 1, 1)
         self.TrialSentencingButton = QtWidgets.QPushButton(self.crimTab)
+        self.TrialSentencingButton.setMinimumSize(QtCore.QSize(120, 30))
         self.TrialSentencingButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.TrialSentencingButton.setObjectName("TrialSentencingButton")
         self.gridLayout_2.addWidget(self.TrialSentencingButton, 5, 1, 1, 1)
@@ -292,6 +297,7 @@ class Ui_MainWindow(object):
         self.label_7.setObjectName("label_7")
         self.gridLayout_2.addWidget(self.label_7, 4, 2, 1, 1)
         self.SentencingOnlyButton = QtWidgets.QPushButton(self.crimTab)
+        self.SentencingOnlyButton.setMinimumSize(QtCore.QSize(120, 30))
         self.SentencingOnlyButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.SentencingOnlyButton.setObjectName("SentencingOnlyButton")
         self.gridLayout_2.addWidget(self.SentencingOnlyButton, 6, 1, 1, 1)
@@ -308,6 +314,7 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.gridLayout_2.addWidget(self.label_8, 4, 0, 1, 1)
         self.FreeformEntryButton = QtWidgets.QPushButton(self.crimTab)
+        self.FreeformEntryButton.setMinimumSize(QtCore.QSize(120, 30))
         self.FreeformEntryButton.setStyleSheet("background-color: rgb(255, 255, 127);")
         self.FreeformEntryButton.setObjectName("FreeformEntryButton")
         self.gridLayout_2.addWidget(self.FreeformEntryButton, 5, 0, 1, 1)
