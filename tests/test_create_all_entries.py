@@ -470,6 +470,7 @@ def test_create_freeform_entry(qtbot, freeform_dialog):
     mouse_click(freeform_dialog.create_entry_Button)
     assert freeform_dialog.entry_case_information.case_number == "21TRC05611freeform_test"
 
+
 @pytest.mark.create_entry_test
 def test_create_failure_to_appear_entry(qtbot, fta_dialog):
     enter_data(fta_dialog.case_number_lineEdit, "fta_test")

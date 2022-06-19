@@ -4,7 +4,6 @@ from typing import TypeVar
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from package.controllers.base_dialogs import CriminalBaseDialog
-from package.controllers.helper_functions import attribute_check
 from package.models.criminal_charge_models import CriminalCharge
 from package.views import custom_widgets as cw
 
@@ -74,7 +73,6 @@ class BaseChargeGrid(QGridLayout):
                 finding_box.setCurrentText('Guilty')
         self.set_cursor_to_first_fine_box()
 
-    @attribute_check
     def set_cursor_to_first_fine_box(self) -> None:
         """Sets the cursor to the first non-dismissed charge's fine box.
 
@@ -86,8 +84,11 @@ class BaseChargeGrid(QGridLayout):
                 continue
             if self.check_if_charge_dismissed(column):
                 continue
-            self.itemAtPosition(self.row_fine, column).widget().setFocus()
-            break
+            try:
+                self.itemAtPosition(self.row_fine, column).widget().setFocus()
+                break
+            except AttributeError:
+                pass
 
 
 class ChargeGridBuilder(BaseChargeGrid):
