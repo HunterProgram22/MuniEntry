@@ -5,6 +5,7 @@ from abc import ABC, abstractmethod
 import os
 import sys
 
+from loguru import logger
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from package.excel_loaders.case_excel_loader import return_cases_data_from_excel
@@ -133,7 +134,7 @@ def remove_db_connection(connection_name: str) -> None:
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
     if not os.path.exists(database_name):
-        print("The database does not exist. Creating new database.")
+        logger.warning("The database does not exist. Creating new database.")
     db_connection = create_db(database_name, connection_name)
     return db_connection
 
@@ -146,7 +147,7 @@ def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
 
 def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     if not db_connection.isOpen():
-        print(f"Unable to connect to {connection_name} database")
+        logger.critical(f"Unable to connect to {connection_name} database")
         sys.exit(1)
     return True
 
@@ -311,7 +312,7 @@ def main():
 
 
 if __name__ == "__main__":
-    print("Daily Case List Tables and Charges Table created directly from script")
+    logger.info("Daily Case List Tables and Charges Table created directly from script")
 else:
     main()
-    print("Imported Daily Case List Tables and Charges Table")
+    logger.info("Imported Daily Case List Tables and Charges Table")

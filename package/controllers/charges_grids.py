@@ -1,6 +1,7 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
 from typing import TypeVar
 
+from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from package.controllers.base_dialogs import CriminalBaseDialog
@@ -27,14 +28,16 @@ class BaseChargeGrid(QGridLayout):
     def check_if_charge_dismissed(self, column: int) -> bool:
         try:
             return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
-        except AttributeError:
-            pass
+        except AttributeError as error:
+            logger.warning(error)
+        return False
 
     def check_if_allied_offense(self, column: int) -> bool:
         try:
             return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
-        except AttributeError:
-            pass
+        except AttributeError as error:
+            logger.warning(error)
+        return False
 
     def get_plea(self) -> str:
         """Returns copy of the label of the plea button after stripping ' All' from end.
@@ -86,9 +89,9 @@ class BaseChargeGrid(QGridLayout):
                 continue
             try:
                 self.itemAtPosition(self.row_fine, column).widget().setFocus()
-                break
-            except AttributeError:
-                pass
+            except AttributeError as error:
+                logger.warning(error)
+            break
 
 
 class ChargeGridBuilder(BaseChargeGrid):
@@ -291,6 +294,6 @@ class JailChargesGrid(FineOnlyChargeGrid):
 
 
 if __name__ == '__main__':
-    print('Charge Grids ran directly')
+    logger.info('Charge Grids ran directly')
 else:
-    print('Charge Grids Imported')
+    logger.info('Charge Grids Imported')
