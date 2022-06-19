@@ -278,4 +278,3 @@ class MainWindowSlotFunctions(object):
                 case_list.setCurrentText('')
                 case_list.setHidden(True)
                 case_list.setEnabled(False)
-

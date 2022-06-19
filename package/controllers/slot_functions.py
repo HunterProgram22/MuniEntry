@@ -800,7 +800,7 @@ def close_databases():
 
 
 if __name__ == "__main__":
-    print("Slot Functions ran directly")
+    logger.info("Slot Functions ran directly")
 else:
-    print("Slot Functions imported")
+    logger.info("Slot Functions imported")
     charges_database = open_db_connection("con_charges")

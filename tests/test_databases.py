@@ -19,20 +19,20 @@ from package.database_controllers.databases import (
 
 @pytest.fixture
 def crim_sql_retriever():
-    return CriminalCaseSQLRetriever("20TRC09471", "arraignments")
+    return CriminalCaseSQLRetriever("20TRC09471", "pleas")
 
 @pytest.fixture
 def crim_sql_special_character():
-    return CriminalCaseSQLRetriever("21CRB01597", "arraignments")
+    return CriminalCaseSQLRetriever("21CRB01597", "pleas")
 
 
 def test_create_CriminalCaseSQLRetriever(crim_sql_retriever):
     assert crim_sql_retriever.case_number == "20TRC09471"
-    assert crim_sql_retriever.case_table == "arraignments"
+    assert crim_sql_retriever.case_table == "pleas"
 
 def test_special_character_create_CriminalCaseSQLRetriever(crim_sql_special_character):
     assert crim_sql_special_character.case_number == "21CRB01597"
-    assert crim_sql_special_character.case_table == "arraignments"
+    assert crim_sql_special_character.case_table == "pleas"
 
 def test_get_case_data_works(crim_sql_retriever):
     case = crim_sql_retriever.case
@@ -110,16 +110,16 @@ query_list = [
 
 @pytest.mark.parametrize("query", query_list)
 def test_query_offense_statute_data(query):
-    assert len(query_offense_statute_data(query)) == 38
+    assert len(query_offense_statute_data(query)) == 45
 
 
 daily_case_lists = [
-    ("arraignments", 12),
-    ("slated", 11),
-    ("final_pretrials", 10),
+    ("arraignments", 9),
+    ("slated", 12),
+    ("final_pretrials", 12),
     ("pleas", 12),
-    ("trials_to_court", 4),
-    ("pcvh_fcvh", 6),
+    ("trials_to_court", 7),
+    ("pcvh_fcvh", 14),
 ]
 
 @pytest.mark.parametrize("table, total_cases", daily_case_lists)
