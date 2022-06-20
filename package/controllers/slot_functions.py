@@ -66,7 +66,8 @@ class BaseDialogSlotFunctions(object):
         try:
             doc.save(SAVE_PATH + docname)
             startfile(SAVE_PATH + docname)
-        except PermissionError:
+        except PermissionError as error:
+            logger.warning(error)
             self.dialog.message_box = RequiredBox(
                 "An entry for this case is already open in Word."
                 " You must close the Word document first."

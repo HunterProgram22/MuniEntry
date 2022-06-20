@@ -2,6 +2,7 @@
 from __future__ import annotations
 from typing import Type
 
+from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow
 
@@ -259,6 +260,7 @@ class MainWindowSlotFunctions(object):
         The databases are only recreated on reload since the initial load of the
         application already loads the databases.
         """
+        logger.info('Reload cases button pressed.')
         conn = open_db_connection('con_daily_case_lists')
         create_daily_case_list_sql_tables(conn)
         load_daily_case_list_data(conn)
