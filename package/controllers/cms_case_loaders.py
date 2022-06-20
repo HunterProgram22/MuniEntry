@@ -108,7 +108,7 @@ class CmsChargeLoader(CmsNoChargeLoader):
 
 
 class CmsFraLoader(CmsChargeLoader):
-    """Loader for dialogs that include sentencing when the is FRA (insurance) data for the case."""
+    """Loader for sentencing dialogs when there is FRA (insurance) data for the case."""
 
     fra_value = {'Y': 'Yes', 'N': 'No', 'U': 'N/A'}
 
