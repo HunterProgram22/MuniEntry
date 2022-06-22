@@ -1,6 +1,7 @@
 import re
 import datetime
 
+from loguru import logger
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime, QTime
 from PyQt5.QtGui import QIntValidator, QFont
@@ -397,15 +398,17 @@ class DismissedCheckbox(QCheckBox):
 
 
 class RequiredBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Required', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('REQUIRED', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Critical)
-        self.setWindowTitle("Required")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Ok)
 
@@ -422,29 +425,33 @@ class InfoBox(QMessageBox):
 
 
 class WarningBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Warning', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Warning)
-        self.setWindowTitle("Warning")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
 class TwoChoiceQuestionBox(QMessageBox):
-    def __init__(self, message, yes_choice, no_choice, parent=None):
+    def __init__(self, message, yes_choice, no_choice, title='Additional Information Required', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget(yes_choice, no_choice)
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self, yes_choice, no_choice):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Question)
-        self.setWindowTitle("Additional Information Required")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
         self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
@@ -463,15 +470,17 @@ class DataInputBox(QInputDialog):
 
 
 class JailWarningBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Jail Warning', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Warning)
-        self.setWindowTitle("Warning - No Jail Report Date Set")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 

@@ -1,4 +1,5 @@
 """The condtions dialogs module contains secondary dialogs that are opened from a main dialog."""
+from loguru import logger
 
 from PyQt5.QtWidgets import QDialog
 
@@ -58,6 +59,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
+        logger.log('DIALOG', 'AddConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -92,6 +94,7 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
+        logger.log('DIALOG', 'AddJailOnlyDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -153,6 +156,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
+        logger.log('DIALOG', 'AddCommunityControlDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -184,6 +188,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
+        logger.log('DIALOG', 'AddSpecialBondConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)

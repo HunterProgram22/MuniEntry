@@ -4,7 +4,6 @@ Copyright 2021 Justin Kudela.
 The main application entry point.
 """
 import multiprocessing
-import socket
 import sys
 
 from loguru import logger
@@ -12,10 +11,12 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 
-from settings import ICON_PATH, VERSION_NUMBER
+from settings import ICON_PATH, SOCKET_NAME, VERSION_NUMBER
 
-logger.add('./resources/logs/Error_log_{time}.log')
-
+logger.level('DIALOG', no=22, color='<green>')
+logger.level('CHOICE', no=26, color='<cyan>')
+logger.level('CHECKFAIL', no=27, color='<magenta>')
+logger.level('REQUIRED', no=28, color='<magenta>')
 
 def load_window():
     """The main window is loaded as a separate function so the splash screen appears sooner.
@@ -32,7 +33,7 @@ def load_window():
 @logger.catch
 def main():
     """The main applicaiton loop."""
-    logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {socket.gethostname()}')
+    logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel.png'))
     splash.show()
@@ -40,8 +41,10 @@ def main():
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>',
         Qt.AlignBottom | Qt.AlignCenter,
     )
+    logger.info('Splash Screen Shown')
     win = load_window()
     win.show()
+    logger.success('Main Window Open')
     splash.close()
     app.exec()
     logger.info('Application Exited')

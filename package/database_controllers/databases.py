@@ -312,7 +312,7 @@ def main():
 
 
 if __name__ == "__main__":
-    logger.info("Daily Case List Tables and Charges Table created directly from script")
+    logger.success("Daily Case List Tables and Charges Table created directly from script")
 else:
     main()
-    logger.info("Imported Daily Case List Tables and Charges Table")
+    logger.success("Imported Daily Case List Tables and Charges Table")

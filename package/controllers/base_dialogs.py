@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from loguru import logger
+from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
 from package.models.cms_models import CmsCaseInformation
@@ -46,6 +48,9 @@ class BaseDialog(QDialog):
                 model_attribute,
                 getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))(),
             )
+
+    def closeEvent(self, a0: QCloseEvent) -> None:
+        logger.log('DIALOG', f'{self.objectName()} Closed')
 
 
 class CriminalBaseDialog(BaseDialog):

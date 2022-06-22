@@ -294,6 +294,6 @@ class JailChargesGrid(FineOnlyChargeGrid):
 
 
 if __name__ == '__main__':
-    logger.info('Charge Grids ran directly')
+    logger.success('Charge Grids ran directly')
 else:
-    logger.info('Charge Grids Imported')
+    logger.success('Charge Grids Imported')
