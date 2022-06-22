@@ -37,16 +37,15 @@ class BaseDialogSlotFunctions(object):
         self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
-    def close_dialog(self):
-        self.close_event()
-
-    def close_event(self):
-        self.close_window()
-
     def close_window(self):
-        """Function connected to a button to close the window. Can be connected
+        """Closes window by calling closeEvent in BaseDialog.
+
+        Event is logged in BaseDialog closeEvent.
+
+        Function connected to a button to close the window. Can be connected
         to any button press/click/release to close a window. This can also be called
-        at the end of the close_event process to close the dialog."""
+        at the end of the close_event process to close the dialog.
+        """
         self.dialog.close()
 
     def clear_case_information_fields(self):
@@ -801,7 +800,7 @@ def close_databases():
 
 
 if __name__ == "__main__":
-    logger.info("Slot Functions ran directly")
+    logger.success("Slot Functions ran directly")
 else:
-    logger.info("Slot Functions imported")
+    logger.success("Slot Functions imported")
     charges_database = open_db_connection("con_charges")

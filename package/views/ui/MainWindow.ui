@@ -731,80 +731,18 @@ font-weight: bold;</string>
      <height>27</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuLogs">
     <property name="title">
-     <string>File</string>
+     <string>Logs</string>
     </property>
-    <addaction name="actionOpen"/>
-    <addaction name="actionOptions"/>
-    <addaction name="actionExit"/>
-    <addaction name="separator"/>
-    <addaction name="menu_file_exit"/>
+    <addaction name="actionOpen_Current_Log"/>
    </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actioncontrollers"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuSettings"/>
-   <addaction name="menuView"/>
+   <addaction name="menuLogs"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionOpen">
+  <action name="actionOpen_Current_Log">
    <property name="text">
-    <string>Open</string>
-   </property>
-  </action>
-  <action name="actionOptions">
-   <property name="text">
-    <string>Options</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Templates</string>
-   </property>
-  </action>
-  <action name="menu_file_exit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionGeneral_Motion_Entry">
-   <property name="text">
-    <string>General Motion Entry</string>
-   </property>
-  </action>
-  <action name="actionFail_to_Appear_Minor_Traffic_Offense">
-   <property name="text">
-    <string>Fail to Appear - Minor Traffic Offense</string>
-   </property>
-  </action>
-  <action name="actionOmnibus_Motion_Form">
-   <property name="text">
-    <string>Omnibus Motion Form</string>
-   </property>
-  </action>
-  <action name="actionJury_Instructions">
-   <property name="text">
-    <string>Jury Instructions</string>
-   </property>
-  </action>
-  <action name="actioncontrollers">
-   <property name="text">
-    <string>controllers</string>
-   </property>
-  </action>
-  <action name="actionTemplates">
-   <property name="text">
-    <string>Templates</string>
+    <string>Open Current Log</string>
    </property>
   </action>
  </widget>

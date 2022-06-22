@@ -1,5 +1,7 @@
 """Module containing the Main Window of the application."""
 from __future__ import annotations
+
+import os
 from typing import Type
 
 from loguru import logger
@@ -19,7 +21,8 @@ from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH, VERSION_NUMBER
+from settings import LOG_NAME, ICON_PATH, VERSION_NUMBER, LOG_PATH
+
 
 
 # InfoChecker Wrappers
@@ -27,7 +30,7 @@ def check_judicial_officer(func):
     """Prohibits opening a dialog unless a judicial officer is selected."""
     def wrapper(self):
         if self.judicial_officer is None:
-            RequiredBox('You must select a judicial officer.').exec()
+            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         else:
             func(self)
 
@@ -42,7 +45,7 @@ def check_case_list_selected(func):
         else:
             RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
-                'leave the case list field blank.',
+                'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
 
     return wrapper
@@ -56,14 +59,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modify_view()
         self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
+        self.connect_menu_functions()
         self.functions.load_case_lists()
         self.functions.show_hide_daily_case_lists()
         self.judicial_officer: JudicialOfficer = None
         self.case_table: str = 'None'
         self.dialog: Type[QDialog] = QDialog
 
+
     def modify_view(self) -> MainWindowViewModifier:
         return MainWindowViewModifier(self)
+
+    def connect_menu_functions(self) -> None:
+        self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
+
+    def open_current_log(self, s) -> None:
+        os.startfile(f'{LOG_PATH}{LOG_NAME}')
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = MainWindowSlotFunctions(self)
@@ -105,6 +116,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
+        logger.log('DIALOG', f'{self.dialog.objectName()} Opened')
         self.dialog.exec()
 
     @check_case_list_selected
@@ -193,7 +205,6 @@ class MainWindowSignalConnector(object):
 
     def __init__(self, main_window: MainWindow) -> None:
         self.main_window = main_window
-        self.main_window.menu_file_exit.triggered.connect(self.main_window.close)
         self.main_window.reload_cases_Button.released.connect(
             self.main_window.functions.reload_case_lists,
         )
@@ -237,6 +248,7 @@ class MainWindowSignalConnector(object):
             self.main_window.judicial_officer_frame.setHidden(True)
         elif self.main_window.schedulingTab is self.main_window.tabWidget.currentWidget():
             self.main_window.judicial_officer_frame.setHidden(False)
+
 
 
 class MainWindowSlotFunctions(object):

@@ -87,32 +87,22 @@ from package.controllers.view_modifiers import (
     SentencingOnlyDialogViewModifier,
     FreeformDialogViewModifier,
 )
-from package.controllers.information_checkers import (
-    FineOnlyDialogInfoChecker,
-    NotGuiltyBondDialogInfoChecker,
+from package.information_checkers.bond_checkers import (
     NoPleaBondDialogInfoChecker,
-    DiversionDialogInfoChecker,
-    JailCCPleaDialogInfoChecker,
     ProbationViolationBondDialogInfoChecker,
-    FailureToAppearDialogInfoChecker,
-    FreeformDialogInfoChecker,
     BondHearingDialogInfoChecker,
-    PleaOnlyDialogInfoChecker,
-    LeapAdmissionPleaDialogInfoChecker,
-    LeapSentencingDialogInfoChecker,
-    TrialSentencingDialogInfoChecker,
-    SentencingOnlyDialogInfoChecker,
 )
+from package.information_checkers.base_checks import FailureToAppearDialogInfoChecker, \
+    FreeformDialogInfoChecker
+from package.information_checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker, \
+    PleaOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker
+from package.information_checkers.no_jail_sentencing_checkers import FineOnlyDialogInfoChecker, \
+    LeapSentencingDialogInfoChecker, DiversionDialogInfoChecker
+from package.information_checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker, \
+    SentencingOnlyDialogInfoChecker, TrialSentencingDialogInfoChecker
 from package.models.conditions_models import BondConditions, BondModificationConditions, \
     FailureToAppearConditions, CommunityControlViolationBondConditions
 from package.models.template_types import TEMPLATE_DICT
-from package.controllers.charges_grids import (
-    JailChargesGrid,
-    PleaOnlyGrid,
-    LeapAdmissionPleaGrid,
-    FineOnlyChargeGrid,
-    NotGuiltyPleaGrid,
-)
 from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
