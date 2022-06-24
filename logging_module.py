@@ -9,6 +9,7 @@ from settings import LOG_NAME, ICON_PATH
 
 fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
 logger.add(f'./resources/logs/{LOG_NAME}', format=fmt)
+# logger.add(f'./resources/logs/TEST.log', format=fmt, level=20)  # THIS IS FOR A Secondary Log for less details
 logger.level('IMPORT', no=18, color='<white>')
 logger.level('DIALOG', no=22, color='<green>')
 logger.level('BUTTON', no=24, color='<cyan>')
