@@ -21,7 +21,7 @@ from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import LOG_NAME, ICON_PATH, VERSION_NUMBER, LOG_PATH
+from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, LOG_NAME
 
 
 
@@ -248,7 +248,6 @@ class MainWindowSignalConnector(object):
             self.main_window.judicial_officer_frame.setHidden(True)
         elif self.main_window.schedulingTab is self.main_window.tabWidget.currentWidget():
             self.main_window.judicial_officer_frame.setHidden(False)
-
 
 
 class MainWindowSlotFunctions(object):

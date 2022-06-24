@@ -62,6 +62,7 @@ class BaseDialogSlotFunctions(object):
         # extract_data(case_data)
         doc.render(case_data)
         docname = self.set_document_name()
+        logger.info(f'Entry Created: {docname}')
         try:
             doc.save(SAVE_PATH + docname)
             startfile(SAVE_PATH + docname)
@@ -218,6 +219,7 @@ class BaseDialogSlotFunctions(object):
             break
 
     def conditions_checkbox_toggle(self):
+        logger.log('BUTTON', f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
         if self.dialog.sender().isChecked():
             for items in self.dialog.additional_conditions_list:
                 if items[0] == self.dialog.sender().objectName():
@@ -331,6 +333,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         self.criminal_charge.degree = self.dialog.degree_choice_box.currentText()
         self.criminal_charge.type = self.set_offense_type()
         self.main_dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
+        logger.info(f'Added Charge: {self.criminal_charge.offense}, {self.criminal_charge.statute}')
 
     def set_offense_type(self):
         """This calls the database_statutes and behind the scenes sets the appropriate cms_case type
@@ -373,6 +376,8 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
             f"{self.dialog.current_offense_name} - AMENDED to "
             f"{self.dialog.amend_offense_details.amended_charge}",
         )
+        logger.info(f'Original Charge: {self.dialog.current_offense_name}')
+        logger.info(f'Amended Charge: {self.dialog.amend_offense_details.amended_charge}')
 
     def update_charges_grid_with_amended_charge(self):
         for columns in range(self.main_dialog.charges_gridLayout.columnCount()):
@@ -792,15 +797,8 @@ class AddJailOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
                 self.main_dialog.entry_case_information.jail_terms
             )
 
-
-def close_databases():
-    """This function is duplicate of the one in base_dialogs.py"""
-    charges_database.close()
-    charges_database.removeDatabase("QSQLITE")
-
-
 if __name__ == "__main__":
-    logger.success("Slot Functions ran directly")
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
-    logger.success("Slot Functions imported")
+    logger.log('IMPORT', f'{__name__} imported.')
     charges_database = open_db_connection("con_charges")

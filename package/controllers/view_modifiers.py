@@ -4,6 +4,7 @@ view file. Modifications to the view are placed in the ViewModifier class so tha
 be updated each time a view file is recompiled through the pyuic5 command."""
 import datetime, time
 
+from loguru import logger
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
@@ -355,3 +356,9 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
                 self.transfer_model_data_to_view(model_class)
             else:
                 continue
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

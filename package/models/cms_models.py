@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from loguru import logger
 
 from package.models.party_types import Defendant
 
@@ -14,3 +15,9 @@ class CmsCaseInformation:
     defense_counsel_type: str = None
     charges_list: list = field(default_factory=list)
     fra_in_file: str = None
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

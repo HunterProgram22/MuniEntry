@@ -1,4 +1,5 @@
 """Module that contains data checks that are ran when a user creates an entry."""
+from loguru import logger
 from PyQt5.QtWidgets import QDialog
 
 from package.information_checkers.base_checks import BondInfoChecker
@@ -62,3 +63,9 @@ class ProbationViolationBondDialogInfoChecker(BondInfoChecker):
             'check_if_improper_bond_type',
         ]
         self.check_status = self.perform_check_list()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

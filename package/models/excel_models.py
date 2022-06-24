@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from loguru import logger
 
 NO_DATA = 'No Data'
 
@@ -29,3 +30,9 @@ class ChargeExcelData(object):
     statute: str = NO_DATA
     degree: str = NO_DATA
     offense_type: str = NO_DATA
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

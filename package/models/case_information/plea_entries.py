@@ -1,4 +1,5 @@
 """Contains all dataclasses for entries that do not contain FRA or Court Costs."""
+from loguru import logger
 from dataclasses import dataclass, field
 
 from package.models import conditions_models as cm
@@ -64,3 +65,9 @@ class BondHearingEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
 @dataclass
 class NoPleaBondEntryCaseInformation(NotGuiltyBondEntryCaseInformation):
     """General case information data variables and data for no plea bond entry."""
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

@@ -1,4 +1,5 @@
 """Module containing all sql queries used throughout the application."""
+from loguru import logger
 
 
 def create_daily_case_list_tables_sql_query(table: str) -> str:
@@ -101,3 +102,9 @@ def select_statute_from_charges_for_offense_type_sql_query() -> str:
     return f"""
     SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'
     """
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

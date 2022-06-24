@@ -69,9 +69,11 @@ class CriminalBaseDialog(BaseDialog):
         case table.
         """
         self.case_table = case_table
+        logger.info(f'Loading case from {self.case_table}')
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        logger.info(f'Loaded Case {self.cms_case.case_number}')
         self.load_entry_case_information_model()
         self.load_cms_data_to_view()
         self.defense_counsel_name_box.load_attorneys()
@@ -94,3 +96,9 @@ class CriminalBaseDialog(BaseDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

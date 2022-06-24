@@ -2,7 +2,6 @@
 import pathlib
 import socket
 from datetime import datetime
-from loguru import logger
 
 
 # Path Information
@@ -25,20 +24,12 @@ MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
 NONMOVING_COURT_COSTS = 108
 
-
 # Logging Settings
-# Logger levels are placed in MuniEntry_app.py so tests will run properly.
-# logger.level('DIALOG', no=22, color='<green>')
-# logger.level('CHOICE', no=26, color='<cyan>')
-# logger.level('CHECKFAIL', no=27, color='<magenta>')
-# logger.level('REQUIRED', no=28, color='<magenta>')
-fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <50} | {function}:{name}:{line}'
 now = datetime.now()
 now_string = now.strftime('%Y_%m_%d__%H_%M_%S')
 LOG_TIME = f'{now_string}'
 SOCKET_NAME = socket.gethostname()
 LOG_NAME = f'Log_{SOCKET_NAME}_{LOG_TIME}.log'
-logger.add(f'./resources/logs/{LOG_NAME}', format=fmt)
 
 
 # Case List Settings
@@ -54,6 +45,7 @@ EXCEL_DAILY_CASE_LISTS = [
 # Dictionary that provides name of method to access the data in the widget.
 WIDGET_TYPE_ACCESS_DICT = {
     'NoScrollComboBox': 'currentText',
+    'ConditionCheckbox': 'isChecked',
     'QCheckBox': 'isChecked',
     'QRadioButton': 'isChecked',
     'QLineEdit': 'text',
@@ -66,6 +58,7 @@ WIDGET_TYPE_ACCESS_DICT = {
 WIDGET_TYPE_SET_DICT = {
     'NoScrollComboBox': 'setCurrentText',
     'QCheckBox': 'setChecked',
+    'ConditionCheckbox': 'setChecked',
     'QRadioButton': 'setChecked',
     'QLineEdit': 'setText',
     'QTextEdit': 'setPlainText',

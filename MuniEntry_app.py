@@ -5,18 +5,17 @@ The main application entry point.
 """
 import multiprocessing
 import sys
+import socket
 
-from loguru import logger
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 
-from settings import ICON_PATH, SOCKET_NAME, VERSION_NUMBER
+from MuniEntry import logging_module
+from settings import ICON_PATH, VERSION_NUMBER, SOCKET_NAME
 
-logger.level('DIALOG', no=22, color='<green>')
-logger.level('CHOICE', no=26, color='<cyan>')
-logger.level('CHECKFAIL', no=27, color='<magenta>')
-logger.level('REQUIRED', no=28, color='<magenta>')
+from loguru import logger
+
 
 def load_window():
     """The main window is loaded as a separate function so the splash screen appears sooner.

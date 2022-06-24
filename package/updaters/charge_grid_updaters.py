@@ -1,4 +1,5 @@
 """Module that contains the updaters for the different charge grids used by dialogs."""
+from loguru import logger
 
 from package.models.criminal_charge_models import CriminalCharge
 from package.updaters.base_updaters import CBD
@@ -218,3 +219,9 @@ class TrialSentencingGridModelUpdater(JailCCGridModelUpdater):
 
 class DiversionGridModelUpdater(JailCCGridModelUpdater):
     """Extends JailCCGridModelUpdater, but not additional actions performed."""
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

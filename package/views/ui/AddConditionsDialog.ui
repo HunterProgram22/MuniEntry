@@ -224,7 +224,7 @@ font-weight: bold;</string>
            </widget>
           </item>
           <item row="1" column="2">
-           <widget class="QCheckBox" name="als_terminated_checkBox">
+           <widget class="ConditionCheckbox" name="als_terminated_checkBox">
             <property name="text">
              <string>ALS is terminated, OBMV form 2261 shall issue</string>
             </property>
@@ -249,7 +249,7 @@ background-color: rgb(255, 255, 255);</string>
            </widget>
           </item>
           <item row="2" column="2">
-           <widget class="QCheckBox" name="remedial_driving_class_checkBox">
+           <widget class="ConditionCheckbox" name="remedial_driving_class_checkBox">
             <property name="text">
              <string>Remedial driving class required for OL return</string>
             </property>
@@ -675,6 +675,11 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
    <header>.custom_widgets</header>
   </customwidget>
  </customwidgets>

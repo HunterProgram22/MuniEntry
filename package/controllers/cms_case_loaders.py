@@ -133,3 +133,9 @@ class CmsFraLoader(CmsChargeLoader):
             self.dialog.fra_frame.setHidden(False)
         elif self.cms_case.case_number[2:5] == 'CRB':
             self.dialog.fra_frame.setHidden(True)
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

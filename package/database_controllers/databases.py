@@ -125,11 +125,13 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
+    logger.success(f'{connection_name} is connected.')
     return db_connection
 
 
 def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
+    logger.success(f'{connection_name} database connection removed.')
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
@@ -167,6 +169,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
     con_daily_case_lists.close()
+    logger.success(f'{con_daily_case_lists} Closed.')
 
 
 def insert_daily_case_list_sql_data(
@@ -312,7 +315,7 @@ def main():
 
 
 if __name__ == "__main__":
-    logger.success("Daily Case List Tables and Charges Table created directly from script")
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
     main()
-    logger.success("Imported Daily Case List Tables and Charges Table")
+    logger.log('IMPORT', f'{__name__} imported.')

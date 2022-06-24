@@ -103,3 +103,9 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     def connect_signals_to_slots(self) -> AmendChargeDialogSignalConnector:
         return AmendChargeDialogSignalConnector(self)
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

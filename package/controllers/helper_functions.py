@@ -1,4 +1,5 @@
 """Helper functions that are used throughout the application."""
+from loguru import logger
 from datetime import date, timedelta
 
 
@@ -28,3 +29,8 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
     if days_ahead <= 0:  # Target day already happened this week
         days_ahead += 7
     return future_date + timedelta(days_ahead)
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

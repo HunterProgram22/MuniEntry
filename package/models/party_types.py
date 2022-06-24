@@ -1,4 +1,5 @@
 """Module containing all the data structures for parties in cases."""
+from loguru import logger
 
 
 class Person:
@@ -26,3 +27,9 @@ class JudicialOfficer(Person):
         self.first_name = first_name
         self.last_name = last_name
         self.officer_type = officer_type
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

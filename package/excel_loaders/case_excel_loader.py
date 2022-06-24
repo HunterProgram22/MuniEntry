@@ -1,4 +1,5 @@
 """Module for loading case data from Excel files."""
+from loguru import logger
 
 from openpyxl import Workbook  # type: ignore
 
@@ -73,3 +74,9 @@ def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
     if ws.cell(row=1, column=col).value == COL_DEF_ATTY_FIRST_NAME:
         return ''
     return NO_DATA
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

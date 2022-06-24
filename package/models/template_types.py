@@ -1,5 +1,6 @@
 """Module that contains all the template objects for use in the
 application."""
+from loguru import logger
 import pathlib
 
 
@@ -117,3 +118,9 @@ TEMPLATE_DICT = {
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
     "Freeform Entry Dialog": Freeform_Entry_Template,
 }
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

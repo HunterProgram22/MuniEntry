@@ -1,4 +1,6 @@
 """The module that contains the main classes for creating an entry dialog."""
+from loguru import logger
+
 from PyQt5.QtGui import QIntValidator
 
 from package.models.case_information.sentencing_entries import (
@@ -380,7 +382,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     }
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -446,7 +448,7 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
     }
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -491,7 +493,7 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
 
 class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = "Probation Violation Bond Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
@@ -522,7 +524,7 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
 
 class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = "Failure To Appear Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
@@ -558,7 +560,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 
 class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = "Freeform Entry Dialog"
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
@@ -598,7 +600,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         case_table: str = None,
         parent: object = None,
     ) -> None:
-        super().__init__(judicial_officer, cms_case, parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
                 "admin_license_suspension_checkBox",
@@ -672,6 +674,6 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
 
 
 if __name__ == "__main__":
-    pass
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
-    pass
+    logger.log('IMPORT', f'{__name__} imported.')

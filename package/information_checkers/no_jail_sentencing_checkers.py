@@ -1,4 +1,5 @@
 """Module containing information checks for plea and sentencing dialogs with no jail time."""
+from loguru import logger
 from PyQt5.QtWidgets import QDialog
 
 from package.information_checkers.base_checks import (
@@ -79,3 +80,9 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
         message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
         RequiredBox(message, 'Diversion Program Required').exec()
         return FAIL
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

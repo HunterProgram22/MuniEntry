@@ -1,4 +1,5 @@
 """Module that contains dataclasses for data common to all criminal cases."""
+from loguru import logger
 from dataclasses import asdict, dataclass, field
 
 from package.models.party_types import Defendant
@@ -37,3 +38,9 @@ class CriminalCaseInformation(object):
         Example: {{ plaintiff }} populates State of Ohio in a template.
         """
         return asdict(self)
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

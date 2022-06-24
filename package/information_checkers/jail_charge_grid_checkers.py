@@ -1,4 +1,5 @@
 """Module that contains data checks for dialogs that potentially impose jail time."""
+from loguru import logger
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
 from package.information_checkers.base_checks import (
@@ -289,3 +290,9 @@ class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):
             'check_if_in_jail_and_reporting_set',
         ]
         self.check_status = self.perform_check_list()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

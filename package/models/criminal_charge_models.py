@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from loguru import logger
 
 
 @dataclass
@@ -25,3 +26,9 @@ class AmendOffenseDetails:
     original_charge: str = None
     amended_charge: str = None
     motion_disposition: str = "granted"
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

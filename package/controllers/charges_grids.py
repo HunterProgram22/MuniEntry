@@ -51,6 +51,7 @@ class BaseChargeGrid(QGridLayout):
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
+        logger.log('BUTTON', f'{self.sender().text()} Pressed')
         plea = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
@@ -242,7 +243,7 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
 
 
 class JailChargesGrid(FineOnlyChargeGrid):
-    """Charge Grid for the FineOnly Dialog.
+    """Charge Grid for the JailCCPlea Dialog.
 
     The dialog has all fields.
     """
@@ -279,6 +280,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
 
     def set_all_trial_findings(self) -> None:
+        logger.log('BUTTON', f'{self.sender().text()} Pressed')
         trial_finding = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
@@ -288,12 +290,15 @@ class JailChargesGrid(FineOnlyChargeGrid):
             if self.check_if_charge_dismissed(column):
                 continue
             if self.check_if_allied_offense(column):
-                finding_box.setCurrentText('Guilty - Allied Offense')
+                if trial_finding == 'Guilty':
+                    finding_box.setCurrentText('Guilty - Allied Offense')
+                if trial_finding == 'Not Guilty':
+                    finding_box.setCurrentText('Not Guilty - Allied Offense')
             else:
                 finding_box.setCurrentText(trial_finding)
 
 
-if __name__ == '__main__':
-    logger.success('Charge Grids ran directly')
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
-    logger.success('Charge Grids Imported')
+    logger.log('IMPORT', f'{__name__} imported.')

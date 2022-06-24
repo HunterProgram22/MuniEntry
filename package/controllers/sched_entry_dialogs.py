@@ -1,3 +1,5 @@
+from loguru import logger
+
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
@@ -202,6 +204,7 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
 class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.view = dialog
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self):
@@ -230,3 +233,9 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
         )
         self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString("MMMM dd, yyyy")
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

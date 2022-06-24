@@ -1,4 +1,5 @@
 """Module for loading non-CMS charge data from Excel files."""
+from loguru import logger
 from package.excel_loaders.loader_functions import load_active_worksheet
 from package.models.excel_models import ChargeExcelData
 
@@ -24,3 +25,9 @@ def create_charges_data_list(excel_file: str) -> list[ChargeExcelData]:
         charge.offense_type = worksheet.cell(row=row, column=4).value
         charge_data_list.append(charge)
     return charge_data_list
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

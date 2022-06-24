@@ -1,4 +1,5 @@
 """Module that contains general functions used for loading data from Excel files."""
+from loguru import logger
 from openpyxl import Workbook, load_workbook  # type: ignore
 
 
@@ -32,3 +33,9 @@ def create_headers_dict(headers_list: list[tuple[str, int]]) -> dict:
         col_name, col_value = col_tuple
         headers_dict[col_name] = col_value
     return headers_dict
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')
