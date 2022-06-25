@@ -52,11 +52,12 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
         self.dialog_name = "Notice Of Hearing Entry"
         super().__init__(parent)
         self.judicial_officer = judicial_officer
+        logger.debug(self.judicial_officer.last_name)
         self.cms_case = cms_case
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
-        self.functions.update_all_scheduled_dates()
+        self.functions.update_final_pretrial_date()
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -94,22 +95,19 @@ class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        # self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
+        self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_date)
 
 
 class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
 
-    def update_all_scheduled_dates(self):
-        if self.dialog.dialog_name == "Rohrer Scheduling Entry":
-            trial_date = self.set_event_date("Tuesday", "Trial")
-            self.dialog.trial_dateEdit.setDate(trial_date)
-            self.update_final_pretrial_and_pretrial_only()
-        elif self.dialog.dialog_name == "Hemmeter Scheduling Entry":
-            trial_date = self.set_event_date("Thursday", "Trial")
-            self.dialog.trial_dateEdit.setDate(trial_date)
-            self.update_final_pretrial_and_pretrial_only()
+    def update_final_pretrial_date(self):
+        if self.dialog.judicial_officer.last_name == "Rohrer":
+            final_pretrial_date = self.set_event_date("Thursday", "Final Pretrial")
+        elif self.dialog.judicial_officer.last_name == "Hemmeter":
+            final_pretrial_date = self.set_event_date("Tuesday", "Final Pretrial")
+        self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
 
     def set_event_date(self, day_to_set: str, event_to_set: str) -> QDate:
         if event_to_set == "Trial":
