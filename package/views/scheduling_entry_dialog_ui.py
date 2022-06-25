@@ -372,7 +372,7 @@ class Ui_SchedulingEntryDialog(object):
 
     def retranslateUi(self, SchedulingEntryDialog):
         _translate = QtCore.QCoreApplication.translate
-        SchedulingEntryDialog.setWindowTitle(_translate("SchedulingEntryDialog", "Scheduling Entry Information"))
+        SchedulingEntryDialog.setWindowTitle(_translate("SchedulingEntryDialog", "scheduling Entry Information"))
         self.label.setText(_translate("SchedulingEntryDialog", "Def. First Name:"))
         self.label_26.setText(_translate("SchedulingEntryDialog", "Date:"))
         self.cancel_Button.setText(_translate("SchedulingEntryDialog", "Cancel"))

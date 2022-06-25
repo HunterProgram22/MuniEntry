@@ -17,8 +17,8 @@ def sch_dialog_hemmeter(qtbot, main_window):
 
 
 def test_scheduing_entry_rohrer_opens(qtbot, sch_dialog_rohrer):
-    assert sch_dialog_rohrer.windowTitle() == "Rohrer Scheduling Entry Case Information"
+    assert sch_dialog_rohrer.windowTitle() == "Rohrer scheduling Entry Case Information"
 
 def test_scheduing_entry_hemmeter_opens(qtbot, sch_dialog_hemmeter):
-    assert sch_dialog_hemmeter.windowTitle() == "Hemmeter Scheduling Entry Case Information"
+    assert sch_dialog_hemmeter.windowTitle() == "Hemmeter scheduling Entry Case Information"
 
