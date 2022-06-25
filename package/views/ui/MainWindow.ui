@@ -711,16 +711,6 @@ font-weight: bold;</string>
           <property name="verticalSpacing">
            <number>12</number>
           </property>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="notice_of_hearingEntryButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 255);</string>
-            </property>
-            <property name="text">
-             <string>Notice of Hearing</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QPushButton" name="rohrer_schedulingEntryButton">
             <property name="styleSheet">
@@ -738,6 +728,26 @@ font-weight: bold;</string>
             </property>
             <property name="text">
              <string>Hemmeter Scheduling Entry</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="notice_of_hearingEntryButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            </property>
+            <property name="text">
+             <string>Final/Jury Notice of Hearing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="trial_to_court_hearingEntryButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            </property>
+            <property name="text">
+             <string>Trial To Court Notice of Hearing</string>
             </property>
            </widget>
           </item>

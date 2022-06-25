@@ -36,10 +36,14 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         self.case_table = case_table
-        self.dialog_name = "Notice Of Hearing Entry"
+        if judicial_officer.last_name == 'Hemmeter':
+            self.dialog_name = 'Notice Of Hearing Entry Hemmeter'
+        elif judicial_officer.last_name == 'Rohrer':
+            self.dialog_name = 'Notice Of Hearing Entry Rohrer'
+        else:
+            self.dialog_name = 'Notice Of Hearing Entry'
         super().__init__(parent)
         self.judicial_officer = judicial_officer
-        logger.debug(self.judicial_officer.last_name)
         self.cms_case = cms_case
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
@@ -91,6 +95,7 @@ class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
     def update_final_pretrial_date(self):
+        final_pretrial_date = TODAY
         if self.dialog.judicial_officer.last_name == "Rohrer":
             final_pretrial_date = self.set_final_pretrial_date("Thursday", "Final Pretrial")
         elif self.dialog.judicial_officer.last_name == "Hemmeter":
@@ -105,6 +110,7 @@ class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
         return event_date
 
     def update_trial_date(self):
+        trial_date = TODAY
         if self.dialog.judicial_officer.last_name == "Rohrer":
             trial_date = self.set_trial_date("Tuesday", "Trial")
         elif self.dialog.judicial_officer.last_name == "Hemmeter":

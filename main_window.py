@@ -138,8 +138,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return 'Rohrer Scheduling Entry'
         if self.sender().objectName() == 'hemmeter_schedulingEntryButton':
             return 'Hemmeter Scheduling Entry'
-        if self.sender().objectName() == 'notice_of_hearingEntryButton':
-            return 'Notice of Hearing Entry'
         return 'None'
 
 
