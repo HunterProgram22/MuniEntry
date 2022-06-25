@@ -3,6 +3,7 @@ from loguru import logger
 
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
+from package.views.notice_of_hearing_dialog_ui import Ui_NoticeOfHearingDialog
 
 from package.models.template_types import TEMPLATE_DICT
 
@@ -45,10 +46,10 @@ PRETRIAL_TIME_DICT = {
 
 class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
     def __init__(
-            self, judicial_officer=None, dialog_name=None, cms_case=None, case_table=None, parent=None
+            self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         self.case_table = case_table
-        self.dialog_name = dialog_name
+        self.dialog_name = "Notice Of Hearing Entry"
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
@@ -93,7 +94,7 @@ class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
+        # self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
 
 
 class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -155,7 +156,6 @@ class NoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
             "MMMM dd, yyyy"
         )
-        self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString("MMMM dd, yyyy")
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
 
 
