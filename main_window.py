@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow
 
 from package.controllers import main_entry_dialogs as med
 from package.controllers.scheduling.sched_entry_dialogs import SchedulingEntryDialog
-from package.controllers.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.controllers.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog, TrialToCourtHearingDialog
 from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,
     create_daily_case_list_sql_tables,
@@ -174,7 +174,8 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: med.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: med.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: med.FreeformDialog,
-            self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog
+            self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog,
+            self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
         self.main_window.daily_case_list_buttons_dict = {
             self.main_window.arraignments_radioButton: 'arraignments',
