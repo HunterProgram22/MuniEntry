@@ -42,6 +42,7 @@ PRETRIAL_TIME_DICT = {
     "No Pretrial": 0,
 }
 
+
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def __init__(
         self, judicial_officer=None, dialog_name=None, cms_case=None, case_table=None, parent=None

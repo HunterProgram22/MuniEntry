@@ -341,7 +341,7 @@ font-weight: bold;</string>
       <item row="5" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="crimTab">
          <attribute name="title">
@@ -705,10 +705,19 @@ font-weight: bold;</string>
           <string>Scheduling</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1,1">
+          <property name="horizontalSpacing">
+           <number>24</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>12</number>
+          </property>
           <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_12">
+           <widget class="QPushButton" name="notice_of_hearingEntryButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            </property>
             <property name="text">
-             <string>PushButton</string>
+             <string>Notice of Hearing</string>
             </property>
            </widget>
           </item>

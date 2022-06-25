@@ -98,6 +98,10 @@ Scheduling_Entry_Template_Hemmeter = Template(
     "Scheduling_Entry_Template_Hemmeter.docx",
 )
 
+Notice_Of_Hearing_Template = Template(
+    "Notice of Hearing Entry",
+    "Notice_Of_Hearing_Template.docx",
+)
 
 
 TEMPLATE_DICT = {
