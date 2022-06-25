@@ -238,146 +238,153 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="5" column="1">
-              <widget class="NoScrollComboBox" name="final_pretrial_time_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+            <layout class="QGridLayout" name="gridLayout_6">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,2,2,2" rowminimumheight="0,0,0,0">
+               <property name="verticalSpacing">
+                <number>24</number>
                </property>
-               <item>
-                <property name="text">
-                 <string>1:00 PM</string>
-                </property>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Final Pretrial Date:</string>
+                 </property>
+                </widget>
                </item>
-               <item>
-                <property name="text">
-                 <string>1:15 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>1:30 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>1:45 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>2:00 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>2:15 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>2:30 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>2:45 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>3:00 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>3:15 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>3:30 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>3:45 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>4:00 PM</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>4:15 PM</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="2">
-              <widget class="QLabel" name="label_5">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>SCHEDULED DATES</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="NoScrollDateEdit" name="trial_dateEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
+               <item row="1" column="1">
+                <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>Final Pretrial Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Jury Trial Date</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Final Pretrial Time:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="NoScrollComboBox" name="final_pretrial_time_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>1:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4:15 PM</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Jury Trial Date</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Final Pretrial Time:</string>
-               </property>
-              </widget>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QLabel" name="label_5">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                   <underline>true</underline>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>SCHEDULED DATES</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>
@@ -402,155 +409,162 @@ background-color: rgb(255, 255, 255);</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout" columnstretch="1,2,1,1,1">
-             <item row="1" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Def. First Name:</string>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="0" column="0">
+              <layout class="QGridLayout" name="gridLayout" columnstretch="1,2,1,2,1">
+               <property name="verticalSpacing">
+                <number>24</number>
                </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4">
-              <widget class="QPushButton" name="cancel_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Cancel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Case Number:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QPushButton" name="clear_fields_case_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Clear Fields</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="NoScrollDateEdit" name="plea_trial_date">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
+               <item row="1" column="0">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Def. First Name:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="2">
+                <widget class="QLabel" name="label_26">
+                 <property name="text">
+                  <string>Date:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="3">
+                <widget class="NoScrollDateEdit" name="plea_trial_date">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="minimumDate">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-               <property name="date">
-                <date>
-                 <year>2021</year>
-                 <month>1</month>
-                 <day>1</day>
-                </date>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Def. Last Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLineEdit" name="case_number_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>Def. Counsel:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="5">
-              <widget class="QLabel" name="label_6">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>CASE INFORMATION</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QComboBox" name="defense_counsel_name_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
+                 </property>
+                 <property name="minimumDate">
+                  <date>
+                   <year>2021</year>
+                   <month>1</month>
+                   <day>1</day>
+                  </date>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
+                 </property>
+                 <property name="date">
+                  <date>
+                   <year>2021</year>
+                   <month>1</month>
+                   <day>1</day>
+                  </date>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QPushButton" name="cancel_Button">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(160, 160, 160);</string>
+                 </property>
+                 <property name="text">
+                  <string>Cancel</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Def. Last Name:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="2">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Case Number:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="3">
+                <widget class="QLineEdit" name="case_number_lineEdit">
+                 <property name="maximumSize">
+                  <size>
+                   <width>500</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="4">
+                <widget class="QPushButton" name="clear_fields_case_Button">
+                 <property name="focusPolicy">
+                  <enum>Qt::NoFocus</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(160, 160, 160);</string>
+                 </property>
+                 <property name="text">
+                  <string>Clear Fields</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_24">
+                 <property name="text">
+                  <string>Def. Counsel:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QComboBox" name="defense_counsel_name_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="5">
+                <widget class="QLabel" name="label_6">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                   <underline>true</underline>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>CASE INFORMATION</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>

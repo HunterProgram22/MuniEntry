@@ -16,14 +16,6 @@ from package.updaters.general_updaters import CaseInformationUpdater
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 
 TODAY = QDate.currentDate()
-SPEEDY_TRIAL_TIME_DICT = {
-    "M1": 90,
-    "M2": 90,
-    "M3": 45,
-    "M4": 45,
-    "MM": 30,
-    "UCM": 30,
-}
 DAY_DICT = {
     "Monday": 1,
     "Tuesday": 2,
@@ -33,14 +25,9 @@ DAY_DICT = {
 }
 
 EVENT_DICT = {
+    "Trial": 2,
     "Final Pretrial": 2,
     "Pretrial": 28,
-}
-PRETRIAL_TIME_DICT = {
-    "Pretrial 4 weeks before trial": 28,
-    "Pretrial 3 weeks before trial": 21,
-    "Pretrial 2 weeks before trial": 14,
-    "No Pretrial": 0,
 }
 
 
@@ -96,6 +83,7 @@ class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_date)
+        self.dialog.final_pretrial_dateEdit.dateChanged.connect(self.functions.update_trial_date)
 
 
 class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -104,23 +92,30 @@ class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def update_final_pretrial_date(self):
         if self.dialog.judicial_officer.last_name == "Rohrer":
-            final_pretrial_date = self.set_event_date("Thursday", "Final Pretrial")
+            final_pretrial_date = self.set_final_pretrial_date("Thursday", "Final Pretrial")
         elif self.dialog.judicial_officer.last_name == "Hemmeter":
-            final_pretrial_date = self.set_event_date("Tuesday", "Final Pretrial")
+            final_pretrial_date = self.set_final_pretrial_date("Tuesday", "Final Pretrial")
         self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
 
-    def set_event_date(self, day_to_set: str, event_to_set: str) -> QDate:
-        if event_to_set == "Trial":
-            days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
-            event_date = TODAY.addDays(days_until_speedy_trial_date)
-        elif event_to_set == "Pretrial":
-            pretrial_time = self.get_pretrial_time()
-            event_date = self.dialog.trial_dateEdit.date().addDays(-pretrial_time)
-        else:
-            days_to_event = EVENT_DICT.get(event_to_set)
-            event_date = self.dialog.trial_dateEdit.date().addDays(-days_to_event)
+    def set_final_pretrial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+        days_to_event = EVENT_DICT.get(event_to_set)
+        event_date = self.dialog.trial_dateEdit.date().addDays(-days_to_event)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
             event_date = event_date.addDays(-1)
+        return event_date
+
+    def update_trial_date(self):
+        if self.dialog.judicial_officer.last_name == "Rohrer":
+            trial_date = self.set_trial_date("Tuesday", "Trial")
+        elif self.dialog.judicial_officer.last_name == "Hemmeter":
+            trial_date = self.set_trial_date("Thursday", "Trial")
+        self.dialog.trial_dateEdit.setDate(trial_date)
+
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+        days_to_event = EVENT_DICT.get(event_to_set)
+        event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
+        while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
+            event_date = event_date.addDays(1)
         return event_date
 
 
