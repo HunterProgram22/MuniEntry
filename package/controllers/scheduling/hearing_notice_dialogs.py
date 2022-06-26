@@ -4,7 +4,6 @@ from loguru import logger
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
 from package.views.notice_of_hearing_dialog_ui import Ui_NoticeOfHearingDialog
-from package.views.trial_to_court_hearing_dialog_ui import Ui_TrialToCourtHearingDialog
 
 from package.models.template_types import TEMPLATE_DICT
 
@@ -65,14 +64,6 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
 
     def update_entry_case_information(self):
         return NoticeOfHearingDialogCaseInformationUpdater(self)
-
-
-class TrialToCourtHearingDialog(BaseDialog, Ui_TrialToCourtHearingDialog):
-    def __init__(
-            self, judicial_officer=None, cms_case=None, case_table=None, parent=None
-    ):
-        self.dialog_name = 'Trial To Court Hearing Notice'
-        super().__init__(parent)
 
 
 class NoticeOfHearingDialogViewModifier(BaseDialogViewModifier):

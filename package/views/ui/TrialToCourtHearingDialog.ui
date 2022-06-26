@@ -240,7 +240,7 @@ font-weight: bold;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0,0">
+              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0">
                <property name="verticalSpacing">
                 <number>24</number>
                </property>
@@ -272,7 +272,7 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="NoScrollComboBox" name="final_pretrial_time_box">
+                <widget class="NoScrollComboBox" name="trial_time_box">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
@@ -605,7 +605,4 @@ background-color: rgb(255, 255, 255);</string>
   <slot>start_add_conditions_dialog()</slot>
   <slot>start_amend_offense_dialog()</slot>
  </slots>
- <buttongroups>
-  <buttongroup name="buttonGroup"/>
- </buttongroups>
 </ui>
