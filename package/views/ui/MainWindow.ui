@@ -341,7 +341,7 @@ font-weight: bold;</string>
       <item row="5" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="crimTab">
          <attribute name="title">
@@ -704,7 +704,7 @@ font-weight: bold;</string>
          <attribute name="title">
           <string>Scheduling</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1,1">
+         <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1">
           <property name="horizontalSpacing">
            <number>24</number>
           </property>

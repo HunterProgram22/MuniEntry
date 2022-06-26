@@ -354,7 +354,6 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addWidget(self.trial_to_court_hearingEntryButton, 2, 1, 1, 1)
         self.gridLayout_4.setColumnStretch(0, 1)
         self.gridLayout_4.setColumnStretch(1, 1)
-        self.gridLayout_4.setColumnStretch(2, 1)
         self.tabWidget.addTab(self.schedulingTab, "")
         self.gridLayout_5.addWidget(self.tabWidget, 5, 0, 1, 1)
         self.gridLayout_5.setRowStretch(0, 1)
@@ -379,7 +378,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuLogs.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
