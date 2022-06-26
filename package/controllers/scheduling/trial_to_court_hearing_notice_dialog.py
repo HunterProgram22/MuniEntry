@@ -1,6 +1,6 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
-from package.controllers.base_dialogs import BaseDialog
+from package.controllers.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 from package.views.trial_to_court_hearing_dialog_ui import Ui_TrialToCourtHearingDialog
 from package.controllers.view_modifiers import BaseDialogViewModifier
@@ -17,15 +17,13 @@ from package.controllers.cms_case_loaders import CmsNoChargeLoader
 TODAY = QDate.currentDate()
 
 
-class TrialToCourtHearingDialog(BaseDialog, Ui_TrialToCourtHearingDialog):
+class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog):
     def __init__(
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         self.dialog_name = 'Trial To Court Hearing Notice'
-        super().__init__(parent)
-
-    def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self):
         return TrialToCourtDialogViewModifier(self)
@@ -35,6 +33,13 @@ class TrialToCourtHearingDialog(BaseDialog, Ui_TrialToCourtHearingDialog):
 
     def connect_signals_to_slots(self) -> None:
         return TrialToCourtDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = SchedulingCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
+    def load_cms_data_to_view(self):
+        return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self):
         return TrialToCourtDialogCaseInformationUpdater(self)

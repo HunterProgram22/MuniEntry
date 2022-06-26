@@ -76,7 +76,10 @@ class CriminalBaseDialog(BaseDialog):
         logger.info(f'Loaded Case {self.cms_case.case_number}')
         self.load_entry_case_information_model()
         self.load_cms_data_to_view()
-        self.defense_counsel_name_box.load_attorneys()
+        try:
+            self.defense_counsel_name_box.load_attorneys()
+        except AttributeError as error:
+            logger.warning(error)
         self.criminal_charge = None
         self.popup_dialog = None
 

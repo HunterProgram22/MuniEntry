@@ -74,7 +74,10 @@ class UncaughtHook(QtCore.QObject):
             exc_info = (exc_type, exc_value, exc_traceback)
             log_msg = '\n'.join([''.join(traceback.format_tb(exc_traceback)),
                                  '{0}: {1}'.format(exc_type.__name__, exc_value)])
-            logger.critical("Uncaught exception:\n {0}".format(log_msg), exc_info=exc_info)
+            try:
+                logger.critical("Uncaught exception:\n {0}".format(log_msg), exc_info=exc_info)
+            except KeyError as error:
+                logger.critical(error)
 
             # trigger message box show
             self._exception_caught.emit(log_msg)
