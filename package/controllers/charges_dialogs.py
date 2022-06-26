@@ -1,6 +1,8 @@
 """Secondary dialogs opened from a main entry dialog when a charge needs to be added or amended."""
+from loguru import logger
 from typing import TypeVar
 
+from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
 from package.controllers.base_dialogs import CriminalBaseDialog
@@ -56,9 +58,16 @@ class BaseChargeDialog(QDialog):
         self.degree_choice_box.insertItem(0, '')
         self.degree_choice_box.setCurrentText('')
 
+    def closeEvent(self, a0: QCloseEvent) -> None:
+        logger.log('DIALOG', f'{self.objectName()} Closed')
+
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
-    """Class does not need its own init method since it uses the BaseChargeDialog init method."""
+    """Adds a charge to the ChargeGrid for the dialog."""
+
+    def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
+        super().__init__(main_dialog, parent)
+        logger.log('DIALOG', f'{self.objectName()} Opened')
 
     def modify_view(self) -> AddChargeDialogViewModifier:
         return AddChargeDialogViewModifier(self)
@@ -80,6 +89,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(main_dialog, parent)
+        logger.log('DIALOG', f'{self.objectName()} Opened')
         self.amend_offense_details = AmendOffenseDetails()
         self.charge = self.sender().charge
         self.current_offense_name = self.sender().charge.offense
@@ -93,3 +103,9 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     def connect_signals_to_slots(self) -> AmendChargeDialogSignalConnector:
         return AmendChargeDialogSignalConnector(self)
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

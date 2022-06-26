@@ -1,12 +1,18 @@
 """Module containing the Main Window of the application."""
 from __future__ import annotations
+
+import os
 from typing import Type
 
+from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow
 
 from package.controllers import main_entry_dialogs as med
-from package.controllers.sched_entry_dialogs import SchedulingEntryDialog
+from package.controllers.scheduling.sched_entry_dialogs import SchedulingEntryDialog
+from package.controllers.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.controllers.scheduling.trial_to_court_hearing_notice_dialog import \
+    TrialToCourtHearingDialog
 from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,
     create_daily_case_list_sql_tables,
@@ -18,7 +24,8 @@ from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH, VERSION_NUMBER
+from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, LOG_NAME
+
 
 
 # InfoChecker Wrappers
@@ -26,7 +33,7 @@ def check_judicial_officer(func):
     """Prohibits opening a dialog unless a judicial officer is selected."""
     def wrapper(self):
         if self.judicial_officer is None:
-            RequiredBox('You must select a judicial officer.').exec()
+            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         else:
             func(self)
 
@@ -41,7 +48,7 @@ def check_case_list_selected(func):
         else:
             RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
-                'leave the case list field blank.',
+                'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
 
     return wrapper
@@ -55,14 +62,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modify_view()
         self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
+        self.connect_menu_functions()
         self.functions.load_case_lists()
         self.functions.show_hide_daily_case_lists()
         self.judicial_officer: JudicialOfficer = None
         self.case_table: str = 'None'
         self.dialog: Type[QDialog] = QDialog
 
+
     def modify_view(self) -> MainWindowViewModifier:
         return MainWindowViewModifier(self)
+
+    def connect_menu_functions(self) -> None:
+        self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
+
+    def open_current_log(self, s) -> None:
+        os.startfile(f'{LOG_PATH}{LOG_NAME}')
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = MainWindowSlotFunctions(self)
@@ -104,6 +119,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
+        logger.log('DIALOG', f'{self.dialog.objectName()} Opened')
         self.dialog.exec()
 
     @check_case_list_selected
@@ -116,6 +132,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
+        logger.log('DIALOG', f'{self.dialog.objectName()} Opened')
         self.dialog.exec()
 
     def set_scheduling_dialog_name(self) -> str:
@@ -159,6 +176,8 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: med.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: med.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: med.FreeformDialog,
+            self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog,
+            self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
         self.main_window.daily_case_list_buttons_dict = {
             self.main_window.arraignments_radioButton: 'arraignments',
@@ -192,11 +211,9 @@ class MainWindowSignalConnector(object):
 
     def __init__(self, main_window: MainWindow) -> None:
         self.main_window = main_window
-        self.main_window.menu_file_exit.triggered.connect(self.main_window.close)
         self.main_window.reload_cases_Button.released.connect(
             self.main_window.functions.reload_case_lists,
         )
-        self.main_window.tabWidget.tabBarClicked.connect(self.show_hide_judicial_officers)
         self.main_window.rohrer_schedulingEntryButton.released.connect(
             self.main_window.start_scheduling_entry,
         )
@@ -224,19 +241,6 @@ class MainWindowSignalConnector(object):
         for key in self.main_window.dialog_buttons_dict:
             key.pressed.connect(self.main_window.start_dialog_from_entry_button)
 
-    def show_hide_judicial_officers(self) -> None:
-        """The tab that is clicked is the current widget at the time another tab is clicked.
-
-        The logic for setHidden is counterintuitive here. The judicial officer frame is
-        setHidden(False) - meaning it is going to be shown - when the scehdulingTab is the current
-        widget but the signal tied to the pressing of the currentWidget indciates another tabWidget
-        has been pressed.
-        """
-        if self.main_window.crimTab is self.main_window.tabWidget.currentWidget():
-            self.main_window.judicial_officer_frame.setHidden(True)
-        elif self.main_window.schedulingTab is self.main_window.tabWidget.currentWidget():
-            self.main_window.judicial_officer_frame.setHidden(False)
-
 
 class MainWindowSlotFunctions(object):
     """Class that contains common functions for the main window."""
@@ -259,6 +263,7 @@ class MainWindowSlotFunctions(object):
         The databases are only recreated on reload since the initial load of the
         application already loads the databases.
         """
+        logger.info('Reload cases button pressed.')
         conn = open_db_connection('con_daily_case_lists')
         create_daily_case_list_sql_tables(conn)
         load_daily_case_list_data(conn)
@@ -278,4 +283,3 @@ class MainWindowSlotFunctions(object):
                 case_list.setCurrentText('')
                 case_list.setHidden(True)
                 case_list.setEnabled(False)
-

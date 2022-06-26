@@ -4,10 +4,12 @@ the databases used by the application."""
 from abc import ABC, abstractmethod
 import os
 import sys
-import string
 
+from loguru import logger
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
+from package.excel_loaders.case_excel_loader import return_cases_data_from_excel
+from package.excel_loaders.charge_excel_loader import create_charges_data_list
 
 from settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from package.models.cms_models import CmsCaseInformation
@@ -123,16 +125,18 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
+    logger.success(f'{connection_name} is connected.')
     return db_connection
 
 
 def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
+    logger.success(f'{connection_name} database connection removed.')
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
     if not os.path.exists(database_name):
-        print("The database does not exist. Creating new database.")
+        logger.warning("The database does not exist. Creating new database.")
     db_connection = create_db(database_name, connection_name)
     return db_connection
 
@@ -145,7 +149,7 @@ def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
 
 def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     if not db_connection.isOpen():
-        print(f"Unable to connect to {connection_name} database")
+        logger.critical(f"Unable to connect to {connection_name} database")
         sys.exit(1)
     return True
 
@@ -165,6 +169,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
     con_daily_case_lists.close()
+    logger.success(f'{con_daily_case_lists} Closed.')
 
 
 def insert_daily_case_list_sql_data(
@@ -192,71 +197,6 @@ def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> N
     delete_table = QSqlQuery(db_connection)
     delete_table.prepare(delete_table_sql_query(table_name))
     delete_table.exec()
-
-
-class CaseExcelRetriever:
-    def __init__(self) -> None:
-        self.case_number: str = "No Data"
-        self.sub_case_number: str = "No Data"
-        self.defendant_last_name: str = "No Data"
-        self.defendant_first_name: str = "No Data"
-        self.offense: str = "No Data"
-        self.statute: str = "No Data"
-        self.degree: str = "No Data"
-        self.fra_in_file: str = "U"
-        self.moving_bool: str = "No Data"
-        self.def_atty_last_name: str = ""
-        self.def_atty_first_name: str = ""
-        self.def_atty_type: str = "No Data"
-
-
-def return_cases_data_from_excel(excel_file: str) -> list:
-    col_case_number = 1
-    col_sub_case_number = 2
-    col_defendant_last_name = 3
-    col_defendant_first_name = 4
-    col_offense = 5
-    col_statute = 6
-    col_degree = 7
-    col_fra_in_file = 8
-    col_moving_bool = 9
-    col_def_atty_last_name = 10
-    col_def_atty_first_name = 11
-    col_def_atty_type = 12
-    data: list = []
-
-    workbook = load_workbook(excel_file)
-    ws = workbook.active
-    row_count = ws.max_row + 1
-
-    for row in range(2, row_count):
-        case = CaseExcelRetriever()
-        case.case_number = get_cell_value(ws, row, col_case_number)
-        case.defendant_last_name = get_cell_value(ws, row, col_defendant_last_name)
-        case.defendant_first_name = get_cell_value(ws, row, col_defendant_first_name)
-        case.offense = get_cell_value(ws, row, col_offense)
-        case.statute = get_cell_value(ws, row, col_statute)
-        case.degree = get_cell_value(ws, row, col_degree)
-        case.fra_in_file = get_cell_value(ws, row, col_fra_in_file)
-        case.moving_bool = get_cell_value(ws, row, col_moving_bool)
-        case.def_atty_last_name = get_cell_value(ws, row, col_def_atty_last_name)
-        case.def_atty_first_name = get_cell_value(ws, row, col_def_atty_first_name)
-        case.def_atty_type = get_cell_value(ws, row, col_def_atty_type)
-        data.append(case)
-
-    return data
-
-
-def get_cell_value(ws: object, row: int, col: int) -> str:
-    if ws.cell(row=row, column=col).value is None:
-        if col == 8:  # fra_in_file
-            return "U"
-        if col == 10:
-            return ""
-        if col == 11:  # def_atty_last_name and def_atty_first_name
-            return ""
-        return "No Data"
-    return ws.cell(row=row, column=col).value
 
 
 def query_offense_statute_data(query_value: str) -> list:
@@ -299,7 +239,7 @@ def create_charges_sql_table(con_charges: str) -> None:
 
 
 def insert_charges_sql_data(con_charges: QSqlDatabase, table_name: str) -> None:
-    charges_from_table = return_charges_data_from_excel(CHARGES_TABLE)
+    charges_from_table = create_charges_data_list(CHARGES_TABLE)
     for charge in charges_from_table:
         insert_data_query = QSqlQuery(con_charges)
         insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
@@ -310,29 +250,6 @@ def load_charges_data(con_charges: QSqlDatabase) -> None:
     delete_existing_sql_table(con_charges, "charges")
     insert_charges_sql_data(con_charges, "charges")
     con_charges.close()
-
-
-class Charge:
-    def __init__(self, offense: str, statute: str, degree: str, offense_type: str) -> None:
-        self.offense: str = offense
-        self.statute: str = statute
-        self.degree: str = degree
-        self.offense_type: str = offense_type
-
-
-def return_charges_data_from_excel(excel_file: str) -> list:
-    data = []
-    workbook = load_workbook(excel_file)
-    worksheet = workbook.active
-    max_row = worksheet.max_row
-    max_row = max_row + 1
-    for row in range(2, max_row):
-        offense = worksheet.cell(row=row, column=1)
-        statute = worksheet.cell(row=row, column=2)
-        degree = worksheet.cell(row=row, column=3)
-        offense_type = worksheet.cell(row=row, column=4)
-        data.append(Charge(offense.value, statute.value, degree.value, offense_type.value))
-    return data
 
 
 def sql_query_offense_type(key: str) -> str:
@@ -398,7 +315,7 @@ def main():
 
 
 if __name__ == "__main__":
-    print("Daily Case List Tables and Charges Table created directly from script")
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
     main()
-    print("Imported Daily Case List Tables and Charges Table")
+    logger.log('IMPORT', f'{__name__} imported.')

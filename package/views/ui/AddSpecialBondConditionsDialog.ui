@@ -170,8 +170,8 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>0</y>
-           <width>942</width>
+           <y>-208</y>
+           <width>938</width>
            <height>1028</height>
           </rect>
          </property>
@@ -488,14 +488,14 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="0" colspan="4">
-              <widget class="QCheckBox" name="tow_to_residence_checkBox">
+              <widget class="ConditionCheckbox" name="tow_to_residence_checkBox">
                <property name="text">
                 <string>Permit Tow and Immobilization at Defendant's Residence</string>
                </property>
               </widget>
              </item>
              <item row="3" column="0" colspan="2">
-              <widget class="QCheckBox" name="motion_to_return_vehicle_checkBox">
+              <widget class="ConditionCheckbox" name="motion_to_return_vehicle_checkBox">
                <property name="text">
                 <string>Motion for return of vehicle Filed.</string>
                </property>
@@ -761,7 +761,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="3">
-              <widget class="QCheckBox" name="domestic_violence_surrender_weapons_checkBox">
+              <widget class="ConditionCheckbox" name="domestic_violence_surrender_weapons_checkBox">
                <property name="text">
                 <string>Surrender deadly weapons no later than:</string>
                </property>
@@ -779,7 +779,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="domestic_violence_vacate_checkBox">
+              <widget class="ConditionCheckbox" name="domestic_violence_vacate_checkBox">
                <property name="text">
                 <string>Vacate Residence located at:</string>
                </property>
@@ -823,6 +823,11 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
    <header>.custom_widgets</header>
   </customwidget>
  </customwidgets>

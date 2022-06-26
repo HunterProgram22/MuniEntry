@@ -3,6 +3,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from loguru import logger
+from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
 from package.models.cms_models import CmsCaseInformation
@@ -47,6 +49,9 @@ class BaseDialog(QDialog):
                 getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))(),
             )
 
+    def closeEvent(self, a0: QCloseEvent) -> None:
+        logger.log('DIALOG', f'{self.objectName()} Closed')
+
 
 class CriminalBaseDialog(BaseDialog):
     """The base class for all criminal and traffic main entry dialogs."""
@@ -64,12 +69,17 @@ class CriminalBaseDialog(BaseDialog):
         case table.
         """
         self.case_table = case_table
+        logger.info(f'Loading case from {self.case_table}')
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        logger.info(f'Loaded Case {self.cms_case.case_number}')
         self.load_entry_case_information_model()
         self.load_cms_data_to_view()
-        self.defense_counsel_name_box.load_attorneys()
+        try:
+            self.defense_counsel_name_box.load_attorneys()
+        except AttributeError as error:
+            logger.warning(error)
         self.criminal_charge = None
         self.popup_dialog = None
 
@@ -89,3 +99,9 @@ class CriminalBaseDialog(BaseDialog):
     def add_charge_to_grid(self):
         self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

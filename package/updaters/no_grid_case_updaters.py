@@ -1,4 +1,5 @@
 """Module that contains case updaters for dialogs that do not have a charge grid."""
+from loguru import logger
 
 from package.updaters.base_updaters import CBD, BaseDialogUpdater
 from package.updaters.general_updaters import CaseInformationUpdater
@@ -83,3 +84,9 @@ class FreeformDialogUpdater(BaseDialogUpdater):
 
     def update_entry_content(self):
         self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

@@ -1,5 +1,6 @@
 """Module containing data structures for conditions that are part of Case Information models."""
 from dataclasses import dataclass
+from loguru import logger
 
 
 @dataclass
@@ -413,3 +414,9 @@ class CommunityControlViolationBondConditions:
         ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
         ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
     ]
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

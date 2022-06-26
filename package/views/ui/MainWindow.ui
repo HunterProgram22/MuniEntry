@@ -144,6 +144,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>Final Pre-trials</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item row="0" column="0" colspan="3">
@@ -184,6 +187,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>PCVH/FCVH</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item row="1" column="1">
@@ -191,6 +197,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>Slated                                  </string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item row="3" column="1">
@@ -198,6 +207,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>Trials to Court and Jury Trials</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item row="4" column="1">
@@ -244,6 +256,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>Arraignments</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
         <item row="2" column="1">
@@ -277,6 +292,9 @@ font-weight: bold;</string>
           <property name="text">
            <string>Pleas and Motion/Oral Hearings</string>
           </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup</string>
+          </attribute>
          </widget>
         </item>
        </layout>
@@ -686,14 +704,13 @@ font-weight: bold;</string>
          <attribute name="title">
           <string>Scheduling</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1,1">
-          <item row="1" column="2">
-           <widget class="QPushButton" name="pushButton_12">
-            <property name="text">
-             <string>PushButton</string>
-            </property>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1">
+          <property name="horizontalSpacing">
+           <number>24</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>12</number>
+          </property>
           <item row="1" column="0">
            <widget class="QPushButton" name="rohrer_schedulingEntryButton">
             <property name="styleSheet">
@@ -714,6 +731,26 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="notice_of_hearingEntryButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            </property>
+            <property name="text">
+             <string>Final/Jury Notice of Hearing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QPushButton" name="trial_to_court_hearingEntryButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            </property>
+            <property name="text">
+             <string>Trial To Court Notice of Hearing</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -731,80 +768,18 @@ font-weight: bold;</string>
      <height>27</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menuLogs">
     <property name="title">
-     <string>File</string>
+     <string>Logs</string>
     </property>
-    <addaction name="actionOpen"/>
-    <addaction name="actionOptions"/>
-    <addaction name="actionExit"/>
-    <addaction name="separator"/>
-    <addaction name="menu_file_exit"/>
+    <addaction name="actionOpen_Current_Log"/>
    </widget>
-   <widget class="QMenu" name="menuSettings">
-    <property name="title">
-     <string>Settings</string>
-    </property>
-    <addaction name="actioncontrollers"/>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuSettings"/>
-   <addaction name="menuView"/>
+   <addaction name="menuLogs"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionOpen">
+  <action name="actionOpen_Current_Log">
    <property name="text">
-    <string>Open</string>
-   </property>
-  </action>
-  <action name="actionOptions">
-   <property name="text">
-    <string>Options</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Templates</string>
-   </property>
-  </action>
-  <action name="menu_file_exit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
-  <action name="actionGeneral_Motion_Entry">
-   <property name="text">
-    <string>General Motion Entry</string>
-   </property>
-  </action>
-  <action name="actionFail_to_Appear_Minor_Traffic_Offense">
-   <property name="text">
-    <string>Fail to Appear - Minor Traffic Offense</string>
-   </property>
-  </action>
-  <action name="actionOmnibus_Motion_Form">
-   <property name="text">
-    <string>Omnibus Motion Form</string>
-   </property>
-  </action>
-  <action name="actionJury_Instructions">
-   <property name="text">
-    <string>Jury Instructions</string>
-   </property>
-  </action>
-  <action name="actioncontrollers">
-   <property name="text">
-    <string>controllers</string>
-   </property>
-  </action>
-  <action name="actionTemplates">
-   <property name="text">
-    <string>Templates</string>
+    <string>Open Current Log</string>
    </property>
   </action>
  </widget>
@@ -824,4 +799,7 @@ font-weight: bold;</string>
   <slot>pushButtonOmnibusMotion()</slot>
   <slot>pushButtonDialog()</slot>
  </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

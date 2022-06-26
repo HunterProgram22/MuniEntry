@@ -1,10 +1,10 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
 from typing import TypeVar
 
+from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from package.controllers.base_dialogs import CriminalBaseDialog
-from package.controllers.helper_functions import attribute_check
 from package.models.criminal_charge_models import CriminalCharge
 from package.views import custom_widgets as cw
 
@@ -28,14 +28,16 @@ class BaseChargeGrid(QGridLayout):
     def check_if_charge_dismissed(self, column: int) -> bool:
         try:
             return self.itemAtPosition(self.row_dismissed_box, column).widget().isChecked()
-        except AttributeError:
-            pass
+        except AttributeError as error:
+            logger.warning(error)
+        return False
 
     def check_if_allied_offense(self, column: int) -> bool:
         try:
             return self.itemAtPosition(self.row_allied_box, column).widget().isChecked()
-        except AttributeError:
-            pass
+        except AttributeError as error:
+            logger.warning(error)
+        return False
 
     def get_plea(self) -> str:
         """Returns copy of the label of the plea button after stripping ' All' from end.
@@ -49,6 +51,7 @@ class BaseChargeGrid(QGridLayout):
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
+        logger.log('BUTTON', f'{self.sender().text()} Pressed')
         plea = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
@@ -74,7 +77,6 @@ class BaseChargeGrid(QGridLayout):
                 finding_box.setCurrentText('Guilty')
         self.set_cursor_to_first_fine_box()
 
-    @attribute_check
     def set_cursor_to_first_fine_box(self) -> None:
         """Sets the cursor to the first non-dismissed charge's fine box.
 
@@ -86,7 +88,10 @@ class BaseChargeGrid(QGridLayout):
                 continue
             if self.check_if_charge_dismissed(column):
                 continue
-            self.itemAtPosition(self.row_fine, column).widget().setFocus()
+            try:
+                self.itemAtPosition(self.row_fine, column).widget().setFocus()
+            except AttributeError as error:
+                logger.warning(error)
             break
 
 
@@ -238,7 +243,7 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
 
 
 class JailChargesGrid(FineOnlyChargeGrid):
-    """Charge Grid for the FineOnly Dialog.
+    """Charge Grid for the JailCCPlea Dialog.
 
     The dialog has all fields.
     """
@@ -275,6 +280,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
 
     def set_all_trial_findings(self) -> None:
+        logger.log('BUTTON', f'{self.sender().text()} Pressed')
         trial_finding = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
@@ -284,12 +290,15 @@ class JailChargesGrid(FineOnlyChargeGrid):
             if self.check_if_charge_dismissed(column):
                 continue
             if self.check_if_allied_offense(column):
-                finding_box.setCurrentText('Guilty - Allied Offense')
+                if trial_finding == 'Guilty':
+                    finding_box.setCurrentText('Guilty - Allied Offense')
+                if trial_finding == 'Not Guilty':
+                    finding_box.setCurrentText('Not Guilty - Allied Offense')
             else:
                 finding_box.setCurrentText(trial_finding)
 
 
-if __name__ == '__main__':
-    print('Charge Grids ran directly')
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
 else:
-    print('Charge Grids Imported')
+    logger.log('IMPORT', f'{__name__} imported.')

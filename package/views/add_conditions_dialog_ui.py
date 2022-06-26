@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\AddConditionsDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/AddConditionsDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -97,7 +97,7 @@ class Ui_AddConditionsDialog(object):
         self.license_type_box.addItem("")
         self.license_type_box.addItem("")
         self.gridLayout_2.addWidget(self.license_type_box, 1, 1, 1, 1)
-        self.als_terminated_checkBox = QtWidgets.QCheckBox(self.license_suspension_frame)
+        self.als_terminated_checkBox = ConditionCheckbox(self.license_suspension_frame)
         self.als_terminated_checkBox.setObjectName("als_terminated_checkBox")
         self.gridLayout_2.addWidget(self.als_terminated_checkBox, 1, 2, 1, 1)
         self.label_18 = QtWidgets.QLabel(self.license_suspension_frame)
@@ -109,7 +109,7 @@ class Ui_AddConditionsDialog(object):
         self.license_suspension_date_box.setCalendarPopup(True)
         self.license_suspension_date_box.setObjectName("license_suspension_date_box")
         self.gridLayout_2.addWidget(self.license_suspension_date_box, 2, 1, 1, 1)
-        self.remedial_driving_class_checkBox = QtWidgets.QCheckBox(self.license_suspension_frame)
+        self.remedial_driving_class_checkBox = ConditionCheckbox(self.license_suspension_frame)
         self.remedial_driving_class_checkBox.setObjectName("remedial_driving_class_checkBox")
         self.gridLayout_2.addWidget(self.remedial_driving_class_checkBox, 2, 2, 1, 1)
         self.label_21 = QtWidgets.QLabel(self.license_suspension_frame)
@@ -340,4 +340,4 @@ class Ui_AddConditionsDialog(object):
         self.label_14.setText(_translate("AddConditionsDialog", "Finding:"))
         self.label_19.setText(_translate("AddConditionsDialog", "Statute:"))
         self.label_28.setText(_translate("AddConditionsDialog", "Other Conditions"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit

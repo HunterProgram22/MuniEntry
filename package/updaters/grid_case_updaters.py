@@ -1,5 +1,6 @@
 """Module that contains case updaters for dialogs that have a charge grid."""
 
+from loguru import logger
 from package.updaters.base_updaters import CBD, BaseDialogUpdater
 from package.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
@@ -205,3 +206,9 @@ class NotGuiltyBondDialogUpdater(BaseDialogUpdater):
 
     def update_bond_conditions(self) -> None:
         self.dialog.transfer_view_data_to_model(self.model.bond_conditions)
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

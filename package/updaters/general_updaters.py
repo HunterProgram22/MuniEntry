@@ -1,5 +1,6 @@
 """Module that contains general dialogs for specific parts of a dialog dialog."""
 
+from loguru import logger
 from typing import Any
 
 from package.updaters.base_updaters import CBD, BaseDialogUpdater
@@ -19,7 +20,10 @@ class CaseInformationUpdater(BaseDialogUpdater):
         super().__init__(dialog)
         self.model.case_number = self.dialog.case_number_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.get_date()
-        self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
+        try:
+            self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
+        except AttributeError as error:
+            logger.warning(error)
         self.update_defendant()
         self.update_defense_counsel()
 
@@ -29,8 +33,14 @@ class CaseInformationUpdater(BaseDialogUpdater):
 
     def update_defense_counsel(self) -> None:
         self.model.defense_counsel = self.dialog.defense_counsel_name_box.currentText()
-        self.model.defense_counsel_type = self.dialog.defense_counsel_type_box.currentText()
-        self.model.defense_counsel_waived = self.dialog.defense_counsel_waived_checkBox.isChecked()
+        try:
+            self.model.defense_counsel_type = self.dialog.defense_counsel_type_box.currentText()
+        except AttributeError as error:
+            logger.warning(error)
+        try:
+            self.model.defense_counsel_waived = self.dialog.defense_counsel_waived_checkBox.isChecked()
+        except AttributeError as error_2:
+            logger.warning(error_2)
 
 
 class CourtCostsUpdater(BaseDialogUpdater):
@@ -150,3 +160,9 @@ class JailDataUpdater(BaseDialogUpdater):
                 local_jail_days_suspended = 0
             total_jail_days_suspended += local_jail_days_suspended
         return total_jail_days_suspended
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

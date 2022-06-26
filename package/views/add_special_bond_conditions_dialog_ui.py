@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\AddSpecialBondConditionsDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/AddSpecialBondConditionsDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -78,7 +78,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 942, 1028))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -208, 938, 1028))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_11 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_11.setObjectName("gridLayout_11")
@@ -238,10 +238,10 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.vehicle_license_plate_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.vehicle_license_plate_box.setObjectName("vehicle_license_plate_box")
         self.gridLayout_8.addWidget(self.vehicle_license_plate_box, 1, 6, 1, 2)
-        self.tow_to_residence_checkBox = QtWidgets.QCheckBox(self.vehicle_seizure_frame)
+        self.tow_to_residence_checkBox = ConditionCheckbox(self.vehicle_seizure_frame)
         self.tow_to_residence_checkBox.setObjectName("tow_to_residence_checkBox")
         self.gridLayout_8.addWidget(self.tow_to_residence_checkBox, 2, 0, 1, 4)
-        self.motion_to_return_vehicle_checkBox = QtWidgets.QCheckBox(self.vehicle_seizure_frame)
+        self.motion_to_return_vehicle_checkBox = ConditionCheckbox(self.vehicle_seizure_frame)
         self.motion_to_return_vehicle_checkBox.setObjectName("motion_to_return_vehicle_checkBox")
         self.gridLayout_8.addWidget(self.motion_to_return_vehicle_checkBox, 3, 0, 1, 2)
         self.label_8 = QtWidgets.QLabel(self.vehicle_seizure_frame)
@@ -388,7 +388,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.domestic_violence_exclusive_possession_to_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.domestic_violence_exclusive_possession_to_box.setObjectName("domestic_violence_exclusive_possession_to_box")
         self.gridLayout_2.addWidget(self.domestic_violence_exclusive_possession_to_box, 2, 1, 1, 2)
-        self.domestic_violence_surrender_weapons_checkBox = QtWidgets.QCheckBox(self.domestic_violence_frame)
+        self.domestic_violence_surrender_weapons_checkBox = ConditionCheckbox(self.domestic_violence_frame)
         self.domestic_violence_surrender_weapons_checkBox.setObjectName("domestic_violence_surrender_weapons_checkBox")
         self.gridLayout_2.addWidget(self.domestic_violence_surrender_weapons_checkBox, 2, 3, 1, 1)
         self.domestic_violence_surrender_weapons_dateBox = NoScrollDateEdit(self.domestic_violence_frame)
@@ -397,7 +397,7 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.domestic_violence_surrender_weapons_dateBox.setCalendarPopup(True)
         self.domestic_violence_surrender_weapons_dateBox.setObjectName("domestic_violence_surrender_weapons_dateBox")
         self.gridLayout_2.addWidget(self.domestic_violence_surrender_weapons_dateBox, 2, 4, 1, 1)
-        self.domestic_violence_vacate_checkBox = QtWidgets.QCheckBox(self.domestic_violence_frame)
+        self.domestic_violence_vacate_checkBox = ConditionCheckbox(self.domestic_violence_frame)
         self.domestic_violence_vacate_checkBox.setObjectName("domestic_violence_vacate_checkBox")
         self.gridLayout_2.addWidget(self.domestic_violence_vacate_checkBox, 1, 0, 1, 1)
         self.domestic_violence_residence_box = QtWidgets.QLineEdit(self.domestic_violence_frame)
@@ -468,4 +468,4 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_2.setText(_translate("AddSpecialBondConditionsDialog", "Exclusive possesion to:"))
         self.domestic_violence_surrender_weapons_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Surrender deadly weapons no later than:"))
         self.domestic_violence_vacate_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Vacate Residence located at:"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit

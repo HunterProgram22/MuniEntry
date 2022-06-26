@@ -1,6 +1,7 @@
 import re
 import datetime
 
+from loguru import logger
 from PyQt5 import QtCore
 from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime, QTime
 from PyQt5.QtGui import QIntValidator, QFont
@@ -289,6 +290,7 @@ class ChargeGridDeleteButton(QPushButton):
     def delete_charge_from_grid_and_charges_list(self):
         """Uses the delete_button that is indexed to the column to delete the
         QLabels for the charge."""
+        logger.info(f'Deleted Charge: {self.charge.offense}, {self.charge.statute}, col={self.column_index}')
         self.dialog.entry_case_information.charges_list.remove(self.charge)
         for row in range(self.dialog.charges_gridLayout.rowCount()):
             layout_item = self.dialog.charges_gridLayout.itemAtPosition(row, self.column_index)
@@ -313,6 +315,19 @@ class ChargeGridAmendButton(QPushButton):
         self.released.connect(self.dialog.functions.start_amend_offense_dialog)
 
 
+class ConditionCheckbox(QCheckBox):
+    def __init__(self, parent=None):
+        super(QCheckBox, self).__init__(parent)
+        self.set_up_widget()
+
+    def set_up_widget(self):
+        self.toggled.connect(self.log_toggle)
+
+    def log_toggle(self):
+        logger.log('BUTTON', f'{self.sender().text()} Checkbox Set: {self.sender().isChecked()}')
+
+
+
 class AlliedCheckbox(QCheckBox):
     def __init__(self, column_index, dialog, parent=None):
         super(QCheckBox, self).__init__(parent)
@@ -327,24 +342,28 @@ class AlliedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
+        """TODO: Bug exists for Trial Sentencing with Not Guilty not switching with plea all when
+        allied is checked."""
+        logger.log('BUTTON', f'Allied Checkbox Set: {self.isChecked()}')
+        grid = self.dialog.charges_gridLayout
         if self.isChecked():
             try:
-                if self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Guilty":
-                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText("Guilty - Allied Offense")
-                elif self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Not Guilty":
-                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText("Not Guilty - Allied Offense")
-            except AttributeError:
-                pass
+                if grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == "Guilty":
+                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText("Guilty - Allied Offense")
+                elif grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == "Not Guilty":
+                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText("Not Guilty - Allied Offense")
+            except AttributeError as error:
+                logger.warning(error)
         else:
             try:
-                if self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Guilty - Allied Offense":
-                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText(
+                if grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == "Guilty - Allied Offense":
+                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText(
                         "Guilty")
-                elif self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().currentText() == "Not Guilty - Allied Offense":
-                    self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setCurrentText(
+                elif grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == "Not Guilty - Allied Offense":
+                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText(
                         "Not Guilty")
-            except AttributeError:
-                pass
+            except AttributeError(error_1):
+                logger.warning(error_1)
 
 
 class DismissedCheckbox(QCheckBox):
@@ -362,50 +381,52 @@ class DismissedCheckbox(QCheckBox):
 
     def set_to_dismissed(self):
         """TODO: the try except block is to account for the Leap Dialogs and NoJail not having same # rows. Fix."""
+        logger.log('BUTTON', f'Dismissed Checkbox Set: {self.isChecked()}')
+        grid = self.dialog.charges_gridLayout
         if self.isChecked():
             try:
-                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("Dismissed")
-            except AttributeError:
-                self.dialog.charges_gridLayout.itemAtPosition(4, self.column_index).widget().setCurrentText("Dismissed")
-                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_plea, self.column_index).widget().setCurrentText("Dismissed")
+            except AttributeError as error:
+                logger.warning(error)
             try:
-                self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(11, self.column_index).widget().setHidden(True)
-                self.dialog.charges_gridLayout.itemAtPosition(12, self.column_index).widget().setHidden(True)
-            except AttributeError:
-                pass
+                grid.itemAtPosition(grid.row_finding, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_fine, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_fine_suspended, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_jail_days, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_jail_days_suspended, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_amend_button, self.column_index).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_delete_button, self.column_index).widget().setHidden(True)
+            except AttributeError as error_1:
+                logger.warning(error_1)
         else:
             try:
-                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setCurrentText("")
-            except AttributeError:
-                self.dialog.charges_gridLayout.itemAtPosition(4, self.column_index).widget().setCurrentText("")
-                self.dialog.charges_gridLayout.itemAtPosition(5, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_plea, self.column_index).widget().setCurrentText("")
+            except AttributeError as error_2:
+                logger.warning(error_2)
             try:
-                self.dialog.charges_gridLayout.itemAtPosition(6, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(7, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(8, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(9, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(10, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(11, self.column_index).widget().setHidden(False)
-                self.dialog.charges_gridLayout.itemAtPosition(12, self.column_index).widget().setHidden(False)
-            except AttributeError:
-                pass
+                grid.itemAtPosition(grid.row_finding, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_fine, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_fine_suspended, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_jail_days, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_jail_days_suspended, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_amend_button, self.column_index).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_delete_button, self.column_index).widget().setHidden(False)
+            except AttributeError as error_3:
+                logger.warning(error_3)
 
 
 class RequiredBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Required', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('REQUIRED', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Critical)
-        self.setWindowTitle("Required")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Ok)
 
@@ -422,29 +443,33 @@ class InfoBox(QMessageBox):
 
 
 class WarningBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Warning', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Warning)
-        self.setWindowTitle("Warning")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
 
 
 class TwoChoiceQuestionBox(QMessageBox):
-    def __init__(self, message, yes_choice, no_choice, parent=None):
+    def __init__(self, message, yes_choice, no_choice, title='Additional Information Required', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget(yes_choice, no_choice)
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self, yes_choice, no_choice):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Question)
-        self.setWindowTitle("Additional Information Required")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
         self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
@@ -463,15 +488,17 @@ class DataInputBox(QInputDialog):
 
 
 class JailWarningBox(QMessageBox):
-    def __init__(self, message, parent=None):
+    def __init__(self, message, title='Jail Warning', parent=None):
         super(QMessageBox, self).__init__(parent)
         self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.log('CHOICE', self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Warning)
-        self.setWindowTitle("Warning - No Jail Report Date Set")
+        self.setWindowTitle(self.title)
         self.setText(self.message)
         self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
 

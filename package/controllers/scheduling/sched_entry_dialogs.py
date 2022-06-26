@@ -1,3 +1,5 @@
+from loguru import logger
+
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.controllers.base_dialogs import BaseDialog
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
@@ -39,6 +41,7 @@ PRETRIAL_TIME_DICT = {
     "Pretrial 2 weeks before trial": 14,
     "No Pretrial": 0,
 }
+
 
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def __init__(
@@ -91,7 +94,7 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.functions = dialog.functions
         self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.functions.close_dialog)
+        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.set_speedy_trial_date_label)
         self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.update_all_scheduled_dates)
         self.dialog.highest_charge_box.currentIndexChanged.connect(self.functions.set_speedy_trial_date_label)
@@ -202,6 +205,7 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
 class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
+        self.view = dialog
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self):
@@ -230,3 +234,9 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
         )
         self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString("MMMM dd, yyyy")
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
+
+
+if __name__ == "__main__":
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

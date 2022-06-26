@@ -61,9 +61,9 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
 
 main_window_all_daily_case_lists = [
-    ("arraignments_radioButton", "Coyan - 21TRC08121", "arraignments_cases_box"),
+    ("arraignments_radioButton", "Conkey - 22TRD01944", "arraignments_cases_box"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
-    ("final_pretrial_radioButton", "Ansley - 21TRC10217", "final_pretrial_cases_box"),
+    ("final_pretrial_radioButton", "Coyan - 21TRC08121", "final_pretrial_cases_box"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
     ("trials_to_court_radioButton", "Borham - 17TRD22590", "trials_to_court_cases_box"),
     ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
@@ -103,16 +103,16 @@ def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
     mouse_click(main_window_noclose.final_pretrial_radioButton)
     enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
     qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key_Delete)
-    assert len(main_window_noclose.final_pretrial_cases_box) == 9
+    assert len(main_window_noclose.final_pretrial_cases_box) == 11
 
 
 daily_case_list_case_counts = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", 12, 11),
-    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", 11, 10),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", 10, 9),
+    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", 9, 8),
+    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", 12, 11),
+    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", 12, 11),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", 12, 11),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 4, 3),
-    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 6, 5),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 7, 6),
+    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 14, 13),
 ]
 
 @pytest.mark.parametrize("case_list_button, case_number, case_list_box, initial_count, delete_count", daily_case_list_case_counts)
