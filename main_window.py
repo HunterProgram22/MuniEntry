@@ -6,7 +6,8 @@ from typing import Type
 
 from loguru import logger
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow
+from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
+from PyQt5.QtGui import QKeySequence
 
 from package.controllers import main_entry_dialogs as med
 from package.controllers.scheduling.sched_entry_dialogs import SchedulingEntryDialog
@@ -74,9 +75,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return MainWindowViewModifier(self)
 
     def connect_menu_functions(self) -> None:
+        self.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self)
+        self.log_shortcut.activated.connect(self.open_current_log)
         self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
 
-    def open_current_log(self, s) -> None:
+    def open_current_log(self, s=None) -> None:
         os.startfile(f'{LOG_PATH}{LOG_NAME}')
 
     def create_dialog_slot_functions(self) -> None:
