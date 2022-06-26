@@ -214,7 +214,6 @@ class MainWindowSignalConnector(object):
         self.main_window.reload_cases_Button.released.connect(
             self.main_window.functions.reload_case_lists,
         )
-        self.main_window.tabWidget.tabBarClicked.connect(self.show_hide_judicial_officers)
         self.main_window.rohrer_schedulingEntryButton.released.connect(
             self.main_window.start_scheduling_entry,
         )
@@ -241,19 +240,6 @@ class MainWindowSignalConnector(object):
     def connect_dialog_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.dialog_buttons_dict:
             key.pressed.connect(self.main_window.start_dialog_from_entry_button)
-
-    def show_hide_judicial_officers(self) -> None:
-        """The tab that is clicked is the current widget at the time another tab is clicked.
-
-        The logic for setHidden is counterintuitive here. The judicial officer frame is
-        setHidden(False) - meaning it is going to be shown - when the scehdulingTab is the current
-        widget but the signal tied to the pressing of the currentWidget indciates another tabWidget
-        has been pressed.
-        """
-        if self.main_window.crimTab is self.main_window.tabWidget.currentWidget():
-            self.main_window.judicial_officer_frame.setHidden(True)
-        elif self.main_window.schedulingTab is self.main_window.tabWidget.currentWidget():
-            self.main_window.judicial_officer_frame.setHidden(False)
 
 
 class MainWindowSlotFunctions(object):
