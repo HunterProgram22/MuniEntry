@@ -125,8 +125,13 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
-    logger.success(f'{connection_name} is connected.')
+    logger.success(f'{db_connection} for {connection_name} is connected.')
     return db_connection
+
+
+def close_db_connection(db_connection: QSqlDatabase) -> None:
+    db_connection.close()
+    logger.success(f'{db_connection} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
@@ -216,10 +221,9 @@ def query_offense_statute_data(query_value: str) -> list:
     return item_list
 
 
-def query_daily_case_list_data(table: str) -> list:
-    conn = open_db_connection("con_daily_case_lists")
+def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
-    query = QSqlQuery(conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     item_list = []
@@ -229,7 +233,6 @@ def query_daily_case_list_data(table: str) -> list:
         name = f"{last_name} - {case_number}"
         item_list.append(name)
     item_list.sort()
-    conn.close()
     item_list.insert(0, "")
     return item_list
 

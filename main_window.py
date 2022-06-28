@@ -19,6 +19,7 @@ from package.database_controllers.databases import (
     create_daily_case_list_sql_tables,
     load_daily_case_list_data,
     open_db_connection,
+    close_db_connection,
     query_daily_case_list_data,
 )
 from package.models.cms_models import CmsCaseInformation
@@ -255,10 +256,17 @@ class MainWindowSlotFunctions(object):
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
+
+        The case count is one less than length of list because a blank line is inserted at the
+        top of the case list. The case count becomes actual number of cases loaded.
         """
+        conn = open_db_connection('con_daily_case_lists')
         for table_name, case_list in self.main_window.database_table_dict.items():
             case_list.clear()
-            case_list.addItems(query_daily_case_list_data(table_name))
+            case_list.addItems(query_daily_case_list_data(table_name, conn))
+            case_count = len(case_list) - 1
+            logger.info(f'{case_count} cases loaded to {table_name} case list.')
+        close_db_connection(conn)
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button only.
@@ -272,6 +280,7 @@ class MainWindowSlotFunctions(object):
         load_daily_case_list_data(conn)
         self.main_window.functions.load_case_lists()
         conn.close()
+        logger.debug(f'{conn} is open is {conn.isOpen()}')
 
     def show_hide_daily_case_lists(self) -> None:
         selected_case_list = self.main_window.radio_buttons_case_lists_dict.get(
