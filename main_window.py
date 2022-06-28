@@ -252,7 +252,7 @@ class MainWindowSlotFunctions(object):
     def __init__(self, main_window: MainWindow) -> None:
         self.main_window = main_window
 
-    def load_case_lists(self) -> None:
+    def load_case_lists(self, db_connection: QSqlDatabase = None) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
@@ -260,13 +260,14 @@ class MainWindowSlotFunctions(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
-        conn = open_db_connection('con_daily_case_lists')
+        if db_connection is None:
+            db_connection = open_db_connection('con_daily_case_lists')
         for table_name, case_list in self.main_window.database_table_dict.items():
             case_list.clear()
-            case_list.addItems(query_daily_case_list_data(table_name, conn))
+            case_list.addItems(query_daily_case_list_data(table_name, db_connection))
             case_count = len(case_list) - 1
             logger.info(f'{case_count} cases loaded to {table_name} case list.')
-        close_db_connection(conn)
+        close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button only.
@@ -278,9 +279,8 @@ class MainWindowSlotFunctions(object):
         conn = open_db_connection('con_daily_case_lists')
         create_daily_case_list_sql_tables(conn)
         load_daily_case_list_data(conn)
-        self.main_window.functions.load_case_lists()
+        self.main_window.functions.load_case_lists(conn)
         conn.close()
-        logger.debug(f'{conn} is open is {conn.isOpen()}')
 
     def show_hide_daily_case_lists(self) -> None:
         selected_case_list = self.main_window.radio_buttons_case_lists_dict.get(

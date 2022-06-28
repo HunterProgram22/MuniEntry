@@ -173,8 +173,6 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         excel_report, table_name = item
         delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
-    con_daily_case_lists.close()
-    logger.success(f'{con_daily_case_lists} Closed.')
 
 
 def insert_daily_case_list_sql_data(
