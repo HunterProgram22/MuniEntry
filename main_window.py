@@ -263,10 +263,11 @@ class MainWindowSlotFunctions(object):
         if db_connection is None:
             db_connection = open_db_connection('con_daily_case_lists')
         for table_name, case_list in self.main_window.database_table_dict.items():
+            old_case_count = 0 if len(case_list) == 0 else len(case_list)- 1
             case_list.clear()
             case_list.addItems(query_daily_case_list_data(table_name, db_connection))
             case_count = len(case_list) - 1
-            logger.info(f'{case_count} cases loaded to {table_name} case list.')
+            logger.info(f'Table: {table_name} - Preload Cases: {old_case_count}; Postload Cases {case_count}')
         close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
