@@ -36,6 +36,7 @@ class BaseChargeDialog(QDialog):
     def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.main_dialog = main_dialog
+        self.db_connection = open_db_connection('con_charges')
         self.modify_view()
         self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
@@ -44,7 +45,6 @@ class BaseChargeDialog(QDialog):
         self.load_statute_choice_boxes()
         logger.debug('Connected statutes')
         self.set_offense_statute_degree_boxes_to_blank()
-        self.db_connection = open_db_connection('con_charges')
 
     def load_offense_choice_boxes(self) -> None:
         conn = open_db_connection("con_charges")
