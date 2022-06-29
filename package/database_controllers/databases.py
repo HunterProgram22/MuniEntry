@@ -60,6 +60,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.query_case_data()
         self.load_data_into_case()
         self.query.finish()
+        close_db_connection(self.database)
 
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog.

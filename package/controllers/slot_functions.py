@@ -196,9 +196,10 @@ class BaseDialogSlotFunctions(object):
             field = "statute"
         elif dialog.sender() == dialog.offense_choice_box:
             field = "offense"
-        charges_database = open_db_connection("con_charges")
-        logger.debug('Set statute and offense ran')
-        query = QSqlQuery(charges_database)
+        # charges_database = open_db_connection("con_charges")
+        # logger.info(f'Db Connection is {dialog.db_connection}')
+        # logger.debug('Set statute and offense ran')
+        query = QSqlQuery(dialog.db_connection)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
         query.prepare(query_string)
         query.bindValue(":key", key)
@@ -216,7 +217,7 @@ class BaseDialogSlotFunctions(object):
                     dialog.offense_choice_box.setCurrentText(offense)
             dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
-            close_db_connection(charges_database)
+            # close_db_connection(charges_database)
             # charges_database.close()
             break
 
@@ -346,7 +347,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         return sql_query_offense_type(key)
 
     def close_event(self):
-        self.dialog.charges_database.close()
+        # self.dialog.charges_database.close()
         self.close_window()
 
 
@@ -803,4 +804,4 @@ if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-    charges_database = open_db_connection("con_charges")
+    # charges_database = open_db_connection("con_charges")
