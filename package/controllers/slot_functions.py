@@ -7,7 +7,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
-from package.database_controllers.databases import open_db_connection, extract_data, sql_query_offense_type
+from package.database_controllers.databases import open_db_connection, close_db_connection, extract_data, sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
 from package.models.criminal_charge_models import CriminalCharge
 from package.views.custom_widgets import RequiredBox
@@ -189,7 +189,6 @@ class BaseDialogSlotFunctions(object):
     def set_statute_and_offense(cls, key, dialog):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
-        charges_database = open_db_connection("con_charges")
         field = None
         if dialog.freeform_entry_checkBox.isChecked():
             return None
@@ -197,6 +196,8 @@ class BaseDialogSlotFunctions(object):
             field = "statute"
         elif dialog.sender() == dialog.offense_choice_box:
             field = "offense"
+        charges_database = open_db_connection("con_charges")
+        logger.debug('Set statute and offense ran')
         query = QSqlQuery(charges_database)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
         query.prepare(query_string)
@@ -215,7 +216,8 @@ class BaseDialogSlotFunctions(object):
                     dialog.offense_choice_box.setCurrentText(offense)
             dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
-            charges_database.close()
+            close_db_connection(charges_database)
+            # charges_database.close()
             break
 
     def conditions_checkbox_toggle(self):

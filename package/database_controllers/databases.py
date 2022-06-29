@@ -202,10 +202,10 @@ def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> N
     delete_table.exec()
 
 
-def query_offense_statute_data(query_value: str) -> list:
-    conn = open_db_connection("con_charges")
+def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) -> list:
+    # conn = open_db_connection("con_charges")
     query_string = select_distinct_offense_statute_sql_query()
-    query = QSqlQuery(conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     item_list = []
@@ -215,7 +215,7 @@ def query_offense_statute_data(query_value: str) -> list:
         elif query_value == "statute":
             item_list.append(query.value(1))
     item_list.sort()
-    conn.close()
+    # close_db_connection(conn)
     return item_list
 
 
@@ -308,11 +308,13 @@ def main():
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
+    close_db_connection(con_daily_case_lists)
 
     create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
     create_charges_sql_table(con_charges)
     load_charges_data(con_charges)
+    close_db_connection(con_charges)
 
 
 if __name__ == "__main__":
