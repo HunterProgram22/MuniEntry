@@ -20,6 +20,7 @@ from package.controllers.view_modifiers import (
 )
 from package.database_controllers.databases import (
     open_db_connection,
+    close_db_connection,
     query_offense_statute_data,
 )
 from package.models.criminal_charge_models import AmendOffenseDetails
@@ -35,7 +36,7 @@ class BaseChargeDialog(QDialog):
     def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.main_dialog = main_dialog
-        self.charges_database = open_db_connection('con_charges')
+        self.db_connection = open_db_connection('con_charges')
         self.modify_view()
         self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
@@ -44,11 +45,15 @@ class BaseChargeDialog(QDialog):
         self.set_offense_statute_degree_boxes_to_blank()
 
     def load_offense_choice_boxes(self) -> None:
-        self.offense_choice_box.addItems(query_offense_statute_data('offense'))
+        offense_list = query_offense_statute_data(self.db_connection, 'offense')
+        self.offense_choice_box.addItems(offense_list)
+        logger.info(f'{len(offense_list)} offenses loaded.')
         self.offense_choice_box.insertItem(0, '')
 
     def load_statute_choice_boxes(self) -> None:
-        self.statute_choice_box.addItems(query_offense_statute_data('statute'))
+        statute_list = query_offense_statute_data(self.db_connection, 'statute')
+        self.statute_choice_box.addItems(statute_list)
+        logger.info(f'{len(statute_list)} statutes loaded.')
         self.statute_choice_box.insertItem(0, '')
 
     def set_offense_statute_degree_boxes_to_blank(self) -> None:
@@ -60,6 +65,7 @@ class BaseChargeDialog(QDialog):
 
     def closeEvent(self, a0: QCloseEvent) -> None:
         logger.log('DIALOG', f'{self.objectName()} Closed')
+        close_db_connection(self.db_connection)
 
 
 class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):

@@ -19,13 +19,14 @@ from package.database_controllers.databases import (
     create_daily_case_list_sql_tables,
     load_daily_case_list_data,
     open_db_connection,
+    close_db_connection,
     query_daily_case_list_data,
 )
 from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, LOG_NAME
+from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
 
 
 
@@ -80,7 +81,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
 
     def open_current_log(self, s=None) -> None:
-        os.startfile(f'{LOG_PATH}{LOG_NAME}')
+        os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = MainWindowSlotFunctions(self)
@@ -251,14 +252,23 @@ class MainWindowSlotFunctions(object):
     def __init__(self, main_window: MainWindow) -> None:
         self.main_window = main_window
 
-    def load_case_lists(self) -> None:
+    def load_case_lists(self, db_connection: QSqlDatabase = None) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
+
+        The case count is one less than length of list because a blank line is inserted at the
+        top of the case list. The case count becomes actual number of cases loaded.
         """
+        if db_connection is None:
+            db_connection = open_db_connection('con_daily_case_lists')
         for table_name, case_list in self.main_window.database_table_dict.items():
+            old_case_count = 0 if len(case_list) == 0 else len(case_list)- 1
             case_list.clear()
-            case_list.addItems(query_daily_case_list_data(table_name))
+            case_list.addItems(query_daily_case_list_data(table_name, db_connection))
+            case_count = len(case_list) - 1
+            logger.info(f'Table: {table_name} - Preload Cases: {old_case_count}; Postload Cases {case_count}')
+        close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button only.
@@ -270,7 +280,7 @@ class MainWindowSlotFunctions(object):
         conn = open_db_connection('con_daily_case_lists')
         create_daily_case_list_sql_tables(conn)
         load_daily_case_list_data(conn)
-        self.main_window.functions.load_case_lists()
+        self.main_window.functions.load_case_lists(conn)
         conn.close()
 
     def show_hide_daily_case_lists(self) -> None:

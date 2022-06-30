@@ -7,7 +7,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
-from package.database_controllers.databases import open_db_connection, extract_data, sql_query_offense_type
+from package.database_controllers.databases import open_db_connection, close_db_connection, extract_data, sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
 from package.models.criminal_charge_models import CriminalCharge
 from package.views.custom_widgets import RequiredBox
@@ -184,39 +184,37 @@ class BaseDialogSlotFunctions(object):
             QDate.currentDate().addDays(days_to_complete)
         )
 
-    @classmethod
-    @logger.catch
-    def set_statute_and_offense(cls, key, dialog):
-        """:key: is the string that is passed by the function each time the field
-        is changed on the view."""
-        charges_database = open_db_connection("con_charges")
-        field = None
-        if dialog.freeform_entry_checkBox.isChecked():
+    def set_offense(self, key):
+        if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        if dialog.sender() == dialog.statute_choice_box:
-            field = "statute"
-        elif dialog.sender() == dialog.offense_choice_box:
-            field = "offense"
-        query = QSqlQuery(charges_database)
+        field = 'statute'
+        offense, statute, degree = self.query_charges_database(key, field)
+        if statute == key:
+            self.dialog.offense_choice_box.setCurrentText(offense)
+        self.dialog.degree_choice_box.setCurrentText(degree)
+
+    def set_statute(self, key):
+        if self.dialog.freeform_entry_checkBox.isChecked():
+            return None
+        field = 'offense'
+        offense, statute, degree = self.query_charges_database(key, field)
+        if offense == key:
+            self.dialog.statute_choice_box.setCurrentText(statute)
+        self.dialog.degree_choice_box.setCurrentText(degree)
+
+    def query_charges_database(self, key, field):
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
+        query = QSqlQuery(self.dialog.db_connection)
         query.prepare(query_string)
         query.bindValue(":key", key)
         query.bindValue(field, field)
         query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if field == "offense":
-                if offense == key:
-                    dialog.statute_choice_box.setCurrentText(statute)
-            elif field == "statute":
-                if statute == key:
-                    dialog.offense_choice_box.setCurrentText(offense)
-            dialog.degree_choice_box.setCurrentText(degree)
-            query.finish()
-            charges_database.close()
-            break
+        query.next()
+        offense = query.value(1)
+        statute = query.value(2)
+        degree = query.value(3)
+        query.finish()
+        return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
         logger.log('BUTTON', f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
@@ -341,10 +339,9 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         key = self.dialog.statute_choice_box.currentText()
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        return sql_query_offense_type(key)
+        return sql_query_offense_type(key, self.dialog.db_connection)
 
     def close_event(self):
-        self.dialog.charges_database.close()
         self.close_window()
 
 
@@ -429,7 +426,6 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         )
 
     def close_event(self):
-        self.dialog.charges_database.close()
         self.close_window()
 
 
@@ -801,4 +797,4 @@ if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-    charges_database = open_db_connection("con_charges")
+    # charges_database = open_db_connection("con_charges")

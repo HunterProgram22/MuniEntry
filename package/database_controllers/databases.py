@@ -60,6 +60,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.query_case_data()
         self.load_data_into_case()
         self.query.finish()
+        close_db_connection(self.database)
 
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog.
@@ -125,13 +126,18 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
-    logger.success(f'{connection_name} is connected.')
+    logger.log('DATABASE', f'{db_connection.connectionName()} database connection open.')
     return db_connection
+
+
+def close_db_connection(db_connection: QSqlDatabase) -> None:
+    db_connection.close()
+    logger.log('DATABASE', f'{db_connection.connectionName()} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
-    logger.success(f'{connection_name} database connection removed.')
+    logger.log('DATABASE', f'{connection_name} database connection removed.')
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
@@ -168,8 +174,6 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         excel_report, table_name = item
         delete_existing_sql_table(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
-    con_daily_case_lists.close()
-    logger.success(f'{con_daily_case_lists} Closed.')
 
 
 def insert_daily_case_list_sql_data(
@@ -199,10 +203,9 @@ def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> N
     delete_table.exec()
 
 
-def query_offense_statute_data(query_value: str) -> list:
-    conn = open_db_connection("con_charges")
+def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) -> list:
     query_string = select_distinct_offense_statute_sql_query()
-    query = QSqlQuery(conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     item_list = []
@@ -212,14 +215,12 @@ def query_offense_statute_data(query_value: str) -> list:
         elif query_value == "statute":
             item_list.append(query.value(1))
     item_list.sort()
-    conn.close()
     return item_list
 
 
-def query_daily_case_list_data(table: str) -> list:
-    conn = open_db_connection("con_daily_case_lists")
+def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
-    query = QSqlQuery(conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     item_list = []
@@ -229,7 +230,6 @@ def query_daily_case_list_data(table: str) -> list:
         name = f"{last_name} - {case_number}"
         item_list.append(name)
     item_list.sort()
-    conn.close()
     item_list.insert(0, "")
     return item_list
 
@@ -238,27 +238,25 @@ def create_charges_sql_table(con_charges: str) -> None:
     QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
-def insert_charges_sql_data(con_charges: QSqlDatabase, table_name: str) -> None:
+def insert_charges_sql_data(db_connection: QSqlDatabase, table_name: str) -> None:
     charges_from_table = create_charges_data_list(CHARGES_TABLE)
     for charge in charges_from_table:
-        insert_data_query = QSqlQuery(con_charges)
+        insert_data_query = QSqlQuery(db_connection)
         insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
         insert_data_query.exec()
 
 
-def load_charges_data(con_charges: QSqlDatabase) -> None:
-    delete_existing_sql_table(con_charges, "charges")
-    insert_charges_sql_data(con_charges, "charges")
-    con_charges.close()
+def load_charges_data(db_connection: QSqlDatabase) -> None:
+    delete_existing_sql_table(db_connection, "charges")
+    insert_charges_sql_data(db_connection, "charges")
 
 
-def sql_query_offense_type(key: str) -> str:
+def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
     """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
     court costs. If no match is found this returns "Moving" which is the highest court cost, so if
     the defendant is told the amount it should not be less than what it is owed.
     TODO: add for AmendChargeDialogSlotFunctions."""
-    charges_database = open_db_connection("con_charges")
-    query = QSqlQuery(charges_database)
+    query = QSqlQuery(db_connection)
     query.prepare(select_statute_from_charges_for_offense_type_sql_query())
     query.bindValue(":key", key)
     query.exec()
@@ -268,7 +266,6 @@ def sql_query_offense_type(key: str) -> str:
         offense_type = query.value(4)
         if statute == key:
             query.finish()
-            charges_database.close()
             return offense_type
     return offense_type
 
@@ -307,11 +304,13 @@ def main():
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
+    close_db_connection(con_daily_case_lists)
 
     create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
     create_charges_sql_table(con_charges)
     load_charges_data(con_charges)
+    close_db_connection(con_charges)
 
 
 if __name__ == "__main__":
