@@ -327,7 +327,6 @@ class ConditionCheckbox(QCheckBox):
         logger.log('BUTTON', f'{self.sender().text()} Checkbox Set: {self.sender().isChecked()}')
 
 
-
 class AlliedCheckbox(QCheckBox):
     def __init__(self, column_index, dialog, parent=None):
         super(QCheckBox, self).__init__(parent)

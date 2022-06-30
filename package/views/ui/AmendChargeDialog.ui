@@ -270,7 +270,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QCheckBox" name="freeform_entry_checkBox">
+       <widget class="ConditionCheckbox" name="freeform_entry_checkBox">
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
@@ -394,6 +394,13 @@ font-weight: bold;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>motion_decision_box</tabstop>
   <tabstop>statute_choice_box</tabstop>

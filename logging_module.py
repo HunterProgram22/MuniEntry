@@ -11,7 +11,7 @@ fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {functio
 logger.add(f'./resources/logs/detaillogs/{FULL_LOG_NAME}', format=fmt, level=10)
 logger.add(f'./resources/logs/{USER_LOG_NAME}', format=fmt, level=20)
 logger.level('IMPORT', no=18, color='<white>')
-logger.level('DATABASE', no=19, color='<green>')
+logger.level('DATABASE', no=21, color='<green>')
 logger.level('DIALOG', no=22, color='<green>')
 logger.level('BUTTON', no=24, color='<cyan>')
 logger.level('CHOICE', no=26, color='<cyan>')

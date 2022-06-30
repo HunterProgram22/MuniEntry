@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\AddChargeDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/AddChargeDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -163,7 +163,7 @@ class Ui_AddChargeDialog(object):
         self.clear_fields_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
         self.clear_fields_Button.setObjectName("clear_fields_Button")
         self.gridLayout_3.addWidget(self.clear_fields_Button, 3, 2, 1, 1)
-        self.freeform_entry_checkBox = QtWidgets.QCheckBox(self.frame_3)
+        self.freeform_entry_checkBox = ConditionCheckbox(self.frame_3)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(9)
@@ -206,3 +206,4 @@ class Ui_AddChargeDialog(object):
         self.degree_choice_box.setItemText(5, _translate("AddChargeDialog", "UCM"))
         self.clear_fields_Button.setText(_translate("AddChargeDialog", "Clear Fields"))
         self.freeform_entry_checkBox.setText(_translate("AddChargeDialog", "Enable freeform entry for offense/statute"))
+from .custom_widgets import ConditionCheckbox

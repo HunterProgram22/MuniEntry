@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'package\views\ui\AmendChargeDialog.ui'
+# Form implementation generated from reading ui file 'package/views/ui/AmendChargeDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -149,7 +149,7 @@ class Ui_AmendChargeDialog(object):
         self.statute_choice_box.setEditable(False)
         self.statute_choice_box.setObjectName("statute_choice_box")
         self.gridLayout_3.addWidget(self.statute_choice_box, 3, 1, 1, 1)
-        self.freeform_entry_checkBox = QtWidgets.QCheckBox(self.frame_3)
+        self.freeform_entry_checkBox = ConditionCheckbox(self.frame_3)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(9)
@@ -242,3 +242,4 @@ class Ui_AmendChargeDialog(object):
         self.label_23.setText(_translate("AmendChargeDialog", "Degree:"))
         self.label_3.setText(_translate("AmendChargeDialog", "Amended Charge Details"))
         self.original_charge_label.setText(_translate("AmendChargeDialog", "Original Charge Label"))
+from .custom_widgets import ConditionCheckbox
