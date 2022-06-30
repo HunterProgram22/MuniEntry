@@ -49,7 +49,8 @@ class BaseDialog(QDialog):
                 getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))(),
             )
 
-    def closeEvent(self, a0: QCloseEvent) -> None:
+    def closeEvent(self, event: QCloseEvent) -> None:
+        """Extends pyqt close event method in order to log when a dialog closes."""
         logger.log('DIALOG', f'{self.objectName()} Closed')
 
 
@@ -73,7 +74,8 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        logger.info(f'Loaded Case {self.cms_case.case_number}')
+        loaded_case = cms_case.case_number
+        logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()
         self.load_cms_data_to_view()
         try:
@@ -101,7 +103,7 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.setFocus()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
