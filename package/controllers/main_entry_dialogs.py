@@ -1,130 +1,150 @@
 """The module that contains the main classes for creating an entry dialog."""
 from loguru import logger
-
 from PyQt5.QtGui import QIntValidator
 
-from package.models.case_information.sentencing_entries import (
-    FineOnlyEntryCaseInformation,
-    JailCCEntryCaseInformation,
-    TrialSentencingEntryCaseInformation,
-    LeapSentencingEntryCaseInformation,
-    DiversionEntryCaseInformation,
-    SentencingOnlyEntryCaseInformation,
+from package.controllers.base_dialogs import CriminalBaseDialog
+from package.controllers.cms_case_loaders import (
+    CmsChargeLoader,
+    CmsFraLoader,
+    CmsNoChargeLoader,
+)
+from package.controllers.signal_connectors import (
+    BondHearingDialogSignalConnector,
+    DiversionDialogSignalConnector,
+    FailureToAppearDialogSignalConnector,
+    FineOnlyDialogSignalConnector,
+    FreeformDialogSignalConnector,
+    JailCCDialogSignalConnector,
+    LeapAdmissionPleaDialogSignalConnector,
+    LeapSentencingDialogSignalConnector,
+    NoPleaBondDialogSignalConnector,
+    NotGuiltyBondDialogSignalConnector,
+    PleaOnlyDialogSignalConnector,
+    ProbationViolationBondDialogSignalConnector,
+    SentencingOnlyDialogSignalConnector,
+    TrialSentencingDialogSignalConnector,
+)
+from package.controllers.slot_functions import (
+    BondHearingDialogSlotFunctions,
+    DiversionDialogSlotFunctions,
+    FailureToAppearDialogSlotFunctions,
+    FineOnlyDialogSlotFunctions,
+    FreeformDialogSlotFunctions,
+    JailCCDialogSlotFunctions,
+    LeapAdmissionPleaDialogSlotFunctions,
+    LeapSentencingDialogSlotFunctions,
+    NoPleaBondDialogSlotFunctions,
+    NotGuiltyBondDialogSlotFunctions,
+    PleaOnlyDialogSlotFunctions,
+    ProbationViolationBondDialogSlotFunctions,
+    SentencingOnlyDialogSlotFunctions,
+    TrialSentencingDialogSlotFunctions,
+)
+from package.controllers.view_modifiers import (
+    BondHearingDialogViewModifier,
+    DiversionDialogViewModifier,
+    FailureToAppearDialogViewModifier,
+    FineOnlyDialogViewModifier,
+    FreeformDialogViewModifier,
+    JailCCDialogViewModifier,
+    LeapAdmissionPleaDialogViewModifier,
+    LeapSentencingDialogViewModifier,
+    NoPleaBondDialogViewModifier,
+    NotGuiltyBondDialogViewModifier,
+    PleaOnlyDialogViewModifier,
+    ProbationViolationBondDialogViewModifier,
+    SentencingOnlyDialogViewModifier,
+    TrialSentencingDialogViewModifier,
+)
+from package.information_checkers.base_checks import (
+    FailureToAppearDialogInfoChecker,
+    FreeformDialogInfoChecker,
+)
+from package.information_checkers.bond_checkers import (
+    BondHearingDialogInfoChecker,
+    NoPleaBondDialogInfoChecker,
+    ProbationViolationBondDialogInfoChecker,
+)
+from package.information_checkers.jail_charge_grid_checkers import (
+    JailCCPleaDialogInfoChecker,
+    SentencingOnlyDialogInfoChecker,
+    TrialSentencingDialogInfoChecker,
+)
+from package.information_checkers.no_jail_sentencing_checkers import (
+    DiversionDialogInfoChecker,
+    FineOnlyDialogInfoChecker,
+    LeapSentencingDialogInfoChecker,
+)
+from package.information_checkers.plea_only_checkers import (
+    LeapAdmissionPleaDialogInfoChecker,
+    NotGuiltyBondDialogInfoChecker,
+    PleaOnlyDialogInfoChecker,
 )
 from package.models.case_information.plea_entries import (
-    LeapAdmissionEntryCaseInformation,
+    BondHearingEntryCaseInformation,
     CommunityControlViolationEntryCaseInformation,
     FailureToAppearEntryCaseInformation,
     FreeformEntryCaseInformation,
-    PleaOnlyEntryCaseInformation,
-    NotGuiltyBondEntryCaseInformation,
-    BondHearingEntryCaseInformation,
+    LeapAdmissionEntryCaseInformation,
     NoPleaBondEntryCaseInformation,
+    NotGuiltyBondEntryCaseInformation,
+    PleaOnlyEntryCaseInformation,
 )
-from package.controllers.base_dialogs import CriminalBaseDialog
-from package.controllers.cms_case_loaders import CmsNoChargeLoader, CmsChargeLoader, CmsFraLoader
+from package.models.case_information.sentencing_entries import (
+    DiversionEntryCaseInformation,
+    FineOnlyEntryCaseInformation,
+    JailCCEntryCaseInformation,
+    LeapSentencingEntryCaseInformation,
+    SentencingOnlyEntryCaseInformation,
+    TrialSentencingEntryCaseInformation,
+)
+from package.models.conditions_models import (
+    BondConditions,
+    BondModificationConditions,
+    CommunityControlViolationBondConditions,
+    FailureToAppearConditions,
+)
+from package.models.template_types import TEMPLATE_DICT
 from package.updaters.grid_case_updaters import (
-    JailCCDialogUpdater,
-    FineOnlyDialogUpdater,
-    NotGuiltyBondDialogUpdater,
     DiversionDialogUpdater,
-    PleaOnlyDialogUpdater,
+    FineOnlyDialogUpdater,
+    JailCCDialogUpdater,
     LeapAdmissionPleaDialogUpdater,
     LeapSentencingDialogUpdater,
-    TrialSentencingDialogUpdater,
+    NotGuiltyBondDialogUpdater,
+    PleaOnlyDialogUpdater,
     SentencingOnlyDialogUpdater,
+    TrialSentencingDialogUpdater,
 )
 from package.updaters.no_grid_case_updaters import (
-    NoPleaBondDialogUpdater,
     BondHearingDialogUpdater,
     FailureToAppearDialogUpdater,
     FreeformDialogUpdater,
+    NoPleaBondDialogUpdater,
     ProbationViolationBondDialogUpdater,
 )
-from package.controllers.signal_connectors import (
-    DiversionDialogSignalConnector,
-    JailCCDialogSignalConnector,
-    FineOnlyDialogSignalConnector,
-    NotGuiltyBondDialogSignalConnector,
-    NoPleaBondDialogSignalConnector,
-    ProbationViolationBondDialogSignalConnector,
-    FailureToAppearDialogSignalConnector,
-    BondHearingDialogSignalConnector,
-    PleaOnlyDialogSignalConnector,
-    LeapAdmissionPleaDialogSignalConnector,
-    LeapSentencingDialogSignalConnector,
-    TrialSentencingDialogSignalConnector,
-    SentencingOnlyDialogSignalConnector,
-    FreeformDialogSignalConnector,
-)
-from package.controllers.slot_functions import (
-    DiversionDialogSlotFunctions,
-    JailCCDialogSlotFunctions,
-    FineOnlyDialogSlotFunctions,
-    NotGuiltyBondDialogSlotFunctions,
-    NoPleaBondDialogSlotFunctions,
-    ProbationViolationBondDialogSlotFunctions,
-    FailureToAppearDialogSlotFunctions,
-    BondHearingDialogSlotFunctions,
-    PleaOnlyDialogSlotFunctions,
-    LeapAdmissionPleaDialogSlotFunctions,
-    LeapSentencingDialogSlotFunctions,
-    TrialSentencingDialogSlotFunctions,
-    SentencingOnlyDialogSlotFunctions,
-    FreeformDialogSlotFunctions,
-)
-from package.controllers.view_modifiers import (
-    DiversionDialogViewModifier,
-    JailCCDialogViewModifier,
-    FineOnlyDialogViewModifier,
-    NotGuiltyBondDialogViewModifier,
-    NoPleaBondDialogViewModifier,
-    ProbationViolationBondDialogViewModifier,
-    FailureToAppearDialogViewModifier,
-    BondHearingDialogViewModifier,
-    PleaOnlyDialogViewModifier,
-    LeapAdmissionPleaDialogViewModifier,
-    LeapSentencingDialogViewModifier,
-    TrialSentencingDialogViewModifier,
-    SentencingOnlyDialogViewModifier,
-    FreeformDialogViewModifier,
-)
-from package.information_checkers.bond_checkers import (
-    NoPleaBondDialogInfoChecker,
-    ProbationViolationBondDialogInfoChecker,
-    BondHearingDialogInfoChecker,
-)
-from package.information_checkers.base_checks import FailureToAppearDialogInfoChecker, \
-    FreeformDialogInfoChecker
-from package.information_checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker, \
-    PleaOnlyDialogInfoChecker, NotGuiltyBondDialogInfoChecker
-from package.information_checkers.no_jail_sentencing_checkers import FineOnlyDialogInfoChecker, \
-    LeapSentencingDialogInfoChecker, DiversionDialogInfoChecker
-from package.information_checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker, \
-    SentencingOnlyDialogInfoChecker, TrialSentencingDialogInfoChecker
-from package.models.conditions_models import BondConditions, BondModificationConditions, \
-    FailureToAppearConditions, CommunityControlViolationBondConditions
-from package.models.template_types import TEMPLATE_DICT
-from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
-from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
-from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
-from package.views.no_plea_bond_dialog_ui import Ui_NoPleaBondDialog
-from package.views.probation_violation_bond_dialog_ui import Ui_ProbationViolationBondDialog
-from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
-from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 from package.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
+from package.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
+from package.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
+from package.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
+from package.views.freeform_dialog_ui import Ui_FreeformEntryDialog
+from package.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 from package.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
-from package.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
+from package.views.no_plea_bond_dialog_ui import Ui_NoPleaBondDialog
+from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
+from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
+from package.views.probation_violation_bond_dialog_ui import (
+    Ui_ProbationViolationBondDialog,
+)
 from package.views.sentencing_only_dialog_ui import Ui_SentencingOnlyDialog
-from package.views.freeform_dialog_ui import Ui_FreeformEntryDialog
+from package.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 
 
 class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Diversion Plea Dialog"
+        self.dialog_name = 'Diversion Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.show_restitution_boxes()
 
@@ -157,7 +177,7 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
 class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Plea Only Dialog"
+        self.dialog_name = 'Plea Only Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self) -> None:
@@ -189,18 +209,18 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
-            ("community_control_checkBox", self.entry_case_information.community_control),
-            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
-            ("community_service_checkBox", self.entry_case_information.community_service),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("jail_checkBox", self.entry_case_information.jail_terms),
-            ("impoundment_checkBox", self.entry_case_information.impoundment),
-            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
+            ('community_control_checkBox', self.entry_case_information.community_control),
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('jail_checkBox', self.entry_case_information.jail_terms),
+            ('impoundment_checkBox', self.entry_case_information.impoundment),
+            ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-        self.dialog_name = "Jail CC Plea Dialog"
+        self.dialog_name = 'Jail CC Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        if self.case_table == "slated":
-            self.in_jail_box.setCurrentText("Yes")
+        if self.case_table == 'slated':
+            self.in_jail_box.setCurrentText('Yes')
 
     def modify_view(self) -> None:
         JailCCDialogViewModifier(self)
@@ -232,15 +252,15 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
-            ("community_control_checkBox", self.entry_case_information.community_control),
-            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
-            ("community_service_checkBox", self.entry_case_information.community_service),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("jail_checkBox", self.entry_case_information.jail_terms),
-            ("impoundment_checkBox", self.entry_case_information.impoundment),
-            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
+            ('community_control_checkBox', self.entry_case_information.community_control),
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('jail_checkBox', self.entry_case_information.jail_terms),
+            ('impoundment_checkBox', self.entry_case_information.impoundment),
+            ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-        self.dialog_name = "Trial Sentencing Dialog"
+        self.dialog_name = 'Trial Sentencing Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self) -> None:
@@ -271,11 +291,11 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
-            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
-            ("community_service_checkBox", self.entry_case_information.community_service),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
         ]
-        self.dialog_name = "Fine Only Plea Dialog"
+        self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self) -> None:
@@ -306,11 +326,11 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
-            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
-            ("community_service_checkBox", self.entry_case_information.community_service),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
         ]
-        self.dialog_name = "Leap Sentencing Dialog"
+        self.dialog_name = 'Leap Sentencing Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self) -> None:
@@ -341,15 +361,15 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
-            ("community_control_checkBox", self.entry_case_information.community_control),
-            ("license_suspension_checkBox", self.entry_case_information.license_suspension),
-            ("community_service_checkBox", self.entry_case_information.community_service),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("jail_checkBox", self.entry_case_information.jail_terms),
-            ("impoundment_checkBox", self.entry_case_information.impoundment),
-            ("victim_notification_checkBox", self.entry_case_information.victim_notification),
+            ('community_control_checkBox', self.entry_case_information.community_control),
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('jail_checkBox', self.entry_case_information.jail_terms),
+            ('impoundment_checkBox', self.entry_case_information.impoundment),
+            ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
-        self.dialog_name = "Sentencing Only Dialog"
+        self.dialog_name = 'Sentencing Only Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self) -> None:
@@ -377,33 +397,33 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     condition_checkbox_dict = {
-        "monitoring_checkBox": ["monitoring_type_box"],
-        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+        'monitoring_checkBox': ['monitoring_type_box'],
+        'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
-                "admin_license_suspension_checkBox",
+                'admin_license_suspension_checkBox',
                 self.entry_case_information.admin_license_suspension,
             ),
             (
-                "domestic_violence_checkBox",
+                'domestic_violence_checkBox',
                 self.entry_case_information.domestic_violence_conditions,
             ),
-            ("no_contact_checkBox", self.entry_case_information.no_contact),
-            ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("vehicle_seizure_checkBox", self.entry_case_information.vehicle_seizure),
+            ('no_contact_checkBox', self.entry_case_information.no_contact),
+            ('custodial_supervision_checkBox', self.entry_case_information.custodial_supervision),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.dialog_name = "Not Guilty Bond Dialog"
+        self.dialog_name = 'Not Guilty Bond Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
         self.set_all_pleas_to_not_guilty()
 
     def set_all_pleas_to_not_guilty(self):
-        """Sets all pleas to not guilty at load just like hitting not guilty all button."""
+        '''Sets all pleas to not guilty at load just like hitting not guilty all button.'''
         for column in range(1, self.charges_gridLayout.columnCount()):
             if (
                 self.charges_gridLayout.itemAtPosition(self.charges_gridLayout.row_offense, column)
@@ -411,7 +431,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
             ):
                 self.charges_gridLayout.itemAtPosition(
                     self.charges_gridLayout.row_plea, column
-                ).widget().setCurrentText("Not Guilty")
+                ).widget().setCurrentText('Not Guilty')
 
     def modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
@@ -430,7 +450,7 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         CmsChargeLoader(self)
 
     def update_entry_case_information(self):
-        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        '''Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module.'''
         return NotGuiltyBondDialogUpdater(self)
 
     def add_charge_to_grid(self):
@@ -443,27 +463,27 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
 class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
     condition_checkbox_dict = {
-        "monitoring_checkBox": ["monitoring_type_box"],
-        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+        'monitoring_checkBox': ['monitoring_type_box'],
+        'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
-                "admin_license_suspension_checkBox",
+                'admin_license_suspension_checkBox',
                 self.entry_case_information.admin_license_suspension,
             ),
             (
-                "domestic_violence_checkBox",
+                'domestic_violence_checkBox',
                 self.entry_case_information.domestic_violence_conditions,
             ),
-            ("no_contact_checkBox", self.entry_case_information.no_contact),
-            ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("vehicle_seizure_checkBox", self.entry_case_information.vehicle_seizure),
+            ('no_contact_checkBox', self.entry_case_information.no_contact),
+            ('custodial_supervision_checkBox', self.entry_case_information.custodial_supervision),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.dialog_name = "No Plea Bond Dialog"
+        self.dialog_name = 'No Plea Bond Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
 
@@ -477,7 +497,7 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         return NoPleaBondDialogSignalConnector(self)
 
     def update_entry_case_information(self):
-        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        '''Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module.'''
         return NoPleaBondDialogUpdater(self)
 
     def load_entry_case_information_model(self):
@@ -494,7 +514,7 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
 class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Probation Violation Bond Dialog"
+        self.dialog_name = 'Probation Violation Bond Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
 
@@ -525,13 +545,13 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
 class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Failure To Appear Dialog"
+        self.dialog_name = 'Failure To Appear Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
         if (
-            self.case_table == "final_pretrials"
+            self.case_table == 'final_pretrials'
         ):  # Ovverides the set_appearance_reason in ViewModifier
-            self.appearance_reason_box.setCurrentText("final pre-trial")
+            self.appearance_reason_box.setCurrentText('final pre-trial')
 
     def modify_view(self):
         return FailureToAppearDialogViewModifier(self)
@@ -561,7 +581,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
 class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Freeform Entry Dialog"
+        self.dialog_name = 'Freeform Entry Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def modify_view(self):
@@ -589,8 +609,8 @@ class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
 
 class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
     condition_checkbox_dict = {
-        "monitoring_checkBox": ["monitoring_type_box"],
-        "specialized_docket_checkBox": ["specialized_docket_type_box"],
+        'monitoring_checkBox': ['monitoring_type_box'],
+        'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
     def __init__(
@@ -603,19 +623,19 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
-                "admin_license_suspension_checkBox",
+                'admin_license_suspension_checkBox',
                 self.entry_case_information.admin_license_suspension,
             ),
             (
-                "domestic_violence_checkBox",
+                'domestic_violence_checkBox',
                 self.entry_case_information.domestic_violence_conditions,
             ),
-            ("no_contact_checkBox", self.entry_case_information.no_contact),
-            ("custodial_supervision_checkBox", self.entry_case_information.custodial_supervision),
-            ("other_conditions_checkBox", self.entry_case_information.other_conditions),
-            ("vehicle_seizure_checkBox", self.entry_case_information.vehicle_seizure),
+            ('no_contact_checkBox', self.entry_case_information.no_contact),
+            ('custodial_supervision_checkBox', self.entry_case_information.custodial_supervision),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+            ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.dialog_name = "Bond Hearing Dialog"
+        self.dialog_name = 'Bond Hearing Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondModificationConditions()
 
@@ -636,7 +656,7 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         return CmsNoChargeLoader(self)
 
     def update_entry_case_information(self) -> BondHearingDialogUpdater:
-        """Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module."""
+        '''Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module.'''
         return BondHearingDialogUpdater(self)
 
     def perform_info_checks(self) -> None:
@@ -646,9 +666,9 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
 class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = "Leap Admission Plea Dialog"
+        self.dialog_name = 'Leap Admission Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.functions.set_leap_sentencing_date("120 days")
+        self.functions.set_leap_sentencing_date('120 days')
 
     def modify_view(self) -> None:
         LeapAdmissionPleaDialogViewModifier(self)
@@ -673,7 +693,7 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
