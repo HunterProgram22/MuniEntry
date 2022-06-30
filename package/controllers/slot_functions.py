@@ -184,12 +184,10 @@ class BaseDialogSlotFunctions(object):
             QDate.currentDate().addDays(days_to_complete)
         )
 
-    # @classmethod
     @logger.catch
     def set_statute_and_offense(self, key):
         """:key: is the string that is passed by the function each time the field
         is changed on the view."""
-        logger.debug(key)
         field = None
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
@@ -197,10 +195,8 @@ class BaseDialogSlotFunctions(object):
             field = "statute"
         elif self.dialog.sender() == self.dialog.offense_choice_box:
             field = "offense"
-        # charges_database = open_db_connection("con_charges")
-        # logger.info(f'Db Connection is {dialog.db_connection}')
-        # logger.debug('Set statute and offense ran')
-        query = QSqlQuery(self.dialog.db_connection)
+        conn = open_db_connection("con_charges")
+        query = QSqlQuery(conn)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
         query.prepare(query_string)
         query.bindValue(":key", key)
@@ -218,8 +214,7 @@ class BaseDialogSlotFunctions(object):
                     self.dialog.offense_choice_box.setCurrentText(offense)
             self.dialog.degree_choice_box.setCurrentText(degree)
             query.finish()
-            # close_db_connection(charges_database)
-            # charges_database.close()
+            close_db_connection(conn)
             break
 
     def conditions_checkbox_toggle(self):
