@@ -126,18 +126,18 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
-    logger.success(f'{db_connection.connectionName()} database connection open.')
+    logger.log('DATABASE', f'{db_connection.connectionName()} database connection open.')
     return db_connection
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
     db_connection.close()
-    logger.success(f'{db_connection.connectionName()} database connection closed.')
+    logger.log('DATABASE', f'{db_connection.connectionName()} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
-    logger.success(f'{connection_name} database connection removed.')
+    logger.log('DATABASE', f'{connection_name} database connection removed.')
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
@@ -204,7 +204,6 @@ def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> N
 
 
 def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) -> list:
-    # conn = open_db_connection("con_charges")
     query_string = select_distinct_offense_statute_sql_query()
     query = QSqlQuery(db_connection)
     query.prepare(query_string)
@@ -216,7 +215,6 @@ def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) ->
         elif query_value == "statute":
             item_list.append(query.value(1))
     item_list.sort()
-    # close_db_connection(conn)
     return item_list
 
 

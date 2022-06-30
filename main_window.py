@@ -26,7 +26,7 @@ from package.models.cms_models import CmsCaseInformation
 from package.models.party_types import JudicialOfficer
 from package.views.custom_widgets import RequiredBox
 from package.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, LOG_NAME
+from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
 
 
 
@@ -81,7 +81,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
 
     def open_current_log(self, s=None) -> None:
-        os.startfile(f'{LOG_PATH}{LOG_NAME}')
+        os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
 
     def create_dialog_slot_functions(self) -> None:
         self.functions = MainWindowSlotFunctions(self)

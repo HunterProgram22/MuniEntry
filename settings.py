@@ -29,7 +29,8 @@ now = datetime.now()
 now_string = now.strftime('%Y_%m_%d__%H_%M_%S')
 LOG_TIME = f'{now_string}'
 SOCKET_NAME = socket.gethostname()
-LOG_NAME = f'Log_{SOCKET_NAME}_{LOG_TIME}.log'
+FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
+USER_LOG_NAME = f'User_Log_{SOCKET_NAME}_{LOG_TIME}.log'
 
 
 # Case List Settings
