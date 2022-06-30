@@ -1,11 +1,10 @@
 """Secondary dialogs opened from a main entry dialog when a charge needs to be added or amended."""
-from loguru import logger
 from typing import TypeVar
 
+from loguru import logger
 from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.controllers.signal_connectors import (
     AddChargeDialogSignalConnector,
     AmendChargeDialogSignalConnector,
@@ -19,10 +18,11 @@ from package.controllers.view_modifiers import (
     AmendChargeDialogViewModifier,
 )
 from package.database_controllers.databases import (
-    open_db_connection,
     close_db_connection,
+    open_db_connection,
     query_offense_statute_data,
 )
+from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.models.criminal_charge_models import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
@@ -47,13 +47,15 @@ class BaseChargeDialog(QDialog):
     def load_offense_choice_boxes(self) -> None:
         offense_list = query_offense_statute_data(self.db_connection, 'offense')
         self.offense_choice_box.addItems(offense_list)
-        logger.info(f'{len(offense_list)} offenses loaded.')
+        offense_count = len(offense_list)
+        logger.info(f'{offense_count} offenses loaded.')
         self.offense_choice_box.insertItem(0, '')
 
     def load_statute_choice_boxes(self) -> None:
         statute_list = query_offense_statute_data(self.db_connection, 'statute')
         self.statute_choice_box.addItems(statute_list)
-        logger.info(f'{len(statute_list)} statutes loaded.')
+        statute_count = len(statute_list)
+        logger.info(f'{statute_count} statutes loaded.')
         self.statute_choice_box.insertItem(0, '')
 
     def set_offense_statute_degree_boxes_to_blank(self) -> None:
@@ -63,7 +65,7 @@ class BaseChargeDialog(QDialog):
         self.degree_choice_box.insertItem(0, '')
         self.degree_choice_box.setCurrentText('')
 
-    def closeEvent(self, a0: QCloseEvent) -> None:
+    def closeEvent(self, event: QCloseEvent) -> None:
         logger.log('DIALOG', f'{self.objectName()} Closed')
         close_db_connection(self.db_connection)
 
@@ -111,7 +113,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         return AmendChargeDialogSignalConnector(self)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
