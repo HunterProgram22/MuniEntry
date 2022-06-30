@@ -341,8 +341,6 @@ class AlliedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
-        """TODO: Bug exists for Trial Sentencing with Not Guilty not switching with plea all when
-        allied is checked."""
         logger.log('BUTTON', f'Allied Checkbox Set: {self.isChecked()}')
         grid = self.dialog.charges_gridLayout
         if self.isChecked():
