@@ -10,9 +10,9 @@ from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
 from PyQt5.QtGui import QKeySequence
 
 from package.dialog_builders import main_entry_dialogs as med
-from package.dialog_builders.scheduling import SchedulingEntryDialog
-from package.dialog_builders.scheduling import NoticeOfHearingDialog
-from package.dialog_builders.scheduling import \
+from package.dialog_builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
+from package.dialog_builders.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.dialog_builders.scheduling.trial_to_court_hearing_notice_dialog import \
     TrialToCourtHearingDialog
 from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,

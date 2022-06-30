@@ -11,7 +11,7 @@ from PyQt5.QtWidgets import QLabel
 
 from settings import WIDGET_TYPE_SET_DICT
 from package.controllers.helper_functions import set_future_date
-from package.dialog_builders import charges_grids as cg
+from package.controllers import charges_grids as cg
 
 TODAY = QtCore.QDate.currentDate()
 
