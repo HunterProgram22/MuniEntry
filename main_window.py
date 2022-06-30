@@ -4,12 +4,16 @@ from __future__ import annotations
 import os
 from typing import Type
 
+import package.dialog_builders.bond_dialogs
+import package.dialog_builders.plea_only_dialogs
+import package.dialog_builders.plea_sentence_dialogs
+import package.dialog_builders.sentencing_only_dialogs
 from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
 from PyQt5.QtGui import QKeySequence
 
-from package.dialog_builders import main_entry_dialogs as med
+from package.dialog_builders import general_entry_dialogs as med
 from package.dialog_builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
 from package.dialog_builders.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
 from package.dialog_builders.scheduling.trial_to_court_hearing_notice_dialog import \
@@ -166,19 +170,19 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
         }
         self.main_window.dialog_buttons_dict = {
-            self.main_window.FineOnlyPleaButton: med.FineOnlyPleaDialog,
-            self.main_window.JailCCPleaButton: med.JailCCPleaDialog,
-            self.main_window.DiversionButton: med.DiversionPleaDialog,
-            self.main_window.NotGuiltyBondButton: med.NotGuiltyBondDialog,
+            self.main_window.FineOnlyPleaButton: package.dialog_builders.plea_sentence_dialogs.FineOnlyPleaDialog,
+            self.main_window.JailCCPleaButton: package.dialog_builders.plea_sentence_dialogs.JailCCPleaDialog,
+            self.main_window.DiversionButton: package.dialog_builders.plea_sentence_dialogs.DiversionPleaDialog,
+            self.main_window.NotGuiltyBondButton: package.dialog_builders.plea_only_dialogs.NotGuiltyBondDialog,
             self.main_window.FailureToAppearButton: med.FailureToAppearDialog,
-            self.main_window.ProbationViolationBondButton: med.ProbationViolationBondDialog,
-            self.main_window.BondHearingButton: med.BondHearingDialog,
-            self.main_window.PleaOnlyButton: med.PleaOnlyDialog,
-            self.main_window.NoPleaBondButton: med.NoPleaBondDialog,
-            self.main_window.LeapAdmissionButton: med.LeapAdmissionPleaDialog,
-            self.main_window.LeapSentencingButton: med.LeapSentencingDialog,
-            self.main_window.TrialSentencingButton: med.TrialSentencingDialog,
-            self.main_window.SentencingOnlyButton: med.SentencingOnlyDialog,
+            self.main_window.ProbationViolationBondButton: package.dialog_builders.bond_dialogs.ProbationViolationBondDialog,
+            self.main_window.BondHearingButton: package.dialog_builders.bond_dialogs.BondHearingDialog,
+            self.main_window.PleaOnlyButton: package.dialog_builders.plea_only_dialogs.PleaOnlyDialog,
+            self.main_window.NoPleaBondButton: package.dialog_builders.bond_dialogs.NoPleaBondDialog,
+            self.main_window.LeapAdmissionButton: package.dialog_builders.plea_only_dialogs.LeapAdmissionPleaDialog,
+            self.main_window.LeapSentencingButton: package.dialog_builders.sentencing_only_dialogs.LeapSentencingDialog,
+            self.main_window.TrialSentencingButton: package.dialog_builders.sentencing_only_dialogs.TrialSentencingDialog,
+            self.main_window.SentencingOnlyButton: package.dialog_builders.sentencing_only_dialogs.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: med.FreeformDialog,
             self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
