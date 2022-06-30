@@ -164,6 +164,7 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
         self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
 
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
