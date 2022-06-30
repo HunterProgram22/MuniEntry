@@ -203,9 +203,8 @@ class BaseDialogSlotFunctions(object):
         self.dialog.degree_choice_box.setCurrentText(degree)
 
     def query_charges_database(self, key, field):
-        conn = open_db_connection("con_charges")
-        query = QSqlQuery(conn)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
+        query = QSqlQuery(self.dialog.db_connection)
         query.prepare(query_string)
         query.bindValue(":key", key)
         query.bindValue(field, field)
@@ -215,7 +214,6 @@ class BaseDialogSlotFunctions(object):
         statute = query.value(2)
         degree = query.value(3)
         query.finish()
-        close_db_connection(conn)
         return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
@@ -341,7 +339,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         key = self.dialog.statute_choice_box.currentText()
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        return sql_query_offense_type(key)
+        return sql_query_offense_type(key, self.dialog.db_connection)
 
     def close_event(self):
         self.close_window()

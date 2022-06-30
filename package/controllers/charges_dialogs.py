@@ -41,26 +41,20 @@ class BaseChargeDialog(QDialog):
         self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
         self.load_offense_choice_boxes()
-        logger.debug('Connected offenses')
         self.load_statute_choice_boxes()
-        logger.debug('Connected statutes')
         self.set_offense_statute_degree_boxes_to_blank()
 
     def load_offense_choice_boxes(self) -> None:
-        conn = open_db_connection("con_charges")
-        offense_list = query_offense_statute_data(conn, 'offense')
+        offense_list = query_offense_statute_data(self.db_connection, 'offense')
         self.offense_choice_box.addItems(offense_list)
         logger.info(f'{len(offense_list)} offenses loaded.')
         self.offense_choice_box.insertItem(0, '')
-        close_db_connection(conn)
 
     def load_statute_choice_boxes(self) -> None:
-        conn = open_db_connection("con_charges")
-        statute_list = query_offense_statute_data(conn, 'statute')
+        statute_list = query_offense_statute_data(self.db_connection, 'statute')
         self.statute_choice_box.addItems(statute_list)
         logger.info(f'{len(statute_list)} statutes loaded.')
         self.statute_choice_box.insertItem(0, '')
-        close_db_connection(conn)
 
     def set_offense_statute_degree_boxes_to_blank(self) -> None:
         """Degree choices are loaded in the view, so do not need to be loaded in this method."""

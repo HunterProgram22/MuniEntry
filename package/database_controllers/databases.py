@@ -238,27 +238,26 @@ def create_charges_sql_table(con_charges: str) -> None:
     QSqlQuery(con_charges).exec(create_charges_table_sql_query())
 
 
-def insert_charges_sql_data(con_charges: QSqlDatabase, table_name: str) -> None:
+def insert_charges_sql_data(db_connection: QSqlDatabase, table_name: str) -> None:
     charges_from_table = create_charges_data_list(CHARGES_TABLE)
     for charge in charges_from_table:
-        insert_data_query = QSqlQuery(con_charges)
+        insert_data_query = QSqlQuery(db_connection)
         insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
         insert_data_query.exec()
 
 
-def load_charges_data(con_charges: QSqlDatabase) -> None:
-    delete_existing_sql_table(con_charges, "charges")
-    insert_charges_sql_data(con_charges, "charges")
-    con_charges.close()
+def load_charges_data(db_connection: QSqlDatabase) -> None:
+    delete_existing_sql_table(db_connection, "charges")
+    insert_charges_sql_data(db_connection, "charges")
+    db_connection.close()
 
 
-def sql_query_offense_type(key: str) -> str:
+def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
     """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
     court costs. If no match is found this returns "Moving" which is the highest court cost, so if
     the defendant is told the amount it should not be less than what it is owed.
     TODO: add for AmendChargeDialogSlotFunctions."""
-    charges_database = open_db_connection("con_charges")
-    query = QSqlQuery(charges_database)
+    query = QSqlQuery(db_connection)
     query.prepare(select_statute_from_charges_for_offense_type_sql_query())
     query.bindValue(":key", key)
     query.exec()
@@ -268,7 +267,6 @@ def sql_query_offense_type(key: str) -> str:
         offense_type = query.value(4)
         if statute == key:
             query.finish()
-            charges_database.close()
             return offense_type
     return offense_type
 
