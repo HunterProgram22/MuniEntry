@@ -249,7 +249,6 @@ def insert_charges_sql_data(db_connection: QSqlDatabase, table_name: str) -> Non
 def load_charges_data(db_connection: QSqlDatabase) -> None:
     delete_existing_sql_table(db_connection, "charges")
     insert_charges_sql_data(db_connection, "charges")
-    db_connection.close()
 
 
 def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
