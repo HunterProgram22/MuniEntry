@@ -1,19 +1,40 @@
+"""Module containing classes to build Plea Only Dialogs."""
+from loguru import logger
+
 from package.controllers.cms_case_loaders import CmsChargeLoader
-from package.controllers.signal_connectors import PleaOnlyDialogSignalConnector, \
-    NotGuiltyBondDialogSignalConnector, LeapAdmissionPleaDialogSignalConnector
-from package.controllers.slot_functions import PleaOnlyDialogSlotFunctions, \
-    NotGuiltyBondDialogSlotFunctions, LeapAdmissionPleaDialogSlotFunctions
-from package.controllers.view_modifiers import PleaOnlyDialogViewModifier, \
-    NotGuiltyBondDialogViewModifier, LeapAdmissionPleaDialogViewModifier
+from package.controllers.signal_connectors import (
+    LeapAdmissionPleaDialogSignalConnector,
+    NotGuiltyBondDialogSignalConnector,
+    PleaOnlyDialogSignalConnector,
+)
+from package.controllers.slot_functions import (
+    LeapAdmissionPleaDialogSlotFunctions,
+    NotGuiltyBondDialogSlotFunctions,
+    PleaOnlyDialogSlotFunctions,
+)
+from package.controllers.view_modifiers import (
+    LeapAdmissionPleaDialogViewModifier,
+    NotGuiltyBondDialogViewModifier,
+    PleaOnlyDialogViewModifier,
+)
 from package.dialog_builders.base_dialogs import CriminalBaseDialog
-from package.information_checkers.plea_only_checkers import PleaOnlyDialogInfoChecker, \
-    NotGuiltyBondDialogInfoChecker, LeapAdmissionPleaDialogInfoChecker
-from package.models.case_information.plea_entries import PleaOnlyEntryCaseInformation, \
-    NotGuiltyBondEntryCaseInformation, LeapAdmissionEntryCaseInformation
+from package.information_checkers.plea_only_checkers import (
+    LeapAdmissionPleaDialogInfoChecker,
+    NotGuiltyBondDialogInfoChecker,
+    PleaOnlyDialogInfoChecker,
+)
+from package.models.case_information.plea_entries import (
+    LeapAdmissionEntryCaseInformation,
+    NotGuiltyBondEntryCaseInformation,
+    PleaOnlyEntryCaseInformation,
+)
 from package.models.conditions_models import BondConditions
 from package.models.template_types import TEMPLATE_DICT
-from package.updaters.grid_case_updaters import PleaOnlyDialogUpdater, NotGuiltyBondDialogUpdater, \
-    LeapAdmissionPleaDialogUpdater
+from package.updaters.grid_case_updaters import (
+    LeapAdmissionPleaDialogUpdater,
+    NotGuiltyBondDialogUpdater,
+    PleaOnlyDialogUpdater,
+)
 from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
@@ -142,3 +163,8 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
 
     def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
         self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')
