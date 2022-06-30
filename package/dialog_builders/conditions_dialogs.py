@@ -1,9 +1,7 @@
 """The condtions dialogs module contains secondary dialogs that are opened from a main dialog."""
 from loguru import logger
-
 from PyQt5.QtWidgets import QDialog
 
-from package.dialog_builders.base_dialogs import BaseDialog
 from package.controllers.signal_connectors import (
     AddCommunityControlDialogSignalConnector,
     AddConditionsDialogSignalConnector,
@@ -22,12 +20,15 @@ from package.controllers.view_modifiers import (
     AddJailOnlyDialogViewModifier,
     AddSpecialBondConditionsDialogViewModifier,
 )
+from package.dialog_builders.base_dialogs import BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 from package.views.add_special_bond_conditions_dialog_ui import (
     Ui_AddSpecialBondConditionsDialog,
 )
+
+DIALOG = 'DIALOG'
 
 
 def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) -> None:
@@ -59,7 +60,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log('DIALOG', 'AddConditionsDialog Opened')
+        logger.log(DIALOG, 'AddConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -94,7 +95,7 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log('DIALOG', 'AddJailOnlyDialog Opened')
+        logger.log(DIALOG, 'AddJailOnlyDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -156,7 +157,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log('DIALOG', 'AddCommunityControlDialog Opened')
+        logger.log(DIALOG, 'AddCommunityControlDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -188,7 +189,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log('DIALOG', 'AddSpecialBondConditionsDialog Opened')
+        logger.log(DIALOG, 'AddSpecialBondConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -204,7 +205,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         return AddSpecialBondConditionsDialogSignalConnector(self)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
