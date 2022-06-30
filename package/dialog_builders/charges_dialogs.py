@@ -5,7 +5,7 @@ from typing import TypeVar
 from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
-from package.controllers.base_dialogs import CriminalBaseDialog
+from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.controllers.signal_connectors import (
     AddChargeDialogSignalConnector,
     AmendChargeDialogSignalConnector,

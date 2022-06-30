@@ -3,7 +3,7 @@ from loguru import logger
 
 from PyQt5.QtWidgets import QDialog
 
-from package.controllers.base_dialogs import BaseDialog
+from package.dialog_builders.base_dialogs import BaseDialog
 from package.controllers.signal_connectors import (
     AddCommunityControlDialogSignalConnector,
     AddConditionsDialogSignalConnector,

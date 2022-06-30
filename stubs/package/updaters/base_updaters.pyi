@@ -1,4 +1,4 @@
-from package.controllers.base_dialogs import CriminalBaseDialog as CriminalBaseDialog
+from package.dialog_builders.base_dialogs import CriminalBaseDialog as CriminalBaseDialog
 from typing import Any, TypeVar
 
 CBD = TypeVar('CBD', bound=CriminalBaseDialog)

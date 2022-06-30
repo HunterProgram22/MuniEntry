@@ -7,7 +7,7 @@ from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
 from package.views.custom_widgets import InfoBox
-from package.database_controllers.databases import open_db_connection, close_db_connection, extract_data, sql_query_offense_type
+from package.database_controllers.databases import sql_query_offense_type
 from package.controllers.helper_functions import set_future_date
 from package.models.criminal_charge_models import CriminalCharge
 from package.views.custom_widgets import RequiredBox
@@ -24,14 +24,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog = dialog
 
     def start_add_charge_dialog(self):
-        from package.controllers.charges_dialogs import AddChargeDialog
+        from package.dialog_builders.charges_dialogs import AddChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def start_amend_offense_dialog(self):
-        from package.controllers.charges_dialogs import AmendChargeDialog
+        from package.dialog_builders.charges_dialogs import AmendChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
@@ -470,7 +470,7 @@ class LeapSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.jail_time_credit_box.setHidden(True)
 
     def start_add_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import AddConditionsDialog
+        from package.dialog_builders.conditions_dialogs import AddConditionsDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddConditionsDialog(self.dialog)
@@ -491,7 +491,7 @@ class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.jail_time_credit_box.setHidden(True)
 
     def start_add_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import AddConditionsDialog
+        from package.dialog_builders.conditions_dialogs import AddConditionsDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddConditionsDialog(self.dialog)
@@ -514,7 +514,7 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
 
     @logger.catch
     def start_add_jail_report_dialog(self):
-        from package.controllers.conditions_dialogs import AddJailOnlyDialog
+        from package.dialog_builders.conditions_dialogs import AddJailOnlyDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
@@ -522,7 +522,7 @@ class JailCCDialogSlotFunctions(BaseDialogSlotFunctions):
 
     @logger.catch
     def start_add_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import AddCommunityControlDialog
+        from package.dialog_builders.conditions_dialogs import AddCommunityControlDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
@@ -647,7 +647,7 @@ class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
     def start_add_special_bond_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import (
+        from package.dialog_builders.conditions_dialogs import (
             AddSpecialBondConditionsDialog,
         )
 
@@ -676,7 +676,7 @@ class NoPleaBondDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
     def start_add_special_bond_conditions_dialog(self):
-        from package.controllers.conditions_dialogs import (
+        from package.dialog_builders.conditions_dialogs import (
             AddSpecialBondConditionsDialog,
         )
 

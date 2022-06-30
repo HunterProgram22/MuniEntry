@@ -2,19 +2,16 @@
 after the setupUI is called. This class makes changes to the view that are outside the the specific
 view file. Modifications to the view are placed in the ViewModifier class so that they don't need to
 be updated each time a view file is recompiled through the pyuic5 command."""
-import datetime, time
 
 from loguru import logger
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel, QComboBox, QCheckBox, QLineEdit, QTextEdit, QDateEdit, \
-    QTimeEdit, QRadioButton
+from PyQt5.QtWidgets import QLabel
 
 from settings import WIDGET_TYPE_SET_DICT
 from package.controllers.helper_functions import set_future_date
-from package.controllers import charges_grids as cg
-
+from package.dialog_builders import charges_grids as cg
 
 TODAY = QtCore.QDate.currentDate()
 

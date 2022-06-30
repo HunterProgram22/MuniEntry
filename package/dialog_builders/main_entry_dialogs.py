@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt5.QtGui import QIntValidator
 
-from package.controllers.base_dialogs import CriminalBaseDialog
+from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import (
     CmsChargeLoader,
     CmsFraLoader,

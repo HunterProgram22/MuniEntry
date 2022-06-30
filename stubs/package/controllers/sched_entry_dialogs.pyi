@@ -1,11 +1,8 @@
 from PyQt5.QtCore import QDate
-from package.controllers.base_dialogs import BaseDialog as BaseDialog
-from package.controllers.cms_case_loaders import CmsNoChargeLoader as CmsNoChargeLoader
+from package.dialog_builders.base_dialogs import BaseDialog as BaseDialog
 from package.controllers.signal_connectors import BaseDialogSignalConnector as BaseDialogSignalConnector
 from package.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions
 from package.controllers.view_modifiers import BaseDialogViewModifier as BaseDialogViewModifier
-from package.models.scheduling_information import SchedulingCaseInformation as SchedulingCaseInformation
-from package.models.template_types import TEMPLATE_DICT as TEMPLATE_DICT
 from package.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog as Ui_SchedulingEntryDialog
 from typing import Any
