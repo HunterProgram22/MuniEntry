@@ -344,7 +344,6 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         return sql_query_offense_type(key)
 
     def close_event(self):
-        # self.dialog.charges_database.close()
         self.close_window()
 
 
@@ -429,7 +428,6 @@ class AmendChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         )
 
     def close_event(self):
-        self.dialog.charges_database.close()
         self.close_window()
 
 
