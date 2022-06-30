@@ -184,17 +184,25 @@ class BaseDialogSlotFunctions(object):
             QDate.currentDate().addDays(days_to_complete)
         )
 
-    @logger.catch
-    def set_statute_and_offense(self, key):
-        """:key: is the string that is passed by the function each time the field
-        is changed on the view."""
-        field = None
+    def set_offense(self, key):
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        if self.dialog.sender() == self.dialog.statute_choice_box:
-            field = "statute"
-        elif self.dialog.sender() == self.dialog.offense_choice_box:
-            field = "offense"
+        field = 'statute'
+        offense, statute, degree = self.query_charges_database(key, field)
+        if statute == key:
+            self.dialog.offense_choice_box.setCurrentText(offense)
+        self.dialog.degree_choice_box.setCurrentText(degree)
+
+    def set_statute(self, key):
+        if self.dialog.freeform_entry_checkBox.isChecked():
+            return None
+        field = 'offense'
+        offense, statute, degree = self.query_charges_database(key, field)
+        if offense == key:
+            self.dialog.statute_choice_box.setCurrentText(statute)
+        self.dialog.degree_choice_box.setCurrentText(degree)
+
+    def query_charges_database(self, key, field):
         conn = open_db_connection("con_charges")
         query = QSqlQuery(conn)
         query_string = f"SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%'"
@@ -202,20 +210,13 @@ class BaseDialogSlotFunctions(object):
         query.bindValue(":key", key)
         query.bindValue(field, field)
         query.exec()
-        while query.next():
-            offense = query.value(1)
-            statute = query.value(2)
-            degree = query.value(3)
-            if field == "offense":
-                if offense == key:
-                    self.dialog.statute_choice_box.setCurrentText(statute)
-            elif field == "statute":
-                if statute == key:
-                    self.dialog.offense_choice_box.setCurrentText(offense)
-            self.dialog.degree_choice_box.setCurrentText(degree)
-            query.finish()
-            close_db_connection(conn)
-            break
+        query.next()
+        offense = query.value(1)
+        statute = query.value(2)
+        degree = query.value(3)
+        query.finish()
+        close_db_connection(conn)
+        return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
         logger.log('BUTTON', f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
