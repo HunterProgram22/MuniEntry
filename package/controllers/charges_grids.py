@@ -46,13 +46,14 @@ class BaseChargeGrid(QGridLayout):
         """
         return self.sender().text().replace(' All', '')
 
-    def set_all_pleas(self) -> None:
+    def set_all_pleas(self, plea=None) -> None:
         """Sets the plea for all charges based on the button pressed.
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
         logger.log('BUTTON', f'{self.sender().text()} Pressed')
-        plea = self.get_plea()
+        if plea == None:
+            plea = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
             if self.check_if_column_empty(column):

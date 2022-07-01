@@ -41,6 +41,8 @@ from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
 
 class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
+    """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
+
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Plea Only Dialog'
@@ -70,12 +72,20 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
+    """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
+
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],
         'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+    def __init__(
+        self,
+        judicial_officer: object,
+        cms_case: str = None,
+        case_table: str = None,
+        parent: object = None,
+    ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.additional_conditions_list = [
             (
@@ -94,49 +104,46 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.dialog_name = 'Not Guilty Bond Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
-        self.set_all_pleas_to_not_guilty()
-
-    def set_all_pleas_to_not_guilty(self):
-        '''Sets all pleas to not guilty at load just like hitting not guilty all button.'''
-        for column in range(1, self.charges_gridLayout.columnCount()):
-            if (
-                self.charges_gridLayout.itemAtPosition(self.charges_gridLayout.row_offense, column)
-                is not None
-            ):
-                self.charges_gridLayout.itemAtPosition(
-                    self.charges_gridLayout.row_plea, column
-                ).widget().setCurrentText('Not Guilty')
+        self.charges_gridLayout.set_all_pleas('Not Guilty')
 
     def modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self):
+    def create_dialog_slot_functions(self) -> None:
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
 
-    def connect_signals_to_slots(self):
+    def connect_signals_to_slots(self) -> NotGuiltyBondDialogSignalConnector:
         return NotGuiltyBondDialogSignalConnector(self)
 
-    def load_entry_case_information_model(self):
+    def load_entry_case_information_model(self) -> None:
         self.entry_case_information = NotGuiltyBondEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> None:
         CmsChargeLoader(self)
 
-    def update_entry_case_information(self):
-        '''Calls the dialog specific CaseModelUpdater in the grid_case_updaters.py module.'''
+    def update_entry_case_information(self) -> NotGuiltyBondDialogUpdater:
         return NotGuiltyBondDialogUpdater(self)
 
-    def add_charge_to_grid(self):
+    def add_charge_to_grid(self) -> None:
+        """Ovverides base dialog method to set cursor to defense counsel box."""
         self.charges_gridLayout.add_fields_to_charges_grid(self)
         self.defense_counsel_name_box.setFocus()
 
-    def perform_info_checks(self):
+    def perform_info_checks(self) -> None:
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
 
 
 class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+    """Dialog builder class for 'LEAP Admission Plea' dialog."""
+
+    def __init__(
+        self,
+        judicial_officer: object,
+        cms_case: str = None,
+        case_table: str = None,
+        parent: object = None,
+    ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Leap Admission Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
