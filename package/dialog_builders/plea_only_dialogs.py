@@ -51,23 +51,21 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
     def modify_view(self) -> None:
         PleaOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self):
+    def connect_signals_to_slots(self) -> None:
         self.functions = PleaOnlyDialogSlotFunctions(self)
+        PleaOnlyDialogSignalConnector(self)
 
-    def connect_signals_to_slots(self):
-        return PleaOnlyDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self):
+    def load_entry_case_information_model(self) -> None:
         self.entry_case_information = PleaOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> None:
         CmsChargeLoader(self)
 
-    def update_entry_case_information(self):
-        return PleaOnlyDialogUpdater(self)
+    def update_entry_case_information(self) -> None:
+        PleaOnlyDialogUpdater(self)
 
-    def perform_info_checks(self):
+    def perform_info_checks(self) -> None:
         self.dialog_checks = PleaOnlyDialogInfoChecker(self)
 
 
@@ -109,11 +107,9 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> NotGuiltyBondDialogSignalConnector:
-        return NotGuiltyBondDialogSignalConnector(self)
+        NotGuiltyBondDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
         self.entry_case_information = NotGuiltyBondEntryCaseInformation()
@@ -152,11 +148,9 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def modify_view(self) -> None:
         LeapAdmissionPleaDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> LeapAdmissionPleaDialogSignalConnector:
-        return LeapAdmissionPleaDialogSignalConnector(self)
+        LeapAdmissionPleaDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
         self.entry_case_information = LeapAdmissionEntryCaseInformation()

@@ -60,12 +60,10 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def modify_view(self) -> None:
         DiversionDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = DiversionDialogSlotFunctions(self)
         self.functions.show_jail_report_date_box()
         self.functions.show_other_conditions_box()
-
-    def connect_signals_to_slots(self) -> None:
         DiversionDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -113,11 +111,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def modify_view(self) -> None:
         JailCCDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = JailCCDialogSlotFunctions(self)
         self.functions.show_companion_case_fields()
-
-    def connect_signals_to_slots(self) -> None:
         JailCCDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -156,11 +152,9 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def modify_view(self) -> None:
         FineOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = FineOnlyDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
-
-    def connect_signals_to_slots(self) -> None:
         FineOnlyDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:

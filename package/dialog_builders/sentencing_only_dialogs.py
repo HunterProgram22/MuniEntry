@@ -70,11 +70,9 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
     def modify_view(self) -> None:
         TrialSentencingDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = TrialSentencingDialogSlotFunctions(self)
         self.functions.show_companion_case_fields()
-
-    def connect_signals_to_slots(self) -> None:
         TrialSentencingDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -113,11 +111,9 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
     def modify_view(self) -> None:
         LeapSentencingDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = LeapSentencingDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
-
-    def connect_signals_to_slots(self) -> None:
         LeapSentencingDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -160,10 +156,8 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
     def modify_view(self) -> None:
         SentencingOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = SentencingOnlyDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = SentencingOnlyDialogSlotFunctions(self)
         SentencingOnlyDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
