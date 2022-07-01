@@ -1,4 +1,5 @@
 """Module containing classes to build Plea and Sentencing Dialogs."""
+from loguru import logger
 from PyQt5.QtGui import QIntValidator
 
 from package.controllers.cms_case_loaders import CmsFraLoader
@@ -174,3 +175,9 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = FineOnlyDialogInfoChecker(self)
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')
