@@ -1,7 +1,6 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
-from package.controllers.base_dialogs import CriminalBaseDialog
-from package.controllers.cms_case_loaders import CmsNoChargeLoader
+from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.views.trial_to_court_hearing_dialog_ui import Ui_TrialToCourtHearingDialog
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.models.template_types import TEMPLATE_DICT

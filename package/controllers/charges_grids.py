@@ -4,7 +4,7 @@ from typing import TypeVar
 from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
-from package.controllers.base_dialogs import CriminalBaseDialog
+from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.models.criminal_charge_models import CriminalCharge
 from package.views import custom_widgets as cw
 
@@ -46,13 +46,14 @@ class BaseChargeGrid(QGridLayout):
         """
         return self.sender().text().replace(' All', '')
 
-    def set_all_pleas(self) -> None:
+    def set_all_pleas(self, plea=None) -> None:
         """Sets the plea for all charges based on the button pressed.
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
         logger.log('BUTTON', f'{self.sender().text()} Pressed')
-        plea = self.get_plea()
+        if plea == None:
+            plea = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1
             if self.check_if_column_empty(column):

@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QMessageBox
 from settings import FULL_LOG_NAME, USER_LOG_NAME, ICON_PATH
 
 fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
-logger.add(f'./resources/logs/detaillogs/{FULL_LOG_NAME}', format=fmt, level=10)
+# logger.add(f'./resources/logs/detaillogs/{FULL_LOG_NAME}', format=fmt, level=10)
 logger.add(f'./resources/logs/{USER_LOG_NAME}', format=fmt, level=20)
 logger.level('IMPORT', no=18, color='<white>')
 logger.level('DATABASE', no=21, color='<green>')
