@@ -29,7 +29,7 @@ class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog
 
     def connect_signals_to_slots(self) -> None:
         self.functions = TrialToCourtDialogSlotFunctions(self)
-        return TrialToCourtDialogSignalConnector(self)
+        TrialToCourtDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
         self.entry_case_information = SchedulingCaseInformation()

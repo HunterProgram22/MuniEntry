@@ -44,6 +44,7 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
         else:
             self.dialog_name = 'Notice Of Hearing Entry'
         super().__init__(parent)
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         logger.info(f'Loaded Case {self.cms_case.case_number}')
@@ -60,7 +61,7 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
 
     def connect_signals_to_slots(self) -> None:
         self.functions = NoticeOfHearingDialogSlotFunctions(self)
-        return NoticeOfHearingDialogSignalConnector(self)
+        NoticeOfHearingDialogSignalConnector(self)
 
     def update_entry_case_information(self):
         return NoticeOfHearingDialogCaseInformationUpdater(self)

@@ -51,6 +51,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
         self.dialog_name = dialog_name
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
@@ -69,7 +70,7 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
 
     def connect_signals_to_slots(self) -> None:
         self.functions = SchedulingEntryDialogSlotFunctions(self)
-        return SchedulingEntryDialogSignalConnector(self)
+        SchedulingEntryDialogSignalConnector(self)
 
     def update_entry_case_information(self):
         return SchedulingEntryDialogCaseInformationUpdater(self)
