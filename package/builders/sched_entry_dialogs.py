@@ -32,6 +32,7 @@ DAY_DICT = {
         }
 
 EVENT_DICT = {
+    "Trial": 2,
     "Final Pretrial": 2,
     "Pretrial": 28,
 }
@@ -98,7 +99,11 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.highest_charge_box.currentIndexChanged.connect(self.functions.set_speedy_trial_date_label)
         self.dialog.days_in_jail_lineEdit.textChanged.connect(self.functions.set_speedy_trial_date_label)
         self.dialog.continuance_days_lineEdit.textChanged.connect(self.functions.set_speedy_trial_date_label)
-        self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
+
+        # self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
+
+        self.dialog.final_pretrial_dateEdit.dateChanged.connect(self.functions.update_trial_and_pretrial_only)
+
         self.dialog.highest_charge_box.currentIndexChanged.connect(self.functions.update_all_scheduled_dates)
         self.dialog.days_in_jail_lineEdit.textChanged.connect(self.functions.update_all_scheduled_dates)
         self.dialog.continuance_days_lineEdit.textChanged.connect(self.functions.update_all_scheduled_dates)
@@ -136,6 +141,18 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.trial_dateEdit.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
 
+    def update_trial_and_pretrial_only(self):
+        if self.dialog.dialog_name == "Rohrer Scheduling Entry":
+            trial_date = self.set_trial_date("Tuesday", "Trial")
+            self.dialog.trial_dateEdit.setDate(trial_date)
+            pretrial_date = self.set_event_date("Monday", "Pretrial")
+            self.dialog.pretrial_dateEdit.setDate(pretrial_date)
+        elif self.dialog.dialog_name == "Hemmeter Scheduling Entry":
+            trial_date = self.set_trial_date("Thursday", "Trial")
+            self.dialog.trial_dateEdit.setDate(trial_date)
+            pretrial_date = self.set_event_date("Wednesday", "Pretrial")
+            self.dialog.pretrial_dateEdit.setDate(pretrial_date)
+
     def update_final_pretrial_and_pretrial_only(self):
         if self.dialog.dialog_name == "Rohrer Scheduling Entry":
             final_pretrial_date = self.set_event_date("Thursday", "Final Pretrial")
@@ -145,6 +162,14 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
             pretrial_date =  self.set_event_date("Wednesday", "Pretrial")
         self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
         self.dialog.pretrial_dateEdit.setDate(pretrial_date)
+
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+        if event_to_set == "Trial":
+            days_to_event = EVENT_DICT.get(event_to_set)
+            event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
+            while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
+                event_date = event_date.addDays(1)
+            return event_date
 
     def set_event_date(self, day_to_set: str, event_to_set: str) -> QDate:
         if event_to_set == "Trial":
