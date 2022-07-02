@@ -86,6 +86,8 @@ class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_date)
         self.dialog.final_pretrial_dateEdit.dateChanged.connect(self.functions.update_trial_date)
+        self.dialog.jury_trial_only_no_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
+        self.dialog.jury_trial_only_yes_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
 
 
 class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
@@ -122,6 +124,18 @@ class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
             event_date = event_date.addDays(1)
         return event_date
 
+    def show_hide_final_pretrial(self):
+        if self.dialog.jury_trial_only_no_radioButton.isChecked():
+            self.dialog.final_pretrial_dateEdit.setHidden(False)
+            self.dialog.final_pretrial_date_label.setHidden(False)
+            self.dialog.final_pretrial_time_label.setHidden(False)
+            self.dialog.final_pretrial_time_box.setHidden(False)
+        else:
+            self.dialog.final_pretrial_dateEdit.setHidden(True)
+            self.dialog.final_pretrial_date_label.setHidden(True)
+            self.dialog.final_pretrial_time_label.setHidden(True)
+            self.dialog.final_pretrial_time_box.setHidden(True)
+
 
 class NoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
     def __init__(self, dialog):
@@ -154,6 +168,10 @@ class NoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
             "MMMM dd, yyyy"
         )
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
+        if self.view.jury_trial_only_no_radioButton.isChecked():
+            self.model.jury_trial_only = 'No'
+        elif self.view.jury_trial_only_yes_radioButton.isChecked():
+            self.model.jury_trial_only = 'Yes'
 
 
 if __name__ == "__main__":
