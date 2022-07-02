@@ -4,7 +4,7 @@ from typing import TypeVar
 from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.models.criminal_charge_models import CriminalCharge
 from package.views import custom_widgets as cw
 

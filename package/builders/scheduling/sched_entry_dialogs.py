@@ -1,7 +1,7 @@
 from loguru import logger
 
 from package.controllers.view_modifiers import BaseDialogViewModifier
-from package.dialog_builders.base_dialogs import BaseDialog
+from package.builders.base_dialogs import BaseDialog
 from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 from package.models.template_types import TEMPLATE_DICT
@@ -64,10 +64,8 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def modify_view(self):
         return SchedulingEntryDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = SchedulingEntryDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = SchedulingEntryDialogSlotFunctions(self)
         return SchedulingEntryDialogSignalConnector(self)
 
     def update_entry_case_information(self):

@@ -2,6 +2,7 @@
 from loguru import logger
 from PyQt5.QtWidgets import QDialog
 
+from package.builders.base_dialogs import BaseDialog
 from package.controllers.signal_connectors import (
     AddCommunityControlDialogSignalConnector,
     AddConditionsDialogSignalConnector,
@@ -20,7 +21,6 @@ from package.controllers.view_modifiers import (
     AddJailOnlyDialogViewModifier,
     AddSpecialBondConditionsDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly
@@ -69,12 +69,10 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     def modify_view(self) -> AddConditionsDialogViewModifier:
         return AddConditionsDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = AddConditionsDialogSlotFunctions(self)
         self.functions.update_community_service_due_date()
-
-    def connect_signals_to_slots(self) -> AddConditionsDialogSignalConnector:
-        return AddConditionsDialogSignalConnector(self)
+        AddConditionsDialogSignalConnector(self)
 
 
 class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
@@ -103,11 +101,9 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     def modify_view(self) -> AddJailOnlyDialogViewModifier:
         return AddJailOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = AddJailOnlyDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> AddJailOnlyDialogSignalConnector:
-        return AddJailOnlyDialogSignalConnector(self)
+        AddJailOnlyDialogSignalConnector(self)
 
     def start_jail_only_dialog(self) -> None:
         self.update_entry_case_information()
@@ -166,11 +162,9 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     def modify_view(self) -> AddCommunityControlDialogViewModifier:
         return AddCommunityControlDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = AddCommunityControlDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> AddCommunityControlDialogSignalConnector:
-        return AddCommunityControlDialogSignalConnector(self)
+        AddCommunityControlDialogSignalConnector(self)
 
 
 class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDialog):
@@ -198,11 +192,9 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     def modify_view(self) -> AddSpecialBondConditionsDialogViewModifier:
         return AddSpecialBondConditionsDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = AddSpecialBondConditionsDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> AddSpecialBondConditionsDialogSignalConnector:
-        return AddSpecialBondConditionsDialogSignalConnector(self)
+        AddSpecialBondConditionsDialogSignalConnector(self)
 
 
 if __name__ == '__main__':

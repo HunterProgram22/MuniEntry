@@ -1,5 +1,5 @@
 from PyQt5.QtCore import QDate
-from package.dialog_builders.base_dialogs import BaseDialog as BaseDialog
+from package.builders.base_dialogs import BaseDialog as BaseDialog
 from package.controllers.signal_connectors import BaseDialogSignalConnector as BaseDialogSignalConnector
 from package.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions
 from package.controllers.view_modifiers import BaseDialogViewModifier as BaseDialogViewModifier

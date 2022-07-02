@@ -1,6 +1,7 @@
 """Module containing classes to build Plea Only Dialogs."""
 from loguru import logger
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsChargeLoader
 from package.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
@@ -17,7 +18,6 @@ from package.controllers.view_modifiers import (
     NotGuiltyBondDialogViewModifier,
     PleaOnlyDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.plea_only_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
     NotGuiltyBondDialogInfoChecker,
@@ -51,23 +51,21 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
     def modify_view(self) -> None:
         PleaOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self):
+    def connect_signals_to_slots(self) -> None:
         self.functions = PleaOnlyDialogSlotFunctions(self)
+        PleaOnlyDialogSignalConnector(self)
 
-    def connect_signals_to_slots(self):
-        return PleaOnlyDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self):
+    def load_entry_case_information_model(self) -> None:
         self.entry_case_information = PleaOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
     def load_cms_data_to_view(self) -> None:
         CmsChargeLoader(self)
 
-    def update_entry_case_information(self):
-        return PleaOnlyDialogUpdater(self)
+    def update_entry_case_information(self) -> None:
+        PleaOnlyDialogUpdater(self)
 
-    def perform_info_checks(self):
+    def perform_info_checks(self) -> None:
         self.dialog_checks = PleaOnlyDialogInfoChecker(self)
 
 
@@ -109,11 +107,9 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
     def modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> NotGuiltyBondDialogSignalConnector:
-        return NotGuiltyBondDialogSignalConnector(self)
+        NotGuiltyBondDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
         self.entry_case_information = NotGuiltyBondEntryCaseInformation()
@@ -124,11 +120,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def update_entry_case_information(self) -> NotGuiltyBondDialogUpdater:
         return NotGuiltyBondDialogUpdater(self)
-
-    def add_charge_to_grid(self) -> None:
-        """Ovverides base dialog method to set cursor to defense counsel box."""
-        self.charges_gridLayout.add_fields_to_charges_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
@@ -152,11 +143,9 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def modify_view(self) -> None:
         LeapAdmissionPleaDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> LeapAdmissionPleaDialogSignalConnector:
-        return LeapAdmissionPleaDialogSignalConnector(self)
+        LeapAdmissionPleaDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
         self.entry_case_information = LeapAdmissionEntryCaseInformation()

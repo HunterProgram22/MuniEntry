@@ -1,6 +1,6 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.views.trial_to_court_hearing_dialog_ui import Ui_TrialToCourtHearingDialog
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.models.template_types import TEMPLATE_DICT
@@ -27,10 +27,8 @@ class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog
     def modify_view(self):
         return TrialToCourtDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = TrialToCourtDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = TrialToCourtDialogSlotFunctions(self)
         return TrialToCourtDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):

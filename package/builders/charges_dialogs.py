@@ -5,6 +5,7 @@ from loguru import logger
 from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import QDialog
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.signal_connectors import (
     AddChargeDialogSignalConnector,
     AmendChargeDialogSignalConnector,
@@ -22,7 +23,6 @@ from package.database_controllers.databases import (
     open_db_connection,
     query_offense_statute_data,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.models.criminal_charge_models import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
@@ -38,7 +38,6 @@ class BaseChargeDialog(QDialog):
         self.main_dialog = main_dialog
         self.db_connection = open_db_connection('con_charges')
         self.modify_view()
-        self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
         self.load_offense_choice_boxes()
         self.load_statute_choice_boxes()
@@ -80,11 +79,9 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
     def modify_view(self) -> AddChargeDialogViewModifier:
         return AddChargeDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> AddChargeDialogSlotFunctions:
-        return AddChargeDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> AddChargeDialogSignalConnector:
-        return AddChargeDialogSignalConnector(self)
+    def connect_signals_to_slots(self) -> None:
+        self.functions = AddChargeDialogSlotFunctions(self)
+        AddChargeDialogSignalConnector(self)
 
 
 class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
@@ -106,11 +103,9 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
     def modify_view(self) -> AmendChargeDialogViewModifier:
         return AmendChargeDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> AmendChargeDialogSlotFunctions:
-        return AmendChargeDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> AmendChargeDialogSignalConnector:
-        return AmendChargeDialogSignalConnector(self)
+    def connect_signals_to_slots(self) -> None:
+        self.functions = AmendChargeDialogSlotFunctions(self)
+        AmendChargeDialogSignalConnector(self)
 
 
 if __name__ == '__main__':

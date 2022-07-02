@@ -2,7 +2,7 @@
 from loguru import logger
 
 from package.controllers.view_modifiers import BaseDialogViewModifier
-from package.dialog_builders.base_dialogs import BaseDialog
+from package.builders.base_dialogs import BaseDialog
 from package.views.notice_of_hearing_dialog_ui import Ui_NoticeOfHearingDialog
 
 from package.models.template_types import TEMPLATE_DICT
@@ -56,10 +56,8 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
     def modify_view(self):
         return NoticeOfHearingDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = NoticeOfHearingDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = NoticeOfHearingDialogSlotFunctions(self)
         return NoticeOfHearingDialogSignalConnector(self)
 
     def update_entry_case_information(self):

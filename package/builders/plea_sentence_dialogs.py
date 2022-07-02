@@ -1,7 +1,7 @@
 """Module containing classes to build Plea and Sentencing Dialogs."""
 from loguru import logger
-from PyQt5.QtGui import QIntValidator
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsFraLoader
 from package.controllers.signal_connectors import (
     DiversionDialogSignalConnector,
@@ -18,7 +18,6 @@ from package.controllers.view_modifiers import (
     FineOnlyDialogViewModifier,
     JailCCDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.jail_charge_grid_checkers import (
     JailCCPleaDialogInfoChecker,
 )
@@ -60,12 +59,10 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
     def modify_view(self) -> None:
         DiversionDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = DiversionDialogSlotFunctions(self)
         self.functions.show_jail_report_date_box()
         self.functions.show_other_conditions_box()
-
-    def connect_signals_to_slots(self) -> None:
         DiversionDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -94,7 +91,6 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         parent: object = None,
     ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),
@@ -113,11 +109,9 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
     def modify_view(self) -> None:
         JailCCDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = JailCCDialogSlotFunctions(self)
         self.functions.show_companion_case_fields()
-
-    def connect_signals_to_slots(self) -> None:
         JailCCDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
@@ -156,11 +150,9 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
     def modify_view(self) -> None:
         FineOnlyDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = FineOnlyDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
-
-    def connect_signals_to_slots(self) -> None:
         FineOnlyDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
