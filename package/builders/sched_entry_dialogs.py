@@ -49,10 +49,12 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
         self, judicial_officer=None, dialog_name=None, cms_case=None, case_table=None, parent=None
     ):
         self.case_table = case_table
+        logger.info(f'Loading case from {self.case_table}')
         self.dialog_name = dialog_name
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        logger.info(f'Loaded Case {self.cms_case.case_number}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
