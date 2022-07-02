@@ -97,6 +97,7 @@ class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
     def set_scheduling_dates(self):
         self.model.trial_date = self.view.trial_dateEdit.date().toString("MMMM dd, yyyy")
         self.model.trial_time = self.view.trial_time_box.currentText()
+        self.model.courtroom_assigned = self.view.courtroom_box.currentText()
 
 
 if __name__ == "__main__":

@@ -18,6 +18,7 @@ class SchedulingCaseInformation:
     final_pretrial_time: str = None
     pretrial_scheduled: bool = True
     jury_trial_only: str = None
+    courtroom_assigned: str = None
 
 
     def get_case_information(self):

@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import os
+import random
+from datetime import datetime
 from typing import Type
 
 from loguru import logger
@@ -150,6 +152,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return 'Hemmeter Scheduling Entry'
         return 'None'
 
+    def assign_judge(self):
+        judge_list = ['Judge Hemmeter', 'Judge Rohrer']
+        assigned_judge = random.choice(judge_list)
+        now = datetime.now()
+        now = now.strftime('%B %d, %Y at %H:%M:%S %p')
+        self.assign_judge_label.setText(assigned_judge)
+        self.last_judge_assigned_label.setText(f'The last judge assigned was {assigned_judge} at {now}')
+
 
 class MainWindowViewModifier(object):
     """Class that modifies the view file."""
@@ -228,6 +238,7 @@ class MainWindowSignalConnector(object):
         self.main_window.hemmeter_schedulingEntryButton.released.connect(
             self.main_window.start_scheduling_entry,
         )
+        self.main_window.random_judge_Button.released.connect(self.main_window.assign_judge)
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()
         self.connect_judicial_officers_to_set_officer()

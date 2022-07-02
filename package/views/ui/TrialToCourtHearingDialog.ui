@@ -181,49 +181,7 @@ font-weight: bold;</string>
            <height>697</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="0">
-           <widget class="QFrame" name="frame_8">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(12, 117, 255);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="2" column="0">
-              <widget class="QPushButton" name="close_dialog_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 96, 82);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QPushButton" name="create_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Open Entry</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,2,1">
           <item row="1" column="0">
            <widget class="QFrame" name="frame_5">
             <property name="styleSheet">
@@ -240,27 +198,28 @@ font-weight: bold;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0">
-               <property name="verticalSpacing">
-                <number>24</number>
+              <layout class="QGridLayout" name="gridLayout_3">
+               <property name="bottomMargin">
+                <number>10</number>
                </property>
-               <item row="0" column="0" colspan="2">
-                <widget class="QLabel" name="label_5">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                   <underline>true</underline>
-                  </font>
-                 </property>
+               <property name="verticalSpacing">
+                <number>36</number>
+               </property>
+               <item row="1" column="0">
+                <widget class="QLabel" name="label_4">
                  <property name="text">
-                  <string>SCHEDULED DATES</string>
+                  <string>Trial To Court Date:</string>
                  </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="calendarPopup">
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -323,21 +282,52 @@ font-weight: bold;</string>
                  </item>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_4">
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_8">
                  <property name="text">
-                  <string>Trial To Court Date:</string>
+                  <string>Assigned Courtroom:</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+               <item row="3" column="1">
+                <widget class="NoScrollComboBox" name="courtroom_box">
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom C</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom B</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom A</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="0" column="0" colspan="2">
+                <widget class="QLabel" name="label_5">
+                 <property name="font">
+                  <font>
+                   <family>Palatino Linotype</family>
+                   <pointsize>10</pointsize>
+                   <weight>75</weight>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                   <underline>true</underline>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>SCHEDULED DATES</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignCenter</set>
                  </property>
                 </widget>
                </item>
@@ -522,6 +512,48 @@ background-color: rgb(255, 255, 255);</string>
                 </widget>
                </item>
               </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QFrame" name="frame_8">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(12, 117, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="0" column="0">
+              <widget class="QPushButton" name="create_entry_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Open Entry</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="close_dialog_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 96, 82);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Close Dialog</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>

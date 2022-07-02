@@ -341,7 +341,7 @@ font-weight: bold;</string>
       <item row="5" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="crimTab">
          <attribute name="title">
@@ -704,52 +704,129 @@ font-weight: bold;</string>
          <attribute name="title">
           <string>Scheduling</string>
          </attribute>
-         <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,1">
-          <property name="horizontalSpacing">
-           <number>24</number>
-          </property>
-          <property name="verticalSpacing">
-           <number>12</number>
-          </property>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="rohrer_schedulingEntryButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 255);</string>
+         <layout class="QGridLayout" name="gridLayout_7">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_4" rowstretch="3,2,1,3,3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
             </property>
-            <property name="text">
-             <string>Rohrer Scheduling Entry</string>
+            <property name="topMargin">
+             <number>10</number>
             </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="hemmeter_schedulingEntryButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 255);</string>
+            <property name="horizontalSpacing">
+             <number>24</number>
             </property>
-            <property name="text">
-             <string>Hemmeter Scheduling Entry</string>
+            <property name="verticalSpacing">
+             <number>48</number>
             </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="notice_of_hearingEntryButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 255);</string>
-            </property>
-            <property name="text">
-             <string>Final/Jury Notice of Hearing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="trial_to_court_hearingEntryButton">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 255);</string>
-            </property>
-            <property name="text">
-             <string>Trial To Court Notice of Hearing</string>
-            </property>
-           </widget>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="random_judge_Button">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 170, 0);</string>
+              </property>
+              <property name="text">
+               <string>Assign Random Judge</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="assign_judge_label">
+              <property name="text">
+               <string>Assigned Judge Name</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="2">
+             <widget class="Line" name="line_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QPushButton" name="rohrer_schedulingEntryButton">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Rohrer Scheduling Entry</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QPushButton" name="hemmeter_schedulingEntryButton">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Hemmeter Scheduling Entry</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QPushButton" name="notice_of_hearingEntryButton">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Final/Jury Notice of Hearing</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QPushButton" name="trial_to_court_hearingEntryButton">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Trial To Court Notice of Hearing</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="2">
+             <widget class="QLabel" name="last_judge_assigned_label">
+              <property name="text">
+               <string>The Last Judge Assigned was None.</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
