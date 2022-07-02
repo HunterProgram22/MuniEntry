@@ -56,10 +56,8 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
     def modify_view(self):
         return NoticeOfHearingDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = NoticeOfHearingDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = NoticeOfHearingDialogSlotFunctions(self)
         return NoticeOfHearingDialogSignalConnector(self)
 
     def update_entry_case_information(self):

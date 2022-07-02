@@ -38,7 +38,6 @@ class BaseChargeDialog(QDialog):
         self.main_dialog = main_dialog
         self.db_connection = open_db_connection('con_charges')
         self.modify_view()
-        self.functions = self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
         self.load_offense_choice_boxes()
         self.load_statute_choice_boxes()
@@ -81,7 +80,7 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
         return AddChargeDialogViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
-        AddChargeDialogSlotFunctions(self)
+        self.functions = AddChargeDialogSlotFunctions(self)
         AddChargeDialogSignalConnector(self)
 
 
@@ -105,7 +104,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
         return AmendChargeDialogViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
-        AmendChargeDialogSlotFunctions(self)
+        self.functions = AmendChargeDialogSlotFunctions(self)
         AmendChargeDialogSignalConnector(self)
 
 

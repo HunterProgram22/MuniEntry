@@ -27,10 +27,8 @@ class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog
     def modify_view(self):
         return TrialToCourtDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
-        self.functions = TrialToCourtDialogSlotFunctions(self)
-
     def connect_signals_to_slots(self) -> None:
+        self.functions = TrialToCourtDialogSlotFunctions(self)
         return TrialToCourtDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
