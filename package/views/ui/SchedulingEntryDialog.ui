@@ -532,6 +532,137 @@ background-color: rgb(255, 255, 255);</string>
                </attribute>
               </widget>
              </item>
+             <item row="9" column="1">
+              <widget class="NoScrollDateEdit" name="trial_dateEdit">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0" colspan="2">
+              <widget class="QLabel" name="label_5">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>SCHEDULED DATES</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QRadioButton" name="three_week_pretrial_radioButton">
+               <property name="text">
+                <string>Pretrial 3 weeks before trial</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QRadioButton" name="no_pretrial_radioButton">
+               <property name="text">
+                <string>No Pretrial</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QRadioButton" name="two_week_pretrial_radioButton">
+               <property name="text">
+                <string>Pretrial 2 weeks before trial</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Jury Trial Date</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="2">
+              <widget class="QLabel" name="label_16">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>PRETRIAL TIME</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Final Pretrial Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="pretrial_date_label">
+               <property name="text">
+                <string>Telephonic Pretrial Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="NoScrollDateEdit" name="pretrial_dateEdit">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Final Pretrial Time:</string>
+               </property>
+              </widget>
+             </item>
              <item row="8" column="1">
               <widget class="NoScrollComboBox" name="final_pretrial_time_box">
                <property name="styleSheet">
@@ -607,137 +738,6 @@ background-color: rgb(255, 255, 255);</string>
                  <string>4:15 PM</string>
                 </property>
                </item>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QRadioButton" name="three_week_pretrial_radioButton">
-               <property name="text">
-                <string>Pretrial 3 weeks before trial</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="4" column="0" colspan="2">
-              <widget class="QLabel" name="label_5">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>SCHEDULED DATES</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QRadioButton" name="no_pretrial_radioButton">
-               <property name="text">
-                <string>No Pretrial</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QRadioButton" name="two_week_pretrial_radioButton">
-               <property name="text">
-                <string>Pretrial 2 weeks before trial</string>
-               </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup</string>
-               </attribute>
-              </widget>
-             </item>
-             <item row="9" column="1">
-              <widget class="NoScrollDateEdit" name="pretrial_dateEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Final Pretrial Time:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="NoScrollDateEdit" name="trial_dateEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>Final Pretrial Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="9" column="0">
-              <widget class="QLabel" name="pretrial_date_label">
-               <property name="text">
-                <string>Telephonic Pretrial Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Jury Trial Date</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="2">
-              <widget class="QLabel" name="label_16">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>PRETRIAL TIME</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
               </widget>
              </item>
             </layout>
