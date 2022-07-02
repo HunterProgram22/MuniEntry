@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from loguru import logger
-from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtGui import QCloseEvent, QIntValidator
 from PyQt5.QtWidgets import QDialog
 
 from package.models.cms_models import CmsCaseInformation
@@ -74,6 +74,7 @@ class CriminalBaseDialog(BaseDialog):
         super().__init__(parent)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        self.validator = QIntValidator(0, 1000, self)
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()

@@ -1,6 +1,7 @@
 """Module containing classes to build Plea Only Dialogs."""
 from loguru import logger
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsChargeLoader
 from package.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
@@ -17,7 +18,6 @@ from package.controllers.view_modifiers import (
     NotGuiltyBondDialogViewModifier,
     PleaOnlyDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.plea_only_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
     NotGuiltyBondDialogInfoChecker,
@@ -120,11 +120,6 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
 
     def update_entry_case_information(self) -> NotGuiltyBondDialogUpdater:
         return NotGuiltyBondDialogUpdater(self)
-
-    def add_charge_to_grid(self) -> None:
-        """Ovverides base dialog method to set cursor to defense counsel box."""
-        self.charges_gridLayout.add_fields_to_charges_grid(self)
-        self.defense_counsel_name_box.setFocus()
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)

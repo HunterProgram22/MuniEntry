@@ -14,7 +14,7 @@ from package.controllers.view_modifiers import (
     FailureToAppearDialogViewModifier,
     FreeformDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.base_checks import (
     FailureToAppearDialogInfoChecker,
     FreeformDialogInfoChecker,

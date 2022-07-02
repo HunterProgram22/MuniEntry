@@ -1,6 +1,5 @@
 """Module containing classes to build Sentencing Only Dialogs."""
 from loguru import logger
-from PyQt5.QtGui import QIntValidator
 
 from package.controllers.cms_case_loaders import CmsFraLoader
 from package.controllers.signal_connectors import (
@@ -18,7 +17,7 @@ from package.controllers.view_modifiers import (
     SentencingOnlyDialogViewModifier,
     TrialSentencingDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.jail_charge_grid_checkers import (
     SentencingOnlyDialogInfoChecker,
     TrialSentencingDialogInfoChecker,
@@ -53,7 +52,6 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         parent: object = None,
     ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.validator = QIntValidator(0, 1000, self)
         self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),
@@ -141,6 +139,7 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
         parent: object = None,
     ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.jail_time_credit_box.setValidator(self.validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),
             ('license_suspension_checkBox', self.entry_case_information.license_suspension),

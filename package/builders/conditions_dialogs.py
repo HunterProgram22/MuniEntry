@@ -20,7 +20,7 @@ from package.controllers.view_modifiers import (
     AddJailOnlyDialogViewModifier,
     AddSpecialBondConditionsDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import BaseDialog
+from package.builders.base_dialogs import BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly

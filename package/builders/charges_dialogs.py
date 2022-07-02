@@ -22,7 +22,7 @@ from package.database_controllers.databases import (
     open_db_connection,
     query_offense_statute_data,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.models.criminal_charge_models import AmendOffenseDetails
 from package.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from package.views.amend_charge_dialog_ui import Ui_AmendChargeDialog

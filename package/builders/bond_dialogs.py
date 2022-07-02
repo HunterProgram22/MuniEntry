@@ -17,7 +17,7 @@ from package.controllers.view_modifiers import (
     NoPleaBondDialogViewModifier,
     ProbationViolationBondDialogViewModifier,
 )
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.bond_checkers import (
     BondHearingDialogInfoChecker,
     NoPleaBondDialogInfoChecker,

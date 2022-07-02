@@ -3,7 +3,7 @@
 from loguru import logger
 from typing import TypeVar
 
-from package.dialog_builders.base_dialogs import CriminalBaseDialog
+from package.builders.base_dialogs import CriminalBaseDialog
 
 CBD = TypeVar('CBD', bound=CriminalBaseDialog)
 

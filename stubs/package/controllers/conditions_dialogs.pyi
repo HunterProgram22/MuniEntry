@@ -1,4 +1,4 @@
-from package.dialog_builders.base_dialogs import BaseDialog as BaseDialog
+from package.builders.base_dialogs import BaseDialog as BaseDialog
 from package.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog as Ui_AddCommunityControlDialog
 from package.views.add_conditions_dialog_ui import Ui_AddConditionsDialog as Ui_AddConditionsDialog
 from package.views.add_jail_only_dialog_ui import Ui_AddJailOnly as Ui_AddJailOnly

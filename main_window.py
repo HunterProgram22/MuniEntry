@@ -4,19 +4,19 @@ from __future__ import annotations
 import os
 from typing import Type
 
-import package.dialog_builders.bond_dialogs
-import package.dialog_builders.plea_only_dialogs
-import package.dialog_builders.plea_sentence_dialogs
-import package.dialog_builders.sentencing_only_dialogs
 from loguru import logger
 from PyQt5 import QtGui
 from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
 from PyQt5.QtGui import QKeySequence
 
-from package.dialog_builders import general_entry_dialogs as med
-from package.dialog_builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
-from package.dialog_builders.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
-from package.dialog_builders.scheduling.trial_to_court_hearing_notice_dialog import \
+from package.builders import general_entry_dialogs as general_entry
+from package.builders import bond_dialogs as bond
+from package.builders import plea_only_dialogs as plea_only
+from package.builders import plea_sentence_dialogs as plea_sentence
+from package.builders import sentencing_only_dialogs as sentencing_only
+from package.builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
+from package.builders.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.builders.scheduling.trial_to_court_hearing_notice_dialog import \
     TrialToCourtHearingDialog
 from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,
@@ -170,20 +170,20 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
         }
         self.main_window.dialog_buttons_dict = {
-            self.main_window.FineOnlyPleaButton: package.dialog_builders.plea_sentence_dialogs.FineOnlyPleaDialog,
-            self.main_window.JailCCPleaButton: package.dialog_builders.plea_sentence_dialogs.JailCCPleaDialog,
-            self.main_window.DiversionButton: package.dialog_builders.plea_sentence_dialogs.DiversionPleaDialog,
-            self.main_window.NotGuiltyBondButton: package.dialog_builders.plea_only_dialogs.NotGuiltyBondDialog,
-            self.main_window.FailureToAppearButton: med.FailureToAppearDialog,
-            self.main_window.ProbationViolationBondButton: package.dialog_builders.bond_dialogs.ProbationViolationBondDialog,
-            self.main_window.BondHearingButton: package.dialog_builders.bond_dialogs.BondHearingDialog,
-            self.main_window.PleaOnlyButton: package.dialog_builders.plea_only_dialogs.PleaOnlyDialog,
-            self.main_window.NoPleaBondButton: package.dialog_builders.bond_dialogs.NoPleaBondDialog,
-            self.main_window.LeapAdmissionButton: package.dialog_builders.plea_only_dialogs.LeapAdmissionPleaDialog,
-            self.main_window.LeapSentencingButton: package.dialog_builders.sentencing_only_dialogs.LeapSentencingDialog,
-            self.main_window.TrialSentencingButton: package.dialog_builders.sentencing_only_dialogs.TrialSentencingDialog,
-            self.main_window.SentencingOnlyButton: package.dialog_builders.sentencing_only_dialogs.SentencingOnlyDialog,
-            self.main_window.FreeformEntryButton: med.FreeformDialog,
+            self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
+            self.main_window.JailCCPleaButton: plea_sentence.JailCCPleaDialog,
+            self.main_window.DiversionButton: plea_sentence.DiversionPleaDialog,
+            self.main_window.NotGuiltyBondButton: plea_only.NotGuiltyBondDialog,
+            self.main_window.FailureToAppearButton: general_entry.FailureToAppearDialog,
+            self.main_window.ProbationViolationBondButton: bond.ProbationViolationBondDialog,
+            self.main_window.BondHearingButton: bond.BondHearingDialog,
+            self.main_window.PleaOnlyButton: plea_only.PleaOnlyDialog,
+            self.main_window.NoPleaBondButton: bond.NoPleaBondDialog,
+            self.main_window.LeapAdmissionButton: plea_only.LeapAdmissionPleaDialog,
+            self.main_window.LeapSentencingButton: sentencing_only.LeapSentencingDialog,
+            self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
+            self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
+            self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
             self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
