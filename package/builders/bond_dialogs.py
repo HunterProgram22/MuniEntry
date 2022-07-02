@@ -1,6 +1,7 @@
 """Module for building main entry bond dialogs."""
 from loguru import logger
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 from package.controllers.signal_connectors import (
     BondHearingDialogSignalConnector,
@@ -17,7 +18,6 @@ from package.controllers.view_modifiers import (
     NoPleaBondDialogViewModifier,
     ProbationViolationBondDialogViewModifier,
 )
-from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.bond_checkers import (
     BondHearingDialogInfoChecker,
     NoPleaBondDialogInfoChecker,
@@ -83,11 +83,9 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
     def modify_view(self) -> NoPleaBondDialogViewModifier:
         return NoPleaBondDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = NoPleaBondDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> NoPleaBondDialogSignalConnector:
-        return NoPleaBondDialogSignalConnector(self)
+        NoPleaBondDialogSignalConnector(self)
 
     def update_entry_case_information(self) -> NoPleaBondDialogUpdater:
         return NoPleaBondDialogUpdater(self)
@@ -121,12 +119,10 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
     def modify_view(self) -> ProbationViolationBondDialogViewModifier:
         return ProbationViolationBondDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = ProbationViolationBondDialogSlotFunctions(self)
         self.functions.hide_bond_conditions()
-
-    def connect_signals_to_slots(self) -> ProbationViolationBondDialogSignalConnector:
-        return ProbationViolationBondDialogSignalConnector(self)
+        ProbationViolationBondDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
         self.entry_case_information = CommunityControlViolationEntryCaseInformation()
@@ -179,11 +175,9 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
     def modify_view(self) -> BondHearingDialogViewModifier:
         return BondHearingDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = BondHearingDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> BondHearingDialogSignalConnector:
-        return BondHearingDialogSignalConnector(self)
+        BondHearingDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
         self.entry_case_information = BondHearingEntryCaseInformation()

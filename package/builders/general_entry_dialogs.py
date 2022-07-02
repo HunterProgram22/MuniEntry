@@ -1,6 +1,7 @@
 """The module that contains the main classes for creating an entry dialog."""
 from loguru import logger
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 from package.controllers.signal_connectors import (
     FailureToAppearDialogSignalConnector,
@@ -14,7 +15,6 @@ from package.controllers.view_modifiers import (
     FailureToAppearDialogViewModifier,
     FreeformDialogViewModifier,
 )
-from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.base_checks import (
     FailureToAppearDialogInfoChecker,
     FreeformDialogInfoChecker,
@@ -58,13 +58,11 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         if self.case_table == 'final_pretrials':
             self.appearance_reason_box.setCurrentText('final pre-trial')
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = FailureToAppearDialogSlotFunctions(self)
         self.functions.hide_warrant_radius()
         self.functions.hide_bond_boxes()
-
-    def connect_signals_to_slots(self) -> FreeformDialogSignalConnector:
-        return FailureToAppearDialogSignalConnector(self)
+        FailureToAppearDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
         self.entry_case_information = FailureToAppearEntryCaseInformation()
@@ -97,11 +95,9 @@ class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
     def modify_view(self) -> FreeformDialogViewModifier:
         return FreeformDialogViewModifier(self)
 
-    def create_dialog_slot_functions(self) -> None:
+    def connect_signals_to_slots(self) -> None:
         self.functions = FreeformDialogSlotFunctions(self)
-
-    def connect_signals_to_slots(self) -> FreeformDialogSignalConnector:
-        return FreeformDialogSignalConnector(self)
+        FreeformDialogSignalConnector(self)
 
     def load_entry_case_information_model(self) -> None:
         self.entry_case_information = FreeformEntryCaseInformation()

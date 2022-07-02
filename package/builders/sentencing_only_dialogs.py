@@ -1,6 +1,7 @@
 """Module containing classes to build Sentencing Only Dialogs."""
 from loguru import logger
 
+from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsFraLoader
 from package.controllers.signal_connectors import (
     LeapSentencingDialogSignalConnector,
@@ -17,7 +18,6 @@ from package.controllers.view_modifiers import (
     SentencingOnlyDialogViewModifier,
     TrialSentencingDialogViewModifier,
 )
-from package.builders.base_dialogs import CriminalBaseDialog
 from package.information_checkers.jail_charge_grid_checkers import (
     SentencingOnlyDialogInfoChecker,
     TrialSentencingDialogInfoChecker,

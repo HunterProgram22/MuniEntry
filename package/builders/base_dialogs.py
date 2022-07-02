@@ -18,16 +18,17 @@ class BaseDialog(QDialog):
     def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.modify_view()
-        # self.create_dialog_slot_functions()
         self.connect_signals_to_slots()
 
     def modify_view(self) -> None:
         raise NotImplementedError
 
-    # def create_dialog_slot_functions(self) -> None:
-    #     raise NotImplementedError
-
     def connect_signals_to_slots(self) -> None:
+        """Abstract method that connects signals to dialog slot functions.
+
+        Raises:
+            NotImplementedError: if the dialog does not implement the method.
+        """
         raise NotImplementedError
 
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
