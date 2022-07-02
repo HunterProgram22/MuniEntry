@@ -14,9 +14,9 @@ from package.builders import bond_dialogs as bond
 from package.builders import plea_only_dialogs as plea_only
 from package.builders import plea_sentence_dialogs as plea_sentence
 from package.builders import sentencing_only_dialogs as sentencing_only
-from package.builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
-from package.builders.scheduling.hearing_notice_dialogs import NoticeOfHearingDialog
-from package.builders.scheduling.trial_to_court_hearing_notice_dialog import \
+from package.builders.sched_entry_dialogs import SchedulingEntryDialog
+from package.builders.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.builders.trial_to_court_hearing_notice_dialog import \
     TrialToCourtHearingDialog
 from package.database_controllers.databases import (
     CriminalCaseSQLRetriever,
