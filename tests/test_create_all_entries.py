@@ -89,6 +89,13 @@ def leap_dialog(qtbot, main_window):
     return main_window.dialog
 
 
+def leap_valid_dialog(qtbot, main_window):
+    "LEAP Admission Plea - Already Valid Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.LeapAdmissionValidButton)
+    return main_window.dialog
+
+
 @pytest.fixture
 def pve_dialog(qtbot, main_window):
     "Preliminary Probation Violation Bond Entry"
@@ -498,6 +505,16 @@ def test_leap_admission_plea_entry(qtbot, leap_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(leap_dialog.create_entry_Button)
     assert leap_dialog.entry_case_information.case_number == "21TRC05611leap_admission_test"
+
+
+@pytest.mark.create_entry_test
+def test_leap_admission_plea_valid_entry(qtbot, leap_valid_dialog):
+    enter_data(leap_valid_dialog.case_number_lineEdit, "leap_admission_valid_test")
+    mouse_click(leap_valid_dialog.guilty_all_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(leap_valid_dialog.create_entry_Button)
+    assert leap_valid_dialog.entry_case_information.case_number == "21TRC05611leap_admission_valid_test"
 
 
 @pytest.mark.create_entry_test
