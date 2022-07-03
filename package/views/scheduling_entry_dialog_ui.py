@@ -157,7 +157,7 @@ class Ui_SchedulingEntryDialog(object):
         self.label_6.setAlignment(QtCore.Qt.AlignCenter)
         self.label_6.setObjectName("label_6")
         self.gridLayout.addWidget(self.label_6, 0, 0, 1, 5)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -420,4 +420,4 @@ class Ui_SchedulingEntryDialog(object):
         self.final_pretrial_time_box.setItemText(13, _translate("SchedulingEntryDialog", "4:15 PM"))
         self.close_dialog_Button.setText(_translate("SchedulingEntryDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("SchedulingEntryDialog", "Open Entry"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

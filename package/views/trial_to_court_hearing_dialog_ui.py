@@ -209,7 +209,7 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_24 = QtWidgets.QLabel(self.case_name_Frame)
         self.label_24.setObjectName("label_24")
         self.gridLayout.addWidget(self.label_24, 3, 0, 1, 1)
-        self.defense_counsel_name_box = QtWidgets.QComboBox(self.case_name_Frame)
+        self.defense_counsel_name_box = DefenseCounselComboBox(self.case_name_Frame)
         self.defense_counsel_name_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defense_counsel_name_box.setEditable(True)
         self.defense_counsel_name_box.setObjectName("defense_counsel_name_box")
@@ -297,4 +297,4 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_6.setText(_translate("TrialToCourtHearingDialog", "CASE INFORMATION"))
         self.create_entry_Button.setText(_translate("TrialToCourtHearingDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("TrialToCourtHearingDialog", "Close Dialog"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
