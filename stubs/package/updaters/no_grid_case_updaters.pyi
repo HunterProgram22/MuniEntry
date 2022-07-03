@@ -1,4 +1,4 @@
-from package.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater
+from munientry.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater
 from typing import Any
 
 class NoPleaBondDialogUpdater:

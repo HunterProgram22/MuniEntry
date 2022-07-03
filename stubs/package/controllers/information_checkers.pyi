@@ -1,4 +1,4 @@
-from package.views.custom_widgets import JailWarningBox as JailWarningBox, RequiredBox as RequiredBox, TwoChoiceQuestionBox as TwoChoiceQuestionBox, WarningBox as WarningBox
+from munientry.views.custom_widgets import JailWarningBox as JailWarningBox, RequiredBox as RequiredBox, TwoChoiceQuestionBox as TwoChoiceQuestionBox, WarningBox as WarningBox
 from typing import Any
 
 def check_judicial_officer(func): ...

@@ -2,7 +2,7 @@ import pytest
 from PyQt5.QtSql import QSqlDatabase
 
 from settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
-from package.database_controllers.databases import (
+from munientry.data.databases import (
     CriminalCaseSQLRetriever,
     open_db_connection,
     create_db_connection,
