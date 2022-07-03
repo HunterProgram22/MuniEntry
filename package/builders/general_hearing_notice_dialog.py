@@ -21,7 +21,7 @@ class GeneralNoticeOfHearingDialog(BaseDialog, Ui_GeneralNoticeOfHearingDialog):
     ):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = 'Notice Of Hearing Entry'
+        self.dialog_name = 'General Notice Of Hearing Entry'
         super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer

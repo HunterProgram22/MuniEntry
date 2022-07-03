@@ -309,7 +309,7 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.final_pretrial_time_box.setItemText(12, _translate("FinalJuryNoticeOfHearingDialog", "4:00 PM"))
         self.final_pretrial_time_box.setItemText(13, _translate("FinalJuryNoticeOfHearingDialog", "4:15 PM"))
         self.final_pretrial_date_label.setText(_translate("FinalJuryNoticeOfHearingDialog", "Final Pretrial Date:"))
-        self.label_5.setText(_translate("FinalJuryNoticeOfHearingDialog", "SCHEDULED DATES"))
+        self.label_5.setText(_translate("FinalJuryNoticeOfHearingDialog", "SCHEDULING INFORMATION"))
         self.label_4.setText(_translate("FinalJuryNoticeOfHearingDialog", "Jury Trial Date"))
         self.jury_trial_only_no_radioButton.setText(_translate("FinalJuryNoticeOfHearingDialog", "No"))
         self.label.setText(_translate("FinalJuryNoticeOfHearingDialog", "Def. First Name:"))

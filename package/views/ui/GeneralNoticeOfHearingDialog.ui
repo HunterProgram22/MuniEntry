@@ -282,7 +282,7 @@ background-color: rgb(255, 255, 255);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>SCHEDULED DATES</string>
+                  <string>SCHEDULING INFORMATION</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -494,7 +494,7 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Motion to Supress</string>
+                   <string>Motion to Suppress</string>
                   </property>
                  </item>
                  <item>

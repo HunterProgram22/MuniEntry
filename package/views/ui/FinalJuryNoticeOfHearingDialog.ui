@@ -376,7 +376,7 @@ background-color: rgb(255, 255, 255);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>SCHEDULED DATES</string>
+                  <string>SCHEDULING INFORMATION</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
