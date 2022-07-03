@@ -88,6 +88,11 @@ Leap_Admission_Plea_Template = Template(
     "Leap_Admission_Plea_Template.docx",
 )
 
+Leap_Admission_Plea_Already_Valid_Template = Template(
+    "LEAP Admission Plea Already Valid Entry",
+    "Leap_Admission_Plea_Already_Valid_Template.docx",
+)
+
 Scheduling_Entry_Template_Rohrer = Template(
     "Rohrer Scheduling Entry",
     "Scheduling_Entry_Template_Rohrer.docx",
@@ -137,6 +142,7 @@ TEMPLATE_DICT = {
     "Bond Hearing Dialog": Bond_Hearing_Template,
     "Plea Only Dialog": Plea_Only_Template,
     "Leap Admission Plea Dialog": Leap_Admission_Plea_Template,
+    "Leap Admission Plea Already Valid Dialog": Leap_Admission_Plea_Already_Valid_Template,
     "Leap Sentencing Dialog": Leap_Sentencing_Template,
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,

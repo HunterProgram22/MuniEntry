@@ -5,6 +5,7 @@ from package.builders.base_dialogs import CriminalBaseDialog
 from package.controllers.cms_case_loaders import CmsChargeLoader
 from package.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
+    LeapAdmissionPleaValidDialogSignalConnector,
     NotGuiltyBondDialogSignalConnector,
     PleaOnlyDialogSignalConnector,
 )
@@ -38,6 +39,7 @@ from package.updaters.grid_case_updaters import (
 from package.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 from package.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from package.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
+from package.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 
 
 class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
@@ -146,6 +148,41 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
     def connect_signals_to_slots(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
         LeapAdmissionPleaDialogSignalConnector(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = LeapAdmissionEntryCaseInformation()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+
+    def load_cms_data_to_view(self) -> None:
+        CmsChargeLoader(self)
+
+    def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
+        return LeapAdmissionPleaDialogUpdater(self)
+
+    def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
+        self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
+
+
+class LeapPleaValidDialog(CriminalBaseDialog, Ui_LeapPleaValidDialog):
+    """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
+
+    def __init__(
+        self,
+        judicial_officer: object,
+        cms_case: str = None,
+        case_table: str = None,
+        parent: object = None,
+    ) -> None:
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = 'Leap Admission Plea Already Valid Dialog'
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+
+    def modify_view(self) -> None:
+        LeapAdmissionPleaDialogViewModifier(self)
+
+    def connect_signals_to_slots(self) -> None:
+        self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
+        LeapAdmissionPleaValidDialogSignalConnector(self)
 
     def load_entry_case_information_model(self):
         self.entry_case_information = LeapAdmissionEntryCaseInformation()

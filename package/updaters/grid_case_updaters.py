@@ -154,13 +154,20 @@ class LeapSentencingDialogUpdater(BaseDialogUpdater):
 
 
 class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
-    """Updater for LEAP Admission Plea Dialog - contains a charge grid."""
+    """Updater for LEAP Admission Plea and Already Valid Plea Dialogs - contains a charge grid.
+
+    The updater uses a try/except block so the same updater can be used for both the general
+    LEAP Admission Plea and the LEAP Admission Plea - Already Valid dialogs.
+    """
 
     def __init__(self, dialog: CBD) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
-        self.model.leap_sentencing_date = self.dialog.sentencing_date.get_date()
+        try:
+            self.model.leap_sentencing_date = self.dialog.sentencing_date.get_date()
+        except AttributeError as error:
+            logger.warning(error)
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
