@@ -181,17 +181,20 @@ font-weight: bold;</string>
            <height>752</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,2,2,1,1">
-          <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_5" rowstretch="2,2,1,1">
+          <item row="1" column="0">
            <widget class="QFrame" name="frame_6">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(240, 240, 240);</string>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Box</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_2">
              <item row="2" column="0">
@@ -322,7 +325,7 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="1" column="0">
+          <item row="0" column="0">
            <widget class="QFrame" name="case_name_Frame">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -334,10 +337,13 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(240, 240, 240);</string>
             </property>
             <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
+             <enum>QFrame::Box</enum>
             </property>
             <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout">
              <item row="2" column="0">
@@ -355,7 +361,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="NoScrollComboBox" name="defense_counsel_name_box">
+              <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -553,36 +559,7 @@ font-weight: bold;</string>
             </layout>
            </widget>
           </item>
-          <item row="0" column="0">
-           <widget class="QFrame" name="frame_2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(240, 240, 240);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QTextBrowser" name="textBrowser">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="html">
-                <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Palatino Linotype'; font-size:10pt; font-weight:600; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;INSTRUCTIONS: &lt;/span&gt;&lt;span style=&quot; font-size:11pt; font-weight:400;&quot;&gt;This dialog is to be used only when the defendant has completed all of the conditions necessary to have their license reinstated prior to their court appearance. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item row="3" column="0">
+          <item row="2" column="0">
            <widget class="QPushButton" name="create_entry_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(0, 255, 0);
@@ -597,7 +574,7 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="3" column="0">
            <widget class="QPushButton" name="close_dialog_Button">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(170, 58, 63);
@@ -626,6 +603,11 @@ font-weight: bold;</string>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
    <header>.custom_widgets</header>
   </customwidget>
