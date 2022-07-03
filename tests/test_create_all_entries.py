@@ -89,6 +89,7 @@ def leap_dialog(qtbot, main_window):
     return main_window.dialog
 
 
+@pytest.fixture
 def leap_valid_dialog(qtbot, main_window):
     "LEAP Admission Plea - Already Valid Dialog"
     entry_dialog(qtbot, main_window)
