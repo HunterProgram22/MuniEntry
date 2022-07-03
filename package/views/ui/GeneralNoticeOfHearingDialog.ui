@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TrialToCourtHearingDialog</class>
- <widget class="QDialog" name="TrialToCourtHearingDialog">
+ <class>GeneralNoticeOfHearingDialog</class>
+ <widget class="QDialog" name="GeneralNoticeOfHearingDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -132,7 +132,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Trial To Court Hearing Notice Information</string>
+   <string>General Notice of Hearing Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -181,7 +181,49 @@ font-weight: bold;</string>
            <height>697</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" rowstretch="2,2,1">
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="2" column="0">
+           <widget class="QFrame" name="frame_8">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(12, 117, 255);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_10">
+             <item row="2" column="0">
+              <widget class="QPushButton" name="close_dialog_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 96, 82);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Close Dialog</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QPushButton" name="create_entry_Button">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+               </property>
+               <property name="text">
+                <string>Open Entry</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QFrame" name="frame_5">
             <property name="styleSheet">
@@ -198,22 +240,26 @@ font-weight: bold;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_3">
-               <property name="bottomMargin">
-                <number>10</number>
-               </property>
+              <layout class="QGridLayout" name="gridLayout_3" rowstretch="1,0,0,0,0">
                <property name="verticalSpacing">
-                <number>36</number>
+                <number>24</number>
                </property>
-               <item row="1" column="0">
+               <item row="3" column="0">
                 <widget class="QLabel" name="label_4">
                  <property name="text">
-                  <string>Trial To Court Date:</string>
+                  <string>Hearing Time:</string>
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+               <item row="2" column="0">
+                <widget class="QLabel" name="hearing_date_label">
+                 <property name="text">
+                  <string>Hearing Date:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="NoScrollDateEdit" name="hearing_dateEdit">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -221,94 +267,6 @@ background-color: rgb(255, 255, 255);</string>
                  <property name="calendarPopup">
                   <bool>true</bool>
                  </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_7">
-                 <property name="text">
-                  <string>Trial To Court Time:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="NoScrollComboBox" name="trial_time_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>10:00 AM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>10:30 AM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>11:00 AM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>11:30 AM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1:00 PM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>1:30 PM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2:00 PM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>2:30 PM</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>3:00 PM</string>
-                  </property>
-                 </item>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_8">
-                 <property name="text">
-                  <string>Assigned Courtroom:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="NoScrollComboBox" name="courtroom_box">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom C</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom B</string>
-                  </property>
-                 </item>
-                 <item>
-                  <property name="text">
-                   <string>Courtroom A</string>
-                  </property>
-                 </item>
                 </widget>
                </item>
                <item row="0" column="0" colspan="2">
@@ -324,11 +282,226 @@ background-color: rgb(255, 255, 255);</string>
                   </font>
                  </property>
                  <property name="text">
-                  <string>SCHEDULED DATES</string>
+                  <string>SCHEDULING INFORMATION</string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
                  </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="QLabel" name="hearing_type_label">
+                 <property name="text">
+                  <string>Hearing Type:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="NoScrollComboBox" name="hearing_time_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>8:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>1:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>2:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:15 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:30 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>3:45 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4:00 PM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>4:15 PM</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Hearing Location:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="NoScrollComboBox" name="hearing_location_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom A</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom B</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Courtroom C</string>
+                  </property>
+                 </item>
+                </widget>
+               </item>
+               <item row="1" column="1">
+                <widget class="NoScrollComboBox" name="hearing_type_box">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion to Suppress</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion to Seal</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
               </layout>
@@ -516,48 +689,6 @@ background-color: rgb(255, 255, 255);</string>
             </layout>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QFrame" name="frame_8">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(12, 117, 255);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="0" column="0">
-              <widget class="QPushButton" name="create_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Open Entry</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QPushButton" name="close_dialog_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 96, 82);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -612,4 +743,7 @@ font-weight: bold;</string>
   <slot>start_add_conditions_dialog()</slot>
   <slot>start_amend_offense_dialog()</slot>
  </slots>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

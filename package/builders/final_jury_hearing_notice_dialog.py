@@ -3,7 +3,7 @@ from loguru import logger
 
 from package.controllers.view_modifiers import BaseDialogViewModifier
 from package.builders.base_dialogs import BaseDialog
-from package.views.notice_of_hearing_dialog_ui import Ui_NoticeOfHearingDialog
+from package.views.final_jury_notice_of_hearing_dialog_ui import Ui_FinalJuryNoticeOfHearingDialog
 
 from package.models.template_types import TEMPLATE_DICT
 
@@ -16,26 +16,14 @@ from package.updaters.general_updaters import CaseInformationUpdater
 from package.controllers.cms_case_loaders import CmsNoChargeLoader
 
 TODAY = QDate.currentDate()
-DAY_DICT = {
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-}
-
-EVENT_DICT = {
-    "Trial": 2,
-    "Final Pretrial": 2,
-    "Pretrial": 28,
-}
 
 
-class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
+class FinalJuryNoticeOfHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     def __init__(
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         self.case_table = case_table
+        logger.info(f'Loading case from {self.case_table}')
         if judicial_officer.last_name == 'Hemmeter':
             self.dialog_name = 'Notice Of Hearing Entry Hemmeter'
         elif judicial_officer.last_name == 'Rohrer':
@@ -43,28 +31,29 @@ class NoticeOfHearingDialog(BaseDialog, Ui_NoticeOfHearingDialog):
         else:
             self.dialog_name = 'Notice Of Hearing Entry'
         super().__init__(parent)
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        logger.info(f'Loaded Case {self.cms_case.case_number}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
-        self.functions.update_final_pretrial_date()
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
 
     def modify_view(self):
-        return NoticeOfHearingDialogViewModifier(self)
+        return FinalJuryNoticeOfHearingDialogViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
-        self.functions = NoticeOfHearingDialogSlotFunctions(self)
-        return NoticeOfHearingDialogSignalConnector(self)
+        self.functions = FinalJuryNoticeOfHearingDialogSlotFunctions(self)
+        FinalJuryNoticeOfHearingDialogSignalConnector(self)
 
     def update_entry_case_information(self):
-        return NoticeOfHearingDialogCaseInformationUpdater(self)
+        return FinalJuryNoticeOfHearingDialogCaseInformationUpdater(self)
 
 
-class NoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
+class FinalJuryNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -72,11 +61,12 @@ class NoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.trial_dateEdit.setDate(TODAY)
+        self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 
 
-class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+class FinalJuryNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -84,46 +74,28 @@ class NoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_date)
-        self.dialog.final_pretrial_dateEdit.dateChanged.connect(self.functions.update_trial_date)
+        self.dialog.jury_trial_only_no_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
+        self.dialog.jury_trial_only_yes_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
 
 
-class NoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
+class FinalJuryNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
 
-    def update_final_pretrial_date(self):
-        final_pretrial_date = TODAY
-        if self.dialog.judicial_officer.last_name == "Rohrer":
-            final_pretrial_date = self.set_final_pretrial_date("Thursday", "Final Pretrial")
-        elif self.dialog.judicial_officer.last_name == "Hemmeter":
-            final_pretrial_date = self.set_final_pretrial_date("Tuesday", "Final Pretrial")
-        self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
-
-    def set_final_pretrial_date(self, day_to_set: str, event_to_set: str) -> QDate:
-        days_to_event = EVENT_DICT.get(event_to_set)
-        event_date = self.dialog.trial_dateEdit.date().addDays(-days_to_event)
-        while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
-            event_date = event_date.addDays(-1)
-        return event_date
-
-    def update_trial_date(self):
-        trial_date = TODAY
-        if self.dialog.judicial_officer.last_name == "Rohrer":
-            trial_date = self.set_trial_date("Tuesday", "Trial")
-        elif self.dialog.judicial_officer.last_name == "Hemmeter":
-            trial_date = self.set_trial_date("Thursday", "Trial")
-        self.dialog.trial_dateEdit.setDate(trial_date)
-
-    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
-        days_to_event = EVENT_DICT.get(event_to_set)
-        event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
-        while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
-            event_date = event_date.addDays(1)
-        return event_date
+    def show_hide_final_pretrial(self):
+        if self.dialog.jury_trial_only_no_radioButton.isChecked():
+            self.dialog.final_pretrial_dateEdit.setHidden(False)
+            self.dialog.final_pretrial_date_label.setHidden(False)
+            self.dialog.final_pretrial_time_label.setHidden(False)
+            self.dialog.final_pretrial_time_box.setHidden(False)
+        else:
+            self.dialog.final_pretrial_dateEdit.setHidden(True)
+            self.dialog.final_pretrial_date_label.setHidden(True)
+            self.dialog.final_pretrial_time_label.setHidden(True)
+            self.dialog.final_pretrial_time_box.setHidden(True)
 
 
-class NoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
+class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.view = dialog
@@ -154,6 +126,10 @@ class NoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
             "MMMM dd, yyyy"
         )
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
+        if self.view.jury_trial_only_no_radioButton.isChecked():
+            self.model.jury_trial_only = 'No'
+        elif self.view.jury_trial_only_yes_radioButton.isChecked():
+            self.model.jury_trial_only = 'Yes'
 
 
 if __name__ == "__main__":

@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import os
+import random
+from datetime import datetime
 from typing import Type
 
 from loguru import logger
@@ -15,7 +17,8 @@ from package.builders import plea_only_dialogs as plea_only
 from package.builders import plea_sentence_dialogs as plea_sentence
 from package.builders import sentencing_only_dialogs as sentencing_only
 from package.builders.sched_entry_dialogs import SchedulingEntryDialog
-from package.builders.hearing_notice_dialogs import NoticeOfHearingDialog
+from package.builders.final_jury_hearing_notice_dialog import FinalJuryNoticeOfHearingDialog
+from package.builders.general_hearing_notice_dialog import GeneralNoticeOfHearingDialog
 from package.builders.trial_to_court_hearing_notice_dialog import \
     TrialToCourtHearingDialog
 from package.database_controllers.databases import (
@@ -150,6 +153,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             return 'Hemmeter Scheduling Entry'
         return 'None'
 
+    def assign_judge(self):
+        judge_list = ['Judge Hemmeter', 'Judge Rohrer']
+        assigned_judge = random.choice(judge_list)
+        now = datetime.now()
+        now = now.strftime('%B %d, %Y at %H:%M:%S %p')
+        self.assign_judge_label.setText(assigned_judge)
+        self.last_judge_assigned_label.setText(f'The last judge assigned was {assigned_judge} at {now}')
+
 
 class MainWindowViewModifier(object):
     """Class that modifies the view file."""
@@ -184,7 +195,8 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
-            self.main_window.notice_of_hearingEntryButton: NoticeOfHearingDialog,
+            self.main_window.final_jury_hearingEntryButton: FinalJuryNoticeOfHearingDialog,
+            self.main_window.general_hearingEntryButton: GeneralNoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
         self.main_window.daily_case_list_buttons_dict = {
@@ -228,6 +240,7 @@ class MainWindowSignalConnector(object):
         self.main_window.hemmeter_schedulingEntryButton.released.connect(
             self.main_window.start_scheduling_entry,
         )
+        self.main_window.random_judge_Button.released.connect(self.main_window.assign_judge)
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()
         self.connect_judicial_officers_to_set_officer()

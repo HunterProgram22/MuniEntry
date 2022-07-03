@@ -113,6 +113,11 @@ Notice_Of_Hearing_Template = Template(
     "Notice_Of_Hearing_Template.docx",
 )
 
+General_Notice_Of_Hearing_Template = Template(
+    "General Notice Of Hearing Entry",
+    "General_Notice_Of_Hearing_Template.docx",
+)
+
 Trial_To_Court_Hearing_Notice_Template = Template(
     "Trial To Court Hearing Notice",
     "Trial_To_Court_Hearing_Notice_Template.docx",
@@ -139,6 +144,7 @@ TEMPLATE_DICT = {
     "Notice Of Hearing Entry Hemmeter": Notice_Of_Hearing_Hemmeter_Template,
     "Notice Of Hearing Entry Rohrer": Notice_Of_Hearing_Rohrer_Template,
     "Notice Of Hearing Entry": Notice_Of_Hearing_Template,
+    "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,
     "Trial To Court Hearing Notice": Trial_To_Court_Hearing_Notice_Template,
 }
 
