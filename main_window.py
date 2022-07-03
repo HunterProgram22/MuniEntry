@@ -191,6 +191,7 @@ class MainWindowViewModifier(object):
             self.main_window.PleaOnlyButton: plea_only.PleaOnlyDialog,
             self.main_window.NoPleaBondButton: bond.NoPleaBondDialog,
             self.main_window.LeapAdmissionButton: plea_only.LeapAdmissionPleaDialog,
+            self.main_window.LeapAdmissionValidButton: plea_only.LeapPleaValidDialog,
             self.main_window.LeapSentencingButton: sentencing_only.LeapSentencingDialog,
             self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,

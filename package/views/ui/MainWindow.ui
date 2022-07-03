@@ -37,7 +37,7 @@ font-weight: bold;</string>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,1,1,1,0,2">
+     <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0,0,0,0,0">
       <item row="0" column="0">
        <layout class="QGridLayout" name="judicial_officer_gridLayout">
         <item row="0" column="0">
@@ -341,7 +341,7 @@ font-weight: bold;</string>
       <item row="5" column="0">
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="crimTab">
          <attribute name="title">
@@ -354,8 +354,24 @@ font-weight: bold;</string>
           <property name="verticalSpacing">
            <number>12</number>
           </property>
-          <item row="3" column="1">
-           <widget class="QPushButton" name="LeapAdmissionButton">
+          <item row="1" column="2">
+           <widget class="QPushButton" name="NoPleaBondButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>Appear on Warrant (No Plea) / Bond</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="FineOnlyPleaButton">
             <property name="minimumSize">
              <size>
               <width>120</width>
@@ -366,7 +382,75 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
             <property name="text">
-             <string>LEAP Admission Plea</string>
+             <string>Fine Only</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="label_5">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>Sentencing Only Entries</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QPushButton" name="BondHearingButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>Bond Modification / Revocation</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QPushButton" name="FailureToAppearButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(255, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>Failed to Appear / Issue Warrant</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QPushButton" name="TrialSentencingButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>Jury Trial / Trial to Court Sentencing</string>
             </property>
            </widget>
           </item>
@@ -458,22 +542,6 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QPushButton" name="PleaOnlyButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
-            </property>
-            <property name="text">
-             <string>Plea Only - Future Sentencing</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="1">
            <widget class="QPushButton" name="NotGuiltyBondButton">
             <property name="minimumSize">
@@ -490,8 +558,8 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="FineOnlyPleaButton">
+          <item row="2" column="1">
+           <widget class="QPushButton" name="PleaOnlyButton">
             <property name="minimumSize">
              <size>
               <width>120</width>
@@ -502,107 +570,7 @@ font-weight: bold;</string>
              <string notr="true">background-color: rgb(85, 170, 127);</string>
             </property>
             <property name="text">
-             <string>Fine Only</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QPushButton" name="LeapSentencingButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
-            </property>
-            <property name="text">
-             <string>LEAP Sentencing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QPushButton" name="NoPleaBondButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 127);</string>
-            </property>
-            <property name="text">
-             <string>Appear on Warrant (No Plea) / Bond</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="label_5">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>Sentencing Only Entries</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QPushButton" name="TrialSentencingButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(85, 170, 127);</string>
-            </property>
-            <property name="text">
-             <string>Jury Trial / Trial to Court Sentencing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QPushButton" name="FailureToAppearButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 127);</string>
-            </property>
-            <property name="text">
-             <string>Failed to Appear / Issue Warrant</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QPushButton" name="BondHearingButton">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 127);</string>
-            </property>
-            <property name="text">
-             <string>Bond Modification / Revocation</string>
+             <string>Plea Only - Future Sentencing</string>
             </property>
            </widget>
           </item>
@@ -639,10 +607,72 @@ font-weight: bold;</string>
              </font>
             </property>
             <property name="text">
-             <string>Warrant Entries</string>
+             <string>General / Warrant Entries</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>LEAP Entries</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QPushButton" name="LeapAdmissionButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>LEAP Admission Plea</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QPushButton" name="LeapSentencingButton">
+            <property name="minimumSize">
+             <size>
+              <width>120</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>LEAP Sentencing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QPushButton" name="LeapAdmissionValidButton">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(85, 170, 127);</string>
+            </property>
+            <property name="text">
+             <string>LEAP Admission - Already Valid</string>
             </property>
            </widget>
           </item>
@@ -662,27 +692,7 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>General Entries</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
+          <item row="6" column="2">
            <widget class="QPushButton" name="FreeformEntryButton">
             <property name="minimumSize">
              <size>
