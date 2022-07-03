@@ -1,16 +1,15 @@
 import re
-import datetime
 
 from loguru import logger
 from PyQt5 import QtCore
-from PyQt5.QtCore import QSortFilterProxyModel, Qt, QEvent, QDate, QDateTime, QTime
-from PyQt5.QtGui import QIntValidator, QFont
+from PyQt5.QtCore import QSortFilterProxyModel, Qt, QDate, QTime
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QCheckBox, QCompleter, \
-    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel, QDateTimeEdit
+    QInputDialog, QDateEdit, QTimeEdit, QMenu, QLabel
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
-from settings import ICON_PATH, DB_PATH
+from munientry.settings import ICON_PATH, DB_PATH
 
 
 def return_attorney_data_from_excel(excel_file: str) -> list:

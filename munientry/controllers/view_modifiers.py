@@ -9,7 +9,7 @@ from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
 
-from settings import WIDGET_TYPE_SET_DICT
+from munientry.settings import WIDGET_TYPE_SET_DICT
 from munientry.controllers.helper_functions import set_future_date
 from munientry.controllers import charges_grids as cg
 

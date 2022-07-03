@@ -11,7 +11,7 @@ from munientry.data.databases import sql_query_offense_type
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.views.custom_widgets import RequiredBox
-from settings import SAVE_PATH
+from munientry.settings import SAVE_PATH
 
 SPECIAL_DOCKETS_COSTS = [
     'while on the OVI Docket',

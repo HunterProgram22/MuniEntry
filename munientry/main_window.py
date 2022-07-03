@@ -33,7 +33,7 @@ from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.custom_widgets import RequiredBox
 from munientry.views.main_window_ui import Ui_MainWindow
-from settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
+from munientry.settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
 
 
 

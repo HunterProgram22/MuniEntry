@@ -4,7 +4,7 @@ from loguru import logger
 from typing import Any
 
 from munientry.updaters.base_updaters import CBD, BaseDialogUpdater
-from settings import CRIMINAL_COURT_COSTS, MOVING_COURT_COSTS, NONMOVING_COURT_COSTS
+from munientry.settings import CRIMINAL_COURT_COSTS, MOVING_COURT_COSTS, NONMOVING_COURT_COSTS
 
 
 SPECIAL_DOCKETS_COSTS = [

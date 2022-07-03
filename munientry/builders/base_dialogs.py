@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QDialog
 
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
-from settings import WIDGET_TYPE_ACCESS_DICT
+from munientry.settings import WIDGET_TYPE_ACCESS_DICT
 
 
 class BaseDialog(QDialog):

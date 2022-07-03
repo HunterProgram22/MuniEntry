@@ -5,7 +5,7 @@ from loguru import logger
 from PyQt5 import QtCore, QtWidgets, QtGui
 from PyQt5.QtWidgets import QMessageBox
 
-from settings import FULL_LOG_NAME, USER_LOG_NAME, ICON_PATH
+from munientry.settings import FULL_LOG_NAME, USER_LOG_NAME, ICON_PATH
 
 fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
 # logger.add(f'./resources/logs/detaillogs/{FULL_LOG_NAME}', format=fmt, level=10)

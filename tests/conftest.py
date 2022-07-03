@@ -4,17 +4,16 @@ import inspect
 
 import pytest
 from pytestqt.plugin import QtBot
-from PyQt5.QtWidgets import QApplication
 from PyQt5.QtSql import QSqlDatabase
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtCore import QTimer
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
-import MuniEntry_app
-from main_window import MainWindow
+from munientry import logging_module
+from munientry.main_window import MainWindow
 
 
 """
