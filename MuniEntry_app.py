@@ -3,15 +3,16 @@ Copyright 2021 Justin Kudela.
 
 The main application entry point.
 """
-import multiprocessing
-import sys
-
 try:
     import pyi_splash
     pyi_splash.update_text('UI Loading . . .')
     pyi_splash.close()
 except:
     pass
+
+import multiprocessing
+import sys
+
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
@@ -37,7 +38,7 @@ def load_window():
 
 @logger.catch
 def main():
-    """The main applicaiton loop."""
+    """The main application loop."""
     logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel.png'))
