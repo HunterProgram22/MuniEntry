@@ -5,14 +5,13 @@ The main application entry point.
 """
 import multiprocessing
 import sys
-import socket
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 
-from MuniEntry import logging_module
-from settings import ICON_PATH, VERSION_NUMBER, SOCKET_NAME
+from munientry import logging_module
+from munientry.settings import ICON_PATH, VERSION_NUMBER, SOCKET_NAME
 
 from loguru import logger
 
@@ -24,7 +23,7 @@ def load_window():
     loading and other functions that are done in creating the MainWindow don't occur until after
     the splash screen has appeared.
     """
-    from main_window import MainWindow
+    from munientry.main_window import MainWindow
 
     return MainWindow()
 

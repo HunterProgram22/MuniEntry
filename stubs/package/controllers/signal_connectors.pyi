@@ -1,4 +1,4 @@
-from package.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions, BondHearingDialogSlotFunctions as BondHearingDialogSlotFunctions
+from munientry.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions, BondHearingDialogSlotFunctions as BondHearingDialogSlotFunctions
 
 class BaseDialogSignalConnector:
     def __init__(self, dialog) -> None: ...

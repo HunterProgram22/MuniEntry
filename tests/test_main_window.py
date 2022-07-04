@@ -1,9 +1,8 @@
 import pytest
 from PyQt5 import QtCore
 
-from settings import VERSION_NUMBER
-from tests.conftest import mouse_click, enter_data, right_click
-
+from munientry.settings import VERSION_NUMBER
+from tests.conftest import mouse_click, enter_data
 
 main_window_all_button_test_list = [
     ("FineOnlyPleaButton", "Fine Only Plea Case Information"),

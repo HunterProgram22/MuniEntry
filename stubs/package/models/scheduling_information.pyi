@@ -1,4 +1,4 @@
-from package.models.party_types import Defendant as Defendant
+from munientry.models.party_types import Defendant as Defendant
 
 class SchedulingCaseInformation:
     case_number: str

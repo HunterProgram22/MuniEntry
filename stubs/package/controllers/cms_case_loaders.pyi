@@ -1,4 +1,4 @@
-from package.models.criminal_charge_models import CriminalCharge as CriminalCharge
+from munientry.models.criminal_charge_models import CriminalCharge as CriminalCharge
 from typing import Any
 from PyQt5.QtWidgets import QDialog
 

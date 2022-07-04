@@ -3,7 +3,7 @@ from datetime import date, timedelta
 import pytest
 from tests.conftest import mouse_click, enter_data, check_barkschat
 
-from package.controllers.helper_functions import set_future_date
+from munientry.controllers.helper_functions import set_future_date
 
 TODAY = date.today()
 

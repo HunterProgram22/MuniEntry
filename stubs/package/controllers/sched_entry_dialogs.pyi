@@ -1,10 +1,10 @@
 from PyQt5.QtCore import QDate
-from package.builders.base_dialogs import BaseDialog as BaseDialog
-from package.controllers.signal_connectors import BaseDialogSignalConnector as BaseDialogSignalConnector
-from package.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions
-from package.controllers.view_modifiers import BaseDialogViewModifier as BaseDialogViewModifier
-from package.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater
-from package.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog as Ui_SchedulingEntryDialog
+from munientry.builders.base_dialogs import BaseDialog as BaseDialog
+from munientry.controllers.signal_connectors import BaseDialogSignalConnector as BaseDialogSignalConnector
+from munientry.controllers.slot_functions import BaseDialogSlotFunctions as BaseDialogSlotFunctions
+from munientry.controllers.view_modifiers import BaseDialogViewModifier as BaseDialogViewModifier
+from munientry.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater
+from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog as Ui_SchedulingEntryDialog
 from typing import Any
 
 TODAY: Any
