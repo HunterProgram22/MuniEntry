@@ -11,8 +11,9 @@ PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 SAVE_PATH = fr'{PATH}\resources\saved\\'
 LOG_PATH = fr'{PATH}\resources\logs\\'
+ICON_PATH = fr'{PATH}\resources\icons\\'
+
 DB_PATH = fr'{PATH}\db\\'
-ICON_PATH = fr'{PATH}\icons\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
