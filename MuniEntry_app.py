@@ -6,6 +6,13 @@ The main application entry point.
 import multiprocessing
 import sys
 
+try:
+    import pyi_splash
+    pyi_splash.update_text('UI Loading . . .')
+    pyi_splash.close()
+except:
+    pass
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
