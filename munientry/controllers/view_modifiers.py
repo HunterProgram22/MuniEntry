@@ -2,16 +2,15 @@
 after the setupUI is called. This class makes changes to the view that are outside the the specific
 view file. Modifications to the view are placed in the ViewModifier class so that they don't need to
 be updated each time a view file is recompiled through the pyuic5 command."""
-
 from loguru import logger
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
 
-from munientry.settings import WIDGET_TYPE_SET_DICT
 from munientry.controllers.helper_functions import set_future_date
 from munientry.controllers import charges_grids as cg
+from munientry.settings import WIDGET_TYPE_SET_DICT, ICON_PATH
 
 TODAY = QtCore.QDate.currentDate()
 
@@ -19,7 +18,7 @@ TODAY = QtCore.QDate.currentDate()
 class BaseDialogViewModifier:
     def __init__(self, dialog):
         self.dialog = dialog
-        self.dialog.setWindowIcon(QtGui.QIcon('./icons/gavel.ico'))
+        self.dialog.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.dialog.setWindowFlags(self.dialog.windowFlags() |
                             QtCore.Qt.CustomizeWindowHint |
                             QtCore.Qt.WindowMaximizeButtonHint |

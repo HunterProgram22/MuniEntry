@@ -5,7 +5,6 @@ The main application entry point.
 """
 try:
     import pyi_splash
-    pyi_splash.update_text('MuniEntry Loading . . .')
 except:
     pass
 
@@ -42,14 +41,14 @@ def main():
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel_main_splash.png'))
     splash.show()
-    try:
-        pyi_splash.close()
-    except NameError as error:
-        logger.warning(error)
     splash.showMessage(
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>',
         Qt.AlignBottom | Qt.AlignCenter,
     )
+    try:
+        pyi_splash.close()
+    except NameError as error:
+        logger.warning(error)
     logger.info('Splash Screen Shown')
     win = load_window()
     win.show()
