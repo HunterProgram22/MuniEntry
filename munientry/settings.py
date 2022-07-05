@@ -33,7 +33,15 @@ LOG_TIME = f'{now_string}'
 def get_host():
     socket_dict = {
         'RooberryPrime': 'Justin_Home_PC',
-        'Muni_03': 'Kathryn_Patterson',
+        'MUNI14': 'Justin_Work_Desktop_PC',
+        'Muni03': 'Kathryn_Patterson_PC',
+        'Muni05': 'Pat_Dattilo_PC',
+        'Muni20': 'Courtroom_A_PC',
+        'Muni21': 'Courtroom_B_PC',
+        'Muni22': 'Courtroom_C_PC',
+        'Clerk07': 'Nick_Lockhart_PC',
+        'Clerk08': 'Ryan_Levering_PC',
+        'Muni10': 'Justin_Work_Laptop_PC',
     }
     key = socket.gethostname()
     host = socket_dict.get(key, key)
