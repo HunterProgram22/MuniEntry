@@ -5,7 +5,7 @@ The main application entry point.
 """
 try:
     import pyi_splash
-    pyi_splash.update_text('MuniEntry Loading . . .')
+    pyi_splash.update_text('munientry Loading . . .')
 except:
     pass
 
@@ -38,7 +38,7 @@ def load_window():
 @logger.catch
 def main():
     """The main application loop."""
-    logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
+    logger.info(f'munientry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel_main_splash.png'))
     splash.show()
