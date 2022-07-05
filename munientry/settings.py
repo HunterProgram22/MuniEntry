@@ -27,11 +27,21 @@ NONMOVING_COURT_COSTS = 108
 
 # Logging Settings
 now = datetime.now()
-now_string = now.strftime('%Y_%m_%d__%H_%M_%S')
+now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
 LOG_TIME = f'{now_string}'
-SOCKET_NAME = socket.gethostname()
+
+def get_host():
+    socket_dict = {
+        'RooberryPrime': 'Justin_Home_PC',
+        'Muni_03': 'Kathryn_Patterson',
+    }
+    key = socket.gethostname()
+    host = socket_dict.get(key, key)
+    return host
+
+SOCKET_NAME = get_host()
 FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
-USER_LOG_NAME = f'User_Log_{SOCKET_NAME}_{LOG_TIME}.log'
+USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
 
 
 # Case List Settings
