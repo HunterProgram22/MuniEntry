@@ -5,14 +5,14 @@
       <excludeFolder url="file://$MODULE_DIR$/Lib" />
       <excludeFolder url="file://$MODULE_DIR$/MuniEntry_app.py.egg-info" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
-      <excludeFolder url="file://$MODULE_DIR$/package/controllers/.mypy_cache" />
-      <excludeFolder url="file://$MODULE_DIR$/package/updaters/.mypy_cache" />
       <excludeFolder url="file://$MODULE_DIR$/tests/.pytest_cache" />
       <excludeFolder url="file://$MODULE_DIR$/.mypy_cache" />
       <excludeFolder url="file://$MODULE_DIR$/.pytest_cache" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/htmlcov" />
+      <excludeFolder url="file://$MODULE_DIR$/munientry/controllers/.mypy_cache" />
+      <excludeFolder url="file://$MODULE_DIR$/munientry/updaters/.mypy_cache" />
       <excludePattern pattern=".pylintrc" />
     </content>
     <orderEntry type="inheritedJdk" />

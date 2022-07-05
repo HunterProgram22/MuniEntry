@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QCheckBox as QCheckBox, QComboBox as QComboBox, QDateEdit as QDateEdit, QLineEdit as QLineEdit, QRadioButton as QRadioButton, QTextEdit as QTextEdit, QTimeEdit as QTimeEdit
-from package.controllers.helper_functions import set_future_date as set_future_date
+from munientry.controllers.helper_functions import set_future_date as set_future_date
 from typing import Any
 
 TODAY: Any

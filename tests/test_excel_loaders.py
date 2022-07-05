@@ -1,8 +1,8 @@
 import pytest
 
-from MuniEntry.settings import DB_PATH
-from package.excel_loaders.case_excel_loader import return_cases_data_from_excel
-from package.excel_loaders.loader_functions import load_active_worksheet, get_excel_file_headers, \
+from munientry.settings import DB_PATH
+from munientry.data.case_excel_loader import return_cases_data_from_excel
+from munientry.data.loader_functions import load_active_worksheet, get_excel_file_headers, \
     create_headers_dict
 
 

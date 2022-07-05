@@ -1,8 +1,8 @@
 import pytest
 from PyQt5.QtSql import QSqlDatabase
 
-from settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
-from package.database_controllers.databases import (
+from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
+from munientry.data.databases import (
     CriminalCaseSQLRetriever,
     open_db_connection,
     create_db_connection,
@@ -104,13 +104,14 @@ def test_total_daily_case_lists_is_six():
 
 
 query_list = [
-    "offense",
-    "statute",
+    ("offense", "con_charges"),
+    ("statute", "con_charges"),
 ]
 
-@pytest.mark.parametrize("query", query_list)
-def test_query_offense_statute_data(query):
-    assert len(query_offense_statute_data(query)) == 45
+@pytest.mark.parametrize("query, connection_name", query_list)
+def test_query_offense_statute_data(query, connection_name):
+    db_connection = open_db_connection(connection_name)
+    assert len(query_offense_statute_data(db_connection, query)) == 45
 
 
 daily_case_lists = [
@@ -126,7 +127,8 @@ daily_case_lists = [
 def test_query_daily_case_list_data(table, total_cases):
     """The assertion for total cases needs to be one more than the total cases in the
     test/db cases table because a blank is inserted at the top of the list."""
-    assert len(query_daily_case_list_data(table)) == total_cases
+    db_connection = open_db_connection('con_daily_case_lists')
+    assert len(query_daily_case_list_data(table, db_connection)) == total_cases
 
 
 def test_create_charges_db():

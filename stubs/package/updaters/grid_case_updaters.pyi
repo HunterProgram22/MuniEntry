@@ -1,6 +1,6 @@
-from package.controllers.base_dialogs import CriminalBaseDialog as CriminalBaseDialog
-from package.updaters.charge_grid_updaters import DiversionGridModelUpdater as DiversionGridModelUpdater, FineOnlyGridModelUpdater as FineOnlyGridModelUpdater, JailCCGridModelUpdater as JailCCGridModelUpdater, NotGuiltyGridModelUpdater as NotGuiltyGridModelUpdater, PleaOnlyGridModelUpdater as PleaOnlyGridModelUpdater
-from package.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater, CourtCostsUpdater as CourtCostsUpdater, FinesUpdater as FinesUpdater, JailDataUpdater as JailDataUpdater
+from munientry.builders.base_dialogs import CriminalBaseDialog as CriminalBaseDialog
+from munientry.updaters.charge_grid_updaters import DiversionGridModelUpdater as DiversionGridModelUpdater, FineOnlyGridModelUpdater as FineOnlyGridModelUpdater, JailCCGridModelUpdater as JailCCGridModelUpdater, NotGuiltyGridModelUpdater as NotGuiltyGridModelUpdater, PleaOnlyGridModelUpdater as PleaOnlyGridModelUpdater
+from munientry.updaters.general_updaters import CaseInformationUpdater as CaseInformationUpdater, CourtCostsUpdater as CourtCostsUpdater, FinesUpdater as FinesUpdater, JailDataUpdater as JailDataUpdater
 from typing import Any, TypeVar
 
 BD = TypeVar('BD', bound=CriminalBaseDialog)

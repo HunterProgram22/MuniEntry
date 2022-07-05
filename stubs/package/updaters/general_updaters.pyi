@@ -1,4 +1,4 @@
-from package.updaters.base_updaters import BaseDialogUpdater as BaseDialogUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater as BaseDialogUpdater
 from typing import Any, TypeVar
 
 BDU = TypeVar('BDU', bound=BaseDialogUpdater)

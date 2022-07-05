@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QGridLayout
-from package.views.custom_widgets import AlliedCheckbox as AlliedCheckbox, ChargeGridAmendButton as ChargeGridAmendButton, ChargeGridDeleteButton as ChargeGridDeleteButton, DegreeComboBox as DegreeComboBox, DismissedCheckbox as DismissedCheckbox, FindingComboBox as FindingComboBox, FineLineEdit as FineLineEdit, FineSuspendedLineEdit as FineSuspendedLineEdit, JailLineEdit as JailLineEdit, JailSuspendedLineEdit as JailSuspendedLineEdit, PleaComboBox as PleaComboBox, StatuteLineEdit as StatuteLineEdit
+from munientry.views.custom_widgets import AlliedCheckbox as AlliedCheckbox, ChargeGridAmendButton as ChargeGridAmendButton, ChargeGridDeleteButton as ChargeGridDeleteButton, DegreeComboBox as DegreeComboBox, DismissedCheckbox as DismissedCheckbox, FindingComboBox as FindingComboBox, FineLineEdit as FineLineEdit, FineSuspendedLineEdit as FineSuspendedLineEdit, JailLineEdit as JailLineEdit, JailSuspendedLineEdit as JailSuspendedLineEdit, PleaComboBox as PleaComboBox, StatuteLineEdit as StatuteLineEdit
 
 class ChargesGrid(QGridLayout):
     row_offense: int

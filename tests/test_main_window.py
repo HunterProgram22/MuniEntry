@@ -1,23 +1,36 @@
 import pytest
 from PyQt5 import QtCore
 
-from settings import VERSION_NUMBER
-from tests.conftest import mouse_click, enter_data, right_click
-
+from munientry.settings import VERSION_NUMBER
+from tests.conftest import mouse_click, enter_data
 
 main_window_all_button_test_list = [
     ("FineOnlyPleaButton", "Fine Only Plea Case Information"),
     ("JailCCPleaButton", "Jail Community Control Plea Case Information"),
-    ("NotGuiltyBondButton", "Not Guilty Bond Case Information"),
-    ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("DiversionButton", "Diversion Plea Case Information"),
-    ("ProbationViolationBondButton", "Community Control Violation Bond Case Information"),
-    ("BondHearingButton", "Bond Hearing Case Information"),
+
+    ("NotGuiltyBondButton", "Not Guilty Bond Case Information"),
     ("PleaOnlyButton", "Plea Future Sentencing Case Information"),
+
     ("NoPleaBondButton", "No Plea Bond Case Information"),
+    ("BondHearingButton", "Bond Hearing Case Information"),
+    ("ProbationViolationBondButton", "Community Control Violation Bond Case Information"),
+
     ("LeapAdmissionButton", "LEAP Admission Plea Case Information"),
+    ("LeapAdmissionValidButton", "LEAP Plea - Already Valid Case Information"),
     ("LeapSentencingButton", "LEAP Sentencing Case Information"),
+
     ("TrialSentencingButton", "Trial Sentencing Case Information"),
+    ("SentencingOnlyButton", "Sentencing Only Case Information"),
+
+    ("FailureToAppearButton", "Failure To Appear Case Information"),
+    ("FreeformEntryButton", "Freeform Entry Case Information"),
+
+    ("final_jury_hearingEntryButton", "Final and Jury Notice of Hearing Information"),
+    ("general_hearingEntryButton", "General Notice of Hearing Information"),
+    ("trial_to_court_hearingEntryButton", "Trial To Court Hearing Notice Case Information"),
+    ("rohrer_schedulingEntryButton", "Rohrer Scheduling Entry Case Information"),
+    ("hemmeter_schedulingEntryButton", "Hemmeter Scheduling Entry Case Information"),
 ]
 
 
@@ -27,19 +40,6 @@ def test_window_opens(qtbot, main_window_noclose):
     when it runs."""
     main_window_noclose.show()
     assert main_window_noclose.windowTitle() == f"MuniEntry - Version {VERSION_NUMBER}"
-
-
-@pytest.mark.manual
-@pytest.mark.skip(reason="Works but requires manual interaction")
-def test_judicial_officer_required_warning(qtbot, main_window):
-    mouse_click(main_window.JailCCPleaButton)
-
-
-@pytest.mark.manual
-@pytest.mark.skip(reason="Works but requires manual interaction")
-def test_daily_case_list_required_warning(qtbot, main_window):
-    mouse_click(main_window.bunner_radioButton)
-    mouse_click(main_window.FineOnlyPleaButton)
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)

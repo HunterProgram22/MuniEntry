@@ -1,4 +1,3 @@
-from package.controllers.base_dialogs import BaseDialog as BaseDialog
 from typing import Any
 
 class BaseGridUpdater:

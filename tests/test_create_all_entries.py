@@ -90,6 +90,14 @@ def leap_dialog(qtbot, main_window):
 
 
 @pytest.fixture
+def leap_valid_dialog(qtbot, main_window):
+    "LEAP Admission Plea - Already Valid Dialog"
+    entry_dialog(qtbot, main_window)
+    mouse_click(main_window.LeapAdmissionValidButton)
+    return main_window.dialog
+
+
+@pytest.fixture
 def pve_dialog(qtbot, main_window):
     "Preliminary Probation Violation Bond Entry"
     entry_dialog(qtbot, main_window)
@@ -163,7 +171,7 @@ def test_create_bond_modification_entry(qtbot, bhd_dialog):
 def test_create_leap_sentencing_entry(qtbot, leap_sentence_dialog):
     enter_data(leap_sentence_dialog.case_number_lineEdit, "leap_sentencing_test")
 
-    enter_data(leap_sentence_dialog.leap_plea_date, "5/1/2022")
+    enter_data(leap_sentence_dialog.leap_plea_date, "5/1/2021")
     mouse_click(leap_sentence_dialog.no_contest_all_Button)
     mouse_click(leap_sentence_dialog.credit_for_jail_checkBox)
     enter_data(leap_sentence_dialog.jail_time_credit_box, "2")
@@ -311,7 +319,7 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
 def test_sentencing_only_entry(qtbot, sentencing_only_dialog):
     enter_data(sentencing_only_dialog.case_number_lineEdit, "sentencing_only_test")
 
-    enter_data(sentencing_only_dialog.plea_date, "5/1/2022")
+    enter_data(sentencing_only_dialog.plea_date, "5/1/2021")
     mouse_click(sentencing_only_dialog.victim_statements_checkBox)
     mouse_click(sentencing_only_dialog.offense_of_violence_checkBox)
     mouse_click(sentencing_only_dialog.no_contest_all_Button)
@@ -498,6 +506,16 @@ def test_leap_admission_plea_entry(qtbot, leap_dialog):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(leap_dialog.create_entry_Button)
     assert leap_dialog.entry_case_information.case_number == "21TRC05611leap_admission_test"
+
+
+@pytest.mark.create_entry_test
+def test_leap_admission_plea_valid_entry(qtbot, leap_valid_dialog):
+    enter_data(leap_valid_dialog.case_number_lineEdit, "leap_admission_valid_test")
+    mouse_click(leap_valid_dialog.guilty_all_Button)
+
+    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    mouse_click(leap_valid_dialog.create_entry_Button)
+    assert leap_valid_dialog.entry_case_information.case_number == "21TRC05611leap_admission_valid_test"
 
 
 @pytest.mark.create_entry_test

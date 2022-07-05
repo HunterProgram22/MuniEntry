@@ -1,7 +1,7 @@
-from package.controllers.helper_functions import set_future_date as set_future_date
-from package.database_controllers.databases import extract_data as extract_data, open_db_connection as open_db_connection, sql_query_offense_type as sql_query_offense_type
-from package.models.criminal_charge_models import CriminalCharge as CriminalCharge
-from package.views.custom_widgets import InfoBox as InfoBox, RequiredBox as RequiredBox
+from munientry.controllers.helper_functions import set_future_date as set_future_date
+from munientry.data.databases import extract_data as extract_data, open_db_connection as open_db_connection, sql_query_offense_type as sql_query_offense_type
+from munientry.models.criminal_charge_models import CriminalCharge as CriminalCharge
+from munientry.views.custom_widgets import InfoBox as InfoBox, RequiredBox as RequiredBox
 from typing import Any
 
 class BaseDialogSlotFunctions:
