@@ -5,7 +5,6 @@ The main application entry point.
 """
 try:
     import pyi_splash
-    pyi_splash.update_text('munientry Loading . . .')
 except:
     pass
 
