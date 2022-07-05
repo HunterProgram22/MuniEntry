@@ -3,8 +3,15 @@ Copyright 2021 Justin Kudela.
 
 The main application entry point.
 """
+try:
+    import pyi_splash
+    pyi_splash.update_text('MuniEntry Loading . . .')
+except:
+    pass
+
 import multiprocessing
 import sys
+
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
@@ -30,11 +37,15 @@ def load_window():
 
 @logger.catch
 def main():
-    """The main applicaiton loop."""
+    """The main application loop."""
     logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
     app = QApplication(sys.argv)
-    splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel.png'))
+    splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel_main_splash.png'))
     splash.show()
+    try:
+        pyi_splash.close()
+    except NameError as error:
+        logger.warning(error)
     splash.showMessage(
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>',
         Qt.AlignBottom | Qt.AlignCenter,
