@@ -36,7 +36,6 @@ from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
 
 
-
 # InfoChecker Wrappers
 def check_judicial_officer(func):
     """Prohibits opening a dialog unless a judicial officer is selected."""

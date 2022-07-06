@@ -5,21 +5,19 @@ The main application entry point.
 """
 try:
     import pyi_splash
-except:
+except ModuleNotFoundError:
     pass
 
 import multiprocessing
 import sys
 
-
+from loguru import logger
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QSplashScreen
 
 from munientry import logging_module
-from munientry.settings import ICON_PATH, VERSION_NUMBER, SOCKET_NAME
-
-from loguru import logger
+from munientry.settings import ICON_PATH, SOCKET_NAME, VERSION_NUMBER
 
 
 def load_window():
