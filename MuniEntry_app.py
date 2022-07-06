@@ -31,7 +31,7 @@ def load_window():
     loading and other functions that are done in creating the MainWindow don't occur until after
     the main PyQT splash screen has appeared.
     """
-    from munientry.main_window import MainWindow
+    from munientry.mainwindow.main_window import MainWindow
 
     return MainWindow()
 
