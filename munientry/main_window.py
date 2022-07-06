@@ -8,33 +8,37 @@ from typing import Type
 
 from loguru import logger
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
 from PyQt5.QtGui import QKeySequence
+from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
 
-from munientry.builders import general_entry_dialogs as general_entry
 from munientry.builders import bond_dialogs as bond
+from munientry.builders import general_entry_dialogs as general_entry
 from munientry.builders import plea_only_dialogs as plea_only
 from munientry.builders import plea_sentence_dialogs as plea_sentence
 from munientry.builders import sentencing_only_dialogs as sentencing_only
+from munientry.builders.final_jury_hearing_notice_dialog import (
+    FinalJuryNoticeOfHearingDialog,
+)
+from munientry.builders.general_hearing_notice_dialog import (
+    GeneralNoticeOfHearingDialog,
+)
 from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
-from munientry.builders.final_jury_hearing_notice_dialog import FinalJuryNoticeOfHearingDialog
-from munientry.builders.general_hearing_notice_dialog import GeneralNoticeOfHearingDialog
-from munientry.builders.trial_to_court_hearing_notice_dialog import \
-    TrialToCourtHearingDialog
+from munientry.builders.trial_to_court_hearing_notice_dialog import (
+    TrialToCourtHearingDialog,
+)
 from munientry.data.databases import (
     CriminalCaseSQLRetriever,
+    close_db_connection,
     create_daily_case_list_sql_tables,
     load_daily_case_list_data,
     open_db_connection,
-    close_db_connection,
     query_daily_case_list_data,
 )
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
+from munientry.settings import ICON_PATH, LOG_PATH, USER_LOG_NAME, VERSION_NUMBER
 from munientry.views.custom_widgets import RequiredBox
 from munientry.views.main_window_ui import Ui_MainWindow
-from munientry.settings import ICON_PATH, VERSION_NUMBER, LOG_PATH, USER_LOG_NAME
-
 
 
 # InfoChecker Wrappers
