@@ -103,7 +103,11 @@ class InsuranceInfoChecker(BaseChecker):
     """Class containing checks for Insurance."""
 
     def check_insurance(self) -> str:
-        if self.view.cms_case.case_number[2:5] == 'CRB':
+        try:
+            if self.view.cms_case.case_number[2:5] == 'CRB':
+                return PASS
+        except TypeError as error:
+            logger.warning(error)
             return PASS
         if self.view.fra_in_file_box.currentText() == 'Yes':
             return PASS
