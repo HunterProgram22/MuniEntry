@@ -1,46 +1,23 @@
 """Module containing the Main Window of the application."""
 import os
-import random
-from datetime import datetime
 
 from loguru import logger
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QComboBox, QDialog, QMainWindow, QShortcut
+from PyQt5.QtWidgets import QComboBox, QMainWindow, QShortcut
 
 from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
+from munientry.controllers.helper_functions import (
+    check_case_list_selected,
+    check_judicial_officer,
+    set_random_judge,
+)
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow.main_window_signalconnector import MainWindowSignalConnector
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctions
 from munientry.mainwindow.main_window_view import MainWindowViewModifier
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.settings import LOG_PATH, USER_LOG_NAME
-from munientry.views.custom_widgets import RequiredBox
 from munientry.views.main_window_ui import Ui_MainWindow
-
-
-def check_judicial_officer(func):
-    """Prohibits opening a dialog unless a judicial officer is selected."""
-    def wrapper(self):
-        if self.judicial_officer is None:
-            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        else:
-            func(self)
-
-    return wrapper
-
-
-def check_case_list_selected(func):
-    """Probhitis opening a dialog unless a daily case list is selected."""
-    def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
-            func(self)
-        else:
-            RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-
-    return wrapper
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -131,11 +108,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return 'None'
 
     def assign_judge(self):
-        judge_list = ['Judge Hemmeter', 'Judge Rohrer']
-        assigned_judge = random.choice(judge_list)
-        now = datetime.now()
-        now = now.strftime('%B %d, %Y at %H:%M:%S %p')
+        assigned_judge, time_now = set_random_judge()
         self.assign_judge_label.setText(assigned_judge)
         self.last_judge_assigned_label.setText(
-            f'The last judge assigned was {assigned_judge} at {now}',
+            f'The last judge assigned was {assigned_judge}.\n'
+            + f' The assignment was made at {time_now}.',
         )
