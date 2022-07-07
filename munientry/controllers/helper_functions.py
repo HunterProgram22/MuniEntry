@@ -1,9 +1,35 @@
 """Helper functions that are used throughout the application."""
-from datetime import date, datetime, timedelta
 import random
+from datetime import date, datetime, timedelta
 
 from loguru import logger
+
 from munientry.views.custom_widgets import RequiredBox
+
+
+def check_judicial_officer(func):
+    """Prohibits opening a dialog unless a judicial officer is selected."""
+    def wrapper(self):
+        if self.judicial_officer is None:
+            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+        else:
+            func(self)
+
+    return wrapper
+
+
+def check_case_list_selected(func):
+    """Probhitis opening a dialog unless a daily case list is selected."""
+    def wrapper(self):
+        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+            func(self)
+        else:
+            RequiredBox(
+                'You must select a case list. If not loading a case in the case list '
+                + 'leave the case list field blank.', 'Daily Case List Required',
+            ).exec()
+
+    return wrapper
 
 
 def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
@@ -35,38 +61,15 @@ def next_court_day(future_date: date, weekday_due_date: str) -> date:
 
 
 def set_random_judge() -> tuple[str, str]:
+    """Returns a random judge and the time the judge was assigned."""
     judge_list = ['Judge Hemmeter', 'Judge Rohrer']
     assigned_judge = random.choice(judge_list)
     now = datetime.now()
     time_now = now.strftime('%B %d, %Y at %H:%M:%S %p')
     return (assigned_judge, time_now)
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-
-
-def check_judicial_officer(func):
-    """Prohibits opening a dialog unless a judicial officer is selected."""
-    def wrapper(self):
-        if self.judicial_officer is None:
-            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        else:
-            func(self)
-
-    return wrapper
-
-
-def check_case_list_selected(func):
-    """Probhitis opening a dialog unless a daily case list is selected."""
-    def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
-            func(self)
-        else:
-            RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-
-    return wrapper
