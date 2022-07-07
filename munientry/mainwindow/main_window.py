@@ -27,7 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.modify_view()
         self.connect_signals_to_slots()
-        self.connect_menu_functions()
+        self.menu = MainWindowMenu(self)
         self.functions.load_case_lists()
         self.functions.show_hide_daily_case_lists()
         self.judicial_officer = None
@@ -36,14 +36,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def modify_view(self) -> None:
         MainWindowViewModifier(self)
-
-    def connect_menu_functions(self) -> None:
-        self.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self)
-        self.log_shortcut.activated.connect(self.open_current_log)
-        self.actionOpen_Current_Log.triggered.connect(self.open_current_log)
-
-    def open_current_log(self, signal=None) -> None:
-        os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
 
     def connect_signals_to_slots(self) -> None:
         self.functions = MainWindowSlotFunctions(self)
@@ -114,3 +106,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f'The last judge assigned was {assigned_judge}.\n'
             + f' The assignment was made at {time_now}.',
         )
+
+
+class MainWindowMenu(object):
+    """Class that builds and connects all signals and functions for the mainwindow menu."""
+
+    def __init__(self, window):
+        self.window = window
+        self.connect_menu_functions()
+
+    def connect_menu_functions(self) -> None:
+        self.window.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self.window)
+        self.window.log_shortcut.activated.connect(self.open_current_log)
+        self.window.actionOpen_Current_Log.triggered.connect(self.open_current_log)
+
+    def open_current_log(self, signal=None) -> None:
+        os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
