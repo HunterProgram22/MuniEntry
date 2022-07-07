@@ -1,4 +1,36 @@
-﻿[MASTER]
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+
+@HunterProgram22
+HunterProgram22
+/
+MuniEntry
+Public
+Code
+Issues
+252
+Pull requests
+Discussions
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+MuniEntry/.pylintrc
+@HunterProgram22
+HunterProgram22 Added proper error logging and refactor cms_case_loaders.
+…
+Latest commit 141c186 16 days ago
+ History
+ 1 contributor
+614 lines (460 sloc)  18.8 KB
+
+[MASTER]
 
 # A comma-separated list of package or module names from where C extensions may
 # be loaded. Extensions are loading into the active Python interpreter and may
@@ -612,3 +644,18 @@ preferred-modules=
 # "BaseException, Exception".
 overgeneral-exceptions=BaseException,
                        Exception
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+You have unread notifications
