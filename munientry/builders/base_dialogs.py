@@ -52,7 +52,7 @@ class BaseDialog(QDialog):
 
     def closeEvent(self, event: QCloseEvent) -> None:
         """Extends pyqt close event method in order to log when a dialog closes."""
-        logger.log('DIALOG', f'{self.objectName()} Closed')
+        logger.dialog(f'{self.objectName()} Closed')
 
 
 class CriminalBaseDialog(BaseDialog):
