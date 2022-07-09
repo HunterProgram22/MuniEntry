@@ -51,7 +51,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     to select the table in the database from which to obtain the case."""
 
     def __init__(self, case_number: str, case_table: str) -> None:
-        logger.debug('CriminalCaseSqlRetriever open')
         self.case_number = case_number
         self.case_table = case_table
         self.abbreviation_list = ["DUS", "OVI", "BMV", "FRA", "OL"]

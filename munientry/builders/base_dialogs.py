@@ -44,11 +44,14 @@ class BaseDialog(QDialog):
         for (model_attribute, view_field) in model_class.terms_list:
             key = getattr(self, view_field).__class__.__name__
             view = getattr(self, view_field)
-            setattr(
-                model_class,
-                model_attribute,
-                getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))(),
-            )
+            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))()
+            if view_field_data == '':
+                continue
+            if view_field_data is False:
+                continue
+            setattr(model_class, model_attribute, view_field_data)
+            logger.info(f'{model_class.__class__.__name__} {model_attribute} set to:'
+                        + f' {view_field_data}.')
 
     def closeEvent(self, event: QCloseEvent) -> None:
         """Extends pyqt close event method in order to log when a dialog closes."""
