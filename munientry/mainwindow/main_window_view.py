@@ -27,17 +27,25 @@ class MainWindowViewModifier(object):
         self.main_window.setupUi(self.main_window)
         self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
-        self.create_main_window_dicts()
+        self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
+        self.main_window.dialog_buttons_dict = self.connect_dialog_buttons()
+        self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
+        self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
+        self.main_window.radio_buttons_case_lists_dict = (
+            self.connect_radio_buttons_to_daily_case_lists()
+        )
 
-    def create_main_window_dicts(self) -> None:
-        self.main_window.judicial_officer_buttons_dict = {
+    def connect_judicial_officers(self) -> dict:
+        return {
             self.main_window.bunner_radioButton: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
             self.main_window.pelanda_radioButton: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
             self.main_window.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
         }
-        self.main_window.dialog_buttons_dict = {
+
+    def connect_dialog_buttons(self) -> dict:
+        return {
             self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
             self.main_window.JailCCPleaButton: plea_sentence.JailCCPleaDialog,
             self.main_window.DiversionButton: plea_sentence.DiversionPleaDialog,
@@ -57,7 +65,9 @@ class MainWindowViewModifier(object):
             self.main_window.general_hearingEntryButton: GeneralNoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
-        self.main_window.daily_case_list_buttons_dict = {
+
+    def connect_daily_case_list_radio_buttons(self) -> dict:
+        return{
             self.main_window.arraignments_radioButton: 'arraignments',
             self.main_window.slated_radioButton: 'slated',
             self.main_window.final_pretrial_radioButton: 'final_pretrials',
@@ -65,7 +75,9 @@ class MainWindowViewModifier(object):
             self.main_window.trials_to_court_radioButton: 'trials_to_court',
             self.main_window.pcvh_fcvh_radioButton: 'pcvh_fcvh',
         }
-        self.main_window.database_table_dict = {
+
+    def connect_database_tables_to_daily_case_lists(self) -> dict:
+        return {
             'arraignments': self.main_window.arraignments_cases_box,
             'slated': self.main_window.slated_cases_box,
             'final_pretrials': self.main_window.final_pretrial_cases_box,
@@ -73,7 +85,9 @@ class MainWindowViewModifier(object):
             'trials_to_court': self.main_window.trials_to_court_cases_box,
             'pcvh_fcvh': self.main_window.pcvh_fcvh_cases_box,
         }
-        self.main_window.radio_buttons_case_lists_dict = {
+
+    def connect_radio_buttons_to_daily_case_lists(self) -> dict:
+        return {
             self.main_window.arraignments_radioButton: self.main_window.arraignments_cases_box,
             self.main_window.slated_radioButton: self.main_window.slated_cases_box,
             self.main_window.final_pretrial_radioButton: self.main_window.final_pretrial_cases_box,
