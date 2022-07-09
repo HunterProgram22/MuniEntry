@@ -126,18 +126,18 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
 def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
-    logger.log('DATABASE', f'{db_connection.connectionName()} database connection open.')
+    logger.database(f'{db_connection.connectionName()} database connection open.')
     return db_connection
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
     db_connection.close()
-    logger.log('DATABASE', f'{db_connection.connectionName()} database connection closed.')
+    logger.database(f'{db_connection.connectionName()} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
     QSqlDatabase.removeDatabase(connection_name)
-    logger.log('DATABASE', f'{connection_name} database connection removed.')
+    logger.database(f'{connection_name} database connection removed.')
 
 
 def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:

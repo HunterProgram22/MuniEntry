@@ -29,16 +29,27 @@ class CriticalErrorBox(QMessageBox):
 fmt = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
 
 logger.add(f'./resources/logs/{USER_LOG_NAME}', format=fmt, level=20)
-logger.level('IMPORT', no=18, color='<white>')
-logger.level('DATABASE', no=21, color='<green>')
-logger.level('DIALOG', no=22, color='<green>')
-logger.level('dialog', no=23, color='<green>')
-logger.level('BUTTON', no=24, color='<cyan>')
-logger.level('CHOICE', no=26, color='<cyan>')
-logger.level('CHECKFAIL', no=27, color='<magenta>')
-logger.level('REQUIRED', no=28, color='<magenta>')
 
-logger.__class__.dialog = partialmethod(logger.__class__.log, 'dialog')
+logger.level('IMPORT', no=18, color='<white>')
+
+logger.level('DATABASE', no=21, color='<green>')
+logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
+
+logger.level('DIALOG', no=22, color='<green>')
+logger.__class__.dialog = partialmethod(logger.__class__.log, 'DIALOG')
+
+logger.level('BUTTON', no=24, color='<cyan>')
+logger.__class__.button = partialmethod(logger.__class__.log, 'BUTTON')
+
+logger.level('CHOICE', no=26, color='<cyan>')
+logger.__class__.choice = partialmethod(logger.__class__.log, 'CHOICE')
+
+logger.level('CHECKFAIL', no=27, color='<magenta>')
+logger.__class__.checkfail = partialmethod(logger.__class__.log, 'CHECKFAIL')
+
+logger.level('REQUIRED', no=28, color='<magenta>')
+logger.__class__.required = partialmethod(logger.__class__.log, 'REQUIRED')
+
 
 def show_exception_box(log_msg):
     """Checks if a QApplication instance is available and shows a messagebox with the exception message.

@@ -51,7 +51,7 @@ class BaseChargeGrid(QGridLayout):
 
         Ex. Pressing 'No Contest All' sets all pleas to No Contest.
         """
-        logger.log('BUTTON', f'{self.sender().text()} Pressed')
+        logger.button(f'{self.sender().text()} Pressed')
         if plea == None:
             plea = self.get_plea()
         for column in range(0, self.columnCount()):
@@ -281,7 +281,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
 
     def set_all_trial_findings(self) -> None:
-        logger.log('BUTTON', f'{self.sender().text()} Pressed')
+        logger.button(f'{self.sender().text()} Pressed')
         trial_finding = self.get_plea()
         for column in range(0, self.columnCount()):
             column += 1

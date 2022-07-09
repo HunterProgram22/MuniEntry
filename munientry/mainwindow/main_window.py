@@ -76,7 +76,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             case_table=self.case_table,
         )
         dialog_name = self.dialog.objectName()
-        logger.log('DIALOG', f'{dialog_name} Opened')
+        logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
     @check_case_list_selected
@@ -89,7 +89,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
-        logger.log('DIALOG', f'{dialog_name} Opened')
+        logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
     def set_scheduling_dialog_name(self) -> str:
