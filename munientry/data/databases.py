@@ -51,6 +51,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
     to select the table in the database from which to obtain the case."""
 
     def __init__(self, case_number: str, case_table: str) -> None:
+        logger.debug('CriminalCaseSqlRetriever open')
         self.case_number = case_number
         self.case_table = case_table
         self.abbreviation_list = ["DUS", "OVI", "BMV", "FRA", "OL"]
@@ -68,6 +69,8 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         query_string = select_case_data_sql_query(self.case_table, self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
+        logger.database(f'Querying {self.database.connectionName()}')
+        logger.database(f'Query: {query_string}')
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
