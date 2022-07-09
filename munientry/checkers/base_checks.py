@@ -23,7 +23,7 @@ class BaseChecker(object):
     def perform_check_list(self) -> str:
         for item_to_check in self.dialog_check_list:
             if getattr(self, item_to_check)() == FAIL:
-                logger.log('CHECKFAIL', item_to_check)
+                logger.checkfail(item_to_check)
                 return FAIL
         return PASS
 

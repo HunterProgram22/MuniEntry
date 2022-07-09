@@ -217,7 +217,7 @@ class BaseDialogSlotFunctions(object):
         return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
-        logger.log('BUTTON', f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
+        logger.button(f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
         if self.dialog.sender().isChecked():
             for items in self.dialog.additional_conditions_list:
                 if items[0] == self.dialog.sender().objectName():

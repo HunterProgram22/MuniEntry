@@ -13,7 +13,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
 
 from munientry import logging_module
-from munientry.main_window import MainWindow
+from munientry.mainwindow.main_window import MainWindow
 
 
 """
