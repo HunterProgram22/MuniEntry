@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.controllers.cms_case_loaders import CmsFraLoader
+from munientry.data.cms_case_loaders import CmsFraLoader
 from munientry.controllers.signal_connectors import (
     LeapSentencingDialogSignalConnector,
     SentencingOnlyDialogSignalConnector,

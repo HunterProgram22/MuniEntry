@@ -1,4 +1,4 @@
-from munientry.controllers.cms_case_loaders import CmsNoChargeLoader as CmsNoChargeLoader
+from munientry.data.cms_case_loaders import CmsNoChargeLoader as CmsNoChargeLoader
 from munientry.controllers.signal_connectors import BondHearingDialogSignalConnector as BondHearingDialogSignalConnector
 from munientry.controllers.view_modifiers import BondHearingDialogViewModifier as BondHearingDialogViewModifier
 from munientry.updaters.no_grid_case_updaters import BondHearingDialogUpdater as BondHearingDialogUpdater

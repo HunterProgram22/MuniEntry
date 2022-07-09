@@ -136,6 +136,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+.tests/resources/Saved/
+
 tests/db/charges.sqlite
 
 tests/db/daily_case_lists.sqlite
