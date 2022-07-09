@@ -1,5 +1,6 @@
 import sys
 import traceback
+from types import MethodType
 from functools import partialmethod
 
 from loguru import logger

@@ -18,11 +18,8 @@ from munientry.data.databases import (
 )
 
 
-class MainWindowSlotFunctions(object):
+class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
-
-    # def __init__(self, main_window: object) -> None:
-    #     self = main_window
 
     def load_case_lists(self, db_connection: QSqlDatabase = None) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
@@ -94,9 +91,7 @@ class MainWindowSlotFunctions(object):
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = self.dialog_buttons_dict[
-            self.sender()
-            ](
+        self.dialog = self.dialog_buttons_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
