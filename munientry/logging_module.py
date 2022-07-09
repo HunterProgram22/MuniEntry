@@ -41,6 +41,9 @@ logger.__class__.dialog = partialmethod(logger.__class__.log, 'DIALOG')
 logger.level('BUTTON', no=24, color='<cyan>')
 logger.__class__.button = partialmethod(logger.__class__.log, 'BUTTON')
 
+logger.level('ACTION', no=25, color='<cyan>')
+logger.__class__.action = partialmethod(logger.__class__.log, 'ACTION')
+
 logger.level('CHOICE', no=26, color='<cyan>')
 logger.__class__.choice = partialmethod(logger.__class__.log, 'CHOICE')
 

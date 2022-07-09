@@ -112,7 +112,9 @@ class ExtendedComboBox(QComboBox):
 
     def delete_case(self):
         index = self.currentIndex()
+        case = self.itemText(index)
         self.removeItem(index)
+        logger.action(f'Case {case} deleted from {self.objectName()}.')
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         super(ExtendedComboBox, self).keyPressEvent(event)
