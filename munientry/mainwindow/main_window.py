@@ -3,12 +3,13 @@ import os
 
 from loguru import logger
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QComboBox, QMainWindow, QShortcut
+from PyQt5.QtWidgets import QComboBox, QMainWindow, QShortcut, QInputDialog
 
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.party_types import JudicialOfficer
 from munientry.settings import LOG_PATH, USER_LOG_NAME
 from munientry.views.main_window_ui import Ui_MainWindow
 
@@ -52,6 +53,24 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
     def set_selected_case_list_table(self) -> None:
         self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
+
+
+    def set_visiting_judge(self):
+        if self.visiting_judge_radioButton.isChecked():
+            first_name, ok = QInputDialog.getText(
+                self, 'Set Visiting Judge', 'Enter Judge First Name:'
+            )
+            last_name, ok = QInputDialog.getText(
+                self, 'Set Visiting Judge', 'Enter Judge Last Name:'
+            )
+            if ok:
+                update_dict = {
+                    self.visiting_judge_radioButton: JudicialOfficer(
+                    f'{first_name}', f'{last_name}', 'Judge'
+                    )
+                }
+                self.judicial_officer_buttons_dict.update(update_dict)
+                self.visiting_judge_radioButton.setText(f'Judge {last_name}')
 
     def update_judicial_officer(self) -> None:
         self.judicial_officer = self.judicial_officer_buttons_dict.get(self.sender())
