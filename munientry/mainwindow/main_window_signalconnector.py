@@ -19,7 +19,7 @@ class MainWindowSignalConnector(object):
             self.main_window.assign_judge,
         )
         self.main_window.visiting_judge_radioButton.toggled.connect(
-            self.main_window.set_visiting_judge
+            self.main_window.set_visiting_judge,
         )
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()

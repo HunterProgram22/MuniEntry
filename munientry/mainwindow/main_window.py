@@ -3,7 +3,7 @@ import os
 
 from loguru import logger
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QComboBox, QMainWindow, QShortcut, QInputDialog
+from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QShortcut
 
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
@@ -54,20 +54,19 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
     def set_selected_case_list_table(self) -> None:
         self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
 
-
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
-            first_name, ok = QInputDialog.getText(
-                self, 'Set Visiting Judge', 'Enter Judge First Name:'
+            first_name, response_ok = QInputDialog.getText(
+                self, 'Set Visiting Judge', 'Enter Judge First Name:',
             )
-            last_name, ok = QInputDialog.getText(
-                self, 'Set Visiting Judge', 'Enter Judge Last Name:'
+            last_name, response_ok = QInputDialog.getText(
+                self, 'Set Visiting Judge', 'Enter Judge Last Name:',
             )
-            if ok:
+            if response_ok:
                 update_dict = {
                     self.visiting_judge_radioButton: JudicialOfficer(
-                    f'{first_name}', f'{last_name}', 'Judge'
-                    )
+                        f'{first_name}', f'{last_name}', 'Judge',
+                    ),
                 }
                 self.judicial_officer_buttons_dict.update(update_dict)
                 self.visiting_judge_radioButton.setText(f'Judge {last_name}')
