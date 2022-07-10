@@ -441,7 +441,8 @@ class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def get_days_to_add(self, days_to_add_string):
         leap_sentence_date_dict = {
-            "120 days": 120,
+            '120 days': 120,
+            '30 days': 30,
         }
         return leap_sentence_date_dict.get(days_to_add_string)
 

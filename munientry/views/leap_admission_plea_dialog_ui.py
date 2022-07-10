@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'munientry\views\ui\LeapAdmissionPleaDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/LeapAdmissionPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -98,6 +98,7 @@ class Ui_LeapAdmissionPleaDialog(object):
         self.time_to_complete_box = NoScrollComboBox(self.frame_5)
         self.time_to_complete_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.time_to_complete_box.setObjectName("time_to_complete_box")
+        self.time_to_complete_box.addItem("")
         self.time_to_complete_box.addItem("")
         self.time_to_complete_box.addItem("")
         self.gridLayout_3.addWidget(self.time_to_complete_box, 0, 1, 1, 1)
@@ -330,7 +331,8 @@ class Ui_LeapAdmissionPleaDialog(object):
         LeapAdmissionPleaDialog.setWindowTitle(_translate("LeapAdmissionPleaDialog", "LEAP Admission Plea Case Information"))
         self.label_10.setText(_translate("LeapAdmissionPleaDialog", "Time to Complete LEAP:"))
         self.time_to_complete_box.setItemText(0, _translate("LeapAdmissionPleaDialog", "120 days"))
-        self.time_to_complete_box.setItemText(1, _translate("LeapAdmissionPleaDialog", "forthwith"))
+        self.time_to_complete_box.setItemText(1, _translate("LeapAdmissionPleaDialog", "30 days"))
+        self.time_to_complete_box.setItemText(2, _translate("LeapAdmissionPleaDialog", "forthwith"))
         self.label_19.setText(_translate("LeapAdmissionPleaDialog", "Sentencing Date:"))
         self.add_charge_Button.setText(_translate("LeapAdmissionPleaDialog", "Add Charge"))
         self.no_contest_all_Button.setText(_translate("LeapAdmissionPleaDialog", "No Contest All"))
