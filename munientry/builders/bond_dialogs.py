@@ -2,7 +2,11 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.checkers.bond_checkers import (
+    BondHearingDialogInfoChecker,
+    NoPleaBondDialogInfoChecker,
+    ProbationViolationBondDialogInfoChecker,
+)
 from munientry.controllers.signal_connectors import (
     BondHearingDialogSignalConnector,
     NoPleaBondDialogSignalConnector,
@@ -18,11 +22,7 @@ from munientry.controllers.view_modifiers import (
     NoPleaBondDialogViewModifier,
     ProbationViolationBondDialogViewModifier,
 )
-from munientry.checkers.bond_checkers import (
-    BondHearingDialogInfoChecker,
-    NoPleaBondDialogInfoChecker,
-    ProbationViolationBondDialogInfoChecker,
-)
+from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     BondHearingEntryCaseInformation,
     CommunityControlViolationEntryCaseInformation,

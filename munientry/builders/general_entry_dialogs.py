@@ -2,7 +2,10 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.checkers.base_checks import (
+    FailureToAppearDialogInfoChecker,
+    FreeformDialogInfoChecker,
+)
 from munientry.controllers.signal_connectors import (
     FailureToAppearDialogSignalConnector,
     FreeformDialogSignalConnector,
@@ -15,10 +18,7 @@ from munientry.controllers.view_modifiers import (
     FailureToAppearDialogViewModifier,
     FreeformDialogViewModifier,
 )
-from munientry.checkers.base_checks import (
-    FailureToAppearDialogInfoChecker,
-    FreeformDialogInfoChecker,
-)
+from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     FailureToAppearEntryCaseInformation,
     FreeformEntryCaseInformation,

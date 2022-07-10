@@ -1,18 +1,15 @@
 from loguru import logger
-
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
-from munientry.builders.base_dialogs import BaseDialog
-from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
-
-from munientry.models.template_types import TEMPLATE_DICT
-
 from PyQt5.QtCore import QDate
 
-from munientry.models.scheduling_information import SchedulingCaseInformation
+from munientry.builders.base_dialogs import BaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.models.scheduling_information import SchedulingCaseInformation
+from munientry.models.template_types import TEMPLATE_DICT
+from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 TODAY = QDate.currentDate()
 SPEEDY_TRIAL_TIME_DICT = {
