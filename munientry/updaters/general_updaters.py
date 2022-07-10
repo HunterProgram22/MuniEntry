@@ -1,17 +1,17 @@
 """Module that contains general dialogs for specific parts of a dialog dialog."""
 
-from loguru import logger
 from typing import Any
 
+from loguru import logger
+
+from munientry.settings import (
+    CRIMINAL_COURT_COSTS,
+    MOVING_COURT_COSTS,
+    NONMOVING_COURT_COSTS,
+    SPECIAL_DOCKETS_COSTS,
+)
 from munientry.updaters.base_updaters import CBD, BaseDialogUpdater
-from munientry.settings import CRIMINAL_COURT_COSTS, MOVING_COURT_COSTS, NONMOVING_COURT_COSTS
 
-
-SPECIAL_DOCKETS_COSTS = [
-    'while on the OVI Docket',
-    'while on Mission Court',
-    'while on the Mental Health Docket',
-]
 
 class CaseInformationUpdater(BaseDialogUpdater):
     """Updates the model data with the case information fram (top frame on dialogs)."""
@@ -38,9 +38,11 @@ class CaseInformationUpdater(BaseDialogUpdater):
         except AttributeError as error:
             logger.warning(error)
         try:
-            self.model.defense_counsel_waived = self.dialog.defense_counsel_waived_checkBox.isChecked()
-        except AttributeError as error_2:
-            logger.warning(error_2)
+            self.model.defense_counsel_waived = (
+                self.dialog.defense_counsel_waived_checkBox.isChecked()
+            )
+        except AttributeError as error_two:
+            logger.warning(error_two)
 
 
 class CourtCostsUpdater(BaseDialogUpdater):
@@ -57,8 +59,7 @@ class CourtCostsUpdater(BaseDialogUpdater):
         """Sets the balance due date to the name of the specialized docket or specific due date."""
         if self.dialog.ability_to_pay_box.currentText() in SPECIAL_DOCKETS_COSTS:
             return self.dialog.ability_to_pay_box.currentText()
-        else:
-            return self.dialog.balance_due_date.get_date()
+        return self.dialog.balance_due_date.get_date()
 
     def calculate_court_costs(self) -> int:
         court_costs = 0
@@ -162,7 +163,7 @@ class JailDataUpdater(BaseDialogUpdater):
         return total_jail_days_suspended
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

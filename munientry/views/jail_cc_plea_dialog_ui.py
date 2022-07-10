@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'munientry\views\ui\JailCCPleaDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/JailCCPleaDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -74,7 +74,7 @@ class Ui_JailCCPleaDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1061, 875))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 1082, 875))
         self.scrollAreaWidgetContents_2.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.scrollAreaWidgetContents_2.setObjectName("scrollAreaWidgetContents_2")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents_2)
@@ -215,6 +215,7 @@ class Ui_JailCCPleaDialog(object):
         self.ability_to_pay_box.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.ability_to_pay_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.ability_to_pay_box.setObjectName("ability_to_pay_box")
+        self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
         self.ability_to_pay_box.addItem("")
@@ -634,9 +635,10 @@ class Ui_JailCCPleaDialog(object):
         self.ability_to_pay_box.setItemText(1, _translate("JailCCPleaDialog", "within 30 days"))
         self.ability_to_pay_box.setItemText(2, _translate("JailCCPleaDialog", "within 60 days"))
         self.ability_to_pay_box.setItemText(3, _translate("JailCCPleaDialog", "within 90 days"))
-        self.ability_to_pay_box.setItemText(4, _translate("JailCCPleaDialog", "while on the OVI Docket"))
-        self.ability_to_pay_box.setItemText(5, _translate("JailCCPleaDialog", "while on Mission Court"))
-        self.ability_to_pay_box.setItemText(6, _translate("JailCCPleaDialog", "while on the Mental Health Docket"))
+        self.ability_to_pay_box.setItemText(4, _translate("JailCCPleaDialog", "while on Community Control"))
+        self.ability_to_pay_box.setItemText(5, _translate("JailCCPleaDialog", "while on the OVI Docket"))
+        self.ability_to_pay_box.setItemText(6, _translate("JailCCPleaDialog", "while on Mission Court"))
+        self.ability_to_pay_box.setItemText(7, _translate("JailCCPleaDialog", "while on the Mental Health Docket"))
         self.label_18.setText(_translate("JailCCPleaDialog", "Due date:"))
         self.costs_and_fines_Button.setText(_translate("JailCCPleaDialog", "Show Costs/Fines"))
         self.victim_notification_checkBox.setText(_translate("JailCCPleaDialog", "Fingerprinting and Victim Notification"))

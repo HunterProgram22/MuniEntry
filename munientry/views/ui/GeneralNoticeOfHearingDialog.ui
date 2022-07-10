@@ -494,12 +494,17 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Motion to Suppress</string>
+                   <string>Motion Hearing</string>
                   </property>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Motion to Seal</string>
+                   <string>Motion to Suppress Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion to Seal Hearing</string>
                   </property>
                  </item>
                 </widget>
