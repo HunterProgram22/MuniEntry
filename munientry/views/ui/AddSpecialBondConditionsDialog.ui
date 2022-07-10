@@ -170,7 +170,7 @@ font-weight: bold;</string>
          <property name="geometry">
           <rect>
            <x>0</x>
-           <y>-208</y>
+           <y>0</y>
            <width>938</width>
            <height>1028</height>
           </rect>
@@ -197,6 +197,68 @@ font-weight: bold;</string>
              <property name="sizeConstraint">
               <enum>QLayout::SetDefaultConstraint</enum>
              </property>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>Administrative License Suspension stay is:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="NoScrollComboBox" name="admin_license_suspension_objection_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>No</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Yes</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>State Objects to Administrative License Suspension stay:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Explanation of Decision:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="admin_license_suspension_explanation_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="NoScrollComboBox" name="admin_license_suspension_disposition_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Granted</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Denied</string>
+                </property>
+               </item>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_24">
                <property name="sizePolicy">
@@ -220,68 +282,6 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="text">
-                <string>State Objects to Administrative License Suspension:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="NoScrollComboBox" name="admin_license_suspension_objection_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>No</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Yes</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_21">
-               <property name="text">
-                <string>Administrative License Suspension:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="NoScrollComboBox" name="admin_license_suspension_disposition_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Granted</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Denied</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Explanation of Decision:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QLineEdit" name="admin_license_suspension_explanation_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
