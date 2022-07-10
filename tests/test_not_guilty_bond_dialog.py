@@ -34,6 +34,7 @@ all_ngb_bond_checkbox_conditions_test_list = [
     "comply_protection_order_checkBox",
     "monitoring_checkBox",
     "specialized_docket_checkBox",
+    "public_safety_suspension_checkBox",
     "alcohol_test_kiosk_checkBox",
     "domestic_violence_checkBox",
     "admin_license_suspension_checkBox",
@@ -72,6 +73,7 @@ main_ngb_bond_conditions_model_test_list = [
     ("comply_protection_order_checkBox", "comply_protection_order"),
     ("monitoring_checkBox", "monitoring"),
     ("specialized_docket_checkBox", "specialized_docket"),
+    ("public_safety_suspension_checkBox", "public_safety_suspension"),
     ("alcohol_test_kiosk_checkBox", "alcohol_test_kiosk"),
 ]
 

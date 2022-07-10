@@ -297,6 +297,7 @@ class BondConditions:
     monitoring: bool = False
     monitoring_type: str = None
     comply_protection_order: bool = False
+    public_safety_suspension: bool = False
     terms_list = [
         ("bond_type", "bond_type_box"),
         ("bond_amount", "bond_amount_box"),
@@ -309,6 +310,7 @@ class BondConditions:
         ("monitoring", "monitoring_checkBox"),
         ("monitoring_type", "monitoring_type_box"),
         ("comply_protection_order", "comply_protection_order_checkBox"),
+        ("public_safety_suspension", "public_safety_suspension_checkBox"),
     ]
 
 

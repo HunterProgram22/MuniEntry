@@ -141,6 +141,7 @@ def test_create_no_plea_bond_entry(qtbot, npb_dialog):
     mouse_click(npb_dialog.alcohol_test_kiosk_checkBox)
     mouse_click(npb_dialog.mental_health_assessment_checkBox)
     mouse_click(npb_dialog.specialized_docket_checkBox)
+    mouse_click(npb_dialog.public_safety_suspension_checkBox)
     npb_dialog.appearance_reason_box.setCurrentText("was arrested on a warrant for failure to appear")
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
@@ -160,6 +161,7 @@ def test_create_bond_modification_entry(qtbot, bhd_dialog):
     mouse_click(bhd_dialog.alcohol_test_kiosk_checkBox)
     mouse_click(bhd_dialog.mental_health_assessment_checkBox)
     mouse_click(bhd_dialog.specialized_docket_checkBox)
+    mouse_click(bhd_dialog.public_safety_suspension_checkBox)
     bhd_dialog.bond_modification_decision_box.setCurrentText("request to modify bond is granted")
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
@@ -241,6 +243,7 @@ def test_create_not_guilty_bond_entry(qtbot, ngb_dialog):
     mouse_click(ngb_dialog.alcohol_test_kiosk_checkBox)
     mouse_click(ngb_dialog.mental_health_assessment_checkBox)
     mouse_click(ngb_dialog.specialized_docket_checkBox)
+    mouse_click(ngb_dialog.public_safety_suspension_checkBox)
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(ngb_dialog.create_entry_Button)

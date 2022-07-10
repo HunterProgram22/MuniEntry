@@ -177,7 +177,7 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>988</width>
+           <width>984</width>
            <height>792</height>
           </rect>
          </property>
@@ -407,14 +407,14 @@ border-color: rgb(0, 0, 0);</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,1">
              <item row="1" column="1">
-              <widget class="QCheckBox" name="vehicle_seizure_checkBox">
+              <widget class="ConditionCheckbox" name="vehicle_seizure_checkBox">
                <property name="text">
                 <string>Vehicle Seizure / Immobilization</string>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="admin_license_suspension_checkBox">
+              <widget class="ConditionCheckbox" name="admin_license_suspension_checkBox">
                <property name="text">
                 <string>Administrative License Suspension</string>
                </property>
@@ -441,21 +441,21 @@ border-color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QCheckBox" name="domestic_violence_checkBox">
+              <widget class="ConditionCheckbox" name="domestic_violence_checkBox">
                <property name="text">
                 <string>Domestic Violence Restrictions</string>
                </property>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QCheckBox" name="custodial_supervision_checkBox">
+              <widget class="ConditionCheckbox" name="custodial_supervision_checkBox">
                <property name="text">
                 <string>Custodial Supervision                          </string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QCheckBox" name="no_contact_checkBox">
+              <widget class="ConditionCheckbox" name="no_contact_checkBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>1</horstretch>
@@ -468,7 +468,7 @@ border-color: rgb(0, 0, 0);</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QCheckBox" name="other_conditions_checkBox">
+              <widget class="ConditionCheckbox" name="other_conditions_checkBox">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                  <horstretch>1</horstretch>
@@ -856,14 +856,14 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QCheckBox" name="alcohol_drugs_assessment_checkBox">
+              <widget class="ConditionCheckbox" name="alcohol_drugs_assessment_checkBox">
                <property name="text">
                 <string> Obtain alcohol/drug assessment                             </string>
                </property>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QCheckBox" name="no_alcohol_drugs_checkBox">
+              <widget class="ConditionCheckbox" name="no_alcohol_drugs_checkBox">
                <property name="text">
                 <string> No alcohol/drugs of abuse                                   </string>
                </property>
@@ -945,14 +945,14 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QCheckBox" name="specialized_docket_checkBox">
+              <widget class="ConditionCheckbox" name="specialized_docket_checkBox">
                <property name="text">
                 <string>Screen for Specialized Dockets:                           </string>
                </property>
               </widget>
              </item>
              <item row="6" column="0">
-              <widget class="QCheckBox" name="monitoring_checkBox">
+              <widget class="ConditionCheckbox" name="monitoring_checkBox">
                <property name="layoutDirection">
                 <enum>Qt::LeftToRight</enum>
                </property>
@@ -962,23 +962,30 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QCheckBox" name="mental_health_assessment_checkBox">
+              <widget class="ConditionCheckbox" name="mental_health_assessment_checkBox">
                <property name="text">
                 <string> Obtain mental health assessment                         </string>
                </property>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QCheckBox" name="alcohol_test_kiosk_checkBox">
+              <widget class="ConditionCheckbox" name="alcohol_test_kiosk_checkBox">
                <property name="text">
                 <string> Alcohol Kiosk testing                                         </string>
                </property>
               </widget>
              </item>
              <item row="8" column="0">
-              <widget class="QCheckBox" name="comply_protection_order_checkBox">
+              <widget class="ConditionCheckbox" name="comply_protection_order_checkBox">
                <property name="text">
                 <string> Comply with Terms of Protection Order</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="ConditionCheckbox" name="public_safety_suspension_checkBox">
+               <property name="text">
+                <string>Public Safety Suspension imposed pursuant to R.C. 4511.196(B)</string>
                </property>
               </widget>
              </item>
@@ -1008,6 +1015,11 @@ font-weight: bold;</string>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
+   <header>.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
    <header>.custom_widgets</header>
   </customwidget>
  </customwidgets>
