@@ -15,7 +15,19 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 )
 
 TODAY = QDate.currentDate()
+DAY_DICT = {
+            "Monday": 1,
+            "Tuesday": 2,
+            "Wednesday": 3,
+            "Thursday": 4,
+            "Friday": 5,
+        }
 
+EVENT_DICT = {
+    "Trial": 2,
+    "Final Pretrial": 2,
+    "Pretrial": 28,
+}
 
 def load_dialog_name(judicial_officer: object) -> str:
     """Sets the name of the dialog based on the judicial officer selected.
@@ -69,6 +81,7 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
+        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
 
     def set_view_dates(self):
@@ -95,10 +108,30 @@ class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
         self.dialog.jury_trial_only_yes_radioButton.toggled.connect(
             self.functions.show_hide_final_pretrial,
         )
+        self.dialog.final_pretrial_dateEdit.dateChanged.connect(
+            self.functions.update_trial_date,
+        )
 
 
 class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
+
+    def update_trial_date(self):
+        if self.dialog.dialog_name == 'Notice Of Hearing Entry Rohrer':
+            trial_date = self.set_trial_date('Tuesday', 'Trial')
+        if self.dialog.dialog_name == 'Notice Of Hearing Entry Hemmeter':
+            trial_date = self.set_trial_date('Thursday', 'Trial')
+        try:
+            self.dialog.trial_dateEdit.setDate(trial_date)
+        except UnboundLocalError as error:
+            logger.warning(error)
+
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+        days_to_event = EVENT_DICT.get(event_to_set)
+        event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
+        while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
+            event_date = event_date.addDays(1)
+        return event_date
 
     def show_hide_final_pretrial(self):
         if self.dialog.jury_trial_only_no_radioButton.isChecked():
