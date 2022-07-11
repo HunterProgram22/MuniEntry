@@ -2,7 +2,11 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
+from munientry.checkers.no_jail_sentencing_checkers import (
+    DiversionDialogInfoChecker,
+    FineOnlyDialogInfoChecker,
+)
 from munientry.controllers.signal_connectors import (
     DiversionDialogSignalConnector,
     FineOnlyDialogSignalConnector,
@@ -18,13 +22,7 @@ from munientry.controllers.view_modifiers import (
     FineOnlyDialogViewModifier,
     JailCCDialogViewModifier,
 )
-from munientry.checkers.jail_charge_grid_checkers import (
-    JailCCPleaDialogInfoChecker,
-)
-from munientry.checkers.no_jail_sentencing_checkers import (
-    DiversionDialogInfoChecker,
-    FineOnlyDialogInfoChecker,
-)
+from munientry.data.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     DiversionEntryCaseInformation,
     FineOnlyEntryCaseInformation,

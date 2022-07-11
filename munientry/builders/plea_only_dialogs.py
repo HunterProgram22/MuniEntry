@@ -2,7 +2,11 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.data.cms_case_loaders import CmsChargeLoader
+from munientry.checkers.plea_only_checkers import (
+    LeapAdmissionPleaDialogInfoChecker,
+    NotGuiltyBondDialogInfoChecker,
+    PleaOnlyDialogInfoChecker,
+)
 from munientry.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
     LeapAdmissionPleaValidDialogSignalConnector,
@@ -19,11 +23,7 @@ from munientry.controllers.view_modifiers import (
     NotGuiltyBondDialogViewModifier,
     PleaOnlyDialogViewModifier,
 )
-from munientry.checkers.plea_only_checkers import (
-    LeapAdmissionPleaDialogInfoChecker,
-    NotGuiltyBondDialogInfoChecker,
-    PleaOnlyDialogInfoChecker,
-)
+from munientry.data.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
     NotGuiltyBondEntryCaseInformation,
@@ -37,9 +37,9 @@ from munientry.updaters.grid_case_updaters import (
     PleaOnlyDialogUpdater,
 )
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
+from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
-from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 
 
 class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):

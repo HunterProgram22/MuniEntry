@@ -2,7 +2,13 @@
 from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.checkers.jail_charge_grid_checkers import (
+    SentencingOnlyDialogInfoChecker,
+    TrialSentencingDialogInfoChecker,
+)
+from munientry.checkers.no_jail_sentencing_checkers import (
+    LeapSentencingDialogInfoChecker,
+)
 from munientry.controllers.signal_connectors import (
     LeapSentencingDialogSignalConnector,
     SentencingOnlyDialogSignalConnector,
@@ -18,13 +24,7 @@ from munientry.controllers.view_modifiers import (
     SentencingOnlyDialogViewModifier,
     TrialSentencingDialogViewModifier,
 )
-from munientry.checkers.jail_charge_grid_checkers import (
-    SentencingOnlyDialogInfoChecker,
-    TrialSentencingDialogInfoChecker,
-)
-from munientry.checkers.no_jail_sentencing_checkers import (
-    LeapSentencingDialogInfoChecker,
-)
+from munientry.data.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     LeapSentencingEntryCaseInformation,
     SentencingOnlyEntryCaseInformation,
