@@ -112,7 +112,9 @@ class ExtendedComboBox(QComboBox):
 
     def delete_case(self):
         index = self.currentIndex()
+        case = self.itemText(index)
         self.removeItem(index)
+        logger.action(f'Case {case} deleted from {self.objectName()}.')
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         super(ExtendedComboBox, self).keyPressEvent(event)
@@ -323,7 +325,7 @@ class ConditionCheckbox(QCheckBox):
         self.toggled.connect(self.log_toggle)
 
     def log_toggle(self):
-        logger.log('BUTTON', f'{self.sender().text()} Checkbox Set: {self.sender().isChecked()}')
+        logger.button(f'{self.sender().text()} Checkbox Set: {self.sender().isChecked()}')
 
 
 class AlliedCheckbox(QCheckBox):
@@ -340,7 +342,7 @@ class AlliedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
-        logger.log('BUTTON', f'Allied Checkbox Set: {self.isChecked()}')
+        logger.button(f'Allied Checkbox Set: {self.isChecked()}')
         grid = self.dialog.charges_gridLayout
         if self.isChecked():
             try:
@@ -377,7 +379,7 @@ class DismissedCheckbox(QCheckBox):
 
     def set_to_dismissed(self):
         """TODO: the try except block is to account for the Leap Dialogs and NoJail not having same # rows. Fix."""
-        logger.log('BUTTON', f'Dismissed Checkbox Set: {self.isChecked()}')
+        logger.button(f'Dismissed Checkbox Set: {self.isChecked()}')
         grid = self.dialog.charges_gridLayout
         if self.isChecked():
             try:
@@ -417,7 +419,7 @@ class RequiredBox(QMessageBox):
         self.message = message
         self.title = title
         self.set_up_widget()
-        logger.log('REQUIRED', self.title)
+        logger.required(self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
@@ -444,7 +446,7 @@ class WarningBox(QMessageBox):
         self.message = message
         self.title = title
         self.set_up_widget()
-        logger.log('CHOICE', self.title)
+        logger.choice(self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
@@ -460,7 +462,7 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.message = message
         self.title = title
         self.set_up_widget(yes_choice, no_choice)
-        logger.log('CHOICE', self.title)
+        logger.choice(self.title)
 
     def set_up_widget(self, yes_choice, no_choice):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
@@ -489,7 +491,7 @@ class JailWarningBox(QMessageBox):
         self.message = message
         self.title = title
         self.set_up_widget()
-        logger.log('CHOICE', self.title)
+        logger.choice(self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))

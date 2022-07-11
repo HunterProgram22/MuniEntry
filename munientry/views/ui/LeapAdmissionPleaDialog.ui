@@ -216,6 +216,11 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
+                 <string>30 days</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>forthwith</string>
                 </property>
                </item>

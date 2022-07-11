@@ -135,17 +135,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-tests/db/charges.sqlite
-
-tests/db/daily_case_lists.sqlite
-
-tests/resources/Saved/21TRC05611bhd_test_Bond Hearing Entry.docx
-
-tests/resources/Saved/21TRC05611fop_test_Crim_Traffic Judgment Entry.docx
-
-tests/resources/Saved/21TRC05611jcp_test_Crim_Traffic Judgment Entry.docx
-
-tests/resources/Saved/21TRC05611ngb_test_Not Guilty Bond Entry.docx
-
-tests/resources/Saved/21TRC05611npb_test_No Plea Bond Entry.docx
+/tests/resources/Saved/
+/tests/db/

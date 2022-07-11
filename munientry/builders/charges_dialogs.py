@@ -65,7 +65,7 @@ class BaseChargeDialog(QDialog):
         self.degree_choice_box.setCurrentText('')
 
     def closeEvent(self, event: QCloseEvent) -> None:
-        logger.log('DIALOG', f'{self.objectName()} Closed')
+        logger.dialog(f'{self.objectName()} Closed')
         close_db_connection(self.db_connection)
 
 
@@ -74,7 +74,7 @@ class AddChargeDialog(BaseChargeDialog, Ui_AddChargeDialog):
 
     def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(main_dialog, parent)
-        logger.log('DIALOG', f'{self.objectName()} Opened')
+        logger.dialog(f'{self.objectName()} Opened')
 
     def modify_view(self) -> AddChargeDialogViewModifier:
         return AddChargeDialogViewModifier(self)
@@ -94,7 +94,7 @@ class AmendChargeDialog(BaseChargeDialog, Ui_AmendChargeDialog):
 
     def __init__(self, main_dialog: CBD, parent: QDialog = None) -> None:
         super().__init__(main_dialog, parent)
-        logger.log('DIALOG', f'{self.objectName()} Opened')
+        logger.dialog(f'{self.objectName()} Opened')
         self.amend_offense_details = AmendOffenseDetails()
         self.charge = self.sender().charge
         self.current_offense_name = self.sender().charge.offense

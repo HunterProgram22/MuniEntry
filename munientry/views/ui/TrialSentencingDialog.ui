@@ -168,7 +168,7 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1061</width>
+        <width>1057</width>
         <height>875</height>
        </rect>
       </property>
@@ -486,6 +486,11 @@ background-color: rgb(255, 255, 255);</string>
             <item>
              <property name="text">
               <string>within 90 days</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>while on Community Control</string>
              </property>
             </item>
            </widget>

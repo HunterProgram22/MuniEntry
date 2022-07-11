@@ -49,22 +49,6 @@ font-weight: bold;</string>
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="3" column="0">
-            <widget class="QLabel" name="judicial_officer_label">
-             <property name="font">
-              <font>
-               <family>Palatino Linotype</family>
-               <pointsize>11</pointsize>
-               <weight>75</weight>
-               <italic>false</italic>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>JUDICIAL OFFICER:</string>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="2">
             <widget class="QRadioButton" name="kudela_radioButton">
              <property name="text">
@@ -97,6 +81,29 @@ font-weight: bold;</string>
             <widget class="QRadioButton" name="hemmeter_radioButton">
              <property name="text">
               <string>Judge Hemmeter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="judicial_officer_label">
+             <property name="font">
+              <font>
+               <family>Palatino Linotype</family>
+               <pointsize>11</pointsize>
+               <weight>75</weight>
+               <italic>false</italic>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="text">
+              <string>JUDICIAL OFFICER:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QRadioButton" name="visiting_judge_radioButton">
+             <property name="text">
+              <string>Visiting Judge</string>
              </property>
             </widget>
            </item>

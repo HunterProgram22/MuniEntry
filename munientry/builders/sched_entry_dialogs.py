@@ -12,7 +12,7 @@ from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.updaters.general_updaters import CaseInformationUpdater
-from munientry.controllers.cms_case_loaders import CmsNoChargeLoader
+from munientry.data.cms_case_loaders import CmsNoChargeLoader
 
 TODAY = QDate.currentDate()
 SPEEDY_TRIAL_TIME_DICT = {

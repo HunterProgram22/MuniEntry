@@ -11,13 +11,8 @@ from munientry.data.databases import sql_query_offense_type
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.views.custom_widgets import RequiredBox
-from munientry.settings import SAVE_PATH
+from munientry.settings import SAVE_PATH, SPECIAL_DOCKETS_COSTS
 
-SPECIAL_DOCKETS_COSTS = [
-    'while on the OVI Docket',
-    'while on Mission Court',
-    'while on the Mental Health Docket',
-]
 
 class BaseDialogSlotFunctions(object):
     def __init__(self, dialog):
@@ -217,7 +212,7 @@ class BaseDialogSlotFunctions(object):
         return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
-        logger.log('BUTTON', f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
+        logger.button(f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
         if self.dialog.sender().isChecked():
             for items in self.dialog.additional_conditions_list:
                 if items[0] == self.dialog.sender().objectName():
@@ -446,7 +441,8 @@ class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def get_days_to_add(self, days_to_add_string):
         leap_sentence_date_dict = {
-            "120 days": 120,
+            '120 days': 120,
+            '30 days': 30,
         }
         return leap_sentence_date_dict.get(days_to_add_string)
 

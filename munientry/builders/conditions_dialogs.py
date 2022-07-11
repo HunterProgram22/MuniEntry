@@ -28,8 +28,6 @@ from munientry.views.add_special_bond_conditions_dialog_ui import (
     Ui_AddSpecialBondConditionsDialog,
 )
 
-DIALOG = 'DIALOG'
-
 
 def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) -> None:
     """The function is called to hide frames on load of dialog.
@@ -60,7 +58,7 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log(DIALOG, 'AddConditionsDialog Opened')
+        logger.dialog('AddConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -93,7 +91,7 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log(DIALOG, 'AddJailOnlyDialog Opened')
+        logger.dialog('AddJailOnlyDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -153,7 +151,7 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
     }
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log(DIALOG, 'AddCommunityControlDialog Opened')
+        logger.dialog('AddCommunityControlDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
@@ -183,7 +181,7 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
     ]
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.log(DIALOG, 'AddSpecialBondConditionsDialog Opened')
+        logger.dialog('AddSpecialBondConditionsDialog Opened')
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
