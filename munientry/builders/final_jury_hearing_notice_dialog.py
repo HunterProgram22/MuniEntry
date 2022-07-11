@@ -17,18 +17,28 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class FinalJuryNoticeOfHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
-    """Builder class for the Final and Jury Trial Notice of Hearing.
+def load_dialog_name(judicial_officer: object) -> str:
+    """Sets the name of the dialog based on the judicial officer selected.
 
-    The dialog loads a different template depending on which judicial officer is selected.
+    If not judicial officer is selected it loads a generic dialog name. A generic template is then
+    loaded for the dialog.
     """
+    if judicial_officer.last_name == 'Hemmeter':
+        return 'Notice Of Hearing Entry Hemmeter'
+    if judicial_officer.last_name == 'Rohrer':
+        return 'Notice Of Hearing Entry Rohrer'
+    return 'Notice Of Hearing Entry'
+
+
+class FinalJuryNoticeHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+    """Builder class for the Final and Jury Trial Notice of Hearing."""
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = self.load_dialog_name(judicial_officer)
+        self.dialog_name = load_dialog_name(judicial_officer)
         super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
@@ -39,28 +49,23 @@ class FinalJuryNoticeOfHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDial
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
 
-    def load_dialog_name(self, judicial_officer: object) -> str:
-        if judicial_officer.last_name == 'Hemmeter':
-            return 'Notice Of Hearing Entry Hemmeter'
-        if judicial_officer.last_name == 'Rohrer':
-            return 'Notice Of Hearing Entry Rohrer'
-        return 'Notice Of Hearing Entry'
-
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
 
     def modify_view(self):
-        return FinalJuryNoticeOfHearingDialogViewModifier(self)
+        return FinalJuryNoticeHearingViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
-        self.functions = FinalJuryNoticeOfHearingDialogSlotFunctions(self)
-        FinalJuryNoticeOfHearingDialogSignalConnector(self)
+        self.functions = FinalJuryNoticeHearingSlotFunctions(self)
+        FinalJuryNoticeHearingSignalConnector(self)
 
     def update_entry_case_information(self):
-        return FinalJuryNoticeOfHearingDialogCaseInformationUpdater(self)
+        return FinalJuryNoticeHearingCaseInformationUpdater(self)
 
 
-class FinalJuryNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
+class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
+    """Class that sets and modifies the view for the Final Jury Notice of Hearing."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -72,21 +77,28 @@ class FinalJuryNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 
 
-class FinalJuryNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
+    """Class that connects all signals for the Final Jury Notice of Hearing."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
         self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
+        self.dialog.clear_fields_case_Button.released.connect(
+            self.functions.clear_case_information_fields,
+        )
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.jury_trial_only_no_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
-        self.dialog.jury_trial_only_yes_radioButton.toggled.connect(self.functions.show_hide_final_pretrial)
+        self.dialog.jury_trial_only_no_radioButton.toggled.connect(
+            self.functions.show_hide_final_pretrial,
+        )
+        self.dialog.jury_trial_only_yes_radioButton.toggled.connect(
+            self.functions.show_hide_final_pretrial,
+        )
 
 
-class FinalJuryNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
+class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
+    """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
     def show_hide_final_pretrial(self):
         if self.dialog.jury_trial_only_no_radioButton.isChecked():
@@ -101,15 +113,15 @@ class FinalJuryNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.final_pretrial_time_box.setHidden(True)
 
 
-class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
+class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
+    """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.view = dialog
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self):
-        """Calls the methods that update all model with all fields in the case information (top
-        frame) in all main entry dialogs."""
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
@@ -129,7 +141,7 @@ class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdate
     def set_scheduling_dates(self):
         self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
-            'MMMM dd, yyyy'
+            'MMMM dd, yyyy',
         )
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
         if self.view.jury_trial_only_no_radioButton.isChecked():

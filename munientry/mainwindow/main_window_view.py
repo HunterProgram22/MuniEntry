@@ -7,7 +7,7 @@ from munientry.builders import plea_only_dialogs as plea_only
 from munientry.builders import plea_sentence_dialogs as plea_sentence
 from munientry.builders import sentencing_only_dialogs as sentencing_only
 from munientry.builders.final_jury_hearing_notice_dialog import (
-    FinalJuryNoticeOfHearingDialog,
+    FinalJuryNoticeHearingDialog,
 )
 from munientry.builders.general_hearing_notice_dialog import (
     GeneralNoticeOfHearingDialog,
@@ -62,7 +62,7 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
-            self.main_window.final_jury_hearingEntryButton: FinalJuryNoticeOfHearingDialog,
+            self.main_window.final_jury_hearingEntryButton: FinalJuryNoticeHearingDialog,
             self.main_window.general_hearingEntryButton: GeneralNoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
