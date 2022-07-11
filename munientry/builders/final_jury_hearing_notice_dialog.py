@@ -18,25 +18,33 @@ TODAY = QDate.currentDate()
 
 
 class FinalJuryNoticeOfHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+    """Builder class for the Final and Jury Trial Notice of Hearing.
+
+    The dialog loads a different template depending on which judicial officer is selected.
+    """
+
     def __init__(
-            self, judicial_officer=None, cms_case=None, case_table=None, parent=None
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
-        if judicial_officer.last_name == 'Hemmeter':
-            self.dialog_name = 'Notice Of Hearing Entry Hemmeter'
-        elif judicial_officer.last_name == 'Rohrer':
-            self.dialog_name = 'Notice Of Hearing Entry Rohrer'
-        else:
-            self.dialog_name = 'Notice Of Hearing Entry'
+        self.dialog_name = self.load_dialog_name(judicial_officer)
         super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        logger.info(f'Loaded Case {self.cms_case.case_number}')
+        case_number = cms_case.case_number
+        logger.info(f'Loaded Case {case_number}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
+
+    def load_dialog_name(self, judicial_officer: object) -> str:
+        if judicial_officer.last_name == 'Hemmeter':
+            return 'Notice Of Hearing Entry Hemmeter'
+        if judicial_officer.last_name == 'Rohrer':
+            return 'Notice Of Hearing Entry Rohrer'
+        return 'Notice Of Hearing Entry'
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -109,7 +117,7 @@ class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdate
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
 
     def set_party_information(self):
         self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
@@ -119,9 +127,9 @@ class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdate
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
 
     def set_scheduling_dates(self):
-        self.model.trial_date = self.view.trial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
-            "MMMM dd, yyyy"
+            'MMMM dd, yyyy'
         )
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
         if self.view.jury_trial_only_no_radioButton.isChecked():
@@ -130,7 +138,7 @@ class FinalJuryNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdate
             self.model.jury_trial_only = 'Yes'
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
