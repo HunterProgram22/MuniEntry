@@ -26,7 +26,7 @@ main_window_all_button_test_list = [
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("FreeformEntryButton", "Freeform Entry Case Information"),
 
-    ("final_jury_hearingEntryButton", "Final and Jury Notice of Hearing Information"),
+    ("final_jury_hearingEntryButton", "Notice Of Hearing Entry Hemmeter Case Information"),
     ("general_hearingEntryButton", "General Notice of Hearing Information"),
     ("trial_to_court_hearingEntryButton", "Trial To Court Hearing Notice Case Information"),
     ("rohrer_schedulingEntryButton", "Rohrer Scheduling Entry Case Information"),

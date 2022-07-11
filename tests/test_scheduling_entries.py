@@ -49,11 +49,11 @@ def test_scheduing_entry_hemmeter_opens(qtbot, sch_dialog_hemmeter):
 
 
 def test_jury_final_hearing_notice_roher_opens(qtbot, jury_final_hearing_notice_rohrer):
-    assert jury_final_hearing_notice_rohrer.windowTitle() == "Final and Jury Notice of Hearing Information"
+    assert jury_final_hearing_notice_rohrer.windowTitle() == "Notice Of Hearing Entry Rohrer Case Information"
 
 
 def test_jury_final_hearing_notice_hemmeter_opens(qtbot, jury_final_hearing_notice_hemmeter):
-    assert jury_final_hearing_notice_hemmeter.windowTitle() == "Final and Jury Notice of Hearing Information"
+    assert jury_final_hearing_notice_hemmeter.windowTitle() == "Notice Of Hearing Entry Hemmeter Case Information"
 
 
 def test_trial_to_court_hearing_notice_opens(qtbot, trial_to_court_hearing_notice):

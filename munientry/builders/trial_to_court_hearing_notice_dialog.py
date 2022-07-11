@@ -1,17 +1,18 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
-from munientry.builders.base_dialogs import CriminalBaseDialog
-from munientry.views.trial_to_court_hearing_dialog_ui import Ui_TrialToCourtHearingDialog
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
-from munientry.models.template_types import TEMPLATE_DICT
-
 from PyQt5.QtCore import QDate
 
-from munientry.models.scheduling_information import SchedulingCaseInformation
+from munientry.builders.base_dialogs import CriminalBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.models.scheduling_information import SchedulingCaseInformation
+from munientry.models.template_types import TEMPLATE_DICT
+from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.views.trial_to_court_hearing_dialog_ui import (
+    Ui_TrialToCourtHearingDialog,
+)
 
 TODAY = QDate.currentDate()
 
