@@ -1,6 +1,5 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
 from munientry.builders.base_dialogs import BaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
@@ -9,11 +8,14 @@ from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import DAY_DICT, EVENT_DICT, TODAY
+from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
 )
+
+if TYPE_CHECKING:
+    from PyQt5.QtCore import QDate
 
 
 def load_dialog_name(judicial_officer: object) -> str:
@@ -113,7 +115,7 @@ class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
         except UnboundLocalError as error:
             logger.warning(error)
 
-    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
         days_to_event = EVENT_DICT.get(event_to_set)
         event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
