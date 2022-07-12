@@ -9,25 +9,12 @@ from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import DAY_DICT, EVENT_DICT, TODAY
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
 )
 
-TODAY = QDate.currentDate()
-DAY_DICT = {
-            "Monday": 1,
-            "Tuesday": 2,
-            "Wednesday": 3,
-            "Thursday": 4,
-            "Friday": 5,
-        }
-
-EVENT_DICT = {
-    "Trial": 2,
-    "Final Pretrial": 2,
-    "Pretrial": 28,
-}
 
 def load_dialog_name(judicial_officer: object) -> str:
     """Sets the name of the dialog based on the judicial officer selected.
@@ -81,7 +68,7 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
-        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
+        self.dialog.setWindowTitle(f'{self.dialog.dialog_name} Case Information')
         self.set_view_dates()
 
     def set_view_dates(self):

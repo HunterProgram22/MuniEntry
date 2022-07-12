@@ -8,37 +8,10 @@ from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import TODAY, DAY_DICT, EVENT_DICT, SPEEDY_TRIAL_TIME_DICT, PRETRIAL_TIME_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
-TODAY = QDate.currentDate()
-SPEEDY_TRIAL_TIME_DICT = {
-            "M1": 90,
-            "M2": 90,
-            "M3": 45,
-            "M4": 45,
-            "MM": 30,
-            "UCM": 30,
-        }
-DAY_DICT = {
-            "Monday": 1,
-            "Tuesday": 2,
-            "Wednesday": 3,
-            "Thursday": 4,
-            "Friday": 5,
-        }
-
-EVENT_DICT = {
-    "Trial": 2,
-    "Final Pretrial": 2,
-    "Pretrial": 28,
-}
-PRETRIAL_TIME_DICT = {
-    "Pretrial 4 weeks before trial": 28,
-    "Pretrial 3 weeks before trial": 21,
-    "Pretrial 2 weeks before trial": 14,
-    "No Pretrial": 0,
-}
 
 
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
