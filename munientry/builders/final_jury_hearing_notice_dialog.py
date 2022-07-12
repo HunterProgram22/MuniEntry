@@ -15,10 +15,12 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 )
 
 if TYPE_CHECKING:
-    from PyQt5.QtCore import QDate
+    from PyQt5.QtCore import QDate  # flake8: noqa: WPS201
+
+    from munientry.models.party_types import JudicialOfficer  # flake8: noqa: WPS201
 
 
-def load_dialog_name(judicial_officer: object) -> str:
+def load_dialog_name(judicial_officer: JudicialOfficer) -> str:
     """Sets the name of the dialog based on the judicial officer selected.
 
     If not judicial officer is selected it loads a generic dialog name. A generic template is then
