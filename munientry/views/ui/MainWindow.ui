@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1168</width>
-    <height>878</height>
+    <width>1166</width>
+    <height>871</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -37,13 +37,13 @@ font-weight: bold;</string>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_10">
     <item row="0" column="0">
-     <layout class="QGridLayout" name="gridLayout_9" rowstretch="1,2,3">
+     <layout class="QGridLayout" name="gridLayout_9">
       <item row="0" column="0">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="page">
+        <widget class="QWidget" name="judicial_officers_Stack">
          <layout class="QGridLayout" name="gridLayout_6">
           <item row="0" column="0">
            <widget class="QFrame" name="judicial_officer_frame">
@@ -127,8 +127,11 @@ font-weight: bold;</string>
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="page_2">
+        <widget class="QWidget" name="assignment_commissioners_Stack">
          <layout class="QGridLayout" name="gridLayout_7">
+          <property name="spacing">
+           <number>12</number>
+          </property>
           <item row="0" column="0">
            <widget class="QFrame" name="frame">
             <property name="frameShape">
@@ -141,6 +144,15 @@ font-weight: bold;</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <property name="bottomMargin">
+              <number>24</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>24</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>30</number>
+             </property>
              <item row="1" column="2">
               <widget class="QRadioButton" name="radioButton_2">
                <property name="text">
@@ -310,14 +322,18 @@ font-weight: bold;</string>
         </item>
        </layout>
       </item>
-      <item row="2" column="0">
-       <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0">
-        <item row="0" column="0" rowspan="2">
+      <item row="2" column="0" colspan="2">
+       <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0,0,0">
+        <item row="1" column="0">
          <widget class="QTabWidget" name="tabWidget">
+          <property name="styleSheet">
+           <string notr="true">
+background-color: rgb(208, 208, 208);</string>
+          </property>
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="crimTab">
+          <widget class="QWidget" name="crim_traffic_Tab">
            <attribute name="title">
             <string>Crim/Traffic</string>
            </attribute>
@@ -684,7 +700,7 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="schedulingTab">
+          <widget class="QWidget" name="scheduling_Tab">
            <attribute name="title">
             <string>Scheduling</string>
            </attribute>
@@ -875,6 +891,26 @@ font-weight: bold;</string>
           </widget>
          </widget>
         </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_10">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
+          </property>
+          <property name="text">
+           <string>ENTRIES</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>
@@ -886,7 +922,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1168</width>
+     <width>1166</width>
      <height>27</height>
     </rect>
    </property>
