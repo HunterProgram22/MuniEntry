@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
@@ -17,21 +17,24 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class GeneralNoticeOfHearingDialog(BaseDialog, Ui_GeneralNoticeOfHearingDialog):
+class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
     def __init__(
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
-        self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'General Notice Of Hearing Entry'
-        super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        logger.info(f'Loaded Case {self.cms_case.case_number}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
+        # self.case_table = case_table
+        # logger.info(f'Loading case from {self.case_table}')
+        # self.dialog_name = 'General Notice Of Hearing Entry'
+        # super().__init__(parent)
+        # logger.info(f'Loaded Dialog: {self.dialog_name}')
+        # self.judicial_officer = judicial_officer
+        # self.cms_case = cms_case
+        # logger.info(f'Loaded Case {self.cms_case.case_number}')
+        # self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information = SchedulingCaseInformation()
+        # self.load_cms_data_to_view()
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)

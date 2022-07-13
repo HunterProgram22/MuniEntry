@@ -1,7 +1,7 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import BaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
@@ -20,37 +20,38 @@ if TYPE_CHECKING:
     from munientry.models.party_types import JudicialOfficer
 
 
-def load_dialog_name(judicial_officer: 'JudicialOfficer') -> str:
-    """Sets the name of the dialog based on the judicial officer selected.
+# def load_dialog_name(judicial_officer: 'JudicialOfficer') -> str:
+#     """Sets the name of the dialog based on the judicial officer selected.
+#
+#     If not judicial officer is selected it loads a generic dialog name. A generic template is then
+#     loaded for the dialog.
+#     """
+#     if judicial_officer.last_name == 'Hemmeter':
+#         return 'Notice Of Hearing Entry Hemmeter'
+#     if judicial_officer.last_name == 'Rohrer':
+#         return 'Notice Of Hearing Entry Rohrer'
+#     return 'Notice Of Hearing Entry'
 
-    If not judicial officer is selected it loads a generic dialog name. A generic template is then
-    loaded for the dialog.
-    """
-    if judicial_officer.last_name == 'Hemmeter':
-        return 'Notice Of Hearing Entry Hemmeter'
-    if judicial_officer.last_name == 'Rohrer':
-        return 'Notice Of Hearing Entry Rohrer'
-    return 'Notice Of Hearing Entry'
 
-
-class FinalJuryNoticeHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing."""
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
-        self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = load_dialog_name(judicial_officer)
-        super().__init__(parent)
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        case_number = cms_case.case_number
-        logger.info(f'Loaded Case {case_number}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        # self.case_table = case_table
+        # logger.info(f'Loading case from {self.case_table}')
+        # self.dialog_name = load_dialog_name(judicial_officer)
+        # super().__init__(judicial_officer, cms_case, case_table, parent)
+        # logger.info(f'Loaded Dialog: {self.dialog_name}')
+        # self.judicial_officer = judicial_officer
+        # self.cms_case = cms_case
+        # case_number = cms_case.case_number
+        # logger.info(f'Loaded Case {case_number}')
+        # self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.entry_case_information = SchedulingCaseInformation()
+        # self.load_cms_data_to_view()
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)

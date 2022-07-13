@@ -3,7 +3,7 @@ import pathlib
 import socket
 from datetime import datetime
 from typing import TYPE_CHECKING # Import used so TYPE_CHECKING can be imported with other settings
-
+from PyQt5.QtCore import QDate
 
 # Path Information
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
