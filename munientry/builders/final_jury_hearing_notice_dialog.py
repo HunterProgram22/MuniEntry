@@ -1,65 +1,37 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
 )
 
-TODAY = QDate.currentDate()
-DAY_DICT = {
-            "Monday": 1,
-            "Tuesday": 2,
-            "Wednesday": 3,
-            "Thursday": 4,
-            "Friday": 5,
-        }
+if TYPE_CHECKING:
+    from PyQt5.QtCore import QDate
 
-EVENT_DICT = {
-    "Trial": 2,
-    "Final Pretrial": 2,
-    "Pretrial": 28,
-}
-
-def load_dialog_name(judicial_officer: object) -> str:
-    """Sets the name of the dialog based on the judicial officer selected.
-
-    If not judicial officer is selected it loads a generic dialog name. A generic template is then
-    loaded for the dialog.
-    """
-    if judicial_officer.last_name == 'Hemmeter':
-        return 'Notice Of Hearing Entry Hemmeter'
-    if judicial_officer.last_name == 'Rohrer':
-        return 'Notice Of Hearing Entry Rohrer'
-    return 'Notice Of Hearing Entry'
+    from munientry.models.party_types import JudicialOfficer
 
 
-class FinalJuryNoticeHearingDialog(BaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing."""
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
-        self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = load_dialog_name(judicial_officer)
-        super().__init__(parent)
+        super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = 'Final and Jury Notice of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        case_number = cms_case.case_number
-        logger.info(f'Loaded Case {case_number}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
+        judicial_officer_last_name = self.judicial_officer.last_name
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {judicial_officer_last_name}')
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -81,7 +53,6 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
-        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
 
     def set_view_dates(self):
@@ -117,16 +88,16 @@ class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
     def update_trial_date(self):
-        if self.dialog.dialog_name == 'Notice Of Hearing Entry Rohrer':
+        if self.dialog.judicial_officer.last_name == 'Rohrer':
             trial_date = self.set_trial_date('Tuesday', 'Trial')
-        if self.dialog.dialog_name == 'Notice Of Hearing Entry Hemmeter':
+        if self.dialog.judicial_officer.last_name == 'Hemmeter':
             trial_date = self.set_trial_date('Thursday', 'Trial')
         try:
             self.dialog.trial_dateEdit.setDate(trial_date)
         except UnboundLocalError as error:
             logger.warning(error)
 
-    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
         days_to_event = EVENT_DICT.get(event_to_set)
         event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):

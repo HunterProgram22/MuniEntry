@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import CriminalBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
@@ -17,13 +17,15 @@ from munientry.views.trial_to_court_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog):
+class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
     def __init__(
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
-        self.dialog_name = 'Trial To Court Hearing Notice'
         super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = 'Trial To Court Hearing Notice'
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.setWindowTitle(f"{self.dialog_name} Case Information")
 
     def modify_view(self):
         return TrialToCourtDialogViewModifier(self)
@@ -57,7 +59,6 @@ class TrialToCourtDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
-        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
 
     def set_view_dates(self):

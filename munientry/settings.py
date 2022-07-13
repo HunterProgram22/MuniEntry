@@ -2,7 +2,8 @@
 import pathlib
 import socket
 from datetime import datetime
-
+from typing import TYPE_CHECKING # Import used so TYPE_CHECKING can be imported with other settings
+from PyQt5.QtCore import QDate
 
 # Path Information
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
@@ -91,4 +92,36 @@ WIDGET_TYPE_SET_DICT = {
     'QTextEdit': 'setPlainText',
     'NoScrollDateEdit': 'set_date',
     'NoScrollTimeEdit': 'set_time',
+}
+
+TODAY = QDate.currentDate()
+
+DAY_DICT = {
+            'Monday': 1,
+            'Tuesday': 2,
+            'Wednesday': 3,
+            'Thursday': 4,
+            'Friday': 5,
+        }
+
+EVENT_DICT = {
+    'Trial': 2,
+    'Final Pretrial': 2,
+    'Pretrial': 28,
+}
+
+SPEEDY_TRIAL_TIME_DICT = {
+            'M1': 90,
+            'M2': 90,
+            'M3': 45,
+            'M4': 45,
+            'MM': 30,
+            'UCM': 30,
+        }
+
+PRETRIAL_TIME_DICT = {
+    'Pretrial 4 weeks before trial': 28,
+    'Pretrial 3 weeks before trial': 21,
+    'Pretrial 2 weeks before trial': 14,
+    'No Pretrial': 0,
 }
