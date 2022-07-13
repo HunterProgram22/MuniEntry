@@ -27,6 +27,8 @@ class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHeari
         self.dialog_name = 'General Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        judicial_officer_last_name = self.judicial_officer.last_name
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {judicial_officer_last_name}')
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)

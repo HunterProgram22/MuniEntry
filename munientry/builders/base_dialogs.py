@@ -105,32 +105,15 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.setFocus()
 
 
-def load_dialog_name(judicial_officer: 'JudicialOfficer') -> str:
-    """Sets the name of the dialog based on the judicial officer selected.
-
-    If no judicial officer is selected it loads a generic dialog name. A generic template is then
-    loaded for the dialog.
-    """
-    if judicial_officer.last_name == 'Hemmeter':
-        return 'Notice Of Hearing Entry Hemmeter'
-    if judicial_officer.last_name == 'Rohrer':
-        return 'Notice Of Hearing Entry Rohrer'
-    return 'Notice Of Hearing Entry'
-
-
 class SchedulingBaseDialog(BaseDialog):
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None,):
         super().__init__(parent)
         self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = load_dialog_name(judicial_officer)
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
+        self.entry_case_information = SchedulingCaseInformation()
         self.cms_case = cms_case
         case_number = cms_case.case_number
-        logger.info(f'Loaded Case {case_number}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information = SchedulingCaseInformation()
+        logger.info(f'Loading {case_number} from {self.case_table}')
         self.load_cms_data_to_view()
 
 
