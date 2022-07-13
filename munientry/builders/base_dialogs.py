@@ -108,7 +108,7 @@ class CriminalBaseDialog(BaseDialog):
 def load_dialog_name(judicial_officer: 'JudicialOfficer') -> str:
     """Sets the name of the dialog based on the judicial officer selected.
 
-    If not judicial officer is selected it loads a generic dialog name. A generic template is then
+    If no judicial officer is selected it loads a generic dialog name. A generic template is then
     loaded for the dialog.
     """
     if judicial_officer.last_name == 'Hemmeter':
@@ -120,10 +120,10 @@ def load_dialog_name(judicial_officer: 'JudicialOfficer') -> str:
 
 class SchedulingBaseDialog(BaseDialog):
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None,):
+        super().__init__(parent)
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
         self.dialog_name = load_dialog_name(judicial_officer)
-        super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case

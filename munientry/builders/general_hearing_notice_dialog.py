@@ -18,23 +18,15 @@ TODAY = QDate.currentDate()
 
 
 class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
+    """Builder class for the General Notice of Hearing."""
+
     def __init__(
-            self, judicial_officer=None, cms_case=None, case_table=None, parent=None
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'General Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-        # self.case_table = case_table
-        # logger.info(f'Loading case from {self.case_table}')
-        # self.dialog_name = 'General Notice Of Hearing Entry'
-        # super().__init__(parent)
-        # logger.info(f'Loaded Dialog: {self.dialog_name}')
-        # self.judicial_officer = judicial_officer
-        # self.cms_case = cms_case
-        # logger.info(f'Loaded Case {self.cms_case.case_number}')
-        # self.template = TEMPLATE_DICT.get(self.dialog_name)
-        # self.entry_case_information = SchedulingCaseInformation()
-        # self.load_cms_data_to_view()
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
