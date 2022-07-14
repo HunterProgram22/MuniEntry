@@ -149,7 +149,7 @@ TEMPLATE_DICT = {
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
     "Freeform Entry Dialog": Freeform_Entry_Template,
-    "Final and Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
+    "Final And Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
     "Notice Of Hearing Entry Rohrer": Notice_Of_Hearing_Rohrer_Template,
     "Notice Of Hearing Entry": Notice_Of_Hearing_Template,
     "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,

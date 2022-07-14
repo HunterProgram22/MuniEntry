@@ -27,12 +27,19 @@ def set_assigned_judge(sender) -> str:
         return 'Judge Kyle E. Rohrer'
 
 
+def set_courtroom(sender) -> str:
+    if sender.objectName() == 'hemmeter_final_jury_hearingButton':
+        return 'B'
+    if sender.objectName() == 'rohrer_final_jury_hearingButton':
+        return 'A'
+
+
 class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.
 
-    The assigned_judge is set by the button pressed choosing the dialog and entry.
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
     def __init__(
@@ -43,9 +50,9 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
         logger.info(f'Loaded Dialog: {self.dialog_name}')
 
         self.assigned_judge = set_assigned_judge(self.sender())
-        logger.debug(self.sender().objectName())
-
+        self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
 
     def load_cms_data_to_view(self):
@@ -145,6 +152,9 @@ class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
+        self.model.assigned_judge = self.view.assigned_judge
+        self.model.courtroom = self.view.courtroom
+        self.model.judicial_officer = self.view.judicial_officer
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()

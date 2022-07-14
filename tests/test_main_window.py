@@ -5,6 +5,7 @@ from munientry.settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data
 
 main_window_all_button_test_list = [
+    # CrimTraffic Entries
     ("FineOnlyPleaButton", "Fine Only Plea Case Information"),
     ("JailCCPleaButton", "Jail Community Control Plea Case Information"),
     ("DiversionButton", "Diversion Plea Case Information"),
@@ -26,6 +27,7 @@ main_window_all_button_test_list = [
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("FreeformEntryButton", "Freeform Entry Case Information"),
 
+    # Scheduling Entries
     ("hemmeter_final_jury_hearingButton", "Notice Of Hearing Entry Hemmeter Case Information"),
     ("rohrer_final_jury_hearingButton", "Final Jury Rohrer"),
 

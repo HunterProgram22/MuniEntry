@@ -9,12 +9,6 @@ class MainWindowSignalConnector(object):
         self.main_window.reload_cases_Button.released.connect(
             self.main_window.reload_case_lists,
         )
-        # self.main_window.rohrer_schedulingEntryButton.released.connect(
-        #     self.main_window.start_scheduling_entry,
-        # )
-        # self.main_window.hemmeter_schedulingEntryButton.released.connect(
-        #     self.main_window.start_scheduling_entry,
-        # )
         self.main_window.random_judge_Button.released.connect(
             self.main_window.assign_judge,
         )
