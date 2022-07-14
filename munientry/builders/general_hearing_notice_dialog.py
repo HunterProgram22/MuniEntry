@@ -17,8 +17,27 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
+def set_assigned_judge(sender) -> str:
+    if sender.objectName() == 'hemmeter_general_hearingButton':
+        return 'Judge Marianne T. Hemmeter'
+    if sender.objectName() == 'rohrer_general_hearingButton':
+        return 'Judge Kyle E. Rohrer'
+
+
+def set_courtroom(sender) -> str:
+    if sender.objectName() == 'hemmeter_general_hearingButton':
+        return 'Courtroom B'
+    if sender.objectName() == 'rohrer_general_hearingButton':
+        return 'Courtroom A'
+
+
 class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
-    """Builder class for the General Notice of Hearing."""
+    """Builder class for the General Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None
@@ -26,9 +45,11 @@ class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHeari
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'General Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        judicial_officer_last_name = self.judicial_officer.last_name
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {judicial_officer_last_name}')
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -83,6 +104,9 @@ class GeneralNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater)
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
+        self.model.assigned_judge = self.view.assigned_judge
+        self.model.courtroom = self.view.courtroom
+        self.model.judicial_officer = self.view.judicial_officer
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()
