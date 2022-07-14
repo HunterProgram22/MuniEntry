@@ -21,17 +21,25 @@ if TYPE_CHECKING:
 
 
 class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
-    """Builder class for the Final and Jury Trial Notice of Hearing."""
+    """Builder class for the Final and Jury Trial Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge is set by the button pressed choosing the dialog and entry.
+    """
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Final and Jury Notice of Hearing Entry'
+        self.dialog_name = 'Final And Jury Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
+
+        self.assigned_judge = set_assigned_judge(self.sender())
+        logger.debug(self.sender())
+
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        judicial_officer_last_name = self.judicial_officer.last_name
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {judicial_officer_last_name}')
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)

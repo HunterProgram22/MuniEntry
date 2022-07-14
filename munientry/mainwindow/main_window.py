@@ -65,7 +65,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         logger.info(f'Current stackedWidget is {self.stackedWidget.currentWidget().objectName()}')
         logger.info(f'Current tabWidget is {self.tabWidget.currentWidget().objectName()}')
 
-
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
             first_name, response_ok = QInputDialog.getText(

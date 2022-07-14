@@ -103,9 +103,9 @@ Scheduling_Entry_Template_Hemmeter = Template(
     "Scheduling_Entry_Template_Hemmeter.docx",
 )
 
-Notice_Of_Hearing_Hemmeter_Template = Template(
-    "Notice Of Hearing Entry Hemmeter",
-    "Notice_Of_Hearing_Hemmeter_Template.docx",
+Final_Jury_Notice_Of_Hearing_Template = Template(
+    "Final and Jury Notice Of Hearing Entry",
+    "Final_Jury_Notice_Of_Hearing_Template.docx",
 )
 
 Notice_Of_Hearing_Rohrer_Template = Template(
@@ -144,10 +144,12 @@ TEMPLATE_DICT = {
     "Leap Admission Plea Dialog": Leap_Admission_Plea_Template,
     "Leap Admission Plea Already Valid Dialog": Leap_Admission_Plea_Already_Valid_Template,
     "Leap Sentencing Dialog": Leap_Sentencing_Template,
+
+
     "Rohrer Scheduling Entry": Scheduling_Entry_Template_Rohrer,
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
     "Freeform Entry Dialog": Freeform_Entry_Template,
-    "Notice Of Hearing Entry Hemmeter": Notice_Of_Hearing_Hemmeter_Template,
+    "Final and Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
     "Notice Of Hearing Entry Rohrer": Notice_Of_Hearing_Rohrer_Template,
     "Notice Of Hearing Entry": Notice_Of_Hearing_Template,
     "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,
