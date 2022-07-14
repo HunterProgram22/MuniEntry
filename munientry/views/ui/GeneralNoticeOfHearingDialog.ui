@@ -487,11 +487,9 @@ background-color: rgb(255, 255, 255);</string>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string/>
-                  </property>
-                 </item>
+                 <property name="editable">
+                  <bool>true</bool>
+                 </property>
                  <item>
                   <property name="text">
                    <string>Motion Hearing</string>
