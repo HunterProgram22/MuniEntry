@@ -7,6 +7,7 @@ from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.controllers.helper_functions import (
     check_case_list_selected,
     check_judicial_officer,
+    check_assignment_commissioner,
     set_random_judge,
 )
 from munientry.data.databases import (
@@ -100,7 +101,7 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    @check_judicial_officer
+    @check_assignment_commissioner
     @check_case_list_selected
     def start_scheduling_entry(self) -> None:
         selected_case_table = self.database_table_dict.get(

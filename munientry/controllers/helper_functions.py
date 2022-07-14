@@ -18,6 +18,17 @@ def check_judicial_officer(func):
     return wrapper
 
 
+def check_assignment_commissioner(func):
+    """Prohibits opening a dialog unless an assignment commissioner is selected."""
+    def wrapper(self):
+        if self.judicial_officer is None:
+            RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+        else:
+            func(self)
+
+    return wrapper
+
+
 def check_case_list_selected(func):
     """Probhitis opening a dialog unless a daily case list is selected."""
     def wrapper(self):
