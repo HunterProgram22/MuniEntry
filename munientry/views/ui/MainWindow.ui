@@ -154,21 +154,21 @@ font-weight: bold;</string>
               <number>30</number>
              </property>
              <item row="1" column="2">
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="patterson_radioButton">
                <property name="text">
                 <string>Kathryn Patterson</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="dattilo_radioButton">
                <property name="text">
                 <string>Pat Dattilo</string>
                </property>
               </widget>
              </item>
              <item row="1" column="3">
-              <widget class="QRadioButton" name="radioButton_3">
+              <widget class="QRadioButton" name="none_radioButton">
                <property name="text">
                 <string>None</string>
                </property>
@@ -323,7 +323,7 @@ font-weight: bold;</string>
        </layout>
       </item>
       <item row="2" column="0" colspan="2">
-       <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0,0,0">
+       <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0">
         <item row="1" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="styleSheet">

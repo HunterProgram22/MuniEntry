@@ -43,6 +43,9 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
             self.main_window.visiting_judge_radioButton: JudicialOfficer('None', 'None', 'Judge'),
+            self.main_window.dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            self.main_window.patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            self.main_window.none_radioButton: JudicialOfficer('None', 'None', 'Assignment Commissioner'),
         }
 
     def connect_dialog_buttons(self) -> dict:
