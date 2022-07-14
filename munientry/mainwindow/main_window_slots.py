@@ -115,10 +115,3 @@ class MainWindowSlotFunctionsMixin(object):
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
-
-    # def set_scheduling_dialog_name(self) -> str:
-    #     if self.sender().objectName() == 'rohrer_schedulingEntryButton':
-    #         return 'Rohrer Scheduling Entry'
-    #     if self.sender().objectName() == 'hemmeter_schedulingEntryButton':
-    #         return 'Hemmeter Scheduling Entry'
-    #     return 'None'

@@ -108,16 +108,6 @@ Final_Jury_Notice_Of_Hearing_Template = Template(
     "Final_Jury_Notice_Of_Hearing_Template.docx",
 )
 
-Notice_Of_Hearing_Rohrer_Template = Template(
-    "Notice Of Hearing Entry Rohrer",
-    "Notice_Of_Hearing_Rohrer_Template.docx",
-)
-
-Notice_Of_Hearing_Template = Template(
-    "Notice Of Hearing Entry",
-    "Notice_Of_Hearing_Template.docx",
-)
-
 General_Notice_Of_Hearing_Template = Template(
     "General Notice Of Hearing Entry",
     "General_Notice_Of_Hearing_Template.docx",
@@ -150,8 +140,6 @@ TEMPLATE_DICT = {
     "Hemmeter Scheduling Entry": Scheduling_Entry_Template_Hemmeter,
     "Freeform Entry Dialog": Freeform_Entry_Template,
     "Final And Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
-    "Notice Of Hearing Entry Rohrer": Notice_Of_Hearing_Rohrer_Template,
-    "Notice Of Hearing Entry": Notice_Of_Hearing_Template,
     "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,
     "Trial To Court Hearing Notice": Trial_To_Court_Hearing_Notice_Template,
 }
