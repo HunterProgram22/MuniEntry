@@ -48,11 +48,9 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Final And Jury Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-
         self.assigned_judge = set_assigned_judge(self.sender())
         self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
 
     def load_cms_data_to_view(self):
@@ -110,9 +108,9 @@ class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
     def update_trial_date(self):
-        if self.dialog.judicial_officer.last_name == 'Rohrer':
+        if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
             trial_date = self.set_trial_date('Tuesday', 'Trial')
-        if self.dialog.judicial_officer.last_name == 'Hemmeter':
+        if self.dialog.assigned_judge == 'Judge Marianne T. Hemmeter':
             trial_date = self.set_trial_date('Thursday', 'Trial')
         try:
             self.dialog.trial_dateEdit.setDate(trial_date)
