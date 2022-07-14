@@ -7,6 +7,7 @@ from munientry.models.party_types import Defendant
 class SchedulingCaseInformation:
     case_number: str = None
     judicial_officer: object = None
+    assigned_judge: str = None
     plea_trial_date: str = None
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None

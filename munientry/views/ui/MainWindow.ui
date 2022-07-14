@@ -744,7 +744,7 @@ background-color: rgb(208, 208, 208);</string>
              </widget>
             </item>
             <item row="1" column="0">
-             <widget class="QPushButton" name="final_jury_hearingEntryButton_2">
+             <widget class="QPushButton" name="hemmeter_final_jury_hearingButton">
               <property name="minimumSize">
                <size>
                 <width>120</width>
@@ -760,7 +760,7 @@ background-color: rgb(208, 208, 208);</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="final_jury_hearingEntryButton">
+             <widget class="QPushButton" name="rohrer_final_jury_hearingButton">
               <property name="minimumSize">
                <size>
                 <width>120</width>
@@ -792,7 +792,7 @@ background-color: rgb(208, 208, 208);</string>
              </widget>
             </item>
             <item row="2" column="0">
-             <widget class="QPushButton" name="general_hearingEntryButton">
+             <widget class="QPushButton" name="hemmeter_general_hearingButton">
               <property name="minimumSize">
                <size>
                 <width>120</width>
@@ -808,7 +808,7 @@ background-color: rgb(208, 208, 208);</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QPushButton" name="general_hearingEntryButton_2">
+             <widget class="QPushButton" name="rohrer_general_hearingButton">
               <property name="minimumSize">
                <size>
                 <width>120</width>

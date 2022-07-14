@@ -71,10 +71,12 @@ class MainWindowViewModifier(object):
 
     def connect_scheduling_dialog_buttons(self) -> dict:
         return {
-            self.main_window.rohrer_schedulingEntryButton: SchedulingEntryDialog,
             self.main_window.hemmeter_schedulingEntryButton: SchedulingEntryDialog,
-            self.main_window.final_jury_hearingEntryButton: FinalJuryNoticeHearingDialog,
-            self.main_window.general_hearingEntryButton: GeneralNoticeOfHearingDialog,
+            self.main_window.rohrer_schedulingEntryButton: SchedulingEntryDialog,
+            self.main_window.hemmeter_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
+            self.main_window.rohrer_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
+            self.main_window.hemmeter_general_hearingButton: GeneralNoticeOfHearingDialog,
+            self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
             self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
         }
 

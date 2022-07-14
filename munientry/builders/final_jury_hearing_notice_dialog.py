@@ -20,6 +20,13 @@ if TYPE_CHECKING:
     from munientry.models.party_types import JudicialOfficer
 
 
+def set_assigned_judge(sender) -> str:
+    if sender.objectName() == 'hemmeter_final_jury_hearingButton':
+        return 'Judge Marianne T. Hemmeter'
+    if sender.objectName() == 'rohrer_final_jury_hearingButton':
+        return 'Judge Kyle E. Rohrer'
+
+
 class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing.
 
@@ -36,7 +43,7 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
         logger.info(f'Loaded Dialog: {self.dialog_name}')
 
         self.assigned_judge = set_assigned_judge(self.sender())
-        logger.debug(self.sender())
+        logger.debug(self.sender().objectName())
 
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
