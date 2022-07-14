@@ -52,6 +52,19 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
         self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.set_instructions_label()
+
+    def set_instructions_label(self):
+        if self.assigned_judge == 'Judge Marianne T. Hemmeter':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                'automatically update to the next Thursday.'
+            )
+        if self.assigned_judge == 'Judge Kyle E. Rohrer':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                'automatically update to the next Tuesday.'
+            )
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -79,6 +92,7 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
+
 
 
 class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
