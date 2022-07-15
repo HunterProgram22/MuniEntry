@@ -28,11 +28,11 @@ main_window_all_button_test_list = [
     ("FreeformEntryButton", "Freeform Entry Case Information"),
 
     # Scheduling Entries
-    ("hemmeter_final_jury_hearingButton", "Notice Of Hearing Entry Hemmeter Case Information"),
-    ("rohrer_final_jury_hearingButton", "Final Jury Rohrer"),
+    ("hemmeter_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
+    ("rohrer_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
 
-    ("hemmeter_general_hearingButton", "General Notice of Hearing Information"),
-    ("rohrer_general_hearingButton", "General Notice of Hearing Information"),
+    ("hemmeter_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
+    ("rohrer_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
 
     ("trial_to_court_hearingEntryButton", "Trial To Court Hearing Notice Case Information"),
 
