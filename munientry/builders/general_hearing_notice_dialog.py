@@ -2,12 +2,11 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
-from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.general_notice_of_hearing_dialog_ui import (
@@ -15,20 +14,6 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 )
 
 TODAY = QDate.currentDate()
-
-
-def set_assigned_judge(sender) -> str:
-    if sender.objectName() == 'hemmeter_general_hearingButton':
-        return 'Judge Marianne T. Hemmeter'
-    if sender.objectName() == 'rohrer_general_hearingButton':
-        return 'Judge Kyle E. Rohrer'
-
-
-def set_courtroom(sender) -> str:
-    if sender.objectName() == 'hemmeter_general_hearingButton':
-        return 'Courtroom B'
-    if sender.objectName() == 'rohrer_general_hearingButton':
-        return 'Courtroom A'
 
 
 class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):

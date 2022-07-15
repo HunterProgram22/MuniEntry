@@ -1,7 +1,7 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
@@ -15,29 +15,7 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 
 if TYPE_CHECKING:
     from PyQt5.QtCore import QDate
-    from PyQt5.QtWidgets import QDialog, QPushButton
-
-
-def set_assigned_judge(sender: 'QPushButton') -> str:
-    """Returns the judge name as a string based on the button that is pressed."""
-    if sender.objectName() == 'hemmeter_final_jury_hearingButton':
-        return 'Judge Marianne T. Hemmeter'
-    if sender.objectName() == 'rohrer_final_jury_hearingButton':
-        return 'Judge Kyle E. Rohrer'
-    return 'No Judge Assigned'
-
-
-def set_courtroom(sender: 'QPushButton') -> str:
-    """Returns a string with the courtroom letter based on the button that is pressed.
-
-    Returns a blank underscore if function called from a button that does not set a
-    courtroom. This allows the user to manually enter courtroom in the Word doc.
-    """
-    if sender.objectName() == 'rohrer_final_jury_hearingButton':
-        return 'A'
-    if sender.objectName() == 'hemmeter_final_jury_hearingButton':
-        return 'B'
-    return '_'
+    from PyQt5.QtWidgets import QDialog
 
 
 class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
@@ -58,6 +36,7 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
         self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
         self.set_instructions_label()
 
     def set_instructions_label(self) -> None:
@@ -185,6 +164,7 @@ class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
 
     def set_scheduling_dates(self) -> None:
+        self.model.hearing_location = self.view.hearing_location_box.currentText()
         self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
             'MMMM dd, yyyy',
