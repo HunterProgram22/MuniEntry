@@ -114,7 +114,7 @@ General_Notice_Of_Hearing_Template = Template(
 )
 
 Trial_To_Court_Hearing_Notice_Template = Template(
-    "Trial To Court Hearing Notice",
+    "Trial To Court Notice Of Hearing Entry",
     "Trial_To_Court_Hearing_Notice_Template.docx",
 )
 
@@ -141,7 +141,7 @@ TEMPLATE_DICT = {
     "Freeform Entry Dialog": Freeform_Entry_Template,
     "Final And Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
     "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,
-    "Trial To Court Hearing Notice": Trial_To_Court_Hearing_Notice_Template,
+    "Trial To Court Notice Of Hearing Entry": Trial_To_Court_Hearing_Notice_Template,
 }
 
 

@@ -34,7 +34,8 @@ main_window_all_button_test_list = [
     ("hemmeter_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
     ("rohrer_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
 
-    ("trial_to_court_hearingEntryButton", "Trial To Court Hearing Notice Case Information"),
+    ("hemmeter_trial_court_hearingButton", "Trial To Court Hearing Notice Case Information"),
+    ("rohrer_trial_court_hearingButton", "Trial To Court Hearing Notice Case Information"),
 
     ("rohrer_schedulingEntryButton", "Rohrer Scheduling Entry Case Information"),
     ("hemmeter_schedulingEntryButton", "Hemmeter Scheduling Entry Case Information"),

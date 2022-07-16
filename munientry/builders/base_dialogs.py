@@ -110,8 +110,10 @@ def set_assigned_judge(sender: 'QPushButton') -> str:
     assigned_judge_dict = {
         'rohrer_final_jury_hearingButton': 'Judge Kyle E. Rohrer',
         'rohrer_general_hearingButton': 'Judge Kyle E. Rohrer',
+        'rohrer_trial_court_hearingButton': 'Judge Kyle E. Rohrer',
         'hemmeter_final_jury_hearingButton': 'Judge Marianne T. Hemmeter',
         'hemmeter_general_hearingButton': 'Judge Marianne T. Hemmeter',
+        'hemmeter_trial_court_hearingButton': 'Judge Marianne T. Hemmeter',
     }
     return assigned_judge_dict.get(sender.objectName(), '')
 
@@ -125,8 +127,10 @@ def set_courtroom(sender: 'QPushButton') -> str:
     courtroom_dict = {
         'rohrer_final_jury_hearingButton': 'Courtroom A',
         'rohrer_general_hearingButton': 'Courtroom A',
+        'rohrer_trial_court_hearingButton': 'Courtroom C',
         'hemmeter_final_jury_hearingButton': 'Courtroom B',
         'hemmeter_general_hearingButton': 'Courtroom B',
+        'hemmeter_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')
 

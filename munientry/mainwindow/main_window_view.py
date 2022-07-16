@@ -77,7 +77,8 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
             self.main_window.hemmeter_general_hearingButton: GeneralNoticeOfHearingDialog,
             self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
-            self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
+            self.main_window.hemmeter_trial_court_hearingButton: TrialToCourtHearingDialog,
+            self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
         }
 
     def connect_daily_case_list_radio_buttons(self) -> dict:
