@@ -7,10 +7,12 @@ from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QShortcut
 
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
+from munientry.mainwindow.batch_fta_entries import run_batch_fta_arraignments
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
+from munientry.views.custom_widgets import InfoBox
 from munientry.views.main_window_ui import Ui_MainWindow
 
 
@@ -30,12 +32,20 @@ def open_batch_entries_folder(signal=None) -> None:
     os.startfile(f'{SAVE_PATH}batch\\')
 
 
+def run_batch_fta_process(signal=None) -> None:
+    entries_created = run_batch_fta_arraignments()
+    message = f'The batch process created {entries_created} entries.'
+    InfoBox(message, 'Entries Created').exec()
+    os.startfile(f'{SAVE_PATH}batch\\')
+
+
 def connect_menu_functions(main_window) -> None:
     """Connects all menu functions from the main window."""
     main_window.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), main_window)
     main_window.log_shortcut.activated.connect(open_current_log)
     main_window.actionOpen_Current_Log.triggered.connect(open_current_log)
     main_window.actionOpen_batch_FTA_Entries_Folder.triggered.connect(open_batch_entries_folder)
+    main_window.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):

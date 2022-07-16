@@ -14,10 +14,8 @@ from docxtpl import DocxTemplate
 PATH = 'C:\\Users\\justi\\appdata\\local\\programs\\python\\python310\\MuniEntry\\'
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 SAVE_PATH = fr'{PATH}\resources\saved\\'
-LOG_PATH = fr'{PATH}\resources\logs\\'
-ICON_PATH = fr'{PATH}\resources\icons\\'
-
 DB_PATH = fr'{PATH}\db\\'
+
 
 def create_entry(data):
     doc = DocxTemplate(f'{TEMPLATE_PATH}\\Batch_Failure_To_Appear_Arraignment_Template.docx')
@@ -68,11 +66,14 @@ class BatchCaseInformation:
         return asdict(self)
 
 
-def run_batch_fta_arraignments():
+def run_batch_fta_arraignments() -> int:
     data_for_entries = return_data_from_excel(f'{DB_PATH}\\Batch_FTA_Arraignments.xlsx')
+    entry_count = 0
     for index, person in enumerate(data_for_entries):
         logger.info(f'Creating entry for: {data_for_entries[index]}')
         create_entry(data_for_entries[index])
+        entry_count +=1
+    return entry_count
 
 
 if __name__ == "__main__":
