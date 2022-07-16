@@ -9,12 +9,7 @@ from loguru import logger
 from openpyxl import load_workbook
 from docxtpl import DocxTemplate
 
-# from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH
-# PATH = str(pathlib.Path().absolute())
-PATH = 'C:\\Users\\justi\\appdata\\local\\programs\\python\\python310\\MuniEntry\\'
-TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
-SAVE_PATH = fr'{PATH}\resources\saved\\'
-DB_PATH = fr'{PATH}\db\\'
+from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH
 
 
 def create_entry(data):
@@ -25,7 +20,7 @@ def create_entry(data):
 
 
 def set_document_name(data):
-    docname = f'{data.CaseNumber}.docx'
+    docname = f'{data.CaseNumber}_FTA_Arraignment.docx'
     return docname
 
 
