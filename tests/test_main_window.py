@@ -5,6 +5,7 @@ from munientry.settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data
 
 main_window_all_button_test_list = [
+    # CrimTraffic Entries
     ("FineOnlyPleaButton", "Fine Only Plea Case Information"),
     ("JailCCPleaButton", "Jail Community Control Plea Case Information"),
     ("DiversionButton", "Diversion Plea Case Information"),
@@ -26,9 +27,16 @@ main_window_all_button_test_list = [
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("FreeformEntryButton", "Freeform Entry Case Information"),
 
-    ("final_jury_hearingEntryButton", "Notice Of Hearing Entry Hemmeter Case Information"),
-    ("general_hearingEntryButton", "General Notice of Hearing Information"),
-    ("trial_to_court_hearingEntryButton", "Trial To Court Hearing Notice Case Information"),
+    # Scheduling Entries
+    ("hemmeter_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
+    ("rohrer_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
+
+    ("hemmeter_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
+    ("rohrer_general_hearingButton", "General Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
+
+    ("hemmeter_trial_court_hearingButton", "Trial To Court Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
+    ("rohrer_trial_court_hearingButton", "Trial To Court Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
+
     ("rohrer_schedulingEntryButton", "Rohrer Scheduling Entry Case Information"),
     ("hemmeter_schedulingEntryButton", "Hemmeter Scheduling Entry Case Information"),
 ]

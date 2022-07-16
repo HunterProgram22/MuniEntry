@@ -15,6 +15,7 @@ from munientry.builders.general_hearing_notice_dialog import (
 from munientry.builders.trial_to_court_hearing_notice_dialog import (
     TrialToCourtHearingDialog,
 )
+from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -28,7 +29,8 @@ class MainWindowViewModifier(object):
         self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
-        self.main_window.dialog_buttons_dict = self.connect_dialog_buttons()
+        self.main_window.crim_traffic_dialog_buttons_dict = self.connect_crim_traffic_dialog_buttons()
+        self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
         self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
         self.main_window.radio_buttons_case_lists_dict = (
@@ -43,9 +45,12 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
             self.main_window.visiting_judge_radioButton: JudicialOfficer('None', 'None', 'Judge'),
+            self.main_window.dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            self.main_window.patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            self.main_window.none_radioButton: JudicialOfficer('None', 'None', 'Assignment Commissioner'),
         }
 
-    def connect_dialog_buttons(self) -> dict:
+    def connect_crim_traffic_dialog_buttons(self) -> dict:
         return {
             self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
             self.main_window.JailCCPleaButton: plea_sentence.JailCCPleaDialog,
@@ -62,9 +67,18 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
-            self.main_window.final_jury_hearingEntryButton: FinalJuryNoticeHearingDialog,
-            self.main_window.general_hearingEntryButton: GeneralNoticeOfHearingDialog,
-            self.main_window.trial_to_court_hearingEntryButton: TrialToCourtHearingDialog,
+        }
+
+    def connect_scheduling_dialog_buttons(self) -> dict:
+        return {
+            self.main_window.hemmeter_schedulingEntryButton: SchedulingEntryDialog,
+            self.main_window.rohrer_schedulingEntryButton: SchedulingEntryDialog,
+            self.main_window.hemmeter_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
+            self.main_window.rohrer_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
+            self.main_window.hemmeter_general_hearingButton: GeneralNoticeOfHearingDialog,
+            self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
+            self.main_window.hemmeter_trial_court_hearingButton: TrialToCourtHearingDialog,
+            self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
         }
 
     def connect_daily_case_list_radio_buttons(self) -> dict:

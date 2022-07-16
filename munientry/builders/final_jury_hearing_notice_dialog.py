@@ -1,12 +1,11 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
-from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
@@ -16,46 +15,65 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 
 if TYPE_CHECKING:
     from PyQt5.QtCore import QDate
-
-    from munientry.models.party_types import JudicialOfficer
+    from PyQt5.QtWidgets import QDialog
 
 
 class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
-    """Builder class for the Final and Jury Trial Notice of Hearing."""
+    """Builder class for the Final and Jury Trial Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
 
     def __init__(
         self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ):
+    ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Final and Jury Notice of Hearing Entry'
+        self.dialog_name = 'Final And Jury Notice Of Hearing Entry'
         logger.info(f'Loaded Dialog: {self.dialog_name}')
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        judicial_officer_last_name = self.judicial_officer.last_name
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {judicial_officer_last_name}')
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
+        self.set_instructions_label()
 
-    def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
+    def set_instructions_label(self) -> None:
+        if self.assigned_judge == 'Judge Marianne T. Hemmeter':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                + 'automatically update to the next Thursday.',
+            )
+        if self.assigned_judge == 'Judge Kyle E. Rohrer':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                + 'automatically update to the next Tuesday.',
+            )
 
-    def modify_view(self):
-        return FinalJuryNoticeHearingViewModifier(self)
+    def load_cms_data_to_view(self) -> None:
+        CmsNoChargeLoader(self)
+
+    def modify_view(self) -> None:
+        FinalJuryNoticeHearingViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
         self.functions = FinalJuryNoticeHearingSlotFunctions(self)
         FinalJuryNoticeHearingSignalConnector(self)
 
-    def update_entry_case_information(self):
-        return FinalJuryNoticeHearingCaseInformationUpdater(self)
+    def update_entry_case_information(self) -> None:
+        FinalJuryNoticeHearingCaseInformationUpdater(self)
 
 
 class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
     """Class that sets and modifies the view for the Final Jury Notice of Hearing."""
 
-    def __init__(self, dialog):
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog = dialog
         self.set_view_dates()
 
-    def set_view_dates(self):
+    def set_view_dates(self) -> None:
         self.dialog.plea_trial_date.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
@@ -64,7 +82,7 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
 class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
     """Class that connects all signals for the Final Jury Notice of Hearing."""
 
-    def __init__(self, dialog):
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog = dialog
         self.functions = dialog.functions
@@ -87,10 +105,10 @@ class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
 class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
-    def update_trial_date(self):
-        if self.dialog.judicial_officer.last_name == 'Rohrer':
+    def update_trial_date(self) -> None:
+        if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
             trial_date = self.set_trial_date('Tuesday', 'Trial')
-        if self.dialog.judicial_officer.last_name == 'Hemmeter':
+        if self.dialog.assigned_judge == 'Judge Marianne T. Hemmeter':
             trial_date = self.set_trial_date('Thursday', 'Trial')
         try:
             self.dialog.trial_dateEdit.setDate(trial_date)
@@ -104,7 +122,7 @@ class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
             event_date = event_date.addDays(1)
         return event_date
 
-    def show_hide_final_pretrial(self):
+    def show_hide_final_pretrial(self) -> None:
         if self.dialog.jury_trial_only_no_radioButton.isChecked():
             self.dialog.final_pretrial_dateEdit.setHidden(False)
             self.dialog.final_pretrial_date_label.setHidden(False)
@@ -120,29 +138,33 @@ class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
 class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
     """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
 
-    def __init__(self, dialog):
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.view = dialog
         self.update_model_with_case_information_frame_data()
 
-    def update_model_with_case_information_frame_data(self):
+    def update_model_with_case_information_frame_data(self) -> None:
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
+        self.model.assigned_judge = self.view.assigned_judge
+        self.model.courtroom = self.view.courtroom
+        self.model.judicial_officer = self.view.judicial_officer
 
-    def set_case_number_and_date(self):
+    def set_case_number_and_date(self) -> None:
         self.model.case_number = self.view.case_number_lineEdit.text()
         self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
 
-    def set_party_information(self):
+    def set_party_information(self) -> None:
         self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
         self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
 
-    def set_defense_counsel_information(self):
+    def set_defense_counsel_information(self) -> None:
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
 
-    def set_scheduling_dates(self):
+    def set_scheduling_dates(self) -> None:
+        self.model.hearing_location = self.view.hearing_location_box.currentText()
         self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
             'MMMM dd, yyyy',

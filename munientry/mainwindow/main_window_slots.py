@@ -7,6 +7,7 @@ from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.controllers.helper_functions import (
     check_case_list_selected,
     check_judicial_officer,
+    check_assignment_commissioner,
     set_random_judge,
 )
 from munientry.data.databases import (
@@ -91,7 +92,7 @@ class MainWindowSlotFunctionsMixin(object):
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = self.dialog_buttons_dict[self.sender()](
+        self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
@@ -100,24 +101,18 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
+    @check_assignment_commissioner
     @check_case_list_selected
     def start_scheduling_entry(self) -> None:
         selected_case_table = self.database_table_dict.get(
             self.case_table, QComboBox,
         )
-        dialog_name = self.set_scheduling_dialog_name()
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = SchedulingEntryDialog(
-            dialog_name=dialog_name,
+        self.dialog = self.scheduling_dialog_buttons_dict[self.sender()](
+            self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
+        dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
-
-    def set_scheduling_dialog_name(self) -> str:
-        if self.sender().objectName() == 'rohrer_schedulingEntryButton':
-            return 'Rohrer Scheduling Entry'
-        if self.sender().objectName() == 'hemmeter_schedulingEntryButton':
-            return 'Hemmeter Scheduling Entry'
-        return 'None'

@@ -54,6 +54,17 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
     def set_selected_case_list_table(self) -> None:
         self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
 
+    def set_person_stack_widget(self):
+        logger.action(f'Entry Tab Changed')
+        judicial_officers = self.judicial_officers_Stack
+        assignment_commissioners = self.assignment_commissioners_Stack
+        if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
+            self.stackedWidget.setCurrentWidget(judicial_officers)
+        if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
+            self.stackedWidget.setCurrentWidget(assignment_commissioners)
+        logger.info(f'Current stackedWidget is {self.stackedWidget.currentWidget().objectName()}')
+        logger.info(f'Current tabWidget is {self.tabWidget.currentWidget().objectName()}')
+
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
             first_name, response_ok = QInputDialog.getText(
