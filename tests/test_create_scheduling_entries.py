@@ -16,7 +16,8 @@ scheduling_tab_entries = [
     ("rohrer_final_jury_hearingButton", "rohrer_final_test"),
     ("hemmeter_general_hearingButton", "hemmeter_general_test"),
     ("rohrer_general_hearingButton", "rohrer_general_test"),
-    ("trial_to_court_hearingEntryButton", "ttc_test"),
+    ("hemmeter_trial_court_hearingButton", "hemmeter_ttc_test"),
+    ("rohrer_trial_court_hearingButton", "rohrer_ttc_test"),
     ("rohrer_schedulingEntryButton", "rohrer_sched_entry_test"),
     ("hemmeter_schedulingEntryButton", "hemmeter_sched_entry_test"),
 ]
