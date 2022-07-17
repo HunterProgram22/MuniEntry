@@ -15,6 +15,7 @@ from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH
 
 NO_DATA = 'No Data'
 COL_CASE_NUMBER = 'CaseNumber'
+COL_CASE_TYPE = 'CaseTypeCode'
 COL_EVENT_DATE = 'CaseEventDate'
 COL_DEF_LAST_NAME = 'DefLastName'
 COL_DEF_FIRST_NAME = 'DefFirstName'
@@ -36,6 +37,8 @@ def set_document_name(case_number: str) -> str:
 @dataclass
 class BatchCaseInformation:
     case_number: str  = None
+    case_type_code: str = None
+    warrant_rule: str = None
     case_event_date: str = None
     def_first_name: str = None
     def_last_name: str = None
@@ -58,6 +61,8 @@ def create_batch_case_list(worksheet: Workbook.active, header_dict: dict) -> lis
     row_count = worksheet.max_row + 1
     for row in range(2, row_count):
         case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
+        case_type_code = get_cell_value(worksheet, row, header_dict[COL_CASE_TYPE])
+        warrant_rule = set_warrant_rule(case_type_code)
         case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
         case_event_date = format_event_date(case_event_date)
         def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME])
@@ -66,6 +71,8 @@ def create_batch_case_list(worksheet: Workbook.active, header_dict: dict) -> lis
         def_last_name = def_last_name.title()
         case_information = BatchCaseInformation(
             case_number,
+            case_type_code,
+            warrant_rule,
             case_event_date,
             def_first_name,
             def_last_name,
@@ -84,6 +91,13 @@ def get_cell_value(ws: Workbook.active, row: int, col: int) -> str:
 def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
     """Returns a specific string for certain attributes if there is no data."""
     return NO_DATA
+
+
+def set_warrant_rule(case_type_code: str) -> str:
+    """Returns a string with the specific warrant rule based on the case type."""
+    if case_type_code == 'CRB':
+        return 'Criminal Rule 4'
+    return 'Traffic Rule 7'
 
 
 def format_event_date(case_event_date: datetime) -> str:
