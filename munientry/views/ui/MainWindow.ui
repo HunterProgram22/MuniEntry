@@ -960,6 +960,7 @@ background-color: rgb(208, 208, 208);</string>
      <string>Batch</string>
     </property>
     <addaction name="actionRun_batch_FTA_Entries"/>
+    <addaction name="separator"/>
     <addaction name="actionOpen_batch_FTA_Entries_Folder"/>
    </widget>
    <addaction name="menuBatch"/>

@@ -12,10 +12,10 @@ from munientry.builders.final_jury_hearing_notice_dialog import (
 from munientry.builders.general_hearing_notice_dialog import (
     GeneralNoticeOfHearingDialog,
 )
+from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.builders.trial_to_court_hearing_notice_dialog import (
     TrialToCourtHearingDialog,
 )
-from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -29,7 +29,9 @@ class MainWindowViewModifier(object):
         self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
-        self.main_window.crim_traffic_dialog_buttons_dict = self.connect_crim_traffic_dialog_buttons()
+        self.main_window.crim_traffic_dialog_buttons_dict = (
+            self.connect_crim_traffic_dialog_buttons()
+        )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
         self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
@@ -44,10 +46,14 @@ class MainWindowViewModifier(object):
             self.main_window.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
             self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
             self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
-            self.main_window.visiting_judge_radioButton: JudicialOfficer('None', 'None', 'Judge'),
-            self.main_window.dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.main_window.patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.main_window.none_radioButton: JudicialOfficer('None', 'None', 'Assignment Commissioner'),
+            self.main_window.visiting_judge_radioButton:
+                JudicialOfficer('None', 'Assigned', 'Judge'),
+            self.main_window.dattilo_radioButton:
+                JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            self.main_window.patterson_radioButton:
+                JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            self.main_window.none_radioButton:
+                JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
         }
 
     def connect_crim_traffic_dialog_buttons(self) -> dict:

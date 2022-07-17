@@ -1,51 +1,15 @@
 """Module containing the Main Window of the application."""
-import os
 
 from loguru import logger
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QShortcut
+from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow
 
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
-from munientry.mainwindow.batch_fta_entries import run_batch_fta_arraignments
+from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
-from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
-from munientry.views.custom_widgets import InfoBox
 from munientry.views.main_window_ui import Ui_MainWindow
-
-
-def open_current_log(signal=None) -> None:
-    """Menu function that opens the user logs directly or with keyboard shortcut."""
-    if signal is False:
-        signal = 'Menu'
-    else:
-        signal = 'Keyboard Shortcut'
-    logger.info(f'Log opened from {signal}.')
-    os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
-
-
-def open_batch_entries_folder(signal=None) -> None:
-    """Menu function that opens the folder where batch entries are saved."""
-    logger.info(f'Opened batch entries folder.')
-    os.startfile(f'{SAVE_PATH}batch\\')
-
-
-def run_batch_fta_process(signal=None) -> None:
-    entries_created = run_batch_fta_arraignments()
-    message = f'The batch process created {entries_created} entries.'
-    InfoBox(message, 'Entries Created').exec()
-    os.startfile(f'{SAVE_PATH}batch\\')
-
-
-def connect_menu_functions(main_window) -> None:
-    """Connects all menu functions from the main window."""
-    main_window.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), main_window)
-    main_window.log_shortcut.activated.connect(open_current_log)
-    main_window.actionOpen_Current_Log.triggered.connect(open_current_log)
-    main_window.actionOpen_batch_FTA_Entries_Folder.triggered.connect(open_batch_entries_folder)
-    main_window.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
@@ -70,17 +34,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
     def set_selected_case_list_table(self) -> None:
         self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
-
-    def set_person_stack_widget(self):
-        logger.action(f'Entry Tab Changed')
-        judicial_officers = self.judicial_officers_Stack
-        assignment_commissioners = self.assignment_commissioners_Stack
-        if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
-            self.stackedWidget.setCurrentWidget(judicial_officers)
-        if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
-            self.stackedWidget.setCurrentWidget(assignment_commissioners)
-        logger.info(f'Current stackedWidget is {self.stackedWidget.currentWidget().objectName()}')
-        logger.info(f'Current tabWidget is {self.tabWidget.currentWidget().objectName()}')
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
