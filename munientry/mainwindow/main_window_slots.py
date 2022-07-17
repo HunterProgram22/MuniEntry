@@ -116,3 +116,14 @@ class MainWindowSlotFunctionsMixin(object):
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
+
+    def set_person_stack_widget(self):
+        logger.action(f'Entry Tab Changed')
+        judicial_officers = self.judicial_officers_Stack
+        assignment_commissioners = self.assignment_commissioners_Stack
+        if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
+            self.stackedWidget.setCurrentWidget(judicial_officers)
+        if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
+            self.stackedWidget.setCurrentWidget(assignment_commissioners)
+        logger.info(f'Current stackedWidget is {self.stackedWidget.currentWidget().objectName()}')
+        logger.info(f'Current tabWidget is {self.tabWidget.currentWidget().objectName()}')
