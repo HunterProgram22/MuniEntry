@@ -1,4 +1,5 @@
 """Module for creating a batch of Failure to Appear entries."""
+from datetime import datetime
 
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -51,9 +52,7 @@ def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> l
         case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
         case_type_code = get_cell_value(worksheet, row, header_dict[COL_CASE_TYPE])
         warrant_rule = set_warrant_rule(case_type_code)
-        case_event_date = get_cell_value(
-            worksheet, row, header_dict[COL_EVENT_DATE],
-        ).strftime('%B %d, %Y')
+        case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
         def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME]).title()
         def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME]).title()
         batch_case_data.append(BatchCaseInformation(
@@ -68,9 +67,12 @@ def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> l
 
 def get_cell_value(worksheet: 'Workbook.active', row: int, col: int) -> str:
     """Returns the cell value for a cell in the active excel worksheet."""
-    if worksheet.cell(row=row, column=col).value is None:
+    cell_value = worksheet.cell(row=row, column=col).value
+    if cell_value is None:
         return 'No Data'
-    return worksheet.cell(row=row, column=col).value
+    if isinstance(cell_value, datetime):
+        return cell_value.strftime('%B %d, %Y')
+    return cell_value
 
 
 def set_warrant_rule(case_type_code: str) -> str:
