@@ -22,15 +22,14 @@ def set_document_name(case_number: str) -> str:
 
 
 def return_data_from_excel(excel_file):
-    data = []
+    """Reads through an excel file and gets case data."""
+    batch_case_data = []
     workbook = load_workbook(excel_file, data_only=True)
     worksheet = workbook.active
     row_count = worksheet.max_row + 1
     for row in range(2, row_count):
         CaseNumber = worksheet.cell(row=row, column=1)
-        CaseEventDate = worksheet.cell(row=row, column=3)
-        clean_date = CaseEventDate.value
-        clean_date = clean_date.strftime('%B %d, %Y')
+        case_event_date = get_case_event_date(worksheet, row=row, column=3)
         DefFirstName = worksheet.cell(row=row, column=5)
         clean_first_name = DefFirstName.value
         clean_first_name = clean_first_name.title()
@@ -39,13 +38,17 @@ def return_data_from_excel(excel_file):
         clean_last_name = clean_last_name.title()
         case_information = BatchCaseInformation(
             CaseNumber.value,
-            clean_date,
+            case_event_date,
             clean_first_name,
             clean_last_name,
         )
-        data.append(case_information)
-    return data
+        batch_case_data.append(case_information)
+    return batch_case_data
 
+
+def get_case_event_date(worksheet: object, row: int, column: int) -> str:
+    event_date = worksheet.cell(row=row, column=3).value
+    return event_date.strftime('%B %d, %Y')
 
 @dataclass
 class BatchCaseInformation:
