@@ -1,19 +1,21 @@
 """Module for creating a batch of Failure to Appear entries."""
-from datetime import datetime
-from dataclasses import asdict, dataclass
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from openpyxl import Workbook, load_workbook
 
 from munientry.data.loader_functions import (
     create_headers_dict,
     get_excel_file_headers,
     load_active_worksheet,
 )
-from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH
+from munientry.models.excel_models import BatchCaseInformation
+from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH, TYPE_CHECKING
 
-NO_DATA = 'No Data'
+if TYPE_CHECKING:
+    from datetime import datetime
+
+    from openpyxl import Workbook
+
 COL_CASE_NUMBER = 'CaseNumber'
 COL_CASE_TYPE = 'CaseTypeCode'
 COL_EVENT_DATE = 'CaseEventDate'
@@ -34,19 +36,6 @@ def set_document_name(case_number: str) -> str:
     return f'{case_number}_FTA_Arraignment.docx'
 
 
-@dataclass
-class BatchCaseInformation:
-    case_number: str  = None
-    case_type_code: str = None
-    warrant_rule: str = None
-    case_event_date: str = None
-    def_first_name: str = None
-    def_last_name: str = None
-
-    def get_case_information(self):
-        return asdict(self)
-
-
 def get_case_list_from_excel(excel_file: str) -> list[BatchCaseInformation]:
     """Loads active worksheet, generates header dict, and list with case data objects."""
     worksheet = load_active_worksheet(excel_file)
@@ -55,7 +44,8 @@ def get_case_list_from_excel(excel_file: str) -> list[BatchCaseInformation]:
     return create_batch_case_list(worksheet, headers_dict)
 
 
-def create_batch_case_list(worksheet: Workbook.active, header_dict: dict) -> list[BatchCaseInformation]:
+def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> list[
+    BatchCaseInformation]:
     """Reads through an excel file and gets case data."""
     batch_case_data: list = []
     row_count = worksheet.max_row + 1
@@ -81,16 +71,11 @@ def create_batch_case_list(worksheet: Workbook.active, header_dict: dict) -> lis
     return batch_case_data
 
 
-def get_cell_value(ws: Workbook.active, row: int, col: int) -> str:
+def get_cell_value(ws: 'Workbook.active', row: int, col: int) -> str:
     """Returns the cell value for a cell in the active excel worksheet."""
     if ws.cell(row=row, column=col).value is None:
-        return set_cell_value_if_none(ws, col)
+        return 'No Data'
     return ws.cell(row=row, column=col).value
-
-
-def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
-    """Returns a specific string for certain attributes if there is no data."""
-    return NO_DATA
 
 
 def set_warrant_rule(case_type_code: str) -> str:
@@ -100,7 +85,7 @@ def set_warrant_rule(case_type_code: str) -> str:
     return 'Traffic Rule 7'
 
 
-def format_event_date(case_event_date: datetime) -> str:
+def format_event_date(case_event_date: 'datetime') -> str:
     return case_event_date.strftime('%B %d, %Y')
 
 
