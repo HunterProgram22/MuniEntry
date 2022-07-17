@@ -1,4 +1,5 @@
 """Module for creating a batch of Failure to Appear entries."""
+from datetime import datetime
 from dataclasses import asdict, dataclass
 
 from docxtpl import DocxTemplate
@@ -58,8 +59,11 @@ def create_batch_case_list(worksheet: Workbook.active, header_dict: dict) -> lis
     for row in range(2, row_count):
         case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
         case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
+        case_event_date = format_event_date(case_event_date)
         def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME])
+        def_first_name = def_first_name.title()
         def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME])
+        def_last_name = def_last_name.title()
         case_information = BatchCaseInformation(
             case_number,
             case_event_date,
@@ -82,9 +86,8 @@ def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
     return NO_DATA
 
 
-def get_case_event_date(worksheet: object, row: int, column: int) -> str:
-    event_date = worksheet.cell(row=row, column=3).value
-    return event_date.strftime('%B %d, %Y')
+def format_event_date(case_event_date: datetime) -> str:
+    return case_event_date.strftime('%B %d, %Y')
 
 
 def run_batch_fta_arraignments() -> int:
