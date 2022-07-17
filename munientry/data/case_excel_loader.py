@@ -24,6 +24,14 @@ COL_DEF_ATTY_FIRST_NAME = 'Atty First'
 COL_DEF_ATTY_TYPE = 'Atty Type'
 
 
+def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
+    """Loads active worksheet, generates header dict, and creates case data list."""
+    ws = load_active_worksheet(excel_file)
+    header_list = get_excel_file_headers(ws)
+    headers_dict = create_headers_dict(header_list)
+    return create_case_data_list(ws, headers_dict)
+
+
 def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseExcelData]:
     """Returns a list of CaseExcelData objects.
 
@@ -48,14 +56,6 @@ def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseE
         case.def_atty_type = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_TYPE])
         case_data_list.append(case)
     return case_data_list
-
-
-def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
-    """Loads active worksheet and generates header dict in order to create case data list."""
-    ws = load_active_worksheet(excel_file)
-    header_list = get_excel_file_headers(ws)
-    headers_dict = create_headers_dict(header_list)
-    return create_case_data_list(ws, headers_dict)
 
 
 def get_cell_value(ws: Workbook.active, row: int, col: int) -> str:
