@@ -12,8 +12,6 @@ from munientry.models.excel_models import BatchCaseInformation
 from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from datetime import datetime
-
     from openpyxl import Workbook
 
 COL_CASE_NUMBER = 'CaseNumber'
@@ -45,37 +43,34 @@ def get_case_list_from_excel(excel_file: str) -> list[BatchCaseInformation]:
 
 
 def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> list[
-    BatchCaseInformation]:
+    BatchCaseInformation
+]:
     """Reads through an excel file and gets case data."""
     batch_case_data: list = []
-    row_count = worksheet.max_row + 1
-    for row in range(2, row_count):
+    for row in range(2, worksheet.max_row + 1):
         case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
         case_type_code = get_cell_value(worksheet, row, header_dict[COL_CASE_TYPE])
         warrant_rule = set_warrant_rule(case_type_code)
-        case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
-        case_event_date = format_event_date(case_event_date)
-        def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME])
-        def_first_name = def_first_name.title()
-        def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME])
-        def_last_name = def_last_name.title()
-        case_information = BatchCaseInformation(
+        case_event_date = get_cell_value(
+            worksheet, row, header_dict[COL_EVENT_DATE],
+        ).strftime('%B %d, %Y')
+        def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME]).title()
+        def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME]).title()
+        batch_case_data.append(BatchCaseInformation(
             case_number,
-            case_type_code,
             warrant_rule,
             case_event_date,
             def_first_name,
             def_last_name,
-        )
-        batch_case_data.append(case_information)
+        ))
     return batch_case_data
 
 
-def get_cell_value(ws: 'Workbook.active', row: int, col: int) -> str:
+def get_cell_value(worksheet: 'Workbook.active', row: int, col: int) -> str:
     """Returns the cell value for a cell in the active excel worksheet."""
-    if ws.cell(row=row, column=col).value is None:
+    if worksheet.cell(row=row, column=col).value is None:
         return 'No Data'
-    return ws.cell(row=row, column=col).value
+    return worksheet.cell(row=row, column=col).value
 
 
 def set_warrant_rule(case_type_code: str) -> str:
@@ -85,17 +80,14 @@ def set_warrant_rule(case_type_code: str) -> str:
     return 'Traffic Rule 7'
 
 
-def format_event_date(case_event_date: 'datetime') -> str:
-    return case_event_date.strftime('%B %d, %Y')
-
-
 def run_batch_fta_arraignments() -> int:
-    batch_case_list = get_case_list_from_excel(f'{DB_PATH}\\Batch_FTA_Arraignments.xlsx')
+    """The main function for the batch_fta_entries process."""
+    batch_case_list = get_case_list_from_excel(fr'{DB_PATH}\Batch_FTA_Arraignments.xlsx')
     entry_count = 0
-    for index, case in enumerate(batch_case_list):
-        logger.info(f'Creating Batch FTA entry for: {batch_case_list[index].case_number}')
-        create_entry(batch_case_list[index])
-        entry_count +=1
+    for case in batch_case_list:
+        logger.info(f'Creating Batch FTA entry for: {case.case_number}')
+        create_entry(case)
+        entry_count += 1
     return entry_count
 
 

@@ -5,6 +5,19 @@ NO_DATA = 'No Data'
 
 
 @dataclass
+class BatchCaseInformation(object):
+    """Class for holding case data that is extracted from excel file for batch entries."""
+    case_number: str  = None
+    warrant_rule: str = None
+    case_event_date: str = None
+    def_first_name: str = None
+    def_last_name: str = None
+
+    def get_case_information(self):
+        return asdict(self)
+
+
+@dataclass
 class CaseExcelData(object):
     """Class for holding case data that is extracted from excel file."""
 
@@ -36,16 +49,3 @@ if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-
-
-@dataclass
-class BatchCaseInformation(object):
-    case_number: str  = None
-    case_type_code: str = None
-    warrant_rule: str = None
-    case_event_date: str = None
-    def_first_name: str = None
-    def_last_name: str = None
-
-    def get_case_information(self):
-        return asdict(self)
