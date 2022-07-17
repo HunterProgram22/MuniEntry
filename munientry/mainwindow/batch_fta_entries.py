@@ -1,27 +1,24 @@
 """Module for creating a batch of Failure to Appear entries."""
-import datetime
-import os
-import sys
-import pathlib
-from dataclasses import dataclass, field, asdict
-from loguru import logger
+from dataclasses import asdict, dataclass
 
-from openpyxl import load_workbook
 from docxtpl import DocxTemplate
+from loguru import logger
+from openpyxl import load_workbook
 
 from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH
 
 
-def create_entry(data):
-    doc = DocxTemplate(f'{TEMPLATE_PATH}\\Batch_Failure_To_Appear_Arraignment_Template.docx')
-    doc.render(data.get_case_information())
-    docname = set_document_name(data)
-    doc.save(f'{SAVE_PATH}\\batch\\{docname}')
+def create_entry(case_data):
+    """General create entry function that populates a template with data."""
+    doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
+    doc.render(case_data.get_case_information())
+    docname = set_document_name(case_data.CaseNumber)
+    doc.save(fr'{SAVE_PATH}\batch\{docname}')
 
 
-def set_document_name(data):
-    docname = f'{data.CaseNumber}_FTA_Arraignment.docx'
-    return docname
+def set_document_name(case_number: str) -> str:
+    """Sets document name that includes case number."""
+    return f'{case_number}_FTA_Arraignment.docx'
 
 
 def return_data_from_excel(excel_file):
@@ -65,13 +62,13 @@ def run_batch_fta_arraignments() -> int:
     data_for_entries = return_data_from_excel(f'{DB_PATH}\\Batch_FTA_Arraignments.xlsx')
     entry_count = 0
     for index, person in enumerate(data_for_entries):
-        logger.info(f'Creating entry for: {data_for_entries[index]}')
+        logger.info(f'Creating Batch FTA entry for: {data_for_entries[index].CaseNumber}')
         create_entry(data_for_entries[index])
         entry_count +=1
     return entry_count
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     run_batch_fta_arraignments()
     logger.info(f'{__name__} run directly.')
 else:

@@ -460,6 +460,7 @@ class Ui_MainWindow(object):
         self.actionOpen_batch_FTA_Entries_Folder.setObjectName("actionOpen_batch_FTA_Entries_Folder")
         self.menuLogs.addAction(self.actionOpen_Current_Log)
         self.menuBatch.addAction(self.actionRun_batch_FTA_Entries)
+        self.menuBatch.addSeparator()
         self.menuBatch.addAction(self.actionOpen_batch_FTA_Entries_Folder)
         self.menubar.addAction(self.menuBatch.menuAction())
         self.menubar.addAction(self.menuLogs.menuAction())
