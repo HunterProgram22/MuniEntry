@@ -100,9 +100,9 @@ class CmsChargeLoader(CmsNoChargeLoader):
         """
         if self.cms_case.case_number[2:5] == 'CRB':
             return 'Criminal'
-        if cms_type == 'False':
+        if cms_type == '0':
             return 'Non-moving'
-        if cms_type == 'True':
+        if cms_type == '1':
             return 'Moving'
         return 'Moving'
 
