@@ -11,17 +11,17 @@ from munientry.data.loader_functions import (
 from munientry.models.excel_models import CaseExcelData
 
 NO_DATA = 'No Data'
-COL_CASE = 'Case'
-COL_DEF_LAST_NAME = 'Lastname'
-COL_DEF_FIRST_NAME = 'Firstname'
-COL_CHARGE = 'Charge'
-COL_STATUTE = 'Code'
-COL_DEGREE = 'Degree'
-COL_INSURANCE = 'Insurance'
-COL_MOVING_OFFENSE = 'Moving'
-COL_DEF_ATTY_LAST_NAME = 'Atty Last'
-COL_DEF_ATTY_FIRST_NAME = 'Atty First'
-COL_DEF_ATTY_TYPE = 'Atty Type'
+COL_CASE = 'CaseNumber'
+COL_DEF_LAST_NAME = 'DefLastName'
+COL_DEF_FIRST_NAME = 'DefFirstName'
+COL_CHARGE = 'ChargeDescription'
+COL_STATUTE = 'SectionCode'
+COL_DEGREE = 'DegreeCode'
+COL_INSURANCE = 'InsuranceStatus'
+COL_MOVING_OFFENSE = 'IsMoving'
+COL_DEF_ATTY_LAST_NAME = 'AttorneyLastName'
+COL_DEF_ATTY_FIRST_NAME = 'AttorneyFirstName'
+COL_DEF_ATTY_TYPE = 'PubDef'
 
 
 def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
