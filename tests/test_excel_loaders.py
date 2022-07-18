@@ -12,7 +12,7 @@ all_daily_case_list_excel_files = [
     (f'{DB_PATH}PCVH_FCVH.xlsx', 30),
     (f'{DB_PATH}Pleas.xlsx', 28),
     (f'{DB_PATH}Slated.xlsx', 28),
-    (f'{DB_PATH}Trials_to_Court.xlsx', 28),
+    (f'{DB_PATH}Trials_to_Court.xlsx', 17),
 ]
 
 
@@ -55,4 +55,4 @@ def test_create_headers_dict(db_file, first_name_col):
     worksheet = load_active_worksheet(db_file)
     header_list = get_excel_file_headers(worksheet)
     header_dict = create_headers_dict(header_list)
-    assert header_dict['Firstname'] == first_name_col
+    assert header_dict['DefFirstName'] == first_name_col
