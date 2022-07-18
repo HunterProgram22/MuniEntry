@@ -2,12 +2,11 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
-from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.general_notice_of_hearing_dialog_ui import (
@@ -17,21 +16,25 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class GeneralNoticeOfHearingDialog(BaseDialog, Ui_GeneralNoticeOfHearingDialog):
+class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
+    """Builder class for the General Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
+
     def __init__(
-            self, judicial_officer=None, cms_case=None, case_table=None, parent=None
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
-        self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'General Notice Of Hearing Entry'
-        super().__init__(parent)
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        logger.info(f'Loaded Case {self.cms_case.case_number}')
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
 
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
@@ -86,6 +89,9 @@ class GeneralNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater)
         self.set_party_information()
         self.set_defense_counsel_information()
         self.set_scheduling_dates()
+        self.model.assigned_judge = self.view.assigned_judge
+        self.model.courtroom = self.view.courtroom
+        self.model.judicial_officer = self.view.judicial_officer
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()

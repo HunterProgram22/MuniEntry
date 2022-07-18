@@ -82,28 +82,15 @@ class NoScrollTimeEdit(QTimeEdit):
 
 class ExtendedComboBox(QComboBox):
     def __init__(self, parent=None):
-        """Code is from the user Joachim Bonfert 8/2/21 answer at https://stackoverflow.com/questions/4827207/
-        how-do-i-filter-the-pyqt-qcombobox-items-based-on-the-text-input"""
         super(ExtendedComboBox, self).__init__(parent)
         self.setFocusPolicy(Qt.StrongFocus)
-        self.setEditable(True)
+        self.setEnabled(False)
+        self.setMinimumSize(QtCore.QSize(0, 40))
+        self.setStyleSheet( "background-color: rgb(255, 255, 255);\n"
+                            "selection-background-color: rgb(85, 170, 255);")
+        self.setEditable(False)
         self.setContextMenuPolicy(Qt.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_menu)
-
-        # add a filter model to filter matching items
-        self.pFilterModel = QSortFilterProxyModel(self)
-        self.pFilterModel.setFilterCaseSensitivity(Qt.CaseInsensitive)
-        self.pFilterModel.setSourceModel(self.model())
-
-        # add a completer, which uses the filter model
-        self.completer = QCompleter(self.pFilterModel, self)
-        # always show all (filtered) completions
-        self.completer.setCompletionMode(QCompleter.UnfilteredPopupCompletion)
-        self.setCompleter(self.completer)
-
-        # connect signals
-        self.lineEdit().textEdited[str].connect(self.pFilterModel.setFilterFixedString)
-        self.completer.activated.connect(self.on_completer_activated)
 
     def show_menu(self, pos):
         menu = QMenu()
@@ -120,25 +107,6 @@ class ExtendedComboBox(QComboBox):
         super(ExtendedComboBox, self).keyPressEvent(event)
         if event.key() == QtCore.Qt.Key_Delete:
             self.delete_case()
-
-    # on selection of an item from the completer, select the corresponding item from combobox
-    def on_completer_activated(self, text):
-        if text:
-            index = self.findText(text)
-            self.setCurrentIndex(index)
-            self.activated[str].emit(self.itemText(index))
-
-    # on model change, update the models of the filter and completer as well
-    def setModel(self, model):
-        super(ExtendedComboBox, self).setModel(model)
-        self.pFilterModel.setSourceModel(model)
-        self.completer.setModel(self.pFilterModel)
-
-    # on model column change, update the model column of the filter and completer as well
-    def setModelColumn(self, column):
-        self.completer.setCompletionColumn(column)
-        self.pFilterModel.setFilterKeyColumn(column)
-        super(ExtendedComboBox, self).setModelColumn(column)
 
 
 class DefenseCounselComboBox(NoScrollComboBox):
@@ -430,13 +398,18 @@ class RequiredBox(QMessageBox):
 
 
 class InfoBox(QMessageBox):
-    def __init__(self, parent=None):
+    def __init__(self, message=None,title=None, parent=None):
         super(QMessageBox, self).__init__(parent)
+        self.message = message
+        self.title = title
         self.set_up_widget()
+        logger.info(self.title)
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setIcon(QMessageBox.Information)
+        self.setWindowTitle(self.title)
+        self.setText(self.message)
         self.setStandardButtons(QMessageBox.Ok)
 
 

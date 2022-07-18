@@ -9,22 +9,18 @@ class MainWindowSignalConnector(object):
         self.main_window.reload_cases_Button.released.connect(
             self.main_window.reload_case_lists,
         )
-        self.main_window.rohrer_schedulingEntryButton.released.connect(
-            self.main_window.start_scheduling_entry,
-        )
-        self.main_window.hemmeter_schedulingEntryButton.released.connect(
-            self.main_window.start_scheduling_entry,
-        )
         self.main_window.random_judge_Button.released.connect(
             self.main_window.assign_judge,
         )
         self.main_window.visiting_judge_radioButton.toggled.connect(
             self.main_window.set_visiting_judge,
         )
+        self.main_window.tabWidget.currentChanged.connect(self.main_window.set_person_stack_widget)
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()
         self.connect_judicial_officers_to_set_officer()
-        self.connect_dialog_buttons_to_start_dialog()
+        self.connect_crim_traffic_buttons_to_start_dialog()
+        self.connect_scheduling_buttons_to_start_dialog()
 
     def connect_case_lists_to_show_hide(self) -> None:
         for key in self.main_window.radio_buttons_case_lists_dict:
@@ -38,6 +34,10 @@ class MainWindowSignalConnector(object):
         for key in self.main_window.judicial_officer_buttons_dict:
             key.clicked.connect(self.main_window.update_judicial_officer)
 
-    def connect_dialog_buttons_to_start_dialog(self) -> None:
-        for key in self.main_window.dialog_buttons_dict:
+    def connect_crim_traffic_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.crim_traffic_dialog_buttons_dict:
             key.pressed.connect(self.main_window.start_dialog_from_entry_button)
+
+    def connect_scheduling_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.scheduling_dialog_buttons_dict:
+            key.pressed.connect(self.main_window.start_scheduling_entry)

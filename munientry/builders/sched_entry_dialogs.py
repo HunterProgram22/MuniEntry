@@ -8,52 +8,35 @@ from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import TODAY, DAY_DICT, EVENT_DICT, SPEEDY_TRIAL_TIME_DICT, PRETRIAL_TIME_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
-TODAY = QDate.currentDate()
-SPEEDY_TRIAL_TIME_DICT = {
-            "M1": 90,
-            "M2": 90,
-            "M3": 45,
-            "M4": 45,
-            "MM": 30,
-            "UCM": 30,
-        }
-DAY_DICT = {
-            "Monday": 1,
-            "Tuesday": 2,
-            "Wednesday": 3,
-            "Thursday": 4,
-            "Friday": 5,
-        }
 
-EVENT_DICT = {
-    "Trial": 2,
-    "Final Pretrial": 2,
-    "Pretrial": 28,
-}
-PRETRIAL_TIME_DICT = {
-    "Pretrial 4 weeks before trial": 28,
-    "Pretrial 3 weeks before trial": 21,
-    "Pretrial 2 weeks before trial": 14,
-    "No Pretrial": 0,
-}
+def set_scheduling_dialog_name(sender) -> str:
+    if sender.objectName() == 'rohrer_schedulingEntryButton':
+        return 'Rohrer Scheduling Entry'
+    if sender.objectName() == 'hemmeter_schedulingEntryButton':
+        return 'Hemmeter Scheduling Entry'
+    return 'None'
 
 
 class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
     def __init__(
-        self, judicial_officer=None, dialog_name=None, cms_case=None, case_table=None, parent=None
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
-        self.dialog_name = dialog_name
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
         super().__init__(parent)
+        self.dialog_name = set_scheduling_dialog_name(self.sender())
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         logger.info(f'Loaded Case {self.cms_case.case_number}')
+        logger.debug(self.dialog_name)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        logger.debug(self.template)
+        self.setWindowTitle(f"{self.dialog_name} Case Information")
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
         self.functions.set_speedy_trial_date_label()
@@ -77,7 +60,6 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
-        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
 
     def set_view_dates(self):

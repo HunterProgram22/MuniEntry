@@ -1,29 +1,38 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import CriminalBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.trial_to_court_hearing_dialog_ui import (
     Ui_TrialToCourtHearingDialog,
 )
 
-TODAY = QDate.currentDate()
 
+class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
+    """Builder class for the Trial to Court Notice of Hearing.
 
-class TrialToCourtHearingDialog(CriminalBaseDialog, Ui_TrialToCourtHearingDialog):
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
     def __init__(
             self, judicial_officer=None, cms_case=None, case_table=None, parent=None
     ):
-        self.dialog_name = 'Trial To Court Hearing Notice'
         super().__init__(judicial_officer, cms_case, case_table, parent)
+        self.dialog_name = 'Trial To Court Notice Of Hearing Entry'
+        logger.info(f'Loaded Dialog: {self.dialog_name}')
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
 
     def modify_view(self):
         return TrialToCourtDialogViewModifier(self)
@@ -57,7 +66,6 @@ class TrialToCourtDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
-        self.dialog.setWindowTitle(f"{self.dialog.dialog_name} Case Information")
         self.set_view_dates()
 
     def set_view_dates(self):
@@ -82,6 +90,9 @@ class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
+        self.model.assigned_judge = self.view.assigned_judge
+        self.model.courtroom = self.view.courtroom
+        self.model.judicial_officer = self.view.judicial_officer
         self.set_scheduling_dates()
 
     def set_case_number_and_date(self):
@@ -98,7 +109,7 @@ class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
     def set_scheduling_dates(self):
         self.model.trial_date = self.view.trial_dateEdit.date().toString("MMMM dd, yyyy")
         self.model.trial_time = self.view.trial_time_box.currentText()
-        self.model.courtroom_assigned = self.view.courtroom_box.currentText()
+        self.model.hearing_location = self.view.hearing_location_box.currentText()
 
 
 if __name__ == "__main__":

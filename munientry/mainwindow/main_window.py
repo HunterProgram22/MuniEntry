@@ -1,34 +1,15 @@
 """Module containing the Main Window of the application."""
-import os
 
 from loguru import logger
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QShortcut
+from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow
 
 from munientry.data.databases import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
+from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
-from munientry.settings import LOG_PATH, USER_LOG_NAME
 from munientry.views.main_window_ui import Ui_MainWindow
-
-
-def open_current_log(signal=None) -> None:
-    """Menu function that opens the user logs directly or with keyboard shortcut."""
-    if signal is False:
-        signal = 'Menu'
-    else:
-        signal = 'Keyboard Shortcut'
-    logger.info(f'Log opened from {signal}.')
-    os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
-
-
-def connect_menu_functions(main_window) -> None:
-    """Connects all menu functions from the main window."""
-    main_window.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), main_window)
-    main_window.log_shortcut.activated.connect(open_current_log)
-    main_window.actionOpen_Current_Log.triggered.connect(open_current_log)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):

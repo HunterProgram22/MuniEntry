@@ -1,10 +1,9 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtSql import QSqlDatabase
 from PyQt5.QtWidgets import QComboBox
 
-from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.controllers.helper_functions import (
+    check_assignment_commissioner,
     check_case_list_selected,
     check_judicial_officer,
     set_random_judge,
@@ -16,12 +15,16 @@ from munientry.data.databases import (
     open_db_connection,
     query_daily_case_list_data,
 )
+from munientry.settings import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from PyQt5.QtSql import QSqlDatabase
 
 
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
 
-    def load_case_lists(self, db_connection: QSqlDatabase = None) -> None:
+    def load_case_lists(self, db_connection: 'QSqlDatabase' = None) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
@@ -91,7 +94,7 @@ class MainWindowSlotFunctionsMixin(object):
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = self.dialog_buttons_dict[self.sender()](
+        self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
@@ -100,24 +103,31 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
+    @check_assignment_commissioner
     @check_case_list_selected
     def start_scheduling_entry(self) -> None:
         selected_case_table = self.database_table_dict.get(
             self.case_table, QComboBox,
         )
-        dialog_name = self.set_scheduling_dialog_name()
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = SchedulingEntryDialog(
-            dialog_name=dialog_name,
+        self.dialog = self.scheduling_dialog_buttons_dict[self.sender()](
+            self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
+        dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    def set_scheduling_dialog_name(self) -> str:
-        if self.sender().objectName() == 'rohrer_schedulingEntryButton':
-            return 'Rohrer Scheduling Entry'
-        if self.sender().objectName() == 'hemmeter_schedulingEntryButton':
-            return 'Hemmeter Scheduling Entry'
-        return 'None'
+    def set_person_stack_widget(self) -> None:
+        logger.action('Entry Tab Changed')
+        judicial_officers = self.judicial_officers_Stack
+        assignment_commissioners = self.assignment_commissioners_Stack
+        if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
+            self.stackedWidget.setCurrentWidget(judicial_officers)
+        if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
+            self.stackedWidget.setCurrentWidget(assignment_commissioners)
+        current_stacked_widget = self.stackedWidget.currentWidget().objectName()
+        current_tab_widget = self.tabWidget.currentWidget().objectName()
+        logger.info(f'Current stackedWidget is {current_stacked_widget}')
+        logger.info(f'Current tabWidget is {current_tab_widget}')

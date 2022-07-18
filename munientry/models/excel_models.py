@@ -1,7 +1,20 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from loguru import logger
 
 NO_DATA = 'No Data'
+
+
+@dataclass
+class BatchCaseInformation(object):
+    """Class for holding case data that is extracted from excel file for batch entries."""
+    case_number: str  = None
+    warrant_rule: str = None
+    case_event_date: str = None
+    def_first_name: str = None
+    def_last_name: str = None
+
+    def get_case_information(self):
+        return asdict(self)
 
 
 @dataclass
