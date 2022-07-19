@@ -26,7 +26,7 @@ class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHeari
     """
 
     def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'General Notice Of Hearing Entry'
@@ -48,10 +48,12 @@ class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHeari
         GeneralNoticeOfHearingDialogSignalConnector(self)
 
     def update_entry_case_information(self):
-        return GeneralNoticeOfHearingDialogCaseInformationUpdater(self)
+        return GeneralNoticeOfHearingCaseInformationUpdater(self)
 
 
 class GeneralNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
+    """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -63,29 +65,35 @@ class GeneralNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
 
 
 class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+    """Class that connects signals to slots for General Notice of Hearing Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
         self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
+        self.dialog.clear_fields_case_Button.released.connect(
+            self.functions.clear_case_information_fields,
+        )
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
 
 
 class GeneralNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
+    """Class that adds to base slot functions for use by General Notice of Hearing Dialog.
+
+    Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
+    """
 
 
-class GeneralNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater):
+class GeneralNoticeOfHearingCaseInformationUpdater(CaseInformationUpdater):
+    """Class that updates case information for General Notice of Hearing Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.view = dialog
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self):
-        """Calls the methods that update all model with all fields in the case information (top
-        frame) in all main entry dialogs."""
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
@@ -96,7 +104,7 @@ class GeneralNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater)
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
 
     def set_party_information(self):
         self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
@@ -106,13 +114,13 @@ class GeneralNoticeOfHearingDialogCaseInformationUpdater(CaseInformationUpdater)
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
 
     def set_scheduling_dates(self):
-        self.model.hearing_date = self.view.hearing_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.hearing_date = self.view.hearing_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.hearing_time = self.view.hearing_time_box.currentText()
         self.model.hearing_type = self.view.hearing_type_box.currentText()
         self.model.hearing_location = self.view.hearing_location_box.currentText()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
