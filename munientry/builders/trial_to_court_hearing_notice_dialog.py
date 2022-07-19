@@ -1,7 +1,8 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog, set_assigned_judge, set_courtroom
+from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
