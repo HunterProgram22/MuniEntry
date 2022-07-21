@@ -1,42 +1,54 @@
+"""Module containing all classes for building and using the Scheduling Entry Dialogs."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import TODAY, DAY_DICT, EVENT_DICT, SPEEDY_TRIAL_TIME_DICT, PRETRIAL_TIME_DICT
+from munientry.settings import (
+    DAY_DICT,
+    EVENT_DICT,
+    PRETRIAL_TIME_DICT,
+    SPEEDY_TRIAL_TIME_DICT,
+    TODAY,
+    TYPE_CHECKING,
+)
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
+if TYPE_CHECKING:
+    from PyQt5.QtCore import QDate
+
+ROHRER_SCHEDULING_ENTRY = 'Rohrer Scheduling Entry'
+HEMMETER_SCHEDULING_ENTRY = 'Hemmeter Scheduling Entry'
+TRIAL = 'Trial'
+PRETRIAL = 'Pretrial'
+ENTRY_DATE_FORMAT = 'MMMM dd, yyyy'
+
 
 def set_scheduling_dialog_name(sender) -> str:
+    """Returns a string of the dialog name based on the button that is pressed."""
     if sender.objectName() == 'rohrer_schedulingEntryButton':
-        return 'Rohrer Scheduling Entry'
+        return ROHRER_SCHEDULING_ENTRY
     if sender.objectName() == 'hemmeter_schedulingEntryButton':
-        return 'Hemmeter Scheduling Entry'
+        return HEMMETER_SCHEDULING_ENTRY
     return 'None'
 
 
-class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
+class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+    """The builder class for the Scheduling Entry Dialog."""
+
     def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None
-    ):
-        self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
-        super().__init__(parent)
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
+    ) -> None:
+        super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = set_scheduling_dialog_name(self.sender())
         logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.judicial_officer = judicial_officer
-        self.cms_case = cms_case
-        logger.info(f'Loaded Case {self.cms_case.case_number}')
-        logger.debug(self.dialog_name)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-        logger.debug(self.template)
-        self.setWindowTitle(f"{self.dialog_name} Case Information")
+        self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.entry_case_information = SchedulingCaseInformation()
         self.load_cms_data_to_view()
         self.functions.set_speedy_trial_date_label()
@@ -57,6 +69,8 @@ class SchedulingEntryDialog(BaseDialog, Ui_SchedulingEntryDialog):
 
 
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
+    """Class that sets and modifies the view for the Scheduling Entry Dialogs."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -69,6 +83,8 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
 
 
 class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
+    """Class that connects all signals for the Scheduling Entry Dialogs."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog = dialog
@@ -100,6 +116,8 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
 
 
 class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
+    """Class that contains all signals for the Scheduling Entry Dialogs."""
+
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -114,50 +132,50 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.pretrial_date_label.setHidden(False)
 
     def update_all_scheduled_dates(self):
-        if self.dialog.dialog_name == "Rohrer Scheduling Entry":
-            trial_date = self.set_event_date("Tuesday", "Trial")
+        if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
+            trial_date = self.set_event_date('Tuesday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
-        elif self.dialog.dialog_name == "Hemmeter Scheduling Entry":
-            trial_date = self.set_event_date("Thursday", "Trial")
+        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
+            trial_date = self.set_event_date('Thursday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
 
     def update_trial_and_pretrial_only(self):
-        if self.dialog.dialog_name == "Rohrer Scheduling Entry":
-            trial_date = self.set_trial_date("Tuesday", "Trial")
+        if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
+            trial_date = self.set_trial_date('Tuesday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
-            pretrial_date = self.set_event_date("Monday", "Pretrial")
+            pretrial_date = self.set_event_date('Monday', PRETRIAL)
             self.dialog.pretrial_dateEdit.setDate(pretrial_date)
-        elif self.dialog.dialog_name == "Hemmeter Scheduling Entry":
-            trial_date = self.set_trial_date("Thursday", "Trial")
+        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
+            trial_date = self.set_trial_date('Thursday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
-            pretrial_date = self.set_event_date("Wednesday", "Pretrial")
+            pretrial_date = self.set_event_date('Wednesday', PRETRIAL)
             self.dialog.pretrial_dateEdit.setDate(pretrial_date)
 
     def update_final_pretrial_and_pretrial_only(self):
-        if self.dialog.dialog_name == "Rohrer Scheduling Entry":
-            final_pretrial_date = self.set_event_date("Thursday", "Final Pretrial")
-            pretrial_date = self.set_event_date("Monday", "Pretrial")
-        elif self.dialog.dialog_name == "Hemmeter Scheduling Entry":
-            final_pretrial_date = self.set_event_date("Tuesday", "Final Pretrial")
-            pretrial_date =  self.set_event_date("Wednesday", "Pretrial")
+        if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
+            final_pretrial_date = self.set_event_date('Thursday', 'Final Pretrial')
+            pretrial_date = self.set_event_date('Monday', PRETRIAL)
+        elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
+            final_pretrial_date = self.set_event_date('Tuesday', 'Final Pretrial')
+            pretrial_date =  self.set_event_date('Wednesday', PRETRIAL)
         self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
         self.dialog.pretrial_dateEdit.setDate(pretrial_date)
 
-    def set_trial_date(self, day_to_set: str, event_to_set: str) -> QDate:
-        if event_to_set == "Trial":
+    def set_trial_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
+        if event_to_set == TRIAL:
             days_to_event = EVENT_DICT.get(event_to_set)
             event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
             while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
                 event_date = event_date.addDays(1)
             return event_date
 
-    def set_event_date(self, day_to_set: str, event_to_set: str) -> QDate:
-        if event_to_set == "Trial":
+    def set_event_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
+        if event_to_set == TRIAL:
             days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
             event_date = TODAY.addDays(days_until_speedy_trial_date)
-        elif event_to_set == "Pretrial":
+        elif event_to_set == PRETRIAL:
             pretrial_time = self.get_pretrial_time()
             event_date = self.dialog.trial_dateEdit.date().addDays(-pretrial_time)
         else:
@@ -173,7 +191,7 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
             if button.isChecked():
                 return PRETRIAL_TIME_DICT.get(button.text())
 
-    def get_speedy_trial_date(self) -> QDate:
+    def get_speedy_trial_date(self) -> 'QDate':
         speedy_trial_days = self.get_speedy_trial_days()
         days_in_jail = self.get_days_in_jail()
         continuance_days = self.get_continuance_days()
@@ -183,7 +201,7 @@ class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
 
     def set_speedy_trial_date_label(self):
         speedy_trial_date = self.get_speedy_trial_date()
-        speedy_trial_date = speedy_trial_date.toString("MMMM dd, yyyy")
+        speedy_trial_date = speedy_trial_date.toString(ENTRY_DATE_FORMAT)
         self.dialog.speedy_trial_date_label.setText(speedy_trial_date)
 
     def get_speedy_trial_days(self) -> int:
@@ -223,7 +241,7 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
 
     def set_case_number_and_date(self):
         self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString("MMMM dd, yyyy")
+        self.model.plea_trial_date = self.view.plea_trial_date.date().toString(ENTRY_DATE_FORMAT)
 
     def set_party_information(self):
         self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
@@ -233,15 +251,15 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
 
     def set_scheduling_dates(self):
-        self.model.trial_date = self.view.trial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.trial_date = self.view.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
-            "MMMM dd, yyyy"
+            ENTRY_DATE_FORMAT
         )
-        self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString("MMMM dd, yyyy")
+        self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
