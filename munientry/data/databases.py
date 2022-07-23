@@ -217,6 +217,7 @@ def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) ->
     item_list.sort()
     return item_list
 
+
 def query_attorney_list(db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_attorney_name_sql_query()
     query = QSqlQuery(db_connection)
@@ -228,6 +229,7 @@ def query_attorney_list(db_connection: QSqlDatabase) -> list:
         item_list.append(attorney_full_name)
     item_list.sort()
     return item_list
+
 
 def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
