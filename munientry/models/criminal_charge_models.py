@@ -21,7 +21,7 @@ class CriminalCharge:
 
 @dataclass
 class AmendOffenseDetails:
-    """TODO: This should be refactored to a pure function most likely."""
+    """Class for tracking data when an offense/charge is amended."""
 
     original_charge: str = None
     amended_charge: str = None
