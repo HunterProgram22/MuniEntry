@@ -18,6 +18,7 @@ from munientry.data.sql_queries import (
     delete_table_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
+    select_distinct_attorney_name_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
     select_statute_from_charges_for_offense_type_sql_query,
 )
@@ -216,6 +217,17 @@ def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) ->
     item_list.sort()
     return item_list
 
+def query_attorney_list(db_connection: QSqlDatabase) -> list:
+    query_string = select_distinct_attorney_name_sql_query()
+    query = QSqlQuery(db_connection)
+    query.prepare(query_string)
+    query.exec()
+    item_list = []
+    while query.next():
+        attorney_full_name = f'{query.value(1)} {query.value(2)}'
+        item_list.append(attorney_full_name)
+    item_list.sort()
+    return item_list
 
 def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
@@ -261,6 +273,7 @@ def main():
     close_db_connection(con_daily_case_lists)
 
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_attorneys")
 
 
 if __name__ == "__main__":
