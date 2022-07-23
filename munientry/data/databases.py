@@ -15,9 +15,7 @@ from munientry.settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.data.sql_queries import (
     create_daily_case_list_tables_sql_query,
-    create_charges_table_sql_query,
     insert_daily_case_list_tables_sql_query,
-    insert_charges_sql_query,
     delete_table_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
@@ -236,23 +234,6 @@ def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     return item_list
 
 
-def create_charges_sql_table(con_charges: str) -> None:
-    QSqlQuery(con_charges).exec(create_charges_table_sql_query())
-
-
-def insert_charges_sql_data(db_connection: QSqlDatabase, table_name: str) -> None:
-    charges_from_table = create_charges_data_list(CHARGES_TABLE)
-    for charge in charges_from_table:
-        insert_data_query = QSqlQuery(db_connection)
-        insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
-        insert_data_query.exec()
-
-
-def load_charges_data(db_connection: QSqlDatabase) -> None:
-    delete_existing_sql_table(db_connection, "charges")
-    insert_charges_sql_data(db_connection, "charges")
-
-
 def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
     """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
     court costs. If no match is found this returns "Moving" which is the highest court cost, so if
@@ -270,34 +251,6 @@ def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
             query.finish()
             return offense_type
     return offense_type
-
-
-def extract_data(case_data: dict) -> None:
-    wb_name = "Case_Data.xlsx"
-    wb_name = DB_PATH + wb_name
-    wb = load_workbook(wb_name)
-    page = wb.active
-    case_number = case_data.get("case_number")
-    judicial_officer = case_data.get("judicial_officer").last_name
-    charges_list = case_data.get("charges_list")
-    max_row = page.max_row
-    max_row = max_row + 1
-    for index, charge in enumerate(charges_list):
-        page.cell(row=max_row + index, column=1, value=case_number)
-        page.cell(row=max_row + index, column=2, value=judicial_officer)
-        page.cell(row=max_row + index, column=3, value=charge.get("offense"))
-        page.cell(row=max_row + index, column=4, value=charge.get("statute"))
-        page.cell(row=max_row + index, column=5, value=charge.get("degree"))
-        page.cell(row=max_row + index, column=6, value=charge.get("plea"))
-        page.cell(row=max_row + index, column=7, value=charge.get("finding"))
-        page.cell(row=max_row + index, column=8, value=charge.get("fines_amount"))
-        page.cell(row=max_row + index, column=9, value=charge.get("fines_suspended"))
-        page.cell(row=max_row + index, column=10, value=charge.get("jail_days"))
-        page.cell(row=max_row + index, column=11, value=charge.get("jail_days_suspended"))
-    try:
-        wb.save(filename=wb_name)
-    except PermissionError:
-        pass
 
 
 def main():
