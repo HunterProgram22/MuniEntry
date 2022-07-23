@@ -23,18 +23,6 @@ def create_daily_case_list_tables_sql_query(table: str) -> str:
       """
 
 
-def create_charges_table_sql_query() -> str:
-    return f"""
-            CREATE TABLE charges (
-            id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-            offense VARCHAR(60) UNIQUE NOT NULL,
-            statute VARCHAR(50) NOT NULL,
-            degree VARCHAR(50) NOT NULL,
-            type VARCHAR(50) NOT NULL
-        )
-    """
-
-
 def insert_daily_case_list_tables_sql_query(table: str) -> str:
     # Do not add comma after last value inserted
     return f"""
@@ -55,24 +43,6 @@ def insert_daily_case_list_tables_sql_query(table: str) -> str:
         """
 
 
-def insert_charges_sql_query(table: str, charge: object) -> str:
-    # Do not add comma after last value inserted
-    return f"""
-            INSERT INTO {table} (
-            offense,
-            statute,
-            degree,
-            type
-        )
-        VALUES (
-            '{charge.offense}',
-            '{charge.statute}',
-            '{charge.degree}',
-            '{charge.offense_type}'
-        )
-    """
-
-
 def delete_table_sql_query(table: str) -> str:
     """This clears all data from the table."""
     return f"""
@@ -90,6 +60,12 @@ def select_case_data_sql_query(table: str, case_number: str) -> str:
 
 def select_distinct_offense_statute_sql_query() -> str:
     return f"""SELECT DISTINCT offense, statute FROM charges"""
+
+
+def select_distinct_attorney_name_sql_query() -> str:
+    return f"""
+    SELECT DISTINCT id, attorney_first_name, attorney_last_name FROM attorneys
+    """
 
 
 def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:

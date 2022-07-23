@@ -9,25 +9,12 @@ from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QChe
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
+from munientry.data.databases import close_db_connection, open_db_connection, query_attorney_list
 from munientry.settings import ICON_PATH, DB_PATH
 
 
-def return_attorney_data_from_excel(excel_file: str) -> list:
-    data = []
-    workbook = load_workbook(excel_file)
-    worksheet = workbook.active
-    max_row = worksheet.max_row
-    max_row = max_row + 1
-    for row in range(2, max_row):
-        attorney_first_name = worksheet.cell(row=row, column=1)
-        attorney_last_name = worksheet.cell(row=row, column=2)
-        attorney_full_name = f"{attorney_first_name.value} {attorney_last_name.value}"
-        data.append(attorney_full_name)
-    return data
-
 TODAY = QtCore.QDate.currentDate()
 TODAY_STRING = TODAY.toString("MMMM dd, yyyy")
-ATTORNEY_LIST = return_attorney_data_from_excel(f"{DB_PATH}Attorneys.xlsx")
 
 
 class NoScrollComboBox(QComboBox):
@@ -115,8 +102,13 @@ class DefenseCounselComboBox(NoScrollComboBox):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
 
     def load_attorneys(self):
-        for attorney in ATTORNEY_LIST:
+        db_connection = open_db_connection('con_attorneys')
+        attorney_list = query_attorney_list(db_connection)
+        attorney_count = len(attorney_list)
+        logger.info(f'{attorney_count} attorneys loaded.')
+        for attorney in attorney_list:
             self.addItem(attorney)
+        close_db_connection(db_connection)
 
 
 class StatuteLineEdit(QLabel):
