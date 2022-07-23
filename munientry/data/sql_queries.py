@@ -2,27 +2,6 @@
 from loguru import logger
 
 
-def create_daily_case_list_tables_sql_query(table: str) -> str:
-    """If changes are made to this create_table string then the old table must
-    be deleted. No comma after last item."""
-    return f"""
-      CREATE TABLE {table} (
-          id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-          case_number VARCHAR(20) NOT NULL,
-          defendant_last_name VARCHAR(50) NOT NULL,
-          defendant_first_name VARCHAR(50) NOT NULL,
-          offense VARCHAR(80) NOT NULL,
-          statute VARCHAR(50) NOT NULL,
-          degree VARCHAR(10) NOT NULL,
-          fra_in_file VARCHAR(5) NOT NULL,
-          moving_bool VARCHAR(15) NOT NULL,
-          def_atty_last_name VARCHAR (50) NOT NULL,
-          def_atty_first_name VARCHAR (50) NOT NULL,
-          def_atty_type VARCHAR(5)
-      )
-      """
-
-
 def insert_daily_case_list_tables_sql_query(table: str) -> str:
     # Do not add comma after last value inserted
     return f"""

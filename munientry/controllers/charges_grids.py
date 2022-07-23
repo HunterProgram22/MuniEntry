@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QGridLayout, QLabel
 
 from munientry.builders.base_dialogs import CriminalBaseDialog
 from munientry.models.criminal_charge_models import CriminalCharge
-from munientry.views import custom_widgets as cw
+from munientry.widgets import custom_widgets as cw
 
 CBD = TypeVar('CBD', bound=CriminalBaseDialog)
 

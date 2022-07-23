@@ -549,4 +549,4 @@ class Ui_FineOnlyPleaDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("FineOnlyPleaDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("FineOnlyPleaDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("FineOnlyPleaDialog", "No"))
-from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

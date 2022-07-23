@@ -246,4 +246,4 @@ class Ui_AddJailOnly(object):
         self.label_27.setText(_translate("AddJailOnly", "JAIL COMMITMENT"))
         self.cancel_Button.setText(_translate("AddJailOnly", "Cancel"))
         self.add_conditions_Button.setText(_translate("AddJailOnly", "Add Jail Reporting Terms"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit, NoScrollTimeEdit
+from munientry.widgets.custom_widgets import NoScrollComboBox, NoScrollDateEdit, NoScrollTimeEdit

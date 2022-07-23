@@ -340,4 +340,4 @@ class Ui_AddConditionsDialog(object):
         self.label_14.setText(_translate("AddConditionsDialog", "Finding:"))
         self.label_19.setText(_translate("AddConditionsDialog", "Statute:"))
         self.label_28.setText(_translate("AddConditionsDialog", "Other Conditions"))
-from .custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit

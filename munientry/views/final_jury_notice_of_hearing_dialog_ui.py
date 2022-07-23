@@ -340,4 +340,4 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.clear_fields_case_Button.setText(_translate("FinalJuryNoticeOfHearingDialog", "Clear Fields"))
         self.label_24.setText(_translate("FinalJuryNoticeOfHearingDialog", "Def. Counsel:"))
         self.label_6.setText(_translate("FinalJuryNoticeOfHearingDialog", "CASE INFORMATION"))
-from .custom_widgets import NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollComboBox, NoScrollDateEdit
