@@ -35,16 +35,6 @@ class CaseExcelData(object):
     def_atty_type: str = NO_DATA
 
 
-@dataclass
-class ChargeExcelData(object):
-    """Class for holding charge data that is extracted from excel file."""
-
-    offense: str = NO_DATA
-    statute: str = NO_DATA
-    degree: str = NO_DATA
-    offense_type: str = NO_DATA
-
-
 if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
