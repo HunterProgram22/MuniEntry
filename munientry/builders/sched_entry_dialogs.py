@@ -89,37 +89,69 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         super().__init__(dialog)
         self.dialog = dialog
         self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(self.functions.clear_case_information_fields)
+        self.connect_speedy_trial_items()
+        self.connect_pretrial_radio_buttons()
+        self.dialog.clear_fields_case_Button.released.connect(
+            self.functions.clear_case_information_fields,
+        )
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.set_speedy_trial_date_label)
-        self.dialog.arrest_summons_date_box.dateChanged.connect(self.functions.update_all_scheduled_dates)
-        self.dialog.highest_charge_box.currentIndexChanged.connect(self.functions.set_speedy_trial_date_label)
-        self.dialog.days_in_jail_lineEdit.textChanged.connect(self.functions.set_speedy_trial_date_label)
-        self.dialog.continuance_days_lineEdit.textChanged.connect(self.functions.set_speedy_trial_date_label)
 
-        # self.dialog.trial_dateEdit.dateChanged.connect(self.functions.update_final_pretrial_and_pretrial_only)
+    def connect_speedy_trial_items(self):
+        self.dialog.arrest_summons_date_box.dateChanged.connect(
+            self.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.arrest_summons_date_box.dateChanged.connect(
+            self.functions.update_all_scheduled_dates,
+        )
+        self.dialog.highest_charge_box.currentIndexChanged.connect(
+            self.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.days_in_jail_lineEdit.textChanged.connect(
+            self.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.continuance_days_lineEdit.textChanged.connect(
+            self.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.highest_charge_box.currentIndexChanged.connect(
+            self.functions.update_all_scheduled_dates,
+        )
+        self.dialog.days_in_jail_lineEdit.textChanged.connect(
+            self.functions.update_all_scheduled_dates,
+        )
+        self.dialog.continuance_days_lineEdit.textChanged.connect(
+            self.functions.update_all_scheduled_dates,
+        )
 
-        self.dialog.final_pretrial_dateEdit.dateChanged.connect(self.functions.update_trial_and_pretrial_only)
+    def connect_scheduling_date_fields(self):
+        """Only the final_pretrial_dateEdit field is connected.
 
-        self.dialog.highest_charge_box.currentIndexChanged.connect(self.functions.update_all_scheduled_dates)
-        self.dialog.days_in_jail_lineEdit.textChanged.connect(self.functions.update_all_scheduled_dates)
-        self.dialog.continuance_days_lineEdit.textChanged.connect(self.functions.update_all_scheduled_dates)
-        self.dialog.four_week_pretrial_radioButton.clicked.connect(self.functions.update_final_pretrial_and_pretrial_only)
-        self.dialog.three_week_pretrial_radioButton.clicked.connect(self.functions.update_final_pretrial_and_pretrial_only)
-        self.dialog.two_week_pretrial_radioButton.clicked.connect(self.functions.update_final_pretrial_and_pretrial_only)
-        self.dialog.no_pretrial_radioButton.clicked.connect(self.functions.update_final_pretrial_and_pretrial_only)
-        self.dialog.four_week_pretrial_radioButton.clicked.connect(self.functions.set_pretrial_scheduled)
-        self.dialog.three_week_pretrial_radioButton.clicked.connect(self.functions.set_pretrial_scheduled)
-        self.dialog.two_week_pretrial_radioButton.clicked.connect(self.functions.set_pretrial_scheduled)
-        self.dialog.no_pretrial_radioButton.clicked.connect(self.functions.set_pretrial_scheduled)
+        In order to update other date fields on data entry another solution is required because
+        adding other connections creates a loop due to the signal sent when a date is changed.
+        """
+        self.dialog.final_pretrial_dateEdit.dateChanged.connect(
+            self.functions.update_trial_and_pretrial_only,
+        )
+
+    def connect_pretrial_radio_buttons(self):
+        """Local functions are only used to shorten line length to < 100 characters."""
+        final_and_pretrial_update = self.functions.update_final_pretrial_and_pretrial_only
+        set_pretrial = self.functions.set_pretrial_scheduled
+        self.dialog.four_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
+        self.dialog.three_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
+        self.dialog.two_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
+        self.dialog.no_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
+        self.dialog.four_week_pretrial_radioButton.clicked.connect(set_pretrial)
+        self.dialog.three_week_pretrial_radioButton.clicked.connect(set_pretrial)
+        self.dialog.two_week_pretrial_radioButton.clicked.connect(set_pretrial)
+        self.dialog.no_pretrial_radioButton.clicked.connect(set_pretrial)
 
 
 class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        super().__init__(dialog)
 
     def set_pretrial_scheduled(self):
         if self.dialog.no_pretrial_radioButton.isChecked():
