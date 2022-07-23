@@ -10,7 +10,7 @@ from munientry.data.databases import (
     check_if_db_open,
     query_offense_statute_data,
     query_daily_case_list_data,
-    create_daily_case_list_sql_tables,
+    # create_daily_case_list_sql_tables,
     load_daily_case_list_data,
 )
 
@@ -142,6 +142,5 @@ def test_create_daily_case_lists_db():
     from the main() of databases.py - not ideal test."""
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     assert isinstance(con_daily_case_lists, QSqlDatabase)

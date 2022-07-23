@@ -13,7 +13,6 @@ from munientry.data.case_excel_loader import return_cases_data_from_excel
 from munientry.settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.data.sql_queries import (
-    create_daily_case_list_tables_sql_query,
     insert_daily_case_list_tables_sql_query,
     delete_table_sql_query,
     select_case_data_sql_query,
@@ -160,13 +159,6 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     return True
 
 
-def create_daily_case_list_sql_tables(con_daily_case_lists: QSqlDatabase) -> None:
-    for item in EXCEL_DAILY_CASE_LISTS:
-        table_name: str
-        table_name = item[1]
-        QSqlQuery(con_daily_case_lists).exec(create_daily_case_list_tables_sql_query(table_name))
-
-
 def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
     for item in EXCEL_DAILY_CASE_LISTS:
         excel_report: str
@@ -270,7 +262,6 @@ def main():
 
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     close_db_connection(con_daily_case_lists)
 

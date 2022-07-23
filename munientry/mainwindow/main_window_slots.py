@@ -10,7 +10,7 @@ from munientry.controllers.helper_functions import (
 )
 from munientry.data.databases import (
     close_db_connection,
-    create_daily_case_list_sql_tables,
+    # create_daily_case_list_sql_tables,
     load_daily_case_list_data,
     open_db_connection,
     query_daily_case_list_data,
@@ -53,7 +53,7 @@ class MainWindowSlotFunctionsMixin(object):
         """
         logger.info('Reload cases button pressed.')
         conn = open_db_connection('con_daily_case_lists')
-        create_daily_case_list_sql_tables(conn)
+        # create_daily_case_list_sql_tables(conn)
         load_daily_case_list_data(conn)
         self.load_case_lists(conn)
         conn.close()
