@@ -302,17 +302,13 @@ def extract_data(case_data: dict) -> None:
 
 def main():
 
-    create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     close_db_connection(con_daily_case_lists)
 
-    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
-    con_charges = open_db_connection("con_charges")
-    create_charges_sql_table(con_charges)
-    load_charges_data(con_charges)
-    close_db_connection(con_charges)
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
 
 
 if __name__ == "__main__":
