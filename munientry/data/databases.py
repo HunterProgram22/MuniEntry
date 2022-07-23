@@ -9,7 +9,6 @@ from loguru import logger
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from munientry.data.case_excel_loader import return_cases_data_from_excel
-from munientry.data.charge_excel_loader import create_charges_data_list
 
 from munientry.settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
