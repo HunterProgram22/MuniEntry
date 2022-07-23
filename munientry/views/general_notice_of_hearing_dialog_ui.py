@@ -351,4 +351,4 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.clear_fields_case_Button.setText(_translate("GeneralNoticeOfHearingDialog", "Clear Fields"))
         self.label_24.setText(_translate("GeneralNoticeOfHearingDialog", "Def. Counsel:"))
         self.label_6.setText(_translate("GeneralNoticeOfHearingDialog", "CASE INFORMATION"))
-from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

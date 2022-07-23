@@ -532,4 +532,4 @@ class Ui_MainWindow(object):
         self.actionOpen_Current_Log.setText(_translate("MainWindow", "Open Current Log"))
         self.actionRun_batch_FTA_Entries.setText(_translate("MainWindow", "Run batch FTA Entries"))
         self.actionOpen_batch_FTA_Entries_Folder.setText(_translate("MainWindow", "Open batch FTA Entries Folder"))
-from .custom_widgets import ExtendedComboBox
+from munientry.widgets.custom_widgets import ExtendedComboBox

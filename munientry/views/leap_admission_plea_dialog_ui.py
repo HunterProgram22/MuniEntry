@@ -357,4 +357,4 @@ class Ui_LeapAdmissionPleaDialog(object):
         self.label_7.setText(_translate("LeapAdmissionPleaDialog", "Appearance Reason:"))
         self.label_24.setText(_translate("LeapAdmissionPleaDialog", "Def. Counsel:"))
         self.defense_counsel_waived_checkBox.setText(_translate("LeapAdmissionPleaDialog", "Defendant waived right to counsel"))
-from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

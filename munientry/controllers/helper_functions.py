@@ -6,7 +6,7 @@ from datetime import date, datetime, timedelta
 
 from loguru import logger
 
-from munientry.views.custom_widgets import RequiredBox
+from munientry.widgets.custom_widgets import RequiredBox
 
 
 def check_judicial_officer(func):

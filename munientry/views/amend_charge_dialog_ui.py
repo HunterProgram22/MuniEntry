@@ -242,4 +242,4 @@ class Ui_AmendChargeDialog(object):
         self.label_23.setText(_translate("AmendChargeDialog", "Degree:"))
         self.label_3.setText(_translate("AmendChargeDialog", "Amended Charge Details"))
         self.original_charge_label.setText(_translate("AmendChargeDialog", "Original Charge Label"))
-from .custom_widgets import ConditionCheckbox
+from munientry.widgets.custom_widgets import ConditionCheckbox
