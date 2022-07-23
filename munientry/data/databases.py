@@ -164,7 +164,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
         excel_report: str
         table_name: str
         excel_report, table_name = item
-        delete_existing_sql_table(con_daily_case_lists, table_name)
+        delete_existing_sql_table_data(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
 
 
@@ -189,7 +189,7 @@ def insert_daily_case_list_sql_data(
         insert_data_query.exec()
 
 
-def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> None:
+def delete_existing_sql_table_data(db_connection: QSqlDatabase, table_name: str) -> None:
     delete_table = QSqlQuery(db_connection)
     delete_table.prepare(delete_table_sql_query(table_name))
     delete_table.exec()
