@@ -119,7 +119,7 @@ daily_case_lists = [
     ("slated", 12),
     ("final_pretrials", 12),
     ("pleas", 12),
-    ("trials_to_court", 7),
+    ("trials_to_court", 12),
     ("pcvh_fcvh", 14),
 ]
 

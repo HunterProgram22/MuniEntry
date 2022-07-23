@@ -119,7 +119,7 @@ daily_case_list_case_counts = [
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", 12, 11),
     ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", 12, 11),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", 12, 11),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 7, 6),
+    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 12, 11),
     ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 14, 13),
 ]
 
