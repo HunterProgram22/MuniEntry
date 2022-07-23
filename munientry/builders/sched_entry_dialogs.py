@@ -150,9 +150,6 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
 class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
-    def __init__(self, dialog):
-        super().__init__(dialog)
-
     def set_pretrial_scheduled(self):
         if self.dialog.no_pretrial_radioButton.isChecked():
             self.dialog.entry_case_information.pretrial_scheduled = False
