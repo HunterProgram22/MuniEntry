@@ -31,8 +31,9 @@ class MainWindowSlotFunctionsMixin(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
+        logger.debug(f'db_connection is {db_connection}')
         if db_connection is None:
-            db_connection = open_db_connection('con_daily_case_lists')
+            db_connection = open_db_connection('con_test_odbc')
         for table_name, case_list in self.database_table_dict.items():
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()

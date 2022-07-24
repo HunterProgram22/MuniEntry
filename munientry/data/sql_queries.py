@@ -49,7 +49,7 @@ def select_distinct_attorney_name_sql_query() -> str:
 
 def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
     return f"""
-    SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
+    SELECT DISTINCT DefFirstName, DefLastName, CaseNumber FROM {table}
     """
 
 

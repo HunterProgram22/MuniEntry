@@ -152,6 +152,20 @@ def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
     return db_connection
 
 
+def create_odbc_connection(connection_name: str) -> QSqlDatabase:
+    db_connection = QSqlDatabase.addDatabase("QODBC3", connection_name)
+    connection_string = (
+        r'DRIVER=SQL Server;'
+        + r'SERVER=ROOBERRYPRIME\SQLEXPRESS;'
+        + r'DATABASE=AuthorityCourtTest;'
+        + r'TRUSTED_CONNECTION=yes;'
+    )
+    db_connection.setDatabaseName(connection_string)
+    db_connection.open()
+    logger.debug(db_connection.isOpen())
+    return db_connection
+
+
 def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     if not db_connection.isOpen():
         logger.critical(f"Unable to connect to {connection_name} database")
@@ -267,6 +281,9 @@ def main():
 
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_attorneys")
+    test_connection = create_odbc_connection('con_test_odbc')
+    logger.debug(test_connection)
+    check_if_db_open(test_connection, 'con_test_odbc')
 
 
 if __name__ == "__main__":
