@@ -33,7 +33,7 @@ class MainWindowSlotFunctionsMixin(object):
         """
         logger.debug(f'db_connection is {db_connection}')
         if db_connection is None:
-            db_connection = open_db_connection('con_test_odbc')
+            db_connection = open_db_connection('sql_server_conn')
         for table_name, case_list in self.database_table_dict.items():
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
@@ -52,8 +52,8 @@ class MainWindowSlotFunctionsMixin(object):
         application already loads the databases.
         """
         logger.info('Reload cases button pressed.')
-        conn = open_db_connection('con_daily_case_lists')
-        load_daily_case_list_data(conn)
+        conn = open_db_connection('sql_server_conn')
+        # load_daily_case_list_data(conn)
         self.load_case_lists(conn)
         conn.close()
 

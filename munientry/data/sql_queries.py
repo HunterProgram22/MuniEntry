@@ -33,7 +33,7 @@ def select_case_data_sql_query(table: str, case_number: str) -> str:
     return f"""
             SELECT *
             FROM {table}
-            WHERE case_number = '{case_number}'
+            WHERE CaseNumber = '{case_number}'
             """
 
 

@@ -100,11 +100,11 @@ class MainWindowViewModifier(object):
     def connect_database_tables_to_daily_case_lists(self) -> dict:
         return {
             'arraignments': self.main_window.arraignments_cases_box,
-            # 'slated': self.main_window.slated_cases_box,
-            # 'final_pretrials': self.main_window.final_pretrial_cases_box,
-            # 'pleas': self.main_window.pleas_cases_box,
-            # 'trials_to_court': self.main_window.trials_to_court_cases_box,
-            # 'pcvh_fcvh': self.main_window.pcvh_fcvh_cases_box,
+            'slated': self.main_window.slated_cases_box,
+            'final_pretrials': self.main_window.final_pretrial_cases_box,
+            'pleas': self.main_window.pleas_cases_box,
+            'trials_to_court': self.main_window.trials_to_court_cases_box,
+            'pcvh_fcvh': self.main_window.pcvh_fcvh_cases_box,
         }
 
     def connect_radio_buttons_to_daily_case_lists(self) -> dict:

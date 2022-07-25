@@ -52,7 +52,7 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         self.case_table = case_table
         self.abbreviation_list = ["DUS", "OVI", "BMV", "FRA", "OL"]
         self.delete_word_list = ["UCM", "M1", "M2", "M3", "M4", "MM", "PETTY", "(UCM)"]
-        self.database = open_db_connection("con_daily_case_lists")
+        self.database = open_db_connection("sql_server_conn")
         self.case = CmsCaseInformation()
         self.query_case_data()
         self.load_data_into_case()
@@ -244,7 +244,7 @@ def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query.exec()
     item_list = []
     while query.next():
-        last_name = query.value(0).title()
+        last_name = query.value(1).title()
         case_number = query.value(2)
         name = f"{last_name} - {case_number}"
         item_list.append(name)
@@ -274,16 +274,13 @@ def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
 
 def main():
 
-    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
-    con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    load_daily_case_list_data(con_daily_case_lists)
-    close_db_connection(con_daily_case_lists)
+    odbc_connection = create_odbc_connection('sql_server_conn')
+    check_if_db_open(odbc_connection, 'sql_server_conn')
+    # load_daily_case_list_data(odbc_connection)
+    close_db_connection(odbc_connection)
 
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
     create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_attorneys")
-    test_connection = create_odbc_connection('con_test_odbc')
-    logger.debug(test_connection)
-    check_if_db_open(test_connection, 'con_test_odbc')
 
 
 if __name__ == "__main__":
