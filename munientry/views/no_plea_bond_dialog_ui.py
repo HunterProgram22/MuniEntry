@@ -467,4 +467,4 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.setItemText(7, _translate("NoPleaBondDialog", "$5,000"))
         self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$10,000"))
         self.label_5.setText(_translate("NoPleaBondDialog", "BOND"))
-from .custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

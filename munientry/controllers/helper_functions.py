@@ -1,10 +1,12 @@
 """Helper functions that are used throughout the application."""
+from __future__ import annotations
+
 import random
 from datetime import date, datetime, timedelta
 
 from loguru import logger
 
-from munientry.views.custom_widgets import RequiredBox
+from munientry.widgets.custom_widgets import RequiredBox
 
 
 def check_judicial_officer(func):
@@ -84,3 +86,33 @@ if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
+
+
+def set_assigned_judge(sender: 'QPushButton') -> str:
+    """Returns the judge name as a string based on the button that is pressed."""
+    assigned_judge_dict = {
+        'rohrer_final_jury_hearingButton': 'Judge Kyle E. Rohrer',
+        'rohrer_general_hearingButton': 'Judge Kyle E. Rohrer',
+        'rohrer_trial_court_hearingButton': 'Judge Kyle E. Rohrer',
+        'hemmeter_final_jury_hearingButton': 'Judge Marianne T. Hemmeter',
+        'hemmeter_general_hearingButton': 'Judge Marianne T. Hemmeter',
+        'hemmeter_trial_court_hearingButton': 'Judge Marianne T. Hemmeter',
+    }
+    return assigned_judge_dict.get(sender.objectName(), '')
+
+
+def set_courtroom(sender: 'QPushButton') -> str:
+    """Returns a string with the courtroom letter based on the button that is pressed.
+
+    Returns a blank if function called from a button that does not set a
+    courtroom. This allows the user to manually enter courtroom in the Word doc.
+    """
+    courtroom_dict = {
+        'rohrer_final_jury_hearingButton': 'Courtroom A',
+        'rohrer_general_hearingButton': 'Courtroom A',
+        'rohrer_trial_court_hearingButton': 'Courtroom C',
+        'hemmeter_final_jury_hearingButton': 'Courtroom B',
+        'hemmeter_general_hearingButton': 'Courtroom B',
+        'hemmeter_trial_court_hearingButton': 'Courtroom C',
+    }
+    return courtroom_dict.get(sender.objectName(), '')

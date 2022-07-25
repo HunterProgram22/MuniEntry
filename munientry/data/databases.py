@@ -9,18 +9,15 @@ from loguru import logger
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from munientry.data.case_excel_loader import return_cases_data_from_excel
-from munientry.data.charge_excel_loader import create_charges_data_list
 
 from munientry.settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.data.sql_queries import (
-    create_daily_case_list_tables_sql_query,
-    create_charges_table_sql_query,
     insert_daily_case_list_tables_sql_query,
-    insert_charges_sql_query,
     delete_table_sql_query,
     select_case_data_sql_query,
     select_distinct_offense_statute_sql_query,
+    select_distinct_attorney_name_sql_query,
     select_distinct_def_last_def_first_case_number_sql_query,
     select_statute_from_charges_for_offense_type_sql_query,
 )
@@ -162,19 +159,12 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     return True
 
 
-def create_daily_case_list_sql_tables(con_daily_case_lists: QSqlDatabase) -> None:
-    for item in EXCEL_DAILY_CASE_LISTS:
-        table_name: str
-        table_name = item[1]
-        QSqlQuery(con_daily_case_lists).exec(create_daily_case_list_tables_sql_query(table_name))
-
-
 def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
     for item in EXCEL_DAILY_CASE_LISTS:
         excel_report: str
         table_name: str
         excel_report, table_name = item
-        delete_existing_sql_table(con_daily_case_lists, table_name)
+        delete_existing_sql_table_data(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
 
 
@@ -199,7 +189,7 @@ def insert_daily_case_list_sql_data(
         insert_data_query.exec()
 
 
-def delete_existing_sql_table(db_connection: QSqlDatabase, table_name: str) -> None:
+def delete_existing_sql_table_data(db_connection: QSqlDatabase, table_name: str) -> None:
     delete_table = QSqlQuery(db_connection)
     delete_table.prepare(delete_table_sql_query(table_name))
     delete_table.exec()
@@ -220,6 +210,19 @@ def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) ->
     return item_list
 
 
+def query_attorney_list(db_connection: QSqlDatabase) -> list:
+    query_string = select_distinct_attorney_name_sql_query()
+    query = QSqlQuery(db_connection)
+    query.prepare(query_string)
+    query.exec()
+    item_list = []
+    while query.next():
+        attorney_full_name = f'{query.value(1)} {query.value(2)}'
+        item_list.append(attorney_full_name)
+    item_list.sort()
+    return item_list
+
+
 def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
     query = QSqlQuery(db_connection)
@@ -234,23 +237,6 @@ def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     item_list.sort()
     item_list.insert(0, "")
     return item_list
-
-
-def create_charges_sql_table(con_charges: str) -> None:
-    QSqlQuery(con_charges).exec(create_charges_table_sql_query())
-
-
-def insert_charges_sql_data(db_connection: QSqlDatabase, table_name: str) -> None:
-    charges_from_table = create_charges_data_list(CHARGES_TABLE)
-    for charge in charges_from_table:
-        insert_data_query = QSqlQuery(db_connection)
-        insert_data_query.prepare(insert_charges_sql_query(table_name, charge))
-        insert_data_query.exec()
-
-
-def load_charges_data(db_connection: QSqlDatabase) -> None:
-    delete_existing_sql_table(db_connection, "charges")
-    insert_charges_sql_data(db_connection, "charges")
 
 
 def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
@@ -272,47 +258,15 @@ def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
     return offense_type
 
 
-def extract_data(case_data: dict) -> None:
-    wb_name = "Case_Data.xlsx"
-    wb_name = DB_PATH + wb_name
-    wb = load_workbook(wb_name)
-    page = wb.active
-    case_number = case_data.get("case_number")
-    judicial_officer = case_data.get("judicial_officer").last_name
-    charges_list = case_data.get("charges_list")
-    max_row = page.max_row
-    max_row = max_row + 1
-    for index, charge in enumerate(charges_list):
-        page.cell(row=max_row + index, column=1, value=case_number)
-        page.cell(row=max_row + index, column=2, value=judicial_officer)
-        page.cell(row=max_row + index, column=3, value=charge.get("offense"))
-        page.cell(row=max_row + index, column=4, value=charge.get("statute"))
-        page.cell(row=max_row + index, column=5, value=charge.get("degree"))
-        page.cell(row=max_row + index, column=6, value=charge.get("plea"))
-        page.cell(row=max_row + index, column=7, value=charge.get("finding"))
-        page.cell(row=max_row + index, column=8, value=charge.get("fines_amount"))
-        page.cell(row=max_row + index, column=9, value=charge.get("fines_suspended"))
-        page.cell(row=max_row + index, column=10, value=charge.get("jail_days"))
-        page.cell(row=max_row + index, column=11, value=charge.get("jail_days_suspended"))
-    try:
-        wb.save(filename=wb_name)
-    except PermissionError:
-        pass
-
-
 def main():
 
-    create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     close_db_connection(con_daily_case_lists)
 
-    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
-    con_charges = open_db_connection("con_charges")
-    create_charges_sql_table(con_charges)
-    load_charges_data(con_charges)
-    close_db_connection(con_charges)
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_attorneys")
 
 
 if __name__ == "__main__":

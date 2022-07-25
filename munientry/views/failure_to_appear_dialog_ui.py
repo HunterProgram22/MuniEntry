@@ -394,4 +394,4 @@ class Ui_FailureToAppearDialog(object):
         self.surety_appear_checkBox.setText(_translate("FailureToAppearDialog", "Surety to appear and show cause to avoid judgment"))
         self.arrest_warrant_checkBox.setText(_translate("FailureToAppearDialog", "Issue Warrant for Arrest forthwith"))
         self.arrest_warrant_radius_label.setText(_translate("FailureToAppearDialog", "Warrant Radius:"))
-from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

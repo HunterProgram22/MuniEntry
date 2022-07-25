@@ -12,7 +12,7 @@ all_daily_case_list_excel_files = [
     (f'{DB_PATH}PCVH_FCVH.xlsx', 30),
     (f'{DB_PATH}Pleas.xlsx', 28),
     (f'{DB_PATH}Slated.xlsx', 28),
-    (f'{DB_PATH}Trials_to_Court.xlsx', 17),
+    (f'{DB_PATH}Trials_to_Court.xlsx', 28),
 ]
 
 

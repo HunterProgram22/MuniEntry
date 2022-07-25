@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
-from munientry.views.custom_widgets import RequiredBox, WarningBox
+from munientry.widgets.custom_widgets import RequiredBox, WarningBox
 
 TODAY = QDate.currentDate()
 FAIL = 'Fail'

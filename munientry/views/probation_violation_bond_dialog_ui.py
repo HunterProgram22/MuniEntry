@@ -418,4 +418,4 @@ class Ui_ProbationViolationBondDialog(object):
         self.probable_cause_finding_box.setItemText(2, _translate("ProbationViolationBondDialog", "No probable cause"))
         self.close_dialog_Button.setText(_translate("ProbationViolationBondDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("ProbationViolationBondDialog", "Open Entry"))
-from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

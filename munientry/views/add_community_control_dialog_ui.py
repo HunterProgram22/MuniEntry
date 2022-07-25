@@ -915,4 +915,4 @@ class Ui_AddCommunityControlDialog(object):
         self.label_22.setText(_translate("AddCommunityControlDialog", "Date to Complete:"))
         self.label.setText(_translate("AddCommunityControlDialog", "Days to Complete:"))
         self.label_15.setText(_translate("AddCommunityControlDialog", "Hours:"))
-from .custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit

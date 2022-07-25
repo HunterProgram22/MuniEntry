@@ -10,9 +10,7 @@ from munientry.data.databases import (
     check_if_db_open,
     query_offense_statute_data,
     query_daily_case_list_data,
-    create_charges_sql_table,
-    load_charges_data,
-    create_daily_case_list_sql_tables,
+    # create_daily_case_list_sql_tables,
     load_daily_case_list_data,
 )
 
@@ -81,8 +79,8 @@ def test_open_db_connections(connection):
 
 
 db_name_list = [
-    (f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists"),
-    (f"{DB_PATH}charges.sqlite", "con_charges"),
+    (f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists"),
+    (f"{DB_PATH}MuniEntryDB.sqlite", "con_charges"),
 ]
 
 @pytest.mark.parametrize("database_name, connection_name", db_name_list)
@@ -119,7 +117,7 @@ daily_case_lists = [
     ("slated", 12),
     ("final_pretrials", 12),
     ("pleas", 12),
-    ("trials_to_court", 7),
+    ("trials_to_court", 12),
     ("pcvh_fcvh", 14),
 ]
 
@@ -131,21 +129,18 @@ def test_query_daily_case_list_data(table, total_cases):
     assert len(query_daily_case_list_data(table, db_connection)) == total_cases
 
 
-def test_create_charges_db():
+def test_charges_connection_to_db():
     """This test uses the charges db in the test/db, also code below is copied
     from the main() of databases.py - not ideal test."""
-    create_db_connection(f"{DB_PATH}charges.sqlite", "con_charges")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
-    create_charges_sql_table(con_charges)
-    load_charges_data(con_charges)
     assert isinstance(con_charges, QSqlDatabase)
 
 
 def test_create_daily_case_lists_db():
     """This test uses the charges db in the test/db, also code below is copied
     from the main() of databases.py - not ideal test."""
-    create_db_connection(f"{DB_PATH}daily_case_lists.sqlite", "con_daily_case_lists")
+    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    create_daily_case_list_sql_tables(con_daily_case_lists)
     load_daily_case_list_data(con_daily_case_lists)
     assert isinstance(con_daily_case_lists, QSqlDatabase)

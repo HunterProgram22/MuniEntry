@@ -5,13 +5,15 @@ from typing import Any
 
 from loguru import logger
 from PyQt5.QtGui import QCloseEvent, QIntValidator
-from PyQt5.QtWidgets import QDialog, QPushButton
+from PyQt5.QtWidgets import QDialog
 
-from munientry.models.cms_models import CmsCaseInformation
-from munientry.models.party_types import JudicialOfficer
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import TYPE_CHECKING, WIDGET_TYPE_ACCESS_DICT
+
+if TYPE_CHECKING:
+    from munientry.models.cms_models import CmsCaseInformation
+    from munientry.models.party_types import JudicialOfficer
+
 
 class BaseDialog(QDialog):
     """This class is a base class for all dialog windows."""
@@ -43,16 +45,16 @@ class BaseDialog(QDialog):
                 view fields to model attributes.
         """
         for (model_attribute, view_field) in model_class.terms_list:
-            key = getattr(self, view_field).__class__.__name__
+            widget_type = getattr(self, view_field).__class__.__name__
             view = getattr(self, view_field)
-            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(key, 'None'))()
+            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
             class_name = model_class.__class__.__name__
             setattr(model_class, model_attribute, view_field_data)
             logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
 
     def closeEvent(self, event: QCloseEvent) -> None:
         """Extends pyqt close event method in order to log when a dialog closes."""
-        logger.dialog(f'{self.objectName()} Closed')
+        logger.dialog(f'{self.objectName()} Closed by {event}')
 
 
 class CriminalBaseDialog(BaseDialog):
@@ -105,38 +107,10 @@ class CriminalBaseDialog(BaseDialog):
         self.defense_counsel_name_box.setFocus()
 
 
-def set_assigned_judge(sender: 'QPushButton') -> str:
-    """Returns the judge name as a string based on the button that is pressed."""
-    assigned_judge_dict = {
-        'rohrer_final_jury_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_general_hearingButton': 'Judge Kyle E. Rohrer',
-        'rohrer_trial_court_hearingButton': 'Judge Kyle E. Rohrer',
-        'hemmeter_final_jury_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_general_hearingButton': 'Judge Marianne T. Hemmeter',
-        'hemmeter_trial_court_hearingButton': 'Judge Marianne T. Hemmeter',
-    }
-    return assigned_judge_dict.get(sender.objectName(), '')
-
-
-def set_courtroom(sender: 'QPushButton') -> str:
-    """Returns a string with the courtroom letter based on the button that is pressed.
-
-    Returns a blank if function called from a button that does not set a
-    courtroom. This allows the user to manually enter courtroom in the Word doc.
-    """
-    courtroom_dict = {
-        'rohrer_final_jury_hearingButton': 'Courtroom A',
-        'rohrer_general_hearingButton': 'Courtroom A',
-        'rohrer_trial_court_hearingButton': 'Courtroom C',
-        'hemmeter_final_jury_hearingButton': 'Courtroom B',
-        'hemmeter_general_hearingButton': 'Courtroom B',
-        'hemmeter_trial_court_hearingButton': 'Courtroom C',
-    }
-    return courtroom_dict.get(sender.objectName(), '')
-
-
 class SchedulingBaseDialog(BaseDialog):
-    def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None,):
+    """The base class for all scheduling entries."""
+
+    def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None):
         super().__init__(parent)
         self.case_table = case_table
         self.judicial_officer = judicial_officer
