@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1166</width>
-    <height>871</height>
+    <width>1168</width>
+    <height>899</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -38,288 +38,17 @@ font-weight: bold;</string>
    <layout class="QGridLayout" name="gridLayout_10">
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_9">
-      <item row="1" column="0">
-       <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,1">
-        <property name="verticalSpacing">
-         <number>18</number>
+      <item row="2" column="0">
+       <widget class="Line" name="line">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
         </property>
-        <item row="1" column="0">
-         <widget class="QRadioButton" name="arraignments_radioButton">
-          <property name="text">
-           <string>Arraignments</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QRadioButton" name="slated_radioButton">
-          <property name="text">
-           <string>Slated                                  </string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QRadioButton" name="final_pretrial_radioButton">
-          <property name="text">
-           <string>Final Pre-trials</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="ExtendedComboBox" name="arraignments_cases_box"/>
-        </item>
-        <item row="2" column="1">
-         <widget class="ExtendedComboBox" name="slated_cases_box"/>
-        </item>
-        <item row="2" column="2">
-         <widget class="ExtendedComboBox" name="final_pretrial_cases_box"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QRadioButton" name="pleas_radioButton">
-          <property name="text">
-           <string>Pleas and Motion/Oral Hearings</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QRadioButton" name="trials_to_court_radioButton">
-          <property name="text">
-           <string>Trials to Court and Jury Trials</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="3" column="2">
-         <widget class="QRadioButton" name="pcvh_fcvh_radioButton">
-          <property name="text">
-           <string>PCVH/FCVH</string>
-          </property>
-          <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
-          </attribute>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="ExtendedComboBox" name="pleas_cases_box"/>
-        </item>
-        <item row="4" column="1">
-         <widget class="ExtendedComboBox" name="trials_to_court_cases_box"/>
-        </item>
-        <item row="4" column="2">
-         <widget class="ExtendedComboBox" name="pcvh_fcvh_cases_box"/>
-        </item>
-        <item row="5" column="2">
-         <widget class="QPushButton" name="reload_cases_Button">
-          <property name="minimumSize">
-           <size>
-            <width>120</width>
-            <height>30</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(160, 160, 160);</string>
-          </property>
-          <property name="text">
-           <string>Reload Cases</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="3">
-         <widget class="QLabel" name="label_3">
-          <property name="font">
-           <font>
-            <family>Palatino Linotype</family>
-            <pointsize>11</pointsize>
-            <weight>75</weight>
-            <italic>false</italic>
-            <bold>true</bold>
-            <underline>true</underline>
-           </font>
-          </property>
-          <property name="text">
-           <string>DAILY CASE LISTS</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item row="0" column="0">
-       <widget class="QStackedWidget" name="stackedWidget">
-        <property name="currentIndex">
-         <number>0</number>
+        <property name="lineWidth">
+         <number>2</number>
         </property>
-        <widget class="QWidget" name="judicial_officers_Stack">
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="0">
-           <widget class="QFrame" name="judicial_officer_frame">
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <layout class="QGridLayout" name="gridLayout">
-             <property name="spacing">
-              <number>12</number>
-             </property>
-             <item row="6" column="1">
-              <widget class="QRadioButton" name="pelanda_radioButton">
-               <property name="text">
-                <string>Magistrate Pelanda</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QRadioButton" name="hemmeter_radioButton">
-               <property name="text">
-                <string>Judge Hemmeter</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="2">
-              <widget class="QRadioButton" name="visiting_judge_radioButton">
-               <property name="text">
-                <string>Visiting Judge</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2">
-              <widget class="QRadioButton" name="kudela_radioButton">
-               <property name="text">
-                <string>Magistrate Kudela</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QRadioButton" name="bunner_radioButton">
-               <property name="text">
-                <string>Magistrate Bunner</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QRadioButton" name="rohrer_radioButton">
-               <property name="text">
-                <string>Judge Rohrer</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0" colspan="3">
-              <widget class="QLabel" name="label_9">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>JUDICIAL OFFICER</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="assignment_commissioners_Stack">
-         <layout class="QGridLayout" name="gridLayout_7">
-          <property name="spacing">
-           <number>12</number>
-          </property>
-          <item row="0" column="0">
-           <widget class="QFrame" name="frame">
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>2</number>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_3">
-             <property name="bottomMargin">
-              <number>24</number>
-             </property>
-             <property name="horizontalSpacing">
-              <number>24</number>
-             </property>
-             <property name="verticalSpacing">
-              <number>30</number>
-             </property>
-             <item row="1" column="2">
-              <widget class="QRadioButton" name="patterson_radioButton">
-               <property name="text">
-                <string>Kathryn Patterson</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QRadioButton" name="dattilo_radioButton">
-               <property name="text">
-                <string>Pat Dattilo</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QRadioButton" name="none_radioButton">
-               <property name="text">
-                <string>None</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1" colspan="3">
-              <widget class="QLabel" name="label">
-               <property name="font">
-                <font>
-                 <family>Palatino Linotype</family>
-                 <pointsize>11</pointsize>
-                 <weight>75</weight>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                 <underline>true</underline>
-                </font>
-               </property>
-               <property name="text">
-                <string>ASSIGNMENT COMMISSIONER</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
@@ -923,17 +652,384 @@ background-color: rgb(208, 208, 208);</string>
         </item>
        </layout>
       </item>
-      <item row="2" column="0">
-       <widget class="Line" name="line">
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
+      <item row="0" column="0">
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="lineWidth">
-         <number>2</number>
+        <widget class="QWidget" name="judicial_officers_Stack">
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QFrame" name="judicial_officer_frame">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <item row="3" column="1">
+              <widget class="QRadioButton" name="pelanda_radioButton">
+               <property name="text">
+                <string>Magistrate Pelanda</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QRadioButton" name="hemmeter_radioButton">
+               <property name="text">
+                <string>Judge Hemmeter</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QRadioButton" name="kudela_radioButton">
+               <property name="text">
+                <string>Magistrate Kudela</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QRadioButton" name="bunner_radioButton">
+               <property name="text">
+                <string>Magistrate Bunner</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QRadioButton" name="rohrer_radioButton">
+               <property name="text">
+                <string>Judge Rohrer</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QRadioButton" name="visiting_judge_radioButton">
+               <property name="text">
+                <string>Visiting Judge</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QLabel" name="label_9">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>JUDICIAL OFFICER</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="assignment_commissioners_Stack">
+         <layout class="QGridLayout" name="gridLayout_7">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <property name="bottomMargin">
+              <number>24</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>24</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>30</number>
+             </property>
+             <item row="1" column="2">
+              <widget class="QRadioButton" name="patterson_radioButton">
+               <property name="text">
+                <string>Kathryn Patterson</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QRadioButton" name="dattilo_radioButton">
+               <property name="text">
+                <string>Pat Dattilo</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QRadioButton" name="none_radioButton">
+               <property name="text">
+                <string>None</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="3">
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>ASSIGNMENT COMMISSIONER</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QTabWidget" name="search_tabWidget">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
+        <widget class="QWidget" name="case_list_tab">
+         <attribute name="title">
+          <string>Daily Case Lists</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_11">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,1,0,0" columnstretch="1,1,1">
+            <property name="verticalSpacing">
+             <number>18</number>
+            </property>
+            <item row="5" column="2">
+             <widget class="QRadioButton" name="pcvh_fcvh_radioButton">
+              <property name="text">
+               <string>PCVH/FCVH</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="5" column="0">
+             <widget class="QRadioButton" name="pleas_radioButton">
+              <property name="text">
+               <string>Pleas and Motion/Oral Hearings</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="5" column="1">
+             <widget class="QRadioButton" name="trials_to_court_radioButton">
+              <property name="text">
+               <string>Trials to Court and Jury Trials</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="ExtendedComboBox" name="final_pretrial_cases_box"/>
+            </item>
+            <item row="6" column="0">
+             <widget class="ExtendedComboBox" name="pleas_cases_box"/>
+            </item>
+            <item row="6" column="2">
+             <widget class="ExtendedComboBox" name="pcvh_fcvh_cases_box"/>
+            </item>
+            <item row="6" column="1">
+             <widget class="ExtendedComboBox" name="trials_to_court_cases_box"/>
+            </item>
+            <item row="7" column="2">
+             <widget class="QPushButton" name="reload_cases_Button">
+              <property name="minimumSize">
+               <size>
+                <width>120</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>Reload Daily Case Lists</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QRadioButton" name="slated_radioButton">
+              <property name="text">
+               <string>Slated                                  </string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QRadioButton" name="final_pretrial_radioButton">
+              <property name="text">
+               <string>Final Pre-trials</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QRadioButton" name="arraignments_radioButton">
+              <property name="text">
+               <string>Arraignments</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="ExtendedComboBox" name="slated_cases_box"/>
+            </item>
+            <item row="4" column="0">
+             <widget class="ExtendedComboBox" name="arraignments_cases_box"/>
+            </item>
+            <item row="2" column="0" colspan="3">
+             <widget class="QLabel" name="label_3">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="text">
+               <string>DAILY CASE LISTS</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="case_search_tab">
+         <attribute name="title">
+          <string>Case Search</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_12" columnstretch="1,1">
+          <item row="1" column="1">
+           <widget class="QPushButton" name="get_case_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(160, 160, 160);</string>
+            </property>
+            <property name="text">
+             <string>Get Case</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="2">
+           <widget class="QLabel" name="label_11">
+            <property name="font">
+             <font>
+              <family>Palatino Linotype</family>
+              <pointsize>11</pointsize>
+              <weight>75</weight>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>true</underline>
+             </font>
+            </property>
+            <property name="text">
+             <string>CASE SEARCH</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="case_search_box"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Case Name:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_12">
+            <property name="text">
+             <string>Case Number:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Charges:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="case_number_label_field">
+            <property name="text">
+             <string>None</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="case_name_label_field">
+            <property name="text">
+             <string>None</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="case_charges_label_field">
+            <property name="text">
+             <string>None</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>
@@ -945,7 +1041,7 @@ background-color: rgb(208, 208, 208);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1166</width>
+     <width>1168</width>
      <height>27</height>
     </rect>
    </property>
@@ -987,7 +1083,7 @@ background-color: rgb(208, 208, 208);</string>
   <customwidget>
    <class>ExtendedComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

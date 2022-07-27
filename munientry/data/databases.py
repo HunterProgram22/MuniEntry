@@ -2,15 +2,15 @@
 the databases used by the application."""
 
 from abc import ABC, abstractmethod
-import os
-import sys
 
 from loguru import logger
+from munientry.data.connections import open_db_connection, close_db_connection, \
+    main
 from openpyxl import load_workbook  # type: ignore
 from PyQt5.QtSql import QSqlQuery, QSqlDatabase
 from munientry.data.case_excel_loader import return_cases_data_from_excel
 
-from munientry.settings import DB_PATH, CHARGES_TABLE, EXCEL_DAILY_CASE_LISTS
+from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.data.sql_queries import (
     insert_daily_case_list_tables_sql_query,
@@ -122,43 +122,6 @@ class CriminalCaseSQLRetriever(CaseSQLRetriever):
         return self.case
 
 
-def open_db_connection(connection_name: str) -> QSqlDatabase:
-    db_connection = QSqlDatabase.database(connection_name, open=True)
-    check_if_db_open(db_connection, connection_name)
-    logger.database(f'{db_connection.connectionName()} database connection open.')
-    return db_connection
-
-
-def close_db_connection(db_connection: QSqlDatabase) -> None:
-    db_connection.close()
-    logger.database(f'{db_connection.connectionName()} database connection closed.')
-
-
-def remove_db_connection(connection_name: str) -> None:
-    QSqlDatabase.removeDatabase(connection_name)
-    logger.database(f'{connection_name} database connection removed.')
-
-
-def create_db_connection(database_name: str, connection_name: str) -> QSqlDatabase:
-    if not os.path.exists(database_name):
-        logger.warning("The database does not exist. Creating new database.")
-    db_connection = create_db(database_name, connection_name)
-    return db_connection
-
-
-def create_db(database_name: str, connection_name: str) -> QSqlDatabase:
-    db_connection = QSqlDatabase.addDatabase("QSQLITE", connection_name)
-    db_connection.setDatabaseName(database_name)
-    return db_connection
-
-
-def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
-    if not db_connection.isOpen():
-        logger.critical(f"Unable to connect to {connection_name} database")
-        sys.exit(1)
-    return True
-
-
 def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
     for item in EXCEL_DAILY_CASE_LISTS:
         excel_report: str
@@ -259,14 +222,9 @@ def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
 
 
 def main():
-
-    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     load_daily_case_list_data(con_daily_case_lists)
     close_db_connection(con_daily_case_lists)
-
-    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
-    create_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_attorneys")
 
 
 if __name__ == "__main__":

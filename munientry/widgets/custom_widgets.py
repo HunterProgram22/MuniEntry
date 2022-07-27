@@ -9,7 +9,8 @@ from PyQt5.QtWidgets import QPushButton, QMessageBox, QComboBox, QLineEdit, QChe
 from PyQt5 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
-from munientry.data.databases import close_db_connection, open_db_connection, query_attorney_list
+from munientry.data.databases import query_attorney_list
+from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.settings import ICON_PATH, DB_PATH
 
 

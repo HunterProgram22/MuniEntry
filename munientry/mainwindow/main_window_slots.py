@@ -9,11 +9,10 @@ from munientry.controllers.helper_functions import (
     set_random_judge,
 )
 from munientry.data.databases import (
-    close_db_connection,
     load_daily_case_list_data,
-    open_db_connection,
     query_daily_case_list_data,
 )
+from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.settings import TYPE_CHECKING
 
 if TYPE_CHECKING:
