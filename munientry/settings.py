@@ -135,7 +135,7 @@ def set_server_and_database() -> tuple:
     """
     if socket.gethostname() == 'RooberryPrime':
         server = r'ROOBERRYPRIME\SQLEXPRESS'
-        database = 'AuthorityCourtTest'
+        database = 'AuthorityCourt'
     else:
         server = r'CLERKCRTR\CMI'
         database = 'AuthorityCourt'
