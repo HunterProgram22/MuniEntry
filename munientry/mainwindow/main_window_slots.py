@@ -1,6 +1,7 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
 from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.controllers.helper_functions import (
     check_assignment_commissioner,
@@ -13,6 +14,7 @@ from munientry.data.databases import (
     query_daily_case_list_data,
 )
 from munientry.data.connections import open_db_connection, close_db_connection
+from munientry.data.sql_server_queries import general_case_search_query
 from munientry.settings import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -128,3 +130,22 @@ class MainWindowSlotFunctionsMixin(object):
         current_tab_widget = self.tabWidget.currentWidget().objectName()
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
         logger.info(f'Current tabWidget is {current_tab_widget}')
+
+    def get_case_info(self) -> tuple:
+        logger.debug('Get Case Pressed')
+        case_number = self.case_search_box.text()
+        logger.debug(case_number)
+        query_string = general_case_search_query(case_number)
+        logger.debug(query_string)
+        db_connection = open_db_connection('con_authority_court')
+        query = QSqlQuery(db_connection)
+        query.prepare(query_string)
+        query.exec()
+        query.next()
+        case_number = query.value(2)
+        def_first_name = query.value(5)
+        def_last_name = query.value(4)
+        close_db_connection(db_connection)
+        self.case_number_label_field.setText(case_number)
+        self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
+        return (case_number, def_first_name, def_last_name)

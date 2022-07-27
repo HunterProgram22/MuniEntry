@@ -1,4 +1,4 @@
-"""Module containing all sql queries used throughout the application."""
+"""Module containing all SQL Lite queries used throughout the application."""
 from loguru import logger
 
 

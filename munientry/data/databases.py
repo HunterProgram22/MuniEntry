@@ -12,7 +12,7 @@ from munientry.data.case_excel_loader import return_cases_data_from_excel
 
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 from munientry.models.cms_models import CmsCaseInformation
-from munientry.data.sql_queries import (
+from munientry.data.sql_lite_queries import (
     insert_daily_case_list_tables_sql_query,
     delete_table_sql_query,
     select_case_data_sql_query,
