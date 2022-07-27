@@ -1,4 +1,8 @@
-"""Module that contains all functions for connecting to databases - internal and external."""
+"""Module that contains all functions for connecting to databases - internal and external.
+
+See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+"""
+import socket
 import sys
 
 from loguru import logger
@@ -16,8 +20,8 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
 
     :database_path: The absolute path to the location of the database. The absolute path should
         be set using a sys.path object so that it references the actual location of the database,
-        which will be dependent on the location of the application. Currently uses DB_PATH constant
-        from settings.
+        which will be dependent on the location of the application. Uses DB_PATH constant
+        from settings which sets the absolute path based on the location of the application.
 
     :connection_name: A string that is assigned for future reference to the connection.
 
@@ -26,6 +30,46 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
     db_connection.setDatabaseName(database_path)
     return db_connection
+
+
+def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
+    """Creates a SQL Server database connection.
+
+    The QODBC3 driver is used to create the connection.
+    See https://doc.qt.io/qt-5/sql-driver.html#qodbc
+    This also helped establishing the connection even though it references the pyodbc module.
+    See 'https://stackoverflow.com/questions/16515420/
+    connecting-to-ms-sql-server-with-windows-authentication-using-python/'
+
+    :connection_name: A string that is assigned for future reference to the connection.
+
+    Returns the connection as a QSqlDatabase object.
+    """
+    db_connection = QSqlDatabase.addDatabase('QODBC3', connection_name)
+    server, database = set_server_and_database()
+    connection_string = (
+        'DRIVER=SQL Server;'
+        + f'SERVER={server};'
+        + f'DATABASE={database};'
+        + 'TRUSTED_CONNECTION=yes;'
+    )
+    db_connection.setDatabaseName(connection_string)
+    return db_connection
+
+
+def set_server_and_database() -> tuple:
+    """Sets the server and database name for the SQL Server connection.
+
+    This function is used to set a local instance of the database for Justin to test at home
+    without being connected to the delcity network.
+    """
+    if socket.gethostname() == 'RooberryPrime':
+        server = r'ROOBERRYPRIME\SQLEXPRESS'
+        database = 'AuthorityCourtTest'
+    else:
+        server = r'CLERKCRTR\CMI'
+        database = 'AuthorityCourt'
+    return (server, database)
 
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
@@ -82,10 +126,13 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
 def main():
     """The main function called when the module is imported.
 
-    Creates three (3) connections to the MuniEntryDB Sqlite internal database. Creating multiple
+    Creates one connection to the SQL Server external database.
+
+    Creates three connections to the MuniEntryDB Sqlite internal database. Creating multiple
     connections is likely unnecessary but helps when referencing the connection to determine what
     table in the database the connection is supposed to reference.
     """
+    create_odbc_db_connection('con_authority_court')
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_daily_case_lists')
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_charges')
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_attorneys')
