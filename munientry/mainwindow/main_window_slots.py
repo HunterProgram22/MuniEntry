@@ -15,10 +15,8 @@ from munientry.data.databases import (
 )
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_server_queries import general_case_search_query
-from munientry.settings import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from PyQt5.QtSql import QSqlDatabase
+from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.party_types import Defendant
 
 
 class MainWindowSlotFunctionsMixin(object):
@@ -89,15 +87,27 @@ class MainWindowSlotFunctionsMixin(object):
         'check_case_list_selected: Requires that a daily case list is selected, if no case
         is needed then must select a case list with the field blank.
         """
-        selected_case_table = self.database_table_dict.get(
-            self.case_table, QComboBox,
-        )
-        cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
-            self.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=self.case_table,
-        )
+        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            cms_search_data = self.get_case_info()
+            defendant = Defendant()
+            defendant.first_name = cms_search_data[1]
+            defendant.last_name = cms_search_data[2]
+            cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
+            self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
+                self.judicial_officer,
+                cms_case=cms_case_data,
+                case_table=None,
+            )
+        else:
+            selected_case_table = self.database_table_dict.get(
+                self.case_table, QComboBox,
+            )
+            cms_case_data = self.set_case_to_load(selected_case_table)
+            self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
+                self.judicial_officer,
+                cms_case=cms_case_data,
+                case_table=self.case_table,
+            )
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
