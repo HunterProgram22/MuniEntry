@@ -125,3 +125,18 @@ PRETRIAL_TIME_DICT = {
     'Pretrial 2 weeks before trial': 14,
     'No Pretrial': 0,
 }
+
+
+def set_server_and_database() -> tuple:
+    """Sets the server and database name for the SQL Server connection.
+
+    This function is used to set a local instance of the database for Justin to test at home
+    without being connected to the delcity network.
+    """
+    if socket.gethostname() == 'RooberryPrime':
+        server = r'ROOBERRYPRIME\SQLEXPRESS'
+        database = 'AuthorityCourtTest'
+    else:
+        server = r'CLERKCRTR\CMI'
+        database = 'AuthorityCourt'
+    return (server, database)

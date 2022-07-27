@@ -2,13 +2,12 @@
 
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
 """
-import socket
 import sys
 
 from loguru import logger
 from PyQt5.QtSql import QSqlDatabase
 
-from munientry.settings import DB_PATH
+from munientry.settings import DB_PATH, set_server_and_database
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -55,21 +54,6 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
     )
     db_connection.setDatabaseName(connection_string)
     return db_connection
-
-
-def set_server_and_database() -> tuple:
-    """Sets the server and database name for the SQL Server connection.
-
-    This function is used to set a local instance of the database for Justin to test at home
-    without being connected to the delcity network.
-    """
-    if socket.gethostname() == 'RooberryPrime':
-        server = r'ROOBERRYPRIME\SQLEXPRESS'
-        database = 'AuthorityCourtTest'
-    else:
-        server = r'CLERKCRTR\CMI'
-        database = 'AuthorityCourt'
-    return (server, database)
 
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
