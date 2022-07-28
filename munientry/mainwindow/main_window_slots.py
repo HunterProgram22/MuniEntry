@@ -153,6 +153,8 @@ class MainWindowSlotFunctionsMixin(object):
         query.exec()
         charge_list = []
         case_number = None
+        def_first_name = None
+        def_last_name = None
         while query.next():
             if case_number is None:
                 case_number = query.value(2)
