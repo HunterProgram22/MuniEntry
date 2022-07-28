@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1168</width>
-    <height>899</height>
+    <width>1166</width>
+    <height>892</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -818,7 +818,7 @@ background-color: rgb(208, 208, 208);</string>
       <item row="1" column="0">
        <widget class="QTabWidget" name="search_tabWidget">
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="case_list_tab">
          <attribute name="title">
@@ -1041,7 +1041,7 @@ background-color: rgb(208, 208, 208);</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1168</width>
+     <width>1166</width>
      <height>27</height>
     </rect>
    </property>
