@@ -151,11 +151,17 @@ class MainWindowSlotFunctionsMixin(object):
         query = QSqlQuery(db_connection)
         query.prepare(query_string)
         query.exec()
-        query.next()
-        case_number = query.value(2)
-        def_first_name = query.value(5)
-        def_last_name = query.value(4)
+        charge_list = []
+        case_number = None
+        while query.next():
+            if case_number is None:
+                case_number = query.value(2)
+                def_first_name = query.value(7)
+                def_last_name = query.value(6)
+            charge_list.append(query.value(5))
         close_db_connection(db_connection)
         self.case_number_label_field.setText(case_number)
         self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        return (case_number, def_first_name, def_last_name)
+        charge_list_text = ', '.join(str(charge) for charge in charge_list)
+        self.case_charges_label_field.setText(charge_list_text)
+        return (case_number, def_first_name, def_last_name, charge_list)

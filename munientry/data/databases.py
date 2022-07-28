@@ -38,14 +38,21 @@ class CaseSQLRetriever(ABC):
 
 
 class CriminalCaseSQLRetriever(CaseSQLRetriever):
-    """Class for getting case data from a SQL database and packaging it into an object to be
-    loaded into the application.
+    """Class for getting case data from the SQL Lite internal database.
+
+    The class accepts teh case number and case table to identify the case, then retrieves
+    the case information from the SQL Lite (MuniEntryDB) database and packages it for loading
+    into the application.
+
+    The class also cleans the data when packaging it to address various formatting (i.e. all caps)
+    issues.
 
     :case_number: The selected case number from the case selected in the daily case lists box
     on the main window of the application.
 
     :case_table: The string name of the daily case list box that the case is selected from. Used
-    to select the table in the database from which to obtain the case."""
+    to select the table in the database from which to obtain the case.
+    """
 
     def __init__(self, case_number: str, case_table: str) -> None:
         self.case_number = case_number
