@@ -10,7 +10,7 @@ from munientry.data.sql_lite_functions import load_daily_case_list_data, query_o
     query_daily_case_list_data
 from munientry.data.connections import open_db_connection, remove_db_connection, \
     create_sqlite_db_connection, check_if_db_open
-from munientry.data.case_excel_loader import clean_statute_name, clean_offense_name
+from munientry.data.excel_getters import clean_statute_name, clean_offense_name
 
 
 @pytest.fixture

@@ -1,7 +1,5 @@
-"""Module for loading case data from Excel files."""
+"""Module for getting case data from Excel files."""
 from loguru import logger
-
-from openpyxl import Workbook  # type: ignore
 
 from munientry.data.excel_functions import (
     create_headers_dict,
@@ -9,8 +7,13 @@ from munientry.data.excel_functions import (
     load_active_worksheet,
 )
 from munientry.models.excel_models import CaseExcelData
+from munientry.settings import TYPE_CHECKING
 
-NO_DATA = 'No Data'
+if TYPE_CHECKING:
+    from openpyxl import Workbook
+
+
+# Column Headers
 COL_CASE = 'CaseNumber'
 COL_DEF_LAST_NAME = 'DefLastName'
 COL_DEF_FIRST_NAME = 'DefFirstName'
@@ -23,8 +26,34 @@ COL_DEF_ATTY_LAST_NAME = 'AttorneyLastName'
 COL_DEF_ATTY_FIRST_NAME = 'AttorneyFirstName'
 COL_DEF_ATTY_TYPE = 'PubDef'
 
-CAPITAL_CHARGE_LIST = ('DUS', 'OVI', 'BMV', 'FRA', 'OL')
-DELETE_CHARGE_WORD_LIST = ('UCM', 'M1', 'M2', 'M3', 'M4', 'MM', 'PETTY', '(UCM)')
+NO_DATA = 'No Data'
+OFFENSE_CLEAN_DICT = {
+    'UCM': '',
+    'M1': '',
+    'M2': '',
+    'M3': '',
+    'M4': '',
+    'MM': '',
+    'PETTY': '',
+    '(UCM)': '',
+    'DUS': 'DUS',
+    'OVI': 'OVI',
+    'BMV': 'BMV',
+    'OBMV': 'BMV',
+    'FRA': 'FRA',
+    'OL': 'OL',
+    'OMVI': 'OVI',
+    'FRA/JUDGMENT': 'FRA / Judgment',
+    'OR': '/',
+    'W/O': 'Without',
+    'A': 'a',
+    'TO': 'to',
+    'SUSP': 'Suspension',
+    '-': '',
+    'OF': 'of',
+    'IN': 'in',
+    'AND': 'and',
+}
 
 
 def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
@@ -45,23 +74,15 @@ def clean_offense_name(offense: str) -> str:
     offense_word_list = offense.split()
     clean_offense_word_list = []
     for word in offense_word_list:
-        if word == 'OMVI':
-            clean_offense_word_list.append('OVI')
-            continue
-        elif word == 'FRA/JUDGMENT':
-            clean_offense_word_list.append('FRA / Judgment')
-            continue
-        elif word in CAPITAL_CHARGE_LIST:
-            clean_offense_word_list.append(word)
-            continue
-        elif word in DELETE_CHARGE_WORD_LIST:
+        if OFFENSE_CLEAN_DICT.get(word) is not None:
+            clean_offense_word_list.append(OFFENSE_CLEAN_DICT.get(word))
             continue
         else:
             clean_offense_word_list.append(word.capitalize())
-    return ' '.join([str(word) for word in clean_offense_word_list])
+    return ' '.join([str(clean_word) for clean_word in clean_offense_word_list])
 
 
-def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseExcelData]:
+def create_case_data_list(ws: 'Workbook.active', headers_dict: dict) -> list[CaseExcelData]:
     """Returns a list of CaseExcelData objects.
 
     The CaseExcelData object is loaded with the data from each row (case) and the attributes
@@ -69,12 +90,15 @@ def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseE
     portion of the function starts with row 2 because row 1 is headers.
     """
     case_data_list: list = []
-    row_count: int = ws.max_row + 1
-    for row in range(2, row_count):
+    for row in range(2, ws.max_row + 1):
         case = CaseExcelData()
         case.case_number = get_cell_value(ws, row, headers_dict[COL_CASE])
-        case.defendant_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_LAST_NAME]).title()
-        case.defendant_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_FIRST_NAME]).title()
+        case.defendant_last_name = (
+            get_cell_value(ws, row, headers_dict[COL_DEF_LAST_NAME]).title()
+        )
+        case.defendant_first_name = (
+            get_cell_value(ws, row, headers_dict[COL_DEF_FIRST_NAME]).title()
+        )
 
         offense = get_cell_value(ws, row, headers_dict[COL_CHARGE])
         case.offense = clean_offense_name(offense)
@@ -85,21 +109,25 @@ def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseE
         case.degree = get_cell_value(ws, row, headers_dict[COL_DEGREE])
         case.fra_in_file = get_cell_value(ws, row, headers_dict[COL_INSURANCE])
         case.moving_bool = get_cell_value(ws, row, headers_dict[COL_MOVING_OFFENSE])
-        case.def_atty_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_LAST_NAME]).title()
-        case.def_atty_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_FIRST_NAME]).title()
+        case.def_atty_last_name = (
+            get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_LAST_NAME]).title()
+        )
+        case.def_atty_first_name = (
+            get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_FIRST_NAME]).title()
+        )
         case.def_atty_type = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_TYPE])
         case_data_list.append(case)
     return case_data_list
 
 
-def get_cell_value(ws: Workbook.active, row: int, col: int) -> str:
+def get_cell_value(ws: 'Workbook.active', row: int, col: int) -> str:
     """Returns the cell value for a cell in the active excel worksheet."""
     if ws.cell(row=row, column=col).value is None:
         return set_cell_value_if_none(ws, col)
     return ws.cell(row=row, column=col).value
 
 
-def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
+def set_cell_value_if_none(ws: 'Workbook.active', col: int) -> str:
     """Returns a specific string for certain attributes if there is no data."""
     if ws.cell(row=1, column=col).value == COL_INSURANCE:
         return 'U'
@@ -110,9 +138,7 @@ def set_cell_value_if_none(ws: Workbook.active, col: int) -> str:
     return NO_DATA
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-
-

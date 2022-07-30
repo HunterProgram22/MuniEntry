@@ -1,6 +1,6 @@
 """Module containing all functions that query the internal SQL Lite database."""
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
-from munientry.data.case_excel_loader import return_cases_data_from_excel
+from munientry.data.excel_getters import return_cases_data_from_excel
 from munientry.data.sql_lite_queries import insert_daily_case_list_tables_sql_query, \
     delete_table_sql_query, select_distinct_offense_statute_sql_query, \
     select_distinct_attorney_name_sql_query, \
