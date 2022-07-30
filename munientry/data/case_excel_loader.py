@@ -3,7 +3,7 @@ from loguru import logger
 
 from openpyxl import Workbook  # type: ignore
 
-from munientry.data.loader_functions import (
+from munientry.data.excel_functions import (
     create_headers_dict,
     get_excel_file_headers,
     load_active_worksheet,

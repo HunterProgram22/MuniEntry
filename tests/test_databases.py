@@ -4,11 +4,10 @@ from PyQt5.QtSql import QSqlDatabase
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 from munientry.data.databases import (
     CriminalCaseSQLRetriever,
-    query_offense_statute_data,
-    query_daily_case_list_data,
     # create_daily_case_list_sql_tables,
-    load_daily_case_list_data,
 )
+from munientry.data.sql_lite_functions import load_daily_case_list_data, query_offense_statute_data, \
+    query_daily_case_list_data
 from munientry.data.connections import open_db_connection, remove_db_connection, \
     create_sqlite_db_connection, check_if_db_open
 

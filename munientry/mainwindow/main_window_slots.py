@@ -9,10 +9,7 @@ from munientry.controllers.helper_functions import (
     check_judicial_officer,
     set_random_judge,
 )
-from munientry.data.databases import (
-    load_daily_case_list_data,
-    query_daily_case_list_data,
-)
+from munientry.data.sql_lite_functions import load_daily_case_list_data, query_daily_case_list_data
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_server_queries import general_case_search_query
 from munientry.models.cms_models import CmsCaseInformation
