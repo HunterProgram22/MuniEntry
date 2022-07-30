@@ -836,6 +836,9 @@ font-weight: bold;</string>
       </item>
       <item row="1" column="0">
        <widget class="QTabWidget" name="search_tabWidget">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(218, 218, 218);</string>
         </property>
@@ -1001,6 +1004,9 @@ font-weight: bold;</string>
          </layout>
         </widget>
         <widget class="QWidget" name="case_search_tab">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <attribute name="title">
           <string>Case Search</string>
          </attribute>

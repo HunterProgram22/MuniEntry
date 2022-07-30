@@ -9,6 +9,7 @@ from PyQt5.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.settings import DB_PATH, set_server_and_database
+from munientry.widgets.message_boxes import InfoBox
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -63,7 +64,7 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
     :connection_name: A string provided when the function is called. The string is assigned to the
         database object to allow reference to the database by the connection name.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns the connection as a QSqlDatabase object with an open connection.
     """
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
@@ -103,8 +104,13 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     Exits the application if it cannot connect to the database.
     """
     if not db_connection.isOpen():
-        logger.critical(f'Unable to connect to {connection_name} database')
-        sys.exit(1)
+        logger.warning(f'Unable to connect to {connection_name} database')
+        if connection_name == 'con_authority_court':
+            InfoBox('The Case Search feature is not available because a connection to the'
+                       'AuthorityCourt database could not be made.').exec()
+        if connection_name == 'con_munientry_db':
+            InfoBox('A connection to the MuniEntryDB could not be made. Contact Justin '
+                       'immediately.').exec()
     return True
 
 
