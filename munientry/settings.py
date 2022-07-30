@@ -19,7 +19,7 @@ CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
 # Version Information
-VERSION_NUMBER = '0.33.0'
+VERSION_NUMBER = '0.33.1'
 
 # Court Cost Constants
 MOVING_COURT_COSTS = 137
