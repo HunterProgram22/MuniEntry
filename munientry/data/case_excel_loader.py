@@ -23,6 +23,9 @@ COL_DEF_ATTY_LAST_NAME = 'AttorneyLastName'
 COL_DEF_ATTY_FIRST_NAME = 'AttorneyFirstName'
 COL_DEF_ATTY_TYPE = 'PubDef'
 
+CAPITAL_CHARGE_LIST = ('DUS', 'OVI', 'BMV', 'FRA', 'OL')
+DELETE_CHARGE_WORD_LIST = ('UCM', 'M1', 'M2', 'M3', 'M4', 'MM', 'PETTY', '(UCM)')
+
 
 def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
     """Loads active worksheet, generates header dict, and creates case data list."""
@@ -30,6 +33,32 @@ def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
     header_list = get_excel_file_headers(ws)
     headers_dict = create_headers_dict(header_list)
     return create_case_data_list(ws, headers_dict)
+
+
+def clean_statute_name(statute: str) -> str:
+    """Removes trailing asteriks that are part often part of data from AuthorityCourt."""
+    return statute.rstrip('*')
+
+
+def clean_offense_name(offense: str) -> str:
+    """Sets offense name to title case (except for abbreviations) and removes degree of charge."""
+    offense_word_list = offense.split()
+    clean_offense_word_list = []
+    for word in offense_word_list:
+        if word == 'OMVI':
+            clean_offense_word_list.append('OVI')
+            continue
+        elif word == 'FRA/JUDGMENT':
+            clean_offense_word_list.append('FRA / Judgment')
+            continue
+        elif word in CAPITAL_CHARGE_LIST:
+            clean_offense_word_list.append(word)
+            continue
+        elif word in DELETE_CHARGE_WORD_LIST:
+            continue
+        else:
+            clean_offense_word_list.append(word.capitalize())
+    return ' '.join([str(word) for word in clean_offense_word_list])
 
 
 def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseExcelData]:
@@ -44,15 +73,20 @@ def create_case_data_list(ws: Workbook.active, headers_dict: dict) -> list[CaseE
     for row in range(2, row_count):
         case = CaseExcelData()
         case.case_number = get_cell_value(ws, row, headers_dict[COL_CASE])
-        case.defendant_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_LAST_NAME])
-        case.defendant_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_FIRST_NAME])
-        case.offense = get_cell_value(ws, row, headers_dict[COL_CHARGE])
-        case.statute = get_cell_value(ws, row, headers_dict[COL_STATUTE])
+        case.defendant_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_LAST_NAME]).title()
+        case.defendant_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_FIRST_NAME]).title()
+
+        offense = get_cell_value(ws, row, headers_dict[COL_CHARGE])
+        case.offense = clean_offense_name(offense)
+
+        statute = get_cell_value(ws, row, headers_dict[COL_STATUTE])
+        case.statute = clean_statute_name(statute)
+
         case.degree = get_cell_value(ws, row, headers_dict[COL_DEGREE])
         case.fra_in_file = get_cell_value(ws, row, headers_dict[COL_INSURANCE])
         case.moving_bool = get_cell_value(ws, row, headers_dict[COL_MOVING_OFFENSE])
-        case.def_atty_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_LAST_NAME])
-        case.def_atty_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_FIRST_NAME])
+        case.def_atty_last_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_LAST_NAME]).title()
+        case.def_atty_first_name = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_FIRST_NAME]).title()
         case.def_atty_type = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_TYPE])
         case_data_list.append(case)
     return case_data_list
@@ -80,3 +114,5 @@ if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
+
+

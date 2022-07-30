@@ -2,7 +2,7 @@ import pytest
 from PyQt5.QtSql import QSqlDatabase
 
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
-from munientry.data.databases import (
+from munientry.data.sql_lite_getters import (
     CriminalCaseSQLRetriever,
     # create_daily_case_list_sql_tables,
 )
@@ -10,7 +10,7 @@ from munientry.data.sql_lite_functions import load_daily_case_list_data, query_o
     query_daily_case_list_data
 from munientry.data.connections import open_db_connection, remove_db_connection, \
     create_sqlite_db_connection, check_if_db_open
-from munientry.data.databases import clean_statute_name, clean_offense_name
+from munientry.data.case_excel_loader import clean_statute_name, clean_offense_name
 
 
 @pytest.fixture
@@ -129,7 +129,7 @@ def test_query_daily_case_list_data(table, total_cases):
 
 def test_charges_connection_to_db():
     """This test uses the charges db in the test/db, also code below is copied
-    from the main() of databases.py - not ideal test."""
+    from the main() of sql_lite_getters.py - not ideal test."""
     create_sqlite_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
     assert isinstance(con_charges, QSqlDatabase)
@@ -137,7 +137,7 @@ def test_charges_connection_to_db():
 
 def test_create_daily_case_lists_db():
     """This test uses the charges db in the test/db, also code below is copied
-    from the main() of databases.py - not ideal test."""
+    from the main() of sql_lite_getters.py - not ideal test."""
     create_sqlite_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     load_daily_case_list_data(con_daily_case_lists)
