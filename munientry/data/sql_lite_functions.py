@@ -1,7 +1,6 @@
 """Module containing all functions that query the internal SQL Lite database."""
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from munientry.data.case_excel_loader import return_cases_data_from_excel
-from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_lite_queries import insert_daily_case_list_tables_sql_query, \
     delete_table_sql_query, select_distinct_offense_statute_sql_query, \
     select_distinct_attorney_name_sql_query, \
@@ -107,9 +106,3 @@ def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
             query.finish()
             return offense_type
     return offense_type
-
-
-def main():
-    con_daily_case_lists = open_db_connection("con_daily_case_lists")
-    load_daily_case_list_data(con_daily_case_lists)
-    close_db_connection(con_daily_case_lists)

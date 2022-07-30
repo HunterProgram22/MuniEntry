@@ -10,6 +10,7 @@ from munientry.data.sql_lite_functions import load_daily_case_list_data, query_o
     query_daily_case_list_data
 from munientry.data.connections import open_db_connection, remove_db_connection, \
     create_sqlite_db_connection, check_if_db_open
+from munientry.data.databases import clean_statute_name, clean_offense_name
 
 
 @pytest.fixture
@@ -61,7 +62,7 @@ test_offense_list = [
 
 @pytest.mark.parametrize("test_input, expected_output", test_offense_list)
 def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
-    assert crim_sql_retriever.clean_offense_name(test_input) == expected_output
+    assert clean_offense_name(test_input) == expected_output
 
 
 db_connection_list = [

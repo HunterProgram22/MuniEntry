@@ -7,6 +7,7 @@ import sys
 from loguru import logger
 from PyQt5.QtSql import QSqlDatabase
 
+from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.settings import DB_PATH, set_server_and_database
 
 
@@ -117,6 +118,12 @@ def main():
     table in the database the connection is supposed to reference.
     """
     create_odbc_db_connection('con_authority_court')
+    create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_munientry_db')
+
+    conn = open_db_connection('con_munientry_db')
+    load_daily_case_list_data(conn)
+    close_db_connection(conn)
+
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_daily_case_lists')
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_charges')
     create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_attorneys')
