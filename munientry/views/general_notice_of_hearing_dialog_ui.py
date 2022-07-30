@@ -195,6 +195,7 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.hearing_type_box.addItem("")
         self.hearing_type_box.addItem("")
         self.hearing_type_box.addItem("")
+        self.hearing_type_box.addItem("")
         self.gridLayout_3.addWidget(self.hearing_type_box, 1, 1, 1, 1)
         self.gridLayout_3.setRowStretch(0, 1)
         self.gridLayout_6.addLayout(self.gridLayout_3, 0, 0, 1, 1)
@@ -341,8 +342,9 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.hearing_location_box.setItemText(2, _translate("GeneralNoticeOfHearingDialog", "Courtroom B"))
         self.hearing_location_box.setItemText(3, _translate("GeneralNoticeOfHearingDialog", "Courtroom C"))
         self.hearing_type_box.setItemText(0, _translate("GeneralNoticeOfHearingDialog", "Motion Hearing"))
-        self.hearing_type_box.setItemText(1, _translate("GeneralNoticeOfHearingDialog", "Motion to Suppress Hearing"))
-        self.hearing_type_box.setItemText(2, _translate("GeneralNoticeOfHearingDialog", "Motion to Seal Hearing"))
+        self.hearing_type_box.setItemText(1, _translate("GeneralNoticeOfHearingDialog", "Plea Hearing"))
+        self.hearing_type_box.setItemText(2, _translate("GeneralNoticeOfHearingDialog", "Motion to Suppress Hearing"))
+        self.hearing_type_box.setItemText(3, _translate("GeneralNoticeOfHearingDialog", "Motion to Seal Hearing"))
         self.label.setText(_translate("GeneralNoticeOfHearingDialog", "Def. First Name:"))
         self.label_26.setText(_translate("GeneralNoticeOfHearingDialog", "Date:"))
         self.cancel_Button.setText(_translate("GeneralNoticeOfHearingDialog", "Cancel"))
@@ -351,4 +353,4 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.clear_fields_case_Button.setText(_translate("GeneralNoticeOfHearingDialog", "Clear Fields"))
         self.label_24.setText(_translate("GeneralNoticeOfHearingDialog", "Def. Counsel:"))
         self.label_6.setText(_translate("GeneralNoticeOfHearingDialog", "CASE INFORMATION"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

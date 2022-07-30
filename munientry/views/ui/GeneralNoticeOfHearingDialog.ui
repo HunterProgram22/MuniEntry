@@ -497,6 +497,11 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
+                   <string>Plea Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>Motion to Suppress Hearing</string>
                   </property>
                  </item>
