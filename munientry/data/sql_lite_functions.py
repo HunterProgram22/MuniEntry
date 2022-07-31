@@ -1,12 +1,16 @@
 """Module containing all functions that query the internal SQL Lite database."""
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+
 from munientry.data.excel_getters import return_cases_data_from_excel
-from munientry.data.sql_lite_queries import insert_daily_case_list_tables_sql_query, \
-    delete_table_sql_query, select_distinct_offense_statute_sql_query, \
-    select_distinct_attorney_name_sql_query, \
-    select_distinct_def_last_def_first_case_number_sql_query, \
-    select_statute_from_charges_for_offense_type_sql_query
-from munientry.settings import EXCEL_DAILY_CASE_LISTS, DB_PATH
+from munientry.data.sql_lite_queries import (
+    delete_table_sql_query,
+    insert_daily_case_list_tables_sql_query,
+    select_distinct_attorney_name_sql_query,
+    select_distinct_def_last_def_first_case_number_sql_query,
+    select_distinct_offense_statute_sql_query,
+    select_statute_from_charges_for_offense_type_sql_query,
+)
+from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 
 
 def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
@@ -21,7 +25,7 @@ def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
 def insert_daily_case_list_sql_data(
     con_daily_case_lists: QSqlDatabase, excel_report: str, table_name: str
 ) -> None:
-    cases_from_table = return_cases_data_from_excel(f"{DB_PATH}{excel_report}")
+    cases_from_table = return_cases_data_from_excel(f'{DB_PATH}{excel_report}')
     insert_data_query = QSqlQuery(con_daily_case_lists)
     insert_data_query.prepare(insert_daily_case_list_tables_sql_query(table_name))
     for case in cases_from_table:
@@ -52,9 +56,9 @@ def query_offense_statute_data(db_connection: QSqlDatabase, query_value: str) ->
     query.exec()
     item_list = []
     while query.next():
-        if query_value == "offense":
+        if query_value == 'offense':
             item_list.append(query.value(0))
-        elif query_value == "statute":
+        elif query_value == 'statute':
             item_list.append(query.value(1))
     item_list.sort()
     return item_list
@@ -82,23 +86,24 @@ def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
     while query.next():
         last_name = query.value(0).title()
         case_number = query.value(2)
-        name = f"{last_name} - {case_number}"
+        name = f'{last_name} - {case_number}'
         item_list.append(name)
     item_list.sort()
-    item_list.insert(0, "")
+    item_list.insert(0, '')
     return item_list
 
 
 def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
     """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
-    court costs. If no match is found this returns "Moving" which is the highest court cost, so if
+    court costs. If no match is found this returns 'Moving' which is the highest court cost, so if
     the defendant is told the amount it should not be less than what it is owed.
-    TODO: add for AmendChargeDialogSlotFunctions."""
+    TODO: add for AmendChargeDialogSlotFunctions.
+    """
     query = QSqlQuery(db_connection)
     query.prepare(select_statute_from_charges_for_offense_type_sql_query())
-    query.bindValue(":key", key)
+    query.bindValue(':key', key)
     query.exec()
-    offense_type = "Moving"
+    offense_type = 'Moving'
     while query.next():
         statute = query.value(2)
         offense_type = query.value(4)
