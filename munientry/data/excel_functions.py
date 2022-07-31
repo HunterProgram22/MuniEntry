@@ -35,7 +35,7 @@ def create_headers_dict(headers_list: list[tuple[str, int]]) -> dict:
     return headers_dict
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
