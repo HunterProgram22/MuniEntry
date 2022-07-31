@@ -1,4 +1,6 @@
 """Module for getting case data from Excel files."""
+from types import MappingProxyType
+
 from loguru import logger
 
 from munientry.data.excel_functions import (
@@ -27,7 +29,7 @@ COL_DEF_ATTY_FIRST_NAME = 'AttorneyFirstName'
 COL_DEF_ATTY_TYPE = 'PubDef'
 
 NO_DATA = 'No Data'
-OFFENSE_CLEAN_DICT = {
+OFFENSE_CLEAN_DICT = MappingProxyType({
     'UCM': '',
     'M1': '',
     'M2': '',
@@ -53,19 +55,19 @@ OFFENSE_CLEAN_DICT = {
     'OF': 'of',
     'IN': 'in',
     'AND': 'and',
-}
+})
 
 
 def return_cases_data_from_excel(excel_file: str) -> list[CaseExcelData]:
     """Loads active worksheet, generates header dict, and creates case data list."""
-    ws = load_active_worksheet(excel_file)
-    header_list = get_excel_file_headers(ws)
+    worksheet = load_active_worksheet(excel_file)
+    header_list = get_excel_file_headers(worksheet)
     headers_dict = create_headers_dict(header_list)
-    return create_case_data_list(ws, headers_dict)
+    return create_case_data_list(worksheet, headers_dict)
 
 
 def clean_statute_name(statute: str) -> str:
-    """Removes trailing asteriks that are part often part of data from AuthorityCourt."""
+    """Removes trailing asteriks that are often part of data from AuthorityCourt."""
     return statute.rstrip('*')
 
 
@@ -77,12 +79,11 @@ def clean_offense_name(offense: str) -> str:
         if OFFENSE_CLEAN_DICT.get(word) is not None:
             clean_offense_word_list.append(OFFENSE_CLEAN_DICT.get(word))
             continue
-        else:
-            clean_offense_word_list.append(word.capitalize())
+        clean_offense_word_list.append(word.capitalize())
     return ' '.join([str(clean_word) for clean_word in clean_offense_word_list])
 
 
-def create_case_data_list(ws: 'Workbook.active', headers_dict: dict) -> list[CaseExcelData]:
+def create_case_data_list(worksheet: 'Workbook.active', headers_dict: dict) -> list[CaseExcelData]:
     """Returns a list of CaseExcelData objects.
 
     The CaseExcelData object is loaded with the data from each row (case) and the attributes
@@ -90,50 +91,50 @@ def create_case_data_list(ws: 'Workbook.active', headers_dict: dict) -> list[Cas
     portion of the function starts with row 2 because row 1 is headers.
     """
     case_data_list: list = []
-    for row in range(2, ws.max_row + 1):
+    for row in range(2, worksheet.max_row + 1):
         case = CaseExcelData()
-        case.case_number = get_cell_value(ws, row, headers_dict[COL_CASE])
+        case.case_number = get_cell_value(worksheet, row, headers_dict[COL_CASE])
         case.defendant_last_name = (
-            get_cell_value(ws, row, headers_dict[COL_DEF_LAST_NAME]).title()
+            get_cell_value(worksheet, row, headers_dict[COL_DEF_LAST_NAME]).title()
         )
         case.defendant_first_name = (
-            get_cell_value(ws, row, headers_dict[COL_DEF_FIRST_NAME]).title()
+            get_cell_value(worksheet, row, headers_dict[COL_DEF_FIRST_NAME]).title()
         )
 
-        offense = get_cell_value(ws, row, headers_dict[COL_CHARGE])
+        offense = get_cell_value(worksheet, row, headers_dict[COL_CHARGE])
         case.offense = clean_offense_name(offense)
 
-        statute = get_cell_value(ws, row, headers_dict[COL_STATUTE])
+        statute = get_cell_value(worksheet, row, headers_dict[COL_STATUTE])
         case.statute = clean_statute_name(statute)
 
-        case.degree = get_cell_value(ws, row, headers_dict[COL_DEGREE])
-        case.fra_in_file = get_cell_value(ws, row, headers_dict[COL_INSURANCE])
-        case.moving_bool = get_cell_value(ws, row, headers_dict[COL_MOVING_OFFENSE])
+        case.degree = get_cell_value(worksheet, row, headers_dict[COL_DEGREE])
+        case.fra_in_file = get_cell_value(worksheet, row, headers_dict[COL_INSURANCE])
+        case.moving_bool = get_cell_value(worksheet, row, headers_dict[COL_MOVING_OFFENSE])
         case.def_atty_last_name = (
-            get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_LAST_NAME]).title()
+            get_cell_value(worksheet, row, headers_dict[COL_DEF_ATTY_LAST_NAME]).title()
         )
         case.def_atty_first_name = (
-            get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_FIRST_NAME]).title()
+            get_cell_value(worksheet, row, headers_dict[COL_DEF_ATTY_FIRST_NAME]).title()
         )
-        case.def_atty_type = get_cell_value(ws, row, headers_dict[COL_DEF_ATTY_TYPE])
+        case.def_atty_type = get_cell_value(worksheet, row, headers_dict[COL_DEF_ATTY_TYPE])
         case_data_list.append(case)
     return case_data_list
 
 
-def get_cell_value(ws: 'Workbook.active', row: int, col: int) -> str:
+def get_cell_value(worksheet: 'Workbook.active', row: int, col: int) -> str:
     """Returns the cell value for a cell in the active excel worksheet."""
-    if ws.cell(row=row, column=col).value is None:
-        return set_cell_value_if_none(ws, col)
-    return ws.cell(row=row, column=col).value
+    if worksheet.cell(row=row, column=col).value is None:
+        return set_cell_value_if_none(worksheet, col)
+    return worksheet.cell(row=row, column=col).value
 
 
-def set_cell_value_if_none(ws: 'Workbook.active', col: int) -> str:
+def set_cell_value_if_none(worksheet: 'Workbook.active', col: int) -> str:
     """Returns a specific string for certain attributes if there is no data."""
-    if ws.cell(row=1, column=col).value == COL_INSURANCE:
+    if worksheet.cell(row=1, column=col).value == COL_INSURANCE:
         return 'U'
-    if ws.cell(row=1, column=col).value == COL_DEF_ATTY_LAST_NAME:
+    if worksheet.cell(row=1, column=col).value == COL_DEF_ATTY_LAST_NAME:
         return ''
-    if ws.cell(row=1, column=col).value == COL_DEF_ATTY_FIRST_NAME:
+    if worksheet.cell(row=1, column=col).value == COL_DEF_ATTY_FIRST_NAME:
         return ''
     return NO_DATA
 
