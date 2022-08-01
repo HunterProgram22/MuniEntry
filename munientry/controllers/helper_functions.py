@@ -14,9 +14,11 @@ def check_judicial_officer(func):
     def wrapper(self):
         if self.judicial_officer is None:
             RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        else:
+        if self.judicial_officer.officer_type in ['Judge', 'Magistrate']:
             func(self)
-
+        else:
+            RequiredBox('You must select a judicial officer. Please reselect the radio button for the judge or '
+                        + 'magistrate', 'Judicial Officer Required').exec()
     return wrapper
 
 
@@ -24,9 +26,11 @@ def check_assignment_commissioner(func):
     """Prohibits opening a dialog unless an assignment commissioner is selected."""
     def wrapper(self):
         if self.judicial_officer is None:
-            RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+        if self.judicial_officer.officer_type != 'Assignment Commissioner':
+            return RequiredBox('Please reselect an assignment commissioner.', 'Assignment Commissioner Required').exec()
         else:
-            func(self)
+            return func(self)
 
     return wrapper
 
