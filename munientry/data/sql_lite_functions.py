@@ -14,9 +14,12 @@ from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 
 
 def load_daily_case_list_data(con_daily_case_lists: QSqlDatabase) -> None:
+    """Loads case data from SSRS reports in Excel into the application.
+
+    The function loops through the six SSRS Excel reports for the daily case lists and loads the
+    case data in those files into the application SQL Lite internal database.
+    """
     for item in EXCEL_DAILY_CASE_LISTS:
-        excel_report: str
-        table_name: str
         excel_report, table_name = item
         delete_existing_sql_table_data(con_daily_case_lists, table_name)
         insert_daily_case_list_sql_data(con_daily_case_lists, excel_report, table_name)
