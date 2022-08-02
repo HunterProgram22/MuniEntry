@@ -13,11 +13,11 @@ def check_judicial_officer(func):
     """Prohibits opening a dialog unless a judicial officer is selected."""
     def wrapper(self):
         if self.judicial_officer is None:
-            RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         if self.judicial_officer.officer_type in ['Judge', 'Magistrate']:
-            func(self)
+            return func(self)
         else:
-            RequiredBox('You must select a judicial officer. Please reselect the radio button for the judge or '
+            return RequiredBox('You must select a judicial officer. Please reselect the radio button for the judge or '
                         + 'magistrate', 'Judicial Officer Required').exec()
     return wrapper
 
