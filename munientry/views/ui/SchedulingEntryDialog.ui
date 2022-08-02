@@ -798,23 +798,36 @@ font-weight: bold;</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>pretrial_dateEdit</tabstop>
+  <tabstop>final_pretrial_dateEdit</tabstop>
+  <tabstop>final_pretrial_time_box</tabstop>
+  <tabstop>trial_dateEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>arrest_summons_date_box</tabstop>
+  <tabstop>highest_charge_box</tabstop>
+  <tabstop>days_in_jail_lineEdit</tabstop>
+  <tabstop>continuance_days_lineEdit</tabstop>
+  <tabstop>four_week_pretrial_radioButton</tabstop>
+  <tabstop>three_week_pretrial_radioButton</tabstop>
+  <tabstop>two_week_pretrial_radioButton</tabstop>
+  <tabstop>no_pretrial_radioButton</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

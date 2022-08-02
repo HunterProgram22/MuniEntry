@@ -80,7 +80,7 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1027, 704))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1031, 704))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -296,9 +296,16 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
 
         self.retranslateUi(FinalJuryNoticeOfHearingDialog)
         QtCore.QMetaObject.connectSlotsByName(FinalJuryNoticeOfHearingDialog)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.final_pretrial_dateEdit, self.final_pretrial_time_box)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.final_pretrial_time_box, self.trial_dateEdit)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.trial_dateEdit, self.hearing_location_box)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.hearing_location_box, self.defendant_first_name_lineEdit)
         FinalJuryNoticeOfHearingDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
-        FinalJuryNoticeOfHearingDialog.setTabOrder(self.defendant_last_name_lineEdit, self.case_number_lineEdit)
-        FinalJuryNoticeOfHearingDialog.setTabOrder(self.case_number_lineEdit, self.create_entry_Button)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.defendant_last_name_lineEdit, self.defense_counsel_name_box)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.defense_counsel_name_box, self.case_number_lineEdit)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.case_number_lineEdit, self.jury_trial_only_no_radioButton)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.jury_trial_only_no_radioButton, self.jury_trial_only_yes_radioButton)
+        FinalJuryNoticeOfHearingDialog.setTabOrder(self.jury_trial_only_yes_radioButton, self.create_entry_Button)
         FinalJuryNoticeOfHearingDialog.setTabOrder(self.create_entry_Button, self.close_dialog_Button)
 
     def retranslateUi(self, FinalJuryNoticeOfHearingDialog):

@@ -177,7 +177,7 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1027</width>
+           <width>1031</width>
            <height>704</height>
           </rect>
          </property>
@@ -653,18 +653,25 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>final_pretrial_dateEdit</tabstop>
+  <tabstop>final_pretrial_time_box</tabstop>
+  <tabstop>trial_dateEdit</tabstop>
+  <tabstop>hearing_location_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
+  <tabstop>jury_trial_only_no_radioButton</tabstop>
+  <tabstop>jury_trial_only_yes_radioButton</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

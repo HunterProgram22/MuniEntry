@@ -49,7 +49,7 @@ font-weight: bold;</string>
            <string>Arraignments</string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -59,7 +59,7 @@ font-weight: bold;</string>
            <string>Slated                                  </string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -69,7 +69,7 @@ font-weight: bold;</string>
            <string>Final Pre-trials</string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -88,7 +88,7 @@ font-weight: bold;</string>
            <string>Pleas and Motion/Oral Hearings</string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -98,7 +98,7 @@ font-weight: bold;</string>
            <string>Trials to Court and Jury Trials</string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -108,7 +108,7 @@ font-weight: bold;</string>
            <string>PCVH/FCVH</string>
           </property>
           <attribute name="buttonGroup">
-           <string notr="true">buttonGroup</string>
+           <string notr="true">buttonGroup_2</string>
           </attribute>
          </widget>
         </item>
@@ -186,6 +186,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Pelanda</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="5" column="0">
@@ -193,6 +196,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Judge Hemmeter</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="5" column="2">
@@ -200,6 +206,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Visiting Judge</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="6" column="2">
@@ -207,6 +216,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Kudela</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="6" column="0">
@@ -214,6 +226,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Bunner</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="5" column="1">
@@ -221,6 +236,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Judge Rohrer</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="4" column="0" colspan="3">
@@ -279,6 +297,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Kathryn Patterson</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="1">
@@ -286,6 +307,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Pat Dattilo</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="1" column="3">
@@ -293,6 +317,9 @@ font-weight: bold;</string>
                <property name="text">
                 <string>None</string>
                </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
               </widget>
              </item>
              <item row="0" column="1" colspan="3">
@@ -987,9 +1014,58 @@ background-color: rgb(208, 208, 208);</string>
   <customwidget>
    <class>ExtendedComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>arraignments_radioButton</tabstop>
+  <tabstop>slated_radioButton</tabstop>
+  <tabstop>final_pretrial_radioButton</tabstop>
+  <tabstop>pleas_radioButton</tabstop>
+  <tabstop>trials_to_court_radioButton</tabstop>
+  <tabstop>pcvh_fcvh_radioButton</tabstop>
+  <tabstop>arraignments_cases_box</tabstop>
+  <tabstop>slated_cases_box</tabstop>
+  <tabstop>final_pretrial_cases_box</tabstop>
+  <tabstop>pleas_cases_box</tabstop>
+  <tabstop>trials_to_court_cases_box</tabstop>
+  <tabstop>pcvh_fcvh_cases_box</tabstop>
+  <tabstop>reload_cases_Button</tabstop>
+  <tabstop>pelanda_radioButton</tabstop>
+  <tabstop>hemmeter_radioButton</tabstop>
+  <tabstop>visiting_judge_radioButton</tabstop>
+  <tabstop>kudela_radioButton</tabstop>
+  <tabstop>bunner_radioButton</tabstop>
+  <tabstop>rohrer_radioButton</tabstop>
+  <tabstop>patterson_radioButton</tabstop>
+  <tabstop>dattilo_radioButton</tabstop>
+  <tabstop>none_radioButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>FineOnlyPleaButton</tabstop>
+  <tabstop>NoPleaBondButton</tabstop>
+  <tabstop>JailCCPleaButton</tabstop>
+  <tabstop>NotGuiltyBondButton</tabstop>
+  <tabstop>BondHearingButton</tabstop>
+  <tabstop>PleaOnlyButton</tabstop>
+  <tabstop>DiversionButton</tabstop>
+  <tabstop>ProbationViolationBondButton</tabstop>
+  <tabstop>FailureToAppearButton</tabstop>
+  <tabstop>LeapAdmissionButton</tabstop>
+  <tabstop>TrialSentencingButton</tabstop>
+  <tabstop>SentencingOnlyButton</tabstop>
+  <tabstop>FreeformEntryButton</tabstop>
+  <tabstop>LeapSentencingButton</tabstop>
+  <tabstop>LeapAdmissionValidButton</tabstop>
+  <tabstop>rohrer_general_hearingButton</tabstop>
+  <tabstop>hemmeter_schedulingEntryButton</tabstop>
+  <tabstop>rohrer_schedulingEntryButton</tabstop>
+  <tabstop>hemmeter_final_jury_hearingButton</tabstop>
+  <tabstop>rohrer_final_jury_hearingButton</tabstop>
+  <tabstop>random_judge_Button</tabstop>
+  <tabstop>rohrer_trial_court_hearingButton</tabstop>
+  <tabstop>hemmeter_trial_court_hearingButton</tabstop>
+  <tabstop>hemmeter_general_hearingButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>
@@ -1000,6 +1076,7 @@ background-color: rgb(208, 208, 208);</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>
