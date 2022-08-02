@@ -186,9 +186,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Pelanda</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="5" column="0">
@@ -196,9 +193,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Judge Hemmeter</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="5" column="2">
@@ -206,9 +200,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Visiting Judge</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="6" column="2">
@@ -216,9 +207,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Kudela</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="6" column="0">
@@ -226,9 +214,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Magistrate Bunner</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="5" column="1">
@@ -236,9 +221,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Judge Rohrer</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_2</string>
-               </attribute>
               </widget>
              </item>
              <item row="4" column="0" colspan="3">
@@ -297,9 +279,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Kathryn Patterson</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_3</string>
-               </attribute>
               </widget>
              </item>
              <item row="1" column="1">
@@ -307,9 +286,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>Pat Dattilo</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_3</string>
-               </attribute>
               </widget>
              </item>
              <item row="1" column="3">
@@ -317,9 +293,6 @@ font-weight: bold;</string>
                <property name="text">
                 <string>None</string>
                </property>
-               <attribute name="buttonGroup">
-                <string notr="true">buttonGroup_3</string>
-               </attribute>
               </widget>
              </item>
              <item row="0" column="1" colspan="3">
@@ -1028,7 +1001,5 @@ background-color: rgb(208, 208, 208);</string>
  </slots>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
