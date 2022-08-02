@@ -26,7 +26,9 @@ main_window_all_button_test_list = [
 
     ("FailureToAppearButton", "Failure To Appear Case Information"),
     ("FreeformEntryButton", "Freeform Entry Case Information"),
+]
 
+main_window_scheduling_button_test_list = [
     # Scheduling Entries
     ("hemmeter_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Marianne T. Hemmeter"),
     ("rohrer_final_jury_hearingButton", "Final And Jury Notice Of Hearing Entry Case Information - Judge Kyle E. Rohrer"),
@@ -59,9 +61,27 @@ def test_all_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_t
     assert main_window.dialog.case_number_lineEdit.text() == ""
 
 
+@pytest.mark.parametrize("test_input, dialog_title", main_window_scheduling_button_test_list)
+def test_all_scheduling_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.patterson_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.windowTitle() == dialog_title
+    assert main_window.dialog.case_number_lineEdit.text() == ""
+
+
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
 def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
+
+
+@pytest.mark.parametrize("test_input, dialog_title", main_window_scheduling_button_test_list)
+def test_all_scheduling_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.dattilo_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
