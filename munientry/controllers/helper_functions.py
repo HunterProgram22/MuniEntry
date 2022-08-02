@@ -11,24 +11,26 @@ from munientry.widgets.custom_widgets import RequiredBox
 
 def check_judicial_officer(func):
     """Prohibits opening a dialog unless a judicial officer is selected."""
+
     def wrapper(self):
         if self.judicial_officer is None:
             return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        if self.judicial_officer.officer_type in ['Judge', 'Magistrate']:
-            return func(self)
+        if self.judicial_officer.officer_type == 'Assignment Commissioner':
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         else:
-            return RequiredBox('You must select a judicial officer. Please reselect the radio button for the judge or '
-                        + 'magistrate', 'Judicial Officer Required').exec()
+            return func(self)
+
     return wrapper
 
 
 def check_assignment_commissioner(func):
     """Prohibits opening a dialog unless an assignment commissioner is selected."""
+
     def wrapper(self):
         if self.judicial_officer is None:
             return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
         if self.judicial_officer.officer_type != 'Assignment Commissioner':
-            return RequiredBox('Please reselect an assignment commissioner.', 'Assignment Commissioner Required').exec()
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
         else:
             return func(self)
 
