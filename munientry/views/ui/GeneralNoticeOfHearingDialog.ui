@@ -488,13 +488,8 @@ background-color: rgb(255, 255, 255);</string>
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
                  <property name="editable">
-                  <bool>true</bool>
+                  <bool>false</bool>
                  </property>
-                 <item>
-                  <property name="text">
-                   <string>Motion Hearing</string>
-                  </property>
-                 </item>
                  <item>
                   <property name="text">
                    <string>Plea Hearing</string>
@@ -507,7 +502,17 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
+                   <string>Oral Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>Motion to Seal Hearing</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>Motion Hearing</string>
                   </property>
                  </item>
                 </widget>
@@ -724,8 +729,13 @@ background-color: rgb(255, 255, 255);</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>hearing_type_box</tabstop>
+  <tabstop>hearing_dateEdit</tabstop>
+  <tabstop>hearing_time_box</tabstop>
+  <tabstop>hearing_location_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>

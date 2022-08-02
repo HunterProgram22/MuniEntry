@@ -43,12 +43,310 @@ font-weight: bold;</string>
         <property name="frameShadow">
          <enum>QFrame::Plain</enum>
         </property>
-        <property name="lineWidth">
-         <number>2</number>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="arraignments_radioButton">
+          <property name="text">
+           <string>Arraignments</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QRadioButton" name="slated_radioButton">
+          <property name="text">
+           <string>Slated                                  </string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QRadioButton" name="final_pretrial_radioButton">
+          <property name="text">
+           <string>Final Pre-trials</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="ExtendedComboBox" name="arraignments_cases_box"/>
+        </item>
+        <item row="2" column="1">
+         <widget class="ExtendedComboBox" name="slated_cases_box"/>
+        </item>
+        <item row="2" column="2">
+         <widget class="ExtendedComboBox" name="final_pretrial_cases_box"/>
+        </item>
+        <item row="3" column="0">
+         <widget class="QRadioButton" name="pleas_radioButton">
+          <property name="text">
+           <string>Pleas and Motion/Oral Hearings</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QRadioButton" name="trials_to_court_radioButton">
+          <property name="text">
+           <string>Trials to Court and Jury Trials</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="3" column="2">
+         <widget class="QRadioButton" name="pcvh_fcvh_radioButton">
+          <property name="text">
+           <string>PCVH/FCVH</string>
+          </property>
+          <attribute name="buttonGroup">
+           <string notr="true">buttonGroup_2</string>
+          </attribute>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="ExtendedComboBox" name="pleas_cases_box"/>
+        </item>
+        <item row="4" column="1">
+         <widget class="ExtendedComboBox" name="trials_to_court_cases_box"/>
+        </item>
+        <item row="4" column="2">
+         <widget class="ExtendedComboBox" name="pcvh_fcvh_cases_box"/>
+        </item>
+        <item row="5" column="2">
+         <widget class="QPushButton" name="reload_cases_Button">
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(160, 160, 160);</string>
+          </property>
+          <property name="text">
+           <string>Reload Cases</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <family>Palatino Linotype</family>
+            <pointsize>11</pointsize>
+            <weight>75</weight>
+            <italic>false</italic>
+            <bold>true</bold>
+            <underline>true</underline>
+           </font>
+          </property>
+          <property name="text">
+           <string>DAILY CASE LISTS</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
+        <widget class="QWidget" name="judicial_officers_Stack">
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QFrame" name="judicial_officer_frame">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <item row="6" column="1">
+              <widget class="QRadioButton" name="pelanda_radioButton">
+               <property name="text">
+                <string>Magistrate Pelanda</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QRadioButton" name="hemmeter_radioButton">
+               <property name="text">
+                <string>Judge Hemmeter</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QRadioButton" name="visiting_judge_radioButton">
+               <property name="text">
+                <string>Visiting Judge</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QRadioButton" name="kudela_radioButton">
+               <property name="text">
+                <string>Magistrate Kudela</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QRadioButton" name="bunner_radioButton">
+               <property name="text">
+                <string>Magistrate Bunner</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QRadioButton" name="rohrer_radioButton">
+               <property name="text">
+                <string>Judge Rohrer</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="4" column="0" colspan="3">
+              <widget class="QLabel" name="label_9">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>JUDICIAL OFFICER</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="assignment_commissioners_Stack">
+         <layout class="QGridLayout" name="gridLayout_7">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <item row="0" column="0">
+           <widget class="QFrame" name="frame">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>2</number>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <property name="bottomMargin">
+              <number>24</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>24</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>30</number>
+             </property>
+             <item row="1" column="2">
+              <widget class="QRadioButton" name="patterson_radioButton">
+               <property name="text">
+                <string>Kathryn Patterson</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QRadioButton" name="dattilo_radioButton">
+               <property name="text">
+                <string>Pat Dattilo</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QRadioButton" name="none_radioButton">
+               <property name="text">
+                <string>None</string>
+               </property>
+               <attribute name="buttonGroup">
+                <string notr="true">buttonGroup</string>
+               </attribute>
+              </widget>
+             </item>
+             <item row="0" column="1" colspan="3">
+              <widget class="QLabel" name="label">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>11</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>ASSIGNMENT COMMISSIONER</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
       <item row="3" column="0" colspan="2">
@@ -1086,6 +1384,55 @@ background-color: rgb(208, 208, 208);</string>
    <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>arraignments_radioButton</tabstop>
+  <tabstop>slated_radioButton</tabstop>
+  <tabstop>final_pretrial_radioButton</tabstop>
+  <tabstop>pleas_radioButton</tabstop>
+  <tabstop>trials_to_court_radioButton</tabstop>
+  <tabstop>pcvh_fcvh_radioButton</tabstop>
+  <tabstop>arraignments_cases_box</tabstop>
+  <tabstop>slated_cases_box</tabstop>
+  <tabstop>final_pretrial_cases_box</tabstop>
+  <tabstop>pleas_cases_box</tabstop>
+  <tabstop>trials_to_court_cases_box</tabstop>
+  <tabstop>pcvh_fcvh_cases_box</tabstop>
+  <tabstop>reload_cases_Button</tabstop>
+  <tabstop>pelanda_radioButton</tabstop>
+  <tabstop>hemmeter_radioButton</tabstop>
+  <tabstop>visiting_judge_radioButton</tabstop>
+  <tabstop>kudela_radioButton</tabstop>
+  <tabstop>bunner_radioButton</tabstop>
+  <tabstop>rohrer_radioButton</tabstop>
+  <tabstop>patterson_radioButton</tabstop>
+  <tabstop>dattilo_radioButton</tabstop>
+  <tabstop>none_radioButton</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>FineOnlyPleaButton</tabstop>
+  <tabstop>NoPleaBondButton</tabstop>
+  <tabstop>JailCCPleaButton</tabstop>
+  <tabstop>NotGuiltyBondButton</tabstop>
+  <tabstop>BondHearingButton</tabstop>
+  <tabstop>PleaOnlyButton</tabstop>
+  <tabstop>DiversionButton</tabstop>
+  <tabstop>ProbationViolationBondButton</tabstop>
+  <tabstop>FailureToAppearButton</tabstop>
+  <tabstop>LeapAdmissionButton</tabstop>
+  <tabstop>TrialSentencingButton</tabstop>
+  <tabstop>SentencingOnlyButton</tabstop>
+  <tabstop>FreeformEntryButton</tabstop>
+  <tabstop>LeapSentencingButton</tabstop>
+  <tabstop>LeapAdmissionValidButton</tabstop>
+  <tabstop>rohrer_general_hearingButton</tabstop>
+  <tabstop>hemmeter_schedulingEntryButton</tabstop>
+  <tabstop>rohrer_schedulingEntryButton</tabstop>
+  <tabstop>hemmeter_final_jury_hearingButton</tabstop>
+  <tabstop>rohrer_final_jury_hearingButton</tabstop>
+  <tabstop>random_judge_Button</tabstop>
+  <tabstop>rohrer_trial_court_hearingButton</tabstop>
+  <tabstop>hemmeter_trial_court_hearingButton</tabstop>
+  <tabstop>hemmeter_general_hearingButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
  <slots>
@@ -1096,6 +1443,7 @@ background-color: rgb(208, 208, 208);</string>
   <slot>pushButtonDialog()</slot>
  </slots>
  <buttongroups>
+  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

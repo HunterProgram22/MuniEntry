@@ -237,6 +237,11 @@ background-color: rgb(255, 255, 255);</string>
                  </property>
                  <item>
                   <property name="text">
+                   <string>9:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
                    <string>10:00 AM</string>
                   </property>
                  </item>
@@ -571,22 +576,26 @@ font-weight: bold;</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>trial_dateEdit</tabstop>
+  <tabstop>trial_time_box</tabstop>
+  <tabstop>hearing_location_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
