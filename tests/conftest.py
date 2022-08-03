@@ -171,7 +171,7 @@ def check_barkschat(charges, plea):
     assert charges[1].statute == "4511.19A2"
     assert charges[1].degree == "UCM"
     assert charges[1].plea == plea
-    assert charges[2].offense == "Driving In Marked Lanes"
+    assert charges[2].offense == "Driving in Marked Lanes"
     assert charges[2].statute == "4511.33"
     assert charges[2].degree == "MM"
     assert charges[2].plea == plea

@@ -50,12 +50,12 @@ def test_get_case_data_special_character(crim_sql_special_character):
     assert case.defense_counsel == "Chase Mallory"
     assert case.defense_counsel_type == "No Data"
     assert len(case.charges_list) == 1
-    assert case.charges_list[0][0] == "Possession Of Marihuana"
+    assert case.charges_list[0][0] == "Possession of Marihuana"
 
 
 test_offense_list = [
     ("OVI ALCOHOL / DRUGS 1st", "OVI Alcohol / Drugs 1st"),
-    ("DUS FTA, FINES OR CHILD SUPPORT", "DUS Fta, Fines Or Child Support"),
+    ("DUS FTA, FINES OR CHILD SUPPORT", "DUS Fta, Fines / Child Support"),
     ("BMV SUSPENSION", "BMV Suspension"),
 ]
 
