@@ -18,8 +18,8 @@ from munientry.controllers.view_modifiers import (
     AddChargeDialogViewModifier,
     AmendChargeDialogViewModifier,
 )
+from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_lite_functions import query_offense_statute_data
-from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.models.criminal_charge_models import AmendOffenseDetails
 from munientry.views.add_charge_dialog_ui import Ui_AddChargeDialog
 from munientry.views.amend_charge_dialog_ui import Ui_AmendChargeDialog
