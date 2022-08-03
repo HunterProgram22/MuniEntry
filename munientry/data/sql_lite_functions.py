@@ -7,7 +7,7 @@ from munientry.data.sql_lite_queries import (
     delete_table_sql_query,
     insert_daily_case_list_tables_sql_query,
     select_distinct_attorney_name_sql_query,
-    select_distinct_def_last_and_case_number_sql_query,
+    select_distinct_def_last_case_number_query,
     select_distinct_offense_statute_sql_query,
     select_type_for_statute_in_charges,
 )
@@ -121,7 +121,7 @@ def query_daily_case_list_data(table: str, database: QSqlDatabase) -> list:
 
     Returns a list of distinct cases by party last name and case number.
     """
-    query_string = select_distinct_def_last_and_case_number_sql_query(table)
+    query_string = select_distinct_def_last_case_number_query(table)
     query = QSqlQuery(database)
     query.prepare(query_string)
     query.exec()
