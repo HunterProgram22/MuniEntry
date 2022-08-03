@@ -2,15 +2,15 @@ import pytest
 from PyQt5.QtSql import QSqlDatabase
 
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
-from munientry.data.databases import (
+from munientry.data.sql_lite_getters import (
     CriminalCaseSQLRetriever,
-    query_offense_statute_data,
-    query_daily_case_list_data,
     # create_daily_case_list_sql_tables,
-    load_daily_case_list_data,
 )
+from munientry.data.sql_lite_functions import load_daily_case_list_data, query_offense_statute_data, \
+    query_daily_case_list_data
 from munientry.data.connections import open_db_connection, remove_db_connection, \
     create_sqlite_db_connection, check_if_db_open
+from munientry.data.excel_getters import clean_statute_name, clean_offense_name
 
 
 @pytest.fixture
@@ -50,19 +50,19 @@ def test_get_case_data_special_character(crim_sql_special_character):
     assert case.defense_counsel == "Chase Mallory"
     assert case.defense_counsel_type == "No Data"
     assert len(case.charges_list) == 1
-    assert case.charges_list[0][0] == "Possession Of Marihuana"
+    assert case.charges_list[0][0] == "Possession of Marihuana"
 
 
 test_offense_list = [
     ("OVI ALCOHOL / DRUGS 1st", "OVI Alcohol / Drugs 1st"),
-    ("DUS FTA, FINES OR CHILD SUPPORT", "DUS Fta, Fines Or Child Support"),
+    ("DUS FTA, FINES OR CHILD SUPPORT", "DUS Fta, Fines / Child Support"),
     ("BMV SUSPENSION", "BMV Suspension"),
 ]
 
 
 @pytest.mark.parametrize("test_input, expected_output", test_offense_list)
 def test_clean_offense_name(crim_sql_retriever, test_input, expected_output):
-    assert crim_sql_retriever.clean_offense_name(test_input) == expected_output
+    assert clean_offense_name(test_input) == expected_output
 
 
 db_connection_list = [
@@ -129,7 +129,7 @@ def test_query_daily_case_list_data(table, total_cases):
 
 def test_charges_connection_to_db():
     """This test uses the charges db in the test/db, also code below is copied
-    from the main() of databases.py - not ideal test."""
+    from the main() of sql_lite_getters.py - not ideal test."""
     create_sqlite_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_charges")
     con_charges = open_db_connection("con_charges")
     assert isinstance(con_charges, QSqlDatabase)
@@ -137,7 +137,7 @@ def test_charges_connection_to_db():
 
 def test_create_daily_case_lists_db():
     """This test uses the charges db in the test/db, also code below is copied
-    from the main() of databases.py - not ideal test."""
+    from the main() of sql_lite_getters.py - not ideal test."""
     create_sqlite_db_connection(f"{DB_PATH}MuniEntryDB.sqlite", "con_daily_case_lists")
     con_daily_case_lists = open_db_connection("con_daily_case_lists")
     load_daily_case_list_data(con_daily_case_lists)

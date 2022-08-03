@@ -10,12 +10,8 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.widgets.custom_widgets import (
-    JailWarningBox,
-    RequiredBox,
-    TwoChoiceQuestionBox,
-    WarningBox,
-)
+from munientry.widgets.message_boxes import RequiredBox, WarningBox, TwoChoiceQuestionBox, \
+    JailWarningBox
 
 YES = 'Yes'
 

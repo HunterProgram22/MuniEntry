@@ -3,7 +3,7 @@
 from loguru import logger
 from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow
 
-from munientry.data.databases import CriminalCaseSQLRetriever
+from munientry.data.sql_lite_getters import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin

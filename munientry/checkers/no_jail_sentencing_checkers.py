@@ -8,7 +8,7 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.widgets.custom_widgets import RequiredBox
+from munientry.widgets.message_boxes import RequiredBox
 
 
 class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):

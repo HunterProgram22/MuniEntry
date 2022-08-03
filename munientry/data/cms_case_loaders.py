@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 from loguru import logger
-from PyQt5.QtWidgets import QDialog
 
 from munientry.models.criminal_charge_models import CriminalCharge
+from munientry.settings import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from PyQt5.QtWidgets import QDialog
 
 
 class CmsNoChargeLoader(object):
@@ -135,7 +138,7 @@ class CmsFraLoader(CmsChargeLoader):
             self.dialog.fra_frame.setHidden(True)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

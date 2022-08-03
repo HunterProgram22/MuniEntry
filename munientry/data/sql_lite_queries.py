@@ -31,35 +31,53 @@ def delete_table_sql_query(table: str) -> str:
 
 def select_case_data_sql_query(table: str, case_number: str) -> str:
     return f"""
-            SELECT *
-            FROM {table}
-            WHERE case_number = '{case_number}'
-            """
+        SELECT
+        case_number,
+        defendant_last_name,
+        defendant_first_name,
+        offense,
+        statute,
+        degree,
+        fra_in_file,
+        moving_bool,
+        def_atty_first_name || ' ' || def_atty_last_name AS defense_counsel,
+        def_atty_type
+        FROM {table}
+        WHERE case_number = '{case_number}'
+        """
 
 
 def select_distinct_offense_statute_sql_query() -> str:
-    return f"""SELECT DISTINCT offense, statute FROM charges"""
+    return 'SELECT DISTINCT offense, statute FROM charges'
 
 
 def select_distinct_attorney_name_sql_query() -> str:
+    return """
+        SELECT DISTINCT
+        id,
+        attorney_first_name || ' ' || attorney_last_name AS attorney_full_name
+        FROM attorneys
+        """
+
+
+def select_distinct_def_last_case_number_query(table: str) -> str:
     return f"""
-    SELECT DISTINCT id, attorney_first_name, attorney_last_name FROM attorneys
-    """
+        SELECT DISTINCT
+        defendant_last_name || ' - ' || case_number AS case_list_name
+        FROM {table}
+        """
 
 
-def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
+def select_type_for_statute_in_charges(statute: str) -> str:
     return f"""
-    SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
-    """
+        SELECT
+        type
+        FROM charges
+        WHERE statute = '{statute}'
+        """
 
 
-def select_statute_from_charges_for_offense_type_sql_query() -> str:
-    return f"""
-    SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'
-    """
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

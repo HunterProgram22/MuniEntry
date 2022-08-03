@@ -2,12 +2,14 @@
 
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
 """
-import sys
-
 from loguru import logger
 from PyQt5.QtSql import QSqlDatabase
 
+from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.settings import DB_PATH, set_server_and_database
+from munientry.widgets.message_boxes import InfoBox
+
+MUNIENTRY_DB = 'MuniEntryDB.sqlite'
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -62,7 +64,7 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
     :connection_name: A string provided when the function is called. The string is assigned to the
         database object to allow reference to the database by the connection name.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns the connection as a QSqlDatabase object with an open connection.
     """
     db_connection = QSqlDatabase.database(connection_name, open=True)
     check_if_db_open(db_connection, connection_name)
@@ -98,12 +100,19 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     :db_connection: The QSqlDatabase object that is the API driver connection to the database.
 
     :connection_name: The string assigned to the connection for reference.
-
-    Exits the application if it cannot connect to the database.
     """
     if not db_connection.isOpen():
-        logger.critical(f'Unable to connect to {connection_name} database')
-        sys.exit(1)
+        logger.warning(f'Unable to connect to {connection_name} database')
+        if connection_name == 'con_authority_court':
+            InfoBox(
+                'The Case Search feature is not available because a connection to the '
+                + 'AuthorityCourt database could not be made.',
+            ).exec()
+        if connection_name == 'con_munientry_db':
+            InfoBox(
+                'A connection to the MuniEntryDB could not be made. Contact Justin '
+                + 'immediately.',
+            ).exec()
     return True
 
 
@@ -117,9 +126,15 @@ def main():
     table in the database the connection is supposed to reference.
     """
     create_odbc_db_connection('con_authority_court')
-    create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_daily_case_lists')
-    create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_charges')
-    create_sqlite_db_connection(f'{DB_PATH}MuniEntryDB.sqlite', 'con_attorneys')
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
+
+    conn = open_db_connection('con_munientry_db')
+    load_daily_case_list_data(conn)
+    close_db_connection(conn)
+
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_daily_case_lists')
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_charges')
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_attorneys')
 
 
 if __name__ == '__main__':

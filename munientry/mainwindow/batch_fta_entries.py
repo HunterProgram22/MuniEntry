@@ -4,7 +4,7 @@ from datetime import datetime
 from docxtpl import DocxTemplate
 from loguru import logger
 
-from munientry.data.loader_functions import (
+from munientry.data.excel_functions import (
     create_headers_dict,
     get_excel_file_headers,
     load_active_worksheet,
