@@ -1,4 +1,5 @@
 """Module containing all functions that query the internal SQL Lite database."""
+from loguru import logger
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.data.excel_getters import return_cases_data_from_excel
@@ -6,9 +7,9 @@ from munientry.data.sql_lite_queries import (
     delete_table_sql_query,
     insert_daily_case_list_tables_sql_query,
     select_distinct_attorney_name_sql_query,
-    select_distinct_def_last_def_first_case_number_sql_query,
+    select_distinct_def_last_and_case_number_sql_query,
     select_distinct_offense_statute_sql_query,
-    select_statute_from_charges_for_offense_type_sql_query,
+    select_type_for_statute_in_charges,
 )
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 
@@ -36,7 +37,7 @@ def insert_daily_case_list_sql_data(
 
     :excel_report: The name of the SSRS report (excel file). The path is added in the function.
 
-    :table_name: The name of the SSRS report that corresponds to the table in the SQL Lite
+    :table_name: The name of the SQL Lite table the data is being inserted into in the SQL Lite
         database.
     """
     cases_list = return_cases_data_from_excel(f'{DB_PATH}{excel_report}')
@@ -92,50 +93,70 @@ def query_offense_statute_data(database: QSqlDatabase, query_value: str) -> list
     return item_list
 
 
-def query_attorney_list(db_connection: QSqlDatabase) -> list:
+def query_attorney_list(database: QSqlDatabase) -> list:
+    """Queries the attorneys table in the SQL Lite internal database (MuniEntryDB.sqlite).
+
+    :database: The SQL Lite database object for MuniEntryDB.sqlite.
+
+    Returns a list of all attorneys in the attorneys table.
+    """
     query_string = select_distinct_attorney_name_sql_query()
-    query = QSqlQuery(db_connection)
+    query = QSqlQuery(database)
     query.prepare(query_string)
     query.exec()
     item_list = []
     while query.next():
-        attorney_full_name = f'{query.value(1)} {query.value(2)}'
+        attorney_full_name = query.value('attorney_full_name')
         item_list.append(attorney_full_name)
     item_list.sort()
     return item_list
 
 
-def query_daily_case_list_data(table: str, db_connection: QSqlDatabase) -> list:
-    query_string = select_distinct_def_last_def_first_case_number_sql_query(table)
-    query = QSqlQuery(db_connection)
+def query_daily_case_list_data(table: str, database: QSqlDatabase) -> list:
+    """Queries one of the case tables and returns a list of cases.
+
+    :table: The specific table of cases to be queried.
+
+    :database: The SQL Lite database object for MuniEntryDB.sqlite.
+
+    Returns a list of distinct cases by party last name and case number.
+    """
+    query_string = select_distinct_def_last_and_case_number_sql_query(table)
+    query = QSqlQuery(database)
     query.prepare(query_string)
     query.exec()
-    item_list = []
+    case_list = []
     while query.next():
-        last_name = query.value(0).title()
-        case_number = query.value(2)
-        name = f'{last_name} - {case_number}'
-        item_list.append(name)
-    item_list.sort()
-    item_list.insert(0, '')
-    return item_list
+        case_list_name = query.value('case_list_name')
+        case_list.append(case_list_name)
+    case_list.sort()
+    case_list.insert(0, '')
+    return case_list
 
 
-def sql_query_offense_type(key: str, db_connection: QSqlDatabase) -> str:
-    """This is called from the AddChargeDialogSlotFunctions to set the offense type to calculate
-    court costs. If no match is found this returns 'Moving' which is the highest court cost, so if
+def query_offense_type(statute: str, database: QSqlDatabase) -> str:
+    """Queries the offense to get the offense type (Moving, Non-moving, or Criminal).
+
+    Used by the AddChargeDialog.
+
+    TODO: add to AmendChargeDialogSlotFunctions because amended charge could have new type.
+
+    :database: The SQL Lite database object for MuniEntryDB.sqlite.
+
+    Returns a string of Moving, Non-moving or Criminal.
+
+    If no match is found this returns 'Moving' which is the highest court cost, so if
     the defendant is told the amount it should not be less than what it is owed.
-    TODO: add for AmendChargeDialogSlotFunctions.
     """
-    query = QSqlQuery(db_connection)
-    query.prepare(select_statute_from_charges_for_offense_type_sql_query())
-    query.bindValue(':key', key)
+    query = QSqlQuery(database)
+    query.prepare(select_type_for_statute_in_charges(statute))
     query.exec()
-    offense_type = 'Moving'
-    while query.next():
-        statute = query.value(2)
-        offense_type = query.value(4)
-        if statute == key:
-            query.finish()
-            return offense_type
-    return offense_type
+    if query.next() is None:
+        return 'Moving'
+    return query.value('type')
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

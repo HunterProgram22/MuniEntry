@@ -53,19 +53,27 @@ def select_distinct_offense_statute_sql_query() -> str:
 
 def select_distinct_attorney_name_sql_query() -> str:
     return f"""
-    SELECT DISTINCT id, attorney_first_name, attorney_last_name FROM attorneys
+    SELECT DISTINCT 
+    id, 
+    attorney_first_name || ' ' || attorney_last_name AS attorney_full_name 
+    FROM attorneys
     """
 
 
-def select_distinct_def_last_def_first_case_number_sql_query(table: str) -> str:
+def select_distinct_def_last_and_case_number_sql_query(table: str) -> str:
     return f"""
-    SELECT DISTINCT defendant_last_name, defendant_first_name, case_number FROM {table}
+    SELECT DISTINCT 
+    defendant_last_name || ' - ' || case_number AS case_list_name 
+    FROM {table}
     """
 
 
-def select_statute_from_charges_for_offense_type_sql_query() -> str:
+def select_type_for_statute_in_charges(statute: str) -> str:
     return f"""
-    SELECT * FROM charges WHERE statute LIKE '%' || :key || '%'
+    SELECT 
+    type 
+    FROM charges 
+    WHERE statute = '{statute}'
     """
 
 
