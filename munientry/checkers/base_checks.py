@@ -267,7 +267,7 @@ class FreeformDialogInfoChecker(DefenseCounselChecker):
         self.check_status = self.perform_check_list()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

@@ -10,8 +10,12 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.widgets.message_boxes import RequiredBox, WarningBox, TwoChoiceQuestionBox, \
-    JailWarningBox
+from munientry.widgets.message_boxes import (
+    JailWarningBox,
+    RequiredBox,
+    TwoChoiceQuestionBox,
+    WarningBox,
+)
 
 YES = 'Yes'
 
@@ -288,7 +292,7 @@ class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):
         self.check_status = self.perform_check_list()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

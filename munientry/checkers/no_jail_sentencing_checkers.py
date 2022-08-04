@@ -1,6 +1,5 @@
 """Module containing information checks for plea and sentencing dialogs with no jail time."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog
 
 from munientry.checkers.base_checks import (
     FAIL,
@@ -8,7 +7,11 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
+from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
+
+if TYPE_CHECKING:
+    from PyQt5.QtWidgets import QDialog
 
 
 class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
@@ -82,7 +85,7 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
         return FAIL
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
