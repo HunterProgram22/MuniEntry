@@ -1,7 +1,7 @@
 """Module containing the Main Window of the application."""
 
 from loguru import logger
-from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow
+from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
 
 from munientry.data.sql_lite_getters import CriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
@@ -10,6 +10,34 @@ from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
+from munientry.widgets.message_boxes import WarningBox
+
+
+def load_blank_case_template() -> CmsCaseInformation:
+    """Loads the CmsCaseInformation model with no data."""
+    return CmsCaseInformation()
+
+
+def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQLRetriever:
+    """Loads the case data from a case table.
+
+    Returns a CmsCaseInformation object via CriminalCaseSQLRetriever().load_case()
+    that contains all data from the Cms daily case list reports.
+    """
+    case_number = selected_case_table.currentText().split(' - ')[1]
+    last_name = selected_case_table.currentText().split(' - ')[0]
+    all_cases = [selected_case_table.itemText(i) for i in range(selected_case_table.count())]
+    for case in all_cases:
+        logger.debug(case.split(' - ')[0])
+    message = (
+            f'There are multiple cases with the last name {last_name}. Do you want to '
+            + f'combine them into a single entry?'
+    )
+    msg_response = WarningBox(message, 'Companion Cases').exec()
+    if msg_response == QMessageBox.No:
+        return CriminalCaseSQLRetriever(case_number, case_table).load_case()
+    if msg_response == QMessageBox.Yes:
+        return CriminalCaseSQLRetriever(case_number, case_table).load_case()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
@@ -58,12 +86,15 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         logger.action(f'Judicial Officer set to: {judicial_officer}')
 
     def set_case_to_load(self, selected_case_table: QComboBox) -> CmsCaseInformation:
-        """Returns an empty CmsCaseInformation object if no case is selected.
+        """Returns CmsCaseInformation object model for loading to the template.
 
-        Otherwise returns a CmsCaseInformation object via CriminalCaseSQLRetriever().load_case()
-        that contains all data from the Cms daily case list reports.
+        :selected_case_table: The QComboBox object that is the daily case list table that is
+            currently selected on the Main Window.
+
+        TODO: Refactor selected_case_table and self.case_table to single variable.
         """
         if selected_case_table.currentText() == '':
-            return CmsCaseInformation()
-        case_number = selected_case_table.currentText().split('- ')[1]
-        return CriminalCaseSQLRetriever(case_number, self.case_table).load_case()
+            return load_blank_case_template()
+        else:
+            return load_case_from_case_list(selected_case_table, self.case_table)
+
