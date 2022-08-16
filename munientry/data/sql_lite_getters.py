@@ -69,6 +69,14 @@ class CriminalCaseSQLRetriever(object):
         return self.case
 
 
+class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
+
+    def __init__(self, case_number: str, companion_case_numbers: str, case_table: str) -> None:
+        super().__init__(case_number, case_table)
+        self.all_case_numbers = companion_case_numbers
+        self.case.case_number = self.all_case_numbers
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:

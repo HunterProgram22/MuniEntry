@@ -3,7 +3,7 @@
 from loguru import logger
 from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
 
-from munientry.data.sql_lite_getters import CriminalCaseSQLRetriever
+from munientry.data.sql_lite_getters import CriminalCaseSQLRetriever, MultipleCriminalCaseSQLRetriever
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
@@ -27,17 +27,33 @@ def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQL
     case_number = selected_case_table.currentText().split(' - ')[1]
     last_name = selected_case_table.currentText().split(' - ')[0]
     all_cases = [selected_case_table.itemText(i) for i in range(selected_case_table.count())]
+    case_match_count = 0
+    matched_case_numbers_list = []
     for case in all_cases:
-        logger.debug(case.split(' - ')[0])
-    message = (
-            f'There are multiple cases with the last name {last_name}. Do you want to '
-            + f'combine them into a single entry?'
-    )
-    msg_response = WarningBox(message, 'Companion Cases').exec()
-    if msg_response == QMessageBox.No:
-        return CriminalCaseSQLRetriever(case_number, case_table).load_case()
-    if msg_response == QMessageBox.Yes:
-        return CriminalCaseSQLRetriever(case_number, case_table).load_case()
+        if case.split(' - ')[0] == last_name:
+            case_match_count += 1
+            matched_case_number = case.split(' - ')[1]
+            matched_case_numbers_list.append(matched_case_number)
+    if case_match_count > 1:
+        message = (
+                f'There are {case_match_count} cases with the last name {last_name}. Do you want to '
+                + f'combine them into a single entry?'
+        )
+        msg_response = WarningBox(message, 'Companion Cases').exec()
+        if msg_response == QMessageBox.No:
+            return load_single_case_for_template(case_number, case_table)
+        if msg_response == QMessageBox.Yes:
+            companion_case_numbers = ', '.join(matched_case_numbers_list)
+            return load_multiple_cases_for_template(case_number, companion_case_numbers, case_table)
+    return load_single_case_for_template(case_number, case_table)
+
+
+def load_single_case_for_template(case_number, case_table):
+    return CriminalCaseSQLRetriever(case_number, case_table).load_case()
+
+
+def load_multiple_cases_for_template(case_number, companion_case_numbers, case_table):
+    return MultipleCriminalCaseSQLRetriever(case_number, companion_case_numbers, case_table).load_case()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
