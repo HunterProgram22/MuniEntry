@@ -82,7 +82,6 @@ class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
         self.query_case_data()
         self.query.finish()
         close_db_connection(self.database)
-        # self.case.case_number = self.all_case_numbers
 
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
@@ -97,27 +96,9 @@ class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
             self.query.exec()
             self.load_query_data_into_case()
 
-    def load_query_data_into_case(self) -> None:
-        while self.query.next():
-            if self.case.case_number is None:
-                self.load_case_information()
-            self.load_charge_information()
-
     def load_case_information(self) -> None:
+        super().load_case_information()
         self.case.case_number = self.joined_case_numbers
-        self.case.defendant.last_name = self.query.value('defendant_last_name')
-        self.case.defendant.first_name = self.query.value('defendant_first_name')
-        self.case.fra_in_file = self.query.value('fra_in_file')
-        self.case.defense_counsel = self.query.value('defense_counsel')
-        self.case.defense_counsel_type = self.query.value('def_atty_type')
-
-    def load_charge_information(self) -> None:
-        offense = self.query.value('offense')
-        statute = self.query.value('statute')
-        degree = self.query.value('degree')
-        moving_bool = self.query.value('moving_bool')
-        charge = (offense, statute, degree, moving_bool)
-        self.case.charges_list.append(charge)
 
 
 if __name__ == '__main__':
