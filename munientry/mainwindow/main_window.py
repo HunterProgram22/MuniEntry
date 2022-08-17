@@ -1,5 +1,4 @@
 """Module containing the Main Window of the application."""
-
 from loguru import logger
 from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
 
@@ -16,6 +15,14 @@ from munientry.widgets.message_boxes import WarningBox
 def load_blank_case_template() -> CmsCaseInformation:
     """Loads the CmsCaseInformation model with no data."""
     return CmsCaseInformation()
+
+
+def load_single_case_for_template(case_number, case_table):
+    return CriminalCaseSQLRetriever(case_number, case_table).load_case()
+
+
+def load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table):
+    return MultipleCriminalCaseSQLRetriever(matched_case_numbers_list, joined_case_numbers, case_table).load_case()
 
 
 def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQLRetriever:
@@ -47,14 +54,6 @@ def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQL
             joined_case_numbers = ', '.join(matched_case_numbers_list)
             return load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table)
     return load_single_case_for_template(case_number, case_table)
-
-
-def load_single_case_for_template(case_number, case_table):
-    return CriminalCaseSQLRetriever(case_number, case_table).load_case()
-
-
-def load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table):
-    return MultipleCriminalCaseSQLRetriever(matched_case_numbers_list, joined_case_numbers, case_table).load_case()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
