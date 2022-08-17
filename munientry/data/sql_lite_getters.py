@@ -71,10 +71,53 @@ class CriminalCaseSQLRetriever(object):
 
 class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
 
-    def __init__(self, case_number: str, companion_case_numbers: str, case_table: str) -> None:
-        super().__init__(case_number, case_table)
-        self.all_case_numbers = companion_case_numbers
-        self.case.case_number = self.all_case_numbers
+    def __init__(self, matched_case_numbers_list: list, joined_case_numbers: str, case_table: str) -> None:
+        logger.debug(matched_case_numbers_list)
+        self.joined_case_numbers = joined_case_numbers
+        self.all_case_numbers = matched_case_numbers_list
+        self.case_table = case_table
+        self.database_connection_name = 'con_munientry_db'
+        self.database = open_db_connection(self.database_connection_name)
+        self.case = CmsCaseInformation()
+        self.query_case_data()
+        self.query.finish()
+        close_db_connection(self.database)
+        # self.case.case_number = self.all_case_numbers
+
+    def query_case_data(self) -> None:
+        """Query database based on cms_case number to return the data to load for the dialog."""
+        for case_number in self.all_case_numbers:
+            self.case_number = case_number
+            query_string = select_case_data_sql_query(self.case_table, self.case_number)
+            self.query = QSqlQuery(self.database)
+            self.query.prepare(query_string)
+            logger.database(f'Querying {self.database_connection_name}')
+            logger.database(f'Query: {query_string}')
+            self.query.bindValue(self.case_number, self.case_number)
+            self.query.exec()
+            self.load_query_data_into_case()
+
+    def load_query_data_into_case(self) -> None:
+        while self.query.next():
+            if self.case.case_number is None:
+                self.load_case_information()
+            self.load_charge_information()
+
+    def load_case_information(self) -> None:
+        self.case.case_number = self.joined_case_numbers
+        self.case.defendant.last_name = self.query.value('defendant_last_name')
+        self.case.defendant.first_name = self.query.value('defendant_first_name')
+        self.case.fra_in_file = self.query.value('fra_in_file')
+        self.case.defense_counsel = self.query.value('defense_counsel')
+        self.case.defense_counsel_type = self.query.value('def_atty_type')
+
+    def load_charge_information(self) -> None:
+        offense = self.query.value('offense')
+        statute = self.query.value('statute')
+        degree = self.query.value('degree')
+        moving_bool = self.query.value('moving_bool')
+        charge = (offense, statute, degree, moving_bool)
+        self.case.charges_list.append(charge)
 
 
 if __name__ == '__main__':

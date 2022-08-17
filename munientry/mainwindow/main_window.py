@@ -43,8 +43,8 @@ def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQL
         if msg_response == QMessageBox.No:
             return load_single_case_for_template(case_number, case_table)
         if msg_response == QMessageBox.Yes:
-            companion_case_numbers = ', '.join(matched_case_numbers_list)
-            return load_multiple_cases_for_template(case_number, companion_case_numbers, case_table)
+            joined_case_numbers = ', '.join(matched_case_numbers_list)
+            return load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table)
     return load_single_case_for_template(case_number, case_table)
 
 
@@ -52,8 +52,8 @@ def load_single_case_for_template(case_number, case_table):
     return CriminalCaseSQLRetriever(case_number, case_table).load_case()
 
 
-def load_multiple_cases_for_template(case_number, companion_case_numbers, case_table):
-    return MultipleCriminalCaseSQLRetriever(case_number, companion_case_numbers, case_table).load_case()
+def load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table):
+    return MultipleCriminalCaseSQLRetriever(matched_case_numbers_list, joined_case_numbers, case_table).load_case()
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
