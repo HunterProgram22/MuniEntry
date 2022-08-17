@@ -36,7 +36,8 @@ def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQL
             matched_case_numbers_list.append(matched_case_number)
     if case_match_count > 1:
         message = (
-                f'There are {case_match_count} cases with the last name {last_name}. Do you want to '
+                f'There are {case_match_count} cases with the last name {last_name}.\n\nThe matching cases are: '
+                + f'{matched_case_numbers_list}.\n\nDo you want to '
                 + f'combine them into a single entry?'
         )
         msg_response = WarningBox(message, 'Companion Cases').exec()
