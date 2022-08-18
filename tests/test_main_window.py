@@ -109,10 +109,10 @@ def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button
 daily_case_list_appearance_reasons = [
     ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", "arraignment", "FineOnlyPleaButton"),
     ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("final_pretrial_radioButton", "Henderson - 20TRC09471", "final_pretrial_cases_box", "a change of plea", "JailCCPleaButton"),
     ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "a change of plea", "JailCCPleaButton"),
     ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "a change of plea", "JailCCPleaButton"),
-    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
+    ("pcvh_fcvh_radioButton", "Gregory - 22TRC00568", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
 ]
 
 
