@@ -12,27 +12,24 @@ from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.message_boxes import WarningBox
 
 
-def load_blank_case_template() -> CmsCaseInformation:
+def load_no_case() -> CmsCaseInformation:
     """Loads the CmsCaseInformation model with no data."""
     return CmsCaseInformation()
 
 
-def load_single_case_for_template(case_number, case_table):
+def load_single_case(case_number: str, case_table: str) -> CmsCaseInformation:
+    """Loads a single case into the CmsCaseInformation model."""
     return CriminalCaseSQLRetriever(case_number, case_table).load_case()
 
 
-def load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table):
-    return MultipleCriminalCaseSQLRetriever(matched_case_numbers_list, joined_case_numbers, case_table).load_case()
+def load_multiple_cases(matched_case_numbers: list, case_table: str) -> CmsCaseInformation:
+    """Loads multiple caes into the CmsCaseInformation model."""
+    return MultipleCriminalCaseSQLRetriever(matched_case_numbers, case_table).load_case()
 
 
-def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQLRetriever:
-    """Loads the case data from a case table.
-
-    Returns a CmsCaseInformation object via CriminalCaseSQLRetriever().load_case()
-    that contains all data from the Cms daily case list reports.
-    """
-    case_number = selected_case_table.currentText().split(' - ')[1]
-    last_name = selected_case_table.currentText().split(' - ')[0]
+def check_for_companion_cases(selected_case_table, case_table) -> CriminalCaseSQLRetriever:
+    """Checks for matching last names to find potential companion cases to load."""
+    last_name, case_number = selected_case_table.currentText().split(' - ')
     all_cases = [selected_case_table.itemText(i) for i in range(selected_case_table.count())]
     case_match_count = 0
     matched_case_numbers_list = []
@@ -49,11 +46,10 @@ def load_case_from_case_list(selected_case_table, case_table) -> CriminalCaseSQL
         )
         msg_response = WarningBox(message, 'Companion Cases').exec()
         if msg_response == QMessageBox.No:
-            return load_single_case_for_template(case_number, case_table)
+            return load_single_case(case_number, case_table)
         if msg_response == QMessageBox.Yes:
-            joined_case_numbers = ', '.join(matched_case_numbers_list)
-            return load_multiple_cases_for_template(matched_case_numbers_list, joined_case_numbers, case_table)
-    return load_single_case_for_template(case_number, case_table)
+            return load_multiple_cases(matched_case_numbers_list, case_table)
+    return load_single_case(case_number, case_table)
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
@@ -110,7 +106,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         TODO: Refactor selected_case_table and self.case_table to single variable.
         """
         if selected_case_table.currentText() == '':
-            return load_blank_case_template()
+            return load_no_case()
         else:
-            return load_case_from_case_list(selected_case_table, self.case_table)
+            return check_for_companion_cases(selected_case_table, self.case_table)
 

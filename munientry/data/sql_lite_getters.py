@@ -71,9 +71,8 @@ class CriminalCaseSQLRetriever(object):
 
 class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
 
-    def __init__(self, matched_case_numbers_list: list, joined_case_numbers: str, case_table: str) -> None:
+    def __init__(self, matched_case_numbers_list: list, case_table: str) -> None:
         logger.debug(matched_case_numbers_list)
-        self.joined_case_numbers = joined_case_numbers
         self.all_case_numbers = matched_case_numbers_list
         self.case_table = case_table
         self.database_connection_name = 'con_munientry_db'
@@ -98,7 +97,7 @@ class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
 
     def load_case_information(self) -> None:
         super().load_case_information()
-        self.case.case_number = self.joined_case_numbers
+        self.case.case_number = ', '.join(self.all_case_numbers)
 
 
 if __name__ == '__main__':
