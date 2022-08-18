@@ -110,20 +110,35 @@ class MainWindowSlotFunctionsMixin(object):
         self.dialog.exec()
 
     @check_assignment_commissioner
-    @check_case_list_selected
     def start_scheduling_entry(self) -> None:
+        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            cms_search_data = self.get_case_info()
+            defendant = Defendant()
+            defendant.first_name = cms_search_data[1]
+            defendant.last_name = cms_search_data[2]
+            cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
+            self.dialog = self.scheduling_dialog_buttons_dict[self.sender()](
+                self.judicial_officer,
+                cms_case=cms_case_data,
+                case_table=None,
+            )
+        else:
+            self.dialog = self.set_dialog_from_daily_case_list()
+        dialog_name = self.dialog.objectName()
+        logger.dialog(f'{dialog_name} Opened')
+        self.dialog.exec()
+
+    @check_case_list_selected
+    def set_dialog_from_daily_case_list(self):
         selected_case_table = self.database_table_dict.get(
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        self.dialog = self.scheduling_dialog_buttons_dict[self.sender()](
+        return self.scheduling_dialog_buttons_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
         )
-        dialog_name = self.dialog.objectName()
-        logger.dialog(f'{dialog_name} Opened')
-        self.dialog.exec()
 
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
