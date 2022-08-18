@@ -10,8 +10,8 @@ from munientry.checkers.base_checks import (
 from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
 
-if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
+# if TYPE_CHECKING:
+from PyQt5.QtWidgets import QDialog
 
 
 class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):

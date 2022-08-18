@@ -4,8 +4,8 @@ from loguru import logger
 from munientry.checkers.base_checks import BondInfoChecker, ChargeGridInfoChecker
 from munientry.settings import TYPE_CHECKING
 
-if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
+# if TYPE_CHECKING:
+from PyQt5.QtWidgets import QDialog
 
 
 class LeapAdmissionPleaDialogInfoChecker(ChargeGridInfoChecker):

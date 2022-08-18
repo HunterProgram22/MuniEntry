@@ -69,6 +69,37 @@ class CriminalCaseSQLRetriever(object):
         return self.case
 
 
+class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
+
+    def __init__(self, matched_case_numbers_list: list, case_table: str) -> None:
+        logger.debug(matched_case_numbers_list)
+        self.all_case_numbers = matched_case_numbers_list
+        self.case_table = case_table
+        self.database_connection_name = 'con_munientry_db'
+        self.database = open_db_connection(self.database_connection_name)
+        self.case = CmsCaseInformation()
+        self.query_case_data()
+        self.query.finish()
+        close_db_connection(self.database)
+
+    def query_case_data(self) -> None:
+        """Query database based on cms_case number to return the data to load for the dialog."""
+        for case_number in self.all_case_numbers:
+            self.case_number = case_number
+            query_string = select_case_data_sql_query(self.case_table, self.case_number)
+            self.query = QSqlQuery(self.database)
+            self.query.prepare(query_string)
+            logger.database(f'Querying {self.database_connection_name}')
+            logger.database(f'Query: {query_string}')
+            self.query.bindValue(self.case_number, self.case_number)
+            self.query.exec()
+            self.load_query_data_into_case()
+
+    def load_case_information(self) -> None:
+        super().load_case_information()
+        self.case.case_number = ', '.join(self.all_case_numbers)
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
