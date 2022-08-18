@@ -2,7 +2,10 @@
 from loguru import logger
 from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
 
-from munientry.data.sql_lite_getters import CriminalCaseSQLRetriever, MultipleCriminalCaseSQLRetriever
+from munientry.data.sql_lite_getters import (
+    CriminalCaseSQLRetriever,
+    MultipleCriminalCaseSQLRetriever,
+)
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
@@ -27,10 +30,13 @@ def load_multiple_cases(matched_case_numbers: list, case_table: str) -> CmsCaseI
     return MultipleCriminalCaseSQLRetriever(matched_case_numbers, case_table).load_case()
 
 
-def check_for_companion_cases(selected_case_table, case_table) -> CriminalCaseSQLRetriever:
+def check_for_companion_cases(
+    selected_case_table: object,
+    case_table: str,
+) -> CriminalCaseSQLRetriever:
     """Checks for matching last names to find potential companion cases to load."""
     selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
-    all_cases = [selected_case_table.itemText(i) for i in range(selected_case_table.count())]
+    all_cases = [selected_case_table.itemText(case) for case in range(selected_case_table.count())]
     case_match_count, matched_cases_list = search_daily_case_list(all_cases, selected_last_name)
     if case_match_count > 1:
         response = ask_if_cases_combined(case_match_count, selected_last_name, matched_cases_list)
@@ -59,8 +65,8 @@ def ask_if_cases_combined(case_match_count, last_name, matched_case_numbers_list
     """Asks user if they want to combine matched cases or just load selected case."""
     case_numbers = '\n'.join(matched_case_numbers_list)
     message = (
-            f'There are {case_match_count} cases with the last name {last_name}.\n\nThe matching '
-            + f'cases are:\n{case_numbers}\n\nDo you want to combine them into a single entry?'
+        f'There are {case_match_count} cases with the last name {last_name}.\n\nThe matching '
+        + f'cases are:\n{case_numbers}\n\nDo you want to combine them into a single entry?'
     )
     return WarningBox(message, 'Companion Cases').exec()
 
@@ -120,6 +126,4 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         """
         if selected_case_table.currentText() == '':
             return load_no_case()
-        else:
-            return check_for_companion_cases(selected_case_table, self.case_table)
-
+        return check_for_companion_cases(selected_case_table, self.case_table)
