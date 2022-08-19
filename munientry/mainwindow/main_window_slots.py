@@ -1,6 +1,6 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QDialog, QComboBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.controllers.helper_functions import (
@@ -75,69 +75,63 @@ class MainWindowSlotFunctionsMixin(object):
         )
 
     @check_judicial_officer
-    @check_case_list_selected
-    def start_dialog_from_entry_button(self) -> None:
-        """The decorator checks prevent the dialog execution unless compliant.
+    def start_crim_traffic_entry(self) -> None:
+        """Starts a criminal/traffic dialog based on the dialog button that is pressed.
 
         :check_judicial_officer: Requires that a judicial officer is selected.
-
-        'check_case_list_selected: Requires that a daily case list is selected, if no case
-        is needed then must select a case list with the field blank.
         """
+        button_dict = self.crim_traffic_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            cms_search_data = self.get_case_info()
-            defendant = Defendant()
-            defendant.first_name = cms_search_data[1]
-            defendant.last_name = cms_search_data[2]
-            cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
-            self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
-                self.judicial_officer,
-                cms_case=cms_case_data,
-                case_table=None,
-            )
+            self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
-            selected_case_table = self.database_table_dict.get(
-                self.case_table, QComboBox,
-            )
-            cms_case_data = self.set_case_to_load(selected_case_table)
-            self.dialog = self.crim_traffic_dialog_buttons_dict[self.sender()](
-                self.judicial_officer,
-                cms_case=cms_case_data,
-                case_table=self.case_table,
-            )
+            self.dialog = self.set_dialog_from_case_search(button_dict)
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
     @check_assignment_commissioner
     def start_scheduling_entry(self) -> None:
+        """Starts a scheduling dialog based on the dialog button that is pressed.
+
+        :check_assignment_commisserion: Requires that a assignment commissioner is selected.
+        """
+        button_dict = self.scheduling_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            cms_search_data = self.get_case_info()
-            defendant = Defendant()
-            defendant.first_name = cms_search_data[1]
-            defendant.last_name = cms_search_data[2]
-            cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
-            self.dialog = self.scheduling_dialog_buttons_dict[self.sender()](
-                self.judicial_officer,
-                cms_case=cms_case_data,
-                case_table=None,
-            )
+            self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
-            self.dialog = self.set_dialog_from_daily_case_list()
+            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
     @check_case_list_selected
-    def set_dialog_from_daily_case_list(self):
+    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
+        """Sets the case to be loaded from the daily case list tab.
+
+        :check_case_list_selected: Requires that a daily case list is selected, if no case
+            is needed then must select a case list with the field blank.
+        """
         selected_case_table = self.database_table_dict.get(
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        return self.scheduling_dialog_buttons_dict[self.sender()](
+        return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
             case_table=self.case_table,
+        )
+
+    def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
+        """Sets the case to be loaded from the case search tab."""
+        cms_search_data = self.get_case_info()
+        defendant = Defendant()
+        defendant.first_name = cms_search_data[1]
+        defendant.last_name = cms_search_data[2]
+        cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
+        return button_dict[self.sender()](
+            self.judicial_officer,
+            cms_case=cms_case_data,
+            case_table=None,
         )
 
     def set_person_stack_widget(self) -> None:

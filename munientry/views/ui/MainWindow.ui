@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1168</width>
-    <height>899</height>
+    <width>1170</width>
+    <height>906</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1026,6 +1026,12 @@ font-weight: bold;</string>
             <property name="text">
              <string>Get Case</string>
             </property>
+            <property name="autoDefault">
+             <bool>true</bool>
+            </property>
+            <property name="default">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="1" column="0">
@@ -1135,7 +1141,7 @@ font-weight: bold;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1168</width>
+     <width>1170</width>
      <height>27</height>
     </rect>
    </property>
@@ -1231,7 +1237,24 @@ font-weight: bold;</string>
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>case_search_box</sender>
+   <signal>returnPressed()</signal>
+   <receiver>get_case_Button</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>267</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>842</x>
+     <y>286</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>pushButtonJuryInstructions()</slot>
   <slot>pushButtonTransferEntry()</slot>

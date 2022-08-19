@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1168, 899)
+        MainWindow.resize(1170, 906)
         MainWindow.setMinimumSize(QtCore.QSize(900, 720))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -475,6 +475,8 @@ class Ui_MainWindow(object):
         self.gridLayout_12.addWidget(self.case_search_box, 1, 1, 1, 1)
         self.get_case_Button = QtWidgets.QPushButton(self.case_search_tab)
         self.get_case_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.get_case_Button.setAutoDefault(True)
+        self.get_case_Button.setDefault(True)
         self.get_case_Button.setObjectName("get_case_Button")
         self.gridLayout_12.addWidget(self.get_case_Button, 1, 2, 1, 1)
         self.label_15 = QtWidgets.QLabel(self.case_search_tab)
@@ -530,7 +532,7 @@ class Ui_MainWindow(object):
         self.gridLayout_10.addLayout(self.gridLayout_9, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1168, 27))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1170, 27))
         self.menubar.setObjectName("menubar")
         self.menuLogs = QtWidgets.QMenu(self.menubar)
         self.menuLogs.setObjectName("menuLogs")
@@ -557,6 +559,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
         self.search_tabWidget.setCurrentIndex(0)
+        self.case_search_box.returnPressed.connect(self.get_case_Button.click) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.NoPleaBondButton, self.JailCCPleaButton)
         MainWindow.setTabOrder(self.JailCCPleaButton, self.NotGuiltyBondButton)

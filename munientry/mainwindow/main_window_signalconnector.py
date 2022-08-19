@@ -37,7 +37,7 @@ class MainWindowSignalConnector(object):
 
     def connect_crim_traffic_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.crim_traffic_dialog_buttons_dict:
-            key.pressed.connect(self.main_window.start_dialog_from_entry_button)
+            key.pressed.connect(self.main_window.start_crim_traffic_entry)
 
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.scheduling_dialog_buttons_dict:
