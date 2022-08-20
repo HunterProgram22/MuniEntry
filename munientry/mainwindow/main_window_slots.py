@@ -74,27 +74,35 @@ class MainWindowSlotFunctionsMixin(object):
             + f' The assignment was made at {time_now}.',
         )
 
-    @check_judicial_officer
+    # @check_judicial_officer
     def start_crim_traffic_entry(self) -> None:
         """Starts a criminal/traffic dialog based on the dialog button that is pressed.
 
         :check_judicial_officer: Requires that a judicial officer is selected.
         """
+        if self.judicial_officer is None:
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+        if self.judicial_officer.officer_type == 'Assignment Commissioner':
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         button_dict = self.crim_traffic_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
-            self.dialog = self.set_dialog_from_case_search(button_dict)
+            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
         dialog_name = self.dialog.objectName()
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    @check_assignment_commissioner
+    # @check_assignment_commissioner
     def start_scheduling_entry(self) -> None:
         """Starts a scheduling dialog based on the dialog button that is pressed.
 
         :check_assignment_commisserion: Requires that a assignment commissioner is selected.
         """
+        if self.judicial_officer is None:
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+        if self.judicial_officer.officer_type != 'Assignment Commissioner':
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
         button_dict = self.scheduling_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
@@ -104,22 +112,29 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    @check_case_list_selected
+    # @check_case_list_selected
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab.
 
         :check_case_list_selected: Requires that a daily case list is selected, if no case
             is needed then must select a case list with the field blank.
         """
-        selected_case_table = self.database_table_dict.get(
-            self.case_table, QComboBox,
-        )
-        cms_case_data = self.set_case_to_load(selected_case_table)
-        return button_dict[self.sender()](
-            self.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=self.case_table,
-        )
+        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+            selected_case_table = self.database_table_dict.get(
+                self.case_table, QComboBox,
+            )
+            cms_case_data = self.set_case_to_load(selected_case_table)
+            return button_dict[self.sender()](
+                self.judicial_officer,
+                cms_case=cms_case_data,
+                case_table=self.case_table,
+            )
+        else:
+            RequiredBox(
+                'You must select a case list. If not loading a case in the case list '
+                + 'leave the case list field blank.', 'Daily Case List Required',
+                ).exec()
+
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
