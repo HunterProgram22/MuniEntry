@@ -3,7 +3,7 @@ from PyQt5.QtSql import QSqlDatabase
 
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 from munientry.data.sql_lite_getters import (
-    CriminalCaseSQLRetriever,
+    CriminalCaseSQLLite,
     # create_daily_case_list_sql_tables,
 )
 from munientry.data.sql_lite_functions import load_daily_case_list_data, query_offense_statute_data, \
@@ -15,11 +15,11 @@ from munientry.data.excel_getters import clean_statute_name, clean_offense_name
 
 @pytest.fixture
 def crim_sql_retriever():
-    return CriminalCaseSQLRetriever("20TRC09471", "pleas")
+    return CriminalCaseSQLLite("20TRC09471", "pleas")
 
 @pytest.fixture
 def crim_sql_special_character():
-    return CriminalCaseSQLRetriever("21CRB01597", "pleas")
+    return CriminalCaseSQLLite("21CRB01597", "pleas")
 
 
 def test_create_CriminalCaseSQLRetriever(crim_sql_retriever):

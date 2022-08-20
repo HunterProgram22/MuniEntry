@@ -3,8 +3,8 @@ from loguru import logger
 from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
 
 from munientry.data.sql_lite_getters import (
-    CriminalCaseSQLRetriever,
-    MultipleCriminalCaseSQLRetriever,
+    CriminalCaseSQLLite,
+    MultipleCriminalCaseSQLLite,
 )
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_menu import connect_menu_functions
@@ -22,18 +22,18 @@ def load_no_case() -> CmsCaseInformation:
 
 def load_single_case(case_number: str, case_table: str) -> CmsCaseInformation:
     """Loads a single case into the CmsCaseInformation model."""
-    return CriminalCaseSQLRetriever(case_number, case_table).load_case()
+    return CriminalCaseSQLLite(case_number, case_table).load_case()
 
 
 def load_multiple_cases(matched_case_numbers: list, case_table: str) -> CmsCaseInformation:
     """Loads multiple cases into the CmsCaseInformation model."""
-    return MultipleCriminalCaseSQLRetriever(matched_case_numbers, case_table).load_case()
+    return MultipleCriminalCaseSQLLite(matched_case_numbers, case_table).load_case()
 
 
 def check_for_companion_cases(
     selected_case_table: object,
     case_table: str,
-) -> CriminalCaseSQLRetriever:
+) -> CriminalCaseSQLLite:
     """Checks for matching last names to find potential companion cases to load."""
     selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
     all_cases = [selected_case_table.itemText(case) for case in range(selected_case_table.count())]

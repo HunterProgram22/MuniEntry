@@ -6,6 +6,7 @@ from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.sql_lite_functions import load_daily_case_list_data, query_daily_case_list_data
 from munientry.data.connections import open_db_connection, close_db_connection
+from munientry.data.sql_server_getters import CriminalCaseSQLServer
 from munientry.data.sql_server_queries import general_case_search_query
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import Defendant
@@ -119,6 +120,7 @@ class MainWindowSlotFunctionsMixin(object):
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
+        logger.debug(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
@@ -127,11 +129,9 @@ class MainWindowSlotFunctionsMixin(object):
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
-        cms_search_data = self.get_case_info()
-        defendant = Defendant()
-        defendant.first_name = cms_search_data[1]
-        defendant.last_name = cms_search_data[2]
-        cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
+        case_number = self.case_search_box.text()
+        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        logger.debug(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
@@ -151,29 +151,16 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
-    def get_case_info(self) -> tuple:
-        logger.debug('Get Case Pressed')
+    def get_case_info(self):
+        """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
-        logger.debug(case_number)
-        query_string = general_case_search_query(case_number)
-        logger.debug(query_string)
-        db_connection = open_db_connection('con_authority_court')
-        query = QSqlQuery(db_connection)
-        query.prepare(query_string)
-        query.exec()
-        charge_list = []
-        case_number = None
-        def_first_name = None
-        def_last_name = None
-        while query.next():
-            if case_number is None:
-                case_number = query.value(2)
-                def_first_name = query.value(7)
-                def_last_name = query.value(6)
-            charge_list.append(query.value(5))
-        close_db_connection(db_connection)
-        self.case_number_label_field.setText(case_number)
-        self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        charge_list_text = ', '.join(str(charge) for charge in charge_list)
+        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        logger.debug(cms_case_data)
+        self.set_case_info_from_search(cms_case_data)
+
+    def set_case_info_from_search(self, cms_case_data: CmsCaseInformation) -> None:
+        """Sets the case search fields on the UI with data from the case that is retrieved."""
+        self.case_number_label_field.setText(cms_case_data.case_number)
+        self.case_name_label_field.setText(f'State of Ohio v. {cms_case_data.defendant.first_name} {cms_case_data.defendant.last_name}')
+        charge_list_text = ', '.join(str(charge) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
-        return (case_number, def_first_name, def_last_name, charge_list)
