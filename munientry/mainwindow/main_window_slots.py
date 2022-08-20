@@ -162,5 +162,5 @@ class MainWindowSlotFunctionsMixin(object):
         """Sets the case search fields on the UI with data from the case that is retrieved."""
         self.case_number_label_field.setText(cms_case_data.case_number)
         self.case_name_label_field.setText(f'State of Ohio v. {cms_case_data.defendant.first_name} {cms_case_data.defendant.last_name}')
-        charge_list_text = ', '.join(str(charge) for charge in cms_case_data.charges_list)
+        charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)

@@ -54,11 +54,11 @@ class CriminalCaseSQLServer(object):
         # self.case.defense_counsel_type = self.query.value('def_atty_type')
 
     def load_charge_information(self) -> None:
-        charge = self.query.value('Charge')
-        # statute = self.query.value('statute')
-        # degree = self.query.value('degree')
-        # moving_bool = self.query.value('moving_bool')
-        # charge = (offense, statute, degree, moving_bool)
+        offense = self.query.value('Charge')
+        statute = self.query.value('Statute')
+        degree = 'None' # self.query.value('degree')
+        moving_bool = 'None' # self.query.value('moving_bool')
+        charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 
     def load_case(self) -> CmsCaseInformation:

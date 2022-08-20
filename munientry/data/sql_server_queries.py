@@ -9,7 +9,7 @@ def general_case_search_query(case_number: str) -> str:
     Violation.Id AS ViolationID,
     CaseMaster.CaseNumber,
     SubCase.SubCaseNumber,
-    Violation.SectionCode,
+    Violation.SectionCode AS Statute,
     Violation.Descr AS Charge,
     CasePerson.LastName as DefLastName,
     CasePerson.FirstName as DefFirstName,
