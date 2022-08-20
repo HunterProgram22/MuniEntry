@@ -9,48 +9,6 @@ from loguru import logger
 from munientry.widgets.message_boxes import RequiredBox
 
 
-def check_judicial_officer(func):
-    """Prohibits opening a dialog unless a judicial officer is selected."""
-
-    def wrapper(self):
-        if self.judicial_officer is None:
-            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        if self.judicial_officer.officer_type == 'Assignment Commissioner':
-            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
-        else:
-            return func(self)
-
-    return wrapper
-
-
-def check_assignment_commissioner(func):
-    """Prohibits opening a dialog unless an assignment commissioner is selected."""
-
-    def wrapper(self):
-        if self.judicial_officer is None:
-            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
-        if self.judicial_officer.officer_type != 'Assignment Commissioner':
-            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
-        else:
-            return func(self)
-
-    return wrapper
-
-
-def check_case_list_selected(func):
-    """Probhitis opening a dialog unless a daily case list is selected."""
-    def wrapper(self):
-        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
-            func(self)
-        else:
-            RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-
-    return wrapper
-
-
 def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
     """Adds days to a date and sets a future weekday date.
 
@@ -88,12 +46,6 @@ def set_random_judge() -> tuple[str, str]:
     return (assigned_judge, time_now)
 
 
-if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
-
-
 def set_assigned_judge(sender: 'QPushButton') -> str:
     """Returns the judge name as a string based on the button that is pressed."""
     assigned_judge_dict = {
@@ -122,3 +74,9 @@ def set_courtroom(sender: 'QPushButton') -> str:
         'hemmeter_trial_court_hearingButton': 'Courtroom C',
     }
     return courtroom_dict.get(sender.objectName(), '')
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')

@@ -3,12 +3,7 @@ from loguru import logger
 from PyQt5.QtWidgets import QDialog, QComboBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.controllers.helper_functions import (
-    check_assignment_commissioner,
-    check_case_list_selected,
-    check_judicial_officer,
-    set_random_judge,
-)
+from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.sql_lite_functions import load_daily_case_list_data, query_daily_case_list_data
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_server_queries import general_case_search_query
@@ -74,12 +69,8 @@ class MainWindowSlotFunctionsMixin(object):
             + f' The assignment was made at {time_now}.',
         )
 
-    # @check_judicial_officer
     def start_crim_traffic_entry(self) -> None:
-        """Starts a criminal/traffic dialog based on the dialog button that is pressed.
-
-        :check_judicial_officer: Requires that a judicial officer is selected.
-        """
+        """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
         if self.judicial_officer is None:
             return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         if self.judicial_officer.officer_type == 'Assignment Commissioner':
@@ -93,12 +84,8 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    # @check_assignment_commissioner
     def start_scheduling_entry(self) -> None:
-        """Starts a scheduling dialog based on the dialog button that is pressed.
-
-        :check_assignment_commisserion: Requires that a assignment commissioner is selected.
-        """
+        """Starts a scheduling dialog based on the dialog button that is pressed."""
         if self.judicial_officer is None:
             return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
         if self.judicial_officer.officer_type != 'Assignment Commissioner':
@@ -112,13 +99,8 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    # @check_case_list_selected
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab.
-
-        :check_case_list_selected: Requires that a daily case list is selected, if no case
-            is needed then must select a case list with the field blank.
-        """
+        """Sets the case to be loaded from the daily case list tab."""
         if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
             selected_case_table = self.database_table_dict.get(
                 self.case_table, QComboBox,
@@ -134,7 +116,6 @@ class MainWindowSlotFunctionsMixin(object):
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
                 ).exec()
-
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
