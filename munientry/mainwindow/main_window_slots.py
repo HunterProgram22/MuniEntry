@@ -9,6 +9,7 @@ from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_server_queries import general_case_search_query
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import Defendant
+from munientry.widgets.message_boxes import RequiredBox
 
 
 class MainWindowSlotFunctionsMixin(object):

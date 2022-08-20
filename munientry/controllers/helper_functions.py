@@ -1,12 +1,9 @@
 """Helper functions that are used throughout the application."""
 from __future__ import annotations
-
 import random
 from datetime import date, datetime, timedelta
 
 from loguru import logger
-
-from munientry.widgets.message_boxes import RequiredBox
 
 
 def set_future_date(days_to_add: int, weekday_due_date: str) -> int:
