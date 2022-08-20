@@ -81,7 +81,11 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        dialog_name = self.dialog.objectName()
+        try:
+            dialog_name = self.dialog.objectName()
+        except AttributeError as e:
+            logger.warning(e)
+            return None
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
@@ -96,27 +100,30 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        dialog_name = self.dialog.objectName()
+        try:
+            dialog_name = self.dialog.objectName()
+        except AttributeError as e:
+            logger.warning(e)
+            return None
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
-        if any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
-            selected_case_table = self.database_table_dict.get(
-                self.case_table, QComboBox,
-            )
-            cms_case_data = self.set_case_to_load(selected_case_table)
-            return button_dict[self.sender()](
-                self.judicial_officer,
-                cms_case=cms_case_data,
-                case_table=self.case_table,
-            )
-        else:
-            RequiredBox(
+        if not any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+            return RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
-                ).exec()
+            ).exec()
+        selected_case_table = self.database_table_dict.get(
+            self.case_table, QComboBox,
+        )
+        cms_case_data = self.set_case_to_load(selected_case_table)
+        return button_dict[self.sender()](
+            self.judicial_officer,
+            cms_case=cms_case_data,
+            case_table=self.case_table,
+        )
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
