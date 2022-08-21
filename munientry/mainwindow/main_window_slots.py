@@ -139,7 +139,7 @@ class MainWindowSlotFunctionsMixin(object):
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
-        logger.debug(cms_case_data)
+        logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
@@ -150,7 +150,7 @@ class MainWindowSlotFunctionsMixin(object):
         """Sets the case to be loaded from the case search tab."""
         case_number = self.case_search_box.text()
         cms_case_data = CriminalCaseSQLServer(case_number).load_case()
-        logger.debug(cms_case_data)
+        logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
