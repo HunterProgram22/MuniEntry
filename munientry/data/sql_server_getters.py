@@ -5,6 +5,7 @@ from PyQt5.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_server_queries import general_case_search_query
+from munientry.data.excel_getters import clean_offense_name, clean_statute_name
 from munientry.models.cms_models import CmsCaseInformation
 
 
@@ -50,13 +51,15 @@ class CriminalCaseSQLServer(object):
         self.case.defendant.last_name = self.query.value('DefLastName').title()
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         # self.case.fra_in_file = self.query.value('fra_in_file')
-        # self.case.defense_counsel = self.query.value('defense_counsel')
-        # self.case.defense_counsel_type = self.query.value('def_atty_type')
+        self.case.defense_counsel = self.query.value('DefenseCounsel').title()
+        self.case.defense_counsel_type = self.query.value('PubDef')
 
     def load_charge_information(self) -> None:
         offense = self.query.value('Charge')
+        offense = clean_offense_name(offense)
         statute = self.query.value('Statute')
-        degree = 'None' # self.query.value('degree')
+        statute = clean_statute_name(statute)
+        degree = self.query.value('DegreeCode')
         moving_bool = 'None' # self.query.value('moving_bool')
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
