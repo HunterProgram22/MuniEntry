@@ -1025,7 +1025,7 @@ font-weight: bold;</string>
   <customwidget>
    <class>ConditionCheckbox</class>
    <extends>QCheckBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>

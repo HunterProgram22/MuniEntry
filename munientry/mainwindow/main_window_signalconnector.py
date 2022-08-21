@@ -16,7 +16,7 @@ class MainWindowSignalConnector(object):
             self.main_window.set_visiting_judge,
         )
         self.main_window.tabWidget.currentChanged.connect(self.main_window.set_person_stack_widget)
-        self.main_window.get_case_Button.pressed.connect(self.main_window.get_case_info)
+        self.main_window.get_case_Button.pressed.connect(self.main_window.query_case_info)
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()
         self.connect_judicial_officers_to_set_officer()

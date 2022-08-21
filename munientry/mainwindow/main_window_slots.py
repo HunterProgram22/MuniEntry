@@ -1,16 +1,21 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog, QComboBox
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+from PyQt5.QtWidgets import QComboBox, QDialog
 
 from munientry.controllers.helper_functions import set_random_judge
-from munientry.data.sql_lite_functions import load_daily_case_list_data, query_daily_case_list_data
-from munientry.data.connections import open_db_connection, close_db_connection
+from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.data.sql_lite_functions import (
+    load_daily_case_list_data,
+    query_daily_case_list_data,
+)
 from munientry.data.sql_server_getters import CriminalCaseSQLServer
-from munientry.data.sql_server_queries import general_case_search_query
-from munientry.models.cms_models import CmsCaseInformation
-from munientry.models.party_types import Defendant
+from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
+
+if TYPE_CHECKING:
+    from PyQt5.QtSql import QSqlDatabase
+
+    from munientry.models.cms_models import CmsCaseInformation
 
 
 class MainWindowSlotFunctionsMixin(object):
@@ -72,11 +77,18 @@ class MainWindowSlotFunctionsMixin(object):
         )
 
     def start_crim_traffic_entry(self) -> None:
-        """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
+        """Starts a criminal/traffic dialog based on the dialog button that is pressed.
+
+        TODO: Refactor and fix signature on return.
+        """
         if self.judicial_officer is None:
-            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+            return RequiredBox(
+                'You must select a judicial officer.', 'Judicial Officer Required',
+            ).exec()
         if self.judicial_officer.officer_type == 'Assignment Commissioner':
-            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+            return RequiredBox(
+                'You must select a judicial officer.', 'Judicial Officer Required',
+            ).exec()
         button_dict = self.crim_traffic_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
@@ -84,18 +96,25 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
         try:
             dialog_name = self.dialog.objectName()
-        except AttributeError as e:
-            logger.warning(e)
+        except AttributeError as err:
+            logger.warning(err)
             return None
         logger.dialog(f'{dialog_name} Opened')
-        self.dialog.exec()
+        return self.dialog.exec()
 
     def start_scheduling_entry(self) -> None:
-        """Starts a scheduling dialog based on the dialog button that is pressed."""
+        """Starts a scheduling dialog based on the dialog button that is pressed.
+
+        TODO: Refactor and fix signature on return.
+        """
         if self.judicial_officer is None:
-            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+            return RequiredBox(
+                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
+            ).exec()
         if self.judicial_officer.officer_type != 'Assignment Commissioner':
-            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+            return RequiredBox(
+                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
+            ).exec()
         button_dict = self.scheduling_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
@@ -103,11 +122,11 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
         try:
             dialog_name = self.dialog.objectName()
-        except AttributeError as e:
-            logger.warning(e)
+        except AttributeError as err:
+            logger.warning(err)
             return None
         logger.dialog(f'{dialog_name} Opened')
-        self.dialog.exec()
+        return self.dialog.exec()
 
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
@@ -151,16 +170,18 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
-    def get_case_info(self):
+    def query_case_info(self):
         """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
         cms_case_data = CriminalCaseSQLServer(case_number).load_case()
         logger.debug(cms_case_data)
         self.set_case_info_from_search(cms_case_data)
 
-    def set_case_info_from_search(self, cms_case_data: CmsCaseInformation) -> None:
+    def set_case_info_from_search(self, cms_case_data: 'CmsCaseInformation') -> None:
         """Sets the case search fields on the UI with data from the case that is retrieved."""
         self.case_number_label_field.setText(cms_case_data.case_number)
-        self.case_name_label_field.setText(f'State of Ohio v. {cms_case_data.defendant.first_name} {cms_case_data.defendant.last_name}')
+        def_first_name = cms_case_data.defendant.first_name
+        def_last_name = cms_case_data.defendant.last_name
+        self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
         charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
