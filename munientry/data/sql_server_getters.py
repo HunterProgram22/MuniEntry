@@ -50,17 +50,15 @@ class CriminalCaseSQLServer(object):
         self.case.case_number = self.query.value('CaseNumber')
         self.case.defendant.last_name = self.query.value('DefLastName').title()
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
-        # self.case.fra_in_file = self.query.value('fra_in_file')
+        self.case.fra_in_file = self.query.value('FraInFile')
         self.case.defense_counsel = self.query.value('DefenseCounsel').title()
         self.case.defense_counsel_type = self.query.value('PubDef')
 
     def load_charge_information(self) -> None:
-        offense = self.query.value('Charge')
-        offense = clean_offense_name(offense)
-        statute = self.query.value('Statute')
-        statute = clean_statute_name(statute)
+        offense = clean_offense_name(self.query.value('Charge'))
+        statute = clean_statute_name(self.query.value('Statute'))
         degree = self.query.value('DegreeCode')
-        moving_bool = 'None' # self.query.value('moving_bool')
+        moving_bool = self.query.value('MovingBool')
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 

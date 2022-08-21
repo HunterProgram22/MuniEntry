@@ -14,7 +14,9 @@ def general_case_search_query(case_number: str) -> str:
     d.DegreeCode,
 	cp.FirstName AS DefFirstName,
 	cp.LastName AS DefLastName,
-    CONCAT(att.FirstName, ' ', att.LastName) as DefenseCounsel,
+	cm.InsuranceStatus AS FraInFile,
+	vd.IsMoving AS MovingBool,
+    CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
     IIF (sc.AttorneyTypeID = '476', 1,0) AS PubDef
 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm

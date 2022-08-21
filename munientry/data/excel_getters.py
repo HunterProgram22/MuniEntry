@@ -80,8 +80,8 @@ def clean_offense_name(offense: str) -> str:
             clean_offense_word_list.append(OFFENSE_CLEAN_DICT.get(word))
             continue
         clean_offense_word_list.append(word.capitalize())
-    return ' '.join([str(clean_word) for clean_word in clean_offense_word_list])
-
+    clean_offense = ' '.join([str(clean_word) for clean_word in clean_offense_word_list])
+    return clean_offense.rstrip(' ')
 
 def create_case_data_list(worksheet: 'Workbook.active', headers_dict: dict) -> list[CaseExcelData]:
     """Returns a list of CaseExcelData objects.
