@@ -8,7 +8,7 @@ from munientry.data.sql_lite_queries import select_case_data_sql_query
 from munientry.models.cms_models import CmsCaseInformation
 
 
-class CriminalCaseSQLRetriever(object):
+class CriminalCaseSQLLite(object):
     """Packages case data from the SQL Lite internal database.
 
     The class accepts the case number and case table to identify the case, then retrieves
@@ -69,7 +69,7 @@ class CriminalCaseSQLRetriever(object):
         return self.case
 
 
-class MultipleCriminalCaseSQLRetriever(CriminalCaseSQLRetriever):
+class MultipleCriminalCaseSQLLite(CriminalCaseSQLLite):
 
     def __init__(self, matched_case_numbers_list: list, case_table: str) -> None:
         logger.debug(matched_case_numbers_list)

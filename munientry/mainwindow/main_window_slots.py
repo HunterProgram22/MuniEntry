@@ -3,17 +3,14 @@ from loguru import logger
 from PyQt5.QtWidgets import QDialog, QComboBox
 from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.controllers.helper_functions import (
-    check_assignment_commissioner,
-    check_case_list_selected,
-    check_judicial_officer,
-    set_random_judge,
-)
+from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.sql_lite_functions import load_daily_case_list_data, query_daily_case_list_data
 from munientry.data.connections import open_db_connection, close_db_connection
+from munientry.data.sql_server_getters import CriminalCaseSQLServer
 from munientry.data.sql_server_queries import general_case_search_query
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import Defendant
+from munientry.widgets.message_boxes import RequiredBox
 
 
 class MainWindowSlotFunctionsMixin(object):
@@ -74,47 +71,56 @@ class MainWindowSlotFunctionsMixin(object):
             + f' The assignment was made at {time_now}.',
         )
 
-    @check_judicial_officer
     def start_crim_traffic_entry(self) -> None:
-        """Starts a criminal/traffic dialog based on the dialog button that is pressed.
-
-        :check_judicial_officer: Requires that a judicial officer is selected.
-        """
+        """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
+        if self.judicial_officer is None:
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
+        if self.judicial_officer.officer_type == 'Assignment Commissioner':
+            return RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         button_dict = self.crim_traffic_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
-            self.dialog = self.set_dialog_from_case_search(button_dict)
-        dialog_name = self.dialog.objectName()
+            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
+        try:
+            dialog_name = self.dialog.objectName()
+        except AttributeError as e:
+            logger.warning(e)
+            return None
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    @check_assignment_commissioner
     def start_scheduling_entry(self) -> None:
-        """Starts a scheduling dialog based on the dialog button that is pressed.
-
-        :check_assignment_commisserion: Requires that a assignment commissioner is selected.
-        """
+        """Starts a scheduling dialog based on the dialog button that is pressed."""
+        if self.judicial_officer is None:
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
+        if self.judicial_officer.officer_type != 'Assignment Commissioner':
+            return RequiredBox('You must select an assignment commissioner.', 'Assignment Commissioner Required').exec()
         button_dict = self.scheduling_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        dialog_name = self.dialog.objectName()
+        try:
+            dialog_name = self.dialog.objectName()
+        except AttributeError as e:
+            logger.warning(e)
+            return None
         logger.dialog(f'{dialog_name} Opened')
         self.dialog.exec()
 
-    @check_case_list_selected
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab.
-
-        :check_case_list_selected: Requires that a daily case list is selected, if no case
-            is needed then must select a case list with the field blank.
-        """
+        """Sets the case to be loaded from the daily case list tab."""
+        if not any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+            return RequiredBox(
+                'You must select a case list. If not loading a case in the case list '
+                + 'leave the case list field blank.', 'Daily Case List Required',
+            ).exec()
         selected_case_table = self.database_table_dict.get(
             self.case_table, QComboBox,
         )
         cms_case_data = self.set_case_to_load(selected_case_table)
+        logger.debug(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
@@ -123,11 +129,9 @@ class MainWindowSlotFunctionsMixin(object):
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
-        cms_search_data = self.get_case_info()
-        defendant = Defendant()
-        defendant.first_name = cms_search_data[1]
-        defendant.last_name = cms_search_data[2]
-        cms_case_data = CmsCaseInformation(cms_search_data[0], defendant)
+        case_number = self.case_search_box.text()
+        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        logger.debug(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
@@ -147,29 +151,16 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
-    def get_case_info(self) -> tuple:
-        logger.debug('Get Case Pressed')
+    def get_case_info(self):
+        """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
-        logger.debug(case_number)
-        query_string = general_case_search_query(case_number)
-        logger.debug(query_string)
-        db_connection = open_db_connection('con_authority_court')
-        query = QSqlQuery(db_connection)
-        query.prepare(query_string)
-        query.exec()
-        charge_list = []
-        case_number = None
-        def_first_name = None
-        def_last_name = None
-        while query.next():
-            if case_number is None:
-                case_number = query.value(2)
-                def_first_name = query.value(7)
-                def_last_name = query.value(6)
-            charge_list.append(query.value(5))
-        close_db_connection(db_connection)
-        self.case_number_label_field.setText(case_number)
-        self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        charge_list_text = ', '.join(str(charge) for charge in charge_list)
+        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        logger.debug(cms_case_data)
+        self.set_case_info_from_search(cms_case_data)
+
+    def set_case_info_from_search(self, cms_case_data: CmsCaseInformation) -> None:
+        """Sets the case search fields on the UI with data from the case that is retrieved."""
+        self.case_number_label_field.setText(cms_case_data.case_number)
+        self.case_name_label_field.setText(f'State of Ohio v. {cms_case_data.defendant.first_name} {cms_case_data.defendant.last_name}')
+        charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
-        return (case_number, def_first_name, def_last_name, charge_list)
