@@ -370,6 +370,7 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
+        self.bond_amount_box.addItem("")
         self.gridLayout_5.addWidget(self.bond_amount_box, 2, 1, 1, 1)
         self.label_5 = QtWidgets.QLabel(self.frame_5)
         font = QtGui.QFont()
@@ -465,6 +466,8 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.setItemText(5, _translate("NoPleaBondDialog", "$3,000"))
         self.bond_amount_box.setItemText(6, _translate("NoPleaBondDialog", "$3,500"))
         self.bond_amount_box.setItemText(7, _translate("NoPleaBondDialog", "$5,000"))
-        self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$10,000"))
+        self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$7,500"))
+        self.bond_amount_box.setItemText(9, _translate("NoPleaBondDialog", "$10,000"))
         self.label_5.setText(_translate("NoPleaBondDialog", "BOND"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import ConditionCheckbox
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

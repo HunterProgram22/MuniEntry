@@ -184,6 +184,7 @@ class Ui_BondHearingDialog(object):
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
+        self.bond_amount_box.addItem("")
         self.gridLayout_5.addWidget(self.bond_amount_box, 2, 1, 1, 1)
         self.bond_type_box = NoScrollComboBox(self.bond_frame)
         self.bond_type_box.setStyleSheet("background-color: rgb(255, 255, 255);")
@@ -447,7 +448,8 @@ class Ui_BondHearingDialog(object):
         self.bond_amount_box.setItemText(5, _translate("BondHearingDialog", "$3,000"))
         self.bond_amount_box.setItemText(6, _translate("BondHearingDialog", "$3,500"))
         self.bond_amount_box.setItemText(7, _translate("BondHearingDialog", "$5,000"))
-        self.bond_amount_box.setItemText(8, _translate("BondHearingDialog", "$10,000"))
+        self.bond_amount_box.setItemText(8, _translate("BondHearingDialog", "$7,500"))
+        self.bond_amount_box.setItemText(9, _translate("BondHearingDialog", "$10,000"))
         self.bond_type_box.setItemText(0, _translate("BondHearingDialog", "Recognizance (OR) Bond"))
         self.bond_type_box.setItemText(1, _translate("BondHearingDialog", "10% Deposit, Cash or Surety Bond"))
         self.bond_type_box.setItemText(2, _translate("BondHearingDialog", "Cash or Surety Bond"))
@@ -481,4 +483,5 @@ class Ui_BondHearingDialog(object):
         self.defense_counsel_waived_checkBox.setText(_translate("BondHearingDialog", "Defendant appeared without counsel"))
         self.close_dialog_Button.setText(_translate("BondHearingDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("BondHearingDialog", "Open Entry"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import ConditionCheckbox
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit

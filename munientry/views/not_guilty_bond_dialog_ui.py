@@ -379,6 +379,7 @@ class Ui_NotGuiltyBondDialog(object):
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
+        self.bond_amount_box.addItem("")
         self.gridLayout_5.addWidget(self.bond_amount_box, 2, 1, 1, 1)
         self.label_5 = QtWidgets.QLabel(self.frame_5)
         font = QtGui.QFont()
@@ -535,7 +536,8 @@ class Ui_NotGuiltyBondDialog(object):
         self.bond_amount_box.setItemText(5, _translate("NotGuiltyBondDialog", "$3,000"))
         self.bond_amount_box.setItemText(6, _translate("NotGuiltyBondDialog", "$3,500"))
         self.bond_amount_box.setItemText(7, _translate("NotGuiltyBondDialog", "$5,000"))
-        self.bond_amount_box.setItemText(8, _translate("NotGuiltyBondDialog", "$10,000"))
+        self.bond_amount_box.setItemText(8, _translate("NotGuiltyBondDialog", "$7,500"))
+        self.bond_amount_box.setItemText(9, _translate("NotGuiltyBondDialog", "$10,000"))
         self.label_5.setText(_translate("NotGuiltyBondDialog", "BOND"))
         self.label_7.setText(_translate("NotGuiltyBondDialog", "BOND CONDITIONS"))
         self.alcohol_drugs_assessment_checkBox.setText(_translate("NotGuiltyBondDialog", " Obtain alcohol/drug assessment                             "))
@@ -557,4 +559,5 @@ class Ui_NotGuiltyBondDialog(object):
         self.alcohol_test_kiosk_checkBox.setText(_translate("NotGuiltyBondDialog", " Alcohol Kiosk testing                                         "))
         self.comply_protection_order_checkBox.setText(_translate("NotGuiltyBondDialog", " Comply with Terms of Protection Order"))
         self.public_safety_suspension_checkBox.setText(_translate("NotGuiltyBondDialog", "Public Safety Suspension imposed pursuant to R.C. 4511.196(B)"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from .custom_widgets import ConditionCheckbox
+from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
