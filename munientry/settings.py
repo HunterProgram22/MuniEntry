@@ -19,14 +19,14 @@ CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
 # Version Information
-VERSION_NUMBER = '0.33.2'
+VERSION_NUMBER = '0.34.0'
 
 # Court Cost Constants
 MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
 NONMOVING_COURT_COSTS = 108
 
-# Logging Settings
+# Logging Settings,s
 now = datetime.now()
 now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
 LOG_TIME = f'{now_string}'
