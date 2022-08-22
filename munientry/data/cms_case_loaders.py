@@ -133,9 +133,13 @@ class CmsFraLoader(CmsChargeLoader):
     def hide_fra_if_criminal_case(self) -> None:
         """The Insurance (FRA) data is not used in criminal cases so it is hidden."""
         if self.cms_case.case_number is None:
-            self.dialog.fra_frame.setHidden(False)
-        elif self.cms_case.case_number[2:5] == 'CRB':
-            self.dialog.fra_frame.setHidden(True)
+            return self.dialog.fra_frame.setHidden(False)
+        if 'TRC' in self.cms_case.case_number:
+            return self.dialog.fra_frame.setHidden(False)
+        if 'TRD' in self.cms_case.case_number:
+            return self.dialog.fra_frame.setHidden(False)
+        if self.cms_case.case_number[2:5] == 'CRB':
+            return self.dialog.fra_frame.setHidden(True)
 
 
 if __name__ == '__main__':
