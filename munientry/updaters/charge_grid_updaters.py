@@ -217,6 +217,7 @@ class TrialSentencingGridModelUpdater(JailCCGridModelUpdater):
     def __init__(self, dialog: CBD) -> None:
         super().__init__(dialog)
 
+
 class DiversionGridModelUpdater(JailCCGridModelUpdater):
     """Extends JailCCGridModelUpdater, but not additional actions performed."""
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'munientry\views\ui\ProbationViolationBondDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/ProbationViolationBondDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -276,6 +276,7 @@ class Ui_ProbationViolationBondDialog(object):
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
         self.bond_amount_box.addItem("")
+        self.bond_amount_box.addItem("")
         self.gridLayout_5.addWidget(self.bond_amount_box, 2, 1, 1, 1)
         self.label_12 = QtWidgets.QLabel(self.frame_5)
         font = QtGui.QFont()
@@ -409,7 +410,8 @@ class Ui_ProbationViolationBondDialog(object):
         self.bond_amount_box.setItemText(5, _translate("ProbationViolationBondDialog", "$3,000"))
         self.bond_amount_box.setItemText(6, _translate("ProbationViolationBondDialog", "$3,500"))
         self.bond_amount_box.setItemText(7, _translate("ProbationViolationBondDialog", "$5,000"))
-        self.bond_amount_box.setItemText(8, _translate("ProbationViolationBondDialog", "$10,000"))
+        self.bond_amount_box.setItemText(8, _translate("ProbationViolationBondDialog", "$7,500"))
+        self.bond_amount_box.setItemText(9, _translate("ProbationViolationBondDialog", "$10,000"))
         self.label_12.setText(_translate("ProbationViolationBondDialog", "BOND"))
         self.label_4.setText(_translate("ProbationViolationBondDialog", "Probable Cause for Community Control Violation:"))
         self.label_10.setText(_translate("ProbationViolationBondDialog", "PROBABLE CAUSE FINDING"))

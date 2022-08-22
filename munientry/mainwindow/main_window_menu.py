@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QShortcut
 
 from munientry.mainwindow.batch_fta_entries import run_batch_fta_arraignments
 from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
-from munientry.widgets.custom_widgets import InfoBox
+from munientry.widgets.message_boxes import InfoBox
 
 
 def open_current_log(signal=None) -> None:

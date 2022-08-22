@@ -6,11 +6,10 @@ from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtCore import QDate
 
-from munientry.widgets.custom_widgets import InfoBox
-from munientry.data.databases import sql_query_offense_type
+from munientry.data.sql_lite_functions import query_offense_type
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.criminal_charge_models import CriminalCharge
-from munientry.widgets.custom_widgets import RequiredBox
+from munientry.widgets.message_boxes import RequiredBox, InfoBox
 from munientry.settings import SAVE_PATH, SPECIAL_DOCKETS_COSTS
 
 
@@ -334,7 +333,7 @@ class AddChargeDialogSlotFunctions(BaseDialogSlotFunctions):
         key = self.dialog.statute_choice_box.currentText()
         if self.dialog.freeform_entry_checkBox.isChecked():
             return None
-        return sql_query_offense_type(key, self.dialog.db_connection)
+        return query_offense_type(key, self.dialog.db_connection)
 
     def close_event(self):
         self.close_window()

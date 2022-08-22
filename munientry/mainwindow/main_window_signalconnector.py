@@ -16,6 +16,7 @@ class MainWindowSignalConnector(object):
             self.main_window.set_visiting_judge,
         )
         self.main_window.tabWidget.currentChanged.connect(self.main_window.set_person_stack_widget)
+        self.main_window.get_case_Button.pressed.connect(self.main_window.query_case_info)
         self.connect_case_lists_to_show_hide()
         self.connect_case_lists_to_set_selected_case_list()
         self.connect_judicial_officers_to_set_officer()
@@ -36,7 +37,7 @@ class MainWindowSignalConnector(object):
 
     def connect_crim_traffic_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.crim_traffic_dialog_buttons_dict:
-            key.pressed.connect(self.main_window.start_dialog_from_entry_button)
+            key.pressed.connect(self.main_window.start_crim_traffic_entry)
 
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.scheduling_dialog_buttons_dict:

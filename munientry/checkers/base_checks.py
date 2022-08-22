@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
-from munientry.widgets.custom_widgets import RequiredBox, WarningBox
+from munientry.widgets.message_boxes import RequiredBox, WarningBox
 
 TODAY = QDate.currentDate()
 FAIL = 'Fail'
@@ -103,12 +103,19 @@ class InsuranceInfoChecker(BaseChecker):
     """Class containing checks for Insurance."""
 
     def check_insurance(self) -> str:
+        if 'TRC' in self.view.cms_case.case_number:
+            return self.insurance_check_message()
+        if 'TRD' in self.view.cms_case.case_number:
+            return self.insurance_check_message()
         try:
             if self.view.cms_case.case_number[2:5] == 'CRB':
                 return PASS
         except TypeError as error:
             logger.warning(error)
             return PASS
+        return self.insurance_check_message()
+
+    def insurance_check_message(self):
         if self.view.fra_in_file_box.currentText() == 'Yes':
             return PASS
         if self.view.fra_in_court_box.currentText() == 'N/A':
@@ -267,7 +274,7 @@ class FreeformDialogInfoChecker(DefenseCounselChecker):
         self.check_status = self.perform_check_list()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

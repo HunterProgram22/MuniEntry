@@ -19,14 +19,14 @@ CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
 # Version Information
-VERSION_NUMBER = '0.33.2'
+VERSION_NUMBER = '0.34.0'
 
 # Court Cost Constants
 MOVING_COURT_COSTS = 137
 CRIMINAL_COURT_COSTS = 127
 NONMOVING_COURT_COSTS = 108
 
-# Logging Settings
+# Logging Settings,s
 now = datetime.now()
 now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
 LOG_TIME = f'{now_string}'
@@ -125,3 +125,18 @@ PRETRIAL_TIME_DICT = {
     'Pretrial 2 weeks before trial': 14,
     'No Pretrial': 0,
 }
+
+
+def set_server_and_database() -> tuple:
+    """Sets the server and database name for the SQL Server connection.
+
+    This function is used to set a local instance of the database for Justin to test at home
+    without being connected to the delcity network.
+    """
+    if socket.gethostname() == 'RooberryPrime':
+        server = r'ROOBERRYPRIME\SQLEXPRESS'
+        database = 'AuthorityCourt'
+    else:
+        server = r'CLERKCRTR\CMI'
+        database = 'AuthorityCourt'
+    return (server, database)

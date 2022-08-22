@@ -1,11 +1,11 @@
 """Module that contains information checks for plea only dialogs."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog
 
-from munientry.checkers.base_checks import (
-    BondInfoChecker,
-    ChargeGridInfoChecker,
-)
+from munientry.checkers.base_checks import BondInfoChecker, ChargeGridInfoChecker
+from munientry.settings import TYPE_CHECKING
+
+# if TYPE_CHECKING:
+from PyQt5.QtWidgets import QDialog
 
 
 class LeapAdmissionPleaDialogInfoChecker(ChargeGridInfoChecker):
@@ -60,7 +60,7 @@ class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
         self.check_status = self.perform_check_list()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
