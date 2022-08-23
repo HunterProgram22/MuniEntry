@@ -4,14 +4,14 @@ from loguru import logger
 from munientry.checkers.base_checks import BondInfoChecker, ChargeGridInfoChecker
 from munientry.settings import TYPE_CHECKING
 
-# if TYPE_CHECKING:
-from PyQt5.QtWidgets import QDialog
+if TYPE_CHECKING:
+    from PyQt5.QtWidgets import QDialog
 
 
 class LeapAdmissionPleaDialogInfoChecker(ChargeGridInfoChecker):
     """Class with all checks for LEAP Admission Plea Dialog."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -26,7 +26,7 @@ class PleaOnlyDialogInfoChecker(ChargeGridInfoChecker):
     The Plea Only Dialog includes the finding. Sentencing is set out in the future.
     """
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -47,7 +47,7 @@ class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
