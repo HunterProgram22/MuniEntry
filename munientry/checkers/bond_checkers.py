@@ -4,8 +4,8 @@ from loguru import logger
 from munientry.checkers.base_checks import BondInfoChecker
 from munientry.settings import TYPE_CHECKING
 
-# if TYPE_CHECKING:
-from PyQt5.QtWidgets import QDialog
+if TYPE_CHECKING:
+    from PyQt5.QtWidgets import QDialog
 
 
 class NoPleaBondDialogInfoChecker(BondInfoChecker):
@@ -19,7 +19,7 @@ class NoPleaBondDialogInfoChecker(BondInfoChecker):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -42,7 +42,7 @@ class BondHearingDialogInfoChecker(BondInfoChecker):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -58,7 +58,7 @@ class BondHearingDialogInfoChecker(BondInfoChecker):
 class ProbationViolationBondDialogInfoChecker(BondInfoChecker):
     """Class with checks for the Probation Violation Bond Dialog."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
