@@ -1,6 +1,8 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtWidgets import QComboBox, QDialog
+from PyQt5.QtCore import QSize
+from PyQt5.QtSql import QSqlQuery
+from PyQt5.QtWidgets import QComboBox, QDialog, QTableWidgetItem, QHeaderView, QSizePolicy, QLineEdit
 
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.connections import close_db_connection, open_db_connection
@@ -9,8 +11,10 @@ from munientry.data.sql_lite_functions import (
     query_daily_case_list_data,
 )
 from munientry.data.sql_server_getters import CriminalCaseSQLServer
+from munientry.data.sql_server_queries import get_case_docket_query
 from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
+from munientry.widgets.table_widgets import ReportTable, ReportWindow
 
 if TYPE_CHECKING:
     from PyQt5.QtSql import QSqlDatabase
@@ -173,6 +177,9 @@ class MainWindowSlotFunctionsMixin(object):
     def query_case_info(self):
         """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
+        case_number = update_case_number(case_number)
+        logger.debug(case_number)
+        self.case_search_box.setText(case_number)
         cms_case_data = CriminalCaseSQLServer(case_number).load_case()
         logger.debug(cms_case_data)
         self.set_case_info_from_search(cms_case_data)
@@ -185,3 +192,54 @@ class MainWindowSlotFunctionsMixin(object):
         self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
         charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
+
+    def show_case_docket_case_list(self):
+        selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
+        selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
+        self.show_case_docket(selected_case_number)
+
+    def show_case_docket(self, case_number=None):
+        if case_number is None:
+            case_number = self.case_search_box.text()
+            case_number = update_case_number(case_number)
+            self.case_search_box.setText(case_number)
+        db = open_db_connection('con_authority_court')
+        query_string = get_case_docket_query(case_number)
+        logger.info(query_string)
+        self.query = QSqlQuery(db)
+        self.query.prepare(query_string)
+        self.query.exec()
+        data_list = []
+        while self.query.next():
+            docket_item = (self.query.value('Date'), self.query.value('Remark'))
+            data_list.append(docket_item)
+
+        rows = len(data_list)
+        self.window = ReportWindow(rows, 2, f'Docket Report for {case_number}')
+        header_labels = ['Date', 'Docket Description']
+        self.window.table.setHorizontalHeaderLabels(header_labels)
+        for row, docket_item in enumerate(data_list):
+            docket_item_stripped = ' '.join(docket_item[1].splitlines())
+            docket_item_stripped = docket_item_stripped.title()
+            docket_date = QTableWidgetItem(docket_item[0])
+            docket_descr = QTableWidgetItem()
+            docket_descr.setText(docket_item_stripped)
+            docket_descr.setToolTip(docket_item[1])
+            self.window.table.setItem(row, 0, docket_date)
+            self.window.table.setItem(row, 1, docket_descr)
+        self.window.show()
+        close_db_connection(db)
+
+def update_case_number(case_number: str) -> str:
+    zero_insert_dict = {
+        9: '0',
+        8: '00',
+        7: '000',
+        6: '0000',
+    }
+    case_number_length = len(case_number)
+    if case_number_length== 10:
+        return case_number
+    elif zero_insert_dict.get(case_number_length) is not None:
+        return case_number[:5] + zero_insert_dict.get(case_number_length)+ case_number[5:]
+    return case_number

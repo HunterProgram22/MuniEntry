@@ -3,7 +3,7 @@ import os
 
 from loguru import logger
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QShortcut
+from PyQt5.QtWidgets import QShortcut, QInputDialog
 
 from munientry.mainwindow.batch_fta_entries import run_batch_fta_arraignments
 from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
@@ -41,3 +41,4 @@ def connect_menu_functions(main_window) -> None:
     main_window.actionOpen_Current_Log.triggered.connect(open_current_log)
     main_window.actionOpen_batch_FTA_Entries_Folder.triggered.connect(open_batch_entries_folder)
     main_window.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
+
