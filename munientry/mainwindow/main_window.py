@@ -1,14 +1,17 @@
 """Module containing the Main Window of the application."""
 from loguru import logger
-from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox
+from PyQt5.QtSql import QSqlQuery, QSqlQueryModel
+from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox, QTableView, QListWidget, QTableWidget, QTableWidgetItem
 
 from munientry.data.sql_lite_getters import (
     CriminalCaseSQLLite,
     MultipleCriminalCaseSQLLite,
 )
+from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
+from munientry.mainwindow.main_window_reports import MainWindowReportsMixin
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
@@ -71,7 +74,7 @@ def ask_if_cases_combined(case_match_count, last_name, matched_case_numbers_list
     return WarningBox(message, 'Companion Cases').exec()
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
+class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin, MainWindowReportsMixin):
     """The main window of the application that is the launching point for all dialogs."""
 
     def __init__(self, parent=None) -> None:
@@ -79,6 +82,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.modify_view()
         self.connect_signals_to_slots()
         connect_menu_functions(self)
+        self.actionArraignments.triggered.connect(self.run_arraignments_report)
+        self.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
         self.load_case_lists()
         self.show_hide_daily_case_lists()
         self.judicial_officer = None

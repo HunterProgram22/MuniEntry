@@ -36,6 +36,43 @@ def general_case_search_query(case_number: str) -> str:
     """
 
 
+def event_type_report_query(report_date: str, event_codes: str) -> str:
+    return f"""
+    SELECT DISTINCT
+    cm.CaseNumber
+	,cp.FirstName + ' ' + cp.LastName as DefFullName
+	,sc.SubCaseNumber
+    ,sc.ChargeDescription AS Charge
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[CaseEvent] ce 
+    ON cm.Id = ce.CaseMasterID
+	LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
+    ON cm.Id = sc.CaseMasterID
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Violation] v
+    ON sc.ViolationId = v.Id
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
+    ON vd.ViolationID = v.Id and vd.EndDate IS NULL and vd.IsActive = '1'
+	LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+	ON cp.CaseMasterID = sc.CaseMasterID 
+    WHERE EventID in {event_codes} and EventDate = '{report_date}' and SubCaseNumber LIKE '%-A'
+    """
+
+
+def get_case_docket_query(case_number: str) -> str:
+    return f"""
+    SELECT
+    de.Date,
+    de.Remark
+    FROM [AuthorityCourt].[dbo].[CaseMaster]cm
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Docket]d
+    ON cm.Id = d.CaseMasterID
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[DocketEntry]de
+    ON d.Id = de.DocketId
+    WHERE CaseNumber = '{case_number}'
+    ORDER BY de.Date
+    """
+
+
 if __name__ == "__main__":
     logger.log("IMPORT", f"{__name__} run directly.")
 else:
