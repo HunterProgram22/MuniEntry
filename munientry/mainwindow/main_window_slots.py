@@ -194,8 +194,13 @@ class MainWindowSlotFunctionsMixin(object):
         self.case_charges_label_field.setText(charge_list_text)
 
     def show_case_docket_case_list(self):
+        """TODO: ValueError catch put in to handle empty daily case list - fix daily case lists."""
         selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
-        selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
+        try:
+            selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
+        except ValueError as err:
+            logger.warning(err)
+            return None
         self.show_case_docket(selected_case_number)
 
     def show_case_docket(self, case_number=None):
