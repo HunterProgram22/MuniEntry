@@ -1,5 +1,5 @@
 from PyQt5 import QtGui, QtPrintSupport
-from PyQt5.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout
+from PyQt5.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout, QDialog
 from loguru import logger
 from munientry.settings import ICON_PATH
 
@@ -23,7 +23,7 @@ class ReportWindow(QWidget):
 
     def handlePrint(self):
         dialog = QtPrintSupport.QPrintDialog()
-        if dialog.exec_() == QtWidgets.QDialog.Accepted:
+        if dialog.exec_() == QDialog.Accepted:
             self.handlePaintRequest(dialog.printer())
 
     def handlePreview(self):
