@@ -44,27 +44,27 @@ def search_daily_case_list(all_cases: list, selected_last_name: str) -> tuple:
     return case_match_count, matched_cases_list
 
 
-def check_for_companion_cases(selected_case_table: object, case_table: str) -> CriminalCaseSQLLite:
+def check_for_companion_cases(daily_case_list: object) -> CriminalCaseSQLLite:
     """Checks for matching last names to find potential companion cases to load."""
-    selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
-    all_cases = [selected_case_table.itemText(case) for case in range(selected_case_table.count())]
-    case_match_count, matched_cases_list = search_daily_case_list(all_cases, selected_last_name)
+    last_name, case_number = daily_case_list.combo_box.currentText().split(' - ')
+    all_cases = [daily_case_list.combo_box.itemText(case) for case in range(daily_case_list.combo_box.count())]
+    case_match_count, matched_cases_list = search_daily_case_list(all_cases, last_name)
     if case_match_count > 1:
-        return ask_if_cases_combined(selected_last_name, selected_case_number, matched_cases_list, case_table)
-    return load_single_case(selected_case_number, case_table)
+        return ask_if_cases_combined(last_name, case_number, matched_cases_list, daily_case_list.name)
+    return load_single_case(case_number, daily_case_list.name)
 
 
-def ask_if_cases_combined(selected_last_name: str, selected_case_number: str, matched_cases_list: list, case_table) -> CriminalCaseSQLLite:
+def ask_if_cases_combined(last_name: str, case_number: str, matched_cases_list: list, case_table: str) -> CriminalCaseSQLLite:
     """Asks user if they want to combine matched cases or just load single selected case."""
     case_numbers = '\n'.join(matched_cases_list)
     case_count = len(matched_cases_list)
     message = (
-        f'There are {case_count} cases with the last name {selected_last_name}.\n\nThe matching '
+        f'There are {case_count} cases with the last name {last_name}.\n\nThe matching '
         + f'cases are:\n{case_numbers}\n\nDo you want to combine them into a single entry?'
     )
     response = WarningBox(message, 'Companion Cases').exec()
     if response == QMessageBox.No:
-        return load_single_case(selected_case_number, case_table)
+        return load_single_case(case_number, case_table)
     return load_multiple_cases(matched_cases_list, case_table)
 
 
@@ -113,16 +113,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         judicial_officer = self.judicial_officer.last_name
         logger.action(f'Judicial Officer set to: {judicial_officer}')
 
-    def set_case_to_load(self, selected_case_table: QComboBox) -> CmsCaseInformation:
+    def set_case_to_load(self, daily_case_list: object) -> CmsCaseInformation:
         """Returns CmsCaseInformation object model for loading to the template.
 
-        :selected_case_table: The QComboBox object that is the daily case list table that is
-            currently selected on the Main Window.
-
-        TODO: Refactor selected_case_table and self.case_table to single variable.
+        :daily_case_list: The daily case list table that is currently selected on the Main Window.
         """
-        logger.debug(selected_case_table)
-        logger.debug(f'Self is {self.case_table}')
-        if selected_case_table.currentText() == '':
+        if daily_case_list.combo_box.currentText() == '':
             return load_no_case()
-        return check_for_companion_cases(selected_case_table, self.case_table)
+        return check_for_companion_cases(daily_case_list)
