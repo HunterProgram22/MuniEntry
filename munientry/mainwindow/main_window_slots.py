@@ -2,7 +2,14 @@
 from loguru import logger
 from PyQt5.QtCore import QSize
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QComboBox, QDialog, QTableWidgetItem, QHeaderView, QSizePolicy, QLineEdit
+from PyQt5.QtWidgets import (
+    QComboBox,
+    QDialog,
+    QHeaderView,
+    QLineEdit,
+    QSizePolicy,
+    QTableWidgetItem,
+)
 
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.connections import close_db_connection, open_db_connection
