@@ -131,20 +131,21 @@ class MainWindowSlotFunctionsMixin(object):
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
-        daily_case_list = None
-        for case_list in self.daily_case_lists:
-            logger.debug(case_list)
-            logger.debug(case_list.radio_button.isChecked())
-            if case_list.radio_button.isChecked():
-                daily_case_list = case_list
+        daily_case_list = self.set_daily_case_list()
         cms_case_data = self.set_case_to_load(daily_case_list)
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
-            case_table=self.case_table,
+            case_table=self.daily_case_list_name,
         )
 
+    def set_daily_case_list(self) -> object:
+        for case_list in self.daily_case_lists:
+            if case_list.radio_button.isChecked():
+                return case_list
+        return None
+            
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
         case_number = self.case_search_box.text()
@@ -173,10 +174,8 @@ class MainWindowSlotFunctionsMixin(object):
         """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
         case_number = update_case_number(case_number)
-        logger.debug(case_number)
         self.case_search_box.setText(case_number)
         cms_case_data = CriminalCaseSQLServer(case_number).load_case()
-        logger.debug(cms_case_data)
         self.set_case_info_from_search(cms_case_data)
 
     def set_case_info_from_search(self, cms_case_data: 'CmsCaseInformation') -> None:
@@ -190,13 +189,13 @@ class MainWindowSlotFunctionsMixin(object):
 
     def show_case_docket_case_list(self):
         """TODO: ValueError catch put in to handle empty daily case list - fix daily case lists."""
-        selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
+        daily_case_list = self.set_daily_case_list()
         try:
-            selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
+            last_name, case_number = daily_case_list.combo_box.currentText().split(' - ')
         except ValueError as err:
             logger.warning(err)
             return None
-        self.show_case_docket(selected_case_number)
+        self.show_case_docket(case_number)
 
     def show_case_docket(self, case_number=None):
         if case_number is None:

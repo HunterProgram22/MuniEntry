@@ -140,7 +140,7 @@ class DailyCaseList(object):
         self.connect_signals()
 
     def connect_signals(self):
-        self.radio_button.clicked.connect(self.set_selected_case_list_table)
+        self.radio_button.clicked.connect(self.set_daily_case_list_name)
         self.radio_button.toggled.connect(self.show_hide_case_list)
 
     def show_hide_case_list(self):
@@ -153,5 +153,5 @@ class DailyCaseList(object):
             self.combo_box.setEnabled(False)
             self.combo_box.setHidden(True)
 
-    def set_selected_case_list_table(self):
-        self.main_window.case_table = self.name
+    def set_daily_case_list_name(self):
+        self.main_window.daily_case_list_name = self.name

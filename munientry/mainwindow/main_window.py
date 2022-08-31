@@ -80,16 +80,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
-        self.case_table = 'None'
+        self.daily_case_list_name = 'None'
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
         main_window_signalconnector.MainWindowSignalConnector(self)
-
-    def set_selected_case_list_table(self) -> None:
-        self.case_table = self.sender().name
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
