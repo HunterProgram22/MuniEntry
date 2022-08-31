@@ -43,11 +43,6 @@ class MainWindowViewModifier(object):
             self.trials_to_court_list,
         ]
 
-        # self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
-        # self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
-        # self.main_window.radio_buttons_case_lists_dict = (
-        #     self.create_daily_case_lists()
-        # )
 
     def connect_judicial_officers(self) -> dict:
         return {
@@ -160,27 +155,3 @@ class DailyCaseList(object):
 
     def set_selected_case_list_table(self):
         self.main_window.case_table = self.name
-#
-#
-#
-# def connect_daily_case_list_radio_buttons(self) -> dict:
-#     return {
-#         self.main_window.arraignments_radioButton: 'arraignments',
-#         self.main_window.slated_radioButton: 'slated',
-#         self.main_window.final_pretrial_radioButton: 'final_pretrials',
-#         self.main_window.pleas_radioButton: 'pleas',
-#         self.main_window.trials_to_court_radioButton: 'trials_to_court',
-#         self.main_window.pcvh_fcvh_radioButton: 'pcvh_fcvh',
-#     }
-#
-#
-# def connect_database_tables_to_daily_case_lists(self) -> dict:
-#     return {
-#         'arraignments': self.main_window.arraignments_cases_box,
-#         'slated': self.main_window.slated_cases_box,
-#         'final_pretrials': self.main_window.final_pretrial_cases_box,
-#         'pleas': self.main_window.pleas_cases_box,
-#         'trials_to_court': self.main_window.trials_to_court_cases_box,
-#         'pcvh_fcvh': self.main_window.pcvh_fcvh_cases_box,
-#     }
-

@@ -90,7 +90,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
     def set_selected_case_list_table(self) -> None:
         self.case_table = self.sender().name
-        # self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
