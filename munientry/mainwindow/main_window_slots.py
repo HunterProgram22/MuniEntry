@@ -35,13 +35,13 @@ class MainWindowSlotFunctionsMixin(object):
         """
         if db_connection is None:
             db_connection = open_db_connection('con_daily_case_lists')
-        for table_name, case_list in self.database_table_dict.items():
-            old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
-            case_list.clear()
-            case_list.addItems(query_daily_case_list_data(table_name, db_connection))
-            case_count = len(case_list) - 1
+        for case_list in self.daily_case_lists:
+            old_case_count = len(case_list.combo_box) - 1 if len(case_list.combo_box) > 1 else 0
+            case_list.combo_box.clear()
+            case_list.combo_box.addItems(query_daily_case_list_data(case_list.name, db_connection))
+            case_count = len(case_list.combo_box) - 1
             logger.info(
-                f'Table: {table_name} - Preload Cases: {old_case_count};'
+                f'Table: {case_list.name} - Preload Cases: {old_case_count};'
                 + f' Postload Cases {case_count}',
             )
         close_db_connection(db_connection)
@@ -59,18 +59,10 @@ class MainWindowSlotFunctionsMixin(object):
         conn.close()
 
     def show_hide_daily_case_lists(self) -> None:
-        selected_case_list = self.radio_buttons_case_lists_dict.get(
-            self.sender(),
-        )
-        for case_list in self.radio_buttons_case_lists_dict.values():
-            if case_list == selected_case_list:
-                case_list.setEnabled(True)
-                case_list.setHidden(False)
-                case_list.setFocus()
-            else:
-                case_list.setCurrentText('')
-                case_list.setHidden(True)
-                case_list.setEnabled(False)
+        for case_list in self.daily_case_lists:
+            case_list.combo_box.setCurrentText('')
+            case_list.combo_box.setHidden(True)
+            case_list.combo_box.setEnabled(False)
 
     def assign_judge(self) -> None:
         assigned_judge, time_now = set_random_judge()
@@ -134,15 +126,18 @@ class MainWindowSlotFunctionsMixin(object):
 
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
-        if not any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+        if not any(case_list.radio_button.isChecked() for case_list in self.daily_case_lists):
+        # if not any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
             return RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
-        selected_case_table = self.database_table_dict.get(
-            self.case_table, QComboBox,
-        )
-        cms_case_data = self.set_case_to_load(selected_case_table)
+        selected_case_table = [case_list.radio_button.isChecked() for case_list in self.daily_case_lists]
+        # self.database_table_dict.get(
+        #     self.case_table, QComboBox,
+        # )
+        logger.debug(selected_case_table)
+        cms_case_data = self.set_case_to_load(selected_case_table[0])
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,

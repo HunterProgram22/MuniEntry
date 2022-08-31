@@ -34,6 +34,14 @@ class MainWindowViewModifier(object):
         )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.create_daily_case_lists()
+        self.main_window.daily_case_lists = [
+            self.arraignments_list,
+            self.slated_list,
+            self.pleas_list,
+            self.pcvh_fcvh_list,
+            self.final_pretrial_list,
+            self.trials_to_court_list,
+        ]
 
         # self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
         # self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
