@@ -50,11 +50,11 @@ def check_for_companion_cases(selected_case_table: object, case_table: str) -> C
     all_cases = [selected_case_table.itemText(case) for case in range(selected_case_table.count())]
     case_match_count, matched_cases_list = search_daily_case_list(all_cases, selected_last_name)
     if case_match_count > 1:
-        return ask_if_cases_combined(selected_last_name, matched_cases_list, case_table)
+        return ask_if_cases_combined(selected_last_name, selected_case_number, matched_cases_list, case_table)
     return load_single_case(selected_case_number, case_table)
 
 
-def ask_if_cases_combined(selected_last_name: str, matched_cases_list: list, case_table) -> CriminalCaseSQLLite:
+def ask_if_cases_combined(selected_last_name: str, selected_case_number: str, matched_cases_list: list, case_table) -> CriminalCaseSQLLite:
     """Asks user if they want to combine matched cases or just load single selected case."""
     case_numbers = '\n'.join(matched_cases_list)
     case_count = len(matched_cases_list)
