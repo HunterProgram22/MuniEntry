@@ -132,12 +132,15 @@ class MainWindowSlotFunctionsMixin(object):
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
-        selected_case_table = [case_list.radio_button.isChecked() for case_list in self.daily_case_lists]
-        # self.database_table_dict.get(
-        #     self.case_table, QComboBox,
-        # )
+        for case_list in self.daily_case_lists:
+            logger.debug(case_list)
+            logger.debug(case_list.radio_button.isChecked())
+            if case_list.radio_button.isChecked():
+                selected_case_table = case_list.combo_box
+            # else:
+            #     selected_case_table = None
         logger.debug(selected_case_table)
-        cms_case_data = self.set_case_to_load(selected_case_table[0])
+        cms_case_data = self.set_case_to_load(selected_case_table)
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
