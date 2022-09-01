@@ -12,8 +12,7 @@ from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
-from munientry.widgets.message_boxes import InfoBox
-from munientry.widgets.table_widgets import ReportWindow
+from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
 
@@ -43,13 +42,17 @@ def run_batch_fta_process(_signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
     entries_created = run_batch_fta_arraignments()
     message = f'The batch process created {entries_created} entries.'
-    InfoBox(message, 'Entries Created').exec()
+    message_boxes.InfoBox(message, 'Entries Created').exec()
     os.startfile(f'{SAVE_PATH}batch\\')
 
 
-def create_event_report_window(data_list: list, report_name: str, report_date: str) -> ReportWindow:
+def create_event_report_window(
+    data_list: list, report_name: str, report_date: str,
+) -> table_widgets.ReportWindow:
     """Creates a window to load the event table and print buttons onto."""
-    window = ReportWindow(len(data_list), 3, f'{report_name} Report for {report_date}')
+    window = table_widgets.ReportWindow(
+        len(data_list), 3, f'{report_name} Report for {report_date}',
+    )
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
     Case = namedtuple('Case', 'case_number defendant_name primary_charge')
     for row, case in enumerate(data_list):
@@ -72,7 +75,7 @@ class MainWindowMenu(object):
         self.log_shortcut.activated.connect(open_current_log)
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
         self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
-            open_batch_entries_folder
+            open_batch_entries_folder,
         )
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
         self.mainwindow.actionArraignments.triggered.connect(self.run_arraignments_report)

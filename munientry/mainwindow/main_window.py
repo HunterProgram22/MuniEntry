@@ -2,7 +2,10 @@
 from loguru import logger
 from PyQt5.QtWidgets import QInputDialog, QMainWindow, QMessageBox
 
-from munientry.data.sql_lite_getters import CriminalCaseSQLLite, MultipleCriminalCaseSQLLite
+from munientry.data.sql_lite_getters import (
+    CriminalCaseSQLLite,
+    MultipleCriminalCaseSQLLite,
+)
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.mainwindow.menu import MainWindowMenu
@@ -75,7 +78,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
-        self.daily_case_list_name = 'None'
+        self.daily_case_list = None
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
