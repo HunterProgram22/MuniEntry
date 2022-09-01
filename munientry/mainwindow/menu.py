@@ -24,18 +24,14 @@ FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
 
 def open_current_log(signal=None) -> None:
     """Menu function that opens the user logs directly or with keyboard shortcut."""
-    if signal is False:
-        signal = 'Menu'
-    else:
-        signal = 'Keyboard Shortcut'
-    logger.info(f'Log opened from {signal}.')
     os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
+    logger.info(f'Current system log opened.')
 
 
 def open_batch_entries_folder(_signal=None) -> None:
     """Menu function that opens the folder where batch entries are saved."""
-    logger.info('Opened batch entries folder.')
     os.startfile(f'{SAVE_PATH}batch\\')
+    logger.info('Batch entries folder opened.')
 
 
 def run_batch_fta_process(_signal=None) -> None:
@@ -44,6 +40,7 @@ def run_batch_fta_process(_signal=None) -> None:
     message = f'The batch process created {entries_created} entries.'
     message_boxes.InfoBox(message, 'Entries Created').exec()
     os.startfile(f'{SAVE_PATH}batch\\')
+    logger.info(f'{message}')
 
 
 def create_event_report_window(
