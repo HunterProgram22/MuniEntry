@@ -802,6 +802,16 @@ font-weight: bold;</string>
               </property>
              </widget>
             </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="limited_driving_privilegesButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>Limited Driving Privileges</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </widget>
