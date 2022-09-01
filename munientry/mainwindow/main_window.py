@@ -31,7 +31,7 @@ def search_daily_case_list(daily_case_list: list, selected_last_name: str) -> tu
     """Loops through all cases in daily case list to find matching last names."""
     case_match_count = 0
     matched_cases_list = []
-    for case in daily_case_list.combo_box.all_items():
+    for case in daily_case_list.all_items():
         if case == '':
             continue
         checked_last_name, checked_case_number = case.split(' - ')
@@ -43,7 +43,7 @@ def search_daily_case_list(daily_case_list: list, selected_last_name: str) -> tu
 
 def check_for_companion_cases(daily_case_list: object) -> CriminalCaseSQLLite:
     """Checks for matching last names to find potential companion cases to load."""
-    last_name, case_number = daily_case_list.combo_box.currentText().split(' - ')
+    last_name, case_number = daily_case_list.currentText().split(' - ')
     case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
@@ -110,6 +110,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
         :daily_case_list: The daily case list table that is currently selected on the Main Window.
         """
-        if daily_case_list.combo_box.currentText() == '':
+        if daily_case_list.currentText() == '':
             return load_no_case()
         return check_for_companion_cases(daily_case_list)

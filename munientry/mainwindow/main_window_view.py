@@ -26,6 +26,7 @@ class MainWindowViewModifier(object):
     def __init__(self, main_window: object) -> None:
         self.main_window = main_window
         self.main_window.setupUi(self.main_window)
+        self.create_daily_case_lists()
         self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
@@ -33,16 +34,14 @@ class MainWindowViewModifier(object):
             self.connect_crim_traffic_dialog_buttons()
         )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
-        self.create_daily_case_lists()
         self.main_window.daily_case_lists = [
-            self.arraignments_list,
-            self.slated_list,
-            self.pleas_list,
-            self.pcvh_fcvh_list,
-            self.final_pretrial_list,
-            self.trials_to_court_list,
+            self.main_window.arraignments_cases_box,
+            self.main_window.slated_cases_box,
+            self.main_window.pleas_cases_box,
+            self.main_window.pcvh_fcvh_cases_box,
+            self.main_window.final_pretrial_cases_box,
+            self.main_window.trials_to_court_cases_box,
         ]
-
 
     def connect_judicial_officers(self) -> dict:
         return {
@@ -92,66 +91,34 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
         }
 
-
     def create_daily_case_lists(self) -> None:
-        self.arraignments_list = DailyCaseList(
+        self.main_window.arraignments_cases_box.setup_combo_box(
             'arraignments',
-            self.main_window.arraignments_cases_box,
             self.main_window.arraignments_radioButton,
             self.main_window,
         )
-        self.slated_list = DailyCaseList(
+        self.main_window.slated_cases_box.setup_combo_box(
             'slated',
-            self.main_window.slated_cases_box,
             self.main_window.slated_radioButton,
             self.main_window,
         )
-        self.final_pretrial_list = DailyCaseList(
+        self.main_window.final_pretrial_cases_box.setup_combo_box(
             'final_pretrials',
-            self.main_window.final_pretrial_cases_box,
             self.main_window.final_pretrial_radioButton,
             self.main_window,
         )
-        self.pleas_list = DailyCaseList(
+        self.main_window.pleas_cases_box.setup_combo_box(
             'pleas',
-            self.main_window.pleas_cases_box,
             self.main_window.pleas_radioButton,
             self.main_window,
         )
-        self.trials_to_court_list = DailyCaseList(
+        self.main_window.trials_to_court_cases_box.setup_combo_box(
             'trials_to_court',
-            self.main_window.trials_to_court_cases_box,
             self.main_window.trials_to_court_radioButton,
             self.main_window,
         )
-        self.pcvh_fcvh_list = DailyCaseList(
+        self.main_window.pcvh_fcvh_cases_box.setup_combo_box(
             'pcvh_fcvh',
-            self.main_window.pcvh_fcvh_cases_box,
             self.main_window.pcvh_fcvh_radioButton,
             self.main_window,
         )
-
-class DailyCaseList(object):
-    def __init__(self, name, combo_box, radio_button, main_window):
-        self.name = name
-        self.combo_box = combo_box
-        self.radio_button = radio_button
-        self.main_window = main_window
-        self.connect_signals()
-
-    def connect_signals(self):
-        self.radio_button.clicked.connect(self.set_daily_case_list_name)
-        self.radio_button.toggled.connect(self.show_hide_case_list)
-
-    def show_hide_case_list(self):
-        if self.radio_button.isChecked():
-            self.combo_box.setEnabled(True)
-            self.combo_box.setHidden(False)
-            self.combo_box.setFocus()
-        else:
-            self.combo_box.setCurrentText('')
-            self.combo_box.setEnabled(False)
-            self.combo_box.setHidden(True)
-
-    def set_daily_case_list_name(self):
-        self.main_window.daily_case_list_name = self.name

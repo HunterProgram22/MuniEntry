@@ -423,4 +423,5 @@ class Ui_PleaOnlyDialog(object):
         self.label_5.setText(_translate("PleaOnlyDialog", "FUTURE SENTENCING REASONS"))
         self.prepare_psi_checkBox.setText(_translate("PleaOnlyDialog", "Prepare Presentence Investigation Report"))
         self.victim_appearance_checkBox.setText(_translate("PleaOnlyDialog", "Set for Future Sentencing to Allow for Appearance of the Victim at Sentencing"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

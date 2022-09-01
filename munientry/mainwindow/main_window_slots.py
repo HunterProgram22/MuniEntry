@@ -43,10 +43,10 @@ class MainWindowSlotFunctionsMixin(object):
         if db_connection is None:
             db_connection = open_db_connection('con_daily_case_lists')
         for case_list in self.daily_case_lists:
-            old_case_count = len(case_list.combo_box) - 1 if len(case_list.combo_box) > 1 else 0
-            case_list.combo_box.clear()
-            case_list.combo_box.addItems(query_daily_case_list_data(case_list.name, db_connection))
-            case_count = len(case_list.combo_box) - 1
+            old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
+            case_list.clear()
+            case_list.addItems(query_daily_case_list_data(case_list.name, db_connection))
+            case_count = len(case_list) - 1
             logger.info(
                 f'Table: {case_list.name} - Preload Cases: {old_case_count};'
                 + f' Postload Cases {case_count}',
@@ -67,9 +67,9 @@ class MainWindowSlotFunctionsMixin(object):
 
     def show_hide_daily_case_lists(self) -> None:
         for case_list in self.daily_case_lists:
-            case_list.combo_box.setCurrentText('')
-            case_list.combo_box.setHidden(True)
-            case_list.combo_box.setEnabled(False)
+            case_list.setCurrentText('')
+            case_list.setHidden(True)
+            case_list.setEnabled(False)
 
     def assign_judge(self) -> None:
         assigned_judge, time_now = set_random_judge()

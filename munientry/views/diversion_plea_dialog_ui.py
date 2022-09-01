@@ -534,4 +534,5 @@ class Ui_DiversionPleaDialog(object):
         self.fra_in_court_box.setItemText(2, _translate("DiversionPleaDialog", "No"))
         self.create_entry_Button.setText(_translate("DiversionPleaDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("DiversionPleaDialog", "Close Dialog"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
