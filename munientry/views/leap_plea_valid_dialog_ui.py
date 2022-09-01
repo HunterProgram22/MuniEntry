@@ -312,4 +312,5 @@ class Ui_LeapPleaValidDialog(object):
         self.appearance_reason_box.setItemText(4, _translate("LeapPleaValidDialog", "LEAP sentencing"))
         self.create_entry_Button.setText(_translate("LeapPleaValidDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("LeapPleaValidDialog", "Close Dialog"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

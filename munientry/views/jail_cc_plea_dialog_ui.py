@@ -687,4 +687,5 @@ class Ui_JailCCPleaDialog(object):
         self.label_25.setText(_translate("JailCCPleaDialog", "Dismissed:"))
         self.label_7.setText(_translate("JailCCPleaDialog", "Allied:"))
         self.plea_label_1.setText(_translate("JailCCPleaDialog", "Plea:"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

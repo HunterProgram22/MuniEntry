@@ -26,6 +26,7 @@ class MainWindowViewModifier(object):
     def __init__(self, main_window: object) -> None:
         self.main_window = main_window
         self.main_window.setupUi(self.main_window)
+        self.create_daily_case_lists()
         self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
@@ -33,11 +34,14 @@ class MainWindowViewModifier(object):
             self.connect_crim_traffic_dialog_buttons()
         )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
-        self.main_window.daily_case_list_buttons_dict = self.connect_daily_case_list_radio_buttons()
-        self.main_window.database_table_dict = self.connect_database_tables_to_daily_case_lists()
-        self.main_window.radio_buttons_case_lists_dict = (
-            self.connect_radio_buttons_to_daily_case_lists()
-        )
+        self.main_window.daily_case_lists = [
+            self.main_window.arraignments_cases_box,
+            self.main_window.slated_cases_box,
+            self.main_window.pleas_cases_box,
+            self.main_window.pcvh_fcvh_cases_box,
+            self.main_window.final_pretrial_cases_box,
+            self.main_window.trials_to_court_cases_box,
+        ]
 
     def connect_judicial_officers(self) -> dict:
         return {
@@ -87,33 +91,34 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
         }
 
-    def connect_daily_case_list_radio_buttons(self) -> dict:
-        return{
-            self.main_window.arraignments_radioButton: 'arraignments',
-            self.main_window.slated_radioButton: 'slated',
-            self.main_window.final_pretrial_radioButton: 'final_pretrials',
-            self.main_window.pleas_radioButton: 'pleas',
-            self.main_window.trials_to_court_radioButton: 'trials_to_court',
-            self.main_window.pcvh_fcvh_radioButton: 'pcvh_fcvh',
-        }
-
-    def connect_database_tables_to_daily_case_lists(self) -> dict:
-        return {
-            'arraignments': self.main_window.arraignments_cases_box,
-            'slated': self.main_window.slated_cases_box,
-            'final_pretrials': self.main_window.final_pretrial_cases_box,
-            'pleas': self.main_window.pleas_cases_box,
-            'trials_to_court': self.main_window.trials_to_court_cases_box,
-            'pcvh_fcvh': self.main_window.pcvh_fcvh_cases_box,
-        }
-
-    def connect_radio_buttons_to_daily_case_lists(self) -> dict:
-        return {
-            self.main_window.arraignments_radioButton: self.main_window.arraignments_cases_box,
-            self.main_window.slated_radioButton: self.main_window.slated_cases_box,
-            self.main_window.final_pretrial_radioButton: self.main_window.final_pretrial_cases_box,
-            self.main_window.pleas_radioButton: self.main_window.pleas_cases_box,
-            self.main_window.trials_to_court_radioButton:
-                self.main_window.trials_to_court_cases_box,
-            self.main_window.pcvh_fcvh_radioButton: self.main_window.pcvh_fcvh_cases_box,
-        }
+    def create_daily_case_lists(self) -> None:
+        self.main_window.arraignments_cases_box.setup_combo_box(
+            'arraignments',
+            self.main_window.arraignments_radioButton,
+            self.main_window,
+        )
+        self.main_window.slated_cases_box.setup_combo_box(
+            'slated',
+            self.main_window.slated_radioButton,
+            self.main_window,
+        )
+        self.main_window.final_pretrial_cases_box.setup_combo_box(
+            'final_pretrials',
+            self.main_window.final_pretrial_radioButton,
+            self.main_window,
+        )
+        self.main_window.pleas_cases_box.setup_combo_box(
+            'pleas',
+            self.main_window.pleas_radioButton,
+            self.main_window,
+        )
+        self.main_window.trials_to_court_cases_box.setup_combo_box(
+            'trials_to_court',
+            self.main_window.trials_to_court_radioButton,
+            self.main_window,
+        )
+        self.main_window.pcvh_fcvh_cases_box.setup_combo_box(
+            'pcvh_fcvh',
+            self.main_window.pcvh_fcvh_radioButton,
+            self.main_window,
+        )

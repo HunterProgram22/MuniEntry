@@ -1,6 +1,7 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
 from typing import TypeVar
 
+import munientry.widgets.combo_boxes
 from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
@@ -103,7 +104,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
-        self.addWidget(cw.DegreeComboBox(charge.degree), self.row_degree, column)
+        self.addWidget(munientry.widgets.combo_boxes.DegreeComboBox(charge.degree), self.row_degree, column)
 
     def add_delete_button_to_grid(self, column: int, charge: CriminalCharge, dialog: CBD) -> None:
         self.addWidget(
@@ -113,7 +114,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         )
 
     def add_plea_box_to_grid(self, column: int, dialog: CBD) -> None:
-        self.addWidget(cw.PleaComboBox(column, dialog), self.row_plea, column)
+        self.addWidget(munientry.widgets.combo_boxes.PleaComboBox(column, dialog), self.row_plea, column)
 
     def add_amend_button_to_grid(self, column: int, charge: CriminalCharge, dialog: CBD) -> None:
         self.addWidget(
@@ -126,7 +127,7 @@ class ChargeGridBuilder(BaseChargeGrid):
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
     def add_finding_box_to_grid(self, column: int) -> None:
-        self.addWidget(cw.FindingComboBox(), self.row_finding, column)
+        self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(), self.row_finding, column)
 
     def add_allied_checkbox_to_grid(self, column: int, dialog: CBD) -> None:
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)

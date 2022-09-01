@@ -483,4 +483,5 @@ class Ui_BondHearingDialog(object):
         self.defense_counsel_waived_checkBox.setText(_translate("BondHearingDialog", "Defendant appeared without counsel"))
         self.close_dialog_Button.setText(_translate("BondHearingDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("BondHearingDialog", "Open Entry"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
