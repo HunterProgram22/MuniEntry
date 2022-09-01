@@ -22,10 +22,7 @@ class DailyCaseListComboBox(QComboBox):
         self.name = name
         self.radio_button = radio_button
         self.main_window = main_window
-        self.connect_signals()
-
-    def connect_signals(self):
-        self.radio_button.clicked.connect(self.set_daily_case_list_name)
+        self.radio_button.clicked.connect(self.set_daily_case_list)
         self.radio_button.toggled.connect(self.show_hide_case_list)
 
     def show_hide_case_list(self):
@@ -38,8 +35,8 @@ class DailyCaseListComboBox(QComboBox):
             self.setEnabled(False)
             self.setHidden(True)
 
-    def set_daily_case_list_name(self):
-        self.main_window.daily_case_list_name = self.name
+    def set_daily_case_list(self):
+        self.main_window.daily_case_list = self
 
     def show_menu(self, pos):
         menu = QMenu()
