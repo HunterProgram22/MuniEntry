@@ -26,7 +26,10 @@ class CmsNoChargeLoader(object):
         """Loads the case management system data to the dialog."""
         self.set_case_number()
         self.set_defendant_name()
-        self.set_defense_counsel_name()
+        try:
+            self.set_defense_counsel_name()
+        except AttributeError as err:
+            logger.warning(err)
         try:
             self.set_defense_counsel_type()
         except AttributeError as error:

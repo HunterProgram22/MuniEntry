@@ -12,6 +12,7 @@ from munientry.builders.final_jury_hearing_notice_dialog import (
 from munientry.builders.general_hearing_notice_dialog import (
     GeneralNoticeOfHearingDialog,
 )
+from munientry.builders.driving_privileges_dialog import DrivingPrivilegesDialog
 from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
 from munientry.builders.trial_to_court_hearing_notice_dialog import (
     TrialToCourtHearingDialog,
@@ -89,6 +90,7 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
             self.main_window.hemmeter_trial_court_hearingButton: TrialToCourtHearingDialog,
             self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
+            self.main_window.limited_driving_privilegesButton: DrivingPrivilegesDialog,
         }
 
     def create_daily_case_lists(self) -> None:
