@@ -79,6 +79,7 @@ class CmsDrivingInfoLoader(CmsNoChargeLoader):
         self.dialog.defendant_state_lineEdit.setText(self.cms_case.defendant.state)
         self.dialog.defendant_zipcode_lineEdit.setText(self.cms_case.defendant.zipcode)
         self.dialog.defendant_driver_license_lineEdit.setText(self.cms_case.defendant.license_number)
+        self.dialog.defendant_dob_lineEdit.setText(self.cms_case.defendant.birth_date)
 
 
 class CmsChargeLoader(CmsNoChargeLoader):

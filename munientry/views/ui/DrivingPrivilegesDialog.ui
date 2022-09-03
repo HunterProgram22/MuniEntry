@@ -381,16 +381,6 @@ font-weight: bold;</string>
                  </property>
                 </widget>
                </item>
-               <item row="3" column="1">
-                <widget class="NoScrollDateEdit" name="defendat_dob_date">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="2">
                 <widget class="QLabel" name="label_26">
                  <property name="text">
@@ -412,7 +402,7 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="1" column="3">
-                <widget class="NoScrollDateEdit" name="entry_date">
+                <widget class="NoScrollDateEdit" name="plea_trial_date">
                  <property name="focusPolicy">
                   <enum>Qt::NoFocus</enum>
                  </property>
@@ -483,6 +473,13 @@ background-color: rgb(255, 255, 255);</string>
                </item>
                <item row="5" column="3">
                 <widget class="QLineEdit" name="defendant_zipcode_lineEdit">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(255, 255, 255);</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="defendant_dob_lineEdit">
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>

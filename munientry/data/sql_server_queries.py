@@ -43,7 +43,7 @@ def driving_case_search_query(case_number: str) -> str:
       cp.FirstName as DefFirstName,
       cp.MiddleName as DefMiddleName,
       cp.Suffix as DefSuffix,
-	  cp.BirthDate as DefBirthDate,
+	  FORMAT (cp.BirthDate, 'd','us') as DefBirthDate,
       ti.DefendantCity as DefCity,
       ti.DefendantState as DefState,
       ti.DefendantZip as DefZipcode,

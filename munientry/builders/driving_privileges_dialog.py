@@ -56,7 +56,7 @@ class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.entry_date.setDate(TODAY)
+        self.dialog.plea_trial_date.setDate(TODAY)
 
 
 class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
