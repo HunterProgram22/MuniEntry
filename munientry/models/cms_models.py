@@ -24,6 +24,9 @@ class DrivingPrivilegesInformation:
 
     case_number: str = None
     defendant: object = field(default_factory=DefendantDriver)
+    suspension_type: str = None
+    suspension_start_date: str = None
+    suspension_end_date: str = None
 
 
 if __name__ == "__main__":
