@@ -90,11 +90,10 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
     def update_model_with_case_information_frame_data(self):
         self.set_case_number_and_date()
         self.set_party_information()
-        self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_case_number_and_date(self):
         self.model.case_number = self.dialog.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.dialog.entry_date.date().toString('MMMM dd, yyyy')
+        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
 
     def set_party_information(self):
         self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()
