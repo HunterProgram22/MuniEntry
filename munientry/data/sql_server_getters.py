@@ -66,7 +66,7 @@ class CriminalCaseSQLServer(object):
         return self.case
 
 
-class DrivingInfoSQLServer(CriminalCaseSQLServer):
+class DrivingInfoSQLServer(object):
     """Packages driving privileges case data from the SQL Server Authority Court database.
 
     The class accepts the case number to identify the case, then retrieves
@@ -78,8 +78,14 @@ class DrivingInfoSQLServer(CriminalCaseSQLServer):
     """
 
     def __init__(self, case_number: str) -> None:
-        super().__init__(case_number)
+        self.case_number = case_number
+        self.database_connection_name = 'con_authority_court'
+        self.database = open_db_connection(self.database_connection_name)
         self.case = DrivingPrivilegesInformation()
+        self.query_case_data()
+        self.load_query_data_into_case()
+        self.query.finish()
+        close_db_connection(self.database)
 
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
@@ -93,13 +99,19 @@ class DrivingInfoSQLServer(CriminalCaseSQLServer):
 
     def load_query_data_into_case(self) -> None:
         while self.query.next():
-            if self.case.case_number is None:
-                self.load_case_information()
+            logger.debug(self.query.value('CaseNumber'))
+            self.load_case_information()
 
     def load_case_information(self) -> None:
         self.case.case_number = self.query.value('CaseNumber')
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         self.case.defendant.last_name = self.query.value('DefLastName').title()
+        self.case.defendant.birth_date = self.query.value('DefBirthDate')
+        self.case.defendant.address = self.query.value('DefAddress')
+        self.case.defendant.city = self.query.value('DefCity')
+        self.case.defendant.state = self.query.value('DefState')
+        self.case.defendant.zipcode = self.query.value('DefZipcode')
+        self.case.defendant.license_number = self.query.value('DefLicenseNumber')
 
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case

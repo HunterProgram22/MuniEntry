@@ -43,17 +43,12 @@ def driving_case_search_query(case_number: str) -> str:
       cp.FirstName as DefFirstName,
       cp.MiddleName as DefMiddleName,
       cp.Suffix as DefSuffix,
-	  cp.BirthDate,
-	  ti.TicketNumber, 
-      ti.DefendantCity,
-      ti.DefendantState,
-      ti.DefendantZip,
-      ti.DefendantPresentAddress,
-      ti.DefendantDLNumber,
-      ti.DefendantDLIssueDate,
-      ti.DefendantDLIssueState,
-      ti.DefendantDLExpireDate,
-      ti.DefendantDriversLicenseClass
+	  cp.BirthDate as DefBirthDate,
+      ti.DefendantCity as DefCity,
+      ti.DefendantState as DefState,
+      ti.DefendantZip as DefZipcode,
+      ti.DefendantPresentAddress as DefAddress,
+      ti.DefendantDLNumber as DefLicenseNumber
 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
