@@ -7,7 +7,7 @@ from munientry.controllers.helper_functions import set_assigned_judge, set_court
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import (
@@ -35,7 +35,7 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
 
     def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
+        return CmsDrivingInfoLoader(self)
 
     def modify_view(self):
         return DrivingPrivilegesViewModifier(self)

@@ -62,6 +62,25 @@ class CmsNoChargeLoader(object):
             self.dialog.defense_counsel_type_box.setCurrentText('Private Counsel')
 
 
+class CmsDrivingInfoLoader(CmsNoChargeLoader):
+    """Loader for CMS data for Driving Privileges."""
+
+    def __init__(self, dialog: QDialog) -> None:
+        super().__init__(dialog)
+
+    def load_cms_data(self) -> None:
+        self.set_case_number()
+        self.set_defendant_name()
+        self.set_defendant_driving_info()
+
+    def set_defendant_driving_info(self):
+        self.dialog.defendant_address_lineEdit.setText(self.cms_case.defendant.address)
+        self.dialog.defendant_city_lineEdit.setText(self.cms_case.defendant.city)
+        self.dialog.defendant_state_lineEdit.setText(self.cms_case.defendant.state)
+        self.dialog.defendant_zipcode_lineEdit.setText(self.cms_case.defendant.zipcode)
+        self.dialog.defendant_driver_license_lineEdit.setText(self.cms_case.defendant.license_number)
+
+
 class CmsChargeLoader(CmsNoChargeLoader):
     """Class for Loading CMS data when the charges in a case need to be loaded for the dialog.
 
