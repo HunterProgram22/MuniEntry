@@ -120,6 +120,7 @@ class MainWindowSlotFunctionsMixin(object):
             ).exec()
         button_dict = self.scheduling_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            logger.debug(self.sender().objectName())
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:
             self.dialog = self.set_dialog_from_daily_case_list(button_dict)
