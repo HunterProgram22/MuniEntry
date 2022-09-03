@@ -4,9 +4,9 @@ from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_server_queries import general_case_search_query
+from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
-from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.cms_models import CmsCaseInformation, DrivingPrivilegesInformation
 
 
 class CriminalCaseSQLServer(object):
@@ -65,6 +65,44 @@ class CriminalCaseSQLServer(object):
     def load_case(self) -> CmsCaseInformation:
         return self.case
 
+
+class DrivingInfoSQLServer(CriminalCaseSQLServer):
+    """Packages driving privileges case data from the SQL Server Authority Court database.
+
+    The class accepts the case number to identify the case, then retrieves
+    the case information from the SQL Server (AuthorityCourtDBO) database and packages it for
+    loading into the application.
+
+    :case_number: The entered case number from the on the case search tab of the main window of
+        the application.
+    """
+
+    def __init__(self, case_number: str) -> None:
+        super().__init__(case_number)
+        self.case = DrivingPrivilegesInformation()
+
+    def query_case_data(self) -> None:
+        """Query database based on cms_case number to return the data to load for the dialog."""
+        query_string = driving_case_search_query(self.case_number)
+        self.query = QSqlQuery(self.database)
+        self.query.prepare(query_string)
+        logger.database(f'Querying {self.database_connection_name}')
+        logger.database(f'Query: {query_string}')
+        self.query.bindValue(self.case_number, self.case_number)
+        self.query.exec()
+
+    def load_query_data_into_case(self) -> None:
+        while self.query.next():
+            if self.case.case_number is None:
+                self.load_case_information()
+
+    def load_case_information(self) -> None:
+        self.case.case_number = self.query.value('CaseNumber')
+        self.case.defendant.first_name = self.query.value('DefFirstName').title()
+        self.case.defendant.last_name = self.query.value('DefLastName').title()
+
+    def load_case(self) -> DrivingPrivilegesInformation:
+        return self.case
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
