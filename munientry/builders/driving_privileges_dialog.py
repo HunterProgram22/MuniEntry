@@ -85,11 +85,9 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.update_model_with_case_information_frame_data()
-
-    def update_model_with_case_information_frame_data(self):
         self.set_case_number_and_date()
         self.set_defendant_driving_info()
+        self.set_privileges_info()
 
     def set_case_number_and_date(self):
         self.model.case_number = self.dialog.case_number_lineEdit.text()
@@ -104,6 +102,13 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.defendant.zipcode = self.dialog.defendant_zipcode_lineEdit.text()
         self.model.defendant.license_number = self.dialog.defendant_driver_license_lineEdit.text()
         self.model.defendant.birth_date = self.dialog.defendant_dob_lineEdit.text()
+
+    def set_privileges_info(self):
+        radio_buttons = [self.dialog.court_suspension_radioButton, self.dialog.als_suspension_radioButton]
+        suspension_type = [button for button in radio_buttons if button.isChecked()]
+        self.model.suspension_type = suspension_type[0].text()
+        self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()
+        self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
 
 
 if __name__ == '__main__':
