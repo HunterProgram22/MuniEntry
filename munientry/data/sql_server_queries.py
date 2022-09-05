@@ -48,7 +48,11 @@ def driving_case_search_query(case_number: str) -> str:
       ti.DefendantState as DefState,
       ti.DefendantZip as DefZipcode,
       ti.DefendantPresentAddress as DefAddress,
-      ti.DefendantDLNumber as DefLicenseNumber
+      ti.DefendantDLNumber as DefLicenseNumber,
+      cp.AddressLine1 as CaseAddress,
+      cp.City as CaseCity,
+      cp.StateID as CaseState,
+      cp.ZipCode as CaseZipcode
 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc

@@ -7,6 +7,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
 from munientry.models.cms_models import CmsCaseInformation, DrivingPrivilegesInformation
+from munientry.widgets.message_boxes import InfoBox
 
 
 class CriminalCaseSQLServer(object):
@@ -83,6 +84,7 @@ class DrivingInfoSQLServer(object):
         self.database = open_db_connection(self.database_connection_name)
         self.case = DrivingPrivilegesInformation()
         self.query_case_data()
+        self.check_query_for_conflicts()
         self.load_query_data_into_case()
         self.query.finish()
         close_db_connection(self.database)
@@ -97,9 +99,27 @@ class DrivingInfoSQLServer(object):
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
-    def load_query_data_into_case(self) -> None:
+    def check_query_for_conflicts(self):
+        count = 0
         while self.query.next():
-            self.load_case_information()
+            count += 1
+            logger.debug(count)
+        if count <= 1:
+            return None
+        else:
+            message = (
+                'There are multiple addresses and/or driver license numbers associated with'
+                + ' this case, please check fields closely and correct address fields if'
+                + ' needed.'
+            )
+            msg_response = InfoBox(message, 'Multiple Addreses for Defendant').exec()
+            return None
+
+    def load_query_data_into_case(self) -> None:
+        self.query.first()
+        self.load_case_information()
+        # while self.query.next():
+        #     self.load_case_information()
 
     def load_case_information(self) -> None:
         self.case.case_number = self.query.value('CaseNumber')
