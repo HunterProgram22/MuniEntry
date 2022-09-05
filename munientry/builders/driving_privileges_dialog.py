@@ -90,6 +90,7 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.set_case_number_and_date()
         self.set_defendant_driving_info()
         self.set_privileges_info()
+        self.set_employer_school_info()
 
     def set_case_number_and_date(self):
         self.model.case_number = self.dialog.case_number_lineEdit.text()
@@ -113,11 +114,34 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
         driving_days = self.get_driving_days()
         self.model.driving_days = ', '.join(driving_days)
+        driving_hours = self.get_driving_hours()
+        self.model.driving_hours = ' to '.join(driving_hours)
         privileges_type = self.get_privileges_type()
         self.model.privileges_type = ', '.join(privileges_type) if len(privileges_type) > 1 else ''.join(privileges_type)
-        logger.debug(self.dialog.ignition_interlock_checkBox.isChecked())
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
-        logger.debug(self.model.ignition_interlock)
+        self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
+        self.model.other_conditions = self.get_other_conditions()
+
+    def get_other_conditions(self) -> str:
+        if self.dialog.varied_hours_checkBox.isChecked() and self.dialog.other_conditions_checkBox.isChecked():
+            return ' Days and hours may vary. and only other conditions.'
+        if self.dialog.other_conditions_checkBox.isChecked():
+            return ' and only other conditions.'
+        if self.dialog.varied_hours_checkBox.isChecked():
+            return '. Days and hours may vary.'
+        else:
+            return '.'
+
+    def set_employer_school_info(self):
+        self.model.employer_school_name = self.dialog.employer_name_lineEdit.text()
+        self.model.employer_school_address = self.dialog.employer_address_lineEdit.text()
+
+    def get_driving_hours(self) -> list:
+        driving_hours_list = [
+            self.dialog.from_hours_lineEdit,
+            self.dialog.to_hours_lineEdit,
+        ]
+        return [hours.text() for hours in driving_hours_list]
 
     def get_driving_days(self) -> list:
         driving_days_list = [

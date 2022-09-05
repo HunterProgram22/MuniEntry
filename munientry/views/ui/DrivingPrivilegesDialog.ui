@@ -766,7 +766,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="5" column="3">
-              <widget class="QCheckBox" name="other_checkBox">
+              <widget class="QCheckBox" name="other_conditions_checkBox">
                <property name="text">
                 <string>Other</string>
                </property>
@@ -874,7 +874,40 @@ background-color: rgb(255, 255, 255);</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
+  <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defendant_dob_lineEdit</tabstop>
+  <tabstop>defendant_driver_license_lineEdit</tabstop>
+  <tabstop>defendant_address_lineEdit</tabstop>
+  <tabstop>defendant_city_lineEdit</tabstop>
+  <tabstop>defendant_state_lineEdit</tabstop>
+  <tabstop>defendant_zipcode_lineEdit</tabstop>
+  <tabstop>suspension_start_date</tabstop>
+  <tabstop>suspension_end_date</tabstop>
+  <tabstop>court_suspension_radioButton</tabstop>
+  <tabstop>als_suspension_radioButton</tabstop>
+  <tabstop>occupational_checkBox</tabstop>
+  <tabstop>educational_checkBox</tabstop>
+  <tabstop>vocational_checkBox</tabstop>
+  <tabstop>sunday_checkBox</tabstop>
+  <tabstop>monday_checkBox</tabstop>
+  <tabstop>tuesday_checkBox</tabstop>
+  <tabstop>wednesday_checkBox</tabstop>
+  <tabstop>thursday_checkBox</tabstop>
+  <tabstop>friday_checkBox</tabstop>
+  <tabstop>saturday_checkBox</tabstop>
+  <tabstop>varied_hours_checkBox</tabstop>
+  <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>from_hours_lineEdit</tabstop>
+  <tabstop>to_hours_lineEdit</tabstop>
+  <tabstop>restricted_tags_checkBox</tabstop>
+  <tabstop>ignition_interlock_checkBox</tabstop>
+  <tabstop>employer_name_lineEdit</tabstop>
+  <tabstop>employer_address_lineEdit</tabstop>
+  <tabstop>employer_city_lineEdit</tabstop>
+  <tabstop>employer_state_lineEdit</tabstop>
+  <tabstop>employer_zipcode_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

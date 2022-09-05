@@ -23,6 +23,7 @@ class DrivingPrivilegesInformation:
     into the Dialog view."""
 
     case_number: str = None
+    plea_trial_date: str = None
     defendant: object = field(default_factory=DefendantDriver)
     suspension_type: str = None
     suspension_start_date: str = None
@@ -31,10 +32,13 @@ class DrivingPrivilegesInformation:
     driving_days: str = None
     driving_hours: str = None
     ignition_interlock: bool = False
+    restricted_tags: bool = False
+    employer_school_name: str = None
+    employer_school_address: str = None
+    other_conditions: str = None
 
-    def get_case_information(self):
-        """Returns a dictionary with all of cms_case information required
-        to populate an entry."""
+    def get_case_information(self) -> dict:
+        """Returns a dictionary with all of information required to populate an entry."""
         return asdict(self)
 
 
