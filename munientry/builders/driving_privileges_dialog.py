@@ -35,6 +35,7 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.enable_other_conditions()
 
     def load_cms_data_to_view(self):
         return CmsDrivingInfoLoader(self)
@@ -73,6 +74,7 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         )
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
+        self.dialog.other_conditions_checkBox.toggled.connect(self.functions.enable_other_conditions)
 
 
 class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
@@ -81,6 +83,14 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
     Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
     """
 
+    def enable_other_conditions(self):
+        if self.dialog.other_conditions_checkBox.isChecked():
+            self.dialog.other_conditions_lineEdit.setEnabled(True)
+            self.dialog.other_conditions_lineEdit.setHidden(False)
+            self.dialog.other_conditions_lineEdit.setFocus()
+        else:
+            self.dialog.other_conditions_lineEdit.setEnabled(False)
+            self.dialog.other_conditions_lineEdit.setHidden(True)
 
 class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
     """Updates case information for Driving Privileges Dialog."""
@@ -93,6 +103,7 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.set_employer_school_info()
 
     def set_case_number_and_date(self):
+        self.model.judicial_officer = self.dialog.judicial_officer
         self.model.case_number = self.dialog.case_number_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
 
@@ -124,9 +135,11 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
 
     def get_other_conditions(self) -> str:
         if self.dialog.varied_hours_checkBox.isChecked() and self.dialog.other_conditions_checkBox.isChecked():
-            return ' Days and hours may vary. and only other conditions.'
+            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
+            return f'. Days and hours may vary. {other_conditions_text}'
         if self.dialog.other_conditions_checkBox.isChecked():
-            return ' and only other conditions.'
+            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
+            return f'. {other_conditions_text}'
         if self.dialog.varied_hours_checkBox.isChecked():
             return '. Days and hours may vary.'
         else:
@@ -134,7 +147,14 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
 
     def set_employer_school_info(self):
         self.model.employer_school_name = self.dialog.employer_name_lineEdit.text()
-        self.model.employer_school_address = self.dialog.employer_address_lineEdit.text()
+        self.model.employer_school_address = self.get_employer_school_address()
+
+    def get_employer_school_address(self) -> str:
+        address = self.dialog.employer_address_lineEdit.text()
+        city = self.dialog.employer_city_lineEdit.text()
+        state = self.dialog.employer_state_lineEdit.text()
+        zipcode = self.dialog.employer_zipcode_lineEdit.text()
+        return f'{address}, {city}, {state} {zipcode}'
 
     def get_driving_hours(self) -> list:
         driving_hours_list = [

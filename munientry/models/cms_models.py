@@ -23,6 +23,7 @@ class DrivingPrivilegesInformation:
     into the Dialog view."""
 
     case_number: str = None
+    judicial_officer: object = None
     plea_trial_date: str = None
     defendant: object = field(default_factory=DefendantDriver)
     suspension_type: str = None

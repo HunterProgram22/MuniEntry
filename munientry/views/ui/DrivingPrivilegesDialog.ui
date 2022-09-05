@@ -854,6 +854,16 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
+             <item row="5" column="4" colspan="4">
+              <widget class="QLineEdit" name="other_conditions_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>List other conditions here.</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -899,6 +909,7 @@ background-color: rgb(255, 255, 255);</string>
   <tabstop>saturday_checkBox</tabstop>
   <tabstop>varied_hours_checkBox</tabstop>
   <tabstop>other_conditions_checkBox</tabstop>
+  <tabstop>other_conditions_lineEdit</tabstop>
   <tabstop>from_hours_lineEdit</tabstop>
   <tabstop>to_hours_lineEdit</tabstop>
   <tabstop>restricted_tags_checkBox</tabstop>
