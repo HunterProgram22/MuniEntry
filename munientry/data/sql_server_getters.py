@@ -99,7 +99,6 @@ class DrivingInfoSQLServer(object):
 
     def load_query_data_into_case(self) -> None:
         while self.query.next():
-            logger.debug(self.query.value('CaseNumber'))
             self.load_case_information()
 
     def load_case_information(self) -> None:
