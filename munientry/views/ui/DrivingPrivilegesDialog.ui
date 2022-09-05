@@ -240,7 +240,7 @@ font-weight: bold;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_8">
              <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,0">
+              <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,4">
                <property name="horizontalSpacing">
                 <number>6</number>
                </property>
@@ -606,7 +606,7 @@ background-color: rgb(255, 255, 255);</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3">
+            <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1,1,1,1,1,1,1">
              <item row="1" column="0">
               <widget class="QLabel" name="label_15">
                <property name="text">
@@ -617,7 +617,8 @@ background-color: rgb(255, 255, 255);</string>
              <item row="1" column="1">
               <widget class="NoScrollDateEdit" name="suspension_start_date">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>
@@ -655,7 +656,8 @@ background-color: rgb(255, 255, 255);</string>
              <item row="2" column="1">
               <widget class="NoScrollDateEdit" name="suspension_end_date">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="calendarPopup">
                 <bool>true</bool>
@@ -757,14 +759,14 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="5" column="1">
-              <widget class="QCheckBox" name="checkBox_8">
+              <widget class="QCheckBox" name="varied_hours_checkBox">
                <property name="text">
                 <string>Days / Hours may vary</string>
                </property>
               </widget>
              </item>
              <item row="5" column="3">
-              <widget class="QCheckBox" name="checkBox_9">
+              <widget class="QCheckBox" name="other_checkBox">
                <property name="text">
                 <string>Other</string>
                </property>
@@ -781,7 +783,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="QLineEdit" name="lineEdit_6">
+              <widget class="QLineEdit" name="from_hours_lineEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -798,7 +800,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="3">
-              <widget class="QLineEdit" name="lineEdit_7">
+              <widget class="QLineEdit" name="to_hours_lineEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -812,7 +814,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="7" column="1" colspan="2">
-              <widget class="QCheckBox" name="checkBox">
+              <widget class="QCheckBox" name="restricted_tags_checkBox">
                <property name="text">
                 <string>Restricted Vehicle ID Tags</string>
                </property>
@@ -845,8 +847,8 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="3">
-              <widget class="QCheckBox" name="checkBox_2">
+             <item row="7" column="3" colspan="2">
+              <widget class="QCheckBox" name="ignition_interlock_checkBox">
                <property name="text">
                 <string>Certified Ignition Interlock Device</string>
                </property>

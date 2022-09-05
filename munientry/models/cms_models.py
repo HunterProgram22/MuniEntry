@@ -27,6 +27,10 @@ class DrivingPrivilegesInformation:
     suspension_type: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
+    privileges_type: str = None
+    driving_days: str = None
+    driving_hours: str = None
+    ignition_interlock: bool = False
 
     def get_case_information(self):
         """Returns a dictionary with all of cms_case information required

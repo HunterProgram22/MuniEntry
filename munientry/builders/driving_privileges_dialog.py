@@ -111,6 +111,33 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.suspension_type = suspension_type[0].text()
         self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()
         self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
+        driving_days = self.get_driving_days()
+        self.model.driving_days = ', '.join(driving_days)
+        privileges_type = self.get_privileges_type()
+        self.model.privileges_type = ', '.join(privileges_type) if len(privileges_type) > 1 else ''.join(privileges_type)
+        logger.debug(self.dialog.ignition_interlock_checkBox.isChecked())
+        self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
+        logger.debug(self.model.ignition_interlock)
+
+    def get_driving_days(self) -> list:
+        driving_days_list = [
+            self.dialog.sunday_checkBox,
+            self.dialog.monday_checkBox,
+            self.dialog.tuesday_checkBox,
+            self.dialog.wednesday_checkBox,
+            self.dialog.thursday_checkBox,
+            self.dialog.friday_checkBox,
+            self.dialog.saturday_checkBox,
+        ]
+        return [day.text() for day in driving_days_list if day.isChecked()]
+
+    def get_privileges_type(self) -> list:
+        privileges_type_list = [
+            self.dialog.occupational_checkBox,
+            self.dialog.educational_checkBox,
+            self.dialog.vocational_checkBox,
+        ]
+        return [type.text() for type in privileges_type_list if type.isChecked()]
 
 
 if __name__ == '__main__':
