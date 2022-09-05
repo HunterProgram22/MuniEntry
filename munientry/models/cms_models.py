@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from loguru import logger
 
 from munientry.models.party_types import Defendant, DefendantDriver
@@ -27,6 +27,11 @@ class DrivingPrivilegesInformation:
     suspension_type: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
+
+    def get_case_information(self):
+        """Returns a dictionary with all of cms_case information required
+        to populate an entry."""
+        return asdict(self)
 
 
 if __name__ == "__main__":

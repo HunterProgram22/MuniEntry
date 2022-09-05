@@ -8,6 +8,7 @@ from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
+from munientry.models.cms_models import DrivingPrivilegesInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import (
@@ -30,6 +31,7 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
     ):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Driving Privileges Entry'
+        self.entry_case_information = DrivingPrivilegesInformation()
         logger.info(f'Loaded Dialog: {self.dialog_name}')
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')

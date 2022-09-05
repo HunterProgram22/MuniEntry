@@ -26,10 +26,6 @@ class SchedulingCaseInformation:
     hearing_type: str = None
     hearing_location: str = None
 
-    suspension_type: str = None
-    suspension_start_date: str = None
-    suspension_end_date: str = None
-
     def get_case_information(self):
         """Returns a dictionary with all of cms_case information required
         to populate an entry."""
