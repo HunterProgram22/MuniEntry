@@ -637,6 +637,9 @@ background-color: rgb(255, 255, 255);</string>
                <property name="text">
                 <string>Court</string>
                </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item row="1" column="5">

@@ -307,6 +307,7 @@ class Ui_DrivingPrivilegesDialog(object):
         self.label_4.setObjectName("label_4")
         self.gridLayout_3.addWidget(self.label_4, 1, 3, 1, 1)
         self.court_suspension_radioButton = QtWidgets.QRadioButton(self.frame_5)
+        self.court_suspension_radioButton.setChecked(True)
         self.court_suspension_radioButton.setObjectName("court_suspension_radioButton")
         self.gridLayout_3.addWidget(self.court_suspension_radioButton, 1, 4, 1, 1)
         self.als_suspension_radioButton = QtWidgets.QRadioButton(self.frame_5)

@@ -507,7 +507,7 @@ background-color: rgb(255, 255, 255);</string>
                  </item>
                  <item>
                   <property name="text">
-                   <string>Motion to Seal Hearing</string>
+                   <string>Seal Record</string>
                   </property>
                  </item>
                  <item>
@@ -720,12 +720,12 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>
