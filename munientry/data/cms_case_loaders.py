@@ -71,7 +71,10 @@ class CmsDrivingInfoLoader(CmsNoChargeLoader):
     def load_cms_data(self) -> None:
         self.set_case_number()
         self.set_defendant_name()
-        self.set_defendant_driving_info()
+        try:
+            self.set_defendant_driving_info()
+        except AttributeError as error:
+            logger.warning(error)
 
     def set_defendant_driving_info(self):
         self.dialog.defendant_address_lineEdit.setText(self.cms_case.defendant.address)
