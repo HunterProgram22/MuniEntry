@@ -17,6 +17,10 @@ class Template:
         self.template_path = TEMPLATE_PATH + template_path
 
 
+Driving_Privileges_Template = Template(
+    "Driving Privileges Journal Entry",
+    "Driving_Privileges_Template.docx",
+)
 
 Fine_Only_Plea_Final_Judgment_Template = Template(
     "Fine Only Judgment Entry",
@@ -142,6 +146,8 @@ TEMPLATE_DICT = {
     "Final And Jury Notice Of Hearing Entry": Final_Jury_Notice_Of_Hearing_Template,
     "General Notice Of Hearing Entry": General_Notice_Of_Hearing_Template,
     "Trial To Court Notice Of Hearing Entry": Trial_To_Court_Hearing_Notice_Template,
+
+    'Driving Privileges Entry': Driving_Privileges_Template,
 }
 
 

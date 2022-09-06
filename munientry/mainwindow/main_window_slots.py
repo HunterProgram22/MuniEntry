@@ -2,7 +2,14 @@
 from loguru import logger
 from PyQt5.QtCore import QSize
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QComboBox, QDialog, QTableWidgetItem, QHeaderView, QSizePolicy, QLineEdit
+from PyQt5.QtWidgets import (
+    QComboBox,
+    QDialog,
+    QHeaderView,
+    QLineEdit,
+    QSizePolicy,
+    QTableWidgetItem,
+)
 
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data.connections import close_db_connection, open_db_connection
@@ -10,7 +17,7 @@ from munientry.data.sql_lite_functions import (
     load_daily_case_list_data,
     query_daily_case_list_data,
 )
-from munientry.data.sql_server_getters import CriminalCaseSQLServer
+from munientry.data.sql_server_getters import CriminalCaseSQLServer, DrivingInfoSQLServer
 from munientry.data.sql_server_queries import get_case_docket_query
 from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
@@ -35,13 +42,13 @@ class MainWindowSlotFunctionsMixin(object):
         """
         if db_connection is None:
             db_connection = open_db_connection('con_daily_case_lists')
-        for table_name, case_list in self.database_table_dict.items():
+        for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
-            case_list.addItems(query_daily_case_list_data(table_name, db_connection))
+            case_list.addItems(query_daily_case_list_data(case_list.name, db_connection))
             case_count = len(case_list) - 1
             logger.info(
-                f'Table: {table_name} - Preload Cases: {old_case_count};'
+                f'Table: {case_list.name} - Preload Cases: {old_case_count};'
                 + f' Postload Cases {case_count}',
             )
         close_db_connection(db_connection)
@@ -59,18 +66,10 @@ class MainWindowSlotFunctionsMixin(object):
         conn.close()
 
     def show_hide_daily_case_lists(self) -> None:
-        selected_case_list = self.radio_buttons_case_lists_dict.get(
-            self.sender(),
-        )
-        for case_list in self.radio_buttons_case_lists_dict.values():
-            if case_list == selected_case_list:
-                case_list.setEnabled(True)
-                case_list.setHidden(False)
-                case_list.setFocus()
-            else:
-                case_list.setCurrentText('')
-                case_list.setHidden(True)
-                case_list.setEnabled(False)
+        for case_list in self.daily_case_lists:
+            case_list.setCurrentText('')
+            case_list.setHidden(True)
+            case_list.setEnabled(False)
 
     def assign_judge(self) -> None:
         assigned_judge, time_now = set_random_judge()
@@ -134,26 +133,27 @@ class MainWindowSlotFunctionsMixin(object):
 
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
-        if not any(key.isChecked() for key in self.daily_case_list_buttons_dict.keys()):
+        if not any(case_list.radio_button.isChecked() for case_list in self.daily_case_lists):
             return RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
-        selected_case_table = self.database_table_dict.get(
-            self.case_table, QComboBox,
-        )
-        cms_case_data = self.set_case_to_load(selected_case_table)
+        cms_case_data = self.set_case_to_load(self.daily_case_list)
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
             cms_case=cms_case_data,
-            case_table=self.case_table,
+            case_table=self.daily_case_list.name,
         )
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
+        logger.debug(self.sender().objectName())
         case_number = self.case_search_box.text()
-        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        if self.sender().objectName() == 'limited_driving_privilegesButton':
+            cms_case_data = DrivingInfoSQLServer(case_number).load_case()
+        else:
+            cms_case_data = CriminalCaseSQLServer(case_number).load_case()
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,
@@ -178,10 +178,8 @@ class MainWindowSlotFunctionsMixin(object):
         """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
         case_number = self.case_search_box.text()
         case_number = update_case_number(case_number)
-        logger.debug(case_number)
         self.case_search_box.setText(case_number)
         cms_case_data = CriminalCaseSQLServer(case_number).load_case()
-        logger.debug(cms_case_data)
         self.set_case_info_from_search(cms_case_data)
 
     def set_case_info_from_search(self, cms_case_data: 'CmsCaseInformation') -> None:
@@ -195,13 +193,12 @@ class MainWindowSlotFunctionsMixin(object):
 
     def show_case_docket_case_list(self):
         """TODO: ValueError catch put in to handle empty daily case list - fix daily case lists."""
-        selected_case_table = self.database_table_dict.get(self.case_table, QComboBox)
         try:
-            selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
+            last_name, case_number = self.daily_case_list.currentText().split(' - ')
         except ValueError as err:
             logger.warning(err)
             return None
-        self.show_case_docket(selected_case_number)
+        self.show_case_docket(case_number)
 
     def show_case_docket(self, case_number=None):
         if case_number is None:

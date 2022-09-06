@@ -668,4 +668,5 @@ class Ui_TrialSentencingDialog(object):
         self.label_25.setText(_translate("TrialSentencingDialog", "Dismissed:"))
         self.label_7.setText(_translate("TrialSentencingDialog", "Allied:"))
         self.label_15.setText(_translate("TrialSentencingDialog", "Tried To:"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

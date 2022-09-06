@@ -1,17 +1,14 @@
 """Module containing the Main Window of the application."""
 from loguru import logger
-from PyQt5.QtSql import QSqlQuery, QSqlQueryModel
-from PyQt5.QtWidgets import QComboBox, QInputDialog, QMainWindow, QMessageBox, QTableView, QListWidget, QTableWidget, QTableWidgetItem
+from PyQt5.QtWidgets import QInputDialog, QMainWindow, QMessageBox
 
 from munientry.data.sql_lite_getters import (
     CriminalCaseSQLLite,
     MultipleCriminalCaseSQLLite,
 )
-from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.mainwindow import main_window_signalconnector, main_window_view
-from munientry.mainwindow.main_window_menu import connect_menu_functions
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
-from munientry.mainwindow.main_window_reports import MainWindowReportsMixin
+from munientry.mainwindow.menu import MainWindowMenu
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
@@ -33,28 +30,11 @@ def load_multiple_cases(matched_case_numbers: list, case_table: str) -> CmsCaseI
     return MultipleCriminalCaseSQLLite(matched_case_numbers, case_table).load_case()
 
 
-def check_for_companion_cases(
-    selected_case_table: object,
-    case_table: str,
-) -> CriminalCaseSQLLite:
-    """Checks for matching last names to find potential companion cases to load."""
-    selected_last_name, selected_case_number = selected_case_table.currentText().split(' - ')
-    all_cases = [selected_case_table.itemText(case) for case in range(selected_case_table.count())]
-    case_match_count, matched_cases_list = search_daily_case_list(all_cases, selected_last_name)
-    if case_match_count > 1:
-        response = ask_if_cases_combined(case_match_count, selected_last_name, matched_cases_list)
-        if response == QMessageBox.No:
-            return load_single_case(selected_case_number, case_table)
-        if response == QMessageBox.Yes:
-            return load_multiple_cases(matched_cases_list, case_table)
-    return load_single_case(selected_case_number, case_table)
-
-
-def search_daily_case_list(all_cases: list, selected_last_name: str) -> tuple:
+def search_daily_case_list(daily_case_list: list, selected_last_name: str) -> tuple:
     """Loops through all cases in daily case list to find matching last names."""
     case_match_count = 0
     matched_cases_list = []
-    for case in all_cases:
+    for case in daily_case_list.all_items():
         if case == '':
             continue
         checked_last_name, checked_case_number = case.split(' - ')
@@ -64,40 +44,47 @@ def search_daily_case_list(all_cases: list, selected_last_name: str) -> tuple:
     return case_match_count, matched_cases_list
 
 
-def ask_if_cases_combined(case_match_count, last_name, matched_case_numbers_list):
-    """Asks user if they want to combine matched cases or just load selected case."""
-    case_numbers = '\n'.join(matched_case_numbers_list)
+def check_for_companion_cases(daily_case_list: object) -> CriminalCaseSQLLite:
+    """Checks for matching last names to find potential companion cases to load."""
+    last_name, case_number = daily_case_list.currentText().split(' - ')
+    case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
+    if case_match_count > 1:
+        response = ask_if_cases_combined(last_name, matched_cases_list)
+        if response == QMessageBox.Yes:
+            return load_multiple_cases(matched_cases_list, daily_case_list.name)
+    return load_single_case(case_number, daily_case_list.name)
+
+
+def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> WarningBox:
+    """Asks user if they want to combine matched cases or just load single selected case."""
+    case_numbers = '\n'.join(matched_cases_list)
+    case_count = len(matched_cases_list)
     message = (
-        f'There are {case_match_count} cases with the last name {last_name}.\n\nThe matching '
+        f'There are {case_count} cases with the last name {last_name}.\n\nThe matching '
         + f'cases are:\n{case_numbers}\n\nDo you want to combine them into a single entry?'
     )
     return WarningBox(message, 'Companion Cases').exec()
 
 
-class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin, MainWindowReportsMixin):
+class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
     """The main window of the application that is the launching point for all dialogs."""
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.modify_view()
         self.connect_signals_to_slots()
-        connect_menu_functions(self)
-        self.actionArraignments.triggered.connect(self.run_arraignments_report)
-        self.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
+        self.menu = MainWindowMenu(self)
         self.load_case_lists()
         self.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
-        self.case_table = 'None'
+        self.daily_case_list = None
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
 
     def connect_signals_to_slots(self) -> None:
         main_window_signalconnector.MainWindowSignalConnector(self)
-
-    def set_selected_case_list_table(self) -> None:
-        self.case_table = self.daily_case_list_buttons_dict.get(self.sender(), 'None')
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
@@ -121,14 +108,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin, MainW
         judicial_officer = self.judicial_officer.last_name
         logger.action(f'Judicial Officer set to: {judicial_officer}')
 
-    def set_case_to_load(self, selected_case_table: QComboBox) -> CmsCaseInformation:
+    def set_case_to_load(self, daily_case_list: object) -> CmsCaseInformation:
         """Returns CmsCaseInformation object model for loading to the template.
 
-        :selected_case_table: The QComboBox object that is the daily case list table that is
-            currently selected on the Main Window.
-
-        TODO: Refactor selected_case_table and self.case_table to single variable.
+        :daily_case_list: The daily case list table that is currently selected on the Main Window.
         """
-        if selected_case_table.currentText() == '':
+        if daily_case_list.currentText() == '':
             return load_no_case()
-        return check_for_companion_cases(selected_case_table, self.case_table)
+        return check_for_companion_cases(daily_case_list)

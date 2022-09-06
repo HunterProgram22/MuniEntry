@@ -692,4 +692,5 @@ class Ui_SentencingOnlyDialog(object):
         self.defense_counsel_type_box.setItemText(1, _translate("SentencingOnlyDialog", "Private Counsel"))
         self.label_26.setText(_translate("SentencingOnlyDialog", "Date:"))
         self.label_3.setText(_translate("SentencingOnlyDialog", "Case Number:"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

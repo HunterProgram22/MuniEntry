@@ -26,7 +26,10 @@ class CmsNoChargeLoader(object):
         """Loads the case management system data to the dialog."""
         self.set_case_number()
         self.set_defendant_name()
-        self.set_defense_counsel_name()
+        try:
+            self.set_defense_counsel_name()
+        except AttributeError as err:
+            logger.warning(err)
         try:
             self.set_defense_counsel_type()
         except AttributeError as error:
@@ -57,6 +60,29 @@ class CmsNoChargeLoader(object):
             self.dialog.defense_counsel_type_box.setCurrentText('Public Defender')
         else:
             self.dialog.defense_counsel_type_box.setCurrentText('Private Counsel')
+
+
+class CmsDrivingInfoLoader(CmsNoChargeLoader):
+    """Loader for CMS data for Driving Privileges."""
+
+    def __init__(self, dialog: QDialog) -> None:
+        super().__init__(dialog)
+
+    def load_cms_data(self) -> None:
+        self.set_case_number()
+        self.set_defendant_name()
+        try:
+            self.set_defendant_driving_info()
+        except AttributeError as error:
+            logger.warning(error)
+
+    def set_defendant_driving_info(self):
+        self.dialog.defendant_address_lineEdit.setText(self.cms_case.defendant.address)
+        self.dialog.defendant_city_lineEdit.setText(self.cms_case.defendant.city)
+        self.dialog.defendant_state_lineEdit.setText(self.cms_case.defendant.state)
+        self.dialog.defendant_zipcode_lineEdit.setText(self.cms_case.defendant.zipcode)
+        self.dialog.defendant_driver_license_lineEdit.setText(self.cms_case.defendant.license_number)
+        self.dialog.defendant_dob_lineEdit.setText(self.cms_case.defendant.birth_date)
 
 
 class CmsChargeLoader(CmsNoChargeLoader):

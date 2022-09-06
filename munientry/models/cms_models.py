@@ -1,7 +1,7 @@
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from loguru import logger
 
-from munientry.models.party_types import Defendant
+from munientry.models.party_types import Defendant, DefendantDriver
 
 
 @dataclass
@@ -15,6 +15,32 @@ class CmsCaseInformation:
     defense_counsel_type: str = None
     charges_list: list = field(default_factory=list)
     fra_in_file: str = None
+
+
+@dataclass
+class DrivingPrivilegesInformation:
+    """Stores the data that is loaded from the Case Management System so that it can be loaded
+    into the Dialog view."""
+
+    case_number: str = None
+    judicial_officer: object = None
+    plea_trial_date: str = None
+    defendant: object = field(default_factory=DefendantDriver)
+    suspension_type: str = None
+    suspension_start_date: str = None
+    suspension_end_date: str = None
+    privileges_type: str = None
+    driving_days: str = None
+    driving_hours: str = None
+    ignition_interlock: bool = False
+    restricted_tags: bool = False
+    employer_school_name: str = None
+    employer_school_address: str = None
+    other_conditions: str = None
+
+    def get_case_information(self) -> dict:
+        """Returns a dictionary with all of information required to populate an entry."""
+        return asdict(self)
 
 
 if __name__ == "__main__":

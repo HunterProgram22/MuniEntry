@@ -1,4 +1,5 @@
 """Module containing all the data structures for parties in cases."""
+from dataclasses import dataclass, field
 from loguru import logger
 
 
@@ -29,7 +30,21 @@ class JudicialOfficer(Person):
         self.officer_type = officer_type
 
 
-if __name__ == "__main__":
+@dataclass
+class DefendantDriver:
+    """Class for storing data for a defendant that has necessary data for driving privileges."""
+
+    first_name: str = None
+    last_name: str = None
+    birth_date: str = None
+    license_number: str = None
+    address: str = None
+    city: str = None
+    state: str = None
+    zipcode: str = None
+
+
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

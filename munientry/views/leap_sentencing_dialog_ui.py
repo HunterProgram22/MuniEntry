@@ -555,4 +555,5 @@ class Ui_LeapSentencingDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("LeapSentencingDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("LeapSentencingDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("LeapSentencingDialog", "No"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox

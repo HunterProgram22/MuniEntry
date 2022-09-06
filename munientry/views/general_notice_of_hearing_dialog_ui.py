@@ -350,7 +350,7 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.hearing_type_box.setItemText(0, _translate("GeneralNoticeOfHearingDialog", "Plea Hearing"))
         self.hearing_type_box.setItemText(1, _translate("GeneralNoticeOfHearingDialog", "Motion to Suppress Hearing"))
         self.hearing_type_box.setItemText(2, _translate("GeneralNoticeOfHearingDialog", "Oral Hearing"))
-        self.hearing_type_box.setItemText(3, _translate("GeneralNoticeOfHearingDialog", "Motion to Seal Hearing"))
+        self.hearing_type_box.setItemText(3, _translate("GeneralNoticeOfHearingDialog", "Seal Record"))
         self.hearing_type_box.setItemText(4, _translate("GeneralNoticeOfHearingDialog", "Motion Hearing"))
         self.label.setText(_translate("GeneralNoticeOfHearingDialog", "Def. First Name:"))
         self.label_26.setText(_translate("GeneralNoticeOfHearingDialog", "Date:"))
@@ -360,4 +360,5 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.clear_fields_case_Button.setText(_translate("GeneralNoticeOfHearingDialog", "Clear Fields"))
         self.label_24.setText(_translate("GeneralNoticeOfHearingDialog", "Def. Counsel:"))
         self.label_6.setText(_translate("GeneralNoticeOfHearingDialog", "CASE INFORMATION"))
-from munientry.widgets.custom_widgets import DefenseCounselComboBox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit

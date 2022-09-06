@@ -468,4 +468,5 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_2.setText(_translate("AddSpecialBondConditionsDialog", "Exclusive possesion to:"))
         self.domestic_violence_surrender_weapons_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Surrender deadly weapons no later than:"))
         self.domestic_violence_vacate_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Vacate Residence located at:"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollComboBox, NoScrollDateEdit
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+from munientry.widgets.combo_boxes import NoScrollComboBox

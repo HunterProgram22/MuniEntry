@@ -25,7 +25,10 @@ class CaseInformationUpdater(BaseDialogUpdater):
         except AttributeError as error:
             logger.warning(error)
         self.update_defendant()
-        self.update_defense_counsel()
+        try:
+            self.update_defense_counsel()
+        except AttributeError as err:
+            logger.warning(err)
 
     def update_defendant(self) -> None:
         self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()

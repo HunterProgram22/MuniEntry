@@ -36,6 +36,35 @@ def general_case_search_query(case_number: str) -> str:
     """
 
 
+def driving_case_search_query(case_number: str) -> str:
+    return f"""
+    SELECT DISTINCT cm.CaseNumber,
+      cp.LastName as DefLastName,
+      cp.FirstName as DefFirstName,
+      cp.MiddleName as DefMiddleName,
+      cp.Suffix as DefSuffix,
+	  FORMAT (cp.BirthDate, 'd','us') as DefBirthDate,
+      ti.DefendantCity as DefCity,
+      ti.DefendantState as DefState,
+      ti.DefendantZip as DefZipcode,
+      ti.DefendantPresentAddress as DefAddress,
+      ti.DefendantDLNumber as DefLicenseNumber,
+      cp.AddressLine1 as CaseAddress,
+      cp.City as CaseCity,
+      cp.StateID as CaseState,
+      cp.ZipCode as CaseZipcode
+
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
+    ON cm.Id = sc.CaseMasterID
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+    ON cp.CaseMasterID = sc.CaseMasterID and cp.PersonTypeID = '1'
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[TicketImport] ti
+    ON cp.LastName = ti.DefendantLastName
+    WHERE CaseNumber='{case_number}'
+    """
+
+
 def event_type_report_query(report_date: str, event_codes: str) -> str:
     return f"""
     SELECT DISTINCT
