@@ -17,7 +17,7 @@ from munientry.data.sql_lite_functions import (
     load_daily_case_list_data,
     query_daily_case_list_data,
 )
-from munientry.data.sql_server_getters import CriminalCaseSQLServer
+from munientry.data.sql_server_getters import CriminalCaseSQLServer, DrivingInfoSQLServer
 from munientry.data.sql_server_queries import get_case_docket_query
 from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
@@ -148,8 +148,12 @@ class MainWindowSlotFunctionsMixin(object):
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
+        logger.debug(self.sender().objectName())
         case_number = self.case_search_box.text()
-        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        if self.sender().objectName() == 'limited_driving_privilegesButton':
+            cms_case_data = DrivingInfoSQLServer(case_number).load_case()
+        else:
+            cms_case_data = CriminalCaseSQLServer(case_number).load_case()
         logger.info(cms_case_data)
         return button_dict[self.sender()](
             self.judicial_officer,

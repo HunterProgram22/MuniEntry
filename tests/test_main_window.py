@@ -42,7 +42,7 @@ main_window_scheduling_button_test_list = [
     ("rohrer_schedulingEntryButton", "Rohrer Scheduling Entry Case Information"),
     ("hemmeter_schedulingEntryButton", "Hemmeter Scheduling Entry Case Information"),
 
-    ('limited_driving_privilegesButton', 'Limited Driving Privileges Information')
+    ('limited_driving_privilegesButton', 'Driving Privileges Entry Case Information')
 ]
 
 
