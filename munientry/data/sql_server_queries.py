@@ -60,7 +60,7 @@ def driving_case_search_query(case_number: str) -> str:
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
     ON cp.CaseMasterID = sc.CaseMasterID and cp.PersonTypeID = '1'
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[TicketImport] ti
-    ON cp.LastName = ti.DefendantLastName
+    ON cp.LastName = ti.DefendantLastName AND cp.FirstName = ti.DefendantFirstName
     WHERE CaseNumber='{case_number}'
     """
 
