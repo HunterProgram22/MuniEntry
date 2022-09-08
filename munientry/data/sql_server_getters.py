@@ -6,7 +6,8 @@ from PyQt5.QtSql import QSqlQuery
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
-from munientry.models.cms_models import CmsCaseInformation, DrivingPrivilegesInformation
+from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
 
 

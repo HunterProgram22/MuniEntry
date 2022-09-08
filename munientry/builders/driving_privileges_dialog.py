@@ -8,7 +8,7 @@ from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
-from munientry.models.cms_models import DrivingPrivilegesInformation
+from munientry.models.privileges_models import DrivingPrivilegesInformation, EmployerSchoolInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import (
@@ -75,6 +75,7 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.other_conditions_checkBox.toggled.connect(self.functions.enable_other_conditions)
+        self.dialog.add_employer_school_Button.released.connect(self.functions.add_employer_school)
 
 
 class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
@@ -91,6 +92,18 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         else:
             self.dialog.other_conditions_lineEdit.setEnabled(False)
             self.dialog.other_conditions_lineEdit.setHidden(True)
+
+    def add_employer_school(self):
+        employer_school = EmployerSchoolInformation()
+        employer_school.name = self.dialog.employer_name_lineEdit.text()
+        employer_school.address = self.dialog.employer_address_lineEdit.text()
+        employer_school.city = self.dialog.employer_city_lineEdit.text()
+        employer_school.state = self.dialog.employer_state_lineEdit.text()
+        employer_school.zipcode = self.dialog.employer_zipcode_lineEdit.text()
+        logger.info(employer_school)
+        self.dialog.entry_case_information.add_employer_school_to_list(employer_school)
+
+
 
 class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
     """Updates case information for Driving Privileges Dialog."""
