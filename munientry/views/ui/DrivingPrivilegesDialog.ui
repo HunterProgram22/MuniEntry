@@ -182,49 +182,19 @@ font-weight: bold;</string>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
-          <item row="3" column="1">
-           <widget class="QFrame" name="frame_8">
+          <item row="5" column="1">
+           <widget class="QPushButton" name="close_dialog_Button">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(107, 107, 107);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_10">
-             <item row="3" column="2">
-              <widget class="QPushButton" name="close_dialog_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 96, 82);
+             <string notr="true">background-color: rgb(255, 96, 82);
 font: 75 11pt &quot;Palatino Linotype&quot;;
 font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Close Dialog</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="2">
-              <widget class="QPushButton" name="create_entry_Button">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-               </property>
-               <property name="text">
-                <string>Open Entry</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            </property>
+            <property name="text">
+             <string>Close Dialog</string>
+            </property>
            </widget>
           </item>
-          <item row="3" column="0">
+          <item row="3" column="0" colspan="2">
            <widget class="QFrame" name="frame">
             <property name="styleSheet">
              <string notr="true">background-color: rgb(235, 235, 235);</string>
@@ -238,106 +208,262 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_8">
-             <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,4">
-               <property name="horizontalSpacing">
-                <number>6</number>
+            <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,1,1,1,1,1,1,1,0">
+             <item row="14" column="0">
+              <widget class="QLabel" name="label_23">
+               <property name="text">
+                <string>State:</string>
                </property>
-               <property name="verticalSpacing">
-                <number>12</number>
+              </widget>
+             </item>
+             <item row="10" column="1" rowspan="2" colspan="3">
+              <widget class="QLineEdit" name="employer_name_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
-               <item row="0" column="0" colspan="2">
-                <widget class="QLabel" name="label_18">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>EMPLOYER / SCHOOL INFORMATION</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_19">
-                 <property name="text">
-                  <string>Name: </string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="employer_state_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="employer_name_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_20">
-                 <property name="text">
-                  <string>Address:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="employer_address_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_21">
-                 <property name="text">
-                  <string>City:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_22">
-                 <property name="text">
-                  <string>ZIP Code:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="employer_zipcode_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_23">
-                 <property name="text">
-                  <string>State:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="employer_city_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>Address:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Name: </string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1" colspan="3">
+              <widget class="QLineEdit" name="employer_city_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1" colspan="3">
+              <widget class="QLineEdit" name="employer_address_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QLabel" name="label_21">
+               <property name="text">
+                <string>City:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1" colspan="3">
+              <widget class="QLineEdit" name="employer_state_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="0">
+              <widget class="QLabel" name="label_22">
+               <property name="text">
+                <string>ZIP Code:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="1" colspan="3">
+              <widget class="QLineEdit" name="employer_zipcode_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_17">
+               <property name="text">
+                <string>Type of Privileges:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="9">
+              <widget class="QLabel" name="label_18">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>EMPLOYER / SCHOOL INFORMATION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>Hours for Privileges:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_28">
+               <property name="text">
+                <string>Conditions:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Days for Privileges:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QCheckBox" name="occupational_checkBox">
+               <property name="text">
+                <string>Occupational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QCheckBox" name="sunday_checkBox">
+               <property name="text">
+                <string>Sunday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>From:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QCheckBox" name="varied_hours_checkBox">
+               <property name="text">
+                <string>Days / Hours may vary</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QCheckBox" name="educational_checkBox">
+               <property name="text">
+                <string>Educational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QCheckBox" name="monday_checkBox">
+               <property name="text">
+                <string>Monday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QCheckBox" name="tuesday_checkBox">
+               <property name="text">
+                <string>Tuesday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QCheckBox" name="vocational_checkBox">
+               <property name="text">
+                <string>Vocational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QCheckBox" name="wednesday_checkBox">
+               <property name="text">
+                <string>Wednesday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="5">
+              <widget class="QCheckBox" name="thursday_checkBox">
+               <property name="text">
+                <string>Thursday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="6">
+              <widget class="QCheckBox" name="friday_checkBox">
+               <property name="text">
+                <string>Friday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="7">
+              <widget class="QCheckBox" name="saturday_checkBox">
+               <property name="text">
+                <string>Saturday</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QCheckBox" name="other_conditions_checkBox">
+               <property name="text">
+                <string>Other</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLineEdit" name="from_hours_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLabel" name="label_25">
+               <property name="text">
+                <string>To:</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="4">
+              <widget class="QLineEdit" name="to_hours_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="3" colspan="5">
+              <widget class="QLineEdit" name="other_conditions_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="placeholderText">
+                <string>List other conditions here.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="4" colspan="4">
+              <widget class="QPushButton" name="pushButton">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Add Another Employer/School</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -362,232 +488,225 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_5">
-             <item row="0" column="0">
-              <layout class="QGridLayout" name="gridLayout">
-               <property name="verticalSpacing">
-                <number>24</number>
+            <layout class="QGridLayout" name="gridLayout" columnstretch="1,3,1,1,1">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Case Number:</string>
                </property>
-               <item row="4" column="3">
-                <widget class="QLineEdit" name="defendant_state_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="4">
-                <widget class="QPushButton" name="clear_fields_case_Button">
-                 <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(160, 160, 160);</string>
-                 </property>
-                 <property name="text">
-                  <string>Clear Fields</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>Address:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0" colspan="5">
-                <widget class="QLabel" name="label_6">
-                 <property name="font">
-                  <font>
-                   <family>Palatino Linotype</family>
-                   <pointsize>10</pointsize>
-                   <weight>75</weight>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                   <underline>true</underline>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>CASE INFORMATION</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label">
-                 <property name="text">
-                  <string>Def. First Name:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="3">
-                <widget class="QLineEdit" name="defendant_driver_license_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_8">
-                 <property name="text">
-                  <string>Def. DOB:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="2">
-                <widget class="QLabel" name="label_9">
-                 <property name="text">
-                  <string>Def. Driver License Number:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="3">
-                <widget class="QLineEdit" name="defendant_last_name_lineEdit">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_3">
-                 <property name="text">
-                  <string>Case Number:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="4">
-                <widget class="QPushButton" name="cancel_Button">
-                 <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(160, 160, 160);</string>
-                 </property>
-                 <property name="text">
-                  <string>Cancel</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="2">
-                <widget class="QLabel" name="label_26">
-                 <property name="text">
-                  <string>Entry Date:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLineEdit" name="case_number_lineEdit">
-                 <property name="maximumSize">
-                  <size>
-                   <width>500</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="3">
-                <widget class="NoScrollDateEdit" name="plea_trial_date">
-                 <property name="focusPolicy">
-                  <enum>Qt::NoFocus</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: rgb(0, 0, 0);
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="case_number_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Entry Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="NoScrollDateEdit" name="plea_trial_date">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
-                 </property>
-                 <property name="minimumDate">
-                  <date>
-                   <year>2021</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                 <property name="calendarPopup">
-                  <bool>true</bool>
-                 </property>
-                 <property name="date">
-                  <date>
-                   <year>2021</year>
-                   <month>1</month>
-                   <day>1</day>
-                  </date>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="defendant_address_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="2">
-                <widget class="QLabel" name="label_2">
-                 <property name="text">
-                  <string>Def. Last Name:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_12">
-                 <property name="text">
-                  <string>City:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="defendant_city_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="2">
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>State:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="2">
-                <widget class="QLabel" name="label_14">
-                 <property name="text">
-                  <string>ZIP Code:</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="3">
-                <widget class="QLineEdit" name="defendant_zipcode_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="defendant_dob_lineEdit">
-                 <property name="styleSheet">
-                  <string notr="true">background-color: rgb(255, 255, 255);</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+               </property>
+               <property name="minimumDate">
+                <date>
+                 <year>2021</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+               <property name="date">
+                <date>
+                 <year>2021</year>
+                 <month>1</month>
+                 <day>1</day>
+                </date>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="cancel_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Cancel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Def. First Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Def. DOB:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QLineEdit" name="defendant_dob_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QPushButton" name="clear_fields_case_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Clear Fields</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Def. Last Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="defendant_last_name_lineEdit">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Def. Driver License Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="defendant_driver_license_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Address:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="defendant_address_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="label_13">
+               <property name="text">
+                <string>State:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3">
+              <widget class="QLineEdit" name="defendant_state_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>City:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLineEdit" name="defendant_city_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="2">
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>ZIP Code:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="3">
+              <widget class="QLineEdit" name="defendant_zipcode_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0" colspan="5">
+              <widget class="QLabel" name="label_6">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>CASE INFORMATION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -606,224 +725,21 @@ background-color: rgb(255, 255, 255);</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" columnstretch="1,1,1,1,1,1,1,1">
-             <item row="1" column="0">
+            <layout class="QGridLayout" name="gridLayout_3">
+             <property name="horizontalSpacing">
+              <number>12</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>18</number>
+             </property>
+             <item row="2" column="0">
               <widget class="QLabel" name="label_15">
                <property name="text">
                 <string>Begin Suspension Date:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="NoScrollDateEdit" name="suspension_start_date">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QLabel" name="label_4">
-               <property name="text">
-                <string>Suspension Type:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4">
-              <widget class="QRadioButton" name="court_suspension_radioButton">
-               <property name="text">
-                <string>Court</string>
-               </property>
-               <property name="checked">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="5">
-              <widget class="QRadioButton" name="als_suspension_radioButton">
-               <property name="text">
-                <string>ALS</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_16">
-               <property name="text">
-                <string>End Suspension Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="NoScrollDateEdit" name="suspension_end_date">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="3">
-              <widget class="QLabel" name="label_17">
-               <property name="text">
-                <string>Type of Privileges:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="4">
-              <widget class="QCheckBox" name="occupational_checkBox">
-               <property name="text">
-                <string>Occupational</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="5">
-              <widget class="QCheckBox" name="educational_checkBox">
-               <property name="text">
-                <string>Educational</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="6">
-              <widget class="QCheckBox" name="vocational_checkBox">
-               <property name="text">
-                <string>Vocational</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="8">
-              <widget class="Line" name="line">
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_7">
-               <property name="text">
-                <string>Days for Privileges:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1">
-              <widget class="QCheckBox" name="sunday_checkBox">
-               <property name="text">
-                <string>Sunday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="3">
-              <widget class="QCheckBox" name="tuesday_checkBox">
-               <property name="text">
-                <string>Tuesday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="4">
-              <widget class="QCheckBox" name="wednesday_checkBox">
-               <property name="text">
-                <string>Wednesday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="5">
-              <widget class="QCheckBox" name="thursday_checkBox">
-               <property name="text">
-                <string>Thursday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="6">
-              <widget class="QCheckBox" name="friday_checkBox">
-               <property name="text">
-                <string>Friday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="7">
-              <widget class="QCheckBox" name="saturday_checkBox">
-               <property name="text">
-                <string>Saturday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_10">
-               <property name="text">
-                <string>Hours for Privileges:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="1">
-              <widget class="QCheckBox" name="varied_hours_checkBox">
-               <property name="text">
-                <string>Days / Hours may vary</string>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="3">
-              <widget class="QCheckBox" name="other_conditions_checkBox">
-               <property name="text">
-                <string>Other</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>From:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="1">
-              <widget class="QLineEdit" name="from_hours_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="2">
-              <widget class="QLabel" name="label_25">
-               <property name="text">
-                <string>To:</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="3">
-              <widget class="QLineEdit" name="to_hours_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_27">
-               <property name="text">
-                <string>Additional Requirements:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="1" colspan="2">
-              <widget class="QCheckBox" name="restricted_tags_checkBox">
-               <property name="text">
-                <string>Restricted Vehicle ID Tags</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0" colspan="8">
+             <item row="0" column="0" colspan="6">
               <widget class="QLabel" name="label_5">
                <property name="font">
                 <font>
@@ -836,38 +752,157 @@ background-color: rgb(255, 255, 255);</string>
                 </font>
                </property>
                <property name="text">
-                <string>DRIVING PRIVILEGES INFORMATION</string>
+                <string>GENERAL PRIVILEGES INFORMATION</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
-             <item row="4" column="2">
-              <widget class="QCheckBox" name="monday_checkBox">
-               <property name="text">
-                <string>Monday</string>
+             <item row="2" column="1">
+              <widget class="NoScrollDateEdit" name="suspension_start_date">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
-             <item row="7" column="3" colspan="2">
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_27">
+               <property name="text">
+                <string>Additional Requirements:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Suspension Type:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="4">
+              <widget class="QLabel" name="label_16">
+               <property name="text">
+                <string>End Suspension Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="5">
+              <widget class="NoScrollDateEdit" name="suspension_end_date">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_29">
+               <property name="text">
+                <string>Term of Suspension:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="3">
+              <widget class="QComboBox" name="suspension_term_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>6 Months</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1 Year</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>2 Years</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>3 Years</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>4 Years</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>5 Years</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>6 Years</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>7 Years</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="1" column="1" colspan="2">
+              <widget class="QRadioButton" name="court_suspension_radioButton">
+               <property name="text">
+                <string>Court</string>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3" colspan="2">
+              <widget class="QRadioButton" name="als_suspension_radioButton">
+               <property name="text">
+                <string>ALS</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1" colspan="2">
+              <widget class="QCheckBox" name="restricted_tags_checkBox">
+               <property name="text">
+                <string>Restricted Vehicle ID Tags</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="3" colspan="2">
               <widget class="QCheckBox" name="ignition_interlock_checkBox">
                <property name="text">
                 <string>Certified Ignition Interlock Device</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="4" colspan="4">
-              <widget class="QLineEdit" name="other_conditions_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="placeholderText">
-                <string>List other conditions here.</string>
-               </property>
-              </widget>
-             </item>
             </layout>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QPushButton" name="create_entry_Button">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+            </property>
+            <property name="text">
+             <string>Open Entry</string>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>
@@ -889,41 +924,17 @@ background-color: rgb(255, 255, 255);</string>
  <tabstops>
   <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
-  <tabstop>defendant_last_name_lineEdit</tabstop>
-  <tabstop>defendant_dob_lineEdit</tabstop>
   <tabstop>defendant_driver_license_lineEdit</tabstop>
   <tabstop>defendant_address_lineEdit</tabstop>
   <tabstop>defendant_city_lineEdit</tabstop>
   <tabstop>defendant_state_lineEdit</tabstop>
   <tabstop>defendant_zipcode_lineEdit</tabstop>
   <tabstop>suspension_start_date</tabstop>
-  <tabstop>suspension_end_date</tabstop>
-  <tabstop>court_suspension_radioButton</tabstop>
-  <tabstop>als_suspension_radioButton</tabstop>
-  <tabstop>occupational_checkBox</tabstop>
-  <tabstop>educational_checkBox</tabstop>
-  <tabstop>vocational_checkBox</tabstop>
-  <tabstop>sunday_checkBox</tabstop>
-  <tabstop>monday_checkBox</tabstop>
-  <tabstop>tuesday_checkBox</tabstop>
-  <tabstop>wednesday_checkBox</tabstop>
-  <tabstop>thursday_checkBox</tabstop>
-  <tabstop>friday_checkBox</tabstop>
-  <tabstop>saturday_checkBox</tabstop>
-  <tabstop>varied_hours_checkBox</tabstop>
-  <tabstop>other_conditions_checkBox</tabstop>
-  <tabstop>other_conditions_lineEdit</tabstop>
-  <tabstop>from_hours_lineEdit</tabstop>
-  <tabstop>to_hours_lineEdit</tabstop>
-  <tabstop>restricted_tags_checkBox</tabstop>
-  <tabstop>ignition_interlock_checkBox</tabstop>
   <tabstop>employer_name_lineEdit</tabstop>
   <tabstop>employer_address_lineEdit</tabstop>
   <tabstop>employer_city_lineEdit</tabstop>
   <tabstop>employer_state_lineEdit</tabstop>
   <tabstop>employer_zipcode_lineEdit</tabstop>
-  <tabstop>create_entry_Button</tabstop>
-  <tabstop>close_dialog_Button</tabstop>
  </tabstops>
  <resources/>
  <connections/>
