@@ -103,7 +103,7 @@ class DrivingInfoSQLServer(object):
         count = 0
         while self.query.next():
             count += 1
-            logger.debug(count)
+        logger.info(f'Conflict check found {count} addresses for Defendant.')
         if count <= 1:
             return None
         else:
@@ -118,8 +118,6 @@ class DrivingInfoSQLServer(object):
     def load_query_data_into_case(self) -> None:
         self.query.first()
         self.load_case_information()
-        # while self.query.next():
-        #     self.load_case_information()
 
     def load_case_information(self) -> None:
         self.case.case_number = self.query.value('CaseNumber')

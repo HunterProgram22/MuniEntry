@@ -358,13 +358,6 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QCheckBox" name="educational_checkBox">
-               <property name="text">
-                <string>Educational</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="2">
               <widget class="QCheckBox" name="monday_checkBox">
                <property name="text">
@@ -376,13 +369,6 @@ font-weight: bold;</string>
               <widget class="QCheckBox" name="tuesday_checkBox">
                <property name="text">
                 <string>Tuesday</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QCheckBox" name="vocational_checkBox">
-               <property name="text">
-                <string>Vocational</string>
                </property>
               </widget>
              </item>
@@ -455,13 +441,44 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="4" colspan="4">
+             <item row="1" column="5" colspan="2">
+              <widget class="QCheckBox" name="vocational_checkBox">
+               <property name="text">
+                <string>Vocational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3" colspan="2">
+              <widget class="QCheckBox" name="educational_checkBox">
+               <property name="text">
+                <string>Educational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="4" colspan="4">
               <widget class="QPushButton" name="pushButton">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(160, 160, 160);</string>
                </property>
                <property name="text">
                 <string>Add Another Employer/School</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="4" colspan="4">
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>Employers and Schools for Privileges</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="4" colspan="4">
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>None.</string>
                </property>
               </widget>
              </item>
