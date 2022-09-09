@@ -36,6 +36,28 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.enable_other_conditions()
+        self.driving_days_list = [
+            self.sunday_checkBox,
+            self.monday_checkBox,
+            self.tuesday_checkBox,
+            self.wednesday_checkBox,
+            self.thursday_checkBox,
+            self.friday_checkBox,
+            self.saturday_checkBox,
+        ]
+        self.privileges_type_list = [
+            self.occupational_checkBox,
+            self.educational_checkBox,
+            self.vocational_checkBox,
+        ]
+        self.driving_hours_list = [
+            self.from_hours_lineEdit,
+            self.to_hours_lineEdit,
+        ]
+        self.condition_boxes_list = [
+            self.varied_hours_checkBox,
+            self.other_conditions_checkBox,
+        ]
 
     def load_cms_data_to_view(self):
         return CmsDrivingInfoLoader(self)
@@ -102,7 +124,36 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         employer_school.zipcode = self.dialog.employer_zipcode_lineEdit.text()
         logger.info(employer_school)
         self.dialog.entry_case_information.add_employer_school_to_list(employer_school)
+        self._set_employer_school_label()
+        self._clear_employer_school_fields()
 
+    def _set_employer_school_label(self):
+        employer_school_names = [employer.name for employer in self.dialog.entry_case_information.employer_school_list]
+        employer_school_string = ', '.join(employer_school_names)
+        self.dialog.employer_school_label.setText(employer_school_string)
+
+    def _clear_employer_school_fields(self):
+        self.dialog.employer_name_lineEdit.clear()
+        self.dialog.employer_address_lineEdit.clear()
+        self.dialog.employer_city_lineEdit.clear()
+        self.dialog.employer_state_lineEdit.clear()
+        self.dialog.employer_zipcode_lineEdit.clear()
+        self._clear_driving_days()
+        self._clear_privileges_types()
+        self._clear_conditions_boxes()
+        self._clear_hours_fields()
+
+    def _clear_driving_days(self) -> list:
+        return [day.setChecked(False) for day in self.dialog.driving_days_list]
+
+    def _clear_privileges_types(self) -> list:
+        return [type.setChecked(False) for type in self.dialog.privileges_type_list]
+
+    def _clear_conditions_boxes(self) -> list:
+        return [condition.setChecked(False) for condition in self.dialog.condition_boxes_list]
+
+    def _clear_hours_fields(self) -> list:
+        return [hours.clear() for hours in self.dialog.driving_hours_list]
 
 
 class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
@@ -170,31 +221,13 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         return f'{address}, {city}, {state} {zipcode}'
 
     def get_driving_hours(self) -> list:
-        driving_hours_list = [
-            self.dialog.from_hours_lineEdit,
-            self.dialog.to_hours_lineEdit,
-        ]
-        return [hours.text() for hours in driving_hours_list]
+        return [hours.text() for hours in self.dialog.driving_hours_list]
 
     def get_driving_days(self) -> list:
-        driving_days_list = [
-            self.dialog.sunday_checkBox,
-            self.dialog.monday_checkBox,
-            self.dialog.tuesday_checkBox,
-            self.dialog.wednesday_checkBox,
-            self.dialog.thursday_checkBox,
-            self.dialog.friday_checkBox,
-            self.dialog.saturday_checkBox,
-        ]
-        return [day.text() for day in driving_days_list if day.isChecked()]
+        return [day.text() for day in self.dialog.driving_days_list if day.isChecked()]
 
     def get_privileges_type(self) -> list:
-        privileges_type_list = [
-            self.dialog.occupational_checkBox,
-            self.dialog.educational_checkBox,
-            self.dialog.vocational_checkBox,
-        ]
-        return [type.text() for type in privileges_type_list if type.isChecked()]
+        return [type.text() for type in self.dialog.privileges_type_list if type.isChecked()]
 
 
 if __name__ == '__main__':

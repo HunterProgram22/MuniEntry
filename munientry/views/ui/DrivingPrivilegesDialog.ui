@@ -476,13 +476,48 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="14" column="4" colspan="4">
-              <widget class="QLabel" name="label_31">
+              <widget class="QLabel" name="employer_school_label">
                <property name="text">
                 <string>None.</string>
                </property>
               </widget>
              </item>
             </layout>
+            <zorder>label_23</zorder>
+            <zorder>label_20</zorder>
+            <zorder>label_19</zorder>
+            <zorder>employer_city_lineEdit</zorder>
+            <zorder>employer_address_lineEdit</zorder>
+            <zorder>label_21</zorder>
+            <zorder>employer_state_lineEdit</zorder>
+            <zorder>label_22</zorder>
+            <zorder>employer_zipcode_lineEdit</zorder>
+            <zorder>label_17</zorder>
+            <zorder>label_18</zorder>
+            <zorder>label_10</zorder>
+            <zorder>label_28</zorder>
+            <zorder>label_7</zorder>
+            <zorder>occupational_checkBox</zorder>
+            <zorder>sunday_checkBox</zorder>
+            <zorder>label_24</zorder>
+            <zorder>varied_hours_checkBox</zorder>
+            <zorder>monday_checkBox</zorder>
+            <zorder>tuesday_checkBox</zorder>
+            <zorder>wednesday_checkBox</zorder>
+            <zorder>thursday_checkBox</zorder>
+            <zorder>friday_checkBox</zorder>
+            <zorder>saturday_checkBox</zorder>
+            <zorder>other_conditions_checkBox</zorder>
+            <zorder>from_hours_lineEdit</zorder>
+            <zorder>label_25</zorder>
+            <zorder>to_hours_lineEdit</zorder>
+            <zorder>other_conditions_lineEdit</zorder>
+            <zorder>vocational_checkBox</zorder>
+            <zorder>educational_checkBox</zorder>
+            <zorder>add_employer_school_Button</zorder>
+            <zorder>label_30</zorder>
+            <zorder>employer_school_label</zorder>
+            <zorder>employer_name_lineEdit</zorder>
            </widget>
           </item>
           <item row="0" column="0" colspan="2">
