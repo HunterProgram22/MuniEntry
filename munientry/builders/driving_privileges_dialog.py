@@ -98,13 +98,28 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.other_conditions_checkBox.toggled.connect(self.functions.enable_other_conditions)
         self.dialog.add_employer_school_Button.released.connect(self.functions.add_employer_school)
+        self.dialog.suspension_term_box.currentTextChanged.connect(self.functions.update_end_suspension_date)
 
 
 class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
-    """Slot functions used only by Driving Privileges Dialog.
+    """Slot functions used only by Driving Privileges Dialog."""
 
-    Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
-    """
+    def update_end_suspension_date(self) -> None:
+        suspension_days_dict = {
+            '90 Days': 90,
+            '1 Year': 365,
+            '2 Years': 730,
+            '3 Years': 1095,
+            '4 Years': 1460,
+            '5 Years': 1825,
+            '6 Years': 2190,
+            '7 Years': 2555,
+        }
+        term = self.dialog.suspension_term_box.currentText()
+        suspension_start_date = self.dialog.suspension_start_date.date()
+        term_days = suspension_days_dict.get(term, 0)
+        end_date = suspension_start_date.addDays(term_days)
+        self.dialog.suspension_end_date.setDate(end_date)
 
     def enable_other_conditions(self):
         if self.dialog.other_conditions_checkBox.isChecked():
@@ -122,6 +137,10 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         employer_school.city = self.dialog.employer_city_lineEdit.text()
         employer_school.state = self.dialog.employer_state_lineEdit.text()
         employer_school.zipcode = self.dialog.employer_zipcode_lineEdit.text()
+        employer_school.privileges_type = self._get_privileges_type()
+        employer_school.driving_days = self._get_driving_days()
+        employer_school.driving_hours = self._get_driving_hours()
+        employer_school.other_conditions = self._get_other_conditions()
         logger.info(employer_school)
         self.dialog.entry_case_information.add_employer_school_to_list(employer_school)
         self._set_employer_school_label()
@@ -142,6 +161,32 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         self._clear_privileges_types()
         self._clear_conditions_boxes()
         self._clear_hours_fields()
+
+    def _get_other_conditions(self) -> str:
+        if self.dialog.varied_hours_checkBox.isChecked() and self.dialog.other_conditions_checkBox.isChecked():
+            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
+            return f'Days and hours may vary. {other_conditions_text}'
+        if self.dialog.other_conditions_checkBox.isChecked():
+            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
+            return f'{other_conditions_text}'
+        if self.dialog.varied_hours_checkBox.isChecked():
+            return 'Days and hours may vary.'
+        else:
+            return ''
+
+    def _get_driving_hours(self) -> str:
+        driving_hours = [hours.text() for hours in self.dialog.driving_hours_list]
+        return ' to '.join(driving_hours)
+
+    def _get_driving_days(self) -> str:
+        driving_days = [day.text() for day in self.dialog.driving_days_list if day.isChecked()]
+        return ', '.join(driving_days)
+
+    def _get_privileges_type(self) -> str:
+        privileges_type = [type.text() for type in self.dialog.privileges_type_list if type.isChecked()]
+        if len(privileges_type) == 1:
+            return privileges_type[0]
+        return ', '.join(privileges_type)
 
     def _clear_driving_days(self) -> list:
         return [day.setChecked(False) for day in self.dialog.driving_days_list]
@@ -164,7 +209,6 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.set_case_number_and_date()
         self.set_defendant_driving_info()
         self.set_privileges_info()
-        self.set_employer_school_info()
 
     def set_case_number_and_date(self):
         self.model.judicial_officer = self.dialog.judicial_officer
@@ -187,47 +231,8 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.suspension_type = suspension_type[0].text()
         self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()
         self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
-        driving_days = self.get_driving_days()
-        self.model.driving_days = ', '.join(driving_days)
-        driving_hours = self.get_driving_hours()
-        self.model.driving_hours = ' to '.join(driving_hours)
-        privileges_type = self.get_privileges_type()
-        self.model.privileges_type = ', '.join(privileges_type) if len(privileges_type) > 1 else ''.join(privileges_type)
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
-        self.model.other_conditions = self.get_other_conditions()
-
-    def get_other_conditions(self) -> str:
-        if self.dialog.varied_hours_checkBox.isChecked() and self.dialog.other_conditions_checkBox.isChecked():
-            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
-            return f'. Days and hours may vary. {other_conditions_text}'
-        if self.dialog.other_conditions_checkBox.isChecked():
-            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
-            return f'. {other_conditions_text}'
-        if self.dialog.varied_hours_checkBox.isChecked():
-            return '. Days and hours may vary.'
-        else:
-            return '.'
-
-    def set_employer_school_info(self):
-        self.model.employer_school_name = self.dialog.employer_name_lineEdit.text()
-        self.model.employer_school_address = self.get_employer_school_address()
-
-    def get_employer_school_address(self) -> str:
-        address = self.dialog.employer_address_lineEdit.text()
-        city = self.dialog.employer_city_lineEdit.text()
-        state = self.dialog.employer_state_lineEdit.text()
-        zipcode = self.dialog.employer_zipcode_lineEdit.text()
-        return f'{address}, {city}, {state} {zipcode}'
-
-    def get_driving_hours(self) -> list:
-        return [hours.text() for hours in self.dialog.driving_hours_list]
-
-    def get_driving_days(self) -> list:
-        return [day.text() for day in self.dialog.driving_days_list if day.isChecked()]
-
-    def get_privileges_type(self) -> list:
-        return [type.text() for type in self.dialog.privileges_type_list if type.isChecked()]
 
 
 if __name__ == '__main__':

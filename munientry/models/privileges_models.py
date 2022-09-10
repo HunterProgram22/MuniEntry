@@ -14,15 +14,9 @@ class DrivingPrivilegesInformation:
     suspension_type: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
-    privileges_type: str = None
-    driving_days: str = None
-    driving_hours: str = None
     ignition_interlock: bool = False
     restricted_tags: bool = False
     employer_school_list: list = field(default_factory=list)
-    # employer_school_name: str = None
-    # employer_school_address: str = None
-    other_conditions: str = None
 
     def add_employer_school_to_list(self, employer):
         self.employer_school_list.append(employer)
@@ -41,4 +35,7 @@ class EmployerSchoolInformation:
     city: str = None
     state: str = None
     zipcode: str = None
-
+    privileges_type: str = None
+    driving_days: str = None
+    driving_hours: str = None
+    other_conditions: str = None
