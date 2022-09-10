@@ -982,6 +982,8 @@ font-weight: bold;</string>
   <tabstop>case_number_lineEdit</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defendant_dob_lineEdit</tabstop>
+  <tabstop>defendant_driver_license_lineEdit</tabstop>
   <tabstop>defendant_address_lineEdit</tabstop>
   <tabstop>defendant_city_lineEdit</tabstop>
   <tabstop>defendant_state_lineEdit</tabstop>
@@ -1016,8 +1018,6 @@ font-weight: bold;</string>
   <tabstop>add_employer_school_Button</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
-  <tabstop>defendant_dob_lineEdit</tabstop>
-  <tabstop>defendant_driver_license_lineEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

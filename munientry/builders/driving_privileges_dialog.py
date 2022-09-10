@@ -3,17 +3,17 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 
 from munientry.builders.base_dialogs import SchedulingBaseDialog
-from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.controllers.slot_functions import BaseDialogSlotFunctions
 from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
-from munientry.models.privileges_models import DrivingPrivilegesInformation, EmployerSchoolInformation
+from munientry.models.privileges_models import (
+    DrivingPrivilegesInformation,
+    EmployerSchoolInformation,
+)
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
-from munientry.views.driving_privileges_dialog_ui import (
-    Ui_DrivingPrivilegesDialog,
-)
+from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 
 TODAY = QDate.currentDate()
 
@@ -22,12 +22,10 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.
-
-    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
     def __init__(
-            self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
+        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
     ):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Driving Privileges Entry'
@@ -36,28 +34,6 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.enable_other_conditions()
-        self.driving_days_list = [
-            self.sunday_checkBox,
-            self.monday_checkBox,
-            self.tuesday_checkBox,
-            self.wednesday_checkBox,
-            self.thursday_checkBox,
-            self.friday_checkBox,
-            self.saturday_checkBox,
-        ]
-        self.privileges_type_list = [
-            self.occupational_checkBox,
-            self.educational_checkBox,
-            self.vocational_checkBox,
-        ]
-        self.driving_hours_list = [
-            self.from_hours_lineEdit,
-            self.to_hours_lineEdit,
-        ]
-        self.condition_boxes_list = [
-            self.varied_hours_checkBox,
-            self.other_conditions_checkBox,
-        ]
 
     def load_cms_data_to_view(self):
         return CmsDrivingInfoLoader(self)
@@ -96,13 +72,42 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         )
         self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.other_conditions_checkBox.toggled.connect(self.functions.enable_other_conditions)
+        self.dialog.other_conditions_checkBox.toggled.connect(
+            self.functions.enable_other_conditions,
+        )
         self.dialog.add_employer_school_Button.released.connect(self.functions.add_employer_school)
-        self.dialog.suspension_term_box.currentTextChanged.connect(self.functions.update_end_suspension_date)
+        self.dialog.suspension_term_box.currentTextChanged.connect(
+            self.functions.update_end_suspension_date,
+        )
 
 
 class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
+
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self._driving_days_list = [
+            self.dialog.sunday_checkBox,
+            self.dialog.monday_checkBox,
+            self.dialog.tuesday_checkBox,
+            self.dialog.wednesday_checkBox,
+            self.dialog.thursday_checkBox,
+            self.dialog.friday_checkBox,
+            self.dialog.saturday_checkBox,
+        ]
+        self._privileges_type_list = [
+            self.dialog.occupational_checkBox,
+            self.dialog.educational_checkBox,
+            self.dialog.vocational_checkBox,
+        ]
+        self._driving_hours_list = [
+            self.dialog.from_hours_lineEdit,
+            self.dialog.to_hours_lineEdit,
+        ]
+        self._condition_boxes_list = [
+            self.dialog.varied_hours_checkBox,
+            self.dialog.other_conditions_checkBox,
+        ]
 
     def update_end_suspension_date(self) -> None:
         suspension_days_dict = {
@@ -145,10 +150,12 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.entry_case_information.add_employer_school_to_list(employer_school)
         self._set_employer_school_label()
         self._clear_employer_school_fields()
-        self.dialog.employer_name_lineEdit.setFocus()
+        self.dialog.occupational_checkBox.setFocus()
 
     def _set_employer_school_label(self):
-        employer_school_names = [employer.name for employer in self.dialog.entry_case_information.employer_school_list]
+        employer_school_names = [
+            employer.name for employer in self.dialog.entry_case_information.employer_school_list
+        ]
         employer_school_string = ', '.join(employer_school_names)
         self.dialog.employer_school_label.setText(employer_school_string)
 
@@ -164,42 +171,42 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         self._clear_hours_fields()
 
     def _get_other_conditions(self) -> str:
-        if self.dialog.varied_hours_checkBox.isChecked() and self.dialog.other_conditions_checkBox.isChecked():
-            other_conditions_text = self.dialog.other_conditions_lineEdit.text()
-            return f'Days and hours may vary. {other_conditions_text}'
+        if self.dialog.varied_hours_checkBox.isChecked():
+            if self.dialog.other_conditions_checkBox.isChecked():
+                other_conditions_text = self.dialog.other_conditions_lineEdit.text()
+                return f'Days and hours may vary. {other_conditions_text}'
         if self.dialog.other_conditions_checkBox.isChecked():
             other_conditions_text = self.dialog.other_conditions_lineEdit.text()
             return f'{other_conditions_text}'
         if self.dialog.varied_hours_checkBox.isChecked():
             return 'Days and hours may vary.'
-        else:
-            return ''
+        return ''
 
     def _get_driving_hours(self) -> str:
-        driving_hours = [hours.text() for hours in self.dialog.driving_hours_list]
+        driving_hours = [hours.text() for hours in self._driving_hours_list]
         return ' to '.join(driving_hours)
 
     def _get_driving_days(self) -> str:
-        driving_days = [day.text() for day in self.dialog.driving_days_list if day.isChecked()]
+        driving_days = [day.text() for day in self._driving_days_list if day.isChecked()]
         return ', '.join(driving_days)
 
     def _get_privileges_type(self) -> str:
-        privileges_type = [type.text() for type in self.dialog.privileges_type_list if type.isChecked()]
+        privileges_type = [priv.text() for priv in self._privileges_type_list if priv.isChecked()]
         if len(privileges_type) == 1:
             return privileges_type[0]
         return ', '.join(privileges_type)
 
     def _clear_driving_days(self) -> list:
-        return [day.setChecked(False) for day in self.dialog.driving_days_list]
+        return [day.setChecked(False) for day in self._driving_days_list]
 
     def _clear_privileges_types(self) -> list:
-        return [type.setChecked(False) for type in self.dialog.privileges_type_list]
+        return [priv.setChecked(False) for priv in self._privileges_type_list]
 
     def _clear_conditions_boxes(self) -> list:
-        return [condition.setChecked(False) for condition in self.dialog.condition_boxes_list]
+        return [condition.setChecked(False) for condition in self._condition_boxes_list]
 
     def _clear_hours_fields(self) -> list:
-        return [hours.clear() for hours in self.dialog.driving_hours_list]
+        return [hours.clear() for hours in self._driving_hours_list]
 
 
 class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
@@ -227,7 +234,9 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.defendant.birth_date = self.dialog.defendant_dob_lineEdit.text()
 
     def set_privileges_info(self):
-        radio_buttons = [self.dialog.court_suspension_radioButton, self.dialog.als_suspension_radioButton]
+        radio_buttons = [
+            self.dialog.court_suspension_radioButton, self.dialog.als_suspension_radioButton,
+        ]
         suspension_type = [button for button in radio_buttons if button.isChecked()]
         self.model.suspension_type = suspension_type[0].text()
         self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()

@@ -481,7 +481,9 @@ class Ui_DrivingPrivilegesDialog(object):
         QtCore.QMetaObject.connectSlotsByName(DrivingPrivilegesDialog)
         DrivingPrivilegesDialog.setTabOrder(self.case_number_lineEdit, self.defendant_first_name_lineEdit)
         DrivingPrivilegesDialog.setTabOrder(self.defendant_first_name_lineEdit, self.defendant_last_name_lineEdit)
-        DrivingPrivilegesDialog.setTabOrder(self.defendant_last_name_lineEdit, self.defendant_address_lineEdit)
+        DrivingPrivilegesDialog.setTabOrder(self.defendant_last_name_lineEdit, self.defendant_dob_lineEdit)
+        DrivingPrivilegesDialog.setTabOrder(self.defendant_dob_lineEdit, self.defendant_driver_license_lineEdit)
+        DrivingPrivilegesDialog.setTabOrder(self.defendant_driver_license_lineEdit, self.defendant_address_lineEdit)
         DrivingPrivilegesDialog.setTabOrder(self.defendant_address_lineEdit, self.defendant_city_lineEdit)
         DrivingPrivilegesDialog.setTabOrder(self.defendant_city_lineEdit, self.defendant_state_lineEdit)
         DrivingPrivilegesDialog.setTabOrder(self.defendant_state_lineEdit, self.defendant_zipcode_lineEdit)
@@ -515,8 +517,6 @@ class Ui_DrivingPrivilegesDialog(object):
         DrivingPrivilegesDialog.setTabOrder(self.employer_zipcode_lineEdit, self.add_employer_school_Button)
         DrivingPrivilegesDialog.setTabOrder(self.add_employer_school_Button, self.create_entry_Button)
         DrivingPrivilegesDialog.setTabOrder(self.create_entry_Button, self.close_dialog_Button)
-        DrivingPrivilegesDialog.setTabOrder(self.close_dialog_Button, self.defendant_dob_lineEdit)
-        DrivingPrivilegesDialog.setTabOrder(self.defendant_dob_lineEdit, self.defendant_driver_license_lineEdit)
 
     def retranslateUi(self, DrivingPrivilegesDialog):
         _translate = QtCore.QCoreApplication.translate
