@@ -145,6 +145,7 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.entry_case_information.add_employer_school_to_list(employer_school)
         self._set_employer_school_label()
         self._clear_employer_school_fields()
+        self.dialog.employer_name_lineEdit.setFocus()
 
     def _set_employer_school_label(self):
         employer_school_names = [employer.name for employer in self.dialog.entry_case_information.employer_school_list]
