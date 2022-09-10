@@ -167,9 +167,9 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-890</y>
+        <y>-468</y>
         <width>1101</width>
-        <height>1754</height>
+        <height>1785</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -987,6 +987,13 @@ font-weight: bold;</string>
             </item>
            </widget>
           </item>
+          <item row="24" column="0">
+           <widget class="QCheckBox" name="scram_remove_checkBox">
+            <property name="text">
+             <string>Defendant's SCRAM unit may be removed</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -1058,7 +1065,13 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2" columnstretch="2,2,1">
+         <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,2">
+          <property name="horizontalSpacing">
+           <number>24</number>
+          </property>
+          <property name="verticalSpacing">
+           <number>6</number>
+          </property>
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
@@ -1211,6 +1224,13 @@ background-color: rgb(255, 255, 255);</string>
             </property>
            </widget>
           </item>
+          <item row="3" column="2">
+           <widget class="QCheckBox" name="license_susp_interlock_checkBox">
+            <property name="text">
+             <string>Ignition interlock required if privileges granted</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
@@ -1287,7 +1307,7 @@ background-color: rgb(255, 255, 255);</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,2,0,0,0,0,0">
+         <layout class="QGridLayout" name="gridLayout_10" columnstretch="1,1,1,0,0,0,0">
           <item row="0" column="0" colspan="7">
            <widget class="QLabel" name="label_13">
             <property name="font">
@@ -1403,6 +1423,13 @@ background-color: rgb(255, 255, 255);</string>
               <string>be immobilized</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QCheckBox" name="vehicle_release_checkBox">
+            <property name="text">
+             <string>Vehicle has been impounded for 90 days, may be released</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -1676,7 +1703,7 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
