@@ -77,7 +77,7 @@ class Ui_AddCommunityControlDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -468, 1101, 1785))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -566, 1101, 1785))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -930,5 +930,5 @@ class Ui_AddCommunityControlDialog(object):
         self.label_22.setText(_translate("AddCommunityControlDialog", "Date to Complete:"))
         self.label.setText(_translate("AddCommunityControlDialog", "Days to Complete:"))
         self.label_15.setText(_translate("AddCommunityControlDialog", "Hours:"))
-from .custom_widgets import ConditionCheckbox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

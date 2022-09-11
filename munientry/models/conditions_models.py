@@ -80,6 +80,7 @@ class CommunityControl:
     no_contact_with_ordered: bool = False
     no_contact_with_person: str = None
     alcohol_monitoring: bool = False
+    alcohol_monitoring_remove: bool = False
     alcohol_monitoring_court_pay: bool = False
     alcohol_monitoring_time: str = None
     house_arrest: bool = False
@@ -114,6 +115,7 @@ class CommunityControl:
         ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
         ("no_contact_with_person", "community_control_no_contact_with_box"),
         ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
+        ("alcohol_monitoring_remove", "scram_remove_checkBox"),
         ("alcohol_monitoring_court_pay", "alcohol_monitoring_court_pay_checkBox"),
         ("alcohol_monitoring_time", "alcohol_monitoring_time_box"),
         ("house_arrest", "house_arrest_checkBox"),
@@ -171,11 +173,13 @@ class Impoundment:
     vehicle_license_plate: str = None
     impound_time: str = None
     impound_action: str = None
+    release_vehicle: bool = False
     terms_list = [
         ("vehicle_make_model", "vehicle_make_model_box"),
         ("vehicle_license_plate", "vehicle_license_plate_box"),
         ("impound_time", "vehicle_impound_time_box"),
         ("impound_action", "vehicle_impound_action_box"),
+        ("release_vehicle", "vehicle_release_checkBox"),
     ]
 
 
@@ -189,12 +193,14 @@ class LicenseSuspension:
     suspension_term: str = None
     remedial_driving_class_required: bool = False
     als_terminated: bool = False
+    interlock_required: bool = False
     terms_list = [
         ("license_type", "license_type_box"),
         ("suspended_date", "license_suspension_date_box"),
         ("suspension_term", "term_of_suspension_box"),
         ("remedial_driving_class_required", "remedial_driving_class_checkBox"),
         ("als_terminated", "als_terminated_checkBox"),
+        ("interlock_required", "license_susp_interlock_checkBox"),
     ]
 
 

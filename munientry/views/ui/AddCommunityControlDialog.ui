@@ -167,7 +167,7 @@ font-weight: bold;</string>
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-468</y>
+        <y>-566</y>
         <width>1101</width>
         <height>1785</height>
        </rect>
@@ -1708,12 +1708,12 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>ConditionCheckbox</class>
    <extends>QCheckBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>
