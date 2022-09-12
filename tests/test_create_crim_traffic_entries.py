@@ -268,6 +268,7 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
     def add_conditions():
         qtbot.addWidget(jcp_dialog.popup_dialog)
         mouse_click(jcp_dialog.popup_dialog.als_terminated_checkBox)
+        mouse_click(jcp_dialog.popup_dialog.license_susp_interlock_checkBox)
         mouse_click(jcp_dialog.popup_dialog.remedial_driving_class_checkBox)
         enter_data(jcp_dialog.popup_dialog.term_of_suspension_box, "12 months")
         enter_data(jcp_dialog.popup_dialog.community_service_hours_ordered_box, "50")
@@ -290,6 +291,7 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
         mouse_click(jcp_dialog.popup_dialog.driver_intervention_program_checkBox)
         mouse_click(jcp_dialog.popup_dialog.mental_health_evaluation_checkBox)
         mouse_click(jcp_dialog.popup_dialog.specialized_docket_checkBox)
+        mouse_click(jcp_dialog.popup_dialog.scram_remove_checkBox)
         mouse_click(jcp_dialog.popup_dialog.alcohol_monitoring_checkBox)
         enter_data(jcp_dialog.popup_dialog.alcohol_monitoring_time_box, "30 days")
         mouse_click(jcp_dialog.popup_dialog.alcohol_monitoring_court_pay_checkBox)
@@ -338,6 +340,7 @@ def test_sentencing_only_entry(qtbot, sentencing_only_dialog):
     def add_conditions():
         qtbot.addWidget(sentencing_only_dialog.popup_dialog)
         mouse_click(sentencing_only_dialog.popup_dialog.als_terminated_checkBox)
+        mouse_click(sentencing_only_dialog.popup_dialog.license_susp_interlock_checkBox)
         mouse_click(sentencing_only_dialog.popup_dialog.remedial_driving_class_checkBox)
         enter_data(sentencing_only_dialog.popup_dialog.term_of_suspension_box, "12 months")
         enter_data(sentencing_only_dialog.popup_dialog.community_service_hours_ordered_box, "50")
@@ -360,6 +363,7 @@ def test_sentencing_only_entry(qtbot, sentencing_only_dialog):
         mouse_click(sentencing_only_dialog.popup_dialog.driver_intervention_program_checkBox)
         mouse_click(sentencing_only_dialog.popup_dialog.mental_health_evaluation_checkBox)
         mouse_click(sentencing_only_dialog.popup_dialog.specialized_docket_checkBox)
+        mouse_click(sentencing_only_dialog.popup_dialog.scram_remove_checkBox)
         mouse_click(sentencing_only_dialog.popup_dialog.alcohol_monitoring_checkBox)
         enter_data(sentencing_only_dialog.popup_dialog.alcohol_monitoring_time_box, "30 days")
         mouse_click(sentencing_only_dialog.popup_dialog.alcohol_monitoring_court_pay_checkBox)
@@ -405,6 +409,7 @@ def test_trial_sentencing_entry(qtbot, trial_sentencing_dialog):
     def add_conditions():
         qtbot.addWidget(trial_sentencing_dialog.popup_dialog)
         mouse_click(trial_sentencing_dialog.popup_dialog.als_terminated_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.license_susp_interlock_checkBox)
         mouse_click(trial_sentencing_dialog.popup_dialog.remedial_driving_class_checkBox)
         enter_data(trial_sentencing_dialog.popup_dialog.term_of_suspension_box, "12 months")
         enter_data(trial_sentencing_dialog.popup_dialog.community_service_hours_ordered_box, "50")
@@ -427,6 +432,7 @@ def test_trial_sentencing_entry(qtbot, trial_sentencing_dialog):
         mouse_click(trial_sentencing_dialog.popup_dialog.driver_intervention_program_checkBox)
         mouse_click(trial_sentencing_dialog.popup_dialog.mental_health_evaluation_checkBox)
         mouse_click(trial_sentencing_dialog.popup_dialog.specialized_docket_checkBox)
+        mouse_click(trial_sentencing_dialog.popup_dialog.scram_remove_checkBox)
         mouse_click(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_checkBox)
         enter_data(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_time_box, "30 days")
         mouse_click(trial_sentencing_dialog.popup_dialog.alcohol_monitoring_court_pay_checkBox)

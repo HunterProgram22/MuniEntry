@@ -143,6 +143,12 @@ class Ui_AddConditionsDialog(object):
         self.label_24.setAlignment(QtCore.Qt.AlignCenter)
         self.label_24.setObjectName("label_24")
         self.gridLayout_2.addWidget(self.label_24, 0, 0, 1, 3)
+        self.license_susp_interlock_checkBox = ConditionCheckbox(self.license_suspension_frame)
+        self.license_susp_interlock_checkBox.setObjectName("license_susp_interlock_checkBox")
+        self.gridLayout_2.addWidget(self.license_susp_interlock_checkBox, 3, 2, 1, 1)
+        self.gridLayout_2.setColumnStretch(0, 1)
+        self.gridLayout_2.setColumnStretch(1, 1)
+        self.gridLayout_2.setColumnStretch(2, 2)
         self.gridLayout_5.addWidget(self.license_suspension_frame, 1, 0, 1, 2)
         self.community_service_frame = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.community_service_frame.setEnabled(False)
@@ -319,6 +325,7 @@ class Ui_AddConditionsDialog(object):
         self.term_of_suspension_box.setItemText(4, _translate("AddConditionsDialog", "30 months"))
         self.term_of_suspension_box.setItemText(5, _translate("AddConditionsDialog", "36 months"))
         self.label_24.setText(_translate("AddConditionsDialog", "License Suspension"))
+        self.license_susp_interlock_checkBox.setText(_translate("AddConditionsDialog", "Ignition interlock required if privileges granted"))
         self.label_26.setText(_translate("AddConditionsDialog", "Community Service"))
         self.label.setText(_translate("AddConditionsDialog", "Days to Complete:"))
         self.community_service_days_to_complete_box.setItemText(0, _translate("AddConditionsDialog", "30"))
@@ -340,5 +347,5 @@ class Ui_AddConditionsDialog(object):
         self.label_14.setText(_translate("AddConditionsDialog", "Finding:"))
         self.label_19.setText(_translate("AddConditionsDialog", "Statute:"))
         self.label_28.setText(_translate("AddConditionsDialog", "Other Conditions"))
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
 from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
