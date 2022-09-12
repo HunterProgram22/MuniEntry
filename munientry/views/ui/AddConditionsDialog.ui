@@ -190,7 +190,7 @@ font-weight: bold;</string>
          <property name="lineWidth">
           <number>2</number>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
+         <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,2">
           <item row="1" column="0">
            <widget class="QLabel" name="label_9">
             <property name="text">
@@ -328,6 +328,13 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="ConditionCheckbox" name="license_susp_interlock_checkBox">
+            <property name="text">
+             <string>Ignition interlock required if privileges granted</string>
             </property>
            </widget>
           </item>
@@ -670,17 +677,17 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>ConditionCheckbox</class>
    <extends>QCheckBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

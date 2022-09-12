@@ -6,7 +6,8 @@ from PyQt5.QtSql import QSqlQuery
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
-from munientry.models.cms_models import CmsCaseInformation, DrivingPrivilegesInformation
+from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
 
 
@@ -103,7 +104,7 @@ class DrivingInfoSQLServer(object):
         count = 0
         while self.query.next():
             count += 1
-            logger.debug(count)
+        logger.info(f'Conflict check found {count} addresses for Defendant.')
         if count <= 1:
             return None
         else:
@@ -118,8 +119,6 @@ class DrivingInfoSQLServer(object):
     def load_query_data_into_case(self) -> None:
         self.query.first()
         self.load_case_information()
-        # while self.query.next():
-        #     self.load_case_information()
 
     def load_case_information(self) -> None:
         self.case.case_number = self.query.value('CaseNumber')
