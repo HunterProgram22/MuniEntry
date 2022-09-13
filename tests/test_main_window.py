@@ -73,7 +73,7 @@ def test_all_scheduling_entry_buttons_with_no_case(qtbot, main_window, test_inpu
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
-def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
+def test_all_entry_buttons_with_case_from_daily_case_list(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
@@ -82,13 +82,34 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, dialog_titl
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_scheduling_button_test_list)
-def test_all_scheduling_entry_buttons_with_case(qtbot, main_window, test_input, dialog_title):
+def test_all_scheduling_entry_buttons_with_case_from_daily_case_list(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.dattilo_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
     assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
 
+
+@pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
+def test_all_entry_buttons_with_case_from_case_search(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.hemmeter_radioButton)
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, "22TRD01955")
+    mouse_click(main_window.get_case_Button)
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.case_number_lineEdit.text() == "22TRD01955"
+    assert main_window.dialog.defendant_last_name_lineEdit.text() == 'Mahan'
+
+
+@pytest.mark.parametrize("test_input, dialog_title", main_window_scheduling_button_test_list)
+def test_all_scheduling_entry_buttons_with_case_from_case_search(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.patterson_radioButton)
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, "22TRD01955")
+    mouse_click(main_window.get_case_Button)
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.case_number_lineEdit.text() == "22TRD01955"
+    assert main_window.dialog.defendant_last_name_lineEdit.text() == 'Mahan'
 
 main_window_all_daily_case_lists = [
     ("arraignments_radioButton", "Conkey - 22TRD01944", "arraignments_cases_box"),
