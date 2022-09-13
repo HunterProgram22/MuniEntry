@@ -1,9 +1,24 @@
 """A module containing common variables used throughout the application."""
+import configparser
 import pathlib
 import socket
 from datetime import datetime
 from typing import TYPE_CHECKING # Import used so TYPE_CHECKING can be imported with other settings
 from PyQt5.QtCore import QDate
+
+config = configparser.SafeConfigParser()
+config.read('config.ini')
+
+# Version Information
+version = config['version']
+VERSION_NUMBER = version['version_number']
+
+# Court Cost Constants
+costs = config['costs']
+MOVING_COURT_COSTS = int(costs['moving'])
+CRIMINAL_COURT_COSTS = int(costs['criminal'])
+NONMOVING_COURT_COSTS = int(costs['non_moving'])
+
 
 # Path Information
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
@@ -18,34 +33,16 @@ DB_PATH = fr'{PATH}\db\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
-# Version Information
-VERSION_NUMBER = '0.37.0'
 
-# Court Cost Constants
-MOVING_COURT_COSTS = 137
-CRIMINAL_COURT_COSTS = 127
-NONMOVING_COURT_COSTS = 108
-
-# Logging Settings,s
+# Logging Settings
 now = datetime.now()
 now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
 LOG_TIME = f'{now_string}'
 
 def get_host():
-    socket_dict = {
-        'RooberryPrime': 'Justin_Home_PC',
-        'MUNI14': 'Justin_Work_Desktop_PC',
-        'Muni03': 'Kathryn_Patterson_PC',
-        'Muni05': 'Pat_Dattilo_PC',
-        'Muni20': 'Courtroom_A_PC',
-        'Muni21': 'Courtroom_B_PC',
-        'Muni22': 'Courtroom_C_PC',
-        'Clerk07': 'Nick_Lockhart_PC',
-        'Clerk08': 'Ryan_Levering_PC',
-        'Muni10': 'Justin_Work_Laptop_PC',
-    }
+    sockets = config['sockets']
     key = socket.gethostname()
-    host = socket_dict.get(key, key)
+    host = sockets.get(key, key)
     return host
 
 SOCKET_NAME = get_host()
