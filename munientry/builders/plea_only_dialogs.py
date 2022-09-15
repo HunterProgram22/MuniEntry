@@ -1,7 +1,7 @@
 """Module containing classes to build Plea Only Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import CriminalBaseDialog
+from munientry.builders.base_dialogs import CriminalBaseDialog, TestCriminalBaseDialog
 from munientry.checkers.plea_only_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
     NotGuiltyBondDialogInfoChecker,
@@ -41,34 +41,23 @@ from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
-
-class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
+class PleaOnlyDialog(TestCriminalBaseDialog, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
+    build_dict = {
+        'view': PleaOnlyDialogViewModifier,
+        'slots': PleaOnlyDialogSlotFunctions,
+        'signals': PleaOnlyDialogSignalConnector,
+        'case_information_model': PleaOnlyEntryCaseInformation,
+        'loader': CmsChargeLoader,
+        'updater': PleaOnlyDialogUpdater,
+        'info_checker': PleaOnlyDialogInfoChecker,
+    }
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Plea Only Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-
-    def _modify_view(self) -> None:
-        PleaOnlyDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = PleaOnlyDialogSlotFunctions(self)
-        PleaOnlyDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self) -> None:
-        self.entry_case_information = PleaOnlyEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
-
-    def load_cms_data_to_view(self) -> None:
-        CmsChargeLoader(self)
-
-    def update_entry_case_information(self) -> None:
-        PleaOnlyDialogUpdater(self)
-
-    def perform_info_checks(self) -> None:
-        self.dialog_checks = PleaOnlyDialogInfoChecker(self)
 
 
 class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
