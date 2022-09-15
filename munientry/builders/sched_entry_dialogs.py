@@ -57,10 +57,10 @@ class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
 
-    def modify_view(self):
+    def _modify_view(self):
         return SchedulingEntryDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = SchedulingEntryDialogSlotFunctions(self)
         SchedulingEntryDialogSignalConnector(self)
 

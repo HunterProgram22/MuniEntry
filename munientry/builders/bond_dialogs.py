@@ -80,10 +80,10 @@ class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
 
-    def modify_view(self) -> NoPleaBondDialogViewModifier:
+    def _modify_view(self) -> NoPleaBondDialogViewModifier:
         return NoPleaBondDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = NoPleaBondDialogSlotFunctions(self)
         NoPleaBondDialogSignalConnector(self)
 
@@ -116,10 +116,10 @@ class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBond
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
 
-    def modify_view(self) -> ProbationViolationBondDialogViewModifier:
+    def _modify_view(self) -> ProbationViolationBondDialogViewModifier:
         return ProbationViolationBondDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = ProbationViolationBondDialogSlotFunctions(self)
         self.functions.hide_bond_conditions()
         ProbationViolationBondDialogSignalConnector(self)
@@ -172,10 +172,10 @@ class BondHearingDialog(CriminalBaseDialog, Ui_BondHearingDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondModificationConditions()
 
-    def modify_view(self) -> BondHearingDialogViewModifier:
+    def _modify_view(self) -> BondHearingDialogViewModifier:
         return BondHearingDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = BondHearingDialogSlotFunctions(self)
         BondHearingDialogSignalConnector(self)
 

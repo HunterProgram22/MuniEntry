@@ -64,10 +64,10 @@ class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
         super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
-    def modify_view(self) -> AddConditionsDialogViewModifier:
+    def _modify_view(self) -> AddConditionsDialogViewModifier:
         return AddConditionsDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = AddConditionsDialogSlotFunctions(self)
         self.functions.update_community_service_due_date()
         AddConditionsDialogSignalConnector(self)
@@ -96,10 +96,10 @@ class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
         self.main_dialog = main_dialog
         super().__init__(parent)
 
-    def modify_view(self) -> AddJailOnlyDialogViewModifier:
+    def _modify_view(self) -> AddJailOnlyDialogViewModifier:
         return AddJailOnlyDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = AddJailOnlyDialogSlotFunctions(self)
         AddJailOnlyDialogSignalConnector(self)
 
@@ -157,10 +157,10 @@ class AddCommunityControlDialog(BaseDialog, Ui_AddCommunityControlDialog):
         super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
-    def modify_view(self) -> AddCommunityControlDialogViewModifier:
+    def _modify_view(self) -> AddCommunityControlDialogViewModifier:
         return AddCommunityControlDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = AddCommunityControlDialogSlotFunctions(self)
         AddCommunityControlDialogSignalConnector(self)
 
@@ -187,10 +187,10 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
         super().__init__(parent)
         enable_condition_frames(self, main_dialog)
 
-    def modify_view(self) -> AddSpecialBondConditionsDialogViewModifier:
+    def _modify_view(self) -> AddSpecialBondConditionsDialogViewModifier:
         return AddSpecialBondConditionsDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = AddSpecialBondConditionsDialogSlotFunctions(self)
         AddSpecialBondConditionsDialogSignalConnector(self)
 

@@ -54,10 +54,10 @@ class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.show_restitution_boxes()
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         DiversionDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = DiversionDialogSlotFunctions(self)
         self.functions.show_jail_report_date_box()
         self.functions.show_other_conditions_box()
@@ -104,10 +104,10 @@ class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         JailCCDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = JailCCDialogSlotFunctions(self)
         self.functions.show_companion_case_fields()
         JailCCDialogSignalConnector(self)
@@ -145,10 +145,10 @@ class FineOnlyPleaDialog(CriminalBaseDialog, Ui_FineOnlyPleaDialog):
         self.dialog_name = 'Fine Only Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         FineOnlyDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = FineOnlyDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
         FineOnlyDialogSignalConnector(self)

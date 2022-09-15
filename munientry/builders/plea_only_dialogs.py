@@ -50,10 +50,10 @@ class PleaOnlyDialog(CriminalBaseDialog, Ui_PleaOnlyDialog):
         self.dialog_name = 'Plea Only Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         PleaOnlyDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = PleaOnlyDialogSlotFunctions(self)
         PleaOnlyDialogSignalConnector(self)
 
@@ -106,10 +106,10 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.entry_case_information.bond_conditions = BondConditions()
         self.charges_gridLayout.set_all_pleas('Not Guilty')
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         NotGuiltyBondDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = NotGuiltyBondDialogSlotFunctions(self)
         NotGuiltyBondDialogSignalConnector(self)
 
@@ -142,10 +142,10 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date('120 days')
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         LeapAdmissionPleaDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
         LeapAdmissionPleaDialogSignalConnector(self)
 
@@ -177,10 +177,10 @@ class LeapPleaValidDialog(CriminalBaseDialog, Ui_LeapPleaValidDialog):
         self.dialog_name = 'Leap Admission Plea Already Valid Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         LeapAdmissionPleaDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
         LeapAdmissionPleaValidDialogSignalConnector(self)
 

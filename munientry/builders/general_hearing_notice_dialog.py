@@ -40,10 +40,10 @@ class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHeari
     def load_cms_data_to_view(self):
         return CmsNoChargeLoader(self)
 
-    def modify_view(self):
+    def _modify_view(self):
         return GeneralNoticeOfHearingDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = GeneralNoticeOfHearingDialogSlotFunctions(self)
         GeneralNoticeOfHearingDialogSignalConnector(self)
 

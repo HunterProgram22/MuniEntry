@@ -55,10 +55,10 @@ class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHea
     def load_cms_data_to_view(self) -> None:
         CmsNoChargeLoader(self)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         FinalJuryNoticeHearingViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = FinalJuryNoticeHearingSlotFunctions(self)
         FinalJuryNoticeHearingSignalConnector(self)
 

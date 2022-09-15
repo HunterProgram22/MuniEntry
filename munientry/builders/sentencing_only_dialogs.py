@@ -65,10 +65,10 @@ class TrialSentencingDialog(CriminalBaseDialog, Ui_TrialSentencingDialog):
         self.dialog_name = 'Trial Sentencing Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         TrialSentencingDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = TrialSentencingDialogSlotFunctions(self)
         self.functions.show_companion_case_fields()
         TrialSentencingDialogSignalConnector(self)
@@ -106,10 +106,10 @@ class LeapSentencingDialog(CriminalBaseDialog, Ui_LeapSentencingDialog):
         self.dialog_name = 'Leap Sentencing Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         LeapSentencingDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = LeapSentencingDialogSlotFunctions(self)
         self.functions.set_fines_credit_for_jail_field()
         LeapSentencingDialogSignalConnector(self)
@@ -152,10 +152,10 @@ class SentencingOnlyDialog(CriminalBaseDialog, Ui_SentencingOnlyDialog):
         self.dialog_name = 'Sentencing Only Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         SentencingOnlyDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = SentencingOnlyDialogSlotFunctions(self)
         SentencingOnlyDialogSignalConnector(self)
 

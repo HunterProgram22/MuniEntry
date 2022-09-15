@@ -39,10 +39,10 @@ class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDial
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
         self.hearing_location_box.setCurrentText(self.courtroom)
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         TrialToCourtDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = TrialToCourtDialogSlotFunctions(self)
         TrialToCourtDialogSignalConnector(self)
 

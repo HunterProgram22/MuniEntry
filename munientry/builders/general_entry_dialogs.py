@@ -48,7 +48,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
 
-    def modify_view(self) -> None:
+    def _modify_view(self) -> None:
         """Standard call to build the view, then updates appearance reason.
 
         Sets appearance reason to final pre-trial instead of change of plea if dialog opens a
@@ -58,7 +58,7 @@ class FailureToAppearDialog(CriminalBaseDialog, Ui_FailureToAppearDialog):
         if self.case_table == 'final_pretrials':
             self.appearance_reason_box.setCurrentText('final pre-trial')
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = FailureToAppearDialogSlotFunctions(self)
         self.functions.hide_warrant_radius()
         self.functions.hide_bond_boxes()
@@ -92,10 +92,10 @@ class FreeformDialog(CriminalBaseDialog, Ui_FreeformEntryDialog):
         self.dialog_name = 'Freeform Entry Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def modify_view(self) -> FreeformDialogViewModifier:
+    def _modify_view(self) -> FreeformDialogViewModifier:
         return FreeformDialogViewModifier(self)
 
-    def connect_signals_to_slots(self) -> None:
+    def _connect_signals_to_slots(self) -> None:
         self.functions = FreeformDialogSlotFunctions(self)
         FreeformDialogSignalConnector(self)
 
