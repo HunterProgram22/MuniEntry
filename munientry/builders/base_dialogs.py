@@ -15,7 +15,7 @@ if TYPE_CHECKING:
     from munientry.models.party_types import JudicialOfficer
 
 
-class TestBaseDialog(QDialog):
+class BaseDialogBuilder(QDialog):
     """This class is a base class for all dialog windows."""
 
     def __init__(self, parent: QDialog = None) -> None:
@@ -69,7 +69,7 @@ class TestBaseDialog(QDialog):
         logger.dialog(f'{self.objectName()} Closed by {event}')
 
 
-class TestCriminalBaseDialog(TestBaseDialog):
+class CriminalDialogBuilder(BaseDialogBuilder):
     """The base class for all criminal and traffic main entry dialogs."""
 
     def __init__(

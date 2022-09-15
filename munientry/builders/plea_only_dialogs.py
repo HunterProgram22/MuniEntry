@@ -1,7 +1,7 @@
 """Module containing classes to build Plea Only Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import CriminalBaseDialog, TestCriminalBaseDialog
+from munientry.builders.base_dialogs import CriminalBaseDialog, CriminalDialogBuilder
 from munientry.checkers.plea_only_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
     NotGuiltyBondDialogInfoChecker,
@@ -41,7 +41,7 @@ from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
-class PleaOnlyDialog(TestCriminalBaseDialog, Ui_PleaOnlyDialog):
+class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
     build_dict = {
         'view': PleaOnlyDialogViewModifier,
@@ -60,8 +60,17 @@ class PleaOnlyDialog(TestCriminalBaseDialog, Ui_PleaOnlyDialog):
         self.entry_case_information.judicial_officer = self.judicial_officer
 
 
-class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
+class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
     """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
+    build_dict = {
+        'view': NotGuiltyBondDialogViewModifier,
+        'slots': NotGuiltyBondDialogSlotFunctions,
+        'signals': NotGuiltyBondDialogSignalConnector,
+        'case_information_model': NotGuiltyBondEntryCaseInformation,
+        'loader': CmsChargeLoader,
+        'updater': NotGuiltyBondDialogUpdater,
+        'info_checker': NotGuiltyBondDialogInfoChecker,
+    }
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],
@@ -93,31 +102,21 @@ class NotGuiltyBondDialog(CriminalBaseDialog, Ui_NotGuiltyBondDialog):
         self.dialog_name = 'Not Guilty Bond Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
+        self.entry_case_information.judicial_officer = self.judicial_officer
         self.charges_gridLayout.set_all_pleas('Not Guilty')
 
-    def _modify_view(self) -> None:
-        NotGuiltyBondDialogViewModifier(self)
 
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = NotGuiltyBondDialogSlotFunctions(self)
-        NotGuiltyBondDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self) -> None:
-        self.entry_case_information = NotGuiltyBondEntryCaseInformation()
-        self.entry_case_information.judicial_officer = self.judicial_officer
-
-    def load_cms_data_to_view(self) -> None:
-        CmsChargeLoader(self)
-
-    def update_entry_case_information(self) -> NotGuiltyBondDialogUpdater:
-        return NotGuiltyBondDialogUpdater(self)
-
-    def perform_info_checks(self) -> None:
-        self.dialog_checks = NotGuiltyBondDialogInfoChecker(self)
-
-
-class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
+class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
+    build_dict = {
+        'view': LeapAdmissionPleaDialogViewModifier,
+        'slots': LeapAdmissionPleaDialogSlotFunctions,
+        'signals': LeapAdmissionPleaDialogSignalConnector,
+        'case_information_model': LeapAdmissionEntryCaseInformation,
+        'loader': CmsChargeLoader,
+        'updater': LeapAdmissionPleaDialogUpdater,
+        'info_checker': LeapAdmissionPleaDialogInfoChecker,
+    }
 
     def __init__(
         self,
@@ -130,30 +129,20 @@ class LeapAdmissionPleaDialog(CriminalBaseDialog, Ui_LeapAdmissionPleaDialog):
         self.dialog_name = 'Leap Admission Plea Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date('120 days')
-
-    def _modify_view(self) -> None:
-        LeapAdmissionPleaDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
-        LeapAdmissionPleaDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self):
-        self.entry_case_information = LeapAdmissionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
 
-    def load_cms_data_to_view(self) -> None:
-        CmsChargeLoader(self)
 
-    def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
-        return LeapAdmissionPleaDialogUpdater(self)
-
-    def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
-        self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
-
-
-class LeapPleaValidDialog(CriminalBaseDialog, Ui_LeapPleaValidDialog):
+class LeapPleaValidDialog(CriminalDialogBuilder, Ui_LeapPleaValidDialog):
     """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
+    build_dict = {
+        'view': LeapAdmissionPleaDialogViewModifier,
+        'slots': LeapAdmissionPleaDialogSlotFunctions,
+        'signals': LeapAdmissionPleaValidDialogSignalConnector,
+        'case_information_model': LeapAdmissionEntryCaseInformation,
+        'loader': CmsChargeLoader,
+        'updater': LeapAdmissionPleaDialogUpdater,
+        'info_checker': LeapAdmissionPleaDialogInfoChecker,
+    }
 
     def __init__(
         self,
@@ -165,26 +154,7 @@ class LeapPleaValidDialog(CriminalBaseDialog, Ui_LeapPleaValidDialog):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.dialog_name = 'Leap Admission Plea Already Valid Dialog'
         self.template = TEMPLATE_DICT.get(self.dialog_name)
-
-    def _modify_view(self) -> None:
-        LeapAdmissionPleaDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = LeapAdmissionPleaDialogSlotFunctions(self)
-        LeapAdmissionPleaValidDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self):
-        self.entry_case_information = LeapAdmissionEntryCaseInformation()
         self.entry_case_information.judicial_officer = self.judicial_officer
-
-    def load_cms_data_to_view(self) -> None:
-        CmsChargeLoader(self)
-
-    def update_entry_case_information(self) -> LeapAdmissionPleaDialogUpdater:
-        return LeapAdmissionPleaDialogUpdater(self)
-
-    def perform_info_checks(self) -> LeapAdmissionPleaDialogInfoChecker:
-        self.dialog_checks = LeapAdmissionPleaDialogInfoChecker(self)
 
 
 if __name__ == '__main__':
