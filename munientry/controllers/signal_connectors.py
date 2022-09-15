@@ -2,7 +2,6 @@
 when a dialog is built and connect all of the interface objects (i.e. buttons,
 checkboxes, etc.) to the dialog."""
 from loguru import logger
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions, BondHearingDialogSlotFunctions
 
 
 class BaseDialogSignalConnector:
@@ -178,24 +177,6 @@ class DiversionDialogSignalConnector(BaseDialogSignalConnector):
         dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.functions.show_jail_report_date_box)
         dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.show_restitution_boxes)
         dialog.other_conditions_checkBox.toggled.connect(dialog.functions.show_other_conditions_box)
-
-
-class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        self.connect_not_guilty_all_button(dialog)
-        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.show_hide_bond_conditions)
-        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
-        dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.no_contact_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.custodial_supervision_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.other_conditions_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.vehicle_seizure_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.monitoring_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
 
 
 class NoPleaBondDialogSignalConnector(BaseDialogSignalConnector):

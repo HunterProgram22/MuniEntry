@@ -186,15 +186,6 @@ class DiversionDialogViewModifier(BaseDialogViewModifier):
         self.dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
 
 
-class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.NotGuiltyPleaGrid
-        self.set_appearance_reason()
-        self.dialog.monitoring_type_box.setHidden(True)
-        self.dialog.specialized_docket_type_box.setHidden(True)
-
-
 class NoPleaBondDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

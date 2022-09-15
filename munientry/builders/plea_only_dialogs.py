@@ -1,44 +1,35 @@
 """Module containing classes to build Plea Only Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import CriminalBaseDialog, CriminalDialogBuilder
+from munientry.builders.base_dialogs import CriminalDialogBuilder
 from munientry.checkers.plea_only_checkers import (
     LeapAdmissionPleaDialogInfoChecker,
-    NotGuiltyBondDialogInfoChecker,
     PleaOnlyDialogInfoChecker,
 )
 from munientry.controllers.signal_connectors import (
     LeapAdmissionPleaDialogSignalConnector,
     LeapAdmissionPleaValidDialogSignalConnector,
-    NotGuiltyBondDialogSignalConnector,
     PleaOnlyDialogSignalConnector,
 )
 from munientry.controllers.slot_functions import (
     LeapAdmissionPleaDialogSlotFunctions,
-    NotGuiltyBondDialogSlotFunctions,
     PleaOnlyDialogSlotFunctions,
 )
 from munientry.controllers.view_modifiers import (
     LeapAdmissionPleaDialogViewModifier,
-    NotGuiltyBondDialogViewModifier,
     PleaOnlyDialogViewModifier,
 )
 from munientry.data.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
-    NotGuiltyBondEntryCaseInformation,
     PleaOnlyEntryCaseInformation,
 )
-from munientry.models.conditions_models import BondConditions
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.grid_case_updaters import (
     LeapAdmissionPleaDialogUpdater,
-    NotGuiltyBondDialogUpdater,
     PleaOnlyDialogUpdater,
 )
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
-from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
 class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
@@ -57,51 +48,6 @@ class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
         self.entry_case_information.judicial_officer = self.judicial_officer
-
-
-class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
-    """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
-    build_dict = {
-        'dialog_name': 'Not Guilty Bond Dialog',
-        'view': NotGuiltyBondDialogViewModifier,
-        'slots': NotGuiltyBondDialogSlotFunctions,
-        'signals': NotGuiltyBondDialogSignalConnector,
-        'case_information_model': NotGuiltyBondEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': NotGuiltyBondDialogUpdater,
-        'info_checker': NotGuiltyBondDialogInfoChecker,
-    }
-
-    condition_checkbox_dict = {
-        'monitoring_checkBox': ['monitoring_type_box'],
-        'specialized_docket_checkBox': ['specialized_docket_type_box'],
-    }
-
-    def __init__(
-        self,
-        judicial_officer: object,
-        cms_case: str = None,
-        case_table: str = None,
-        parent: object = None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.additional_conditions_list = [
-            (
-                'admin_license_suspension_checkBox',
-                self.entry_case_information.admin_license_suspension,
-            ),
-            (
-                'domestic_violence_checkBox',
-                self.entry_case_information.domestic_violence_conditions,
-            ),
-            ('no_contact_checkBox', self.entry_case_information.no_contact),
-            ('custodial_supervision_checkBox', self.entry_case_information.custodial_supervision),
-            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
-            ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
-        ]
-        self.entry_case_information.bond_conditions = BondConditions()
-        self.entry_case_information.judicial_officer = self.judicial_officer
-        self.charges_gridLayout.set_all_pleas('Not Guilty')
 
 
 class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
