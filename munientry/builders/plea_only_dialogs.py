@@ -44,6 +44,7 @@ from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
     build_dict = {
+        'dialog_name': 'Plea Only Dialog',
         'view': PleaOnlyDialogViewModifier,
         'slots': PleaOnlyDialogSlotFunctions,
         'signals': PleaOnlyDialogSignalConnector,
@@ -55,14 +56,13 @@ class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
 
     def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Plea Only Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.judicial_officer = self.judicial_officer
 
 
 class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
     """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
     build_dict = {
+        'dialog_name': 'Not Guilty Bond Dialog',
         'view': NotGuiltyBondDialogViewModifier,
         'slots': NotGuiltyBondDialogSlotFunctions,
         'signals': NotGuiltyBondDialogSignalConnector,
@@ -99,8 +99,6 @@ class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.dialog_name = 'Not Guilty Bond Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.bond_conditions = BondConditions()
         self.entry_case_information.judicial_officer = self.judicial_officer
         self.charges_gridLayout.set_all_pleas('Not Guilty')
@@ -109,6 +107,7 @@ class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
 class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
     build_dict = {
+        'dialog_name': 'Leap Admission Plea Dialog',
         'view': LeapAdmissionPleaDialogViewModifier,
         'slots': LeapAdmissionPleaDialogSlotFunctions,
         'signals': LeapAdmissionPleaDialogSignalConnector,
@@ -126,8 +125,6 @@ class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog)
         parent: object = None,
     ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Leap Admission Plea Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.functions.set_leap_sentencing_date('120 days')
         self.entry_case_information.judicial_officer = self.judicial_officer
 
@@ -135,6 +132,7 @@ class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog)
 class LeapPleaValidDialog(CriminalDialogBuilder, Ui_LeapPleaValidDialog):
     """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
     build_dict = {
+        'dialog_name': 'Leap Admission Plea Already Valid Dialog',
         'view': LeapAdmissionPleaDialogViewModifier,
         'slots': LeapAdmissionPleaDialogSlotFunctions,
         'signals': LeapAdmissionPleaValidDialogSignalConnector,
@@ -152,8 +150,6 @@ class LeapPleaValidDialog(CriminalDialogBuilder, Ui_LeapPleaValidDialog):
         parent: object = None,
     ) -> None:
         super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Leap Admission Plea Already Valid Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.entry_case_information.judicial_officer = self.judicial_officer
 
 

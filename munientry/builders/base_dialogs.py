@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QDialog
 
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import TYPE_CHECKING, WIDGET_TYPE_ACCESS_DICT
+from munientry.models.template_types import TEMPLATE_DICT
 
 if TYPE_CHECKING:
     from munientry.models.cms_models import CmsCaseInformation
@@ -23,6 +24,8 @@ class BaseDialogBuilder(QDialog):
         self.build_attrs = self._get_dialog_attributes()
         self._modify_view()
         self._connect_signals_to_slots()
+        self.dialog_name = self.build_attrs.get('dialog_name', None)
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
 
     def _get_dialog_attributes(self):
         return self.build_dict
