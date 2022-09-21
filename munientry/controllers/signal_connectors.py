@@ -122,13 +122,6 @@ class LeapAdmissionPleaValidDialogSignalConnector(BaseDialogSignalConnector):
         dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
 
 
-class PleaOnlyDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        self.connect_plea_all_button_signals(dialog)
-
-
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

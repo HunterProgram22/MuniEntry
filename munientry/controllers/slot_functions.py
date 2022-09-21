@@ -447,11 +447,6 @@ class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
         return leap_sentence_date_dict.get(days_to_add_string)
 
 
-class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-
 class LeapSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

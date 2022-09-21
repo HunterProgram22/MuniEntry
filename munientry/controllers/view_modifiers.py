@@ -138,13 +138,6 @@ class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
 
 
-class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.PleaOnlyGrid
-        self.set_appearance_reason()
-
-
 class JailCCDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

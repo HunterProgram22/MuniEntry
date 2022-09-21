@@ -27,7 +27,7 @@ class BaseDialogBuilder(QDialog):
         self.dialog_name = self.build_attrs.get('dialog_name', None)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
 
-    def _get_dialog_attributes(self):
+    def _get_dialog_attributes(self) -> dict:
         return self.build_dict
 
     def _modify_view(self) -> None:

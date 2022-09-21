@@ -1,4 +1,5 @@
 """Builder module for the Not Guilty Bond Dialog."""
+from loguru import logger
 
 from munientry.builders.base_dialogs import CriminalDialogBuilder
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
@@ -135,3 +136,9 @@ class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
         self.entry_case_information.bond_conditions = BondConditions()
         self.entry_case_information.judicial_officer = self.judicial_officer
         self.charges_gridLayout.set_all_pleas('Not Guilty')
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')
+else:
+    logger.log('IMPORT', f'{__name__} imported.')
