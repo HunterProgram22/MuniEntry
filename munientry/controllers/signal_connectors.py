@@ -120,28 +120,6 @@ class LeapSentencingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.functions.set_fines_credit_for_jail_field)
 
 
-class LeapAdmissionPleaDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        """The plea all buttons are connected directly because the base dialog method also connects
-        findings and a Leap Admission Plea does not have findings."""
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
-        dialog.no_contest_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
-        dialog.time_to_complete_box.currentTextChanged.connect(dialog.functions.set_leap_sentencing_date)
-
-
-class LeapAdmissionPleaValidDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        """The plea all buttons are connected directly because the base dialog method also connects
-        findings and a Leap Admission Plea does not have findings."""
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
-        dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
-
-
 class JailCCDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
