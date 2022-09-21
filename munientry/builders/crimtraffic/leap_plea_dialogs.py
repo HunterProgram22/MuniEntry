@@ -67,7 +67,7 @@ class LeapAdmissionPleaValidDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_charge_Button.released.connect(dialog.functions.start_add_charge_dialog)
         dialog.guilty_all_Button.pressed.connect(dialog.charges_gridLayout.set_all_pleas)
 
-        
+
 class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
@@ -123,4 +123,3 @@ if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')
-
