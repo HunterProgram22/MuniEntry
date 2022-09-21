@@ -14,6 +14,8 @@ from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
 
 class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
+    """View builder for Plea Only - Future Sentence Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog.charges_gridLayout.__class__ = cg.PleaOnlyGrid
@@ -21,6 +23,8 @@ class PleaOnlyDialogViewModifier(BaseDialogViewModifier):
 
 
 class PleaOnlyDialogSignalConnector(BaseDialogSignalConnector):
+    """Signal Connector for Plea Only - Future Sentence Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals(dialog)
@@ -28,12 +32,12 @@ class PleaOnlyDialogSignalConnector(BaseDialogSignalConnector):
 
 
 class PleaOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
+    """Additional functions for Plea Only - Future Sentence Dialog."""
 
 
 class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
+
     build_dict = {
         'dialog_name': 'Plea Only Dialog',
         'view': PleaOnlyDialogViewModifier,
@@ -50,7 +54,7 @@ class PleaOnlyDialog(CriminalDialogBuilder, Ui_PleaOnlyDialog):
         self.entry_case_information.judicial_officer = self.judicial_officer
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:
     logger.log('IMPORT', f'{__name__} imported.')

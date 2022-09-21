@@ -658,6 +658,18 @@ class BondHearingDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.show_bond_boxes("None")
+        
+    def start_add_special_bond_conditions_dialog(self):
+        self.dialog.update_entry_case_information()
+        AddSpecialBondConditionsDialog(self.dialog).exec()
+
+    def show_hide_bond_conditions(self):
+        if self.dialog.bond_type_box.currentText() == 'Continue Existing Bond':
+            self.dialog.bond_conditions_frame.setHidden(True)
+            self.dialog.special_bond_conditions_frame.setHidden(True)
+        else:
+            self.dialog.bond_conditions_frame.setHidden(False)
+            self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
