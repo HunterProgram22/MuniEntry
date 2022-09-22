@@ -110,8 +110,10 @@ class BaseDialogViewModifier(object):
 
     @classmethod
     def hide_boxes(cls, dialog):
-        for item in cls.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
+        logger.debug(cls.condition_checkbox_list)
+        for condition in cls.condition_checkbox_list:
+            logger.debug(condition)
+            (condition_checkbox, condition_field) = condition
             if hasattr(dialog, condition_checkbox):
                 if getattr(dialog, condition_checkbox).isChecked():
                     getattr(dialog, condition_field).setEnabled(True)
@@ -121,9 +123,11 @@ class BaseDialogViewModifier(object):
                     getattr(dialog, condition_field).setHidden(True)
 
     def transfer_model_data_to_view(self, model_class):
-        '''Loops through the terms_list for a model and loads data into the view of the dialog on
-        load. This is to allow for previously entered data to be shown if a user comes back to
-        the dialog after having previously entered data.'''
+        """Loops through the terms_list for a model and loads data into the view of the dialog.
+
+        This is to allow previously entered data to be shown if a user comes back to
+        the dialog after having previously entered data.
+        """
         for (model_attribute, view_field) in model_class.terms_list:
             key = getattr(self.dialog, view_field).__class__.__name__
             view = getattr(self.dialog, view_field)
@@ -151,14 +155,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog.popup_dialog.exec()
 
     def close_window(self):
-        '''Closes window by calling closeEvent in BaseDialog.
+        """Closes window by calling closeEvent in BaseDialog.
 
         Event is logged in BaseDialog closeEvent.
 
         Function connected to a button to close the window. Can be connected
         to any button press/click/release to close a window. This can also be called
         at the end of the close_event process to close the dialog.
-        '''
+        """
         self.dialog.close()
 
     def clear_case_information_fields(self):
@@ -167,42 +171,45 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def create_entry(self):
-        '''Loads the proper template and creates the entry.'''
+    def create_entry(self) -> None:
+        """Loads the proper template and creates the entry."""
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
-        # extract_data(case_data)
         doc.render(case_data)
         docname = self.set_document_name()
         logger.info(f'Entry Created: {docname}')
         try:
             doc.save(SAVE_PATH + docname)
-            startfile(SAVE_PATH + docname)
         except PermissionError as error:
             logger.warning(error)
             self.dialog.message_box = RequiredBox(
-                'An entry for this case is already open in Word.'
-                ' You must close the Word document first.'
+                'An entry for this case is already open in Word.\n'
+                + 'You must close the Word document first.',
             )
             self.dialog.message_box.exec()
+        startfile(SAVE_PATH + docname)
 
-    def create_entry_process(self):
-        '''The info_checks variable is either 'Pass' or 'Fail' based on the checks performed by the
-        update_info_and_perform_checks method.'''
+    def create_entry_process(self) -> None:
+        """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
         if self.update_info_and_perform_checks() == 'Pass':
             self.create_entry()
 
-    def set_document_name(self):
-        '''Returns a name for the document in the format CaseNumber_TemplateName.docx
-        (i.e. 21CRB1234_Crim_Traffic Judgment Entry.docx'''
-        return (
-            f'{self.dialog.entry_case_information.case_number}'
-            f'_{self.dialog.template.template_name}.docx'
-        )
+    def set_document_name(self) -> str:
+        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
+
+        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
+        """
+        case_number = self.dialog.entry_case_information.case_number
+        template_name = self.dialog.template.template_name
+        return f'{case_number}_{template_name}.docx'
 
     def set_fines_costs_pay_date(self, days_to_add_string):
-        '''Sets the sentencing date to the Tuesday after the number of days added.'''
+        """Sets the fines/costs pay date.
+
+        Date is set to the Tuesday after the number of days added, unless forthwith or a special
+        docket is selected.
+        """
         if days_to_add_string == 'forthwith':
             self.dialog.balance_due_date.setHidden(False)
             self.dialog.balance_due_date.setDate(QDate.currentDate())
@@ -213,7 +220,7 @@ class BaseDialogSlotFunctions(object):
             days_to_add = self.get_days_to_add(days_to_add_string)
             total_days_to_add = set_future_date(days_to_add, 'Tuesday')
             self.dialog.balance_due_date.setDate(
-                QDate.currentDate().addDays(total_days_to_add)
+                QDate.currentDate().addDays(total_days_to_add),
             )
 
     def get_days_to_add(self, days_to_add_string):
@@ -224,14 +231,15 @@ class BaseDialogSlotFunctions(object):
         }
         return pay_date_dict.get(days_to_add_string)
 
-    @logger.catch
     def update_info_and_perform_checks(self):
-        '''This method performs an update then calls to the main_entry_dialog's InfoChecker class to run
-        the checks for that dialog. The InfoChecker check_status will return as 'Fail' if any of the
-        checks are hard stops - meaning the warning message doesn't allow immediate correction.
+        """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
 
-        The dialog.update_entry_case_information is called a second time to update the model with any changes
-        to information that was made by the InfoChecker checks.'''
+        The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
+        meaning the warning message doesn't allow immediate correction.
+
+        The dialog.update_entry_case_information is called a second time to update the model
+        with any changes to information that was made by the InfoChecker checks.
+        """
         self.dialog.update_entry_case_information()
         self.dialog.perform_info_checks()
         if self.dialog.dialog_checks.check_status == 'Fail':
@@ -239,7 +247,7 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_entry_case_information()
         return 'Pass'
 
-    def set_defense_counsel(self):
+    def set_defense_counsel(self) -> None:
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
             self.dialog.defense_counsel_name_box.setEnabled(False)
             self.dialog.defense_counsel_type_box.setEnabled(False)
@@ -247,9 +255,8 @@ class BaseDialogSlotFunctions(object):
             self.dialog.defense_counsel_name_box.setEnabled(True)
             self.dialog.defense_counsel_type_box.setEnabled(True)
 
-    def set_fra_in_file(self, current_text):
-        '''Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in the complaint of file.'''
+    def set_fra_in_file(self, current_text: str) -> None:
+        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
         if current_text == 'Yes':
             self.dialog.entry_case_information.fra_in_file = True
             self.dialog.fra_in_court_box.setCurrentText('No')
@@ -258,9 +265,8 @@ class BaseDialogSlotFunctions(object):
         else:
             self.dialog.entry_case_information.fra_in_file = None
 
-    def set_fra_in_court(self, current_text):
-        '''Sets the FRA (proof of insurance) to true if the view indicates 'yes'
-        that the FRA was shown in court.'''
+    def set_fra_in_court(self, current_text: str) -> None:
+        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
         if current_text == 'Yes':
             self.dialog.entry_case_information.fra_in_court = True
         elif current_text == 'No':
@@ -268,52 +274,69 @@ class BaseDialogSlotFunctions(object):
         else:
             self.dialog.entry_case_information.fra_in_court = None
 
-    @logger.catch
     def show_costs_and_fines(self):
         self.dialog.update_entry_case_information()
-        message = InfoBox()
-        message.setWindowTitle('Total Costs and Fines')
-        message.setInformativeText(
-            f'Costs: $ {str(self.dialog.entry_case_information.court_costs.amount)}'
-            f'\nFines: $ {str(self.dialog.entry_case_information.total_fines)}'
-            f'\nFines Suspended: $ {str(self.dialog.entry_case_information.total_fines_suspended)}'
-            f'\n\n*Does not include possible bond forfeiture or other costs \n that '
-            f'may be assessed as a result of prior actions in the case. '
+        costs = str(self.dialog.entry_case_information.court_costs.amount)
+        fines = str(self.dialog.entry_case_information.total_fines)
+        fines_suspended = str(self.dialog.entry_case_information.total_fines_suspended)
+        total_fines_and_costs = str(self.get_total_fines_and_costs())
+        message_box = InfoBox(
+            f'Total Costs and Fines Due By Due Date: $ {total_fines_and_costs}',
+            'Total Costs and Fines',
         )
-        total_fines_and_costs = (
-            self.dialog.entry_case_information.court_costs.amount
-            + self.dialog.entry_case_information.total_fines
-        ) - self.dialog.entry_case_information.total_fines_suspended
-        message.setText(
-            f'Total Costs and Fines Due By Due Date: $ {str(total_fines_and_costs)}'
+        message_box.setInformativeText(
+            f'Costs: $ {costs}'
+            + f'\nFines: $ {fines}'
+            + f'\nFines Suspended: $ {fines_suspended}'
+            + '\n\n*Does not include possible bond forfeiture or other costs that'
+            + ' may be assessed as a result of prior actions in the case.',
         )
-        message.exec_()
+        message_box.exec_()
 
-    def update_community_service_due_date(self, _index=None):
+    def get_total_fines_and_costs(self) -> int:
+        return (
+            (
+                self.dialog.entry_case_information.court_costs.amount
+                + self.dialog.entry_case_information.total_fines
+            )
+            - self.dialog.entry_case_information.total_fines_suspended
+        )
+
+    def update_community_service_due_date(self, _index=None) -> None:
         days_to_complete = int(
-            self.dialog.community_service_days_to_complete_box.currentText()
+            self.dialog.community_service_days_to_complete_box.currentText(),
         )
         self.dialog.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_to_complete)
+            QDate.currentDate().addDays(days_to_complete),
         )
 
-    def set_offense(self, key):
+    def set_offense(self, key) -> int:
+        """Sets the offense and degree for a charge based on the statute.
+
+        Returns 0 if the freeform box is checked so database is not queried.
+        """
         if self.dialog.freeform_entry_checkBox.isChecked():
-            return None
+            return 0
         field = 'statute'
         offense, statute, degree = self.query_charges_database(key, field)
         if statute == key:
             self.dialog.offense_choice_box.setCurrentText(offense)
-        self.dialog.degree_choice_box.setCurrentText(degree)
+            self.dialog.degree_choice_box.setCurrentText(degree)
+        return 1
 
-    def set_statute(self, key):
+    def set_statute(self, key) -> int:
+        """Sets the statute and degree for a charge based on the offense.
+
+        Returns 0 if the freeform box is checked so database is not queried.
+        """
         if self.dialog.freeform_entry_checkBox.isChecked():
-            return None
+            return 0
         field = 'offense'
         offense, statute, degree = self.query_charges_database(key, field)
         if offense == key:
             self.dialog.statute_choice_box.setCurrentText(statute)
-        self.dialog.degree_choice_box.setCurrentText(degree)
+            self.dialog.degree_choice_box.setCurrentText(degree)
+        return 1
 
     def query_charges_database(self, key, field):
         query_string = f'SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%''
