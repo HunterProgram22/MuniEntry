@@ -139,6 +139,37 @@ class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
             else:
                 continue
 
+    def set_report_date_view(self):
+        if self.dialog.report_type_box.currentText() == 'date set by Office of Community Control':
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        elif self.dialog.report_type_box.currentText() == 'forthwith':
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
+        else:
+            self.dialog.report_date_box.setEnabled(True)
+            self.dialog.report_date_box.setHidden(False)
+            self.dialog.report_time_box.setEnabled(True)
+            self.dialog.report_time_box.setHidden(False)
+            self.dialog.report_date_label.setHidden(False)
+            self.dialog.report_time_label.setHidden(False)
+
+    def set_report_days_notes_box(self):
+        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
+            self.dialog.jail_report_days_notes_box.setDisabled(True)
+            self.dialog.jail_report_days_notes_box.setHidden(True)
+        else:
+            self.dialog.jail_report_days_notes_box.setDisabled(False)
+            self.dialog.jail_report_days_notes_box.setHidden(False)
+
 
 class AddCommunityControlDialogViewModifier(BaseDialogViewModifier):
     condition_checkbox_list = [
@@ -191,6 +222,7 @@ class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
     def set_special_bond_conditions_case_information_banner(self):
         column = self.dialog.charges_gridLayout.columnCount() + 1
         for charge in self.dialog.charges_list:
+            logger.debug(charge)
             charge = vars(charge)
             if charge is not None:
                 self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
