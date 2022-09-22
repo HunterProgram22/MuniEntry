@@ -4,106 +4,14 @@ view file. Modifications to the view are placed in the ViewModifier class so tha
 be updated each time a view file is recompiled through the pyuic5 command."""
 from loguru import logger
 from PyQt5 import QtCore
-from PyQt5 import QtGui
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
+from munientry.builders.base_dialogs import BaseDialogViewModifier
 
 from munientry.controllers.helper_functions import set_future_date
 from munientry.controllers import charges_grids as cg
-from munientry.settings import WIDGET_TYPE_SET_DICT, ICON_PATH
 
 TODAY = QtCore.QDate.currentDate()
-
-
-class BaseDialogViewModifier:
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.dialog.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
-        self.dialog.setWindowFlags(self.dialog.windowFlags() |
-                            QtCore.Qt.CustomizeWindowHint |
-                            QtCore.Qt.WindowMaximizeButtonHint |
-                            QtCore.Qt.WindowCloseButtonHint)
-        self.dialog.setupUi(self.dialog)
-
-    def set_appearance_reason(self):
-        if self.dialog.case_table == "final_pretrials":
-            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
-        elif self.dialog.case_table == "pleas":
-            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
-        elif self.dialog.case_table == "trials_to_court":
-            self.dialog.appearance_reason_box.setCurrentText("a change of plea")
-
-    def set_case_information_banner(self):
-        self.dialog.defendant_name_label.setText(
-            "State of Ohio v. {defendant_first_name} {defendant_last_name}".format(
-                defendant_first_name=self.dialog.main_dialog.entry_case_information.defendant.first_name,
-                defendant_last_name=self.dialog.main_dialog.entry_case_information.defendant.last_name
-            )
-        )
-        self.dialog.case_number_label.setText(self.dialog.main_dialog.entry_case_information.case_number)
-
-    ###Additional Condition/Jail Dialog Setup Methods###
-    def set_conditions_case_information_banner(self):
-        column = self.dialog.charges_gridLayout.columnCount() + 1
-        for _index, charge in enumerate(self.dialog.charges_list):
-            charge = vars(charge)
-            if charge is not None:
-                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("offense")), 0, column)
-                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("statute")), 1, column)
-                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get("finding")), 2, column)
-                column += 1
-
-    def set_report_date_view(self):
-        if self.dialog.report_type_box.currentText() == "date set by Office of Community Control":
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        elif self.dialog.report_type_box.currentText() == "forthwith":
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        else:
-            self.dialog.report_date_box.setEnabled(True)
-            self.dialog.report_date_box.setHidden(False)
-            self.dialog.report_time_box.setEnabled(True)
-            self.dialog.report_time_box.setHidden(False)
-            self.dialog.report_date_label.setHidden(False)
-            self.dialog.report_time_label.setHidden(False)
-
-    def set_report_days_notes_box(self):
-        if self.dialog.jail_sentence_execution_type_box.currentText() == "consecutive days":
-            self.dialog.jail_report_days_notes_box.setDisabled(True)
-            self.dialog.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.dialog.jail_report_days_notes_box.setDisabled(False)
-            self.dialog.jail_report_days_notes_box.setHidden(False)
-
-    @classmethod
-    def hide_boxes(cls, dialog):
-        for item in cls.condition_checkbox_list:
-            (condition_checkbox, condition_field) = item
-            if hasattr(dialog, condition_checkbox):
-                if getattr(dialog, condition_checkbox).isChecked():
-                    getattr(dialog, condition_field).setEnabled(True)
-                    getattr(dialog, condition_field).setHidden(False)
-                else:
-                    getattr(dialog, condition_field).setEnabled(False)
-                    getattr(dialog, condition_field).setHidden(True)
-
-    def transfer_model_data_to_view(self, model_class):
-        """Loops through the terms_list for a model and loads data into the view of the dialog on
-        load. This is to allow for previously entered data to be shown if a user comes back to
-        the dialog after having previously entered data."""
-        for (model_attribute, view_field) in model_class.terms_list:
-            key = getattr(self.dialog, view_field).__class__.__name__
-            view = getattr(self.dialog, view_field)
-            getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
 
 
 class AddChargeDialogViewModifier(BaseDialogViewModifier):

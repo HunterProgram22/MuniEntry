@@ -1,11 +1,10 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.base_dialogs import SchedulingBaseDialog, BaseDialogViewModifier, \
+    BaseDialogSlotFunctions
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING

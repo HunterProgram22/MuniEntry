@@ -4,26 +4,6 @@ checkboxes, etc.) to the dialog."""
 from loguru import logger
 
 
-class BaseDialogSignalConnector_Refactor:
-    """Refactor class for temp use only."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-    def connect_main_dialog_common_signals(self):
-        self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.clear_fields_case_Button.released.connect(self.dialog.functions.clear_case_information_fields)
-        self.dialog.create_entry_Button.released.connect(self.dialog.functions.create_entry_process)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.defense_counsel_waived_checkBox.toggled.connect(self.dialog.functions.set_defense_counsel)
-
-    def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(self.dialog.charges_gridLayout.set_all_pleas)
-
-    def connect_add_charge_button(self):
-        self.dialog.add_charge_Button.released.connect(self.dialog.functions.start_add_charge_dialog)
-
-
 class BaseDialogSignalConnector:
     def __init__(self, dialog):
         dialog.cancel_Button.released.connect(dialog.functions.close_window)

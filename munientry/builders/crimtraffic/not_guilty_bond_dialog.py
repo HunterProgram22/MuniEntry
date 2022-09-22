@@ -1,13 +1,15 @@
 """Builder module for the Not Guilty Bond Dialog."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import CriminalDialogBuilder
+from munientry.builders.base_dialogs import (
+    BaseDialogSignalConnector_Refactor,
+    BaseDialogSlotFunctions,
+    BaseDialogViewModifier,
+    CriminalDialogBuilder,
+)
 from munientry.builders.conditions_dialogs import AddSpecialBondConditionsDialog
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.controllers import charges_grids as cg
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector_Refactor
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     NotGuiltyBondEntryCaseInformation,
@@ -109,14 +111,7 @@ class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
         'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
-    def __init__(
-        self,
-        judicial_officer: object,
-        cms_case: str = None,
-        case_table: str = None,
-        parent: object = None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
+    def additional_setup(self):
         self.additional_conditions_list = [
             (
                 'admin_license_suspension_checkBox',
@@ -131,11 +126,8 @@ class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.entry_case_information.judicial_officer = self.judicial_officer
         self.charges_gridLayout.set_all_pleas('Not Guilty')
 
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
