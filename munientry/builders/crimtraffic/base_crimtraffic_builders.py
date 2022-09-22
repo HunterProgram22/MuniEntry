@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QLabel
 
 from munientry.builders.base_dialogs import BaseDialogBuilder
 from munientry.controllers.helper_functions import set_future_date
+from munientry.data.sql_lite_queries import select_off_stat_deg_from_charges_query
 from munientry.settings import (
     ICON_PATH,
     SAVE_PATH,
@@ -338,21 +339,25 @@ class BaseDialogSlotFunctions(object):
             self.dialog.degree_choice_box.setCurrentText(degree)
         return 1
 
-    def query_charges_database(self, key, field):
-        query_string = f'SELECT * FROM charges WHERE {field} LIKE '%' || :key || '%''
+    def query_charges_database(self, key: str, field: str) -> tuple:
+        query_string = select_off_stat_deg_from_charges_query(key, field)
         query = QSqlQuery(self.dialog.db_connection)
         query.prepare(query_string)
-        query.bindValue(':key', key)
-        query.bindValue(field, field)
         query.exec()
         query.next()
-        offense = query.value(1)
-        statute = query.value(2)
-        degree = query.value(3)
+        offense = query.value('offense')
+        statute = query.value('statute')
+        degree = query.value('degree')
         query.finish()
         return offense, statute, degree
 
     def conditions_checkbox_toggle(self):
+        """TODO: This needs to be refactored.
+
+        It loops through all additional conditions to set a single one as true or false.
+        
+        TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
+        """
         logger.button(f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
         if self.dialog.sender().isChecked():
             for items in self.dialog.additional_conditions_list:

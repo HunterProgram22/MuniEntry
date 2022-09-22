@@ -106,7 +106,15 @@ class NotGuiltyBondDialog(crim.CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
         'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
 
+
     def additional_setup(self):
+        """The self.additional_conditions list is called in the base_crimtraffic_builders module.
+
+        TODO: This needs refactoring along with the conditions_checkbox_toggle method in
+        BaseDialogSlotFunctions in base_crimtraffic_builder. It is too complex.
+
+        TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
+        """
         self.additional_conditions_list = [
             (
                 'admin_license_suspension_checkBox',
