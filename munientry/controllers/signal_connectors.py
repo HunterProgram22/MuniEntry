@@ -139,17 +139,6 @@ class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
 
 
-class DiversionDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        self.connect_plea_all_button_signals(dialog)
-        self.connect_fra_signals(dialog)
-        dialog.diversion_jail_imposed_checkBox.toggled.connect(dialog.functions.show_jail_report_date_box)
-        dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.show_restitution_boxes)
-        dialog.other_conditions_checkBox.toggled.connect(dialog.functions.show_other_conditions_box)
-
-
 class NoPleaBondDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

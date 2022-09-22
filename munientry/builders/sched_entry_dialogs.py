@@ -1,7 +1,8 @@
 """Module containing all classes for building and using the Scheduling Entry Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog, BaseDialogViewModifier, \
+from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
 from munientry.controllers.signal_connectors import BaseDialogSignalConnector
 from munientry.data.cms_case_loaders import CmsNoChargeLoader

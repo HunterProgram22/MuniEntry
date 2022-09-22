@@ -2,12 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import (
-    BaseDialogSignalConnector_Refactor,
-    BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
-    CriminalDialogBuilder,
-)
+from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.controllers.helper_functions import set_future_date
@@ -20,7 +15,7 @@ from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDi
 from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 
 
-class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
+class LeapAdmissionPleaDialogViewModifier(crim.BaseDialogViewModifier):
     """View builder for Leap Plea and Leap Plea - Already Valid Dialogs."""
 
     def __init__(self, dialog):
@@ -29,7 +24,7 @@ class LeapAdmissionPleaDialogViewModifier(BaseDialogViewModifier):
         self.set_appearance_reason()
 
 
-class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
+class LeapAdmissionPleaDialogSlotFunctions(crim.BaseDialogSlotFunctions):
     """Additional functions for Leap Plea Dialogs."""
 
     def set_leap_sentencing_date(self, days_to_add_string):
@@ -51,7 +46,7 @@ class LeapAdmissionPleaDialogSlotFunctions(BaseDialogSlotFunctions):
         return leap_sentence_date_dict.get(days_to_add_string)
 
 
-class LeapAdmissionPleaDialogSignalConnector(BaseDialogSignalConnector_Refactor):
+class LeapAdmissionPleaDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
     """Signal Connector for Leap Plea Dialog."""
 
     def __init__(self, dialog):
@@ -71,7 +66,7 @@ class LeapAdmissionPleaDialogSignalConnector(BaseDialogSignalConnector_Refactor)
         )
 
 
-class LeapAdmissionPleaValidDialogSignalConnector(BaseDialogSignalConnector_Refactor):
+class LeapAdmissionPleaValidDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
     """Signal Connector for Leap Plea - Already Valid Dialog."""
 
     def __init__(self, dialog):
@@ -85,7 +80,7 @@ class LeapAdmissionPleaValidDialogSignalConnector(BaseDialogSignalConnector_Refa
         )
 
 
-class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
+class LeapAdmissionPleaDialog(crim.CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
     build_dict = {
@@ -103,7 +98,7 @@ class LeapAdmissionPleaDialog(CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog)
         self.functions.set_leap_sentencing_date('120 days')
 
 
-class LeapPleaValidDialog(CriminalDialogBuilder, Ui_LeapPleaValidDialog):
+class LeapPleaValidDialog(crim.CriminalDialogBuilder, Ui_LeapPleaValidDialog):
     """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
 
     build_dict = {

@@ -1,4 +1,5 @@
 """Module for building the view of the MainWindow."""
+import munientry.builders.crimtraffic.diversion_dialog
 import munientry.builders.crimtraffic.leap_plea_dialogs
 import munientry.builders.crimtraffic.not_guilty_bond_dialog
 import munientry.builders.crimtraffic.plea_only_future_sentence_dialog
@@ -67,7 +68,7 @@ class MainWindowViewModifier(object):
         return {
             self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
             self.main_window.JailCCPleaButton: plea_sentence.JailCCPleaDialog,
-            self.main_window.DiversionButton: plea_sentence.DiversionPleaDialog,
+            self.main_window.DiversionButton: munientry.builders.crimtraffic.diversion_dialog.DiversionPleaDialog,
             self.main_window.NotGuiltyBondButton: munientry.builders.crimtraffic.not_guilty_bond_dialog.NotGuiltyBondDialog,
             self.main_window.FailureToAppearButton: general_entry.FailureToAppearDialog,
             self.main_window.ProbationViolationBondButton: bond.ProbationViolationBondDialog,

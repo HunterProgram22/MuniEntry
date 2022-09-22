@@ -4,78 +4,32 @@ from loguru import logger
 from munientry.builders.base_dialogs import CriminalBaseDialog
 from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
 from munientry.checkers.no_jail_sentencing_checkers import (
-    DiversionDialogInfoChecker,
     FineOnlyDialogInfoChecker,
 )
 from munientry.controllers.signal_connectors import (
-    DiversionDialogSignalConnector,
     FineOnlyDialogSignalConnector,
     JailCCDialogSignalConnector,
 )
 from munientry.controllers.slot_functions import (
-    DiversionDialogSlotFunctions,
     FineOnlyDialogSlotFunctions,
     JailCCDialogSlotFunctions,
 )
 from munientry.controllers.view_modifiers import (
-    DiversionDialogViewModifier,
     FineOnlyDialogViewModifier,
     JailCCDialogViewModifier,
 )
 from munientry.data.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
-    DiversionEntryCaseInformation,
     FineOnlyEntryCaseInformation,
     JailCCEntryCaseInformation,
 )
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.grid_case_updaters import (
-    DiversionDialogUpdater,
     FineOnlyDialogUpdater,
     JailCCDialogUpdater,
 )
-from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 from munientry.views.fine_only_plea_dialog_ui import Ui_FineOnlyPleaDialog
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-
-
-class DiversionPleaDialog(CriminalBaseDialog, Ui_DiversionPleaDialog):
-    """Dialog builder class for 'Diversion' dialog."""
-
-    def __init__(
-        self,
-        judicial_officer: object,
-        cms_case: str = None,
-        case_table: str = None,
-        parent: object = None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Diversion Plea Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.functions.show_restitution_boxes()
-
-    def _modify_view(self) -> None:
-        DiversionDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = DiversionDialogSlotFunctions(self)
-        self.functions.show_jail_report_date_box()
-        self.functions.show_other_conditions_box()
-        DiversionDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self) -> None:
-        self.entry_case_information = DiversionEntryCaseInformation()
-        self.entry_case_information.judicial_officer = self.judicial_officer
-        self.entry_case_information.diversion.ordered = True
-
-    def load_cms_data_to_view(self) -> None:
-        CmsFraLoader(self)
-
-    def update_entry_case_information(self) -> None:
-        DiversionDialogUpdater(self)
-
-    def perform_info_checks(self) -> None:
-        self.dialog_checks = DiversionDialogInfoChecker(self)
 
 
 class JailCCPleaDialog(CriminalBaseDialog, Ui_JailCCPleaDialog):

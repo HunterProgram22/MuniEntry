@@ -1,12 +1,7 @@
 """Builder module for the Not Guilty Bond Dialog."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import (
-    BaseDialogSignalConnector_Refactor,
-    BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
-    CriminalDialogBuilder,
-)
+from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.conditions_dialogs import AddSpecialBondConditionsDialog
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.controllers import charges_grids as cg
@@ -18,7 +13,7 @@ from munientry.updaters.grid_case_updaters import NotGuiltyBondDialogUpdater
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 
 
-class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
+class NotGuiltyBondDialogViewModifier(crim.BaseDialogViewModifier):
     """View builder for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):
@@ -29,7 +24,23 @@ class NotGuiltyBondDialogViewModifier(BaseDialogViewModifier):
         self.dialog.specialized_docket_type_box.setHidden(True)
 
 
-class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector_Refactor):
+class NotGuiltyBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+    """Additional functions for Not Guilty Bond Dialog."""
+
+    def start_add_special_bond_conditions_dialog(self):
+        self.dialog.update_entry_case_information()
+        AddSpecialBondConditionsDialog(self.dialog).exec()
+
+    def show_hide_bond_conditions(self):
+        if self.dialog.bond_type_box.currentText() == 'Continue Existing Bond':
+            self.dialog.bond_conditions_frame.setHidden(True)
+            self.dialog.special_bond_conditions_frame.setHidden(True)
+        else:
+            self.dialog.bond_conditions_frame.setHidden(False)
+            self.dialog.special_bond_conditions_frame.setHidden(False)
+
+
+class NotGuiltyBondDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
     """Signal Connector for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):
@@ -76,23 +87,7 @@ class NotGuiltyBondDialogSignalConnector(BaseDialogSignalConnector_Refactor):
         )
 
 
-class NotGuiltyBondDialogSlotFunctions(BaseDialogSlotFunctions):
-    """Additional functions for Not Guilty Bond Dialog."""
-
-    def start_add_special_bond_conditions_dialog(self):
-        self.dialog.update_entry_case_information()
-        AddSpecialBondConditionsDialog(self.dialog).exec()
-
-    def show_hide_bond_conditions(self):
-        if self.dialog.bond_type_box.currentText() == 'Continue Existing Bond':
-            self.dialog.bond_conditions_frame.setHidden(True)
-            self.dialog.special_bond_conditions_frame.setHidden(True)
-        else:
-            self.dialog.bond_conditions_frame.setHidden(False)
-            self.dialog.special_bond_conditions_frame.setHidden(False)
-
-
-class NotGuiltyBondDialog(CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
+class NotGuiltyBondDialog(crim.CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
     """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
 
     build_dict = {

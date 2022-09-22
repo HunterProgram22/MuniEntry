@@ -4,11 +4,9 @@ view file. Modifications to the view are placed in the ViewModifier class so tha
 be updated each time a view file is recompiled through the pyuic5 command."""
 from loguru import logger
 from PyQt5 import QtCore
-from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
-from munientry.builders.base_dialogs import BaseDialogViewModifier
+from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier
 
-from munientry.controllers.helper_functions import set_future_date
 from munientry.controllers import charges_grids as cg
 
 TODAY = QtCore.QDate.currentDate()
@@ -56,28 +54,6 @@ class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
-
-
-class DiversionDialogViewModifier(BaseDialogViewModifier):
-    """Diversion uses the JailCharges Grid because all aspects of the grid are the same."""
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
-        self.set_appearance_reason()
-        self.set_diversion_fine_pay_date_box()
-        self.set_diversion_jail_report_date_box()
-
-    def set_diversion_fine_pay_date_box(self):
-        """Diversion pay date is set to the first Tuesday after 97 days - 90 days to comply, plus 7 days
-        to process paperwork (per Judge Hemmeter). The 1 in the set_future_date is for Tuesday."""
-        diversion_pay_days_to_add = set_future_date(97, "Tuesday")
-        self.dialog.diversion_fine_pay_date_box.setDate(QDate.currentDate().addDays(diversion_pay_days_to_add))
-
-    def set_diversion_jail_report_date_box(self):
-        """Diversion jail report date is set to the first Friday after 97 days - 90 days to comply, plus 7 days
-        to process paperwork (per Judge Hemmeter). The 4 in the set_future_date is for Friday."""
-        jail_report_days_to_add = set_future_date(97, "Friday")
-        self.dialog.diversion_jail_report_date_box.setDate(QDate.currentDate().addDays(jail_report_days_to_add))
 
 
 class NoPleaBondDialogViewModifier(BaseDialogViewModifier):

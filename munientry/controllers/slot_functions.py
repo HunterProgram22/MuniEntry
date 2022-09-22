@@ -2,7 +2,7 @@
 
 from loguru import logger
 # from munientry.builders.not_guilty_bond_dialog import NotGuiltyBondDialogSlotFunctions
-from munientry.builders.base_dialogs import BaseDialogSlotFunctions
+from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogSlotFunctions
 
 from munientry.data.sql_lite_functions import query_offense_type
 from munientry.models.criminal_charge_models import CriminalCharge
@@ -228,40 +228,6 @@ class TrialSentencingDialogSlotFunctions(JailCCDialogSlotFunctions):
 
     def set_all_findings_process(self):
         self.dialog.charges_gridLayout.set_all_trial_findings()
-
-
-class DiversionDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-    def show_other_conditions_box(self):
-        if self.dialog.other_conditions_checkBox.isChecked():
-            self.dialog.other_conditions_textEdit.setHidden(False)
-            self.dialog.other_conditions_textEdit.setFocus()
-        else:
-            self.dialog.other_conditions_textEdit.setHidden(True)
-
-    def show_jail_report_date_box(self):
-        if self.dialog.diversion_jail_imposed_checkBox.isChecked():
-            self.dialog.diversion_jail_report_date_box.setHidden(False)
-            self.dialog.diversion_jail_report_date_label.setHidden(False)
-            self.dialog.jail_report_date_note_label.setHidden(False)
-        else:
-            self.dialog.diversion_jail_report_date_box.setHidden(True)
-            self.dialog.diversion_jail_report_date_label.setHidden(True)
-            self.dialog.jail_report_date_note_label.setHidden(True)
-
-    def show_restitution_boxes(self):
-        if self.dialog.pay_restitution_checkBox.isChecked():
-            self.dialog.pay_restitution_to_box.setHidden(False)
-            self.dialog.pay_restitution_amount_box.setHidden(False)
-            self.dialog.pay_restitution_to_label.setHidden(False)
-            self.dialog.pay_restitution_amount_label.setHidden(False)
-        else:
-            self.dialog.pay_restitution_to_box.setHidden(True)
-            self.dialog.pay_restitution_amount_box.setHidden(True)
-            self.dialog.pay_restitution_to_label.setHidden(True)
-            self.dialog.pay_restitution_amount_label.setHidden(True)
 
 
 class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
