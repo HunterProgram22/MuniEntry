@@ -37,18 +37,27 @@ def leap_valid_dialog(qtbot, main_window):
 def test_leap_dialog_opens(leap_dialog):
     assert leap_dialog.windowTitle() == "LEAP Admission Plea Case Information"
 
+
 def test_leap_valid_dialog_opens(leap_valid_dialog):
     assert leap_valid_dialog.windowTitle() == "LEAP Plea - Already Valid Case Information"
 
-# leap_dialogs_test_list = [
-#     'leap_dialog',
-#     'leap_valid_dialog',
-# ]
-#
-# @pytest.mark.parametrize('dialog', leap_dialogs_test_list)
-# def test_check_waived_counsel_disables_def_counsel_box(qtbot, dialog):
-#     assert dialog.defense_counsel_name_box.isEnabled()
-#     assert dialog.defense_counsel_type_box.isEnabled()
-#     mouse_click(dialog.defense_counsel_waived_checkBox)
-#     assert dialog.defense_counsel_name_box.isEnabled() == False
-#     assert dialog.defense_counsel_type_box.isEnabled() == False
+
+def test_check_waived_counsel_disables_def_counsel_box(leap_dialog):
+    assert leap_dialog.defense_counsel_name_box.isEnabled()
+    assert leap_dialog.defense_counsel_type_box.isEnabled()
+    mouse_click(leap_dialog.defense_counsel_waived_checkBox)
+    assert leap_dialog.defense_counsel_name_box.isEnabled() == False
+    assert leap_dialog.defense_counsel_type_box.isEnabled() == False
+
+
+def test_check_waived_counsel_disables_def_counsel_box_leap_valid(leap_valid_dialog):
+    assert leap_valid_dialog.defense_counsel_name_box.isEnabled()
+    assert leap_valid_dialog.defense_counsel_type_box.isEnabled()
+    mouse_click(leap_valid_dialog.defense_counsel_waived_checkBox)
+    assert leap_valid_dialog.defense_counsel_name_box.isEnabled() == False
+    assert leap_valid_dialog.defense_counsel_type_box.isEnabled() == False
+
+
+def test_sentencing_date(leap_dialog):
+    date = set_future_date(120, "Monday")
+    assert leap_dialog.sentencing_date.date() == TODAY + timedelta(days=date)
