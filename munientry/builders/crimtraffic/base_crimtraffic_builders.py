@@ -111,9 +111,7 @@ class BaseDialogViewModifier(object):
 
     @classmethod
     def hide_boxes(cls, dialog):
-        logger.debug(cls.condition_checkbox_list)
         for condition in cls.condition_checkbox_list:
-            logger.debug(condition)
             (condition_checkbox, condition_field) = condition
             if hasattr(dialog, condition_checkbox):
                 if getattr(dialog, condition_checkbox).isChecked():
@@ -481,3 +479,26 @@ class BaseDialogSignalConnector_Refactor(object):
         self.dialog.add_charge_Button.released.connect(
             self.dialog.functions.start_add_charge_dialog,
         )
+
+    def connect_court_cost_signals(self):
+        self.dialog.ability_to_pay_box.currentTextChanged.connect(
+            self.dialog.functions.set_fines_costs_pay_date,
+        )
+        self.dialog.costs_and_fines_Button.released.connect(
+            self.dialog.functions.show_costs_and_fines,
+        )
+
+    def connect_main_dialog_additional_condition_signals(self):
+        self.dialog.license_suspension_checkBox.toggled.connect(
+            self.dialog.functions.conditions_checkbox_toggle,
+        )
+        self.dialog.community_service_checkBox.toggled.connect(
+            self.dialog.functions.conditions_checkbox_toggle,
+        )
+        self.dialog.other_conditions_checkBox.toggled.connect(
+            self.dialog.functions.conditions_checkbox_toggle,
+        )
+        self.dialog.add_conditions_Button.pressed.connect(
+            self.dialog.functions.start_add_conditions_dialog,
+        )
+
