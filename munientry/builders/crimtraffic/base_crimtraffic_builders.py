@@ -355,50 +355,35 @@ class BaseDialogSlotFunctions(object):
         """TODO: This needs to be refactored.
 
         It loops through all additional conditions to set a single one as true or false.
-        
+
         TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
         """
-        logger.button(f'{self.dialog.sender().text()} Checkbox Set: {self.dialog.sender().isChecked()}')
-        if self.dialog.sender().isChecked():
-            for items in self.dialog.additional_conditions_list:
-                if items[0] == self.dialog.sender().objectName():
-                    setattr(items[1], 'ordered', True)
-        else:
-            for items in self.dialog.additional_conditions_list:
-                if items[0] == self.dialog.sender().objectName():
-                    setattr(items[1], 'ordered', False)
+        for condition_items in self.dialog.additional_conditions_list:
+            checkbox_name, condition = condition_items
+            if self.dialog.sender().isChecked():
+                if checkbox_name == self.dialog.sender().objectName():
+                    setattr(condition, 'ordered', True)
+            elif checkbox_name == self.dialog.sender().objectName():
+                setattr(condition, 'ordered', False)
 
     def set_report_date(self):
-        if (
-            self.dialog.report_type_box.currentText()
-            == 'date set by Office of Community Control'
-        ):
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        elif self.dialog.report_type_box.currentText() == 'forthwith':
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        else:
+        if self.dialog.report_type_box.currentText() == 'future date':
             self.dialog.report_date_box.setEnabled(True)
             self.dialog.report_date_box.setHidden(False)
             self.dialog.report_time_box.setEnabled(True)
             self.dialog.report_time_box.setHidden(False)
             self.dialog.report_date_label.setHidden(False)
             self.dialog.report_time_label.setHidden(False)
+        else:
+            self.dialog.report_date_box.setDisabled(True)
+            self.dialog.report_date_box.setHidden(True)
+            self.dialog.report_time_box.setDisabled(True)
+            self.dialog.report_time_box.setHidden(True)
+            self.dialog.report_date_label.setHidden(True)
+            self.dialog.report_time_label.setHidden(True)
 
     def show_report_days_notes_box(self):
-        if (
-            self.dialog.jail_sentence_execution_type_box.currentText()
-            == 'consecutive days'
-        ):
+        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
             self.dialog.jail_report_days_notes_box.setDisabled(True)
             self.dialog.jail_report_days_notes_box.setHidden(True)
         else:
@@ -406,18 +391,17 @@ class BaseDialogSlotFunctions(object):
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
     def show_hide_checkbox_connected_fields(self):
-        '''Gets list of boxes tied to condition checkbox and sets to show or hidden based on
-        whether the box is checked or not.'''
+        """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
         checkbox = self.dialog.sender()
         boxes = self.dialog.condition_checkbox_dict.get(checkbox.objectName())
-        for item in boxes:
+        for field in boxes:
             if checkbox.isChecked():
-                getattr(self.dialog, item).setEnabled(True)
-                getattr(self.dialog, item).setHidden(False)
-                getattr(self.dialog, item).setFocus(True)
+                getattr(self.dialog, field).setEnabled(True)
+                getattr(self.dialog, field).setHidden(False)
+                getattr(self.dialog, field).setFocus(True)
             else:
-                getattr(self.dialog, item).setEnabled(False)
-                getattr(self.dialog, item).setHidden(True)
+                getattr(self.dialog, field).setEnabled(False)
+                getattr(self.dialog, field).setHidden(True)
 
     def set_freeform_entry(self):
         if self.dialog.freeform_entry_checkBox.isChecked():
@@ -452,10 +436,16 @@ class BaseDialogSignalConnector_Refactor(object):
 
     def connect_main_dialog_common_signals(self):
         self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.clear_fields_case_Button.released.connect(self.dialog.functions.clear_case_information_fields)
-        self.dialog.create_entry_Button.released.connect(self.dialog.functions.create_entry_process)
+        self.dialog.clear_fields_case_Button.released.connect(
+            self.dialog.functions.clear_case_information_fields,
+        )
+        self.dialog.create_entry_Button.released.connect(
+            self.dialog.functions.create_entry_process,
+        )
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.defense_counsel_waived_checkBox.toggled.connect(self.dialog.functions.set_defense_counsel)
+        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
+            self.dialog.functions.set_defense_counsel,
+        )
 
     def connect_fra_signals(self):
         self.dialog.fra_in_file_box.currentTextChanged.connect(
@@ -483,7 +473,11 @@ class BaseDialogSignalConnector_Refactor(object):
         )
 
     def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(self.dialog.charges_gridLayout.set_all_pleas)
+        self.dialog.not_guilty_all_Button.pressed.connect(
+            self.dialog.charges_gridLayout.set_all_pleas,
+        )
 
     def connect_add_charge_button(self):
-        self.dialog.add_charge_Button.released.connect(self.dialog.functions.start_add_charge_dialog)
+        self.dialog.add_charge_Button.released.connect(
+            self.dialog.functions.start_add_charge_dialog,
+        )
