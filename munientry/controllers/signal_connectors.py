@@ -89,32 +89,6 @@ class LeapSentencingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.credit_for_jail_checkBox.toggled.connect(dialog.functions.set_fines_credit_for_jail_field)
 
 
-class SentencingOnlyDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        self.connect_plea_all_button_signals(dialog)
-        self.connect_fra_signals(dialog)
-        self.connect_court_cost_signals(dialog)
-        self.connect_main_dialog_additional_condition_signals(dialog)
-        dialog.jail_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.add_companion_cases_checkBox.toggled.connect(
-            dialog.functions.show_companion_case_fields,
-        )
-        dialog.community_control_checkBox.toggled.connect(
-            dialog.functions.conditions_checkbox_toggle,
-        )
-        dialog.impoundment_checkBox.toggled.connect(
-            dialog.functions.conditions_checkbox_toggle,
-        )
-        dialog.victim_notification_checkBox.toggled.connect(
-            dialog.functions.conditions_checkbox_toggle,
-        )
-        dialog.add_jail_report_Button.pressed.connect(
-            dialog.functions.start_add_jail_report_dialog,
-        )
-
-
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
