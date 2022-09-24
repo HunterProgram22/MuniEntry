@@ -42,12 +42,6 @@ class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
-class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.set_appearance_reason()
-
-
 class FreeformDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

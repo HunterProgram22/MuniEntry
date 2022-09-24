@@ -229,42 +229,6 @@ class FreeformDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog = dialog
 
 
-class FailureToAppearDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-    def hide_warrant_radius(self):
-        if self.dialog.arrest_warrant_checkBox.isChecked():
-            self.dialog.arrest_warrant_radius_label.setHidden(False)
-            self.dialog.arrest_warrant_radius_box.setHidden(False)
-        else:
-            self.dialog.arrest_warrant_radius_label.setHidden(True)
-            self.dialog.arrest_warrant_radius_box.setHidden(True)
-
-    def hide_bond_boxes(self):
-        if self.dialog.set_bond_checkBox.isChecked():
-            self.dialog.bond_type_box.setHidden(False)
-            self.dialog.bond_amount_box.setHidden(False)
-            self.dialog.bond_type_label.setHidden(False)
-            self.dialog.bond_amount_label.setHidden(False)
-        else:
-            self.dialog.bond_type_box.setHidden(True)
-            self.dialog.bond_amount_box.setHidden(True)
-            self.dialog.bond_type_label.setHidden(True)
-            self.dialog.bond_amount_label.setHidden(True)
-
-    def set_bond_amount_box(self):
-        if self.dialog.bond_type_box.currentText() == "No Bond":
-            self.dialog.bond_amount_box.setHidden(True)
-            self.dialog.bond_amount_label.setHidden(True)
-        elif self.dialog.bond_type_box.currentText() == "Recognizance (OR) Bond":
-            self.dialog.bond_amount_box.setHidden(True)
-            self.dialog.bond_amount_label.setHidden(True)
-        else:
-            self.dialog.bond_amount_box.setHidden(False)
-            self.dialog.bond_amount_label.setHidden(False)
-
-
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

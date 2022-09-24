@@ -1,5 +1,6 @@
 """Module for building the view of the MainWindow."""
 import munientry.builders.crimtraffic.bond_hearing_dialog
+import munientry.builders.crimtraffic.failure_to_appear_dialog
 import munientry.builders.crimtraffic.no_plea_bond_dialog
 import munientry.builders.crimtraffic.probation_violation_bond_dialog
 from PyQt5 import QtGui
@@ -73,7 +74,7 @@ class MainWindowViewModifier(object):
             self.main_window.JailCCPleaButton: munientry.builders.crimtraffic.jail_cc_plea_dialog.JailCCPleaDialog,
             self.main_window.DiversionButton: munientry.builders.crimtraffic.diversion_dialog.DiversionPleaDialog,
             self.main_window.NotGuiltyBondButton: munientry.builders.crimtraffic.not_guilty_bond_dialog.NotGuiltyBondDialog,
-            self.main_window.FailureToAppearButton: general_entry.FailureToAppearDialog,
+            self.main_window.FailureToAppearButton: munientry.builders.crimtraffic.failure_to_appear_dialog.FailureToAppearDialog,
             self.main_window.ProbationViolationBondButton: munientry.builders.crimtraffic.probation_violation_bond_dialog.ProbationViolationBondDialog,
             self.main_window.BondHearingButton: munientry.builders.crimtraffic.bond_hearing_dialog.BondHearingDialog,
             self.main_window.PleaOnlyButton: munientry.builders.crimtraffic.plea_only_future_sentence_dialog.PleaOnlyDialog,
