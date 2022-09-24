@@ -49,12 +49,6 @@ class BondHearingDialogViewModifier(BaseDialogViewModifier):
         self.dialog.specialized_docket_type_box.setHidden(True)
 
 
-class ProbationViolationBondDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.set_appearance_reason()
-
-
 class FailureToAppearDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

@@ -149,14 +149,6 @@ class BondHearingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
 
 
-class ProbationViolationBondDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.hide_bond_conditions)
-        dialog.bond_type_box.currentTextChanged.connect(dialog.functions.set_if_no_bond)
-
-
 class FreeformDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

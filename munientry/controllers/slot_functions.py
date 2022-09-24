@@ -224,21 +224,6 @@ class TrialSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-    def hide_bond_conditions(self):
-        if self.dialog.bond_type_box.currentText() == "No Bond":
-            self.dialog.bond_conditions_frame.setHidden(True)
-        else:
-            self.dialog.bond_conditions_frame.setHidden(False)
-
-    def set_if_no_bond(self, dialog):
-        if self.dialog.bond_type_box.currentText() == "No Bond":
-            self.dialog.bond_amount_box.setCurrentText("None")
-
-
 class FreeformDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog
