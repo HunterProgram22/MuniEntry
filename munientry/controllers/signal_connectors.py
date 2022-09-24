@@ -133,21 +133,6 @@ class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
 
 
-class NoPleaBondDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-        dialog.add_special_conditions_Button.pressed.connect(dialog.functions.start_add_special_bond_conditions_dialog)
-        dialog.admin_license_suspension_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.domestic_violence_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.no_contact_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.custodial_supervision_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.other_conditions_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.vehicle_seizure_checkBox.toggled.connect(dialog.functions.conditions_checkbox_toggle)
-        dialog.monitoring_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-
-
 class BondHearingDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

@@ -4,101 +4,38 @@ from loguru import logger
 from munientry.builders.base_dialogs import CriminalBaseDialog
 from munientry.checkers.bond_checkers import (
     BondHearingDialogInfoChecker,
-    NoPleaBondDialogInfoChecker,
     ProbationViolationBondDialogInfoChecker,
 )
 from munientry.controllers.signal_connectors import (
     BondHearingDialogSignalConnector,
-    NoPleaBondDialogSignalConnector,
     ProbationViolationBondDialogSignalConnector,
 )
 from munientry.controllers.slot_functions import (
     BondHearingDialogSlotFunctions,
-    NoPleaBondDialogSlotFunctions,
     ProbationViolationBondDialogSlotFunctions,
 )
 from munientry.controllers.view_modifiers import (
     BondHearingDialogViewModifier,
-    NoPleaBondDialogViewModifier,
     ProbationViolationBondDialogViewModifier,
 )
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     BondHearingEntryCaseInformation,
     CommunityControlViolationEntryCaseInformation,
-    NoPleaBondEntryCaseInformation,
 )
 from munientry.models.conditions_models import (
-    BondConditions,
     BondModificationConditions,
     CommunityControlViolationBondConditions,
 )
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.no_grid_case_updaters import (
     BondHearingDialogUpdater,
-    NoPleaBondDialogUpdater,
     ProbationViolationBondDialogUpdater,
 )
 from munientry.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
-from munientry.views.no_plea_bond_dialog_ui import Ui_NoPleaBondDialog
 from munientry.views.probation_violation_bond_dialog_ui import (
     Ui_ProbationViolationBondDialog,
 )
-
-
-class NoPleaBondDialog(CriminalBaseDialog, Ui_NoPleaBondDialog):
-    """Dialog builder class for 'Appear on Warrant (No Plea) / Bond' Entry."""
-
-    condition_checkbox_dict = {
-        'monitoring_checkBox': ['monitoring_type_box'],
-        'specialized_docket_checkBox': ['specialized_docket_type_box'],
-    }
-
-    def __init__(
-        self,
-        judicial_officer: object,
-        cms_case: str = None,
-        case_table: str = None,
-        parent: object = None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.additional_conditions_list = [
-            (
-                'admin_license_suspension_checkBox',
-                self.entry_case_information.admin_license_suspension,
-            ),
-            (
-                'domestic_violence_checkBox',
-                self.entry_case_information.domestic_violence_conditions,
-            ),
-            ('no_contact_checkBox', self.entry_case_information.no_contact),
-            ('custodial_supervision_checkBox', self.entry_case_information.custodial_supervision),
-            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
-            ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
-        ]
-        self.dialog_name = 'No Plea Bond Dialog'
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.entry_case_information.bond_conditions = BondConditions()
-
-    def _modify_view(self) -> NoPleaBondDialogViewModifier:
-        return NoPleaBondDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = NoPleaBondDialogSlotFunctions(self)
-        NoPleaBondDialogSignalConnector(self)
-
-    def update_entry_case_information(self) -> NoPleaBondDialogUpdater:
-        return NoPleaBondDialogUpdater(self)
-
-    def load_entry_case_information_model(self) -> None:
-        self.entry_case_information = NoPleaBondEntryCaseInformation()
-        self.entry_case_information.judicial_officer = self.judicial_officer
-
-    def load_cms_data_to_view(self) -> CmsNoChargeLoader:
-        return CmsNoChargeLoader(self)
-
-    def perform_info_checks(self) -> None:
-        self.dialog_checks = NoPleaBondDialogInfoChecker(self)
 
 
 class ProbationViolationBondDialog(CriminalBaseDialog, Ui_ProbationViolationBondDialog):
