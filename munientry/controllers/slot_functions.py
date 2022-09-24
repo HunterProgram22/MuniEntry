@@ -224,11 +224,6 @@ class TrialSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class FreeformDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

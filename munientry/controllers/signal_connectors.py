@@ -133,12 +133,6 @@ class TrialSentencingDialogSignalConnector(BaseDialogSignalConnector):
         dialog.add_jail_report_Button.pressed.connect(dialog.functions.start_add_jail_report_dialog)
 
 
-class FreeformDialogSignalConnector(BaseDialogSignalConnector):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals(dialog)
-
-
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)

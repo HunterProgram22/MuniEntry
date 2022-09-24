@@ -1,11 +1,11 @@
 """Module for building the view of the MainWindow."""
 import munientry.builders.crimtraffic.bond_hearing_dialog
 import munientry.builders.crimtraffic.failure_to_appear_dialog
+import munientry.builders.crimtraffic.freeform_dialog
 import munientry.builders.crimtraffic.no_plea_bond_dialog
 import munientry.builders.crimtraffic.probation_violation_bond_dialog
 from PyQt5 import QtGui
 
-from munientry.builders import general_entry_dialogs as general_entry
 from munientry.builders import sentencing_only_dialogs as sentencing_only
 from munientry.builders.final_jury_hearing_notice_dialog import (
     FinalJuryNoticeHearingDialog,
@@ -84,7 +84,7 @@ class MainWindowViewModifier(object):
             self.main_window.LeapSentencingButton: sentencing_only.LeapSentencingDialog,
             self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
-            self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
+            self.main_window.FreeformEntryButton: munientry.builders.crimtraffic.freeform_dialog.FreeformDialog,
         }
 
     def connect_scheduling_dialog_buttons(self) -> dict:
