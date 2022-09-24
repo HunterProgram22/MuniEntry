@@ -4,7 +4,7 @@ checkboxes, etc.) to the dialog."""
 from loguru import logger
 
 
-class BaseDialogSignalConnector:
+class BaseDialogSignalConnectorOld:
     def __init__(self, dialog):
         dialog.cancel_Button.released.connect(dialog.functions.close_window)
 
@@ -60,7 +60,7 @@ class BaseDialogSignalConnector:
         )
 
 
-class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
+class AddChargeDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
@@ -69,7 +69,7 @@ class AddChargeDialogSignalConnector(BaseDialogSignalConnector):
         dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
-class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
+class AmendChargeDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_statute_and_offense_boxes(dialog)
@@ -78,21 +78,21 @@ class AmendChargeDialogSignalConnector(BaseDialogSignalConnector):
         dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
 
 
-class AddConditionsDialogSignalConnector(BaseDialogSignalConnector):
+class AddConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)
         self.connect_community_service_days_update(dialog)
 
 
-class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnector):
+class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)
         self.connect_jail_frame_signals(dialog)
 
 
-class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
+class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)
@@ -111,7 +111,7 @@ class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnector):
         dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
 
 
-class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnector):
+class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals(dialog)

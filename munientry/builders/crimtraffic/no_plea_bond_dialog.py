@@ -38,7 +38,7 @@ class NoPleaBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             getattr(self.dialog, condition_field).setHidden(True)
 
 
-class NoPleaBondDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class NoPleaBondDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal connector for No Plea Bond Dialog."""
 
     def __init__(self, dialog):

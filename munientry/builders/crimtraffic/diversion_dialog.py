@@ -81,7 +81,7 @@ class DiversionDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.pay_restitution_amount_label.setHidden(True)
 
 
-class DiversionDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class DiversionDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Diversion Dialog."""
 
     def __init__(self, dialog):

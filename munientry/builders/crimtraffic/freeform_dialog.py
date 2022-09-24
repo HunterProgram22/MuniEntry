@@ -17,7 +17,7 @@ class FreeformDialogSlotFunctions(crim.BaseDialogSlotFunctions):
     """Additional functions for Freeform Entry Dialog."""
 
 
-class FreeformDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class FreeformDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Freeform Entry Dialog."""
 
     def __init__(self, dialog):

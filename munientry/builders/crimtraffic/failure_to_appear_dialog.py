@@ -55,7 +55,7 @@ class FailureToAppearDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.bond_amount_label.setHidden(False)
 
 
-class FailureToAppearDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class FailureToAppearDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Failure To Appear Dialog."""
 
     def __init__(self, dialog):

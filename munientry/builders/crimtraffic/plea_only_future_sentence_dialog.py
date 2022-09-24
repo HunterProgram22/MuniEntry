@@ -23,7 +23,7 @@ class PleaOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
     """Additional functions for Plea Only - Future Sentence Dialog."""
 
 
-class PleaOnlyDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class PleaOnlyDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Plea Only - Future Sentence Dialog."""
 
     def __init__(self, dialog):

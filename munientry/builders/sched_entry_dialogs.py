@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
+from munientry.controllers.signal_connectors import BaseDialogSignalConnectorOld
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
@@ -82,7 +82,7 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
+class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnectorOld):
     """Class that connects all signals for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):

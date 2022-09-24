@@ -6,7 +6,7 @@ from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
+from munientry.controllers.signal_connectors import BaseDialogSignalConnectorOld
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
@@ -64,7 +64,7 @@ class GeneralNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
         self.dialog.hearing_dateEdit.setDate(TODAY)
 
 
-class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnectorOld):
     """Class that connects signals to slots for General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):

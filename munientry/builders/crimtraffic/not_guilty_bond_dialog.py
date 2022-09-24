@@ -40,7 +40,7 @@ class NotGuiltyBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
-class NotGuiltyBondDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class NotGuiltyBondDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):

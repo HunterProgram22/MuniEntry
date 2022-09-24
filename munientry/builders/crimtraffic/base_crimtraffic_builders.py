@@ -426,8 +426,8 @@ class BaseDialogSlotFunctions(object):
             self.dialog.special_bond_conditions_frame.setHidden(True)
 
 
-class BaseDialogSignalConnector_Refactor(object):
-    """Refactor class for temp use only."""
+class BaseDialogSignalConnector(object):
+    """Base Signal Connector for CrimTraffic Entries."""
 
     def __init__(self, dialog):
         self.dialog = dialog

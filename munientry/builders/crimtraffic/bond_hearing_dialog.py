@@ -38,7 +38,7 @@ class BondHearingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
-class BondHearingDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class BondHearingDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal connector for Bond Hearing Dialog."""
 
     def __init__(self, dialog):

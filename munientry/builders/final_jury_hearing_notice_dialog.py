@@ -5,7 +5,7 @@ from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
+from munientry.controllers.signal_connectors import BaseDialogSignalConnectorOld
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
@@ -80,7 +80,7 @@ class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 
 
-class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
+class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnectorOld):
     """Class that connects all signals for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog: 'QDialog') -> None:

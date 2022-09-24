@@ -40,7 +40,7 @@ class FineOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class FineOnlyDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class FineOnlyDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Fine Only Plea Dialog."""
 
     def __init__(self, dialog):

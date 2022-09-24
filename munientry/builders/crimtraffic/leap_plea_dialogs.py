@@ -46,7 +46,7 @@ class LeapAdmissionPleaDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         return leap_sentence_date_dict.get(days_to_add_string)
 
 
-class LeapAdmissionPleaDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class LeapAdmissionPleaDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Leap Plea Dialog."""
 
     def __init__(self, dialog):
@@ -66,7 +66,7 @@ class LeapAdmissionPleaDialogSignalConnector(crim.BaseDialogSignalConnector_Refa
         )
 
 
-class LeapAdmissionPleaValidDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
+class LeapAdmissionPleaValidDialogSignalConnector(crim.BaseDialogSignalConnector):
     """Signal Connector for Leap Plea - Already Valid Dialog."""
 
     def __init__(self, dialog):

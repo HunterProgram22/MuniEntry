@@ -5,7 +5,7 @@ from PyQt5.QtCore import QDate
 from munientry.builders.base_dialogs import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
+from munientry.controllers.signal_connectors import BaseDialogSignalConnectorOld
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
@@ -60,7 +60,7 @@ class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
+class DrivingPrivilegesSignalConnector(BaseDialogSignalConnectorOld):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
