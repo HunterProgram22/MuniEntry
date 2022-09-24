@@ -1,8 +1,11 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
 
+from munientry.builders.conditions_dialogs import (
+    AddCommunityControlDialog,
+    AddJailOnlyDialog,
+)
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.builders.conditions_dialogs import AddJailOnlyDialog, AddCommunityControlDialog
 from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.data.cms_case_loaders import CmsFraLoader
@@ -11,7 +14,6 @@ from munientry.models.case_information.sentencing_entries import (
 )
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
-
 
 
 class JailCCDialogViewModifier(crim.BaseDialogViewModifier):
@@ -57,6 +59,9 @@ class JailCCDialogSignalConnector(crim.BaseDialogSignalConnector_Refactor):
         self.connect_fra_signals()
         self.connect_court_cost_signals()
         self.connect_main_dialog_additional_condition_signals()
+        self.connect_dialog_specific_signals()
+
+    def connect_dialog_specific_signals(self):
         self.dialog.jail_checkBox.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
         self.dialog.add_companion_cases_checkBox.toggled.connect(
             self.dialog.functions.show_companion_case_fields,
