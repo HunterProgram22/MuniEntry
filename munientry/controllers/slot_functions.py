@@ -187,43 +187,6 @@ class SentencingOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class TrialSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
-    """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
-    TODO: TEMP MOVE TO BASEDIALOGSLOTFUNCTIONS DURING REFACTOR
-
-    The only difference between dialogs is the template used and the charge grid does not
-    have a plea field.
-    """
-    def __init__(self, dialog):
-        super().__init__(dialog)
-
-    def set_all_findings_process(self):
-        self.dialog.charges_gridLayout.set_all_trial_findings()
-
-    # Added temporarily to get tests to pass inherit from JailSlot?
-    def show_companion_case_fields(self):
-        if self.dialog.add_companion_cases_checkBox.isChecked():
-            self.dialog.companion_cases_box.setHidden(False)
-            self.dialog.companion_cases_sentence_box.setHidden(False)
-            self.dialog.companion_cases_sentence_label.setHidden(False)
-        else:
-            self.dialog.companion_cases_box.setHidden(True)
-            self.dialog.companion_cases_sentence_box.setHidden(True)
-            self.dialog.companion_cases_sentence_label.setHidden(True)
-
-    def start_add_jail_report_dialog(self):
-        from munientry.builders.conditions_dialogs import AddJailOnlyDialog
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddJailOnlyDialog(self.dialog)
-        self.dialog.popup_dialog.exec()
-
-    def start_add_conditions_dialog(self):
-        from munientry.builders.conditions_dialogs import AddCommunityControlDialog
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
-        self.dialog.popup_dialog.exec()
-
-
 class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

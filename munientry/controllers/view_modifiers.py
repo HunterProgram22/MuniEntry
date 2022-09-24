@@ -36,12 +36,6 @@ class SentencingOnlyDialogViewModifier(BaseDialogViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
-class TrialSentencingDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
-
-
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
