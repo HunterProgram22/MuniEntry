@@ -154,27 +154,6 @@ class LeapSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class FineOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-
-    def set_fines_credit_for_jail_field(self):
-        if self.dialog.credit_for_jail_checkBox.isChecked():
-            self.dialog.jail_time_credit_box.setEnabled(True)
-            self.dialog.jail_time_credit_box.setHidden(False)
-            self.dialog.jail_time_credit_box.setFocus()
-        else:
-            self.dialog.jail_time_credit_box.setEnabled(False)
-            self.dialog.jail_time_credit_box.setHidden(True)
-
-    def start_add_conditions_dialog(self):
-        from munientry.builders.conditions_dialogs import AddConditionsDialog
-
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddConditionsDialog(self.dialog)
-        self.dialog.popup_dialog.exec()
-
-
 class SentencingOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
     """Inherits from JailCCDialogSlotFunctions because all the functions are the same.
     TODO: TEMP MOVE TO BASEDIALOGSLOTFUNCTIONS DURING REFACTOR
@@ -243,7 +222,6 @@ class TrialSentencingDialogSlotFunctions(BaseDialogSlotFunctions):
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddCommunityControlDialog(self.dialog)
         self.dialog.popup_dialog.exec()
-
 
 
 class ProbationViolationBondDialogSlotFunctions(BaseDialogSlotFunctions):

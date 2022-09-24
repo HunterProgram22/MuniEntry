@@ -3,7 +3,6 @@ from PyQt5 import QtGui
 
 from munientry.builders import bond_dialogs as bond
 from munientry.builders import general_entry_dialogs as general_entry
-from munientry.builders import plea_sentence_dialogs as plea_sentence
 from munientry.builders import sentencing_only_dialogs as sentencing_only
 from munientry.builders.final_jury_hearing_notice_dialog import (
     FinalJuryNoticeHearingDialog,
@@ -18,6 +17,7 @@ from munientry.builders.trial_to_court_hearing_notice_dialog import (
 )
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
+import munientry.builders.crimtraffic.fine_only_plea_dialog
 import munientry.builders.crimtraffic.diversion_dialog
 import munientry.builders.crimtraffic.jail_cc_plea_dialog
 import munientry.builders.crimtraffic.leap_plea_dialogs
@@ -67,7 +67,7 @@ class MainWindowViewModifier(object):
 
     def connect_crim_traffic_dialog_buttons(self) -> dict:
         return {
-            self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
+            self.main_window.FineOnlyPleaButton: munientry.builders.crimtraffic.fine_only_plea_dialog.FineOnlyPleaDialog,
             self.main_window.JailCCPleaButton: munientry.builders.crimtraffic.jail_cc_plea_dialog.JailCCPleaDialog,
             self.main_window.DiversionButton: munientry.builders.crimtraffic.diversion_dialog.DiversionPleaDialog,
             self.main_window.NotGuiltyBondButton: munientry.builders.crimtraffic.not_guilty_bond_dialog.NotGuiltyBondDialog,
