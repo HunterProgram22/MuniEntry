@@ -1,9 +1,9 @@
 """Module for building the view of the MainWindow."""
+import munientry.builders.crimtraffic.bond_hearing_dialog
 import munientry.builders.crimtraffic.no_plea_bond_dialog
 import munientry.builders.crimtraffic.probation_violation_bond_dialog
 from PyQt5 import QtGui
 
-from munientry.builders import bond_dialogs as bond
 from munientry.builders import general_entry_dialogs as general_entry
 from munientry.builders import sentencing_only_dialogs as sentencing_only
 from munientry.builders.final_jury_hearing_notice_dialog import (
@@ -75,7 +75,7 @@ class MainWindowViewModifier(object):
             self.main_window.NotGuiltyBondButton: munientry.builders.crimtraffic.not_guilty_bond_dialog.NotGuiltyBondDialog,
             self.main_window.FailureToAppearButton: general_entry.FailureToAppearDialog,
             self.main_window.ProbationViolationBondButton: munientry.builders.crimtraffic.probation_violation_bond_dialog.ProbationViolationBondDialog,
-            self.main_window.BondHearingButton: bond.BondHearingDialog,
+            self.main_window.BondHearingButton: munientry.builders.crimtraffic.bond_hearing_dialog.BondHearingDialog,
             self.main_window.PleaOnlyButton: munientry.builders.crimtraffic.plea_only_future_sentence_dialog.PleaOnlyDialog,
             self.main_window.NoPleaBondButton: munientry.builders.crimtraffic.no_plea_bond_dialog.NoPleaBondDialog,
             self.main_window.LeapAdmissionButton: munientry.builders.crimtraffic.leap_plea_dialogs.LeapAdmissionPleaDialog,
