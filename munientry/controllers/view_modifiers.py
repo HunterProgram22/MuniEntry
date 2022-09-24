@@ -7,8 +7,6 @@ from PyQt5 import QtCore
 from PyQt5.QtWidgets import QLabel
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier
 
-from munientry.controllers import charges_grids as cg
-
 TODAY = QtCore.QDate.currentDate()
 
 
@@ -22,12 +20,6 @@ class AmendChargeDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_case_information_banner()
-
-
-class LeapSentencingDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
