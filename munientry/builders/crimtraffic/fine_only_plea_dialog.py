@@ -75,7 +75,7 @@ class FineOnlyPleaDialog(crim.CriminalDialogBuilder, Ui_FineOnlyPleaDialog):
             ('community_service_checkBox', self.entry_case_information.community_service),
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
         ]
-        self.functions.set_fines_credit_for_jail_field()
+        self.functions.set_fines_credit_for_jail_field()  # Hides credit_for_jail field on load
 
 
 if __name__ == '__main__':

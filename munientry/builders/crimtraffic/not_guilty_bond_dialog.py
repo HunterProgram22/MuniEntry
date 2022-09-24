@@ -1,8 +1,8 @@
 """Builder module for the Not Guilty Bond Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.conditions_dialogs import AddSpecialBondConditionsDialog
+from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.data.cms_case_loaders import CmsChargeLoader
@@ -105,7 +105,6 @@ class NotGuiltyBondDialog(crim.CriminalDialogBuilder, Ui_NotGuiltyBondDialog):
         'monitoring_checkBox': ['monitoring_type_box'],
         'specialized_docket_checkBox': ['specialized_docket_type_box'],
     }
-
 
     def additional_setup(self):
         """The self.additional_conditions list is called in the base_crimtraffic_builders module.
