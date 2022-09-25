@@ -12,7 +12,6 @@ from PyQt5.QtWidgets import QLabel
 
 from munientry.builders.base_dialogs import BaseDialogBuilder
 from munientry.controllers.helper_functions import set_future_date
-from munientry.data.sql_lite_queries import select_off_stat_deg_from_charges_query
 from munientry.settings import (
     ICON_PATH,
     SAVE_PATH,
@@ -140,14 +139,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog = dialog
 
     def start_add_charge_dialog(self):
-        from munientry.builders.charges_dialogs import AddChargeDialog
+        from munientry.builders.crimtraffic.charges_dialogs import AddChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def start_amend_offense_dialog(self):
-        from munientry.builders.charges_dialogs import AmendChargeDialog
+        from munientry.builders.crimtraffic.charges_dialogs import AmendChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
@@ -157,10 +156,6 @@ class BaseDialogSlotFunctions(object):
         """Closes window by calling closeEvent in BaseDialog.
 
         Event is logged in BaseDialog closeEvent.
-
-        Function connected to a button to close the window. Can be connected
-        to any button press/click/release to close a window. This can also be called
-        at the end of the close_event process to close the dialog.
         """
         self.dialog.close()
 
@@ -309,46 +304,6 @@ class BaseDialogSlotFunctions(object):
             QDate.currentDate().addDays(days_to_complete),
         )
 
-    def set_offense(self, key) -> int:
-        """Sets the offense and degree for a charge based on the statute.
-
-        Returns 0 if the freeform box is checked so database is not queried.
-        """
-        if self.dialog.freeform_entry_checkBox.isChecked():
-            return 0
-        field = 'statute'
-        offense, statute, degree = self.query_charges_database(key, field)
-        if statute == key:
-            self.dialog.offense_choice_box.setCurrentText(offense)
-            self.dialog.degree_choice_box.setCurrentText(degree)
-        return 1
-
-    def set_statute(self, key) -> int:
-        """Sets the statute and degree for a charge based on the offense.
-
-        Returns 0 if the freeform box is checked so database is not queried.
-        """
-        if self.dialog.freeform_entry_checkBox.isChecked():
-            return 0
-        field = 'offense'
-        offense, statute, degree = self.query_charges_database(key, field)
-        if offense == key:
-            self.dialog.statute_choice_box.setCurrentText(statute)
-            self.dialog.degree_choice_box.setCurrentText(degree)
-        return 1
-
-    def query_charges_database(self, key: str, field: str) -> tuple:
-        query_string = select_off_stat_deg_from_charges_query(key, field)
-        query = QSqlQuery(self.dialog.db_connection)
-        query.prepare(query_string)
-        query.exec()
-        query.next()
-        offense = query.value('offense')
-        statute = query.value('statute')
-        degree = query.value('degree')
-        query.finish()
-        return offense, statute, degree
-
     def conditions_checkbox_toggle(self):
         """TODO: This needs to be refactored.
 
@@ -401,20 +356,6 @@ class BaseDialogSlotFunctions(object):
                 getattr(self.dialog, field).setEnabled(False)
                 getattr(self.dialog, field).setHidden(True)
 
-    def set_freeform_entry(self):
-        if self.dialog.freeform_entry_checkBox.isChecked():
-            self.dialog.statute_choice_box.setEditable(True)
-            self.dialog.offense_choice_box.setEditable(True)
-            self.dialog.statute_choice_box.clearEditText()
-            self.dialog.offense_choice_box.clearEditText()
-            self.dialog.degree_choice_box.setCurrentText('')
-        else:
-            self.dialog.statute_choice_box.setEditable(False)
-            self.dialog.offense_choice_box.setEditable(False)
-            self.dialog.statute_choice_box.setCurrentText('')
-            self.dialog.offense_choice_box.setCurrentText('')
-            self.dialog.degree_choice_box.setCurrentText('')
-
     def show_bond_boxes(self, bond_mod_string):
         if bond_mod_string == 'request to modify bond is granted':
             self.dialog.bond_frame.setHidden(False)
@@ -431,9 +372,9 @@ class BaseDialogSignalConnector(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
+        self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
 
     def connect_main_dialog_common_signals(self):
-        self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.clear_fields_case_Button.released.connect(
             self.dialog.functions.clear_case_information_fields,
         )
@@ -501,4 +442,3 @@ class BaseDialogSignalConnector(object):
         self.dialog.add_conditions_Button.pressed.connect(
             self.dialog.functions.start_add_conditions_dialog,
         )
-

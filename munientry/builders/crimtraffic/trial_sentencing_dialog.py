@@ -1,7 +1,7 @@
 """Builder module for Trial Sentencing Dialog."""
 from loguru import logger
 
-from munientry.builders.conditions_dialogs import (
+from munientry.builders.crimtraffic.conditions_dialogs import (
     AddCommunityControlDialog,
     AddJailOnlyDialog,
 )

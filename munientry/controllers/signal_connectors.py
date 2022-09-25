@@ -51,32 +51,6 @@ class BaseDialogSignalConnectorOld:
             dialog.functions.update_community_service_due_date
         )
 
-    def connect_statute_and_offense_boxes(self, dialog):
-        dialog.statute_choice_box.currentTextChanged.connect(
-            dialog.functions.set_offense
-        )
-        dialog.offense_choice_box.currentTextChanged.connect(
-            dialog.functions.set_statute
-        )
-
-
-class AddChargeDialogSignalConnector(BaseDialogSignalConnectorOld):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_statute_and_offense_boxes(dialog)
-        dialog.clear_fields_Button.released.connect(dialog.functions.clear_add_charge_fields)
-        dialog.add_charge_Button.released.connect(dialog.functions.add_charge_process)
-        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
-
-
-class AmendChargeDialogSignalConnector(BaseDialogSignalConnectorOld):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_statute_and_offense_boxes(dialog)
-        dialog.clear_fields_Button.released.connect(dialog.functions.clear_amend_charge_fields)
-        dialog.amend_charge_Button.released.connect(dialog.functions.amend_offense_process)
-        dialog.freeform_entry_checkBox.toggled.connect(dialog.functions.set_freeform_entry)
-
 
 class AddConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):

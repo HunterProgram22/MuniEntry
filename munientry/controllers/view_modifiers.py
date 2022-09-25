@@ -10,18 +10,6 @@ from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogV
 TODAY = QtCore.QDate.currentDate()
 
 
-class AddChargeDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.set_case_information_banner()
-
-
-class AmendChargeDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.set_case_information_banner()
-
-
 class AddConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

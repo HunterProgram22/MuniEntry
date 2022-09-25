@@ -1,7 +1,7 @@
 """Builder module for the No Plea Bond Dialog."""
 from loguru import logger
 
-from munientry.builders.conditions_dialogs import AddSpecialBondConditionsDialog
+from munientry.builders.crimtraffic.conditions_dialogs import AddSpecialBondConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import NoPleaBondDialogInfoChecker
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
