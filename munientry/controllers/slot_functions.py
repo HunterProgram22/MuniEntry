@@ -4,38 +4,6 @@ from loguru import logger
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogSlotFunctions
 
 
-class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.main_dialog = dialog.main_dialog
-
-    def add_conditions(self):
-        if self.main_dialog.community_service_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.community_service
-            )
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.other_conditions
-            )
-        if self.main_dialog.community_control_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.community_control
-            )
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.license_suspension
-            )
-        if self.main_dialog.impoundment_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.impoundment
-            )
-        if self.main_dialog.victim_notification_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.victim_notification
-            )
-
-
 class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

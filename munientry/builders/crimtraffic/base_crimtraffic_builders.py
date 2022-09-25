@@ -165,17 +165,15 @@ class BaseDialogViewModifier(object):
                 self.dialog.charges_gridLayout.addWidget(QLabel(charge.finding), 2, column)
                 column += 1
 
-    @classmethod
-    def hide_boxes(cls, dialog):
-        for condition in cls.condition_checkbox_list:
+    def hide_boxes(self):
+        for condition in self.condition_checkbox_list:
             (condition_checkbox, condition_field) = condition
-            if hasattr(dialog, condition_checkbox):
-                if getattr(dialog, condition_checkbox).isChecked():
-                    getattr(dialog, condition_field).setEnabled(True)
-                    getattr(dialog, condition_field).setHidden(False)
-                else:
-                    getattr(dialog, condition_field).setEnabled(False)
-                    getattr(dialog, condition_field).setHidden(True)
+            if getattr(self.dialog, condition_checkbox).isChecked():
+                getattr(self.dialog, condition_field).setEnabled(True)
+                getattr(self.dialog, condition_field).setHidden(False)
+            else:
+                getattr(self.dialog, condition_field).setEnabled(False)
+                getattr(self.dialog, condition_field).setHidden(True)
 
     def load_existing_data_to_dialog(self):
         for condition in self.condition_classes:

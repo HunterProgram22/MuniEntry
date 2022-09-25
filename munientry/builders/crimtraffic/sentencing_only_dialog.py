@@ -2,9 +2,9 @@
 from loguru import logger
 
 from munientry.builders.crimtraffic.conditions_dialogs import (
-    AddCommunityControlDialog,
     AddJailOnlyDialog,
 )
+from munientry.builders.crimtraffic.add_community_control_dialog import AddCommunityControlDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.jail_charge_grid_checkers import SentencingOnlyDialogInfoChecker
 from munientry.controllers import charges_grids as cg

@@ -59,25 +59,6 @@ class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnectorOld):
         self.connect_jail_frame_signals(dialog)
 
 
-class AddCommunityControlDialogSignalConnector(BaseDialogSignalConnectorOld):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_condition_dialog_main_signals(dialog)
-        self.connect_community_service_days_update(dialog)
-        self.connect_community_control_dialog_specific_signals(dialog)
-
-    def connect_community_control_dialog_specific_signals(self, dialog):
-        dialog.gps_exclusion_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.community_control_not_within_500_feet_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.community_control_no_contact_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.house_arrest_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.community_control_community_service_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.other_community_control_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.alcohol_monitoring_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.pay_restitution_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-        dialog.specialized_docket_checkBox.toggled.connect(dialog.functions.show_hide_checkbox_connected_fields)
-
-
 class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)
