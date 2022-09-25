@@ -4,26 +4,6 @@ from loguru import logger
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogSlotFunctions
 
 
-class AddConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.main_dialog = dialog.main_dialog
-
-    def add_conditions(self):
-        if self.main_dialog.community_service_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.community_service
-            )
-        if self.main_dialog.license_suspension_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.license_suspension
-            )
-        if self.main_dialog.other_conditions_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.other_conditions
-            )
-
-
 class AddCommunityControlDialogSlotFunctions(BaseDialogSlotFunctions):
     def __init__(self, dialog):
         self.dialog = dialog

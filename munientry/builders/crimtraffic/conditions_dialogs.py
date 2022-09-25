@@ -5,24 +5,20 @@ from PyQt5.QtWidgets import QDialog
 from munientry.builders.base_dialogs import BaseDialog
 from munientry.controllers.signal_connectors import (
     AddCommunityControlDialogSignalConnector,
-    AddConditionsDialogSignalConnector,
     AddJailOnlyDialogSignalConnector,
     AddSpecialBondConditionsDialogSignalConnector,
 )
 from munientry.controllers.slot_functions import (
     AddCommunityControlDialogSlotFunctions,
-    AddConditionsDialogSlotFunctions,
     AddJailOnlyDialogSlotFunctions,
     AddSpecialBondConditionsDialogSlotFunctions,
 )
 from munientry.controllers.view_modifiers import (
     AddCommunityControlDialogViewModifier,
-    AddConditionsDialogViewModifier,
     AddJailOnlyDialogViewModifier,
     AddSpecialBondConditionsDialogViewModifier,
 )
 from munientry.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
-from munientry.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 from munientry.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 from munientry.views.add_special_bond_conditions_dialog_ui import (
     Ui_AddSpecialBondConditionsDialog,
@@ -43,34 +39,6 @@ def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) ->
             frame = getattr(conditions_dialog, frame)
             frame.setParent(None)
             frame.deleteLater()
-
-
-class AddConditionsDialog(BaseDialog, Ui_AddConditionsDialog):
-    """The secondary conditions dialog for non-community control conditions.
-
-    Dialogs that use: FineOnlyPleaDialog, LeapSentencingDialog.
-    """
-
-    conditions_frames = [
-        ('other_conditions_checkBox', 'other_conditions_frame'),
-        ('license_suspension_checkBox', 'license_suspension_frame'),
-        ('community_service_checkBox', 'community_service_frame'),
-    ]
-
-    def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        logger.dialog('AddConditionsDialog Opened')
-        self.charges_list = main_dialog.entry_case_information.charges_list
-        self.main_dialog = main_dialog
-        super().__init__(parent)
-        enable_condition_frames(self, main_dialog)
-
-    def _modify_view(self) -> AddConditionsDialogViewModifier:
-        return AddConditionsDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = AddConditionsDialogSlotFunctions(self)
-        self.functions.update_community_service_due_date()
-        AddConditionsDialogSignalConnector(self)
 
 
 class AddJailOnlyDialog(BaseDialog, Ui_AddJailOnly):
@@ -197,5 +165,3 @@ class AddSpecialBondConditionsDialog(BaseDialog, Ui_AddSpecialBondConditionsDial
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

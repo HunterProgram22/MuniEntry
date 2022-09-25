@@ -2,28 +2,84 @@
 from __future__ import annotations
 
 from os import startfile
+from typing import Any
 
 from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtCore import QDate, Qt
-from PyQt5.QtGui import QIcon, QIntValidator
+from PyQt5.QtGui import QIcon, QIntValidator, QCloseEvent
 from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QDialog
 
-from munientry.builders.base_dialogs import BaseDialogBuilder
 from munientry.controllers.helper_functions import set_future_date
+from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import (
     ICON_PATH,
     SAVE_PATH,
     SPECIAL_DOCKETS_COSTS,
     TYPE_CHECKING,
-    WIDGET_TYPE_SET_DICT,
+    WIDGET_TYPE_SET_DICT, WIDGET_TYPE_ACCESS_DICT,
 )
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
 
 if TYPE_CHECKING:
     from munientry.models.cms_models import CmsCaseInformation
     from munientry.models.party_types import JudicialOfficer
+
+
+class BaseDialogBuilder(QDialog):
+    """This class is a base class for all dialog windows."""
+
+    def __init__(self, parent: QDialog = None) -> None:
+        super().__init__(parent)
+        self.build_attrs = self._get_dialog_attributes()
+        self._modify_view()
+        self._connect_signals_to_slots()
+        self.dialog_name = self.build_attrs.get('dialog_name', None)
+
+    def _get_dialog_attributes(self) -> dict:
+        return self.build_dict
+
+    def _modify_view(self) -> None:
+        self.build_attrs.get('view')(self)
+
+    def _connect_signals_to_slots(self) -> None:
+        self.functions = self.build_attrs.get('slots')(self)
+        self.build_attrs.get('signals')(self)
+
+    def load_entry_case_information_model(self):
+        self.entry_case_information = self.build_attrs.get('case_information_model')()
+
+    def load_cms_data_to_view(self) -> None:
+        self.build_attrs.get('loader')(self)
+
+    def update_entry_case_information(self) -> None:
+        self.build_attrs.get('updater')(self)
+
+    def perform_info_checks(self) -> None:
+        self.dialog_checks = self.build_attrs.get('info_checker')(self)
+
+    def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
+        """Takes data in the view fields and transfers to appropriate model class attribute.
+
+        Method loops through all items in terms list which are maps of a model attribute to
+        a view field. The appropriate transfer method is obtained from the WIDGET_TYPE_ACCESS_DICT
+
+        Args:
+            model_class: A dataclass object that has a terms_list attribute mapping
+                view fields to model attributes.
+        """
+        for (model_attribute, view_field) in model_class.terms_list:
+            widget_type = getattr(self, view_field).__class__.__name__
+            view = getattr(self, view_field)
+            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
+            class_name = model_class.__class__.__name__
+            setattr(model_class, model_attribute, view_field_data)
+            logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
+
+    def closeEvent(self, event: QCloseEvent) -> None:
+        """Extends pyqt close event method in order to log when a dialog closes."""
+        logger.dialog(f'{self.objectName()} Closed by {event}')
 
 
 class CriminalDialogBuilder(BaseDialogBuilder):
@@ -44,6 +100,7 @@ class CriminalDialogBuilder(BaseDialogBuilder):
         self.case_table = case_table
         logger.info(f'Loading case from {self.case_table}')
         super().__init__(parent)
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.validator = QIntValidator(0, 1000, self)
@@ -119,6 +176,15 @@ class BaseDialogViewModifier(object):
                 else:
                     getattr(dialog, condition_field).setEnabled(False)
                     getattr(dialog, condition_field).setHidden(True)
+
+    def load_existing_data_to_dialog(self):
+        for condition in self.condition_classes:
+            (condition_checkbox, model_class) = condition
+            if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
+                model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
+                self.transfer_model_data_to_view(model_class)
+            else:
+                continue
 
     def transfer_model_data_to_view(self, model_class):
         """Loops through the terms_list for a model and loads data into the view of the dialog.
@@ -442,3 +508,16 @@ class BaseDialogSignalConnector(object):
         self.dialog.add_conditions_Button.pressed.connect(
             self.dialog.functions.start_add_conditions_dialog,
         )
+
+    def connect_condition_dialog_main_signals(self):
+        self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
+        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
+
+    def connect_community_service_days_update(self):
+        self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.dialog.functions.update_community_service_due_date
+        )
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')

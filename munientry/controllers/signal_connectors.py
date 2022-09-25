@@ -52,13 +52,6 @@ class BaseDialogSignalConnectorOld:
         )
 
 
-class AddConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_condition_dialog_main_signals(dialog)
-        self.connect_community_service_days_update(dialog)
-
-
 class AddJailOnlyDialogSignalConnector(BaseDialogSignalConnectorOld):
     def __init__(self, dialog):
         super().__init__(dialog)

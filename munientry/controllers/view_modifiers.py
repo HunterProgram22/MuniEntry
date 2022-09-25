@@ -10,27 +10,6 @@ from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogV
 TODAY = QtCore.QDate.currentDate()
 
 
-class AddConditionsDialogViewModifier(BaseDialogViewModifier):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.set_conditions_case_information_banner()
-        self.load_existing_data_to_dialog()
-
-    def load_existing_data_to_dialog(self):
-        CONDITIONS_CLASSES = [
-            ("other_conditions_checkBox", "other_conditions"),
-            ("license_suspension_checkBox", "license_suspension"),
-            ("community_service_checkBox", "community_service"),
-        ]
-        for item in CONDITIONS_CLASSES:
-            (condition_checkbox, model_class) = item
-            if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
-                model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
-                self.transfer_model_data_to_view(model_class)
-            else:
-                continue
-
-
 class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
     condition_checkbox_list = [
         ("companion_cases_checkBox", "companion_cases_box"),
