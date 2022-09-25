@@ -2,7 +2,6 @@
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.builders.crimtraffic.conditions_dialogs import enable_condition_frames
 from munientry.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 
 
@@ -76,7 +75,7 @@ class AddConditionsDialog(crim.BaseDialogBuilder, Ui_AddConditionsDialog):
         self.main_dialog = main_dialog
         super().__init__(parent)
         logger.dialog(f'{self.dialog_name} Opened')
-        enable_condition_frames(self, main_dialog)
+        crim.enable_condition_frames(self, main_dialog)
 
     def additional_setup(self):
         self.functions.update_community_service_due_date()
