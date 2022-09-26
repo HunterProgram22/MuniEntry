@@ -36,18 +36,6 @@ class AddSpecialBondConditionsDialogSlotFunctions(BaseDialogSlotFunctions):
             )
 
 
-class AddJailOnlyDialogSlotFunctions(BaseDialogSlotFunctions):
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.main_dialog = dialog.main_dialog
-
-    def add_conditions(self):
-        if self.main_dialog.jail_checkBox.isChecked():
-            self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.jail_terms
-            )
-
-
 if __name__ == "__main__":
     logger.log('IMPORT', f'{__name__} run directly.')
 else:

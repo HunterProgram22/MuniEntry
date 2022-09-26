@@ -1,9 +1,7 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic.conditions_dialogs import (
-    AddJailOnlyDialog,
-)
+from munientry.builders.crimtraffic.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.builders.crimtraffic.add_community_control_dialog import AddCommunityControlDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
@@ -106,6 +104,7 @@ class JailCCPleaDialog(crim.CriminalDialogBuilder, Ui_JailCCPleaDialog):
             ('impoundment_checkBox', self.entry_case_information.impoundment),
             ('victim_notification_checkBox', self.entry_case_information.victim_notification),
         ]
+        self.functions.show_companion_case_fields()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
 

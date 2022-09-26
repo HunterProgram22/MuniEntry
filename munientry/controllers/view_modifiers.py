@@ -10,68 +10,6 @@ from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogV
 TODAY = QtCore.QDate.currentDate()
 
 
-class AddJailOnlyDialogViewModifier(BaseDialogViewModifier):
-    condition_checkbox_list = [
-        ("companion_cases_checkBox", "companion_cases_box"),
-        ("companion_cases_checkBox", "jail_term_type_box"),
-        ("companion_cases_checkBox", "consecutive_jail_days_label"),
-    ]
-
-    def __init__(self, dialog):
-        """This does not include a load_existing_data_to_dialog method because it is only called
-        from a warning message if user forgot to add jail reporting terms and chooses to add them
-        after getting the warning."""
-        super().__init__(dialog)
-        self.set_conditions_case_information_banner()
-        self.load_existing_data_to_dialog()
-        self.hide_boxes(dialog)  # Class method needs dialog ? TODO: Fix
-        self.set_report_date_view()
-        self.set_report_days_notes_box()
-
-    def load_existing_data_to_dialog(self):
-        CONDITIONS_CLASSES = [
-            ("jail_checkBox", "jail_terms"),
-        ]
-        for item in CONDITIONS_CLASSES:
-            (condition_checkbox, model_class) = item
-            if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
-                model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
-                self.transfer_model_data_to_view(model_class)
-            else:
-                continue
-
-    def set_report_date_view(self):
-        if self.dialog.report_type_box.currentText() == 'date set by Office of Community Control':
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        elif self.dialog.report_type_box.currentText() == 'forthwith':
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-        else:
-            self.dialog.report_date_box.setEnabled(True)
-            self.dialog.report_date_box.setHidden(False)
-            self.dialog.report_time_box.setEnabled(True)
-            self.dialog.report_time_box.setHidden(False)
-            self.dialog.report_date_label.setHidden(False)
-            self.dialog.report_time_label.setHidden(False)
-
-    def set_report_days_notes_box(self):
-        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
-            self.dialog.jail_report_days_notes_box.setDisabled(True)
-            self.dialog.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.dialog.jail_report_days_notes_box.setDisabled(False)
-            self.dialog.jail_report_days_notes_box.setHidden(False)
-
-
 class AddSpecialBondConditionsDialogViewModifier(BaseDialogViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)

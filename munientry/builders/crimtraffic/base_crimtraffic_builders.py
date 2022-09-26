@@ -383,30 +383,6 @@ class BaseDialogSlotFunctions(object):
             elif checkbox_name == self.dialog.sender().objectName():
                 setattr(condition, 'ordered', False)
 
-    def set_report_date(self):
-        if self.dialog.report_type_box.currentText() == 'future date':
-            self.dialog.report_date_box.setEnabled(True)
-            self.dialog.report_date_box.setHidden(False)
-            self.dialog.report_time_box.setEnabled(True)
-            self.dialog.report_time_box.setHidden(False)
-            self.dialog.report_date_label.setHidden(False)
-            self.dialog.report_time_label.setHidden(False)
-        else:
-            self.dialog.report_date_box.setDisabled(True)
-            self.dialog.report_date_box.setHidden(True)
-            self.dialog.report_time_box.setDisabled(True)
-            self.dialog.report_time_box.setHidden(True)
-            self.dialog.report_date_label.setHidden(True)
-            self.dialog.report_time_label.setHidden(True)
-
-    def show_report_days_notes_box(self):
-        if self.dialog.jail_sentence_execution_type_box.currentText() == 'consecutive days':
-            self.dialog.jail_report_days_notes_box.setDisabled(True)
-            self.dialog.jail_report_days_notes_box.setHidden(True)
-        else:
-            self.dialog.jail_report_days_notes_box.setDisabled(False)
-            self.dialog.jail_report_days_notes_box.setHidden(False)
-
     def show_hide_checkbox_connected_fields(self):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
         checkbox = self.dialog.sender()

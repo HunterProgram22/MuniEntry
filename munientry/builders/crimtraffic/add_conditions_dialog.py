@@ -74,6 +74,7 @@ class AddConditionsDialog(crim.BaseDialogBuilder, Ui_AddConditionsDialog):
         self.charges_list = main_dialog.entry_case_information.charges_list
         self.main_dialog = main_dialog
         super().__init__(parent)
+        self.additional_setup()
         logger.dialog(f'{self.dialog_name} Opened')
         crim.enable_condition_frames(self, main_dialog)
 
