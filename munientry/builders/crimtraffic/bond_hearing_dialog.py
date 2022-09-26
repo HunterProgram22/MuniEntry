@@ -1,7 +1,8 @@
 """Builder module for Bond Hearing Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic.conditions_dialogs import AddSpecialBondConditionsDialog
+from munientry.builders.crimtraffic.add_special_bond_conditions_dialog import \
+    AddSpecialBondConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import BondHearingDialogInfoChecker
 from munientry.data.cms_case_loaders import CmsNoChargeLoader

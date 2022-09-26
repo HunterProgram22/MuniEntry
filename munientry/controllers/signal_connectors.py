@@ -1,9 +1,3 @@
-"""Module that contains SignalConnector classes. SignalConnector classes are called
-when a dialog is built and connect all of the interface objects (i.e. buttons,
-checkboxes, etc.) to the dialog."""
-from loguru import logger
-
-
 class BaseDialogSignalConnectorOld:
     def __init__(self, dialog):
         dialog.cancel_Button.released.connect(dialog.functions.close_window)
@@ -47,15 +41,3 @@ class BaseDialogSignalConnectorOld:
         dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
             dialog.functions.update_community_service_due_date
         )
-
-
-class AddSpecialBondConditionsDialogSignalConnector(BaseDialogSignalConnectorOld):
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_condition_dialog_main_signals(dialog)
-
-
-if __name__ == "__main__":
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
