@@ -1,4 +1,5 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -23,7 +24,7 @@ class PleaOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
     """Additional functions for Plea Only - Future Sentence Dialog."""
 
 
-class PleaOnlyDialogSignalConnector(crim.BaseDialogSignalConnector):
+class PleaOnlyDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Plea Only - Future Sentence Dialog."""
 
     def __init__(self, dialog):

@@ -1,4 +1,5 @@
 """Builder module for the Jail CC Plea Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic.add_jail_only_dialog import AddJailOnlyDialog
@@ -47,7 +48,7 @@ class JailCCDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class JailCCDialogSignalConnector(crim.BaseDialogSignalConnector):
+class JailCCDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Jail CC Plea Dialog."""
 
     def __init__(self, dialog):

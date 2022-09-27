@@ -1,4 +1,5 @@
 """Builder module for the Failure To Appear Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -55,7 +56,8 @@ class FailureToAppearDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.bond_amount_label.setHidden(False)
 
 
-class FailureToAppearDialogSignalConnector(crim.BaseDialogSignalConnector):
+class FailureToAppearDialogSignalConnector(
+    munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Failure To Appear Dialog."""
 
     def __init__(self, dialog):

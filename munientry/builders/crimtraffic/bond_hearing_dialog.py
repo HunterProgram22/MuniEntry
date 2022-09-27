@@ -1,4 +1,5 @@
 """Builder module for Bond Hearing Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic.add_special_bond_conditions_dialog import \
@@ -39,7 +40,7 @@ class BondHearingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
-class BondHearingDialogSignalConnector(crim.BaseDialogSignalConnector):
+class BondHearingDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal connector for Bond Hearing Dialog."""
 
     def __init__(self, dialog):

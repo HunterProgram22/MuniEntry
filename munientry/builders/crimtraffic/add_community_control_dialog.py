@@ -1,4 +1,5 @@
 """Module builder for Add Community Control Secondary Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -78,7 +79,8 @@ class AddCommunityControlDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddCommunityControlDialogSignalConnector(crim.BaseDialogSignalConnector):
+class AddCommunityControlDialogSignalConnector(
+    munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Add Community Control Dialog."""
 
     def __init__(self, dialog):

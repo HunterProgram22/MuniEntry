@@ -2,10 +2,10 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.base_dialogs import BaseDialogSignalConnectorOld
+from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
-from munientry.controllers.signal_connectors import BaseDialogSignalConnectorOld
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,

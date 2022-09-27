@@ -1,4 +1,5 @@
 """Builder module for the Not Guilty Bond Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic.add_special_bond_conditions_dialog import \
@@ -41,7 +42,7 @@ class NotGuiltyBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
-class NotGuiltyBondDialogSignalConnector(crim.BaseDialogSignalConnector):
+class NotGuiltyBondDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):

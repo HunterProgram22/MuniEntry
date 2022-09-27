@@ -1,4 +1,5 @@
 """Builder module for the Probation Violation Bond Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -36,7 +37,8 @@ class ProbationViolationBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.bond_amount_box.setCurrentText('None')
 
 
-class ProbationViolationBondDialogSignalConnector(crim.BaseDialogSignalConnector):
+class ProbationViolationBondDialogSignalConnector(
+    munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal connector for Probation Violation Bond Dialog."""
 
     def __init__(self, dialog):

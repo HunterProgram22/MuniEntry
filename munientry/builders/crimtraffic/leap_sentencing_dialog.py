@@ -1,4 +1,5 @@
 """Builder module for the LEAP Sentencing Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic.add_conditions_dialog import AddConditionsDialog
@@ -41,7 +42,7 @@ class LeapSentencingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class LeapSentencingDialogSignalConnector(crim.BaseDialogSignalConnector):
+class LeapSentencingDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for LEAP Sentencing Dialog."""
 
     def __init__(self, dialog):

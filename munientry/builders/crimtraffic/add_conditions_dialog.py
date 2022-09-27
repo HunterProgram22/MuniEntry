@@ -1,4 +1,5 @@
 """Module builder for Add Conditions Secondary Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -42,7 +43,7 @@ class AddConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddConditionsDialogSignalConnector(crim.BaseDialogSignalConnector):
+class AddConditionsDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Additional Conditions Dialog."""
 
     def __init__(self, dialog):

@@ -2,7 +2,6 @@
 from loguru import logger
 
 from munientry.models.criminal_charge_models import CriminalCharge
-from munientry.updaters.base_updaters import CBD
 
 
 class BaseGridUpdater(object):
@@ -14,7 +13,7 @@ class BaseGridUpdater(object):
     row_plea = 3
     row_finding = 4
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         self.grid = dialog.charges_gridLayout
         self.model = dialog.entry_case_information
 
@@ -67,7 +66,7 @@ class NotGuiltyGridModelUpdater(BaseGridUpdater):
 
     row_plea = 3
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_model_with_statute_data()
         self.update_model_with_degree_data()
@@ -82,7 +81,7 @@ class LeapAdmissionPleaGridModelUpdater(BaseGridUpdater):
     row_amend_button = 5
     row_delete_button = 6
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_model_with_statute_data()
         self.update_model_with_degree_data()
@@ -99,7 +98,7 @@ class PleaOnlyGridModelUpdater(BaseGridUpdater):
     row_amend_button = 7
     row_delete_button = 8
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_model_with_statute_data()
         self.update_model_with_degree_data()
@@ -119,7 +118,7 @@ class FineOnlyGridModelUpdater(BaseGridUpdater):
     row_amend_button = 9
     row_delete_button = 10
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_model_with_statute_data()
         self.update_model_with_degree_data()
@@ -171,7 +170,7 @@ class JailCCGridModelUpdater(FineOnlyGridModelUpdater):
     row_amend_button = 11
     row_delete_button = 12
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_model_with_jail_days_data()
         self.update_model_with_jail_days_suspended_data()
@@ -214,7 +213,7 @@ class JailCCGridModelUpdater(FineOnlyGridModelUpdater):
 class TrialSentencingGridModelUpdater(JailCCGridModelUpdater):
     """Overrides parts of the JailCCGridModelUpdater to account for Tried To field instead of plea
     field."""
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
 
 

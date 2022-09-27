@@ -8,7 +8,6 @@ from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtCore import QDate, Qt
 from PyQt5.QtGui import QIcon, QIntValidator, QCloseEvent
-from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QLabel, QDialog
 
 from munientry.controllers.helper_functions import set_future_date
@@ -25,6 +24,21 @@ from munientry.widgets.message_boxes import InfoBox, RequiredBox
 if TYPE_CHECKING:
     from munientry.models.cms_models import CmsCaseInformation
     from munientry.models.party_types import JudicialOfficer
+
+def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) -> None:
+    """The function is called to hide frames on load of dialog.
+
+    Hides conditions that have not been selected in the main dialog. This is necessary
+    because the base view of a dialog contains all possible frames.
+    """
+    for frame_item in conditions_dialog.conditions_frames:
+        (frame_checkbox, frame) = frame_item
+        if getattr(main_dialog, frame_checkbox).isChecked():
+            getattr(conditions_dialog, frame).setEnabled(True)
+        else:
+            frame = getattr(conditions_dialog, frame)
+            frame.setParent(None)
+            frame.deleteLater()
 
 
 class BaseDialogBuilder(QDialog):
@@ -407,107 +421,5 @@ class BaseDialogSlotFunctions(object):
             self.dialog.special_bond_conditions_frame.setHidden(True)
 
 
-class BaseDialogSignalConnector(object):
-    """Base Signal Connector for CrimTraffic Entries."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
-
-    def connect_main_dialog_common_signals(self):
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.dialog.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(
-            self.dialog.functions.create_entry_process,
-        )
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
-            self.dialog.functions.set_defense_counsel,
-        )
-
-    def connect_fra_signals(self):
-        self.dialog.fra_in_file_box.currentTextChanged.connect(
-            self.dialog.functions.set_fra_in_file,
-        )
-        self.dialog.fra_in_court_box.currentTextChanged.connect(
-            self.dialog.functions.set_fra_in_court,
-        )
-
-    def connect_plea_all_button_signals(self):
-        self.dialog.add_charge_Button.released.connect(
-            self.dialog.functions.start_add_charge_dialog,
-        )
-        self.dialog.guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-        self.dialog.guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_findings,
-        )
-        self.dialog.no_contest_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-        self.dialog.no_contest_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_findings,
-        )
-
-    def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-
-    def connect_add_charge_button(self):
-        self.dialog.add_charge_Button.released.connect(
-            self.dialog.functions.start_add_charge_dialog,
-        )
-
-    def connect_court_cost_signals(self):
-        self.dialog.ability_to_pay_box.currentTextChanged.connect(
-            self.dialog.functions.set_fines_costs_pay_date,
-        )
-        self.dialog.costs_and_fines_Button.released.connect(
-            self.dialog.functions.show_costs_and_fines,
-        )
-
-    def connect_main_dialog_additional_condition_signals(self):
-        self.dialog.license_suspension_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.community_service_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.other_conditions_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.add_conditions_Button.pressed.connect(
-            self.dialog.functions.start_add_conditions_dialog,
-        )
-
-    def connect_condition_dialog_main_signals(self):
-        self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
-        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
-
-    def connect_community_service_days_update(self):
-        self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.dialog.functions.update_community_service_due_date
-        )
-
-
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-
-
-def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) -> None:
-    """The function is called to hide frames on load of dialog.
-
-    Hides conditions that have not been selected in the main dialog. This is necessary
-    because the base view of a dialog contains all possible frames.
-    """
-    for frame_item in conditions_dialog.conditions_frames:
-        (frame_checkbox, frame) = frame_item
-        if getattr(main_dialog, frame_checkbox).isChecked():
-            getattr(conditions_dialog, frame).setEnabled(True)
-        else:
-            frame = getattr(conditions_dialog, frame)
-            frame.setParent(None)
-            frame.deleteLater()

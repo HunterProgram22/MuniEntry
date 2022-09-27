@@ -1,4 +1,5 @@
 """Module builder for Add Conditions Secondary Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 from PyQt5.QtWidgets import QLabel
 
@@ -67,7 +68,8 @@ class AddSpecialBondConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddSpecialBondConditionsDialogSignalConnector(crim.BaseDialogSignalConnector):
+class AddSpecialBondConditionsDialogSignalConnector(
+    munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Add Special Bond Conditions Dialog."""
 
     def __init__(self, dialog):

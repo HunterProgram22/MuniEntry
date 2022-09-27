@@ -1,4 +1,5 @@
 """Builder module for the Fine Only Plea Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic.add_conditions_dialog import AddConditionsDialog
@@ -40,7 +41,7 @@ class FineOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class FineOnlyDialogSignalConnector(crim.BaseDialogSignalConnector):
+class FineOnlyDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Fine Only Plea Dialog."""
 
     def __init__(self, dialog):

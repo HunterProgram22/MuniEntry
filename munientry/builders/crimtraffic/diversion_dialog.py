@@ -1,4 +1,5 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 from PyQt5.QtCore import QDate
 
@@ -81,7 +82,7 @@ class DiversionDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.pay_restitution_amount_label.setHidden(True)
 
 
-class DiversionDialogSignalConnector(crim.BaseDialogSignalConnector):
+class DiversionDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Diversion Dialog."""
 
     def __init__(self, dialog):

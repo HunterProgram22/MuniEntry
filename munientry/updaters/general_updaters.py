@@ -10,13 +10,13 @@ from munientry.settings import (
     NONMOVING_COURT_COSTS,
     SPECIAL_DOCKETS_COSTS,
 )
-from munientry.updaters.base_updaters import CBD, BaseDialogUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater
 
 
 class CaseInformationUpdater(BaseDialogUpdater):
     """Updates the model data with the case information fram (top frame on dialogs)."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model.case_number = self.dialog.case_number_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.get_date()
@@ -51,7 +51,7 @@ class CaseInformationUpdater(BaseDialogUpdater):
 class CourtCostsUpdater(BaseDialogUpdater):
     """Updates the court costs for a case by determining the highest charge type."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model.court_costs.ordered = self.dialog.court_costs_box.currentText()
         self.model.court_costs.ability_to_pay_time = self.dialog.ability_to_pay_box.currentText()
@@ -84,7 +84,7 @@ class CourtCostsUpdater(BaseDialogUpdater):
 class FinesUpdater(BaseDialogUpdater):
     """Updates the total fines owed and fines suspended in a case."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model.total_fines = self.calculate_total_fines()
         self.model.total_fines_suspended = self.calculate_total_fines_suspended()
@@ -113,7 +113,7 @@ class FinesUpdater(BaseDialogUpdater):
 class JailDataUpdater(BaseDialogUpdater):
     """Updates the jail days, jail suspended days and jail credit."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_jail_time_credit()
         self.set_all_jail_day_totals()

@@ -1,4 +1,5 @@
 """Module builder for Add Jail Dialog."""
+import munientry.builders.base_dialogs
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -56,7 +57,7 @@ class AddJailOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
 
-class AddJailOnlyDialogSignalConnector(crim.BaseDialogSignalConnector):
+class AddJailOnlyDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
     """Signal Connector for Add Jail Dialog."""
 
     def __init__(self, dialog):
