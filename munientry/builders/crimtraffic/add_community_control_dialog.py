@@ -118,7 +118,7 @@ class AddCommunityControlDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class AddCommunityControlDialog(crim.BaseDialogBuilder, Ui_AddCommunityControlDialog):
+class AddCommunityControlDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddCommunityControlDialog):
     """The secondary conditions sentencing dialogs with community control.
 
     Dialogs that use: JailCCPleaDialog, SentencingOnlyDialog, TrialSentencingDialog.

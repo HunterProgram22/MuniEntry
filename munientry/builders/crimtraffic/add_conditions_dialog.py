@@ -52,7 +52,7 @@ class AddConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_community_service_days_update()
 
 
-class AddConditionsDialog(crim.BaseDialogBuilder, Ui_AddConditionsDialog):
+class AddConditionsDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddConditionsDialog):
     """The secondary conditions dialog builder for non-community control conditions.
 
     Dialogs that use: FineOnlyPleaDialog, LeapSentencingDialog.

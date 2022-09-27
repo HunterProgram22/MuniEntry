@@ -74,7 +74,7 @@ class AddJailOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class AddJailOnlyDialog(crim.BaseDialogBuilder, Ui_AddJailOnly):
+class AddJailOnlyDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddJailOnly):
     """Secondary dialog for setting jail reporting information.
 
     Dialogs that use: JailCCPleaDialog, SentencingOnlyDialog, TrialSentencingDialog.

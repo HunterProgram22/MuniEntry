@@ -2,14 +2,13 @@
 from __future__ import annotations
 
 from os import startfile
-from typing import Any
 
 from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtCore import QDate, Qt
-from PyQt5.QtGui import QIcon, QIntValidator, QCloseEvent
+from PyQt5.QtGui import QIcon, QIntValidator
 from PyQt5.QtWidgets import QLabel, QDialog
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_dialogs import BaseDialogSignalConnector, BaseDialogBuilder
 
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
@@ -18,8 +17,7 @@ from munientry.settings import (
     SAVE_PATH,
     SPECIAL_DOCKETS_COSTS,
     TYPE_CHECKING,
-    WIDGET_TYPE_SET_DICT, WIDGET_TYPE_ACCESS_DICT,
-)
+    WIDGET_TYPE_SET_DICT, )
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
 
 if TYPE_CHECKING:
@@ -40,61 +38,6 @@ def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) ->
             frame = getattr(conditions_dialog, frame)
             frame.setParent(None)
             frame.deleteLater()
-
-
-class BaseDialogBuilder(QDialog):
-    """This class is a base class for all dialog windows."""
-
-    def __init__(self, parent: QDialog = None) -> None:
-        super().__init__(parent)
-        self.build_attrs = self._get_dialog_attributes()
-        self._modify_view()
-        self._connect_signals_to_slots()
-        self.dialog_name = self.build_attrs.get('dialog_name', None)
-
-    def _get_dialog_attributes(self) -> dict:
-        return self.build_dict
-
-    def _modify_view(self) -> None:
-        self.build_attrs.get('view')(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = self.build_attrs.get('slots')(self)
-        self.build_attrs.get('signals')(self)
-
-    def load_entry_case_information_model(self):
-        self.entry_case_information = self.build_attrs.get('case_information_model')()
-
-    def load_cms_data_to_view(self) -> None:
-        self.build_attrs.get('loader')(self)
-
-    def update_entry_case_information(self) -> None:
-        self.build_attrs.get('updater')(self)
-
-    def perform_info_checks(self) -> None:
-        self.dialog_checks = self.build_attrs.get('info_checker')(self)
-
-    def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
-        """Takes data in the view fields and transfers to appropriate model class attribute.
-
-        Method loops through all items in terms list which are maps of a model attribute to
-        a view field. The appropriate transfer method is obtained from the WIDGET_TYPE_ACCESS_DICT
-
-        Args:
-            model_class: A dataclass object that has a terms_list attribute mapping
-                view fields to model attributes.
-        """
-        for (model_attribute, view_field) in model_class.terms_list:
-            widget_type = getattr(self, view_field).__class__.__name__
-            view = getattr(self, view_field)
-            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
-            class_name = model_class.__class__.__name__
-            setattr(model_class, model_attribute, view_field_data)
-            logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
-
-    def closeEvent(self, event: QCloseEvent) -> None:
-        """Extends pyqt close event method in order to log when a dialog closes."""
-        logger.dialog(f'{self.objectName()} Closed by {event}')
 
 
 class CriminalDialogBuilder(BaseDialogBuilder):

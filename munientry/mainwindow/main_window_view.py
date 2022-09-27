@@ -9,15 +9,15 @@ import munientry.builders.crimtraffic.sentencing_only_dialog
 import munientry.builders.crimtraffic.trial_sentencing_dialog
 from PyQt5 import QtGui
 
-from munientry.builders.final_jury_hearing_notice_dialog import (
+from munientry.builders.scheduling.final_jury_hearing_notice_dialog import (
     FinalJuryNoticeHearingDialog,
 )
-from munientry.builders.general_hearing_notice_dialog import (
+from munientry.builders.scheduling.general_hearing_notice_dialog import (
     GeneralNoticeOfHearingDialog,
 )
-from munientry.builders.driving_privileges_dialog import DrivingPrivilegesDialog
-from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
-from munientry.builders.trial_to_court_hearing_notice_dialog import (
+from munientry.builders.scheduling.driving_privileges_dialog import DrivingPrivilegesDialog
+from munientry.builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
+from munientry.builders.scheduling.trial_to_court_hearing_notice_dialog import (
     TrialToCourtHearingDialog,
 )
 from munientry.models.party_types import JudicialOfficer
