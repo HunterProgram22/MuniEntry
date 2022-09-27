@@ -3,7 +3,9 @@ from loguru import logger
 from PyQt5.QtWidgets import QLabel
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.views.add_special_bond_conditions_dialog_ui import Ui_AddSpecialBondConditionsDialog
+from munientry.views.add_special_bond_conditions_dialog_ui import (
+    Ui_AddSpecialBondConditionsDialog,
+)
 
 
 class AddSpecialBondConditionsDialogViewModifier(crim.BaseDialogViewModifier):
@@ -20,17 +22,15 @@ class AddSpecialBondConditionsDialogViewModifier(crim.BaseDialogViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_special_bond_conditions_case_information_banner()
+        self.set_bond_cond_case_information_banner()
         self.load_existing_data_to_dialog()
 
-    def set_special_bond_conditions_case_information_banner(self):
+    def set_bond_cond_case_information_banner(self):
         column = self.dialog.charges_gridLayout.columnCount() + 1
         for charge in self.dialog.charges_list:
-            charge = vars(charge)
-            if charge is not None:
-                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get('offense')), 0, column)
-                self.dialog.charges_gridLayout.addWidget(QLabel(charge.get('statute')), 1, column)
-                column += 1
+            self.dialog.charges_gridLayout.addWidget(QLabel(charge.offense), 0, column)
+            self.dialog.charges_gridLayout.addWidget(QLabel(charge.statute), 1, column)
+            column += 1
 
 
 class AddSpecialBondConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
@@ -43,31 +43,33 @@ class AddSpecialBondConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
     def add_conditions(self):
         if self.main_dialog.domestic_violence_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.domestic_violence_conditions
+                self.main_dialog.entry_case_information.domestic_violence_conditions,
             )
         if self.main_dialog.admin_license_suspension_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.admin_license_suspension
+                self.main_dialog.entry_case_information.admin_license_suspension,
             )
         if self.main_dialog.no_contact_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.no_contact
+                self.main_dialog.entry_case_information.no_contact,
             )
         if self.main_dialog.custodial_supervision_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.custodial_supervision
+                self.main_dialog.entry_case_information.custodial_supervision,
             )
         if self.main_dialog.other_conditions_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.other_conditions
+                self.main_dialog.entry_case_information.other_conditions,
             )
         if self.main_dialog.vehicle_seizure_checkBox.isChecked():
             self.dialog.transfer_view_data_to_model(
-                self.main_dialog.entry_case_information.vehicle_seizure
+                self.main_dialog.entry_case_information.vehicle_seizure,
             )
 
 
 class AddSpecialBondConditionsDialogSignalConnector(crim.BaseDialogSignalConnector):
+    """Signal Connector for Add Special Bond Conditions Dialog."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_condition_dialog_main_signals()
