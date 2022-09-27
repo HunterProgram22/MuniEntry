@@ -40,7 +40,7 @@ class BondHearingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.special_bond_conditions_frame.setHidden(False)
 
 
-class BondHearingDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class BondHearingDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal connector for Bond Hearing Dialog."""
 
     def __init__(self, dialog):

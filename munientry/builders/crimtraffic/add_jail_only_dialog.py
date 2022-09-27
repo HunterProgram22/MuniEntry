@@ -57,7 +57,7 @@ class AddJailOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
 
-class AddJailOnlyDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class AddJailOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Add Jail Dialog."""
 
     def __init__(self, dialog):

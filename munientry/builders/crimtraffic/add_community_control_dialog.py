@@ -79,8 +79,7 @@ class AddCommunityControlDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddCommunityControlDialogSignalConnector(
-    munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class AddCommunityControlDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Add Community Control Dialog."""
 
     def __init__(self, dialog):

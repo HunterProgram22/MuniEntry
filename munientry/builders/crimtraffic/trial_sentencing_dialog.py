@@ -56,8 +56,7 @@ class TrialSentencingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class TrialSentencingDialogSignalConnector(
-    munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class TrialSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Trial Sentencing Dialog."""
 
     def __init__(self, dialog):

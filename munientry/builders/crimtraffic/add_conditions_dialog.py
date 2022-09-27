@@ -43,7 +43,7 @@ class AddConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddConditionsDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class AddConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Additional Conditions Dialog."""
 
     def __init__(self, dialog):

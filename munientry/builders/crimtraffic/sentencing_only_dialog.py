@@ -47,7 +47,7 @@ class SentencingOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class SentencingOnlyDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Sentencing Only Dialog."""
 
     def __init__(self, dialog):

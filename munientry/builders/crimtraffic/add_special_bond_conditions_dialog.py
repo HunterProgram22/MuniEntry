@@ -68,8 +68,7 @@ class AddSpecialBondConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             )
 
 
-class AddSpecialBondConditionsDialogSignalConnector(
-    munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class AddSpecialBondConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Add Special Bond Conditions Dialog."""
 
     def __init__(self, dialog):

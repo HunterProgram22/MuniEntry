@@ -61,7 +61,7 @@ class BaseDialog(QDialog):
 
 
 class BaseDialogSignalConnector(object):
-    """Base Signal Connector for CrimTraffic Entries."""
+    """Base Signal Connector."""
 
     def __init__(self, dialog):
         self.dialog = dialog
@@ -77,72 +77,6 @@ class BaseDialogSignalConnector(object):
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         self.dialog.defense_counsel_waived_checkBox.toggled.connect(
             self.dialog.functions.set_defense_counsel,
-        )
-
-    def connect_fra_signals(self):
-        self.dialog.fra_in_file_box.currentTextChanged.connect(
-            self.dialog.functions.set_fra_in_file,
-        )
-        self.dialog.fra_in_court_box.currentTextChanged.connect(
-            self.dialog.functions.set_fra_in_court,
-        )
-
-    def connect_plea_all_button_signals(self):
-        self.dialog.add_charge_Button.released.connect(
-            self.dialog.functions.start_add_charge_dialog,
-        )
-        self.dialog.guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-        self.dialog.guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_findings,
-        )
-        self.dialog.no_contest_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-        self.dialog.no_contest_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_findings,
-        )
-
-    def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-
-    def connect_add_charge_button(self):
-        self.dialog.add_charge_Button.released.connect(
-            self.dialog.functions.start_add_charge_dialog,
-        )
-
-    def connect_court_cost_signals(self):
-        self.dialog.ability_to_pay_box.currentTextChanged.connect(
-            self.dialog.functions.set_fines_costs_pay_date,
-        )
-        self.dialog.costs_and_fines_Button.released.connect(
-            self.dialog.functions.show_costs_and_fines,
-        )
-
-    def connect_main_dialog_additional_condition_signals(self):
-        self.dialog.license_suspension_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.community_service_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.other_conditions_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.add_conditions_Button.pressed.connect(
-            self.dialog.functions.start_add_conditions_dialog,
-        )
-
-    def connect_condition_dialog_main_signals(self):
-        self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
-        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
-
-    def connect_community_service_days_update(self):
-        self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.dialog.functions.update_community_service_due_date
         )
 
 

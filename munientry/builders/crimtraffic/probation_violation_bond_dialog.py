@@ -37,8 +37,7 @@ class ProbationViolationBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
             self.dialog.bond_amount_box.setCurrentText('None')
 
 
-class ProbationViolationBondDialogSignalConnector(
-    munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class ProbationViolationBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal connector for Probation Violation Bond Dialog."""
 
     def __init__(self, dialog):

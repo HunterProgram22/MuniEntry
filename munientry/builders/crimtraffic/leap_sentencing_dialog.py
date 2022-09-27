@@ -42,7 +42,7 @@ class LeapSentencingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class LeapSentencingDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for LEAP Sentencing Dialog."""
 
     def __init__(self, dialog):

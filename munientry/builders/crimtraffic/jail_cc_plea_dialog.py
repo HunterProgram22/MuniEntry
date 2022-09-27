@@ -48,7 +48,7 @@ class JailCCDialogSlotFunctions(crim.BaseDialogSlotFunctions):
         self.dialog.popup_dialog.exec()
 
 
-class JailCCDialogSignalConnector(munientry.builders.base_dialogs.BaseDialogSignalConnector):
+class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Jail CC Plea Dialog."""
 
     def __init__(self, dialog):
