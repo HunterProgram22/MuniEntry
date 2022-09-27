@@ -8,6 +8,7 @@ from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogV
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
@@ -19,51 +20,6 @@ if TYPE_CHECKING:
     from PyQt5.QtWidgets import QDialog
 
 
-class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
-    """Builder class for the Final and Jury Trial Notice of Hearing.
-
-    The judicial_officer for this entry is the selected Assignment Commissioner.
-
-    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
-    """
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Final And Jury Notice Of Hearing Entry'
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.assigned_judge = set_assigned_judge(self.sender())
-        self.courtroom = set_courtroom(self.sender())
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
-        self.hearing_location_box.setCurrentText(self.courtroom)
-        self.set_instructions_label()
-
-    def set_instructions_label(self) -> None:
-        if self.assigned_judge == 'Judge Marianne T. Hemmeter':
-            self.instructions_label.setText(
-                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Thursday.',
-            )
-        if self.assigned_judge == 'Judge Kyle E. Rohrer':
-            self.instructions_label.setText(
-                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Tuesday.',
-            )
-
-    def load_cms_data_to_view(self) -> None:
-        CmsNoChargeLoader(self)
-
-    def _modify_view(self) -> None:
-        FinalJuryNoticeHearingViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = FinalJuryNoticeHearingSlotFunctions(self)
-        FinalJuryNoticeHearingSignalConnector(self)
-
-    def update_entry_case_information(self) -> None:
-        FinalJuryNoticeHearingCaseInformationUpdater(self)
 
 
 class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
@@ -177,7 +133,45 @@ class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
             self.model.jury_trial_only = 'Yes'
 
 
+class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+    """Builder class for the Final and Jury Trial Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
+
+    build_dict = {
+        'dialog_name': 'Final And Jury Notice Of Hearing Entry',
+        'view': FinalJuryNoticeHearingViewModifier,
+        'slots': FinalJuryNoticeHearingSlotFunctions,
+        'signals': FinalJuryNoticeHearingSignalConnector,
+        'case_information_model': SchedulingCaseInformation,
+        'loader': CmsNoChargeLoader,
+        'updater': FinalJuryNoticeHearingCaseInformationUpdater,
+        'info_checker': None,
+    }
+
+    def additional_setup(self):
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
+        self.set_instructions_label()
+
+
+    def set_instructions_label(self) -> None:
+        if self.assigned_judge == 'Judge Marianne T. Hemmeter':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                + 'automatically update to the next Thursday.',
+            )
+        if self.assigned_judge == 'Judge Kyle E. Rohrer':
+            self.instructions_label.setText(
+                'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
+                + 'automatically update to the next Tuesday.',
+            )
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

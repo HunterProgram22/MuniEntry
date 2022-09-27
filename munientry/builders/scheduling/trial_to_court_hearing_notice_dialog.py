@@ -19,44 +19,6 @@ if TYPE_CHECKING:
     from PyQt5.QtWidgets import QDialog
 
 
-class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
-    """Builder class for the Trial to Court Notice of Hearing.
-
-    The judicial_officer for this entry is the selected Assignment Commissioner.
-
-    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
-    """
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Trial To Court Notice Of Hearing Entry'
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.assigned_judge = set_assigned_judge(self.sender())
-        self.courtroom = set_courtroom(self.sender())
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
-        self.hearing_location_box.setCurrentText(self.courtroom)
-
-    def _modify_view(self) -> None:
-        TrialToCourtDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = TrialToCourtDialogSlotFunctions(self)
-        TrialToCourtDialogSignalConnector(self)
-
-    def load_entry_case_information_model(self) -> None:
-        self.entry_case_information = SchedulingCaseInformation()
-        self.entry_case_information.judicial_officer = self.judicial_officer
-
-    def load_cms_data_to_view(self) -> None:
-        CmsNoChargeLoader(self)
-
-    def update_entry_case_information(self) -> None:
-        TrialToCourtDialogCaseInformationUpdater(self)
-
-
 class TrialToCourtDialogSignalConnector(BaseDialogSignalConnectorOld):
     """Class for connecting signals for Trial to Court Hearing Notice Dialog."""
 
@@ -122,7 +84,31 @@ class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.hearing_location = self.view.hearing_location_box.currentText()
 
 
+class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
+    """Builder class for the Trial to Court Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
+
+    build_dict = {
+        'dialog_name': 'Trial To Court Notice Of Hearing Entry',
+        'view': TrialToCourtDialogViewModifier,
+        'slots': TrialToCourtDialogSlotFunctions,
+        'signals': TrialToCourtDialogSignalConnector,
+        'case_information_model': SchedulingCaseInformation,
+        'loader': CmsNoChargeLoader,
+        'updater': TrialToCourtDialogCaseInformationUpdater,
+        'info_checker': None,
+    }
+
+    def additional_setup(self):
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

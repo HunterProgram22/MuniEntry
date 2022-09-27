@@ -38,36 +38,6 @@ def set_scheduling_dialog_name(sender) -> str:
     return 'None'
 
 
-class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
-    """The builder class for the Scheduling Entry Dialog."""
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = set_scheduling_dialog_name(self.sender())
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information')
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
-        self.functions.set_speedy_trial_date_label()
-        self.functions.update_all_scheduled_dates()
-
-    def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
-
-    def _modify_view(self):
-        return SchedulingEntryDialogViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = SchedulingEntryDialogSlotFunctions(self)
-        SchedulingEntryDialogSignalConnector(self)
-
-    def update_entry_case_information(self):
-        return SchedulingEntryDialogCaseInformationUpdater(self)
-
-
 class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
     """Class that sets and modifies the view for the Scheduling Entry Dialogs."""
 
@@ -291,7 +261,27 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
 
 
+class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+    """The builder class for the Scheduling Entry Dialog."""
+
+    build_dict = {
+        'dialog_name': None,
+        'view': SchedulingEntryDialogViewModifier,
+        'slots': SchedulingEntryDialogSlotFunctions,
+        'signals': SchedulingEntryDialogSignalConnector,
+        'case_information_model': SchedulingCaseInformation,
+        'loader': CmsNoChargeLoader,
+        'updater': SchedulingEntryDialogCaseInformationUpdater,
+        'info_checker': None,
+    }
+
+    def additional_setup(self):
+        self.dialog_name = set_scheduling_dialog_name(self.sender())
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.set_speedy_trial_date_label()
+        self.functions.update_all_scheduled_dates()
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

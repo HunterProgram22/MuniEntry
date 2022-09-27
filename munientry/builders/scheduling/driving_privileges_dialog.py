@@ -18,37 +18,6 @@ from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDia
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
-    """Builder for the Driving Privileges Dialog.
-
-    The judicial_officer for this entry is the selected Assignment Commissioner.
-    """
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ):
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Driving Privileges Entry'
-        self.entry_case_information = DrivingPrivilegesInformation()
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information')
-        self.functions.enable_other_conditions()
-
-    def load_cms_data_to_view(self):
-        return CmsDrivingInfoLoader(self)
-
-    def _modify_view(self):
-        return DrivingPrivilegesViewModifier(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = DrivingPrivilegesSlotFunctions(self)
-        DrivingPrivilegesSignalConnector(self)
-
-    def update_entry_case_information(self):
-        return DrivingPrivilegesCaseInformationUpdater(self)
-
-
 class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
@@ -244,8 +213,27 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
 
+class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
+    """Builder for the Driving Privileges Dialog.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+    """
+
+    build_dict = {
+        'dialog_name': 'Driving Privileges Entry',
+        'view': DrivingPrivilegesViewModifier,
+        'slots': DrivingPrivilegesSlotFunctions,
+        'signals': DrivingPrivilegesSignalConnector,
+        'case_information_model': DrivingPrivilegesInformation,
+        'loader': CmsDrivingInfoLoader,
+        'updater': DrivingPrivilegesCaseInformationUpdater,
+        'info_checker': None,
+    }
+
+    def additional_setup(self):
+        self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.enable_other_conditions()
+
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
