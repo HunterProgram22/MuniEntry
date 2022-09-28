@@ -1,5 +1,4 @@
-"""Builder module for the Leap Plea and Leap Plea - Already Valid Dialogs."""
-import munientry.builders.base_dialogs
+"""Builder module for the Leap Plea Dialog."""
 from loguru import logger
 from PyQt5.QtCore import QDate
 
@@ -13,7 +12,6 @@ from munientry.models.case_information.plea_entries import (
 )
 from munientry.updaters.grid_case_updaters import LeapAdmissionPleaDialogUpdater
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
-from munientry.views.leap_plea_valid_dialog_ui import Ui_LeapPleaValidDialog
 
 
 class LeapAdmissionPleaDialogViewModifier(crim.BaseDialogViewModifier):
@@ -67,20 +65,6 @@ class LeapAdmissionPleaDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapAdmissionPleaValidDialogSignalConnector(crim.CrimTrafficSignalConnector):
-    """Signal Connector for Leap Plea - Already Valid Dialog."""
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.connect_main_dialog_common_signals()
-        self.dialog.add_charge_Button.released.connect(
-            self.dialog.functions.start_add_charge_dialog,
-        )
-        self.dialog.guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-
-
 class LeapAdmissionPleaDialog(crim.CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
@@ -97,21 +81,6 @@ class LeapAdmissionPleaDialog(crim.CriminalDialogBuilder, Ui_LeapAdmissionPleaDi
 
     def additional_setup(self):
         self.functions.set_leap_sentencing_date('120 days')
-
-
-class LeapPleaValidDialog(crim.CriminalDialogBuilder, Ui_LeapPleaValidDialog):
-    """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
-
-    build_dict = {
-        'dialog_name': 'Leap Admission Plea Already Valid Dialog',
-        'view': LeapAdmissionPleaDialogViewModifier,
-        'slots': LeapAdmissionPleaDialogSlotFunctions,
-        'signals': LeapAdmissionPleaValidDialogSignalConnector,
-        'case_information_model': LeapAdmissionEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': LeapAdmissionPleaDialogUpdater,
-        'info_checker': LeapAdmissionPleaDialogInfoChecker,
-    }
 
 
 if __name__ == '__main__':

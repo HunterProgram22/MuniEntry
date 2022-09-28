@@ -2,6 +2,7 @@
 import munientry.builders.crimtraffic.bond_hearing_dialog
 import munientry.builders.crimtraffic.failure_to_appear_dialog
 import munientry.builders.crimtraffic.freeform_dialog
+import munientry.builders.crimtraffic.leap_plea_valid_dialog
 import munientry.builders.crimtraffic.leap_sentencing_dialog
 import munientry.builders.crimtraffic.no_plea_bond_dialog
 import munientry.builders.crimtraffic.probation_violation_bond_dialog
@@ -25,7 +26,7 @@ from munientry.settings import ICON_PATH, VERSION_NUMBER
 import munientry.builders.crimtraffic.fine_only_plea_dialog
 import munientry.builders.crimtraffic.diversion_dialog
 import munientry.builders.crimtraffic.jail_cc_plea_dialog
-import munientry.builders.crimtraffic.leap_plea_dialogs
+import munientry.builders.crimtraffic.leap_plea_dialog
 import munientry.builders.crimtraffic.not_guilty_bond_dialog
 import munientry.builders.crimtraffic.plea_only_future_sentence_dialog
 
@@ -81,8 +82,8 @@ class MainWindowViewModifier(object):
             self.main_window.BondHearingButton: munientry.builders.crimtraffic.bond_hearing_dialog.BondHearingDialog,
             self.main_window.PleaOnlyButton: munientry.builders.crimtraffic.plea_only_future_sentence_dialog.PleaOnlyDialog,
             self.main_window.NoPleaBondButton: munientry.builders.crimtraffic.no_plea_bond_dialog.NoPleaBondDialog,
-            self.main_window.LeapAdmissionButton: munientry.builders.crimtraffic.leap_plea_dialogs.LeapAdmissionPleaDialog,
-            self.main_window.LeapAdmissionValidButton: munientry.builders.crimtraffic.leap_plea_dialogs.LeapPleaValidDialog,
+            self.main_window.LeapAdmissionButton: munientry.builders.crimtraffic.leap_plea_dialog.LeapAdmissionPleaDialog,
+            self.main_window.LeapAdmissionValidButton: munientry.builders.crimtraffic.leap_plea_valid_dialog.LeapPleaValidDialog,
             self.main_window.LeapSentencingButton: munientry.builders.crimtraffic.leap_sentencing_dialog.LeapSentencingDialog,
             self.main_window.TrialSentencingButton: munientry.builders.crimtraffic.trial_sentencing_dialog.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: munientry.builders.crimtraffic.sentencing_only_dialog.SentencingOnlyDialog,
