@@ -1,14 +1,16 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnectorOld
+from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.crimtraffic.base_crimtraffic_builders import (
+    BaseDialogSlotFunctions,
+    BaseDialogViewModifier,
+)
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
-from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
-    BaseDialogSlotFunctions
+from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import TODAY, TYPE_CHECKING
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.trial_to_court_hearing_dialog_ui import (
@@ -17,20 +19,6 @@ from munientry.views.trial_to_court_hearing_dialog_ui import (
 
 if TYPE_CHECKING:
     from PyQt5.QtWidgets import QDialog
-
-
-class TrialToCourtDialogSignalConnector(BaseDialogSignalConnectorOld):
-    """Class for connecting signals for Trial to Court Hearing Notice Dialog."""
-
-    def __init__(self, dialog: 'QDialog') -> None:
-        super().__init__(dialog)
-        self.dialog = dialog
-        self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
 
 
 class TrialToCourtDialogViewModifier(BaseDialogViewModifier):
@@ -48,6 +36,14 @@ class TrialToCourtDialogViewModifier(BaseDialogViewModifier):
 
 class TrialToCourtDialogSlotFunctions(BaseDialogSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
+
+
+class TrialToCourtDialogSignalConnector(BaseDialogSignalConnector):
+    """Class for connecting signals for Trial to Court Hearing Notice Dialog."""
+
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.connect_main_dialog_common_signals()
 
 
 class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
@@ -84,6 +80,15 @@ class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.hearing_location = self.view.hearing_location_box.currentText()
 
 
+class TrialToCourtDialogInfoChecker(BaseChecker):
+    """Class with checks for the Trial To Court Info Checker."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = []
+        self.check_status = self.perform_check_list()
+
+
 class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
     """Builder class for the Trial to Court Notice of Hearing.
 
@@ -100,7 +105,7 @@ class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDial
         'case_information_model': SchedulingCaseInformation,
         'loader': CmsNoChargeLoader,
         'updater': TrialToCourtDialogCaseInformationUpdater,
-        'info_checker': None,
+        'info_checker': TrialToCourtDialogInfoChecker,
     }
 
     def additional_setup(self):

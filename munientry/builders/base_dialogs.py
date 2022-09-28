@@ -97,16 +97,6 @@ class BaseDialogSignalConnector(object):
         except AttributeError as err:
             logger.warning(err)
 
-class BaseDialogSignalConnectorOld:
-    def __init__(self, dialog):
-        dialog.cancel_Button.released.connect(dialog.functions.close_window)
-
-    def connect_main_dialog_common_signals(self, dialog):
-        dialog.clear_fields_case_Button.released.connect(dialog.functions.clear_case_information_fields)
-        dialog.create_entry_Button.released.connect(dialog.functions.create_entry_process)
-        dialog.close_dialog_Button.released.connect(dialog.functions.close_window)
-        dialog.defense_counsel_waived_checkBox.toggled.connect(dialog.functions.set_defense_counsel)
-
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
