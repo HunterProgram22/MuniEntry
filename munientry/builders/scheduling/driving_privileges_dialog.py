@@ -2,7 +2,8 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnectorOld
+from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.checkers.base_checks import BaseChecker
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
     BaseDialogSlotFunctions
@@ -29,24 +30,23 @@ class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(BaseDialogSignalConnectorOld):
+class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
-        self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
+        self.connect_main_dialog_common_signals()
+        self.connect_other_dialog_signals()
+
+    def connect_other_dialog_signals(self):
         self.dialog.other_conditions_checkBox.toggled.connect(
-            self.functions.enable_other_conditions,
+            self.dialog.functions.enable_other_conditions,
         )
-        self.dialog.add_employer_school_Button.released.connect(self.functions.add_employer_school)
+        self.dialog.add_employer_school_Button.released.connect(
+            self.dialog.functions.add_employer_school,
+        )
         self.dialog.suspension_term_box.currentTextChanged.connect(
-            self.functions.update_end_suspension_date,
+            self.dialog.functions.update_end_suspension_date,
         )
 
 
@@ -213,6 +213,16 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
 
+
+class DrivingPrivilegesDialogInfoChecker(BaseChecker):
+    """Class with checks for the Driving Privileges Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = []
+        self.check_status = self.perform_check_list()
+
+
 class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
@@ -227,7 +237,7 @@ class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
         'case_information_model': DrivingPrivilegesInformation,
         'loader': CmsDrivingInfoLoader,
         'updater': DrivingPrivilegesCaseInformationUpdater,
-        'info_checker': None,
+        'info_checker': DrivingPrivilegesDialogInfoChecker,
     }
 
     def additional_setup(self):

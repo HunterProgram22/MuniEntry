@@ -90,10 +90,12 @@ class BaseDialogSignalConnector(object):
             self.dialog.functions.create_entry_process,
         )
         self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
-        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
-            self.dialog.functions.set_defense_counsel,
-        )
-
+        try:
+            self.dialog.defense_counsel_waived_checkBox.toggled.connect(
+                self.dialog.functions.set_defense_counsel,
+            )
+        except AttributeError as err:
+            logger.warning(err)
 
 class BaseDialogSignalConnectorOld:
     def __init__(self, dialog):
