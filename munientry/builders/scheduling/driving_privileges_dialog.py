@@ -3,16 +3,17 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 
 from munientry.builders.base_dialogs import BaseDialogSignalConnector
-from munientry.checkers.base_checks import BaseChecker
+from munientry.builders.crimtraffic.base_crimtraffic_builders import (
+    BaseDialogSlotFunctions,
+    BaseDialogViewModifier,
+)
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
-from munientry.builders.crimtraffic.base_crimtraffic_builders import BaseDialogViewModifier, \
-    BaseDialogSlotFunctions
+from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 
@@ -54,7 +55,7 @@ class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        super().__init__(dialog)
         self._driving_days_list = [
             self.dialog.sunday_checkBox,
             self.dialog.monday_checkBox,
