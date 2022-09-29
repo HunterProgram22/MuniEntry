@@ -125,14 +125,23 @@ class DrivingInfoSQLServer(object):
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         self.case.defendant.last_name = self.query.value('DefLastName').title()
         self.case.defendant.birth_date = self.query.value('DefBirthDate')
-        self.case.defendant.address = self.query.value('DefAddress')
-        self.case.defendant.city = self.query.value('DefCity')
-        self.case.defendant.state = self.query.value('DefState')
-        self.case.defendant.zipcode = self.query.value('DefZipcode')
-        self.case.defendant.license_number = self.query.value('DefLicenseNumber')
+        if self.query.value('DefAddress') != '':
+            self.case.defendant.address = self.query.value('DefAddress').title()
+            self.case.defendant.city = self.query.value('DefCity').title()
+            self.case.defendant.state = self.query.value('DefState')
+            self.case.defendant.zipcode = self.query.value('DefZipcode')
+            self.case.defendant.license_number = self.query.value('DefLicenseNumber')
+        else:
+            self.case.defendant.address = self.query.value('CaseAddress').title()
+            self.case.defendant.city = self.query.value('CaseCity').title()
+            self.case.defendant.state = str(self.query.value('CaseState'))
+            self.case.defendant.zipcode = self.query.value('CaseZipcode')
+            self.case.defendant.license_number = self.query.value('DefLicenseNumber')
+
 
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case
+
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
