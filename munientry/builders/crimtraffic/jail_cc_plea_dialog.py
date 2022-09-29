@@ -23,7 +23,7 @@ class JailCCDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class JailCCDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class JailCCDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Jail CC Plea Dialog."""
 
     def show_companion_case_fields(self):

@@ -2,9 +2,9 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_builders import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    BaseDialogSlotFunctions,
+    CrimTrafficSlotFunctions,
     CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
@@ -51,7 +51,7 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         )
 
 
-class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
+class DrivingPrivilegesSlotFunctions(CrimTrafficSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):

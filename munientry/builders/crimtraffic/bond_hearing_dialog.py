@@ -23,7 +23,7 @@ class BondHearingDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.specialized_docket_type_box.setHidden(True)
 
 
-class BondHearingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class BondHearingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Bond Hearing Dialog."""
 
     def start_add_special_bond_conditions_dialog(self):

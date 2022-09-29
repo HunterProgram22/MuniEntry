@@ -1,5 +1,5 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 from PyQt5.QtCore import QDate
 
@@ -49,7 +49,7 @@ class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
         )
 
 
-class DiversionDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class DiversionDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Diversion Dialog."""
 
     def show_other_conditions_box(self):

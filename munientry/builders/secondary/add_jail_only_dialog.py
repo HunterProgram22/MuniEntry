@@ -1,7 +1,8 @@
 """Module builder for Add Jail Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
+from munientry.builders import base_builders as base
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 
@@ -19,7 +20,7 @@ class AddJailOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
         self.load_existing_data_to_dialog()
 
 
-class AddJailOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class AddJailOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Add Jail Dialog."""
 
     def __init__(self, dialog):
@@ -74,7 +75,7 @@ class AddJailOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class AddJailOnlyDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddJailOnly):
+class AddJailOnlyDialog(base.BaseDialogBuilder, Ui_AddJailOnly):
     """Secondary dialog for setting jail reporting information.
 
     Dialogs that use: JailCCPleaDialog, SentencingOnlyDialog, TrialSentencingDialog.

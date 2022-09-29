@@ -1,7 +1,8 @@
 """Module builder for Add Conditions Secondary Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
+from munientry.builders import base_builders as base
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 
@@ -21,7 +22,7 @@ class AddConditionsDialogViewModifier(crim.CrimTrafficViewModifier):
         self.load_existing_data_to_dialog()
 
 
-class AddConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class AddConditionsDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Additional Conditions Dialog."""
 
     def __init__(self, dialog):
@@ -52,7 +53,7 @@ class AddConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_community_service_days_update()
 
 
-class AddConditionsDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddConditionsDialog):
+class AddConditionsDialog(base.BaseDialogBuilder, Ui_AddConditionsDialog):
     """The secondary conditions dialog builder for non-community control conditions.
 
     Dialogs that use: FineOnlyPleaDialog, LeapSentencingDialog.

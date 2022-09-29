@@ -2,9 +2,9 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_builders import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    BaseDialogSlotFunctions,
+    CrimTrafficSlotFunctions,
     CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
@@ -41,7 +41,7 @@ class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class GeneralNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
+class GeneralNoticeOfHearingDialogSlotFunctions(CrimTrafficSlotFunctions):
     """Class that adds to base slot functions for use by General Notice of Hearing Dialog.
 
     Currently no additional functions are added so only accesses BaseDialogSlotFunctions.

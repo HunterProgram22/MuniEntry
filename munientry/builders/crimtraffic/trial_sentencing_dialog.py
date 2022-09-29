@@ -28,7 +28,7 @@ class TrialSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
-class TrialSentencingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class TrialSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Trial Sentencing Dialog."""
 
     def set_all_findings_process(self):

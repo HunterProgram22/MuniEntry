@@ -1,9 +1,9 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_builders import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    BaseDialogSlotFunctions,
+    CrimTrafficSlotFunctions,
     CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
@@ -51,7 +51,7 @@ class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
         )
 
 
-class FinalJuryNoticeHearingSlotFunctions(BaseDialogSlotFunctions):
+class FinalJuryNoticeHearingSlotFunctions(CrimTrafficSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
     def update_trial_date(self) -> None:

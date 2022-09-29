@@ -22,7 +22,7 @@ class FineOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class FineOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class FineOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Fine Only Plea Dialog."""
 
     def set_fines_credit_for_jail_field(self):

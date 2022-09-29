@@ -1,9 +1,9 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_builders import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    BaseDialogSlotFunctions,
+    CrimTrafficSlotFunctions,
     CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
@@ -34,7 +34,7 @@ class TrialToCourtDialogViewModifier(CrimTrafficViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class TrialToCourtDialogSlotFunctions(BaseDialogSlotFunctions):
+class TrialToCourtDialogSlotFunctions(CrimTrafficSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
 

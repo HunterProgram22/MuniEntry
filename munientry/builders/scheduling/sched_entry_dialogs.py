@@ -1,9 +1,9 @@
 """Module containing all classes for building and using the Scheduling Entry Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import BaseDialogSignalConnector
+from munientry.builders.base_builders import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    BaseDialogSlotFunctions,
+    CrimTrafficSlotFunctions,
     CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
@@ -114,7 +114,7 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.no_pretrial_radioButton.clicked.connect(set_pretrial)
 
 
-class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
+class SchedulingEntryDialogSlotFunctions(CrimTrafficSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
     def set_pretrial_scheduled(self):

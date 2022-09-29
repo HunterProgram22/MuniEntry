@@ -1,7 +1,8 @@
 """Module builder for Add Community Control Secondary Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
+from munientry.builders import base_builders as base
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 
@@ -45,7 +46,7 @@ class AddCommunityControlDialogViewModifier(crim.CrimTrafficViewModifier):
         self.hide_boxes()
 
 
-class AddCommunityControlDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class AddCommunityControlDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Add Community Control Dialog."""
 
     def __init__(self, dialog):
@@ -118,7 +119,7 @@ class AddCommunityControlDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class AddCommunityControlDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddCommunityControlDialog):
+class AddCommunityControlDialog(base.BaseDialogBuilder, Ui_AddCommunityControlDialog):
     """The secondary conditions sentencing dialogs with community control.
 
     Dialogs that use: JailCCPleaDialog, SentencingOnlyDialog, TrialSentencingDialog.

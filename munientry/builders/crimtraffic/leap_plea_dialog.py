@@ -23,7 +23,7 @@ class LeapAdmissionPleaDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class LeapAdmissionPleaDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class LeapAdmissionPleaDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Leap Plea Dialogs."""
 
     def set_leap_sentencing_date(self, days_to_add_string):

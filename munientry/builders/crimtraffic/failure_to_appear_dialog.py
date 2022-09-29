@@ -1,5 +1,5 @@
 """Builder module for the Failure To Appear Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -21,7 +21,7 @@ class FailureToAppearDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class FailureToAppearDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class FailureToAppearDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Failure To Appear Dialog."""
 
     def hide_warrant_radius(self):

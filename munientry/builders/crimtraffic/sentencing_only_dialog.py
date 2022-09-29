@@ -22,7 +22,7 @@ class SentencingOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
-class SentencingOnlyDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class SentencingOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Sentencing Only Dialog."""
 
     def show_companion_case_fields(self):

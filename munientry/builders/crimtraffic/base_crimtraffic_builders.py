@@ -8,8 +8,8 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QLabel, QDialog
-from munientry.builders.base_dialogs import BaseDialogSignalConnector, BaseDialogBuilder, \
-    BaseDialogViewModifier
+from munientry.builders.base_builders import BaseDialogSignalConnector, BaseDialogBuilder, \
+    BaseDialogViewModifier, BaseDialogSlotFunctions
 
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
@@ -143,11 +143,8 @@ class CrimTrafficViewModifier(BaseDialogViewModifier):
             getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
 
 
-class BaseDialogSlotFunctions(object):
+class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
 
     def start_add_charge_dialog(self):
         from munientry.builders.secondary.charges_dialogs import AddChargeDialog

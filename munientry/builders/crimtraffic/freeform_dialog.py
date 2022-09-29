@@ -1,5 +1,5 @@
 """Builder module for the Freeform Entry Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -14,7 +14,7 @@ class FreeformDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Freeform Entry Dialog."""
 
 
-class FreeformDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class FreeformDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Freeform Entry Dialog."""
 
 

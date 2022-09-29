@@ -114,5 +114,12 @@ class BaseDialogViewModifier(object):
         self.dialog.setupUi(self.dialog)
 
 
+class BaseDialogSlotFunctions(object):
+    """Base functions used by all dialogs."""
+
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')

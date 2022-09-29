@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from loguru import logger
-from munientry.builders.base_dialogs import BaseDialogBuilder
+from munientry.builders.base_builders import BaseDialogBuilder
 from munientry.models.template_types import TEMPLATE_DICT
 
 

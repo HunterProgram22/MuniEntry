@@ -1,5 +1,5 @@
 """Builder module for the Probation Violation Bond Dialog."""
-import munientry.builders.base_dialogs
+import munientry.builders.base_builders
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
@@ -23,7 +23,7 @@ class ProbationViolationBondDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class ProbationViolationBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class ProbationViolationBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Probation Violation Bond Dialog."""
 
     def hide_bond_conditions(self):

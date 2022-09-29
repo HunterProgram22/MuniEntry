@@ -25,7 +25,7 @@ class NotGuiltyBondDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.specialized_docket_type_box.setHidden(True)
 
 
-class NotGuiltyBondDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class NotGuiltyBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Not Guilty Bond Dialog."""
 
     def start_add_special_bond_conditions_dialog(self):

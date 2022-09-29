@@ -23,7 +23,7 @@ class LeapSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
-class LeapSentencingDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class LeapSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for LEAP Sentencing Dialog."""
 
     def set_fines_credit_for_jail_field(self):

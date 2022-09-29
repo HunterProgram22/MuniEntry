@@ -1,7 +1,8 @@
-import munientry.builders.base_dialogs
+"""Module builder for Add Special Bond Conditions."""
 from loguru import logger
 from PyQt5.QtWidgets import QLabel
 
+from munientry.builders import base_builders as base
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.views.add_special_bond_conditions_dialog_ui import (
     Ui_AddSpecialBondConditionsDialog,
@@ -33,7 +34,7 @@ class AddSpecialBondConditionsDialogViewModifier(crim.CrimTrafficViewModifier):
             column += 1
 
 
-class AddSpecialBondConditionsDialogSlotFunctions(crim.BaseDialogSlotFunctions):
+class AddSpecialBondConditionsDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Add Special Bond Conditions Dialog."""
 
     def __init__(self, dialog):
@@ -75,7 +76,7 @@ class AddSpecialBondConditionsDialogSignalConnector(crim.CrimTrafficSignalConnec
         self.connect_condition_dialog_main_signals()
 
 
-class AddSpecialBondConditionsDialog(munientry.builders.base_dialogs.BaseDialogBuilder, Ui_AddSpecialBondConditionsDialog):
+class AddSpecialBondConditionsDialog(base.BaseDialogBuilder, Ui_AddSpecialBondConditionsDialog):
     """The secondary dialog for adding special bond conditions.
 
     Dialogs that use: NotGuiltyBondDialog, BondHearingDialog, NoPleaBondDialog.
