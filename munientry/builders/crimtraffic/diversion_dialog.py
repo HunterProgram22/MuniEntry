@@ -17,7 +17,7 @@ from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 DIVERSION_ADD_DAYS = 97
 
 
-class DiversionDialogViewModifier(crim.BaseDialogViewModifier):
+class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Diversion Dialog."""
 
     def __init__(self, dialog):

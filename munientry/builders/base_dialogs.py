@@ -3,11 +3,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from PyQt5.QtCore import Qt
 from loguru import logger
-from PyQt5.QtGui import QCloseEvent
+from PyQt5.QtGui import QCloseEvent, QIcon
 from PyQt5.QtWidgets import QDialog
 
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT
+from munientry.settings import WIDGET_TYPE_ACCESS_DICT, ICON_PATH
 
 
 class BaseDialogBuilder(QDialog):
@@ -96,6 +97,21 @@ class BaseDialogSignalConnector(object):
             )
         except AttributeError as err:
             logger.warning(err)
+
+
+class BaseDialogViewModifier(object):
+    """Base View builder that contains setupUI and common dialog view features."""
+
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.dialog.setWindowFlags(
+            self.dialog.windowFlags()
+            | Qt.CustomizeWindowHint
+            | Qt.WindowMaximizeButtonHint
+            | Qt.WindowCloseButtonHint,
+        )
+        self.dialog.setupUi(self.dialog)
 
 
 if __name__ == '__main__':

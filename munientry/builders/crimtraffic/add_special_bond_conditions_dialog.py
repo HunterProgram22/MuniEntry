@@ -8,7 +8,7 @@ from munientry.views.add_special_bond_conditions_dialog_ui import (
 )
 
 
-class AddSpecialBondConditionsDialogViewModifier(crim.BaseDialogViewModifier):
+class AddSpecialBondConditionsDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Add Special Bond Conditions Dialog."""
 
     condition_classes = [

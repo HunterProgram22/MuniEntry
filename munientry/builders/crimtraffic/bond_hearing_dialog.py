@@ -15,7 +15,7 @@ from munientry.updaters.no_grid_case_updaters import BondHearingDialogUpdater
 from munientry.views.bond_hearing_dialog_ui import Ui_BondHearingDialog
 
 
-class BondHearingDialogViewModifier(crim.BaseDialogViewModifier):
+class BondHearingDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Bond Hearing Dialog."""
 
     def __init__(self, dialog):

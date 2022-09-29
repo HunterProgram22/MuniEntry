@@ -16,7 +16,7 @@ from munientry.updaters.grid_case_updaters import LeapSentencingDialogUpdater
 from munientry.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
 
 
-class LeapSentencingDialogViewModifier(crim.BaseDialogViewModifier):
+class LeapSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for LEAP Sentencing Dialog."""
 
     def __init__(self, dialog):

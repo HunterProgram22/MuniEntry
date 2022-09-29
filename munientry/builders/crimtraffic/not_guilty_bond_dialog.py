@@ -15,7 +15,7 @@ from munientry.updaters.grid_case_updaters import NotGuiltyBondDialogUpdater
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 
 
-class NotGuiltyBondDialogViewModifier(crim.BaseDialogViewModifier):
+class NotGuiltyBondDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):

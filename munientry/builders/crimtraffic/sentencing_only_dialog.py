@@ -15,7 +15,7 @@ from munientry.updaters.grid_case_updaters import SentencingOnlyDialogUpdater
 from munientry.views.sentencing_only_dialog_ui import Ui_SentencingOnlyDialog
 
 
-class SentencingOnlyDialogViewModifier(crim.BaseDialogViewModifier):
+class SentencingOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Sentencing Only Dialog."""
 
     def __init__(self, dialog):

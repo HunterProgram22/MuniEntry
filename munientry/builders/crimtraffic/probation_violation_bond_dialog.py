@@ -15,7 +15,7 @@ from munientry.views.probation_violation_bond_dialog_ui import (
 )
 
 
-class ProbationViolationBondDialogViewModifier(crim.BaseDialogViewModifier):
+class ProbationViolationBondDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Probation Violation Bond Dialog."""
 
     def __init__(self, dialog):

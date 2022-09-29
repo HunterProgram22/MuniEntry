@@ -15,7 +15,7 @@ from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 
 
-class JailCCDialogViewModifier(crim.BaseDialogViewModifier):
+class JailCCDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Jail CC Plea Dialog."""
 
     def __init__(self, dialog):

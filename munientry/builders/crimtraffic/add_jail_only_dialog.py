@@ -6,7 +6,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 
 
-class AddJailOnlyDialogViewModifier(crim.BaseDialogViewModifier):
+class AddJailOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Add Jail Dialog."""
 
     condition_classes = [

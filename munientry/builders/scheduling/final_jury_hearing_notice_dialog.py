@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.base_dialogs import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
     BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
+    CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.checkers.base_checks import BaseChecker
@@ -18,7 +18,7 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 )
 
 
-class FinalJuryNoticeHearingViewModifier(BaseDialogViewModifier):
+class FinalJuryNoticeHearingViewModifier(CrimTrafficViewModifier):
     """Class that sets and modifies the view for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog) -> None:

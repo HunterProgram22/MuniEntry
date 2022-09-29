@@ -15,7 +15,7 @@ from munientry.updaters.no_grid_case_updaters import NoPleaBondDialogUpdater
 from munientry.views.no_plea_bond_dialog_ui import Ui_NoPleaBondDialog
 
 
-class NoPleaBondDialogViewModifier(crim.BaseDialogViewModifier):
+class NoPleaBondDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for No Plea Bond Dialog."""
 
     def __init__(self, dialog):

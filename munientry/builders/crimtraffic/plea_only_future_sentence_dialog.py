@@ -11,7 +11,7 @@ from munientry.updaters.grid_case_updaters import PleaOnlyDialogUpdater
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
 
 
-class PleaOnlyDialogViewModifier(crim.BaseDialogViewModifier):
+class PleaOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Plea Only - Future Sentence Dialog."""
 
     def __init__(self, dialog):

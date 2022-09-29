@@ -5,15 +5,15 @@ from os import startfile
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from PyQt5.QtCore import QDate, Qt
-from PyQt5.QtGui import QIcon, QIntValidator
+from PyQt5.QtCore import QDate
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import QLabel, QDialog
-from munientry.builders.base_dialogs import BaseDialogSignalConnector, BaseDialogBuilder
+from munientry.builders.base_dialogs import BaseDialogSignalConnector, BaseDialogBuilder, \
+    BaseDialogViewModifier
 
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import (
-    ICON_PATH,
     SAVE_PATH,
     SPECIAL_DOCKETS_COSTS,
     TYPE_CHECKING,
@@ -84,19 +84,8 @@ class CriminalDialogBuilder(BaseDialogBuilder):
         self.defense_counsel_name_box.setFocus()
 
 
-class BaseDialogViewModifier(object):
+class CrimTrafficViewModifier(BaseDialogViewModifier):
     """Base View Builder for CrimTraffic Entries."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
-        self.dialog.setWindowFlags(
-            self.dialog.windowFlags()
-            | Qt.CustomizeWindowHint
-            | Qt.WindowMaximizeButtonHint
-            | Qt.WindowCloseButtonHint,
-        )
-        self.dialog.setupUi(self.dialog)
 
     def set_appearance_reason(self):
         if self.dialog.case_table == 'final_pretrials':

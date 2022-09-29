@@ -5,7 +5,7 @@ from PyQt5.QtCore import QDate
 from munientry.builders.base_dialogs import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
     BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
+    CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.checkers.base_checks import BaseChecker
@@ -20,7 +20,7 @@ from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDia
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
+class DrivingPrivilegesViewModifier(CrimTrafficViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):

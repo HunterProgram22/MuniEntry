@@ -13,7 +13,7 @@ from munientry.updaters.no_grid_case_updaters import FailureToAppearDialogUpdate
 from munientry.views.failure_to_appear_dialog_ui import Ui_FailureToAppearDialog
 
 
-class FailureToAppearDialogViewModifier(crim.BaseDialogViewModifier):
+class FailureToAppearDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Failure To Appear Dialog."""
 
     def __init__(self, dialog):

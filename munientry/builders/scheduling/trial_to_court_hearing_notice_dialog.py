@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.base_dialogs import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
     BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
+    CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.checkers.base_checks import BaseChecker
@@ -21,7 +21,7 @@ if TYPE_CHECKING:
     from PyQt5.QtWidgets import QDialog
 
 
-class TrialToCourtDialogViewModifier(BaseDialogViewModifier):
+class TrialToCourtDialogViewModifier(CrimTrafficViewModifier):
     """Class for building and modifying the Trial to Court Hearing Notice Dialog."""
 
     def __init__(self, dialog: 'QDialog') -> None:

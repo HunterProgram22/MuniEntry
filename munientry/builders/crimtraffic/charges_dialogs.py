@@ -19,7 +19,7 @@ STATUTE = 'statute'
 DEGREE = 'degree'
 
 
-class ChargeDialogsViewModifier(crim.BaseDialogViewModifier):
+class ChargeDialogsViewModifier(crim.CrimTrafficViewModifier):
     """View builder for both Add and Amend Charge Dialogs."""
 
     def __init__(self, dialog):

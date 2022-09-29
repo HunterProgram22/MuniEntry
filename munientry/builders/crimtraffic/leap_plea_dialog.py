@@ -14,7 +14,7 @@ from munientry.updaters.grid_case_updaters import LeapAdmissionPleaDialogUpdater
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 
 
-class LeapAdmissionPleaDialogViewModifier(crim.BaseDialogViewModifier):
+class LeapAdmissionPleaDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Leap Plea and Leap Plea - Already Valid Dialogs."""
 
     def __init__(self, dialog):

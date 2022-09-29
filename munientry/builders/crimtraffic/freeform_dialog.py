@@ -10,7 +10,7 @@ from munientry.updaters.no_grid_case_updaters import FreeformDialogUpdater
 from munientry.views.freeform_dialog_ui import Ui_FreeformEntryDialog
 
 
-class FreeformDialogViewModifier(crim.BaseDialogViewModifier):
+class FreeformDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Freeform Entry Dialog."""
 
 

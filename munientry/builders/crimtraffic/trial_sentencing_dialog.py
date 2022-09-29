@@ -17,7 +17,7 @@ from munientry.updaters.grid_case_updaters import TrialSentencingDialogUpdater
 from munientry.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 
 
-class TrialSentencingDialogViewModifier(crim.BaseDialogViewModifier):
+class TrialSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Trial Sentencing Dialog.
 
     Uses the JailChargesGrid but the template does not have a plea field and instead uses tried

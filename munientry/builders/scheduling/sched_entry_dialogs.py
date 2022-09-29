@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.base_dialogs import BaseDialogSignalConnector
 from munientry.builders.crimtraffic.base_crimtraffic_builders import (
     BaseDialogSlotFunctions,
-    BaseDialogViewModifier,
+    CrimTrafficViewModifier,
 )
 from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
 from munientry.checkers.base_checks import BaseChecker
@@ -41,7 +41,7 @@ def set_scheduling_dialog_name(sender) -> str:
     return 'None'
 
 
-class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
+class SchedulingEntryDialogViewModifier(CrimTrafficViewModifier):
     """Class that sets and modifies the view for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
