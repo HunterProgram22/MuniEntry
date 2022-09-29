@@ -33,6 +33,8 @@ DB_PATH = fr'{PATH}\db\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 
+# Version Information
+VERSION_NUMBER = '0.37.1'
 
 # Logging Settings
 now = datetime.now()
