@@ -49,7 +49,7 @@ class ProbationViolationBondDialogSignalConnector(crim.CrimTrafficSignalConnecto
         self.dialog.bond_type_box.currentTextChanged.connect(self.dialog.functions.set_if_no_bond)
 
 
-class ProbationViolationBondDialog(crim.CriminalDialogBuilder, Ui_ProbationViolationBondDialog):
+class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationViolationBondDialog):
     """Dialog builder class for 'Prelim. Probation Violation / Bond' Entry."""
 
     build_dict = {

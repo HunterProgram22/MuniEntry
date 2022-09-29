@@ -1,8 +1,7 @@
 """Builder module for the Fine Only Plea Dialog."""
-import munientry.builders.base_dialogs
 from loguru import logger
 
-from munientry.builders.crimtraffic.add_conditions_dialog import AddConditionsDialog
+from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.no_jail_sentencing_checkers import FineOnlyDialogInfoChecker
 from munientry.controllers import charges_grids as cg
@@ -56,7 +55,7 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class FineOnlyPleaDialog(crim.CriminalDialogBuilder, Ui_FineOnlyPleaDialog):
+class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     """Dialog builder class for 'Fine Only' dialog."""
 
     build_dict = {

@@ -71,7 +71,7 @@ class FailureToAppearDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class FailureToAppearDialog(crim.CriminalDialogBuilder, Ui_FailureToAppearDialog):
+class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDialog):
     """Dialog builder class for 'Failure To Appear / Issue Warrant' Entry."""
 
     build_dict = {

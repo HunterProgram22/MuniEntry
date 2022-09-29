@@ -26,7 +26,7 @@ class FreeformDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class FreeformDialog(crim.CriminalDialogBuilder, Ui_FreeformEntryDialog):
+class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
     """Dialog builder class for 'Freeform Entry'."""
 
     build_dict = {

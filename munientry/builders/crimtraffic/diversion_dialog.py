@@ -101,7 +101,7 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class DiversionPleaDialog(crim.CriminalDialogBuilder, Ui_DiversionPleaDialog):
+class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog):
     """Dialog builder class for 'Diversion' dialog."""
 
     build_dict = {

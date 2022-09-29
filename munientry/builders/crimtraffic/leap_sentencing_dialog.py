@@ -1,8 +1,7 @@
 """Builder module for the LEAP Sentencing Dialog."""
-import munientry.builders.base_dialogs
 from loguru import logger
 
-from munientry.builders.crimtraffic.add_conditions_dialog import AddConditionsDialog
+from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.no_jail_sentencing_checkers import (
     LeapSentencingDialogInfoChecker,
@@ -57,7 +56,7 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapSentencingDialog(crim.CriminalDialogBuilder, Ui_LeapSentencingDialog):
+class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialog):
     """Dialog builder class for 'LEAP Sentencing' dialog."""
 
     build_dict = {

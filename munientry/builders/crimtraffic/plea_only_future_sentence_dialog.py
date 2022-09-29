@@ -33,7 +33,7 @@ class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
 
 
-class PleaOnlyDialog(crim.CriminalDialogBuilder, Ui_PleaOnlyDialog):
+class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
 
     build_dict = {

@@ -40,7 +40,7 @@ def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) ->
             frame.deleteLater()
 
 
-class CriminalDialogBuilder(BaseDialogBuilder):
+class CrimTrafficDialogBuilder(BaseDialogBuilder):
     """The base class for all criminal and traffic main entry dialogs."""
 
     def __init__(
@@ -150,14 +150,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog = dialog
 
     def start_add_charge_dialog(self):
-        from munientry.builders.crimtraffic.charges_dialogs import AddChargeDialog
+        from munientry.builders.secondary.charges_dialogs import AddChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def start_amend_offense_dialog(self):
-        from munientry.builders.crimtraffic.charges_dialogs import AmendChargeDialog
+        from munientry.builders.secondary.charges_dialogs import AmendChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AmendChargeDialog(self.dialog)

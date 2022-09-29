@@ -65,7 +65,7 @@ class LeapAdmissionPleaDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapAdmissionPleaDialog(crim.CriminalDialogBuilder, Ui_LeapAdmissionPleaDialog):
+class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
     build_dict = {

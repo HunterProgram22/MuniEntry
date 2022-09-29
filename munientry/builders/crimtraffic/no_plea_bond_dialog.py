@@ -1,8 +1,7 @@
 """Builder module for the No Plea Bond Dialog."""
-import munientry.builders.base_dialogs
 from loguru import logger
 
-from munientry.builders.crimtraffic.add_special_bond_conditions_dialog import \
+from munientry.builders.secondary.add_special_bond_conditions_dialog import \
     AddSpecialBondConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import NoPleaBondDialogInfoChecker
@@ -78,7 +77,7 @@ class NoPleaBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class NoPleaBondDialog(crim.CriminalDialogBuilder, Ui_NoPleaBondDialog):
+class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
     """Dialog builder class for 'Appear on Warrant (No Plea) / Bond' Entry."""
 
     build_dict = {

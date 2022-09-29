@@ -1,9 +1,8 @@
 """Builder module for Trial Sentencing Dialog."""
-import munientry.builders.base_dialogs
 from loguru import logger
 
-from munientry.builders.crimtraffic.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.builders.crimtraffic.add_community_control_dialog import AddCommunityControlDialog
+from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
+from munientry.builders.secondary.add_community_control_dialog import AddCommunityControlDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.jail_charge_grid_checkers import (
     TrialSentencingDialogInfoChecker,
@@ -97,7 +96,7 @@ class TrialSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class TrialSentencingDialog(crim.CriminalDialogBuilder, Ui_TrialSentencingDialog):
+class TrialSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_TrialSentencingDialog):
     """Dialog builder class for 'Jury Trial / Trial to Court Sentencing' dialog."""
 
     build_dict = {

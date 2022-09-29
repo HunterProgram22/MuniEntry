@@ -1,9 +1,8 @@
 """Builder module for the Jail CC Plea Dialog."""
-import munientry.builders.base_dialogs
 from loguru import logger
 
-from munientry.builders.crimtraffic.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.builders.crimtraffic.add_community_control_dialog import AddCommunityControlDialog
+from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
+from munientry.builders.secondary.add_community_control_dialog import AddCommunityControlDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.jail_charge_grid_checkers import SentencingOnlyDialogInfoChecker
 from munientry.controllers import charges_grids as cg
@@ -78,7 +77,7 @@ class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class SentencingOnlyDialog(crim.CriminalDialogBuilder, Ui_SentencingOnlyDialog):
+class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialog):
     """Dialog builder class for 'Sentencing Only - Already Plead' dialog."""
 
     build_dict = {
