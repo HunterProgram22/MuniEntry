@@ -1,14 +1,12 @@
-"""The BaseDialogs modules contains common base classes from which other dialogs inherit."""
+"""Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-
-from typing import Any
 
 from PyQt5.QtCore import Qt
 from loguru import logger
 from PyQt5.QtGui import QCloseEvent, QIcon
 from PyQt5.QtWidgets import QDialog
 
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT, ICON_PATH
+from munientry.settings import ICON_PATH
 
 
 class BaseDialogBuilder(QDialog):
@@ -52,24 +50,6 @@ class BaseDialogBuilder(QDialog):
 
     def perform_info_checks(self) -> None:
         self.dialog_checks = self.build_attrs.get('info_checker')(self)
-
-    def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
-        """Takes data in the view fields and transfers to appropriate model class attribute.
-
-        Method loops through all items in terms list which are maps of a model attribute to
-        a view field. The appropriate transfer method is obtained from the WIDGET_TYPE_ACCESS_DICT
-
-        Args:
-            model_class: A dataclass object that has a terms_list attribute mapping
-                view fields to model attributes.
-        """
-        for (model_attribute, view_field) in model_class.terms_list:
-            widget_type = getattr(self, view_field).__class__.__name__
-            view = getattr(self, view_field)
-            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
-            class_name = model_class.__class__.__name__
-            setattr(model_class, model_attribute, view_field_data)
-            logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
 
     def closeEvent(self, event: QCloseEvent) -> None:
         """Extends pyqt close event method in order to log when a dialog closes."""
