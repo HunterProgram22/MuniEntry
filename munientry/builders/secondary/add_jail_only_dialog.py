@@ -107,7 +107,6 @@ class AddJailOnlyDialog(second.SecondaryDialogBuilder, Ui_AddJailOnly):
     def __init__(self, main_dialog, parent=None) -> None:
         super().__init__(main_dialog, parent)
         self.additional_setup()
-        logger.dialog(f'{self.dialog_name} Opened')
 
     def additional_setup(self):
         self.functions.set_report_date_boxes()

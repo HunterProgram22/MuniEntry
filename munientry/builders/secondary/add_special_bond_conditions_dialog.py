@@ -102,8 +102,7 @@ class AddSpecialBondConditionsDialog(
 
     def __init__(self, main_dialog, parent=None) -> None:
         super().__init__(main_dialog, parent)
-        logger.dialog(f'{self.dialog_name} Opened')
-        crim.enable_condition_frames(self, main_dialog)
+        second.enable_condition_frames(self, main_dialog)
 
 
 if __name__ == '__main__':

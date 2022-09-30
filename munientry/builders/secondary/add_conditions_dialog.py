@@ -74,8 +74,7 @@ class AddConditionsDialog(second.SecondaryDialogBuilder, Ui_AddConditionsDialog)
     def __init__(self, main_dialog, parent=None) -> None:
         super().__init__(main_dialog, parent)
         self.additional_setup()
-        logger.dialog(f'{self.dialog_name} Opened')
-        crim.enable_condition_frames(self, main_dialog)
+        second.enable_condition_frames(self, main_dialog)
 
     def additional_setup(self):
         self.functions.update_community_service_due_date()

@@ -8,7 +8,7 @@ from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QLabel, QDialog
+from PyQt5.QtWidgets import QLabel
 from munientry.builders.base_builders import BaseDialogSignalConnector, BaseDialogBuilder, \
     BaseDialogViewModifier, BaseDialogSlotFunctions
 
@@ -24,21 +24,6 @@ from munientry.widgets.message_boxes import InfoBox, RequiredBox
 if TYPE_CHECKING:
     from munientry.models.cms_models import CmsCaseInformation
     from munientry.models.party_types import JudicialOfficer
-
-def enable_condition_frames(conditions_dialog: QDialog, main_dialog: QDialog) -> None:
-    """The function is called to hide frames on load of dialog.
-
-    Hides conditions that have not been selected in the main dialog. This is necessary
-    because the base view of a dialog contains all possible frames.
-    """
-    for frame_item in conditions_dialog.conditions_frames:
-        (frame_checkbox, frame) = frame_item
-        if getattr(main_dialog, frame_checkbox).isChecked():
-            getattr(conditions_dialog, frame).setEnabled(True)
-        else:
-            frame = getattr(conditions_dialog, frame)
-            frame.setParent(None)
-            frame.deleteLater()
 
 
 class CrimTrafficDialogBuilder(BaseDialogBuilder):
