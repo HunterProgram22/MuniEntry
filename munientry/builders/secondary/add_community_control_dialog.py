@@ -168,9 +168,7 @@ class AddCommunityControlDialog(second.SecondaryDialogBuilder, Ui_AddCommunityCo
     }
 
     def __init__(self, main_dialog, parent=None) -> None:
-        self.charges_list = main_dialog.entry_case_information.charges_list
-        self.main_dialog = main_dialog
-        super().__init__(parent)
+        super().__init__(main_dialog, parent)
         logger.dialog(f'{self.dialog_name} Opened')
         crim.enable_condition_frames(self, main_dialog)
 

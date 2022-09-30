@@ -10,7 +10,9 @@ from munientry.settings import WIDGET_TYPE_ACCESS_DICT
 
 class SecondaryDialogBuilder(BaseDialogBuilder):
     """The base class for all secondary dialogs called from other dialogs."""
-    def __init__(self, parent):
+    def __init__(self, main_dialog, parent):
+        self.charges_list = main_dialog.entry_case_information.charges_list
+        self.main_dialog = main_dialog
         super().__init__(parent)
 
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:

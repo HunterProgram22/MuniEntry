@@ -72,9 +72,7 @@ class AddConditionsDialog(second.SecondaryDialogBuilder, Ui_AddConditionsDialog)
     ]
 
     def __init__(self, main_dialog, parent=None) -> None:
-        self.charges_list = main_dialog.entry_case_information.charges_list
-        self.main_dialog = main_dialog
-        super().__init__(parent)
+        super().__init__(main_dialog, parent)
         self.additional_setup()
         logger.dialog(f'{self.dialog_name} Opened')
         crim.enable_condition_frames(self, main_dialog)
