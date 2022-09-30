@@ -56,6 +56,28 @@ class BaseDialogBuilder(QDialog):
         logger.dialog(f'{self.objectName()} Closed by {event}')
 
 
+class BaseDialogViewModifier(object):
+    """Base View builder that contains setupUI and common dialog view features."""
+
+    def __init__(self, dialog):
+        self.dialog = dialog
+        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.dialog.setWindowFlags(
+            self.dialog.windowFlags()
+            | Qt.CustomizeWindowHint
+            | Qt.WindowMaximizeButtonHint
+            | Qt.WindowCloseButtonHint,
+            )
+        self.dialog.setupUi(self.dialog)
+
+
+class BaseDialogSlotFunctions(object):
+    """Base functions used by all dialogs."""
+
+    def __init__(self, dialog):
+        self.dialog = dialog
+
+
 class BaseDialogSignalConnector(object):
     """Base Signal Connector."""
 
@@ -77,28 +99,6 @@ class BaseDialogSignalConnector(object):
             )
         except AttributeError as err:
             logger.warning(err)
-
-
-class BaseDialogViewModifier(object):
-    """Base View builder that contains setupUI and common dialog view features."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
-        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
-        self.dialog.setWindowFlags(
-            self.dialog.windowFlags()
-            | Qt.CustomizeWindowHint
-            | Qt.WindowMaximizeButtonHint
-            | Qt.WindowCloseButtonHint,
-        )
-        self.dialog.setupUi(self.dialog)
-
-
-class BaseDialogSlotFunctions(object):
-    """Base functions used by all dialogs."""
-
-    def __init__(self, dialog):
-        self.dialog = dialog
 
 
 if __name__ == '__main__':
