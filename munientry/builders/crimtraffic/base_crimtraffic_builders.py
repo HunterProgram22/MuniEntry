@@ -188,6 +188,21 @@ class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
             self.dialog.bond_conditions_frame.setHidden(True)
             self.dialog.special_bond_conditions_frame.setHidden(True)
 
+    def conditions_checkbox_toggle(self):
+        """TODO: This needs to be refactored.
+
+        It loops through all additional conditions to set a single one as true or false.
+
+        TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
+        """
+        for condition_items in self.dialog.additional_conditions_list:
+            checkbox_name, condition = condition_items
+            if self.dialog.sender().isChecked():
+                if checkbox_name == self.dialog.sender().objectName():
+                    setattr(condition, 'ordered', True)
+            elif checkbox_name == self.dialog.sender().objectName():
+                setattr(condition, 'ordered', False)
+
 
 class CrimTrafficSignalConnector(BaseDialogSignalConnector):
     """Extends Base Dialog Signal Connector for CrimTraffic Entries."""

@@ -162,29 +162,6 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_entry_case_information()
         return 'Pass'
 
-    def update_community_service_due_date(self, _index=None) -> None:
-        days_to_complete = int(
-            self.dialog.community_service_days_to_complete_box.currentText(),
-        )
-        self.dialog.community_service_date_to_complete_box.setDate(
-            QDate.currentDate().addDays(days_to_complete),
-        )
-
-    def conditions_checkbox_toggle(self):
-        """TODO: This needs to be refactored.
-
-        It loops through all additional conditions to set a single one as true or false.
-
-        TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
-        """
-        for condition_items in self.dialog.additional_conditions_list:
-            checkbox_name, condition = condition_items
-            if self.dialog.sender().isChecked():
-                if checkbox_name == self.dialog.sender().objectName():
-                    setattr(condition, 'ordered', True)
-            elif checkbox_name == self.dialog.sender().objectName():
-                setattr(condition, 'ordered', False)
-
     def show_hide_checkbox_connected_fields(self):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
         checkbox = self.dialog.sender()

@@ -34,7 +34,7 @@ class AddSpecialBondConditionsDialogViewModifier(second.SecondaryViewModifier):
             column += 1
 
 
-class AddSpecialBondConditionsDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class AddSpecialBondConditionsDialogSlotFunctions(second.SecondarySlotFunctions):
     """Additional functions for Add Special Bond Conditions Dialog."""
 
     def __init__(self, dialog):

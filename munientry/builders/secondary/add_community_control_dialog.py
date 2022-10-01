@@ -45,7 +45,7 @@ class AddCommunityControlDialogViewModifier(second.SecondaryViewModifier):
         self.hide_boxes()
 
 
-class AddCommunityControlDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class AddCommunityControlDialogSlotFunctions(second.SecondarySlotFunctions):
     """Additional functions for Add Community Control Dialog."""
 
     def __init__(self, dialog):

@@ -1,9 +1,10 @@
 """Contains base classes for secondary dialogs."""
 from loguru import logger
+from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT, WIDGET_TYPE_SET_DICT
+from munientry.settings import WIDGET_TYPE_SET_DICT
 
 
 def enable_condition_frames(conditions_dialog, main_dialog) -> None:
@@ -82,3 +83,10 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
 class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
    """Base set of functions for Secondary Dialogs."""
 
+   def update_community_service_due_date(self, _index=None) -> None:
+       days_to_complete = int(
+           self.dialog.community_service_days_to_complete_box.currentText(),
+       )
+       self.dialog.community_service_date_to_complete_box.setDate(
+           QDate.currentDate().addDays(days_to_complete),
+       )

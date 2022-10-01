@@ -21,7 +21,7 @@ class AddConditionsDialogViewModifier(second.SecondaryViewModifier):
         self.load_existing_data_to_dialog()
 
 
-class AddConditionsDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class AddConditionsDialogSlotFunctions(second.SecondarySlotFunctions):
     """Additional functions for Additional Conditions Dialog."""
 
     def __init__(self, dialog):

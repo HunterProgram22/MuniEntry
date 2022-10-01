@@ -19,7 +19,7 @@ class AddJailOnlyDialogViewModifier(second.SecondaryViewModifier):
         self.load_existing_data_to_dialog()
 
 
-class AddJailOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class AddJailOnlyDialogSlotFunctions(second.SecondarySlotFunctions):
     """Additional functions for Add Jail Dialog."""
 
     def __init__(self, dialog):
