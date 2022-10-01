@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import QDialog
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
+from munientry.builders import base_builders as base
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_lite_functions import (
     query_offense_statute_data,
@@ -19,7 +19,7 @@ STATUTE = 'statute'
 DEGREE = 'degree'
 
 
-class ChargeDialogsViewModifier(crim.CrimTrafficViewModifier):
+class ChargeDialogsViewModifier(base.BaseDialogViewModifier):
     """View builder for both Add and Amend Charge Dialogs."""
 
     def __init__(self, dialog):
@@ -49,6 +49,14 @@ class ChargeDialogsViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.statute_choice_box.setCurrentText('')
         self.dialog.degree_choice_box.insertItem(0, '')
         self.dialog.degree_choice_box.setCurrentText('')
+
+    def set_case_information_banner(self):
+        defendant = self.dialog.main_dialog.entry_case_information.defendant
+        defendant_name = f'{defendant.first_name} {defendant.last_name}'
+        self.dialog.defendant_name_label.setText(f'State of Ohio v. {defendant_name}')
+        self.dialog.case_number_label.setText(
+            self.dialog.main_dialog.entry_case_information.case_number,
+        )
 
 
 class BaseChargeDialogsSlotFunctions(object):

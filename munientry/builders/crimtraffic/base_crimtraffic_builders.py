@@ -70,27 +70,19 @@ class CrimTrafficViewModifier(BaseDialogViewModifier):
         elif self.dialog.case_table == 'trials_to_court':
             self.dialog.appearance_reason_box.setCurrentText('a change of plea')
 
-    def set_case_information_banner(self):
-        defendant = self.dialog.main_dialog.entry_case_information.defendant
-        defendant_name = f'{defendant.first_name} {defendant.last_name}'
-        self.dialog.defendant_name_label.setText(f'State of Ohio v. {defendant_name}')
-        self.dialog.case_number_label.setText(
-            self.dialog.main_dialog.entry_case_information.case_number,
-        )
-
 
 class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
 
     def start_add_charge_dialog(self):
-        from munientry.builders.charges.charges_dialogs import AddChargeDialog
+        from munientry.builders.charges.base_charge_builders import AddChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AddChargeDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def start_amend_offense_dialog(self):
-        from munientry.builders.charges.charges_dialogs import AmendChargeDialog
+        from munientry.builders.charges.base_charge_builders import AmendChargeDialog
 
         self.dialog.update_entry_case_information()
         self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
