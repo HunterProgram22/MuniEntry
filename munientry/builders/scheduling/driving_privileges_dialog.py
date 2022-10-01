@@ -2,12 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_builders import BaseDialogSignalConnector
-from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    CrimTrafficSlotFunctions,
-    CrimTrafficViewModifier,
-)
-from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
@@ -20,7 +15,7 @@ from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDia
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesViewModifier(CrimTrafficViewModifier):
+class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
@@ -31,7 +26,7 @@ class DrivingPrivilegesViewModifier(CrimTrafficViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
+class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -51,7 +46,7 @@ class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
         )
 
 
-class DrivingPrivilegesSlotFunctions(CrimTrafficSlotFunctions):
+class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -224,7 +219,7 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
+class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

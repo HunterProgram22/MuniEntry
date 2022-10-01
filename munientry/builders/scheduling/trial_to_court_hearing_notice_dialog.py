@@ -1,12 +1,7 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
 
-from munientry.builders.base_builders import BaseDialogSignalConnector
-from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    CrimTrafficSlotFunctions,
-    CrimTrafficViewModifier,
-)
-from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
@@ -21,7 +16,7 @@ if TYPE_CHECKING:
     from PyQt5.QtWidgets import QDialog
 
 
-class TrialToCourtDialogViewModifier(CrimTrafficViewModifier):
+class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
     """Class for building and modifying the Trial to Court Hearing Notice Dialog."""
 
     def __init__(self, dialog: 'QDialog') -> None:
@@ -34,11 +29,11 @@ class TrialToCourtDialogViewModifier(CrimTrafficViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class TrialToCourtDialogSlotFunctions(CrimTrafficSlotFunctions):
+class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
 
-class TrialToCourtDialogSignalConnector(BaseDialogSignalConnector):
+class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class for connecting signals for Trial to Court Hearing Notice Dialog."""
 
     def __init__(self, dialog):
@@ -89,7 +84,7 @@ class TrialToCourtDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class TrialToCourtHearingDialog(SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
+class TrialToCourtHearingDialog(sched.SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
     """Builder class for the Trial to Court Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

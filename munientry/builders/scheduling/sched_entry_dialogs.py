@@ -1,12 +1,7 @@
 """Module containing all classes for building and using the Scheduling Entry Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_builders import BaseDialogSignalConnector
-from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    CrimTrafficSlotFunctions,
-    CrimTrafficViewModifier,
-)
-from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
@@ -41,7 +36,7 @@ def set_scheduling_dialog_name(sender) -> str:
     return 'None'
 
 
-class SchedulingEntryDialogViewModifier(CrimTrafficViewModifier):
+class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
     """Class that sets and modifies the view for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
@@ -55,7 +50,7 @@ class SchedulingEntryDialogViewModifier(CrimTrafficViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
+class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class that connects all signals for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
@@ -114,7 +109,7 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.no_pretrial_radioButton.clicked.connect(set_pretrial)
 
 
-class SchedulingEntryDialogSlotFunctions(CrimTrafficSlotFunctions):
+class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
     def set_pretrial_scheduled(self):
@@ -267,7 +262,7 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+class SchedulingEntryDialog(sched.SchedulingBaseDialog, Ui_SchedulingEntryDialog):
     """The builder class for the Scheduling Entry Dialog."""
 
     build_dict = {

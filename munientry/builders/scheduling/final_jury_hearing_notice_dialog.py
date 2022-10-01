@@ -1,12 +1,7 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.builders.base_builders import BaseDialogSignalConnector
-from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    CrimTrafficSlotFunctions,
-    CrimTrafficViewModifier,
-)
-from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
@@ -18,7 +13,7 @@ from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
 )
 
 
-class FinalJuryNoticeHearingViewModifier(CrimTrafficViewModifier):
+class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
     """Class that sets and modifies the view for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog) -> None:
@@ -31,7 +26,7 @@ class FinalJuryNoticeHearingViewModifier(CrimTrafficViewModifier):
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 
 
-class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
+class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):
     """Class that connects all signals for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog) -> None:
@@ -51,7 +46,7 @@ class FinalJuryNoticeHearingSignalConnector(BaseDialogSignalConnector):
         )
 
 
-class FinalJuryNoticeHearingSlotFunctions(CrimTrafficSlotFunctions):
+class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
 
     def update_trial_date(self) -> None:
@@ -135,7 +130,7 @@ class FinalJuryNoticeHearingInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class FinalJuryNoticeHearingDialog(SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+class FinalJuryNoticeHearingDialog(sched.SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

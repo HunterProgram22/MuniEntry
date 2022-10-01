@@ -2,12 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_builders import BaseDialogSignalConnector
-from munientry.builders.crimtraffic.base_crimtraffic_builders import (
-    CrimTrafficSlotFunctions,
-    CrimTrafficViewModifier,
-)
-from munientry.builders.scheduling.base_scheduling_builders import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
@@ -20,7 +15,7 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class GeneralNoticeOfHearingDialogViewModifier(CrimTrafficViewModifier):
+class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
@@ -33,7 +28,7 @@ class GeneralNoticeOfHearingDialogViewModifier(CrimTrafficViewModifier):
         self.dialog.hearing_dateEdit.setDate(TODAY)
 
 
-class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class that connects signals to slots for General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
@@ -41,7 +36,7 @@ class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class GeneralNoticeOfHearingDialogSlotFunctions(CrimTrafficSlotFunctions):
+class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class that adds to base slot functions for use by General Notice of Hearing Dialog.
 
     Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
@@ -92,7 +87,7 @@ class GeneralNoticeOfHearingInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
+class GeneralNoticeOfHearingDialog(sched.SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
     """Builder class for the General Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.
