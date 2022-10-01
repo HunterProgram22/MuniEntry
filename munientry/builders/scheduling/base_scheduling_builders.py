@@ -1,15 +1,12 @@
-from __future__ import annotations
-
-from typing import Any
-
+"""Common base classes for Scheduling Dialogs."""
 from loguru import logger
+
 from munientry.builders import base_builders as base
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT
 
 
 class SchedulingBaseDialog(base.BaseDialogBuilder):
-    """The base class for all scheduling entries."""
+    """The base class for all Scheduling Dialogs."""
 
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None):
         self.case_table = case_table
@@ -28,7 +25,7 @@ class SchedulingBaseDialog(base.BaseDialogBuilder):
 
 
 class SchedulingViewModifier(base.BaseDialogViewModifier):
-   """Base View Builder for Scheduling Dialogs."""
+    """Base View Builder for Scheduling Dialogs."""
 
 
 class SchedulingSignalConnector(base.BaseDialogSignalConnector):

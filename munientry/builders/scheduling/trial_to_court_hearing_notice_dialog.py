@@ -21,7 +21,6 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 
     def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
-        self.dialog = dialog
         self.set_view_dates()
 
     def set_view_dates(self) -> None:
