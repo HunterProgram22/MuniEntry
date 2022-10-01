@@ -1,7 +1,6 @@
 """Module builder for Add Conditions Secondary Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_conditions_dialog_ui import Ui_AddConditionsDialog
 

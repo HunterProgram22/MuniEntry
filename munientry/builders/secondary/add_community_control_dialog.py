@@ -1,7 +1,6 @@
 """Module builder for Add Community Control Secondary Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 

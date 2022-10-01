@@ -1,7 +1,6 @@
 """Module builder for Add Jail Dialog."""
 from loguru import logger
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 
@@ -111,12 +110,6 @@ class AddJailOnlyDialog(second.SecondaryDialogBuilder, Ui_AddJailOnly):
     def additional_setup(self):
         self.functions.set_report_date_boxes()
         self.functions.show_report_days_notes_box()
-
-    def start_jail_only_dialog(self) -> None:
-        """TODO: Check if this is ever called - delete if not."""
-        logger.debug('Add JAIL dialog called')
-        self.update_entry_case_information()
-        AddJailOnlyDialog(self).exec()
 
 
 if __name__ == '__main__':

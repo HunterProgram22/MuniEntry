@@ -38,7 +38,17 @@ class SecondaryDialogBuilder(base.BaseDialogBuilder):
 
 
 class SecondaryViewModifier(base.BaseDialogViewModifier):
-    """Base View Builder for Secondary Dialogs."""
+    """Base View Builder for Secondary Dialogs.
+
+    Note: condition_classes and condition_checkbox_list are set to empty lists because
+    this is an abstract base class. Lists are created in the instantiated subclass.
+
+    TODO: Make a true Abstract Base Class ??
+    """
+
+    condition_checkbox_list = []
+
+    condition_classes = []
 
     def set_conditions_case_information_banner(self):
         column = self.dialog.charges_gridLayout.columnCount() + 1
@@ -65,8 +75,6 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
             if getattr(self.dialog.main_dialog, condition_checkbox).isChecked():
                 model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
                 self.transfer_model_data_to_view(model_class)
-            else:
-                continue
 
     def transfer_model_data_to_view(self, model_class):
         """Loops through the terms_list for a model and loads data into the view of the dialog.
@@ -81,15 +89,15 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
 
 
 class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
-   """Base set of functions for Secondary Dialogs."""
+    """Base set of functions for Secondary Dialogs."""
 
-   def update_community_service_due_date(self, _index=None) -> None:
-       days_to_complete = int(
-           self.dialog.community_service_days_to_complete_box.currentText(),
-       )
-       self.dialog.community_service_date_to_complete_box.setDate(
-           QDate.currentDate().addDays(days_to_complete),
-       )
+    def update_community_service_due_date(self, _index=None) -> None:
+        days_to_complete = int(
+            self.dialog.community_service_days_to_complete_box.currentText(),
+        )
+        self.dialog.community_service_date_to_complete_box.setDate(
+            QDate.currentDate().addDays(days_to_complete),
+        )
 
 
 class SecondarySignalConnector(base.BaseDialogSignalConnector):
@@ -101,5 +109,9 @@ class SecondarySignalConnector(base.BaseDialogSignalConnector):
 
     def connect_community_service_days_update(self):
         self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.dialog.functions.update_community_service_due_date
+            self.dialog.functions.update_community_service_due_date,
         )
+
+
+if __name__ == '__main__':
+    logger.log('IMPORT', f'{__name__} run directly.')

@@ -2,7 +2,6 @@
 from loguru import logger
 from PyQt5.QtWidgets import QLabel
 
-from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_special_bond_conditions_dialog_ui import (
     Ui_AddSpecialBondConditionsDialog,
