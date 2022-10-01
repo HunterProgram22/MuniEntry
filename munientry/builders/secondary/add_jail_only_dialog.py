@@ -6,7 +6,7 @@ from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_jail_only_dialog_ui import Ui_AddJailOnly
 
 
-class AddJailOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
+class AddJailOnlyDialogViewModifier(second.SecondaryViewModifier):
     """View builder for Add Jail Dialog."""
 
     condition_classes = [

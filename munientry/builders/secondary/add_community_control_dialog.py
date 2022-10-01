@@ -6,7 +6,7 @@ from munientry.builders.secondary import base_secondary_builders as second
 from munientry.views.add_community_control_dialog_ui import Ui_AddCommunityControlDialog
 
 
-class AddCommunityControlDialogViewModifier(crim.CrimTrafficViewModifier):
+class AddCommunityControlDialogViewModifier(second.SecondaryViewModifier):
     """View builder for Add Community Control Secondary Dialog."""
 
     condition_classes = [
