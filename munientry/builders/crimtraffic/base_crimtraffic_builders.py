@@ -75,17 +75,17 @@ class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
 
     def start_add_charge_dialog(self):
-        from munientry.builders.charges.base_charge_builders import AddChargeDialog
+        from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
 
         self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddChargeDialog(self.dialog)
+        self.dialog.popup_dialog = AddChargeDialogBuilder(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def start_amend_offense_dialog(self):
-        from munientry.builders.charges.base_charge_builders import AmendChargeDialog
+        from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
 
         self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AmendChargeDialog(self.dialog)
+        self.dialog.popup_dialog = AmendChargeDialogBuilder(self.dialog)
         self.dialog.popup_dialog.exec()
 
     def set_fines_costs_pay_date(self, days_to_add_string):
