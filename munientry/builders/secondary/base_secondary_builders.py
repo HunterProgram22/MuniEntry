@@ -78,3 +78,7 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
             view = getattr(self.dialog, view_field)
             getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
 
+
+class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
+   """Base set of functions for Secondary Dialogs."""
+

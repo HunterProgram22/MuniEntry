@@ -1,14 +1,17 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
 
+from os import startfile
 from typing import Any
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QDate
+from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt5.QtGui import QCloseEvent, QIcon
 from PyQt5.QtWidgets import QDialog
 
-from munientry.settings import ICON_PATH, WIDGET_TYPE_ACCESS_DICT
+from munientry.settings import ICON_PATH, WIDGET_TYPE_ACCESS_DICT, SAVE_PATH
+from munientry.widgets.message_boxes import RequiredBox
 
 
 class BaseDialogBuilder(QDialog):
@@ -96,6 +99,104 @@ class BaseDialogSlotFunctions(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
+
+    def close_window(self):
+        """Closes window by calling closeEvent in BaseDialog.
+
+        Event is logged in BaseDialog closeEvent.
+        """
+        self.dialog.close()
+
+    def clear_case_information_fields(self):
+        self.dialog.defendant_first_name_lineEdit.clear()
+        self.dialog.defendant_last_name_lineEdit.clear()
+        self.dialog.case_number_lineEdit.clear()
+        self.dialog.defendant_first_name_lineEdit.setFocus()
+
+    def create_entry(self) -> None:
+        """Loads the proper template and creates the entry."""
+        self.dialog.update_entry_case_information()
+        doc = DocxTemplate(self.dialog.template.template_path)
+        case_data = self.dialog.entry_case_information.get_case_information()
+        doc.render(case_data)
+        docname = self.set_document_name()
+        logger.info(f'Entry Created: {docname}')
+        try:
+            doc.save(SAVE_PATH + docname)
+        except PermissionError as error:
+            logger.warning(error)
+            self.dialog.message_box = RequiredBox(
+                'An entry for this case is already open in Word.\n'
+                + 'You must close the Word document first.',
+            )
+            self.dialog.message_box.exec()
+        startfile(SAVE_PATH + docname)
+
+    def create_entry_process(self) -> None:
+        """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
+        if self.update_info_and_perform_checks() == 'Pass':
+            self.create_entry()
+
+    def set_document_name(self) -> str:
+        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
+
+        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
+        """
+        case_number = self.dialog.entry_case_information.case_number
+        template_name = self.dialog.template.template_name
+        return f'{case_number}_{template_name}.docx'
+
+    def update_info_and_perform_checks(self):
+        """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
+
+        The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
+        meaning the warning message doesn't allow immediate correction.
+
+        The dialog.update_entry_case_information is called a second time to update the model
+        with any changes to information that was made by the InfoChecker checks.
+        """
+        self.dialog.update_entry_case_information()
+        self.dialog.perform_info_checks()
+        if self.dialog.dialog_checks.check_status == 'Fail':
+            return 'Fail'
+        self.dialog.update_entry_case_information()
+        return 'Pass'
+
+    def update_community_service_due_date(self, _index=None) -> None:
+        days_to_complete = int(
+            self.dialog.community_service_days_to_complete_box.currentText(),
+        )
+        self.dialog.community_service_date_to_complete_box.setDate(
+            QDate.currentDate().addDays(days_to_complete),
+        )
+
+    def conditions_checkbox_toggle(self):
+        """TODO: This needs to be refactored.
+
+        It loops through all additional conditions to set a single one as true or false.
+
+        TODO: Ultimately want to tie a checbox to the 'ordered' attribute of a conditions model.
+        """
+        for condition_items in self.dialog.additional_conditions_list:
+            checkbox_name, condition = condition_items
+            if self.dialog.sender().isChecked():
+                if checkbox_name == self.dialog.sender().objectName():
+                    setattr(condition, 'ordered', True)
+            elif checkbox_name == self.dialog.sender().objectName():
+                setattr(condition, 'ordered', False)
+
+    def show_hide_checkbox_connected_fields(self):
+        """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
+        checkbox = self.dialog.sender()
+        boxes = self.dialog.condition_checkbox_dict.get(checkbox.objectName())
+        for field in boxes:
+            if checkbox.isChecked():
+                getattr(self.dialog, field).setEnabled(True)
+                getattr(self.dialog, field).setHidden(False)
+                getattr(self.dialog, field).setFocus(True)
+            else:
+                getattr(self.dialog, field).setEnabled(False)
+                getattr(self.dialog, field).setHidden(True)
 
 
 class BaseDialogSignalConnector(object):
