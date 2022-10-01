@@ -64,11 +64,6 @@ class CrimTrafficDialogBuilder(BaseDialogBuilder):
     def additional_setup(self):
         """Abstract base method used in subclasses for additional setup after init."""
 
-    # TO BE REFACTORED #
-    def add_charge_to_grid(self):
-        self.charges_gridLayout.add_fields_to_charges_grid(self)
-        self.defense_counsel_name_box.setFocus()
-
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
         """Takes data in the view fields and transfers to appropriate model class attribute.
 

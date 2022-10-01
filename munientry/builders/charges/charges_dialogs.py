@@ -202,7 +202,7 @@ class AddChargeDialogSlotFunctions(BaseChargeDialogsSlotFunctions):
         and the data cleared from the fields.
         """
         self.add_charge_to_entry_case_information()
-        self.main_dialog.add_charge_to_grid()
+        self.add_charge_to_grid()
         self.dialog.functions.close_window()
 
     def add_charge_to_entry_case_information(self):
@@ -216,6 +216,9 @@ class AddChargeDialogSlotFunctions(BaseChargeDialogsSlotFunctions):
         criminal_charge.type = self.set_offense_type()
         self.main_dialog.entry_case_information.add_charge_to_list(criminal_charge)
         logger.info(f'Added Charge: {offense}, {statute}, {degree}')
+
+    def add_charge_to_grid(self):
+        self.main_dialog.charges_gridLayout.add_fields_to_charges_grid(self.main_dialog)
 
     def set_offense_type(self):
         """This calls the internal database and sets the appropriate cms_case type for each charge.

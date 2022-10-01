@@ -112,8 +112,11 @@ class CmsChargeLoader(CmsNoChargeLoader):
             self.criminal_charge.degree = charge[2]
             self.criminal_charge.type = self.set_offense_type(charge[3])
             self.dialog.entry_case_information.add_charge_to_list(self.criminal_charge)
-            self.dialog.add_charge_to_grid()
-            self.dialog.setFocus()
+            self.add_charge_to_grid()
+        self.dialog.setFocus()
+
+    def add_charge_to_grid(self):
+        self.dialog.charges_gridLayout.add_fields_to_charges_grid(self.dialog)
 
     def set_offense_type(self, cms_type):
         """Sets the offense type for each charge to either Moving, Non-moving, or Criminal.
