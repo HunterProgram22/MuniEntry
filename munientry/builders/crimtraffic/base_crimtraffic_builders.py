@@ -264,15 +264,6 @@ class CrimTrafficSignalConnector(BaseDialogSignalConnector):
             self.dialog.functions.start_add_conditions_dialog,
         )
 
-    def connect_condition_dialog_main_signals(self):
-        self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
-        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
-
-    def connect_community_service_days_update(self):
-        self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
-            self.dialog.functions.update_community_service_due_date
-        )
-
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')

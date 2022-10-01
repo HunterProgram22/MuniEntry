@@ -68,7 +68,7 @@ class AddSpecialBondConditionsDialogSlotFunctions(second.SecondarySlotFunctions)
             )
 
 
-class AddSpecialBondConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
+class AddSpecialBondConditionsDialogSignalConnector(second.SecondarySignalConnector):
     """Signal Connector for Add Special Bond Conditions Dialog."""
 
     def __init__(self, dialog):

@@ -79,7 +79,7 @@ class AddCommunityControlDialogSlotFunctions(second.SecondarySlotFunctions):
             )
 
 
-class AddCommunityControlDialogSignalConnector(crim.CrimTrafficSignalConnector):
+class AddCommunityControlDialogSignalConnector(second.SecondarySignalConnector):
     """Signal Connector for Add Community Control Dialog."""
 
     def __init__(self, dialog):

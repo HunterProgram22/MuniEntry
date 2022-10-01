@@ -90,3 +90,16 @@ class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
        self.dialog.community_service_date_to_complete_box.setDate(
            QDate.currentDate().addDays(days_to_complete),
        )
+
+
+class SecondarySignalConnector(base.BaseDialogSignalConnector):
+    """Signal Connector for Secondary Dialogs."""
+
+    def connect_condition_dialog_main_signals(self):
+        self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
+        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
+
+    def connect_community_service_days_update(self):
+        self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
+            self.dialog.functions.update_community_service_due_date
+        )

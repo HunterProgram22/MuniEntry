@@ -63,7 +63,7 @@ class AddJailOnlyDialogSlotFunctions(second.SecondarySlotFunctions):
             self.dialog.jail_report_days_notes_box.setHidden(False)
 
 
-class AddJailOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
+class AddJailOnlyDialogSignalConnector(second.SecondarySignalConnector):
     """Signal Connector for Add Jail Dialog."""
 
     def __init__(self, dialog):

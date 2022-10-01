@@ -43,7 +43,7 @@ class AddConditionsDialogSlotFunctions(second.SecondarySlotFunctions):
             )
 
 
-class AddConditionsDialogSignalConnector(crim.CrimTrafficSignalConnector):
+class AddConditionsDialogSignalConnector(second.SecondarySignalConnector):
     """Signal Connector for Additional Conditions Dialog."""
 
     def __init__(self, dialog):
