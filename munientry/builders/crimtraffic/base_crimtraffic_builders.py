@@ -1,35 +1,22 @@
 """Base Classes for CrimTraffic Entries."""
-from __future__ import annotations
-
 from loguru import logger
 from PyQt5.QtCore import QDate
-from PyQt5.QtGui import QIntValidator
-from munientry.builders.base_builders import BaseDialogSignalConnector, BaseDialogBuilder, \
-    BaseDialogViewModifier, BaseDialogSlotFunctions
 
+from munientry.builders import base_builders as base
+from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
+from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
 from munientry.controllers.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import (
-    SPECIAL_DOCKETS_COSTS,
-    TYPE_CHECKING,
-)
+from munientry.settings import SPECIAL_DOCKETS_COSTS
 from munientry.widgets.message_boxes import InfoBox
 
-if TYPE_CHECKING:
-    from munientry.models.cms_models import CmsCaseInformation
-    from munientry.models.party_types import JudicialOfficer
+ORDERED = 'ordered'
 
 
-class CrimTrafficDialogBuilder(BaseDialogBuilder):
+class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
     """The base class for all criminal and traffic main entry dialogs."""
 
-    def __init__(
-        self,
-        judicial_officer: JudicialOfficer,
-        cms_case: CmsCaseInformation = None,
-        case_table: str = None,
-        parent: BaseDialogBuilder = None,
-    ) -> None:
+    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
         """Self.case_table must be set before the call to super().__init__.
 
         The init of BaseDialog, called by super().__init__ calls ModifyView which will use the
@@ -41,7 +28,6 @@ class CrimTrafficDialogBuilder(BaseDialogBuilder):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
-        self.validator = QIntValidator(0, 1000, self)
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()
@@ -59,7 +45,7 @@ class CrimTrafficDialogBuilder(BaseDialogBuilder):
         """Abstract base method used in subclasses for additional setup after init."""
 
 
-class CrimTrafficViewModifier(BaseDialogViewModifier):
+class CrimTrafficViewModifier(base.BaseDialogViewModifier):
     """Base View Builder for CrimTraffic Entries."""
 
     def set_appearance_reason(self):
@@ -71,22 +57,8 @@ class CrimTrafficViewModifier(BaseDialogViewModifier):
             self.dialog.appearance_reason_box.setCurrentText('a change of plea')
 
 
-class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
-    """Base set of functions for CrimTraffic Entries."""
-
-    def start_add_charge_dialog(self):
-        from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
-
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AddChargeDialogBuilder(self.dialog)
-        self.dialog.popup_dialog.exec()
-
-    def start_amend_offense_dialog(self):
-        from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
-
-        self.dialog.update_entry_case_information()
-        self.dialog.popup_dialog = AmendChargeDialogBuilder(self.dialog)
-        self.dialog.popup_dialog.exec()
+class FineCostsMixin(object):
+    """Mixin methods for dialogs that calculate fines and costs."""
 
     def set_fines_costs_pay_date(self, days_to_add_string):
         """Sets the fines/costs pay date.
@@ -114,33 +86,6 @@ class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
             'within 90 days': 90,
         }
         return pay_date_dict.get(days_to_add_string)
-
-    def set_defense_counsel(self) -> None:
-        if self.dialog.defense_counsel_waived_checkBox.isChecked():
-            self.dialog.defense_counsel_name_box.setEnabled(False)
-            self.dialog.defense_counsel_type_box.setEnabled(False)
-        else:
-            self.dialog.defense_counsel_name_box.setEnabled(True)
-            self.dialog.defense_counsel_type_box.setEnabled(True)
-
-    def set_fra_in_file(self, current_text: str) -> None:
-        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
-        if current_text == 'Yes':
-            self.dialog.entry_case_information.fra_in_file = True
-            self.dialog.fra_in_court_box.setCurrentText('No')
-        elif current_text == 'No':
-            self.dialog.entry_case_information.fra_in_file = False
-        else:
-            self.dialog.entry_case_information.fra_in_file = None
-
-    def set_fra_in_court(self, current_text: str) -> None:
-        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
-        if current_text == 'Yes':
-            self.dialog.entry_case_information.fra_in_court = True
-        elif current_text == 'No':
-            self.dialog.entry_case_information.fra_in_court = False
-        else:
-            self.dialog.entry_case_information.fra_in_court = None
 
     def show_costs_and_fines(self):
         self.dialog.update_entry_case_information()
@@ -170,6 +115,47 @@ class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
             - self.dialog.entry_case_information.total_fines_suspended
         )
 
+
+class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
+    """Base set of functions for CrimTraffic Entries."""
+
+    def start_add_charge_dialog(self):
+        self.dialog.update_entry_case_information()
+        self.dialog.popup_dialog = AddChargeDialogBuilder(self.dialog)
+        self.dialog.popup_dialog.exec()
+
+    def start_amend_offense_dialog(self):
+        self.dialog.update_entry_case_information()
+        self.dialog.popup_dialog = AmendChargeDialogBuilder(self.dialog)
+        self.dialog.popup_dialog.exec()
+
+    def set_defense_counsel(self) -> None:
+        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+            self.dialog.defense_counsel_name_box.setEnabled(False)
+            self.dialog.defense_counsel_type_box.setEnabled(False)
+        else:
+            self.dialog.defense_counsel_name_box.setEnabled(True)
+            self.dialog.defense_counsel_type_box.setEnabled(True)
+
+    def set_fra_in_file(self, current_text: str) -> None:
+        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
+        if current_text == 'Yes':
+            self.dialog.entry_case_information.fra_in_file = True
+            self.dialog.fra_in_court_box.setCurrentText('No')
+        elif current_text == 'No':
+            self.dialog.entry_case_information.fra_in_file = False
+        else:
+            self.dialog.entry_case_information.fra_in_file = None
+
+    def set_fra_in_court(self, current_text: str) -> None:
+        """Sets the FRA (proof of insurance) to true if the view indicates 'Yes'."""
+        if current_text == 'Yes':
+            self.dialog.entry_case_information.fra_in_court = True
+        elif current_text == 'No':
+            self.dialog.entry_case_information.fra_in_court = False
+        else:
+            self.dialog.entry_case_information.fra_in_court = None
+
     def show_bond_boxes(self, bond_mod_string):
         if bond_mod_string == 'request to modify bond is granted':
             self.dialog.bond_frame.setHidden(False)
@@ -191,12 +177,12 @@ class CrimTrafficSlotFunctions(BaseDialogSlotFunctions):
             checkbox_name, condition = condition_items
             if self.dialog.sender().isChecked():
                 if checkbox_name == self.dialog.sender().objectName():
-                    setattr(condition, 'ordered', True)
+                    setattr(condition, ORDERED, True)
             elif checkbox_name == self.dialog.sender().objectName():
-                setattr(condition, 'ordered', False)
+                setattr(condition, ORDERED, False)
 
 
-class CrimTrafficSignalConnector(BaseDialogSignalConnector):
+class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
     """Extends Base Dialog Signal Connector for CrimTraffic Entries."""
 
     def connect_fra_signals(self):
@@ -242,7 +228,7 @@ class CrimTrafficSignalConnector(BaseDialogSignalConnector):
             self.dialog.functions.show_costs_and_fines,
         )
 
-    def connect_main_dialog_additional_condition_signals(self):
+    def connect_main_dialog_add_condition_signals(self):
         self.dialog.license_suspension_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
         )

@@ -22,7 +22,7 @@ class FineOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-class FineOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class FineOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
     """Additional functions for Fine Only Plea Dialog."""
 
     def set_fines_credit_for_jail_field(self):
@@ -49,7 +49,7 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
         self.connect_court_cost_signals()
-        self.connect_main_dialog_additional_condition_signals()
+        self.connect_main_dialog_add_condition_signals()
         self.dialog.credit_for_jail_checkBox.toggled.connect(
             self.dialog.functions.set_fines_credit_for_jail_field,
         )

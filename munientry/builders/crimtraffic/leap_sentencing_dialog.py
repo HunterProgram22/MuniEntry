@@ -23,7 +23,7 @@ class LeapSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
-class LeapSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class LeapSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
     """Additional functions for LEAP Sentencing Dialog."""
 
     def set_fines_credit_for_jail_field(self):
@@ -50,7 +50,7 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
         self.connect_court_cost_signals()
-        self.connect_main_dialog_additional_condition_signals()
+        self.connect_main_dialog_add_condition_signals()
         self.dialog.credit_for_jail_checkBox.toggled.connect(
             self.dialog.functions.set_fines_credit_for_jail_field,
         )

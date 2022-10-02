@@ -1,5 +1,6 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
+from PyQt5.QtGui import QIntValidator
 
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.builders.secondary.add_community_control_dialog import AddCommunityControlDialog
@@ -22,7 +23,7 @@ class SentencingOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
-class SentencingOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class SentencingOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
     """Additional functions for Sentencing Only Dialog."""
 
     def show_companion_case_fields(self):
@@ -55,7 +56,7 @@ class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_plea_all_button_signals()
         self.connect_fra_signals()
         self.connect_court_cost_signals()
-        self.connect_main_dialog_additional_condition_signals()
+        self.connect_main_dialog_add_condition_signals()
         self.connect_dialog_specific_signals()
 
     def connect_dialog_specific_signals(self):
@@ -92,7 +93,8 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
     }
 
     def additional_setup(self):
-        self.jail_time_credit_box.setValidator(self.validator)
+        validator = QIntValidator(0, 1000, self)
+        self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),
             ('license_suspension_checkBox', self.entry_case_information.license_suspension),
