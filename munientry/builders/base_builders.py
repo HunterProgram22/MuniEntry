@@ -4,25 +4,18 @@ from __future__ import annotations
 from os import startfile
 from typing import Any
 
-from PyQt5.QtCore import Qt, QDate
 from docxtpl import DocxTemplate
 from loguru import logger
-from PyQt5.QtGui import QCloseEvent, QIcon
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog
 
-from munientry.settings import ICON_PATH, WIDGET_TYPE_ACCESS_DICT, SAVE_PATH
+from munientry.settings import ICON_PATH, SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox
 
 
-class BaseDialogBuilder(QDialog):
-    """This class is a base class for all dialog windows."""
-
-    def __init__(self, parent: QDialog = None) -> None:
-        super().__init__(parent)
-        self.build_attrs = self._get_dialog_attributes()
-        self._modify_view()
-        self._connect_signals_to_slots()
-        self.dialog_name = self.build_attrs.get('dialog_name', None)
+class BuildMixin(object):
+    """Contains private methods used in the build process."""
 
     def _get_dialog_attributes(self) -> dict:
         """Returns a dict containing all classes used to build and work with a Dialog."""
@@ -44,6 +37,17 @@ class BaseDialogBuilder(QDialog):
         self.functions = self.build_attrs.get('slots')(self)
         self.build_attrs.get('signals')(self)
 
+
+class BaseDialogBuilder(QDialog, BuildMixin):
+    """This class is a base class for all dialog windows."""
+
+    def __init__(self, parent: QDialog = None) -> None:
+        super().__init__(parent)
+        self.build_attrs = self._get_dialog_attributes()
+        self._modify_view()
+        self._connect_signals_to_slots()
+        self.dialog_name = self.build_attrs.get('dialog_name', None)
+
     def load_entry_case_information_model(self):
         self.entry_case_information = self.build_attrs.get('case_information_model')()
 
@@ -56,9 +60,10 @@ class BaseDialogBuilder(QDialog):
     def perform_info_checks(self) -> None:
         self.dialog_checks = self.build_attrs.get('info_checker')(self)
 
-    def closeEvent(self, event: QCloseEvent) -> None:
-        """Extends pyqt close event method in order to log when a dialog closes."""
-        logger.dialog(f'{self.objectName()} Closed by {event}')
+    def close(self):
+        """Closes window by calling closeEvent in BaseDialog."""
+        logger.dialog(f'{self.objectName()} Closed')
+        super().close()
 
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
         """Takes data in the view fields and transfers to appropriate model class attribute.
@@ -90,7 +95,7 @@ class BaseDialogViewModifier(object):
             | Qt.CustomizeWindowHint
             | Qt.WindowMaximizeButtonHint
             | Qt.WindowCloseButtonHint,
-            )
+        )
         self.dialog.setupUi(self.dialog)
 
 
@@ -99,13 +104,6 @@ class BaseDialogSlotFunctions(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-
-    def close_window(self):
-        """Closes window by calling closeEvent in BaseDialog.
-
-        Event is logged in BaseDialog closeEvent.
-        """
-        self.dialog.close()
 
     def clear_case_information_fields(self):
         self.dialog.defendant_first_name_lineEdit.clear()
@@ -167,13 +165,14 @@ class BaseDialogSlotFunctions(object):
         checkbox = self.dialog.sender()
         boxes = self.dialog.condition_checkbox_dict.get(checkbox.objectName())
         for field in boxes:
+            hidden_checkbox = getattr(self.dialog, field)
             if checkbox.isChecked():
-                getattr(self.dialog, field).setEnabled(True)
-                getattr(self.dialog, field).setHidden(False)
-                getattr(self.dialog, field).setFocus(True)
+                hidden_checkbox.setEnabled(True)
+                hidden_checkbox.setHidden(False)
+                hidden_checkbox.setFocus(True)
             else:
-                getattr(self.dialog, field).setEnabled(False)
-                getattr(self.dialog, field).setHidden(True)
+                hidden_checkbox.setEnabled(False)
+                hidden_checkbox.setHidden(True)
 
 
 class BaseDialogSignalConnector(object):
@@ -181,16 +180,16 @@ class BaseDialogSignalConnector(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        self.dialog.cancel_Button.released.connect(self.dialog.functions.close_window)
+        self.dialog.cancel_Button.released.connect(self.dialog.close)
 
     def connect_main_dialog_common_signals(self):
+        self.dialog.close_dialog_Button.released.connect(self.dialog.close)
         self.dialog.clear_fields_case_Button.released.connect(
             self.dialog.functions.clear_case_information_fields,
         )
         self.dialog.create_entry_Button.released.connect(
             self.dialog.functions.create_entry_process,
         )
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
         try:
             self.dialog.defense_counsel_waived_checkBox.toggled.connect(
                 self.dialog.functions.set_defense_counsel,

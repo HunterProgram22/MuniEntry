@@ -105,7 +105,7 @@ class SecondarySignalConnector(base.BaseDialogSignalConnector):
 
     def connect_condition_dialog_main_signals(self):
         self.dialog.add_conditions_Button.pressed.connect(self.dialog.functions.add_conditions)
-        self.dialog.add_conditions_Button.released.connect(self.dialog.functions.close_window)
+        self.dialog.add_conditions_Button.released.connect(self.dialog.close)
 
     def connect_community_service_days_update(self):
         self.dialog.community_service_days_to_complete_box.currentIndexChanged.connect(
