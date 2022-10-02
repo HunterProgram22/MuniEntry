@@ -2,9 +2,11 @@
 from loguru import logger
 from PyQt5.QtGui import QIntValidator
 
-from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.builders.secondary.add_community_control_dialog import AddCommunityControlDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
+from munientry.builders.secondary.add_community_control_dialog import (
+    AddCommunityControlDialog,
+)
+from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.checkers.jail_charge_grid_checkers import SentencingOnlyDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.data.cms_case_loaders import CmsFraLoader

@@ -1,9 +1,10 @@
 """Builder module for the Not Guilty Bond Dialog."""
 from loguru import logger
 
-from munientry.builders.secondary.add_special_bond_conditions_dialog import \
-    AddSpecialBondConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
+from munientry.builders.secondary.add_special_bond_conditions_dialog import (
+    AddSpecialBondConditionsDialog,
+)
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.data.cms_case_loaders import CmsChargeLoader

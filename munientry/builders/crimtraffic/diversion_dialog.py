@@ -1,5 +1,4 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
-import munientry.builders.base_builders
 from loguru import logger
 from PyQt5.QtCore import QDate
 

@@ -1,8 +1,8 @@
 """Builder module for the Fine Only Plea Dialog."""
 from loguru import logger
 
-from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
+from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
 from munientry.checkers.no_jail_sentencing_checkers import FineOnlyDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.data.cms_case_loaders import CmsFraLoader

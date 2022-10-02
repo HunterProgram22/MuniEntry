@@ -1,5 +1,4 @@
 """Builder module for the Freeform Entry Dialog."""
-import munientry.builders.base_builders
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
