@@ -19,7 +19,7 @@ class AmendChargeDialogSlotFunctions(charge.ChargeDialogsSlotFunctions):
             self.update_criminal_charge_offense_name()
             self.add_charge_to_amended_charge_list()
             self.update_charges_grid_with_amended_charge()
-        self.dialog.functions.close_window()
+        self.dialog.close()
 
     def update_criminal_charge_offense_name(self):
         offense_name = self.dialog.current_offense_name

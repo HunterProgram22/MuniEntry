@@ -18,7 +18,7 @@ class AddChargeDialogSlotFunctions(charge.ChargeDialogsSlotFunctions):
         """
         self.add_charge_to_entry_case_information()
         self.add_charge_to_grid()
-        self.dialog.functions.close_window()
+        self.dialog.close()
 
     def add_charge_to_entry_case_information(self):
         criminal_charge = CriminalCharge()
