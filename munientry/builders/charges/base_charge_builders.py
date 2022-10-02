@@ -142,38 +142,24 @@ class ChargeDialogsSignalConnector(object):
         )
 
 
-class ChargeDialogBuilder(QDialog):
+class ChargeDialogBuilder(base.BaseDialogBuilder):
     """The Base Charge Dialog loads the statutes and offenses from the database."""
 
     def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
-        super().__init__(parent)
         self.main_dialog = main_dialog
-        self.build_attrs = self._get_dialog_attributes()
-        self.db_connection_string = self.build_attrs.get('db_connection_string')
+        self.db_connection_string = 'con_charges'
         self.db_connection = open_db_connection(self.db_connection_string)
-        self._modify_view()
-        self._connect_signals_to_slots()
-        self.dialog_name = self.build_attrs.get('dialog_name')
+        super().__init__(parent)
         self.additional_setup()
         logger.dialog(f'{self.dialog_name} Opened')
 
     def additional_setup(self):
         """Abstract base method used in subclasses for additional setup after init."""
 
-    def closeEvent(self, _event) -> None:
-        """Extends QDialog closeEvent to log and close database connection."""
-        logger.dialog(f'{self.objectName()} Closed')
+    def close(self) -> bool:
+        """Extends the close function to close database connection."""
         close_db_connection(self.db_connection)
-
-    def _get_dialog_attributes(self) -> dict:
-        return self.build_dict
-
-    def _modify_view(self) -> None:
-        self.build_attrs.get('view')(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        self.functions = self.build_attrs.get('slots')(self)
-        self.build_attrs.get('signals')(self)
+        super().close()
 
 
 if __name__ == '__main__':
