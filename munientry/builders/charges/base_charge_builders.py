@@ -1,11 +1,9 @@
 """Secondary dialogs opened from a main entry dialog when a charge needs to be added or amended."""
 from loguru import logger
-from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QDialog
 
 from munientry.builders import base_builders as base
-from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data import sql_lite_functions as sql_lite
+from munientry.data.connections import close_db_connection, open_db_connection
 
 OFFENSE = 'offense'
 STATUTE = 'statute'
@@ -89,13 +87,12 @@ class ChargeDialogsSlotFunctions(object):
             return 0
         field = OFFENSE
         offense, statute, degree = sql_lite.query_charges_database(
-           self.dialog.db_connection, key, field,
+            self.dialog.db_connection, key, field,
         )
         if offense == key:
             self.dialog.statute_choice_box.setCurrentText(statute)
             self.dialog.degree_choice_box.setCurrentText(degree)
         return 1
-
 
     def set_freeform_entry(self):
         if self.dialog.freeform_entry_checkBox.isChecked():
@@ -145,7 +142,7 @@ class ChargeDialogsSignalConnector(object):
 class ChargeDialogBuilder(base.BaseDialogBuilder):
     """The Base Charge Dialog loads the statutes and offenses from the database."""
 
-    def __init__(self, main_dialog: QDialog, parent: QDialog = None) -> None:
+    def __init__(self, main_dialog, parent=None) -> None:
         self.main_dialog = main_dialog
         self.db_connection_string = 'con_charges'
         self.db_connection = open_db_connection(self.db_connection_string)
