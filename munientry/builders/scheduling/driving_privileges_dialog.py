@@ -64,6 +64,7 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.occupational_checkBox,
             self.dialog.educational_checkBox,
             self.dialog.vocational_checkBox,
+            self.dialog.medical_checkBox,
         ]
         self._driving_hours_list = [
             self.dialog.from_hours_lineEdit,
@@ -73,6 +74,16 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.varied_hours_checkBox,
             self.dialog.other_conditions_checkBox,
         ]
+
+    def set_document_name(self) -> str:
+        """Overrides BaseDialogSlotFunctions set_document_name.
+
+        Sets the document name based on driver name instead of case number.
+        """
+        first_name = self.dialog.entry_case_information.defendant.first_name
+        last_name = self.dialog.entry_case_information.defendant.last_name
+        template_name = self.dialog.template.template_name
+        return f'{first_name}_{last_name}_{template_name}.docx'
 
     def update_end_suspension_date(self) -> None:
         suspension_days_dict = {

@@ -134,7 +134,7 @@ class DrivingInfoSQLServer(object):
         else:
             self.case.defendant.address = self.query.value('CaseAddress').title()
             self.case.defendant.city = self.query.value('CaseCity').title()
-            self.case.defendant.state = str(self.query.value('CaseState'))
+            # self.case.defendant.state = str(self.query.value('CaseState'))
             self.case.defendant.zipcode = self.query.value('CaseZipcode')
             self.case.defendant.license_number = self.query.value('DefLicenseNumber')
 

@@ -51,7 +51,7 @@ def driving_case_search_query(case_number: str) -> str:
       ti.DefendantDLNumber as DefLicenseNumber,
       cp.AddressLine1 as CaseAddress,
       cp.City as CaseCity,
-      cd.Code as CaseState,
+--       cd.Code as CaseState,
       cp.ZipCode as CaseZipcode
 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
@@ -61,8 +61,8 @@ def driving_case_search_query(case_number: str) -> str:
     ON cp.CaseMasterID = sc.CaseMasterID and cp.PersonTypeID = '1'
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[TicketImport] ti
     ON cp.LastName = ti.DefendantLastName AND cp.FirstName = ti.DefendantFirstName
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Codes] cd
-    ON cd.Id = cp.StateID
+--     LEFT OUTER JOIN [AuthorityCourt].[dbo].[Codes] cd
+-- --     ON cd.Id = cp.StateID
     WHERE CaseNumber='{case_number}'
     """
 
