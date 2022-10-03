@@ -77,6 +77,17 @@ def select_type_for_statute_in_charges(statute: str) -> str:
         """
 
 
+def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
+    return f"""
+    SELECT
+    offense,
+    statute,
+    degree
+    FROM charges
+    WHERE {field} LIKE '%{key}%'
+    """
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
 else:

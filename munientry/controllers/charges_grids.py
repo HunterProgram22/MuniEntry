@@ -1,15 +1,12 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
-from typing import TypeVar
 
 import munientry.widgets.combo_boxes
 from loguru import logger
 from PyQt5.QtWidgets import QGridLayout, QLabel
 
-from munientry.builders.base_dialogs import CriminalBaseDialog
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.widgets import custom_widgets as cw
 
-CBD = TypeVar('CBD', bound=CriminalBaseDialog)
 
 
 class BaseChargeGrid(QGridLayout):
@@ -106,30 +103,30 @@ class ChargeGridBuilder(BaseChargeGrid):
         self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(munientry.widgets.combo_boxes.DegreeComboBox(charge.degree), self.row_degree, column)
 
-    def add_delete_button_to_grid(self, column: int, charge: CriminalCharge, dialog: CBD) -> None:
+    def add_delete_button_to_grid(self, column: int, charge: CriminalCharge, dialog) -> None:
         self.addWidget(
             cw.ChargeGridDeleteButton(column, charge, dialog),
             self.row_delete_button,
             column,
         )
 
-    def add_plea_box_to_grid(self, column: int, dialog: CBD) -> None:
+    def add_plea_box_to_grid(self, column: int, dialog) -> None:
         self.addWidget(munientry.widgets.combo_boxes.PleaComboBox(column, dialog), self.row_plea, column)
 
-    def add_amend_button_to_grid(self, column: int, charge: CriminalCharge, dialog: CBD) -> None:
+    def add_amend_button_to_grid(self, column: int, charge: CriminalCharge, dialog) -> None:
         self.addWidget(
             cw.ChargeGridAmendButton(column, charge, dialog),
             self.row_amend_button,
             column,
         )
 
-    def add_dismissed_checkbox_to_grid(self, column: int, dialog: CBD) -> None:
+    def add_dismissed_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.DismissedCheckbox(column, dialog), self.row_dismissed_box, column)
 
     def add_finding_box_to_grid(self, column: int) -> None:
         self.addWidget(munientry.widgets.combo_boxes.FindingComboBox(), self.row_finding, column)
 
-    def add_allied_checkbox_to_grid(self, column: int, dialog: CBD) -> None:
+    def add_allied_checkbox_to_grid(self, column: int, dialog) -> None:
         self.addWidget(cw.AlliedCheckbox(column, dialog), self.row_allied_box, column)
 
 
@@ -146,7 +143,7 @@ class NotGuiltyPleaGrid(ChargeGridBuilder):
     row_plea = 3
     row_delete_button = 4
 
-    def add_fields_to_charges_grid(self, dialog: CBD) -> None:
+    def add_fields_to_charges_grid(self, dialog) -> None:
         column = self.columnCount() + 1
         charge = dialog.entry_case_information.charges_list[-1]
         self.add_charge_to_grid(column, charge)
@@ -169,7 +166,7 @@ class LeapAdmissionPleaGrid(ChargeGridBuilder):
     row_amend_button = 5
     row_delete_button = 6
 
-    def add_fields_to_charges_grid(self, dialog: CBD) -> None:
+    def add_fields_to_charges_grid(self, dialog) -> None:
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
         self.add_charge_to_grid(column, charge)
@@ -197,7 +194,7 @@ class PleaOnlyGrid(ChargeGridBuilder):
     row_amend_button = 7
     row_delete_button = 8
 
-    def add_fields_to_charges_grid(self, dialog: CBD) -> None:
+    def add_fields_to_charges_grid(self, dialog) -> None:
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
         self.add_charge_to_grid(column, charge)
@@ -227,7 +224,7 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
     row_amend_button = 9
     row_delete_button = 10
 
-    def add_fields_to_charges_grid(self, dialog: CBD) -> None:
+    def add_fields_to_charges_grid(self, dialog) -> None:
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
         self.add_charge_to_grid(column, charge)
@@ -264,7 +261,7 @@ class JailChargesGrid(FineOnlyChargeGrid):
     row_amend_button = 11
     row_delete_button = 12
 
-    def add_fields_to_charges_grid(self, dialog: CBD) -> None:
+    def add_fields_to_charges_grid(self, dialog) -> None:
         charge = dialog.entry_case_information.charges_list[-1]
         column = self.columnCount() + 1
         self.add_charge_to_grid(column, charge)

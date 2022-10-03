@@ -1,7 +1,7 @@
 """Module that contains case updaters for dialogs that have a charge grid."""
 
 from loguru import logger
-from munientry.updaters.base_updaters import CBD, BaseDialogUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
     FineOnlyGridModelUpdater,
@@ -22,7 +22,7 @@ from munientry.updaters.general_updaters import (
 class DiversionDialogUpdater(BaseDialogUpdater):
     """Updater for Diversion Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_diversion_information()
@@ -43,7 +43,7 @@ class DiversionDialogUpdater(BaseDialogUpdater):
 class JailCCDialogUpdater(BaseDialogUpdater):
     """Updater for Jail and Comm. Control Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
@@ -71,7 +71,7 @@ class JailCCDialogUpdater(BaseDialogUpdater):
 
 class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
     """Inherits from Jail Updater because only difference is adds a plea date."""
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_plea_date()
 
@@ -82,7 +82,7 @@ class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
 class TrialSentencingDialogUpdater(JailCCDialogUpdater):
     """Inherits from Jail Updater because only difference is lack of a plea field."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
 
     def update_case_information(self) -> CaseInformationUpdater:
@@ -96,7 +96,7 @@ class TrialSentencingDialogUpdater(JailCCDialogUpdater):
 class FineOnlyDialogUpdater(BaseDialogUpdater):
     """Updater for Fine Only Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
@@ -124,7 +124,7 @@ class FineOnlyDialogUpdater(BaseDialogUpdater):
 class LeapSentencingDialogUpdater(BaseDialogUpdater):
     """Updater for Leap Sentencing Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
@@ -160,7 +160,7 @@ class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
     LEAP Admission Plea and the LEAP Admission Plea - Already Valid dialogs.
     """
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
@@ -179,7 +179,7 @@ class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
 class PleaOnlyDialogUpdater(BaseDialogUpdater):
     """Updater for Plea Only Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()
@@ -199,7 +199,7 @@ class PleaOnlyDialogUpdater(BaseDialogUpdater):
 class NotGuiltyBondDialogUpdater(BaseDialogUpdater):
     """Updater for Not Guilty Bond Dialog - contains a charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_charge_grid_data()

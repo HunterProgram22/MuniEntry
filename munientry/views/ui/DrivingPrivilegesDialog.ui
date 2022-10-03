@@ -441,20 +441,6 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="5" colspan="2">
-              <widget class="QCheckBox" name="vocational_checkBox">
-               <property name="text">
-                <string>Vocational</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3" colspan="2">
-              <widget class="QCheckBox" name="educational_checkBox">
-               <property name="text">
-                <string>Educational</string>
-               </property>
-              </widget>
-             </item>
              <item row="10" column="4" colspan="4">
               <widget class="QPushButton" name="add_employer_school_Button">
                <property name="styleSheet">
@@ -479,6 +465,27 @@ font-weight: bold;</string>
               <widget class="QLabel" name="employer_school_label">
                <property name="text">
                 <string>None.</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QCheckBox" name="educational_checkBox">
+               <property name="text">
+                <string>Educational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QCheckBox" name="vocational_checkBox">
+               <property name="text">
+                <string>Vocational</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QCheckBox" name="medical_checkBox">
+               <property name="text">
+                <string>Medical</string>
                </property>
               </widget>
              </item>
@@ -512,12 +519,13 @@ font-weight: bold;</string>
             <zorder>label_25</zorder>
             <zorder>to_hours_lineEdit</zorder>
             <zorder>other_conditions_lineEdit</zorder>
-            <zorder>vocational_checkBox</zorder>
-            <zorder>educational_checkBox</zorder>
             <zorder>add_employer_school_Button</zorder>
             <zorder>label_30</zorder>
             <zorder>employer_school_label</zorder>
             <zorder>employer_name_lineEdit</zorder>
+            <zorder>educational_checkBox</zorder>
+            <zorder>vocational_checkBox</zorder>
+            <zorder>medical_checkBox</zorder>
            </widget>
           </item>
           <item row="0" column="0" colspan="2">
@@ -996,8 +1004,6 @@ font-weight: bold;</string>
   <tabstop>restricted_tags_checkBox</tabstop>
   <tabstop>ignition_interlock_checkBox</tabstop>
   <tabstop>occupational_checkBox</tabstop>
-  <tabstop>educational_checkBox</tabstop>
-  <tabstop>vocational_checkBox</tabstop>
   <tabstop>sunday_checkBox</tabstop>
   <tabstop>monday_checkBox</tabstop>
   <tabstop>tuesday_checkBox</tabstop>

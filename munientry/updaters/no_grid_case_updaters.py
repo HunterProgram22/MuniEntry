@@ -1,14 +1,14 @@
 """Module that contains case updaters for dialogs that do not have a charge grid."""
 from loguru import logger
 
-from munientry.updaters.base_updaters import CBD, BaseDialogUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.updaters.general_updaters import CaseInformationUpdater
 
 
 class NoPleaBondDialogUpdater(BaseDialogUpdater):
     """Updater for No Plea Bond Dialog - no charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_bond_conditions()
@@ -23,7 +23,7 @@ class NoPleaBondDialogUpdater(BaseDialogUpdater):
 class BondHearingDialogUpdater(BaseDialogUpdater):
     """Updater for Bond Hearing Dialog - no charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_bond_conditions()
@@ -38,7 +38,7 @@ class BondHearingDialogUpdater(BaseDialogUpdater):
 class FailureToAppearDialogUpdater(BaseDialogUpdater):
     """Updater for Failure To Appear Dialog - no charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_fta_conditions()
@@ -53,7 +53,7 @@ class FailureToAppearDialogUpdater(BaseDialogUpdater):
 class ProbationViolationBondDialogUpdater(BaseDialogUpdater):
     """Updater for Probation Violation Dialog - no charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_model_with_probable_cause_information()
@@ -74,7 +74,7 @@ class ProbationViolationBondDialogUpdater(BaseDialogUpdater):
 class FreeformDialogUpdater(BaseDialogUpdater):
     """Updater for Freeform Dialog - no charge grid."""
 
-    def __init__(self, dialog: CBD) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
         self.update_entry_content()
