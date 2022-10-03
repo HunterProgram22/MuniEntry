@@ -1,13 +1,8 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtCore import QSize
 from PyQt5.QtSql import QSqlQuery
 from PyQt5.QtWidgets import (
-    QComboBox,
     QDialog,
-    QHeaderView,
-    QLineEdit,
-    QSizePolicy,
     QTableWidgetItem,
 )
 
@@ -21,7 +16,7 @@ from munientry.data.sql_server_getters import CriminalCaseSQLServer, DrivingInfo
 from munientry.data.sql_server_queries import get_case_docket_query
 from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
-from munientry.widgets.table_widgets import ReportTable, ReportWindow
+from munientry.widgets.table_widgets import ReportWindow
 
 if TYPE_CHECKING:
     from PyQt5.QtSql import QSqlDatabase
@@ -131,6 +126,32 @@ class MainWindowSlotFunctionsMixin(object):
         logger.dialog(f'{dialog_name} Opened')
         return self.dialog.exec()
 
+    def start_admin_entry(self) -> None:
+        """Starts a scheduling dialog based on the dialog button that is pressed.
+
+        TODO: Refactor and fix signature on return.
+        """
+        if self.judicial_officer is None:
+            return RequiredBox(
+                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
+            ).exec()
+        if self.judicial_officer.officer_type != 'Assignment Commissioner':
+            return RequiredBox(
+                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
+            ).exec()
+        button_dict = self.scheduling_dialog_buttons_dict
+        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            self.dialog = self.set_dialog_from_case_search(button_dict)
+        else:
+            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
+        try:
+            dialog_name = self.dialog.objectName()
+        except AttributeError as err:
+            logger.warning(err)
+            return None
+        logger.dialog(f'{dialog_name} Opened')
+        return self.dialog.exec()
+
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
         if not any(case_list.radio_button.isChecked() for case_list in self.daily_case_lists):
@@ -165,10 +186,13 @@ class MainWindowSlotFunctionsMixin(object):
         logger.action('Entry Tab Changed')
         judicial_officers = self.judicial_officers_Stack
         assignment_commissioners = self.assignment_commissioners_Stack
+        admin_staff = self.admin_staff_Stack
         if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
             self.stackedWidget.setCurrentWidget(judicial_officers)
         if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
             self.stackedWidget.setCurrentWidget(assignment_commissioners)
+        if self.tabWidget.currentWidget().objectName() == 'admin_Tab':
+            self.stackedWidget.setCurrentWidget(admin_staff)
         current_stacked_widget = self.stackedWidget.currentWidget().objectName()
         current_tab_widget = self.tabWidget.currentWidget().objectName()
         logger.info(f'Current stackedWidget is {current_stacked_widget}')

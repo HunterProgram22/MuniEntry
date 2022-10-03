@@ -35,3 +35,7 @@ class MainWindowSignalConnector(object):
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.scheduling_dialog_buttons_dict:
             key.pressed.connect(self.main_window.start_scheduling_entry)
+
+    def connect_scheduling_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.admin_dialog_buttons_dict:
+            key.pressed.connect(self.main_window.start_admin_entry)

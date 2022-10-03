@@ -45,6 +45,7 @@ class MainWindowViewModifier(object):
             self.connect_crim_traffic_dialog_buttons()
         )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
+        self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
             self.main_window.slated_cases_box,
@@ -100,6 +101,10 @@ class MainWindowViewModifier(object):
             self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
             self.main_window.hemmeter_trial_court_hearingButton: TrialToCourtHearingDialog,
             self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
+        }
+
+    def connect_admin_dialog_buttons(self) -> dict:
+        return {
             self.main_window.limited_driving_privilegesButton: DrivingPrivilegesDialog,
         }
 
