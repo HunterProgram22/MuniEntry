@@ -1,10 +1,8 @@
 """Module containing all classes for building and using the Scheduling Entry Dialogs."""
 from loguru import logger
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
+from munientry.builders.scheduling import base_scheduling_builders as sched
+from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
@@ -38,42 +36,11 @@ def set_scheduling_dialog_name(sender) -> str:
     return 'None'
 
 
-class SchedulingEntryDialog(SchedulingBaseDialog, Ui_SchedulingEntryDialog):
-    """The builder class for the Scheduling Entry Dialog."""
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ) -> None:
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = set_scheduling_dialog_name(self.sender())
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information')
-        self.entry_case_information = SchedulingCaseInformation()
-        self.load_cms_data_to_view()
-        self.functions.set_speedy_trial_date_label()
-        self.functions.update_all_scheduled_dates()
-
-    def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
-
-    def modify_view(self):
-        return SchedulingEntryDialogViewModifier(self)
-
-    def connect_signals_to_slots(self) -> None:
-        self.functions = SchedulingEntryDialogSlotFunctions(self)
-        SchedulingEntryDialogSignalConnector(self)
-
-    def update_entry_case_information(self):
-        return SchedulingEntryDialogCaseInformationUpdater(self)
-
-
-class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
+class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
     """Class that sets and modifies the view for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
         self.set_view_dates()
 
     def set_view_dates(self):
@@ -82,45 +49,39 @@ class SchedulingEntryDialogViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
+class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class that connects all signals for the Scheduling Entry Dialogs."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
-        self.functions = dialog.functions
+        self.connect_main_dialog_common_signals()
         self.connect_speedy_trial_items()
         self.connect_pretrial_radio_buttons()
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
 
     def connect_speedy_trial_items(self):
         self.dialog.arrest_summons_date_box.dateChanged.connect(
-            self.functions.set_speedy_trial_date_label,
+            self.dialog.functions.set_speedy_trial_date_label,
         )
         self.dialog.arrest_summons_date_box.dateChanged.connect(
-            self.functions.update_all_scheduled_dates,
+            self.dialog.functions.update_all_scheduled_dates,
         )
         self.dialog.highest_charge_box.currentIndexChanged.connect(
-            self.functions.set_speedy_trial_date_label,
+            self.dialog.functions.set_speedy_trial_date_label,
         )
         self.dialog.days_in_jail_lineEdit.textChanged.connect(
-            self.functions.set_speedy_trial_date_label,
+            self.dialog.functions.set_speedy_trial_date_label,
         )
         self.dialog.continuance_days_lineEdit.textChanged.connect(
-            self.functions.set_speedy_trial_date_label,
+            self.dialog.functions.set_speedy_trial_date_label,
         )
         self.dialog.highest_charge_box.currentIndexChanged.connect(
-            self.functions.update_all_scheduled_dates,
+            self.dialog.functions.update_all_scheduled_dates,
         )
         self.dialog.days_in_jail_lineEdit.textChanged.connect(
-            self.functions.update_all_scheduled_dates,
+            self.dialog.functions.update_all_scheduled_dates,
         )
         self.dialog.continuance_days_lineEdit.textChanged.connect(
-            self.functions.update_all_scheduled_dates,
+            self.dialog.functions.update_all_scheduled_dates,
         )
 
     def connect_scheduling_date_fields(self):
@@ -130,13 +91,13 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         adding other connections creates a loop due to the signal sent when a date is changed.
         """
         self.dialog.final_pretrial_dateEdit.dateChanged.connect(
-            self.functions.update_trial_and_pretrial_only,
+            self.dialog.functions.update_trial_and_pretrial_only,
         )
 
     def connect_pretrial_radio_buttons(self):
         """Local functions are only used to shorten line length to < 100 characters."""
-        final_and_pretrial_update = self.functions.update_final_pretrial_and_pretrial_only
-        set_pretrial = self.functions.set_pretrial_scheduled
+        final_and_pretrial_update = self.dialog.functions.update_final_pretrial_and_pretrial_only
+        set_pretrial = self.dialog.functions.set_pretrial_scheduled
         self.dialog.four_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
         self.dialog.three_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
         self.dialog.two_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
@@ -147,7 +108,7 @@ class SchedulingEntryDialogSignalConnector(BaseDialogSignalConnector):
         self.dialog.no_pretrial_radioButton.clicked.connect(set_pretrial)
 
 
-class SchedulingEntryDialogSlotFunctions(BaseDialogSlotFunctions):
+class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
     def set_pretrial_scheduled(self):
@@ -291,7 +252,43 @@ class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
         self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
 
 
+class SchedulingEntryDialogInfoChecker(BaseChecker):
+    """Class with checks for the General Notice Hearing Info Checker."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = []
+        self.check_status = self.perform_check_list()
+
+
+class SchedulingEntryDialog(sched.SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+    """The builder class for the Scheduling Entry Dialog."""
+
+    build_dict = {
+        'dialog_name': None,
+        'view': SchedulingEntryDialogViewModifier,
+        'slots': SchedulingEntryDialogSlotFunctions,
+        'signals': SchedulingEntryDialogSignalConnector,
+        'case_information_model': SchedulingCaseInformation,
+        'loader': CmsNoChargeLoader,
+        'updater': SchedulingEntryDialogCaseInformationUpdater,
+        'info_checker': SchedulingEntryDialogInfoChecker,
+    }
+
+    def additional_setup(self):
+        """The additional setup sets the template here after init.
+
+        The template is set after init because the dialog name is not set initially from the build
+        dict because there are two dialogs and templates built (Rohrer and Hemmeter) in this module.
+
+        TODO: For clarity these should probably just be separated out to separate dialog modules.
+        """
+        self.dialog_name = set_scheduling_dialog_name(self.sender())
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.set_speedy_trial_date_label()
+        self.functions.update_all_scheduled_dates()
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

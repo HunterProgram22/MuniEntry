@@ -28,6 +28,7 @@ all_add_charge_dialogs_test_list = [
     "PleaOnlyButton",
     "LeapSentencingButton",
     "LeapAdmissionButton",
+    "LeapAdmissionValidButton",
     "TrialSentencingButton",
     "SentencingOnlyButton",
 ]
@@ -35,7 +36,10 @@ all_add_charge_dialogs_test_list = [
 @pytest.mark.parametrize("test_input", all_add_charge_dialogs_test_list)
 def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
     """Tests to make sure the Add Charge button opens the Add Charge Dialog for any
-    Main Entry Dialog that has an Add Charge button."""
+    Main Entry Dialog that has an Add Charge button.
+
+    The column count on open is 3 and when add charge is pressed it should add 2 columns.
+    """
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     dialog_button = getattr(main_window, test_input)
@@ -49,7 +53,8 @@ def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
     mouse_click(main_window.dialog.add_charge_Button)
     assert main_window.dialog.popup_dialog.windowTitle() == "Add Charge"
     assert main_window.dialog.charges_gridLayout.columnCount() == 3
-
+    mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
+    assert main_window.dialog.charges_gridLayout.columnCount() == 5
 
 def test_add_charge_dialog_opens(add_charge_dialog):
     assert add_charge_dialog.windowTitle() == "Add Charge"

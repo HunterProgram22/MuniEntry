@@ -2,13 +2,11 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
+from munientry.builders.scheduling import base_scheduling_builders as sched
+from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
-from munientry.models.template_types import TEMPLATE_DICT
+from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.general_notice_of_hearing_dialog_ui import (
     Ui_GeneralNoticeOfHearingDialog,
@@ -17,46 +15,11 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
 TODAY = QDate.currentDate()
 
 
-class GeneralNoticeOfHearingDialog(SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
-    """Builder class for the General Notice of Hearing.
-
-    The judicial_officer for this entry is the selected Assignment Commissioner.
-
-    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
-    """
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ):
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'General Notice Of Hearing Entry'
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.assigned_judge = set_assigned_judge(self.sender())
-        self.courtroom = set_courtroom(self.sender())
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
-        self.hearing_location_box.setCurrentText(self.courtroom)
-
-    def load_cms_data_to_view(self):
-        return CmsNoChargeLoader(self)
-
-    def modify_view(self):
-        return GeneralNoticeOfHearingDialogViewModifier(self)
-
-    def connect_signals_to_slots(self) -> None:
-        self.functions = GeneralNoticeOfHearingDialogSlotFunctions(self)
-        GeneralNoticeOfHearingDialogSignalConnector(self)
-
-    def update_entry_case_information(self):
-        return GeneralNoticeOfHearingCaseInformationUpdater(self)
-
-
-class GeneralNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
+class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
         self.set_view_dates()
 
     def set_view_dates(self):
@@ -64,21 +27,15 @@ class GeneralNoticeOfHearingDialogViewModifier(BaseDialogViewModifier):
         self.dialog.hearing_dateEdit.setDate(TODAY)
 
 
-class GeneralNoticeOfHearingDialogSignalConnector(BaseDialogSignalConnector):
+class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class that connects signals to slots for General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
-        self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
+        self.connect_main_dialog_common_signals()
 
 
-class GeneralNoticeOfHearingDialogSlotFunctions(BaseDialogSlotFunctions):
+class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class that adds to base slot functions for use by General Notice of Hearing Dialog.
 
     Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
@@ -120,7 +77,40 @@ class GeneralNoticeOfHearingCaseInformationUpdater(CaseInformationUpdater):
         self.model.hearing_location = self.view.hearing_location_box.currentText()
 
 
+class GeneralNoticeOfHearingInfoChecker(BaseChecker):
+    """Class with checks for the General Notice Hearing Info Checker."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = []
+        self.check_status = self.perform_check_list()
+
+
+class GeneralNoticeOfHearingDialog(sched.SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
+    """Builder class for the General Notice of Hearing.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+
+    The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
+    """
+
+    build_dict = {
+        'dialog_name': 'General Notice Of Hearing Entry',
+        'view': GeneralNoticeOfHearingDialogViewModifier,
+        'slots': GeneralNoticeOfHearingDialogSlotFunctions,
+        'signals': GeneralNoticeOfHearingDialogSignalConnector,
+        'case_information_model': SchedulingCaseInformation,
+        'loader': CmsNoChargeLoader,
+        'updater': GeneralNoticeOfHearingCaseInformationUpdater,
+        'info_checker': GeneralNoticeOfHearingInfoChecker,
+    }
+
+    def additional_setup(self):
+        self.assigned_judge = set_assigned_judge(self.sender())
+        self.courtroom = set_courtroom(self.sender())
+        self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.hearing_location_box.setCurrentText(self.courtroom)
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

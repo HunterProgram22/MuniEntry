@@ -10,8 +10,13 @@ from munientry.data.sql_lite_queries import (
     select_distinct_def_last_case_number_query,
     select_distinct_offense_statute_sql_query,
     select_type_for_statute_in_charges,
+    select_off_stat_deg_from_charges_query,
 )
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
+
+OFFENSE = 'offense'
+STATUTE = 'statute'
+DEGREE = 'degree'
 
 
 def load_daily_case_list_data(database: QSqlDatabase) -> None:
@@ -154,6 +159,19 @@ def query_offense_type(statute: str, database: QSqlDatabase) -> str:
     if query.next() is None:
         return 'Moving'
     return query.value('type')
+
+
+def query_charges_database(database: QSqlDatabase, key: str, field: str) -> tuple:
+    query_string = select_off_stat_deg_from_charges_query(key, field)
+    query = QSqlQuery(database)
+    query.prepare(query_string)
+    query.exec()
+    query.next()
+    offense = query.value(OFFENSE)
+    statute = query.value(STATUTE)
+    degree = query.value(DEGREE)
+    query.finish()
+    return offense, statute, degree
 
 
 if __name__ == '__main__':

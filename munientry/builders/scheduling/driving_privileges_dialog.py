@@ -2,54 +2,20 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.base_dialogs import SchedulingBaseDialog
-from munientry.controllers.signal_connectors import BaseDialogSignalConnector
-from munientry.controllers.slot_functions import BaseDialogSlotFunctions
-from munientry.controllers.view_modifiers import BaseDialogViewModifier
+from munientry.builders.scheduling import base_scheduling_builders as sched
+from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesDialog(SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
-    """Builder for the Driving Privileges Dialog.
-
-    The judicial_officer for this entry is the selected Assignment Commissioner.
-    """
-
-    def __init__(
-        self, judicial_officer=None, cms_case=None, case_table=None, parent=None,
-    ):
-        super().__init__(judicial_officer, cms_case, case_table, parent)
-        self.dialog_name = 'Driving Privileges Entry'
-        self.entry_case_information = DrivingPrivilegesInformation()
-        logger.info(f'Loaded Dialog: {self.dialog_name}')
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
-        self.setWindowTitle(f'{self.dialog_name} Case Information')
-        self.functions.enable_other_conditions()
-
-    def load_cms_data_to_view(self):
-        return CmsDrivingInfoLoader(self)
-
-    def modify_view(self):
-        return DrivingPrivilegesViewModifier(self)
-
-    def connect_signals_to_slots(self) -> None:
-        self.functions = DrivingPrivilegesSlotFunctions(self)
-        DrivingPrivilegesSignalConnector(self)
-
-    def update_entry_case_information(self):
-        return DrivingPrivilegesCaseInformationUpdater(self)
-
-
-class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
+class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
@@ -60,32 +26,31 @@ class DrivingPrivilegesViewModifier(BaseDialogViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(BaseDialogSignalConnector):
+class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog = dialog
-        self.functions = dialog.functions
-        self.dialog.clear_fields_case_Button.released.connect(
-            self.functions.clear_case_information_fields,
-        )
-        self.dialog.create_entry_Button.released.connect(self.functions.create_entry)
-        self.dialog.close_dialog_Button.released.connect(self.dialog.functions.close_window)
+        self.connect_main_dialog_common_signals()
+        self.connect_other_dialog_signals()
+
+    def connect_other_dialog_signals(self):
         self.dialog.other_conditions_checkBox.toggled.connect(
-            self.functions.enable_other_conditions,
+            self.dialog.functions.enable_other_conditions,
         )
-        self.dialog.add_employer_school_Button.released.connect(self.functions.add_employer_school)
+        self.dialog.add_employer_school_Button.released.connect(
+            self.dialog.functions.add_employer_school,
+        )
         self.dialog.suspension_term_box.currentTextChanged.connect(
-            self.functions.update_end_suspension_date,
+            self.dialog.functions.update_end_suspension_date,
         )
 
 
-class DrivingPrivilegesSlotFunctions(BaseDialogSlotFunctions):
+class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):
-        self.dialog = dialog
+        super().__init__(dialog)
         self._driving_days_list = [
             self.dialog.sunday_checkBox,
             self.dialog.monday_checkBox,
@@ -245,7 +210,36 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
 
 
+class DrivingPrivilegesDialogInfoChecker(BaseChecker):
+    """Class with checks for the Driving Privileges Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = []
+        self.check_status = self.perform_check_list()
+
+
+class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
+    """Builder for the Driving Privileges Dialog.
+
+    The judicial_officer for this entry is the selected Assignment Commissioner.
+    """
+
+    build_dict = {
+        'dialog_name': 'Driving Privileges Entry',
+        'view': DrivingPrivilegesViewModifier,
+        'slots': DrivingPrivilegesSlotFunctions,
+        'signals': DrivingPrivilegesSignalConnector,
+        'case_information_model': DrivingPrivilegesInformation,
+        'loader': CmsDrivingInfoLoader,
+        'updater': DrivingPrivilegesCaseInformationUpdater,
+        'info_checker': DrivingPrivilegesDialogInfoChecker,
+    }
+
+    def additional_setup(self):
+        self.setWindowTitle(f'{self.dialog_name} Case Information')
+        self.functions.enable_other_conditions()
+
+
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

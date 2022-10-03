@@ -1,24 +1,34 @@
 """Module for building the view of the MainWindow."""
+import munientry.builders.crimtraffic.bond_hearing_dialog
+import munientry.builders.crimtraffic.failure_to_appear_dialog
+import munientry.builders.crimtraffic.freeform_dialog
+import munientry.builders.crimtraffic.leap_plea_valid_dialog
+import munientry.builders.crimtraffic.leap_sentencing_dialog
+import munientry.builders.crimtraffic.no_plea_bond_dialog
+import munientry.builders.crimtraffic.probation_violation_bond_dialog
+import munientry.builders.crimtraffic.sentencing_only_dialog
+import munientry.builders.crimtraffic.trial_sentencing_dialog
 from PyQt5 import QtGui
 
-from munientry.builders import bond_dialogs as bond
-from munientry.builders import general_entry_dialogs as general_entry
-from munientry.builders import plea_only_dialogs as plea_only
-from munientry.builders import plea_sentence_dialogs as plea_sentence
-from munientry.builders import sentencing_only_dialogs as sentencing_only
-from munientry.builders.final_jury_hearing_notice_dialog import (
+from munientry.builders.scheduling.final_jury_hearing_notice_dialog import (
     FinalJuryNoticeHearingDialog,
 )
-from munientry.builders.general_hearing_notice_dialog import (
+from munientry.builders.scheduling.general_hearing_notice_dialog import (
     GeneralNoticeOfHearingDialog,
 )
-from munientry.builders.driving_privileges_dialog import DrivingPrivilegesDialog
-from munientry.builders.sched_entry_dialogs import SchedulingEntryDialog
-from munientry.builders.trial_to_court_hearing_notice_dialog import (
+from munientry.builders.scheduling.driving_privileges_dialog import DrivingPrivilegesDialog
+from munientry.builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
+from munientry.builders.scheduling.trial_to_court_hearing_notice_dialog import (
     TrialToCourtHearingDialog,
 )
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
+import munientry.builders.crimtraffic.fine_only_plea_dialog
+import munientry.builders.crimtraffic.diversion_dialog
+import munientry.builders.crimtraffic.jail_cc_plea_dialog
+import munientry.builders.crimtraffic.leap_plea_dialog
+import munientry.builders.crimtraffic.not_guilty_bond_dialog
+import munientry.builders.crimtraffic.plea_only_future_sentence_dialog
 
 
 class MainWindowViewModifier(object):
@@ -63,21 +73,21 @@ class MainWindowViewModifier(object):
 
     def connect_crim_traffic_dialog_buttons(self) -> dict:
         return {
-            self.main_window.FineOnlyPleaButton: plea_sentence.FineOnlyPleaDialog,
-            self.main_window.JailCCPleaButton: plea_sentence.JailCCPleaDialog,
-            self.main_window.DiversionButton: plea_sentence.DiversionPleaDialog,
-            self.main_window.NotGuiltyBondButton: plea_only.NotGuiltyBondDialog,
-            self.main_window.FailureToAppearButton: general_entry.FailureToAppearDialog,
-            self.main_window.ProbationViolationBondButton: bond.ProbationViolationBondDialog,
-            self.main_window.BondHearingButton: bond.BondHearingDialog,
-            self.main_window.PleaOnlyButton: plea_only.PleaOnlyDialog,
-            self.main_window.NoPleaBondButton: bond.NoPleaBondDialog,
-            self.main_window.LeapAdmissionButton: plea_only.LeapAdmissionPleaDialog,
-            self.main_window.LeapAdmissionValidButton: plea_only.LeapPleaValidDialog,
-            self.main_window.LeapSentencingButton: sentencing_only.LeapSentencingDialog,
-            self.main_window.TrialSentencingButton: sentencing_only.TrialSentencingDialog,
-            self.main_window.SentencingOnlyButton: sentencing_only.SentencingOnlyDialog,
-            self.main_window.FreeformEntryButton: general_entry.FreeformDialog,
+            self.main_window.FineOnlyPleaButton: munientry.builders.crimtraffic.fine_only_plea_dialog.FineOnlyPleaDialog,
+            self.main_window.JailCCPleaButton: munientry.builders.crimtraffic.jail_cc_plea_dialog.JailCCPleaDialog,
+            self.main_window.DiversionButton: munientry.builders.crimtraffic.diversion_dialog.DiversionPleaDialog,
+            self.main_window.NotGuiltyBondButton: munientry.builders.crimtraffic.not_guilty_bond_dialog.NotGuiltyBondDialog,
+            self.main_window.FailureToAppearButton: munientry.builders.crimtraffic.failure_to_appear_dialog.FailureToAppearDialog,
+            self.main_window.ProbationViolationBondButton: munientry.builders.crimtraffic.probation_violation_bond_dialog.ProbationViolationBondDialog,
+            self.main_window.BondHearingButton: munientry.builders.crimtraffic.bond_hearing_dialog.BondHearingDialog,
+            self.main_window.PleaOnlyButton: munientry.builders.crimtraffic.plea_only_future_sentence_dialog.PleaOnlyDialog,
+            self.main_window.NoPleaBondButton: munientry.builders.crimtraffic.no_plea_bond_dialog.NoPleaBondDialog,
+            self.main_window.LeapAdmissionButton: munientry.builders.crimtraffic.leap_plea_dialog.LeapAdmissionPleaDialog,
+            self.main_window.LeapAdmissionValidButton: munientry.builders.crimtraffic.leap_plea_valid_dialog.LeapPleaValidDialog,
+            self.main_window.LeapSentencingButton: munientry.builders.crimtraffic.leap_sentencing_dialog.LeapSentencingDialog,
+            self.main_window.TrialSentencingButton: munientry.builders.crimtraffic.trial_sentencing_dialog.TrialSentencingDialog,
+            self.main_window.SentencingOnlyButton: munientry.builders.crimtraffic.sentencing_only_dialog.SentencingOnlyDialog,
+            self.main_window.FreeformEntryButton: munientry.builders.crimtraffic.freeform_dialog.FreeformDialog,
         }
 
     def connect_scheduling_dialog_buttons(self) -> dict:
