@@ -1,6 +1,7 @@
 """Module for building the view of the MainWindow."""
 from PyQt5 import QtGui
 
+from munientry.builders.administrative import driving_privileges_dialog
 from munientry.builders.crimtraffic import (
     bond_hearing_dialog,
     diversion_dialog,
@@ -18,18 +19,11 @@ from munientry.builders.crimtraffic import (
     sentencing_only_dialog,
     trial_sentencing_dialog,
 )
-from munientry.builders.scheduling.driving_privileges_dialog import (
-    DrivingPrivilegesDialog,
-)
-from munientry.builders.scheduling.final_jury_hearing_notice_dialog import (
-    FinalJuryNoticeHearingDialog,
-)
-from munientry.builders.scheduling.general_hearing_notice_dialog import (
-    GeneralNoticeOfHearingDialog,
-)
-from munientry.builders.scheduling.sched_entry_dialogs import SchedulingEntryDialog
-from munientry.builders.scheduling.trial_to_court_hearing_notice_dialog import (
-    TrialToCourtHearingDialog,
+from munientry.builders.scheduling import (
+    final_jury_hearing_notice_dialog,
+    general_hearing_notice_dialog,
+    sched_entry_dialogs,
+    trial_to_court_hearing_notice_dialog,
 )
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
@@ -109,19 +103,28 @@ class MainWindowViewModifier(object):
 
     def connect_scheduling_dialog_buttons(self) -> dict:
         return {
-            self.main_window.hemmeter_schedulingEntryButton: SchedulingEntryDialog,
-            self.main_window.rohrer_schedulingEntryButton: SchedulingEntryDialog,
-            self.main_window.hemmeter_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
-            self.main_window.rohrer_final_jury_hearingButton: FinalJuryNoticeHearingDialog,
-            self.main_window.hemmeter_general_hearingButton: GeneralNoticeOfHearingDialog,
-            self.main_window.rohrer_general_hearingButton: GeneralNoticeOfHearingDialog,
-            self.main_window.hemmeter_trial_court_hearingButton: TrialToCourtHearingDialog,
-            self.main_window.rohrer_trial_court_hearingButton: TrialToCourtHearingDialog,
+            self.main_window.hemmeter_schedulingEntryButton:
+                sched_entry_dialogs.SchedulingEntryDialog,
+            self.main_window.rohrer_schedulingEntryButton:
+                sched_entry_dialogs.SchedulingEntryDialog,
+            self.main_window.hemmeter_final_jury_hearingButton:
+                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
+            self.main_window.rohrer_final_jury_hearingButton:
+                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
+            self.main_window.hemmeter_general_hearingButton:
+                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
+            self.main_window.rohrer_general_hearingButton:
+                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
+            self.main_window.hemmeter_trial_court_hearingButton:
+                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
+            self.main_window.rohrer_trial_court_hearingButton:
+                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
         }
 
     def connect_admin_dialog_buttons(self) -> dict:
         return {
-            self.main_window.limited_driving_privilegesButton: DrivingPrivilegesDialog,
+            self.main_window.limited_driving_privilegesButton:
+                driving_privileges_dialog.DrivingPrivilegesDialog,
         }
 
     def create_daily_case_lists(self) -> None:
