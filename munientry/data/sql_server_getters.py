@@ -25,14 +25,14 @@ class CaseDocketSQLServer(object):
     def get_docket(self) -> list:
         query_string = get_case_docket_query(self.case_number)
         logger.info(query_string)
-        self.query = QSqlQuery(self.database_connection_name)
+        self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         self.query.exec()
         data_list = []
         while self.query.next():
             docket_item = (self.query.value('Date'), self.query.value('Remark'))
             data_list.append(docket_item)
-        close_db_connection(self.database_connection_name)
+        close_db_connection(self.database)
         return data_list
 
 
