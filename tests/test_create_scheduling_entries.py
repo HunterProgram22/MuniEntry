@@ -34,15 +34,3 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, test_name):
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.case_number == f"21TRC05611{test_name}"
-
-
-def test_create_driving_privileges(qtbot, main_window):
-    mouse_click(main_window.assn_comm_patterson_radioButton)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, "22TRD01955")
-    mouse_click(main_window.get_case_Button)
-    mouse_click(main_window.limited_driving_privilegesButton)
-
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
-    mouse_click(main_window.dialog.create_entry_Button)
-    assert main_window.dialog.entry_case_information.case_number == f"22TRD01955"
