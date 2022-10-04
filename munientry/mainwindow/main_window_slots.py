@@ -127,10 +127,7 @@ class MainWindowSlotFunctionsMixin(object):
         return self.dialog.exec()
 
     def start_admin_entry(self) -> None:
-        """Starts a scheduling dialog based on the dialog button that is pressed.
-
-        TODO: Refactor and fix signature on return.
-        """
+        """Starts a admin dialog based on the dialog button that is pressed."""
         if self.judicial_officer is None:
             return RequiredBox(
                 'You must select an assignment commissioner.', 'Assignment Commissioner Required',
@@ -139,7 +136,7 @@ class MainWindowSlotFunctionsMixin(object):
             return RequiredBox(
                 'You must select an assignment commissioner.', 'Assignment Commissioner Required',
             ).exec()
-        button_dict = self.scheduling_dialog_buttons_dict
+        button_dict = self.admin_dialog_buttons_dict
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             self.dialog = self.set_dialog_from_case_search(button_dict)
         else:

@@ -70,6 +70,14 @@ class MainWindowViewModifier(object):
                 JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
             self.main_window.none_radioButton:
                 JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
+            self.main_window.assn_comm_dattilo_radioButton:
+                JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            self.main_window.assn_comm_patterson_radioButton:
+                JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            self.main_window.court_admin_kudela_radioButton:
+                JudicialOfficer('Justin', 'Kudela' , 'Court Administrator'),
+            self.main_window.jury_comm_patterson_radioButton:
+                JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
         }
 
     def connect_crim_traffic_dialog_buttons(self) -> dict:

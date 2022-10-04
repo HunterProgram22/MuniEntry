@@ -60,7 +60,7 @@ font-weight: bold;</string>
       <item row="0" column="0">
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="judicial_officers_Stack">
          <layout class="QGridLayout" name="gridLayout_6">
@@ -274,7 +274,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="assn_comm_patterson_radioButton">
                <property name="text">
                 <string>Assignment Commissioner Patterson</string>
                </property>
