@@ -1,27 +1,13 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import (
-    QDialog,
-    QTableWidgetItem,
-)
+from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 
 from munientry.controllers.helper_functions import set_random_judge
+from munientry.data import sql_lite_functions as sql_lite
+from munientry.data import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_lite_functions import (
-    load_daily_case_list_data,
-    query_daily_case_list_data,
-)
-from munientry.data.sql_server_getters import CriminalCaseSQLServer, DrivingInfoSQLServer
-from munientry.data.sql_server_queries import get_case_docket_query
-from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
 from munientry.widgets.table_widgets import ReportWindow
-
-if TYPE_CHECKING:
-    from PyQt5.QtSql import QSqlDatabase
-
-    from munientry.models.cms_models import CmsCaseInformation
 
 
 class DialogLoader(object):
@@ -57,7 +43,8 @@ class DialogLoader(object):
 
     def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the daily case list tab."""
-        if not any(case_list.radio_button.isChecked() for case_list in self.mainwindow.daily_case_lists):
+        daily_case_lists = self.mainwindow.daily_case_lists
+        if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
             return RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
@@ -75,9 +62,9 @@ class DialogLoader(object):
         logger.debug(self.mainwindow.sender().objectName())
         case_number = self.mainwindow.case_search_box.text()
         if self.mainwindow.sender().objectName() == 'limited_driving_privilegesButton':
-            cms_case_data = DrivingInfoSQLServer(case_number).load_case()
+            cms_case_data = sql_server.DrivingInfoSQLServer(case_number).load_case()
         else:
-            cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+            cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
         logger.info(cms_case_data)
         return button_dict[self.mainwindow.sender()](
             self.mainwindow.judicial_officer,
@@ -86,10 +73,58 @@ class DialogLoader(object):
         )
 
 
+class DialogPreloadChecker(object):
+    """Interface for performing checks to make sure necessary options selected prior to load."""
+
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
+
+    def crimtraffic_checks(self):
+        required_officers = [
+            self.mainwindow.hemmeter_radioButton.isChecked(),
+            self.mainwindow.rohrer_radioButton.isChecked(),
+            self.mainwindow.bunner_radioButton.isChecked(),
+            self.mainwindow.kudela_radioButton.isChecked(),
+            self.mainwindow.visiting_judge_radioButton.isChecked(),
+            self.mainwindow.pelanda_radioButton.isChecked(),
+        ]
+        if any(required_officers):
+            return True
+        RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
+        return False
+
+    def scheduling_checks(self):
+        required_officers = [
+            self.mainwindow.dattilo_radioButton.isChecked(),
+            self.mainwindow.patterson_radioButton.isChecked(),
+            self.mainwindow.none_radioButton.isChecked(),
+        ]
+        if any(required_officers):
+            return True
+        RequiredBox(
+            'You must select an assignment commissioner.', 'Assignment Commissioner Required',
+        ).exec()
+        return False
+
+    def admin_checks(self):
+        required_officers = [
+            self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
+            self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
+            self.mainwindow.court_admin_kudela_radioButton.isChecked(),
+            self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
+        ]
+        if any(required_officers):
+            return True
+        RequiredBox(
+            'You must select an administrative staff person.', 'Administrative Staff Required',
+        ).exec()
+        return False
+
+
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
 
-    def load_case_lists(self, db_connection: 'QSqlDatabase' = None) -> None:
+    def load_case_lists(self, db_connection=None) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
@@ -102,7 +137,7 @@ class MainWindowSlotFunctionsMixin(object):
         for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
-            case_list.addItems(query_daily_case_list_data(case_list.name, db_connection))
+            case_list.addItems(sql_lite.query_daily_case_list_data(case_list.name, db_connection))
             case_count = len(case_list) - 1
             logger.info(
                 f'Table: {case_list.name} - Preload Cases: {old_case_count};'
@@ -118,7 +153,7 @@ class MainWindowSlotFunctionsMixin(object):
         """
         logger.info('Reload cases button pressed.')
         conn = open_db_connection('con_daily_case_lists')
-        load_daily_case_list_data(conn)
+        sql_lite.load_daily_case_list_data(conn)
         self.load_case_lists(conn)
         conn.close()
 
@@ -137,44 +172,19 @@ class MainWindowSlotFunctionsMixin(object):
         )
 
     def start_crim_traffic_entry(self) -> None:
-        """Starts a criminal/traffic dialog based on the dialog button that is pressed.
-
-        TODO: Refactor and fix signature on return.
-        """
-        if self.judicial_officer is None:
-            return RequiredBox(
-                'You must select a judicial officer.', 'Judicial Officer Required',
-            ).exec()
-        if self.judicial_officer.officer_type == 'Assignment Commissioner':
-            return RequiredBox(
-                'You must select a judicial officer.', 'Judicial Officer Required',
-            ).exec()
-        return DialogLoader(self).load_crimtraffic_entry()
+        """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
+        if DialogPreloadChecker(self).crimtraffic_checks():
+            return DialogLoader(self).load_crimtraffic_entry()
 
     def start_scheduling_entry(self) -> None:
         """Starts a scheduling dialog based on the dialog button that is pressed."""
-        if self.judicial_officer is None:
-            return RequiredBox(
-                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
-            ).exec()
-        if self.judicial_officer.officer_type != 'Assignment Commissioner':
-            return RequiredBox(
-                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
-            ).exec()
-        return DialogLoader(self).load_scheduling_entry()
+        if DialogPreloadChecker(self).scheduling_checks():
+            return DialogLoader(self).load_scheduling_entry()
 
     def start_admin_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
-        if self.judicial_officer is None:
-            return RequiredBox(
-                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
-            ).exec()
-        if self.judicial_officer.officer_type != 'Assignment Commissioner':
-            return RequiredBox(
-                'You must select an assignment commissioner.', 'Assignment Commissioner Required',
-            ).exec()
-        return DialogLoader(self).load_admin_entry()
-
+        if DialogPreloadChecker(self).admin_checks():
+            return DialogLoader(self).load_admin_entry()
 
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
@@ -197,10 +207,10 @@ class MainWindowSlotFunctionsMixin(object):
         case_number = self.case_search_box.text()
         case_number = update_case_number(case_number)
         self.case_search_box.setText(case_number)
-        cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
         self.set_case_info_from_search(cms_case_data)
 
-    def set_case_info_from_search(self, cms_case_data: 'CmsCaseInformation') -> None:
+    def set_case_info_from_search(self, cms_case_data) -> None:
         """Sets the case search fields on the UI with data from the case that is retrieved."""
         self.case_number_label_field.setText(cms_case_data.case_number)
         def_first_name = cms_case_data.defendant.first_name
@@ -223,17 +233,7 @@ class MainWindowSlotFunctionsMixin(object):
             case_number = self.case_search_box.text()
             case_number = update_case_number(case_number)
             self.case_search_box.setText(case_number)
-        db = open_db_connection('con_authority_court')
-        query_string = get_case_docket_query(case_number)
-        logger.info(query_string)
-        self.query = QSqlQuery(db)
-        self.query.prepare(query_string)
-        self.query.exec()
-        data_list = []
-        while self.query.next():
-            docket_item = (self.query.value('Date'), self.query.value('Remark'))
-            data_list.append(docket_item)
-
+        data_list = sql_server.CaseDocketSQLServer(case_number).get_docket()
         rows = len(data_list)
         self.window = ReportWindow(rows, 2, f'Docket Report for {case_number}')
         header_labels = ['Date', 'Docket Description']
@@ -248,9 +248,10 @@ class MainWindowSlotFunctionsMixin(object):
             self.window.table.setItem(row, 0, docket_date)
             self.window.table.setItem(row, 1, docket_descr)
         self.window.show()
-        close_db_connection(db)
+
 
 def update_case_number(case_number: str) -> str:
+    """Updates the case number in case search to add 0's if full case number not provided."""
     zero_insert_dict = {
         9: '0',
         8: '00',
@@ -258,8 +259,8 @@ def update_case_number(case_number: str) -> str:
         6: '0000',
     }
     case_number_length = len(case_number)
-    if case_number_length== 10:
+    if case_number_length == 10:
         return case_number
     elif zero_insert_dict.get(case_number_length) is not None:
-        return case_number[:5] + zero_insert_dict.get(case_number_length)+ case_number[5:]
+        return case_number[:5] + zero_insert_dict.get(case_number_length) + case_number[5:]
     return case_number

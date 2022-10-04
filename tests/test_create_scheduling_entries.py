@@ -37,7 +37,7 @@ def test_all_entry_buttons_with_case(qtbot, main_window, test_input, test_name):
 
 
 def test_create_driving_privileges(qtbot, main_window):
-    mouse_click(main_window.dattilo_radioButton)
+    mouse_click(main_window.assn_comm_patterson_radioButton)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, "22TRD01955")
     mouse_click(main_window.get_case_Button)

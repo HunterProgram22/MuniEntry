@@ -1,14 +1,39 @@
 """Module for packaging data from SQL Server database for use in application."""
-
 from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
+from munientry.data.sql_server_queries import (
+    driving_case_search_query,
+    general_case_search_query,
+    get_case_docket_query,
+)
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
+
+
+class CaseDocketSQLServer(object):
+    """Packages case docket data from the SQL Server Authority Court database."""
+
+    def __init__(self, case_number: str) -> None:
+        self.case_number = case_number
+        self.database_connection_name = 'con_authority_court'
+        self.database = open_db_connection(self.database_connection_name)
+
+    def get_docket(self) -> list:
+        query_string = get_case_docket_query(self.case_number)
+        logger.info(query_string)
+        self.query = QSqlQuery(self.database_connection_name)
+        self.query.prepare(query_string)
+        self.query.exec()
+        data_list = []
+        while self.query.next():
+            docket_item = (self.query.value('Date'), self.query.value('Remark'))
+            data_list.append(docket_item)
+        close_db_connection(self.database_connection_name)
+        return data_list
 
 
 class CriminalCaseSQLServer(object):
