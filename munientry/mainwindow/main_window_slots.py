@@ -24,6 +24,68 @@ if TYPE_CHECKING:
     from munientry.models.cms_models import CmsCaseInformation
 
 
+class DialogLoader(object):
+    """Loads the Dialog that is selected from the Main Window UI."""
+
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
+
+    def load_crimtraffic_entry(self):
+        button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
+        return self.set_dialog(button_dict)
+
+    def load_scheduling_entry(self):
+        button_dict = self.mainwindow.scheduling_dialog_buttons_dict
+        return self.set_dialog(button_dict)
+
+    def load_admin_entry(self):
+        button_dict = self.mainwindow.admin_dialog_buttons_dict
+        return self.set_dialog(button_dict)
+
+    def set_dialog(self, button_dict):
+        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            self.mainwindow.dialog = self.set_dialog_from_case_search(button_dict)
+        else:
+            self.mainwindow.dialog = self.set_dialog_from_daily_case_list(button_dict)
+        try:
+            dialog_name = self.mainwindow.dialog.objectName()
+        except AttributeError as err:
+            logger.warning(err)
+            return None
+        logger.dialog(f'{dialog_name} Opened')
+        return self.mainwindow.dialog.exec()
+
+    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
+        """Sets the case to be loaded from the daily case list tab."""
+        if not any(case_list.radio_button.isChecked() for case_list in self.mainwindow.daily_case_lists):
+            return RequiredBox(
+                'You must select a case list. If not loading a case in the case list '
+                + 'leave the case list field blank.', 'Daily Case List Required',
+            ).exec()
+        cms_case_data = self.mainwindow.set_case_to_load(self.mainwindow.daily_case_list)
+        logger.info(cms_case_data)
+        return button_dict[self.mainwindow.sender()](
+            self.mainwindow.judicial_officer,
+            cms_case=cms_case_data,
+            case_table=self.mainwindow.daily_case_list.name,
+        )
+
+    def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
+        """Sets the case to be loaded from the case search tab."""
+        logger.debug(self.mainwindow.sender().objectName())
+        case_number = self.mainwindow.case_search_box.text()
+        if self.mainwindow.sender().objectName() == 'limited_driving_privilegesButton':
+            cms_case_data = DrivingInfoSQLServer(case_number).load_case()
+        else:
+            cms_case_data = CriminalCaseSQLServer(case_number).load_case()
+        logger.info(cms_case_data)
+        return button_dict[self.mainwindow.sender()](
+            self.mainwindow.judicial_officer,
+            cms_case=cms_case_data,
+            case_table=None,
+        )
+
+
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
 
@@ -87,24 +149,10 @@ class MainWindowSlotFunctionsMixin(object):
             return RequiredBox(
                 'You must select a judicial officer.', 'Judicial Officer Required',
             ).exec()
-        button_dict = self.crim_traffic_dialog_buttons_dict
-        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            self.dialog = self.set_dialog_from_case_search(button_dict)
-        else:
-            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        try:
-            dialog_name = self.dialog.objectName()
-        except AttributeError as err:
-            logger.warning(err)
-            return None
-        logger.dialog(f'{dialog_name} Opened')
-        return self.dialog.exec()
+        return DialogLoader(self).load_crimtraffic_entry()
 
     def start_scheduling_entry(self) -> None:
-        """Starts a scheduling dialog based on the dialog button that is pressed.
-
-        TODO: Refactor and fix signature on return.
-        """
+        """Starts a scheduling dialog based on the dialog button that is pressed."""
         if self.judicial_officer is None:
             return RequiredBox(
                 'You must select an assignment commissioner.', 'Assignment Commissioner Required',
@@ -113,18 +161,7 @@ class MainWindowSlotFunctionsMixin(object):
             return RequiredBox(
                 'You must select an assignment commissioner.', 'Assignment Commissioner Required',
             ).exec()
-        button_dict = self.scheduling_dialog_buttons_dict
-        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            self.dialog = self.set_dialog_from_case_search(button_dict)
-        else:
-            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        try:
-            dialog_name = self.dialog.objectName()
-        except AttributeError as err:
-            logger.warning(err)
-            return None
-        logger.dialog(f'{dialog_name} Opened')
-        return self.dialog.exec()
+        return DialogLoader(self).load_scheduling_entry()
 
     def start_admin_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
@@ -136,48 +173,8 @@ class MainWindowSlotFunctionsMixin(object):
             return RequiredBox(
                 'You must select an assignment commissioner.', 'Assignment Commissioner Required',
             ).exec()
-        button_dict = self.admin_dialog_buttons_dict
-        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            self.dialog = self.set_dialog_from_case_search(button_dict)
-        else:
-            self.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        try:
-            dialog_name = self.dialog.objectName()
-        except AttributeError as err:
-            logger.warning(err)
-            return None
-        logger.dialog(f'{dialog_name} Opened')
-        return self.dialog.exec()
+        return DialogLoader(self).load_admin_entry()
 
-    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab."""
-        if not any(case_list.radio_button.isChecked() for case_list in self.daily_case_lists):
-            return RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-        cms_case_data = self.set_case_to_load(self.daily_case_list)
-        logger.info(cms_case_data)
-        return button_dict[self.sender()](
-            self.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=self.daily_case_list.name,
-        )
-
-    def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the case search tab."""
-        logger.debug(self.sender().objectName())
-        case_number = self.case_search_box.text()
-        if self.sender().objectName() == 'limited_driving_privilegesButton':
-            cms_case_data = DrivingInfoSQLServer(case_number).load_case()
-        else:
-            cms_case_data = CriminalCaseSQLServer(case_number).load_case()
-        logger.info(cms_case_data)
-        return button_dict[self.sender()](
-            self.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=None,
-        )
 
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
