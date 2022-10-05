@@ -1,124 +1,13 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog, QTableWidgetItem
+from PyQt5.QtWidgets import QTableWidgetItem
 
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data import sql_lite_functions as sql_lite
 from munientry.data import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.widgets.message_boxes import RequiredBox
+from munientry.mainwindow.dialog_loader import DialogLoader, DialogPreloadChecker
 from munientry.widgets.table_widgets import ReportWindow
-
-
-class DialogLoader(object):
-    """Loads the Dialog that is selected from the Main Window UI."""
-
-    def __init__(self, mainwindow):
-        self.mainwindow = mainwindow
-
-    def load_crimtraffic_entry(self):
-        button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
-        return self.set_dialog(button_dict)
-
-    def load_scheduling_entry(self):
-        button_dict = self.mainwindow.scheduling_dialog_buttons_dict
-        return self.set_dialog(button_dict)
-
-    def load_admin_entry(self):
-        button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self.set_dialog(button_dict)
-
-    def set_dialog(self, button_dict):
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            self.mainwindow.dialog = self.set_dialog_from_case_search(button_dict)
-        else:
-            self.mainwindow.dialog = self.set_dialog_from_daily_case_list(button_dict)
-        try:
-            dialog_name = self.mainwindow.dialog.objectName()
-        except AttributeError as err:
-            logger.warning(err)
-            return None
-        logger.dialog(f'{dialog_name} Opened')
-        return self.mainwindow.dialog.exec()
-
-    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab."""
-        daily_case_lists = self.mainwindow.daily_case_lists
-        if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
-            return RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-        cms_case_data = self.mainwindow.set_case_to_load(self.mainwindow.daily_case_list)
-        logger.info(cms_case_data)
-        return button_dict[self.mainwindow.sender()](
-            self.mainwindow.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=self.mainwindow.daily_case_list.name,
-        )
-
-    def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the case search tab."""
-        logger.debug(self.mainwindow.sender().objectName())
-        case_number = self.mainwindow.case_search_box.text()
-        if self.mainwindow.sender().objectName() == 'limited_driving_privilegesButton':
-            cms_case_data = sql_server.DrivingInfoSQLServer(case_number).load_case()
-        else:
-            cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
-        logger.info(cms_case_data)
-        return button_dict[self.mainwindow.sender()](
-            self.mainwindow.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=None,
-        )
-
-
-class DialogPreloadChecker(object):
-    """Interface for performing checks to make sure necessary options selected prior to load."""
-
-    def __init__(self, mainwindow):
-        self.mainwindow = mainwindow
-
-    def crimtraffic_checks(self):
-        required_officers = [
-            self.mainwindow.hemmeter_radioButton.isChecked(),
-            self.mainwindow.rohrer_radioButton.isChecked(),
-            self.mainwindow.bunner_radioButton.isChecked(),
-            self.mainwindow.kudela_radioButton.isChecked(),
-            self.mainwindow.visiting_judge_radioButton.isChecked(),
-            self.mainwindow.pelanda_radioButton.isChecked(),
-        ]
-        if any(required_officers):
-            return True
-        RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
-        return False
-
-    def scheduling_checks(self):
-        required_officers = [
-            self.mainwindow.dattilo_radioButton.isChecked(),
-            self.mainwindow.patterson_radioButton.isChecked(),
-            self.mainwindow.none_radioButton.isChecked(),
-        ]
-        if any(required_officers):
-            return True
-        RequiredBox(
-            'You must select an assignment commissioner.', 'Assignment Commissioner Required',
-        ).exec()
-        return False
-
-    def admin_checks(self):
-        required_officers = [
-            self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
-            self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
-            self.mainwindow.court_admin_kudela_radioButton.isChecked(),
-            self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
-        ]
-        if any(required_officers):
-            return True
-        RequiredBox(
-            'You must select an administrative staff person.', 'Administrative Staff Required',
-        ).exec()
-        return False
 
 
 class MainWindowSlotFunctionsMixin(object):
