@@ -253,16 +253,51 @@ class MainWindowSlotFunctionsMixin(object):
         self.window.show()
         close_db_connection(db)
 
+
 def update_case_number(case_number: str) -> str:
-    zero_insert_dict = {
-        9: '0',
-        8: '00',
-        7: '000',
-        6: '0000',
-    }
-    case_number_length = len(case_number)
-    if case_number_length== 10:
-        return case_number
-    elif zero_insert_dict.get(case_number_length) is not None:
-        return case_number[:5] + zero_insert_dict.get(case_number_length)+ case_number[5:]
-    return case_number
+    """Updates the case number in case search to add 0's if full case number not provided."""
+    if len(case_number) == 10:
+        return case_number.upper()
+    crim_letter_list = ['B', 'b']
+    if any(letter in case_number for letter in crim_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('b')
+        except ValueError:
+            case_year, case_five_number = case_number.split('B')
+        case_year = case_year[:2]
+        case_code = 'CRB'
+        new_case_number = reset_case_number(case_year, case_code, case_five_number)
+        return new_case_number
+    ovi_letter_list = ['C', 'c']
+    if any(letter in case_number for letter in ovi_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('c')
+        except ValueError:
+            case_year, case_five_number = case_number.split('C')
+        case_year = case_year[:2]
+        case_code = 'TRC'
+        new_case_number = reset_case_number(case_year, case_code, case_five_number)
+        return new_case_number
+    traffic_letter_list = ['D', 'd']
+    if any(letter in case_number for letter in traffic_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('d')
+        except ValueError:
+            case_year, case_five_number = case_number.split('D')
+        case_year = case_year[:2]
+        case_code = 'TRD'
+        new_case_number = reset_case_number(case_year, case_code, case_five_number)
+        return new_case_number
+
+
+def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> str:
+        if len(case_five_number) == 5:
+            return f'{case_year}{case_code}{case_five_number}'
+        elif len(case_five_number) == 4:
+            return f'{case_year}{case_code}0{case_five_number}'
+        elif len(case_five_number) == 3:
+            return f'{case_year}{case_code}00{case_five_number}'
+        elif len(case_five_number) == 2:
+            return f'{case_year}{case_code}000{case_five_number}'
+        elif len(case_five_number) == 1:
+            return f'{case_year}{case_code}0000{case_five_number}'
