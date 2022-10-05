@@ -241,10 +241,9 @@ def update_case_number(case_number: str) -> str:
     if any(letter in case_number for letter in crim_letter_list):
         try:
             case_year, case_five_number = case_number.split('B')
-            case_year = case_year[:2]
         except ValueError:
             case_year, case_five_number = case_number.split('b')
-            case_year = case_year[:2]
+        case_year = case_year[:2]
         case_code = 'CRB'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
         return new_case_number
@@ -252,10 +251,9 @@ def update_case_number(case_number: str) -> str:
     if any(letter in case_number for letter in ovi_letter_list):
         try:
             case_year, case_five_number = case_number.split('C')
-            case_year = case_year[:2]
         except ValueError:
             case_year, case_five_number = case_number.split('c')
-            case_year = case_year[:2]
+        case_year = case_year[:2]
         case_code = 'TRC'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
         return new_case_number
@@ -263,10 +261,9 @@ def update_case_number(case_number: str) -> str:
     if any(letter in case_number for letter in traffic_letter_list):
         try:
             case_year, case_five_number = case_number.split('D')
-            case_year = case_year[:2]
         except ValueError:
             case_year, case_five_number = case_number.split('d')
-            case_year = case_year[:2]
+        case_year = case_year[:2]
         case_code = 'TRD'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
         return new_case_number
