@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMessageBox, QDialog
 from loguru import logger
 
 from munientry.data import sql_server_getters as sql_server
-from munientry.data.sql_lite_getters import CriminalCaseSQLLite, MultipleCriminalCaseSQLLite
+from munientry.data import sql_lite_getters as sql_lite
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.widgets.message_boxes import WarningBox, RequiredBox
 
@@ -40,8 +40,8 @@ def check_for_companion_cases(daily_case_list: object) -> object:
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
         if response == QMessageBox.Yes:
-            return load_multiple_cases(matched_cases_list, daily_case_list.name)
-    return load_single_case(case_number, daily_case_list.name)
+            return load_multiple_cases(matched_cases_list)
+    return load_single_case(case_number)
 
 
 def load_no_case() -> CmsCaseInformation:
@@ -49,14 +49,14 @@ def load_no_case() -> CmsCaseInformation:
     return CmsCaseInformation()
 
 
-def load_single_case(case_number: str, case_table: str) -> CmsCaseInformation:
+def load_single_case(case_number: str) -> CmsCaseInformation:
     """Loads a single case into the CmsCaseInformation model."""
-    return CriminalCaseSQLLite(case_number, case_table).load_case()
+    return sql_server.CriminalCaseSQLServer(case_number).load_case()
 
 
-def load_multiple_cases(matched_case_numbers: list, case_table: str) -> CmsCaseInformation:
+def load_multiple_cases(matched_case_numbers: list) -> CmsCaseInformation:
     """Loads multiple cases into the CmsCaseInformation model."""
-    return MultipleCriminalCaseSQLLite(matched_case_numbers, case_table).load_case()
+    return sql_server.MultipleCriminalCaseSQLServer(matched_case_numbers).load_case()
 
 
 class DialogLoader(object):
@@ -100,6 +100,7 @@ class DialogLoader(object):
             ).exec()
 
         cms_case_data = self.set_case_to_load(self.mainwindow.daily_case_list)
+
         logger.info(cms_case_data)
         return button_dict[self.mainwindow.sender()](
             self.mainwindow.judicial_officer,
@@ -116,6 +117,7 @@ class DialogLoader(object):
             cms_case_data = sql_server.DrivingInfoSQLServer(case_number).load_case()
         else:
             cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
+
         logger.info(cms_case_data)
         return button_dict[self.mainwindow.sender()](
             self.mainwindow.judicial_officer,
