@@ -36,7 +36,6 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
 def check_for_companion_cases(daily_case_list: object) -> object:
     """Checks for matching last names to find potential companion cases to load."""
     last_name, case_number = daily_case_list.currentText().split(' - ')
-    logger.debug(case_number)
     case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
@@ -65,6 +64,11 @@ def load_single_case(case_number: str) -> CmsCaseInformation:
     return sql_server.CriminalCaseSQLServer(case_number).load_case()
 
 
+def load_single_driving_info_case(case_number: str) -> CmsCaseInformation:
+    """Loads a single with Driving Info query into the CmsCaseInformation model."""
+    return sql_server.DrivingInfoSQLServer(case_number).load_case()
+
+
 def load_multiple_cases(matched_case_numbers: list) -> CmsCaseInformation:
     """Loads multiple cases into the CmsCaseInformation model."""
     return sql_server.MultipleCriminalCaseSQLServer(matched_case_numbers).load_case()
@@ -86,7 +90,7 @@ class DialogLoader(object):
 
     def load_admin_entry(self):
         button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self.load_dialog_process(button_dict)
+        return self.load_admin_dialog_process(button_dict)
 
     def set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
@@ -104,7 +108,6 @@ class DialogLoader(object):
             return False
         return True
 
-
     def get_cms_case_data(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
             return set_case_to_load(self.mainwindow.daily_case_list)
@@ -115,6 +118,29 @@ class DialogLoader(object):
         case_table = self.set_case_table()
         judicial_officer = self.mainwindow.judicial_officer
         cms_case_data = self.get_cms_case_data()
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return button_dict.get(self.mainwindow.sender())(
+            judicial_officer,
+            cms_case = cms_case_data,
+            case_table = case_table,
+        )
+
+    def get_case_number(self) -> str:
+        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+            try:
+                last_name, case_number = self.mainwindow.daily_case_list.currentText().split(' - ')
+            except ValueError as err:
+                logger.warning(err)
+                return None
+            return case_number
+        return self.mainwindow.case_search_box.text()
+
+    def load_admin_dialog_process(self, button_dict):
+        """Used for driving privileges entry because case search query is unique."""
+        case_table = None
+        judicial_officer = self.mainwindow.judicial_officer
+        case_number = self.get_case_number()
+        cms_case_data = load_single_driving_info_case(case_number)
         logger.info(f'CMS Case Data: {cms_case_data}')
         return button_dict.get(self.mainwindow.sender())(
             judicial_officer,
