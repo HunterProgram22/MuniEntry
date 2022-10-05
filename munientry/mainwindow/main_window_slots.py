@@ -240,9 +240,9 @@ def update_case_number(case_number: str) -> str:
     crim_letter_list = ['B', 'b']
     if any(letter in case_number for letter in crim_letter_list):
         try:
-            case_year, case_five_number = case_number.split('B')
-        except ValueError:
             case_year, case_five_number = case_number.split('b')
+        except ValueError:
+            case_year, case_five_number = case_number.split('B')
         case_year = case_year[:2]
         case_code = 'CRB'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
@@ -250,9 +250,9 @@ def update_case_number(case_number: str) -> str:
     ovi_letter_list = ['C', 'c']
     if any(letter in case_number for letter in ovi_letter_list):
         try:
-            case_year, case_five_number = case_number.split('C')
-        except ValueError:
             case_year, case_five_number = case_number.split('c')
+        except ValueError:
+            case_year, case_five_number = case_number.split('C')
         case_year = case_year[:2]
         case_code = 'TRC'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
@@ -260,16 +260,16 @@ def update_case_number(case_number: str) -> str:
     traffic_letter_list = ['D', 'd']
     if any(letter in case_number for letter in traffic_letter_list):
         try:
-            case_year, case_five_number = case_number.split('D')
-        except ValueError:
             case_year, case_five_number = case_number.split('d')
+        except ValueError:
+            case_year, case_five_number = case_number.split('D')
         case_year = case_year[:2]
         case_code = 'TRD'
         new_case_number = reset_case_number(case_year, case_code, case_five_number)
         return new_case_number
 
 
-def reset_case_number(case_year, case_code, case_five_number):
+def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> str:
         if len(case_five_number) == 5:
             return f'{case_year}{case_code}{case_five_number}'
         elif len(case_five_number) == 4:
