@@ -44,6 +44,16 @@ def check_for_companion_cases(daily_case_list: object) -> object:
     return load_single_case(case_number)
 
 
+def set_case_to_load(daily_case_list: object) -> CmsCaseInformation:
+    """Returns CmsCaseInformation object model for loading to the template.
+
+    :daily_case_list: The daily case list table that is currently selected on the Main Window.
+    """
+    if daily_case_list.currentText() == '':
+        return load_no_case()
+    return check_for_companion_cases(daily_case_list)
+
+
 def load_no_case() -> CmsCaseInformation:
     """Loads the CmsCaseInformation model with no data."""
     return CmsCaseInformation()
@@ -78,20 +88,24 @@ class DialogLoader(object):
         return self.set_dialog(button_dict)
 
     def set_dialog(self, button_dict):
+
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            self.check_daily_case_list_selected()
             self.mainwindow.dialog = self.set_dialog_from_case_search(button_dict)
         else:
             self.mainwindow.dialog = self.set_dialog_from_daily_case_list(button_dict)
+
+
         try:
             dialog_name = self.mainwindow.dialog.objectName()
         except AttributeError as err:
             logger.warning(err)
             return None
         logger.dialog(f'{dialog_name} Opened')
+
         return self.mainwindow.dialog.exec()
 
-    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab."""
+    def check_daily_case_list_selected(self):
         daily_case_lists = self.mainwindow.daily_case_lists
         if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
             return RequiredBox(
@@ -99,7 +113,10 @@ class DialogLoader(object):
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
 
-        cms_case_data = self.set_case_to_load(self.mainwindow.daily_case_list)
+    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
+        """Sets the case to be loaded from the daily case list tab."""
+
+        cms_case_data = set_case_to_load(self.mainwindow.daily_case_list)
 
         logger.info(cms_case_data)
         return button_dict[self.mainwindow.sender()](
@@ -110,7 +127,6 @@ class DialogLoader(object):
 
     def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
         """Sets the case to be loaded from the case search tab."""
-        logger.debug(self.mainwindow.sender().objectName())
         case_number = self.mainwindow.case_search_box.text()
 
         if self.mainwindow.sender().objectName() == 'limited_driving_privilegesButton':
@@ -125,14 +141,6 @@ class DialogLoader(object):
             case_table=None,
         )
 
-    def set_case_to_load(self, daily_case_list: object) -> CmsCaseInformation:
-        """Returns CmsCaseInformation object model for loading to the template.
-
-        :daily_case_list: The daily case list table that is currently selected on the Main Window.
-        """
-        if daily_case_list.currentText() == '':
-            return load_no_case()
-        return check_for_companion_cases(daily_case_list)
 
 
 class DialogPreloadChecker(object):
