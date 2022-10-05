@@ -36,6 +36,7 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
 def check_for_companion_cases(daily_case_list: object) -> object:
     """Checks for matching last names to find potential companion cases to load."""
     last_name, case_number = daily_case_list.currentText().split(' - ')
+    logger.debug(case_number)
     case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
@@ -77,70 +78,50 @@ class DialogLoader(object):
 
     def load_crimtraffic_entry(self):
         button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
-        return self.set_dialog(button_dict)
+        return self.load_dialog_process(button_dict)
 
     def load_scheduling_entry(self):
         button_dict = self.mainwindow.scheduling_dialog_buttons_dict
-        return self.set_dialog(button_dict)
+        return self.load_dialog_process(button_dict)
 
     def load_admin_entry(self):
         button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self.set_dialog(button_dict)
+        return self.load_dialog_process(button_dict)
 
-    def set_dialog(self, button_dict):
+    def set_case_table(self):
+        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+            if self.is_daily_case_list_selected():
+                return self.mainwindow.daily_case_list.name
+        return None
 
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            self.check_daily_case_list_selected()
-            self.mainwindow.dialog = self.set_dialog_from_case_search(button_dict)
-        else:
-            self.mainwindow.dialog = self.set_dialog_from_daily_case_list(button_dict)
-
-
-        try:
-            dialog_name = self.mainwindow.dialog.objectName()
-        except AttributeError as err:
-            logger.warning(err)
-            return None
-        logger.dialog(f'{dialog_name} Opened')
-
-        return self.mainwindow.dialog.exec()
-
-    def check_daily_case_list_selected(self):
+    def is_daily_case_list_selected(self):
         daily_case_lists = self.mainwindow.daily_case_lists
         if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
-            return RequiredBox(
+            RequiredBox(
                 'You must select a case list. If not loading a case in the case list '
                 + 'leave the case list field blank.', 'Daily Case List Required',
             ).exec()
+            return False
+        return True
 
-    def set_dialog_from_daily_case_list(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the daily case list tab."""
 
-        cms_case_data = set_case_to_load(self.mainwindow.daily_case_list)
-
-        logger.info(cms_case_data)
-        return button_dict[self.mainwindow.sender()](
-            self.mainwindow.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=self.mainwindow.daily_case_list.name,
-        )
-
-    def set_dialog_from_case_search(self, button_dict: dict) -> QDialog:
-        """Sets the case to be loaded from the case search tab."""
+    def get_cms_case_data(self):
+        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+            return set_case_to_load(self.mainwindow.daily_case_list)
         case_number = self.mainwindow.case_search_box.text()
+        return load_single_case(case_number)
 
-        if self.mainwindow.sender().objectName() == 'limited_driving_privilegesButton':
-            cms_case_data = sql_server.DrivingInfoSQLServer(case_number).load_case()
-        else:
-            cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
-
-        logger.info(cms_case_data)
-        return button_dict[self.mainwindow.sender()](
-            self.mainwindow.judicial_officer,
-            cms_case=cms_case_data,
-            case_table=None,
-        )
-
+    def load_dialog_process(self, button_dict):
+        case_table = self.set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self.get_cms_case_data()
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        self.mainwindow.dialog = button_dict.get(self.mainwindow.sender())
+        return self.mainwindow.dialog(
+            judicial_officer,
+            cms_case = cms_case_data,
+            case_table = case_table,
+        ).exec()
 
 
 class DialogPreloadChecker(object):
