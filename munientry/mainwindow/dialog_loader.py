@@ -146,7 +146,8 @@ class DialogLoader(object):
         case_table = None
         judicial_officer = self.mainwindow.judicial_officer
         case_number = self.get_case_number()
-        if case_number == '':
+        logger.debug(case_number)
+        if case_number == None:
             cms_case_data = load_no_case_driving()
         else:
             cms_case_data = load_single_driving_info_case(case_number)
