@@ -63,17 +63,20 @@ class MainWindowSlotFunctionsMixin(object):
     def start_crim_traffic_entry(self) -> None:
         """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).crimtraffic_checks():
-            return DialogLoader(self).load_crimtraffic_entry()
+            self.dialog = DialogLoader(self).load_crimtraffic_entry()
+            return self.dialog.exec()
 
     def start_scheduling_entry(self) -> None:
         """Starts a scheduling dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).scheduling_checks():
-            return DialogLoader(self).load_scheduling_entry()
+            self.dialog = DialogLoader(self).load_scheduling_entry()
+            return self.dialog.exec()
 
     def start_admin_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).admin_checks():
-            return DialogLoader(self).load_admin_entry()
+            self.dialog = DialogLoader(self).load_admin_entry()
+            return self.dialog.exec()
 
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')

@@ -116,12 +116,11 @@ class DialogLoader(object):
         judicial_officer = self.mainwindow.judicial_officer
         cms_case_data = self.get_cms_case_data()
         logger.info(f'CMS Case Data: {cms_case_data}')
-        self.mainwindow.dialog = button_dict.get(self.mainwindow.sender())
-        return self.mainwindow.dialog(
+        return button_dict.get(self.mainwindow.sender())(
             judicial_officer,
             cms_case = cms_case_data,
             case_table = case_table,
-        ).exec()
+        )
 
 
 class DialogPreloadChecker(object):
