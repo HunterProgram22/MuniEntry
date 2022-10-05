@@ -5,6 +5,7 @@ from loguru import logger
 from munientry.data import sql_server_getters as sql_server
 from munientry.data import sql_lite_getters as sql_lite
 from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import WarningBox, RequiredBox
 
 
@@ -57,6 +58,11 @@ def set_case_to_load(daily_case_list: object) -> CmsCaseInformation:
 def load_no_case() -> CmsCaseInformation:
     """Loads the CmsCaseInformation model with no data."""
     return CmsCaseInformation()
+
+
+def load_no_case_driving() -> DrivingPrivilegesInformation:
+    """Loads the DrivingPrivilegesInformation model with no data."""
+    return DrivingPrivilegesInformation()
 
 
 def load_single_case(case_number: str) -> CmsCaseInformation:
@@ -140,7 +146,10 @@ class DialogLoader(object):
         case_table = None
         judicial_officer = self.mainwindow.judicial_officer
         case_number = self.get_case_number()
-        cms_case_data = load_single_driving_info_case(case_number)
+        if case_number == '':
+            cms_case_data = load_no_case_driving()
+        else:
+            cms_case_data = load_single_driving_info_case(case_number)
         logger.info(f'CMS Case Data: {cms_case_data}')
         return button_dict.get(self.mainwindow.sender())(
             judicial_officer,

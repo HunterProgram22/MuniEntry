@@ -76,7 +76,7 @@ def test_all_scheduling_entry_buttons_with_no_case(qtbot, main_window, test_inpu
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_admin_button_test_list)
-def test_all_scheduling_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
+def test_all_admin_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.assn_comm_patterson_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(getattr(main_window, test_input))

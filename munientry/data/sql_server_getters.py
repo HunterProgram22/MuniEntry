@@ -193,7 +193,6 @@ class DrivingInfoSQLServer(object):
             self.case.defendant.zipcode = self.query.value('CaseZipcode')
             self.case.defendant.license_number = self.query.value('DefLicenseNumber')
 
-
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case
 
