@@ -24,9 +24,9 @@ def test_create_driving_privileges_caselist(qtbot, main_window):
     """
     mouse_click(main_window.assn_comm_patterson_radioButton)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_list_tab)
-    mouse_click(main_window.pleas_radioButton)
-    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(main_window.arraignments_radioButton)
+    enter_data(main_window.arraignments_cases_box, 'Conkey - 22TRD01944')
     mouse_click(main_window.limited_driving_privilegesButton)
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.defendant.state == 'OH'
-    assert main_window.dialog.entry_case_information.case_number == '21TRC05611'
+    assert main_window.dialog.entry_case_information.case_number == '22TRD01944'
