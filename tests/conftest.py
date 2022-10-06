@@ -62,6 +62,23 @@ def main_window_noclose(qtbot):
 
 
 @pytest.fixture
+def add_charge_dialog(qtbot, main_window):
+    """Add Charge Dialog is add_charge_dialog. Uses the Jail Dialog
+    as that is the most common."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.JailCCPleaButton)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_charge_Button)
+    return main_window.dialog.popup_dialog
+
+
+@pytest.fixture
 def conditions_dialog(qtbot, main_window):
     """This is the fixture for the add conditions dialog on the the Fine Only main dialog."""
     mouse_click(main_window.rohrer_radioButton)

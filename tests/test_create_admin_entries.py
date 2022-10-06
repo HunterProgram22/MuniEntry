@@ -1,7 +1,7 @@
 """Test module for creating admin entries.
 
-Module Level Parameters:
-    main_window: Is setup and imported automatically from the conftest file.
+Module Level Parameters - fixtures setup and imported automatically from the conftest file.
+    main_window
 """
 from tests.conftest import enter_data, mouse_click
 
