@@ -1,8 +1,12 @@
-"""Test module for creating admin entries."""
+"""Test module for creating admin entries.
+
+Module Level Parameters:
+    main_window: Is setup and imported automatically from the conftest file.
+"""
 from tests.conftest import enter_data, mouse_click
 
 
-def test_create_driving_privileges_casesearch(qtbot, main_window):
+def test_create_driving_privileges_casesearch(main_window):
     """Tests the creation of a driving privileges entry from case search.
 
     Passes even if no entry is opened b/c it checks data.
@@ -17,7 +21,7 @@ def test_create_driving_privileges_casesearch(qtbot, main_window):
     assert main_window.dialog.entry_case_information.case_number == '22TRD01955'
 
 
-def test_create_driving_privileges_caselist(qtbot, main_window):
+def test_create_driving_privileges_caselist(main_window):
     """Tests the creation of a driving privileges entry from daily case lists.
 
     Passes even if no entry is opened b/c it checks data.
