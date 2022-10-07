@@ -15,6 +15,7 @@ sys.path.insert(0, parent_dir)
 from munientry import logging_module
 from munientry.mainwindow.main_window import MainWindow
 
+CLOSE_TIMER = 50
 
 """
 INSTRUCTIONS:
@@ -63,8 +64,7 @@ def main_window_noclose(qtbot):
 
 @pytest.fixture
 def add_charge_dialog(qtbot, main_window):
-    """Add Charge Dialog is add_charge_dialog. Uses the Jail Dialog
-    as that is the most common."""
+    """Add Charge Dialog fixture."""
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.JailCCPleaButton)
