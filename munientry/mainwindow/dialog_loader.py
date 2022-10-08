@@ -1,12 +1,11 @@
 """Module containing classes and functions for loading dialogs from the Main Window."""
-from PyQt5.QtWidgets import QMessageBox, QDialog
 from loguru import logger
+from PyQt5.QtWidgets import QMessageBox
 
 from munientry.data import sql_server_getters as sql_server
-from munientry.data import sql_lite_getters as sql_lite
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
-from munientry.widgets.message_boxes import WarningBox, RequiredBox
+from munientry.widgets.message_boxes import RequiredBox, WarningBox
 
 
 def search_daily_case_list(daily_case_list: list, selected_last_name: str) -> tuple:
@@ -127,8 +126,8 @@ class DialogLoader(object):
         logger.info(f'CMS Case Data: {cms_case_data}')
         return button_dict.get(self.mainwindow.sender())(
             judicial_officer,
-            cms_case = cms_case_data,
-            case_table = case_table,
+            cms_case=cms_case_data,
+            case_table=case_table,
         )
 
     def get_case_number(self) -> str:
@@ -146,16 +145,15 @@ class DialogLoader(object):
         case_table = None
         judicial_officer = self.mainwindow.judicial_officer
         case_number = self.get_case_number()
-        logger.debug(case_number)
-        if case_number == None:
+        if case_number is None:
             cms_case_data = load_no_case_driving()
         else:
             cms_case_data = load_single_driving_info_case(case_number)
         logger.info(f'CMS Case Data: {cms_case_data}')
         return button_dict.get(self.mainwindow.sender())(
             judicial_officer,
-            cms_case = cms_case_data,
-            case_table = case_table,
+            cms_case=cms_case_data,
+            case_table=case_table,
         )
 
 
@@ -165,7 +163,7 @@ class DialogPreloadChecker(object):
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
 
-    def crimtraffic_checks(self):
+    def crimtraffic_checks(self) -> bool:
         required_officers = [
             self.mainwindow.hemmeter_radioButton.isChecked(),
             self.mainwindow.rohrer_radioButton.isChecked(),
@@ -179,7 +177,7 @@ class DialogPreloadChecker(object):
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
 
-    def scheduling_checks(self):
+    def scheduling_checks(self) -> bool:
         required_officers = [
             self.mainwindow.dattilo_radioButton.isChecked(),
             self.mainwindow.patterson_radioButton.isChecked(),
@@ -192,7 +190,7 @@ class DialogPreloadChecker(object):
         ).exec()
         return False
 
-    def admin_checks(self):
+    def admin_checks(self) -> bool:
         required_officers = [
             self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
             self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
