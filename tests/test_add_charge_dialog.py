@@ -1,4 +1,4 @@
-"""Test module for creating admin entries.
+"""Test module for Add Charge Dialog UI Functionality.
 
 Module Level Parameters - fixtures setup and imported automatically from the conftest file.
     main_window
@@ -23,13 +23,8 @@ all_add_charge_dialogs_test_list = [
 ]
 
 
-def close_popup_dialog(qtbot, main_window):
-    qtbot.addWidget(main_window.dialog.popup_dialog)
-    mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
-
-
 @pytest.mark.parametrize('test_input', all_add_charge_dialogs_test_list)
-def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
+def test_add_charge_works_all_dialogs(main_window, test_input):
     """Tests the Add Charge button opens the Add Charge Dialog and adds a charge.
 
     Test is run for all Main Entry Dialogs that have an Add Charge button.
@@ -41,6 +36,8 @@ def test_add_charge_works_all_dialogs(qtbot, main_window, test_input):
     dialog_button = getattr(main_window, test_input)
     mouse_click(dialog_button)
 
+    def close_popup_dialog():
+        mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
 
     QTimer.singleShot(CLOSE_TIMER, close_popup_dialog)
     mouse_click(main_window.dialog.add_charge_Button)

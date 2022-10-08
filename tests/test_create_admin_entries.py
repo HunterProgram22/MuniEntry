@@ -16,6 +16,7 @@ def test_create_driving_privileges_casesearch(main_window):
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
     mouse_click(main_window.limited_driving_privilegesButton)
+    enter_data(main_window.dialog.defendant_driver_license_lineEdit, 'TEST')
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.defendant.state == 'OH'
     assert main_window.dialog.entry_case_information.case_number == '22TRD01955'
@@ -31,6 +32,7 @@ def test_create_driving_privileges_caselist(main_window):
     mouse_click(main_window.arraignments_radioButton)
     enter_data(main_window.arraignments_cases_box, 'Conkey - 22TRD01944')
     mouse_click(main_window.limited_driving_privilegesButton)
+    enter_data(main_window.dialog.defendant_driver_license_lineEdit, 'TEST')
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.defendant.state == 'OH'
     assert main_window.dialog.entry_case_information.case_number == '22TRD01944'
