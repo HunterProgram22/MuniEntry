@@ -24,10 +24,17 @@ NONMOVING_COURT_COSTS = int(costs['non_moving'])
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
 # not properly terminated.
 PATH = str(pathlib.Path().absolute())
+print(PATH)
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 SAVE_PATH = fr'{PATH}\resources\saved\\'
 LOG_PATH = fr'{PATH}\resources\logs\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
+
+paths = config['paths']
+if PATH == r'C:\Users\justi\appdata\local\programs\python\python310\MuniEntry':
+    DRIVE_SAVE_PATH = paths['drive_save_path_home_test']
+else:
+    DRIVE_SAVE_PATH = paths['drive_save_path']
 
 DB_PATH = fr'{PATH}\db\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
