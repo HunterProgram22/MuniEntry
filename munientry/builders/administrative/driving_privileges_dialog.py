@@ -76,6 +76,10 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.other_conditions_checkBox,
         ]
 
+    def create_entry(self, save_path: str=None) -> None:
+        save_path = r'C:\Users\justi\AppData\Local\Programs\Python\Python310\TestSave\\'
+        super().__init__(save_path)
+
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.
 
