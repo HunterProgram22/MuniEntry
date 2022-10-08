@@ -176,6 +176,9 @@ class DrivingInfoSQLServer(object):
         self.load_case_information()
 
     def load_case_information(self) -> None:
+        if self.query.value('CaseNumber') is None:
+            logger.info('NoneType returned from case search - loading empty case.')
+            return None
         self.case.case_number = self.query.value('CaseNumber')
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         self.case.defendant.last_name = self.query.value('DefLastName').title()
