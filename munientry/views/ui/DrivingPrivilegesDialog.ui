@@ -891,6 +891,11 @@ background-color: rgb(255, 255, 255);</string>
                </item>
                <item>
                 <property name="text">
+                 <string>18 Months</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>2 Years</string>
                 </property>
                </item>

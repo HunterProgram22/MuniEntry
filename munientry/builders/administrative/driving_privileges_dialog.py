@@ -89,6 +89,7 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
         suspension_days_dict = {
             '90 Days': 90,
             '1 Year': 365,
+            '18 Months': 547,
             '2 Years': 730,
             '3 Years': 1095,
             '4 Years': 1460,
