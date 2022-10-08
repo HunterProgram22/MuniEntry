@@ -11,6 +11,7 @@ from munientry.models.privileges_models import (
 )
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
+from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 
 TODAY = QDate.currentDate()
 
@@ -89,6 +90,7 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
         suspension_days_dict = {
             '90 Days': 90,
             '1 Year': 365,
+            '18 Months': 547,
             '2 Years': 730,
             '3 Years': 1095,
             '4 Years': 1460,
@@ -226,8 +228,20 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list = [
+            'check_drivers_license',
+        ]
         self.check_status = self.perform_check_list()
+
+    def check_drivers_license(self):
+        if self.view.defendant_driver_license_lineEdit.text().strip() == BLANK:
+            message = (
+                'The Defendant Driver License field is blank. Please enter a Driver License'
+                + ' number. If unkown please enter None or Unknown.'
+            )
+            RequiredBox(message).exec()
+            return FAIL
+        return PASS
 
 
 class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):

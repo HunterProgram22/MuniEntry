@@ -1,14 +1,39 @@
 """Module for packaging data from SQL Server database for use in application."""
-
 from loguru import logger
 from PyQt5.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_server_queries import general_case_search_query, driving_case_search_query
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
+from munientry.data.sql_server_queries import (
+    driving_case_search_query,
+    general_case_search_query,
+    get_case_docket_query,
+)
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
+
+
+class CaseDocketSQLServer(object):
+    """Packages case docket data from the SQL Server Authority Court database."""
+
+    def __init__(self, case_number: str) -> None:
+        self.case_number = case_number
+        self.database_connection_name = 'con_authority_court'
+        self.database = open_db_connection(self.database_connection_name)
+
+    def get_docket(self) -> list:
+        query_string = get_case_docket_query(self.case_number)
+        logger.info(query_string)
+        self.query = QSqlQuery(self.database)
+        self.query.prepare(query_string)
+        self.query.exec()
+        data_list = []
+        while self.query.next():
+            docket_item = (self.query.value('Date'), self.query.value('Remark'))
+            data_list.append(docket_item)
+        close_db_connection(self.database)
+        return data_list
 
 
 class CriminalCaseSQLServer(object):
@@ -68,6 +93,36 @@ class CriminalCaseSQLServer(object):
         return self.case
 
 
+class MultipleCriminalCaseSQLServer(CriminalCaseSQLServer):
+
+    def __init__(self, matched_case_numbers_list: list) -> None:
+        logger.debug(matched_case_numbers_list)
+        self.all_case_numbers = matched_case_numbers_list
+        self.database_connection_name = 'con_authority_court'
+        self.database = open_db_connection(self.database_connection_name)
+        self.case = CmsCaseInformation()
+        self.query_case_data()
+        self.query.finish()
+        close_db_connection(self.database)
+
+    def query_case_data(self) -> None:
+        """Query database based on cms_case number to return the data to load for the dialog."""
+        for case_number in self.all_case_numbers:
+            self.case_number = case_number
+            query_string = general_case_search_query(self.case_number)
+            self.query = QSqlQuery(self.database)
+            self.query.prepare(query_string)
+            logger.database(f'Querying {self.database_connection_name}')
+            logger.database(f'Query: {query_string}')
+            self.query.bindValue(self.case_number, self.case_number)
+            self.query.exec()
+            self.load_query_data_into_case()
+
+    def load_case_information(self) -> None:
+        super().load_case_information()
+        self.case.case_number = ', '.join(self.all_case_numbers)
+
+
 class DrivingInfoSQLServer(object):
     """Packages driving privileges case data from the SQL Server Authority Court database.
 
@@ -121,6 +176,9 @@ class DrivingInfoSQLServer(object):
         self.load_case_information()
 
     def load_case_information(self) -> None:
+        if self.query.value('CaseNumber') is None:
+            logger.info('NoneType returned from case search - loading empty case.')
+            return None
         self.case.case_number = self.query.value('CaseNumber')
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         self.case.defendant.last_name = self.query.value('DefLastName').title()
@@ -137,7 +195,6 @@ class DrivingInfoSQLServer(object):
             self.case.defendant.state = str(self.query.value('CaseState'))
             self.case.defendant.zipcode = self.query.value('CaseZipcode')
             self.case.defendant.license_number = self.query.value('DefLicenseNumber')
-
 
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case

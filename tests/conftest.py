@@ -15,6 +15,7 @@ sys.path.insert(0, parent_dir)
 from munientry import logging_module
 from munientry.mainwindow.main_window import MainWindow
 
+CLOSE_TIMER = 50
 
 """
 INSTRUCTIONS:
@@ -59,6 +60,42 @@ def main_window_noclose(qtbot):
     window = MainWindow()
     qtbot.addWidget(window)
     return window
+
+
+@pytest.fixture
+def driving_priv_dialog(main_window):
+    """Driving Privileges Dialog is driving_priv_dialog."""
+    mouse_click(main_window.assn_comm_patterson_radioButton)
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, '22TRD01955')
+    mouse_click(main_window.get_case_Button)
+    mouse_click(main_window.limited_driving_privilegesButton)
+    return main_window.dialog
+
+
+@pytest.fixture
+def diversion_dialog(qtbot, main_window):
+    """Diversion Plea Dialog is diversion_dialog"""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.DiversionButton)
+    return main_window.dialog
+
+
+@pytest.fixture
+def add_charge_dialog(qtbot, main_window):
+    """Add Charge Dialog fixture."""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.JailCCPleaButton)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_charge_Button)
+    return main_window.dialog.popup_dialog
 
 
 @pytest.fixture
