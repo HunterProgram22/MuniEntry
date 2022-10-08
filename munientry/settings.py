@@ -24,7 +24,6 @@ NONMOVING_COURT_COSTS = int(costs['non_moving'])
 # Path strings require double backslash even with raw f-strings (fr) otherwise the string is
 # not properly terminated.
 PATH = str(pathlib.Path().absolute())
-print(PATH)
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 SAVE_PATH = fr'{PATH}\resources\saved\\'
 LOG_PATH = fr'{PATH}\resources\logs\\'

@@ -83,7 +83,6 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
         Sets a specific save path used to save Driving Privileges.
         """
         save_path = DRIVE_SAVE_PATH
-        logger.debug(save_path)
         super().create_entry(save_path)
 
     def set_document_name(self) -> str:
