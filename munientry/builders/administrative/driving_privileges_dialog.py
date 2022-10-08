@@ -11,7 +11,7 @@ from munientry.models.privileges_models import (
 )
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
-from munientry.widgets.message_boxes import RequiredBox, PASS, FAIL, BLANK
+from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 
 TODAY = QDate.currentDate()
 
@@ -242,7 +242,6 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
             RequiredBox(message).exec()
             return FAIL
         return PASS
-
 
 
 class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):

@@ -453,21 +453,21 @@ def test_trial_sentencing_entry(qtbot, trial_sentencing_dialog):
     assert trial_sentencing_dialog.entry_case_information.case_number == '21TRC05611trial_sentencing'
 
 
-def test_create_diversion_entry(qtbot, div_dialog):
-    enter_data(div_dialog.case_number_lineEdit, 'div_test')
-    mouse_click(div_dialog.marijuana_diversion_radioButton)
-    mouse_click(div_dialog.diversion_jail_imposed_checkBox)
-    mouse_click(div_dialog.pay_restitution_checkBox)
-    enter_data(div_dialog.pay_restitution_to_box, 'Justin Kudela')
-    enter_data(div_dialog.pay_restitution_amount_box, '$5,000')
-    mouse_click(div_dialog.other_conditions_checkBox)
-    enter_data(div_dialog.other_conditions_textEdit, 'Be good or else!')
-    mouse_click(div_dialog.guilty_all_Button)
-    enter_data(div_dialog.fra_in_court_box, 'Yes')
+def test_create_diversion_entry(qtbot, diversion_dialog):
+    enter_data(diversion_dialog.case_number_lineEdit, 'div_test')
+    mouse_click(diversion_dialog.marijuana_diversion_radioButton)
+    mouse_click(diversion_dialog.diversion_jail_imposed_checkBox)
+    mouse_click(diversion_dialog.pay_restitution_checkBox)
+    enter_data(diversion_dialog.pay_restitution_to_box, 'Justin Kudela')
+    enter_data(diversion_dialog.pay_restitution_amount_box, '$5,000')
+    mouse_click(diversion_dialog.other_conditions_checkBox)
+    enter_data(diversion_dialog.other_conditions_textEdit, 'Be good or else!')
+    mouse_click(diversion_dialog.guilty_all_Button)
+    enter_data(diversion_dialog.fra_in_court_box, 'Yes')
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
-    mouse_click(div_dialog.create_entry_Button)
-    assert div_dialog.entry_case_information.case_number == '21TRC05611div_test'
+    mouse_click(diversion_dialog.create_entry_Button)
+    assert diversion_dialog.entry_case_information.case_number == '21TRC05611div_test'
 
 
 def test_create_freeform_entry(qtbot, freeform_dialog):

@@ -63,6 +63,15 @@ def main_window_noclose(qtbot):
 
 
 @pytest.fixture
+def diversion_dialog(qtbot, main_window):
+    """Diversion Plea Dialog is div_dialog"""
+    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.DiversionButton)
+    return main_window.dialog
+
+
+@pytest.fixture
 def add_charge_dialog(qtbot, main_window):
     """Add Charge Dialog fixture."""
     mouse_click(main_window.hemmeter_radioButton)
