@@ -77,7 +77,7 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.other_conditions_checkBox,
         ]
 
-    def create_entry(self) -> None:
+    def create_entry(self, save_path: str=None) -> None:
         """Overrides BaseDialogSlotFunctions create_entry.
 
         Sets a specific save path used to save Driving Privileges.

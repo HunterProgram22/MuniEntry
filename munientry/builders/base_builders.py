@@ -111,13 +111,14 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def create_entry(self) -> None:
+    def create_entry(self, save_path: str=None) -> None:
         """Loads the proper template and creates the entry.
 
         Uses the default SAVE_PATH from settings.py. This is overridden in the create_entry
         method in DrivingPrivilegesSlotFunctions with DRIVE_SAVE_PATH.
         """
-        save_path = SAVE_PATH
+        if save_path is None:
+            save_path = SAVE_PATH
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
