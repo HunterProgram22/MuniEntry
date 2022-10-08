@@ -30,7 +30,7 @@ LOG_PATH = fr'{PATH}\resources\logs\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
 
 paths = config['paths']
-if PATH == r'C:\Users\justi\appdata\local\programs\python\python310\MuniEntry':
+if PATH[:2] == 'C:':
     DRIVE_SAVE_PATH = paths['drive_save_path_home_test']
 else:
     DRIVE_SAVE_PATH = paths['drive_save_path']
