@@ -3,12 +3,9 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
-from munientry.widgets.message_boxes import RequiredBox, WarningBox
+from munientry.widgets.message_boxes import RequiredBox, WarningBox, FAIL, PASS, BLANK
 
 TODAY = QDate.currentDate()
-FAIL = 'Fail'
-PASS = 'Pass'
-BLANK = ''
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 
 
