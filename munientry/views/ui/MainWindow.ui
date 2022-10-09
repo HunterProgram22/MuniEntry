@@ -309,7 +309,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(208, 208, 208);</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="crim_traffic_Tab">
            <attribute name="title">
@@ -896,9 +896,12 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="fiscal_entriesButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
               <property name="text">
-               <string>PushButton</string>
+               <string>Fiscal Journal Entries</string>
               </property>
              </widget>
             </item>
@@ -1265,6 +1268,21 @@ font-weight: bold;</string>
      <height>27</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Palatino Linotype</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
    <widget class="QMenu" name="menuLogs">
     <property name="title">
      <string>Logs</string>
@@ -1286,6 +1304,28 @@ font-weight: bold;</string>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
    </widget>
+   <widget class="QMenu" name="menuOpen">
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Open</string>
+    </property>
+    <addaction name="actionDriving_Privileges_Folder"/>
+   </widget>
+   <addaction name="menuOpen"/>
    <addaction name="menuBatch"/>
    <addaction name="menuReports"/>
    <addaction name="menuLogs"/>
@@ -1314,6 +1354,11 @@ font-weight: bold;</string>
   <action name="actionFinal_Pretrials">
    <property name="text">
     <string>Final Pretrials</string>
+   </property>
+  </action>
+  <action name="actionDriving_Privileges_Folder">
+   <property name="text">
+    <string>Driving Privileges Folder</string>
    </property>
   </action>
  </widget>

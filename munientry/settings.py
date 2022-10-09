@@ -32,7 +32,7 @@ ICON_PATH = fr'{PATH}\resources\icons\\'
 
 
 paths = config['paths']
-if PATH[:2] == 'C:':
+if PATH[:15] == r'C:\Users\justi':
     DRIVE_SAVE_PATH = paths['drive_save_path_home_test']
 else:
     DRIVE_SAVE_PATH = paths['drive_save_path']

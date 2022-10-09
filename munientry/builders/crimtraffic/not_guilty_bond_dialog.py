@@ -53,6 +53,11 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.add_special_conditions_signals()
         self.connect_bond_condition_signals()
 
+    def connect_not_guilty_all_button(self):
+        self.dialog.not_guilty_all_Button.pressed.connect(
+            self.dialog.charges_gridLayout.set_pleas_to_not_guilty,
+        )
+
     def connect_bond_condition_signals(self):
         """Hides the bond condition boxes if 'Continue Existing Bond' is selected."""
         self.dialog.bond_type_box.currentTextChanged.connect(
@@ -130,7 +135,7 @@ class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog)
             ('other_conditions_checkBox', self.entry_case_information.other_conditions),
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
-        self.charges_gridLayout.set_all_pleas('Not Guilty')
+        self.charges_gridLayout.set_pleas_to_not_guilty()
 
 
 if __name__ == '__main__':

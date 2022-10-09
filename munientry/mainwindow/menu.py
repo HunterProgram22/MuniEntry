@@ -11,7 +11,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
-from munientry.settings import LOG_PATH, SAVE_PATH, USER_LOG_NAME
+from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, SAVE_PATH, USER_LOG_NAME
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
@@ -32,6 +32,12 @@ def open_batch_entries_folder(_signal=None) -> None:
     """Menu function that opens the folder where batch entries are saved."""
     os.startfile(f'{SAVE_PATH}batch\\')
     logger.info('Batch entries folder opened.')
+
+
+def open_driving_privileges_folder(_signal=None) -> None:
+    """Menu function that opens the folder where Driving Privileges entries are saved."""
+    os.startfile(f'{DRIVE_SAVE_PATH}')
+    logger.info('Driving Privileges entries folder opened.')
 
 
 def run_batch_fta_process(_signal=None) -> None:
@@ -77,6 +83,9 @@ class MainWindowMenu(object):
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
         self.mainwindow.actionArraignments.triggered.connect(self.run_arraignments_report)
         self.mainwindow.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
+        self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
+            open_driving_privileges_folder,
+        )
 
     def run_arraignments_report(self) -> None:
         report_date = self.get_report_date('Arraignments')
