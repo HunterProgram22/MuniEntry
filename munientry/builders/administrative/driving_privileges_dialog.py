@@ -9,6 +9,7 @@ from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
+from munientry.settings import DRIVE_SAVE_PATH
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
@@ -75,6 +76,14 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.varied_hours_checkBox,
             self.dialog.other_conditions_checkBox,
         ]
+
+    def create_entry(self, save_path: str=None) -> None:
+        """Overrides BaseDialogSlotFunctions create_entry.
+
+        Sets a specific save path used to save Driving Privileges.
+        """
+        save_path = DRIVE_SAVE_PATH
+        super().create_entry(save_path)
 
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.
