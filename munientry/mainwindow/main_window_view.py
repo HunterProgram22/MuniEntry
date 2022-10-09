@@ -129,7 +129,7 @@ class MainWindowViewModifier(object):
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
             self.main_window.fiscal_entriesButton:
-                driving_privileges_dialog.DrivingPrivilegesDialog,
+                admin_fiscal_dialog.AdminFiscalDialog,
         }
 
     def create_daily_case_lists(self) -> None:
