@@ -216,11 +216,6 @@ class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
             self.dialog.charges_gridLayout.set_all_findings,
         )
 
-    def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
-        )
-
     def connect_add_charge_button(self):
         self.dialog.add_charge_Button.released.connect(
             self.dialog.functions.start_add_charge_dialog,
