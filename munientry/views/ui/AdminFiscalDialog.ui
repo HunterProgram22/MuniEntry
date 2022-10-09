@@ -423,6 +423,41 @@ font-weight: bold;</string>
              <enum>QFrame::Raised</enum>
             </property>
             <layout class="QGridLayout" name="gridLayout_3">
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_4">
+               <property name="text">
+                <string>Disbursement Amount:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Disbursed To:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLineEdit" name="disbursement_amount_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="disbursement_vendor_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="disbursement_reason_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_7">
                <property name="maximumSize">
@@ -456,10 +491,17 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="disbursement_reason_lineEdit">
+             <item row="4" column="1">
+              <widget class="QLineEdit" name="invoice_number_lineEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Invoice Number:</string>
                </property>
               </widget>
              </item>
@@ -483,6 +525,12 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>account_number_box</tabstop>
+  <tabstop>subaccount_number_box</tabstop>
+  <tabstop>disbursement_reason_lineEdit</tabstop>
+  <tabstop>disbursement_amount_lineEdit</tabstop>
+  <tabstop>disbursement_vendor_lineEdit</tabstop>
+  <tabstop>invoice_number_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

@@ -61,9 +61,10 @@ class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
 
         Sets the document name based on driver name instead of case number.
         """
-        template_name = self.dialog.template.template_name
         account_number = self.dialog.entry_case_information.account_number
-        return f'{account_number}_{template_name}.docx'
+        vendor_name = self.dialog.entry_case_information.disbursement_vendor
+        invoice = self.dialog.entry_case_information.invoice_number
+        return f'{account_number}_{vendor_name}_{invoice}.docx'
 
 
 class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
@@ -72,6 +73,7 @@ class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_account_numbers_and_date()
+        self.set_payment_information()
 
     def set_account_numbers_and_date(self):
         self.model.judicial_officer = self.dialog.judicial_officer
@@ -82,8 +84,13 @@ class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
         subaccount_number_box_string = self.dialog.subaccount_number_box.currentText()
         self.model.subaccount_name, self.model.subaccount_number = subaccount_number_box_string.split(' - ')
 
-        self.model.disbursement_reason = self.dialog.disbursement_reason_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
+
+    def set_payment_information(self):
+        self.model.disbursement_reason = self.dialog.disbursement_reason_lineEdit.text()
+        self.model.disbursement_amount = self.dialog.disbursement_amount_lineEdit.text()
+        self.model.disbursement_vendor = self.dialog.disbursement_vendor_lineEdit.text()
+        self.model.invoice_number = self.dialog.invoice_number_lineEdit.text()
 
 
 class AdminFiscalInfoChecker(BaseChecker):

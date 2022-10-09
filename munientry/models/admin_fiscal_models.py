@@ -10,6 +10,9 @@ class AdminFiscalEntryInformation:
     subaccount_number: str = None
     subaccount_name: str = None
     disbursement_reason: str = None
+    disbursement_amount: str = None
+    disbursement_vendor: str = None
+    invoice_number: str = None
     judicial_officer: object = None
     plea_trial_date: str = None
 
