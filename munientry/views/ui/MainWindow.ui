@@ -1265,6 +1265,21 @@ font-weight: bold;</string>
      <height>27</height>
     </rect>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Palatino Linotype</family>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <italic>false</italic>
+     <bold>true</bold>
+    </font>
+   </property>
    <widget class="QMenu" name="menuLogs">
     <property name="title">
      <string>Logs</string>
@@ -1286,6 +1301,28 @@ font-weight: bold;</string>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
    </widget>
+   <widget class="QMenu" name="menuOpen">
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <family>Palatino Linotype</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="title">
+     <string>Open</string>
+    </property>
+    <addaction name="actionDriving_Privileges_Folder"/>
+   </widget>
+   <addaction name="menuOpen"/>
    <addaction name="menuBatch"/>
    <addaction name="menuReports"/>
    <addaction name="menuLogs"/>
@@ -1314,6 +1351,11 @@ font-weight: bold;</string>
   <action name="actionFinal_Pretrials">
    <property name="text">
     <string>Final Pretrials</string>
+   </property>
+  </action>
+  <action name="actionDriving_Privileges_Folder">
+   <property name="text">
+    <string>Driving Privileges Folder</string>
    </property>
   </action>
  </widget>
