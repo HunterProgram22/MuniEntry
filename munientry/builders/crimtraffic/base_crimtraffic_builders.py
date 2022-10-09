@@ -185,6 +185,12 @@ class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
 class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
     """Extends Base Dialog Signal Connector for CrimTraffic Entries."""
 
+    def connect_main_dialog_common_signals(self):
+        super().connect_main_dialog_common_signals()
+        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
+            self.dialog.functions.set_defense_counsel,
+        )
+
     def connect_fra_signals(self):
         self.dialog.fra_in_file_box.currentTextChanged.connect(
             self.dialog.functions.set_fra_in_file,

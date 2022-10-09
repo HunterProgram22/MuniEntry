@@ -196,12 +196,6 @@ class BaseDialogSignalConnector(object):
         self.dialog.create_entry_Button.released.connect(
             self.dialog.functions.create_entry_process,
         )
-        try:
-            self.dialog.defense_counsel_waived_checkBox.toggled.connect(
-                self.dialog.functions.set_defense_counsel,
-            )
-        except AttributeError as err:
-            logger.warning(err)
 
 
 if __name__ == '__main__':
