@@ -8,7 +8,7 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.settings import DRIVE_SAVE_PATH
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 from munientry.models.template_types import TEMPLATE_DICT
 
@@ -44,6 +44,10 @@ class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
     def __init__(self, dialog):
         super().__init__(dialog)
 
+    def clear_case_information_fields(self):
+        self.dialog.account_number_box.clear()
+        self.dialog.subaccount_number_box.clear()
+
     def create_entry(self, save_path: str=None) -> None:
         """Overrides BaseDialogSlotFunctions create_entry.
 
@@ -58,19 +62,27 @@ class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
         Sets the document name based on driver name instead of case number.
         """
         template_name = self.dialog.template.template_name
-        return f'TEST_{template_name}.docx'
+        account_number = self.dialog.entry_case_information.account_number
+        return f'{account_number}_{template_name}.docx'
 
 
-class AdminFiscalCaseInformationUpdater(CaseInformationUpdater):
+class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
     """Updates case information for Admin Fiscal Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_case_number_and_date()
+        self.set_account_numbers_and_date()
 
-    def set_case_number_and_date(self):
+    def set_account_numbers_and_date(self):
         self.model.judicial_officer = self.dialog.judicial_officer
-        self.model.case_number = self.dialog.case_number_lineEdit.text()
+
+        account_number_box_string = self.dialog.account_number_box.currentText()
+        self.model.account_name, self.model.account_number = account_number_box_string.split(' - ')
+
+        subaccount_number_box_string = self.dialog.subaccount_number_box.currentText()
+        self.model.subaccount_name, self.model.subaccount_number = subaccount_number_box_string.split(' - ')
+
+        self.model.disbursement_reason = self.dialog.disbursement_reason_lineEdit.text()
         self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
 
 

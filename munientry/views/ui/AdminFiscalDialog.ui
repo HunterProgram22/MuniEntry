@@ -214,7 +214,10 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout" columnstretch="1,0,0,0,0">
+            <layout class="QGridLayout" name="gridLayout" columnstretch="1,4,1,1,1">
+             <property name="verticalSpacing">
+              <number>24</number>
+             </property>
              <item row="2" column="4">
               <widget class="QPushButton" name="clear_fields_case_Button">
                <property name="focusPolicy">
@@ -232,19 +235,6 @@ font-weight: bold;</string>
               <widget class="QLabel" name="label_26">
                <property name="text">
                 <string>Entry Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="case_number_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -298,6 +288,12 @@ background-color: rgb(255, 255, 255);</string>
              </item>
              <item row="0" column="0" colspan="5">
               <widget class="QLabel" name="label_6">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
                <property name="font">
                 <font>
                  <family>Palatino Linotype</family>
@@ -314,6 +310,87 @@ background-color: rgb(255, 255, 255);</string>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>SubAccount Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QComboBox" name="account_number_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Indigent Alcohol Monitoring - 24115000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Indigent Alcohol Treatment - 25115000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Computer Legal Research - 25615000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Special Projects - 25715000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Probation - 25915000</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QComboBox" name="subaccount_number_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Data Processing - 522200</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Professional Services - 523100</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>IDAM - 523160</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Operating Supplies - 533000</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Capital Outlay - 550300</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>
@@ -334,6 +411,61 @@ font-weight: bold;</string>
             </property>
            </widget>
           </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="frame">
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(240, 240, 240);</string>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="0" column="0" colspan="2">
+              <widget class="QLabel" name="label_7">
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>60</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
+               <property name="text">
+                <string>PAYMENT INFORMATION</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Disbursement Reason:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLineEdit" name="disbursement_reason_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
@@ -351,7 +483,6 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>case_number_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>
