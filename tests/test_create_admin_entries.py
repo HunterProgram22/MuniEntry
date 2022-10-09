@@ -36,3 +36,14 @@ def test_create_driving_privileges_caselist(main_window):
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.defendant.state == 'OH'
     assert main_window.dialog.entry_case_information.case_number == '22TRD01944'
+
+
+def test_create_fiscal_entry(main_window):
+    """Tests the creation of a fiscal entry.
+
+    Passes even if no entry is opened b/c it checks data.
+    """
+    mouse_click(main_window.court_admin_kudela_radioButton)
+    mouse_click(main_window.fiscal_entriesButton)
+    mouse_click(main_window.dialog.create_entry_Button)
+    assert main_window.dialog.entry_case_information.account_number == '24015000-533000'
