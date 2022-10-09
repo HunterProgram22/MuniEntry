@@ -1,7 +1,10 @@
 """Module for building the view of the MainWindow."""
 from PyQt5 import QtGui
 
-from munientry.builders.administrative import driving_privileges_dialog
+from munientry.builders.administrative import (
+    driving_privileges_dialog,
+    admin_fiscal_dialog,
+)
 from munientry.builders.crimtraffic import (
     bond_hearing_dialog,
     diversion_dialog,
@@ -124,6 +127,8 @@ class MainWindowViewModifier(object):
     def connect_admin_dialog_buttons(self) -> dict:
         return {
             self.main_window.limited_driving_privilegesButton:
+                driving_privileges_dialog.DrivingPrivilegesDialog,
+            self.main_window.fiscal_entriesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
         }
 
