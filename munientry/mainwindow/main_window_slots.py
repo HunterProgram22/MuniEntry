@@ -78,6 +78,12 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = DialogLoader(self).load_admin_entry()
             return self.dialog.exec()
 
+    def start_admin_fiscal_entry(self) -> None:
+        """Starts the Admin Fiscal Dialog."""
+        if DialogPreloadChecker(self).admin_checks():
+            self.dialog = DialogLoader(self).load_admin_fiscal_entry()
+            return self.dialog.exec()
+
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
         judicial_officers = self.judicial_officers_Stack

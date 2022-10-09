@@ -49,6 +49,7 @@ class MainWindowViewModifier(object):
         )
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
+        self.main_window.admin_dialog_no_case_buttons_dict = self.connect_admin_no_case_dialog_buttons()
 
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
@@ -128,6 +129,10 @@ class MainWindowViewModifier(object):
         return {
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
+        }
+
+    def connect_admin_no_case_dialog_buttons(self) -> dict:
+        return {
             self.main_window.fiscal_entriesButton:
                 admin_fiscal_dialog.AdminFiscalDialog,
         }
