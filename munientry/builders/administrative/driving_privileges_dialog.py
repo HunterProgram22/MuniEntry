@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.scheduling import base_scheduling_builders as sched
+from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
@@ -17,8 +17,8 @@ from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
-    """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
+class DrivingPrivilegesViewModifier(admin.AdminViewModifier):
+    """View class that creates and modifies the view for the Driving Privileges Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -28,7 +28,7 @@ class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
+class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -48,7 +48,7 @@ class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
         )
 
 
-class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
+class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -253,7 +253,7 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
         return PASS
 
 
-class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
+class DrivingPrivilegesDialog(admin.AdminBaseDialog, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

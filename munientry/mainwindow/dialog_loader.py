@@ -97,6 +97,10 @@ class DialogLoader(object):
         button_dict = self.mainwindow.admin_dialog_buttons_dict
         return self.load_admin_dialog_process(button_dict)
 
+    def load_admin_fiscal_entry(self):
+        button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
+        return self.load_admin_fiscal_dialog_process(button_dict)
+
     def set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
             if self.is_daily_case_list_selected():
@@ -155,6 +159,11 @@ class DialogLoader(object):
             cms_case=cms_case_data,
             case_table=case_table,
         )
+
+    def load_admin_fiscal_dialog_process(self, button_dict):
+        """Used for Admin Fiscal entry because there is no case search used."""
+        judicial_officer = self.mainwindow.judicial_officer
+        return button_dict.get(self.mainwindow.sender())(judicial_officer)
 
 
 class DialogPreloadChecker(object):

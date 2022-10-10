@@ -7,7 +7,10 @@ block_cipher = None
 a = Analysis(['MuniEntry_app.py'],
              pathex=[],
              binaries=[],
-             datas=[('./db/MuniEntryDB.sqlite', './db'),
+             datas=[
+                    ('M:/Entries/DrivingPrivileges/holder.txt', 'M:/Entries/DrivingPrivileges'
+                    ('./config.ini', '.'),
+                    ('./db/MuniEntryDB.sqlite', './db'),
                     ('./db/Arraignments.xlsx', './db'),
                     ('./db/Batch_FTA_Arraignments.xlsx', './db'),
                     ('./db/Slated.xlsx', './db'),

@@ -309,7 +309,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(208, 208, 208);</string>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="crim_traffic_Tab">
            <attribute name="title">

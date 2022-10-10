@@ -46,4 +46,4 @@ def test_create_fiscal_entry(main_window):
     mouse_click(main_window.court_admin_kudela_radioButton)
     mouse_click(main_window.fiscal_entriesButton)
     mouse_click(main_window.dialog.create_entry_Button)
-    assert main_window.dialog.entry_case_information.account_number == '24015000-533000'
+    assert main_window.dialog.entry_case_information.account_number == '24115000'
