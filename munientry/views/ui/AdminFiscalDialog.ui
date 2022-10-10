@@ -326,11 +326,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <item>
                 <property name="text">
-                 <string/>
-                </property>
-               </item>
-               <item>
-                <property name="text">
                  <string>Indigent Alcohol Monitoring - 24115000</string>
                 </property>
                </item>
@@ -361,11 +356,6 @@ background-color: rgb(255, 255, 255);</string>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
-               <item>
-                <property name="text">
-                 <string/>
-                </property>
-               </item>
                <item>
                 <property name="text">
                  <string>Data Processing - 522200</string>
