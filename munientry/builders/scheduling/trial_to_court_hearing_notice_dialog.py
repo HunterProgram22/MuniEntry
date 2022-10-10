@@ -7,7 +7,7 @@ from munientry.controllers.helper_functions import set_assigned_judge, set_court
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import TODAY, TYPE_CHECKING
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
 from munientry.views.trial_to_court_hearing_dialog_ui import (
     Ui_TrialToCourtHearingDialog,
 )
@@ -40,38 +40,13 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class TrialToCourtDialogCaseInformationUpdater(CaseInformationUpdater):
+class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
 
-    def __init__(self, dialog: 'QDialog') -> None:
-        super().__init__(dialog)
-        self.view = dialog
-        self.update_model_with_case_information_frame_data()
-
-    def update_model_with_case_information_frame_data(self) -> None:
-        self.set_case_number_and_date()
-        self.set_party_information()
-        self.set_defense_counsel_information()
-        self.model.assigned_judge = self.view.assigned_judge
-        self.model.courtroom = self.view.courtroom
-        self.model.judicial_officer = self.view.judicial_officer
-        self.set_scheduling_dates()
-
-    def set_case_number_and_date(self) -> None:
-        self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
-
-    def set_party_information(self) -> None:
-        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
-        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self) -> None:
-        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
-
     def set_scheduling_dates(self) -> None:
-        self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.trial_time = self.view.trial_time_box.currentText()
-        self.model.hearing_location = self.view.hearing_location_box.currentText()
+        self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.trial_time = self.dialog.trial_time_box.currentText()
+        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
 class TrialToCourtDialogInfoChecker(BaseChecker):

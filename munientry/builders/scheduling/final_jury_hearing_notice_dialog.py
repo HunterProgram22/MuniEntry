@@ -7,7 +7,7 @@ from munientry.controllers.helper_functions import set_assigned_judge, set_court
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
 )
@@ -80,44 +80,19 @@ class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.final_pretrial_time_box.setHidden(True)
 
 
-class FinalJuryNoticeHearingCaseInformationUpdater(CaseInformationUpdater):
+class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.view = dialog
-        self.update_model_with_case_information_frame_data()
-
-    def update_model_with_case_information_frame_data(self) -> None:
-        self.set_case_number_and_date()
-        self.set_party_information()
-        self.set_defense_counsel_information()
-        self.set_scheduling_dates()
-        self.model.assigned_judge = self.view.assigned_judge
-        self.model.courtroom = self.view.courtroom
-        self.model.judicial_officer = self.view.judicial_officer
-
-    def set_case_number_and_date(self) -> None:
-        self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
-
-    def set_party_information(self) -> None:
-        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
-        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self) -> None:
-        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
-
     def set_scheduling_dates(self) -> None:
-        self.model.hearing_location = self.view.hearing_location_box.currentText()
-        self.model.trial_date = self.view.trial_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
+        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
+        self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             'MMMM dd, yyyy',
         )
-        self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
-        if self.view.jury_trial_only_no_radioButton.isChecked():
+        self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
+        if self.dialog.jury_trial_only_no_radioButton.isChecked():
             self.model.jury_trial_only = 'No'
-        elif self.view.jury_trial_only_yes_radioButton.isChecked():
+        elif self.dialog.jury_trial_only_yes_radioButton.isChecked():
             self.model.jury_trial_only = 'Yes'
 
 

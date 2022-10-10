@@ -483,6 +483,8 @@ class Ui_MainWindow(object):
         self.buttonGroup.addButton(self.final_pretrial_radioButton)
         self.gridLayout_8.addWidget(self.final_pretrial_radioButton, 3, 2, 1, 1)
         self.arraignments_radioButton = QtWidgets.QRadioButton(self.case_list_tab)
+        self.arraignments_radioButton.setCheckable(True)
+        self.arraignments_radioButton.setChecked(False)
         self.arraignments_radioButton.setObjectName("arraignments_radioButton")
         self.buttonGroup.addButton(self.arraignments_radioButton)
         self.gridLayout_8.addWidget(self.arraignments_radioButton, 3, 0, 1, 1)

@@ -1057,6 +1057,12 @@ font-weight: bold;</string>
               <property name="text">
                <string>Arraignments</string>
               </property>
+              <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
               <attribute name="buttonGroup">
                <string notr="true">buttonGroup</string>
               </attribute>

@@ -1,7 +1,5 @@
 """Module that contains general dialogs for specific parts of a dialog dialog."""
-
 from typing import Any
-
 from loguru import logger
 
 from munientry.settings import (
