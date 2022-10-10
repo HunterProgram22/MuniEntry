@@ -63,13 +63,14 @@ def main_window_noclose(qtbot):
 
 
 @pytest.fixture
-def driving_priv_dialog(main_window):
+def driving_priv_dialog(qtbot, main_window):
     """Driving Privileges Dialog is driving_priv_dialog."""
     mouse_click(main_window.assn_comm_patterson_radioButton)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
     mouse_click(main_window.limited_driving_privilegesButton)
+    qtbot.addWidget(main_window.dialog)
     return main_window.dialog
 
 
@@ -79,6 +80,7 @@ def diversion_dialog(qtbot, main_window):
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.DiversionButton)
+    qtbot.addWidget(main_window.dialog)
     return main_window.dialog
 
 
