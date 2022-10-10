@@ -8,7 +8,8 @@ a = Analysis(['MuniEntry_app.py'],
              pathex=[],
              binaries=[],
              datas=[
-                    ('M:/Entries/DrivingPrivileges/holder.txt', 'M:/Entries/DrivingPrivileges'
+                    ('M:/Entries/DrivingPrivileges/holder.txt', 'M:/Entries/DrivingPrivileges'),
+                    ('M:/Entries/holder.txt', 'M:/Entries'),
                     ('./config.ini', '.'),
                     ('./db/MuniEntryDB.sqlite', './db'),
                     ('./db/Arraignments.xlsx', './db'),
