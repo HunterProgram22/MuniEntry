@@ -6,7 +6,7 @@ from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
-from munientry.settings import DRIVE_SAVE_PATH
+from munientry.settings import FISCAL_SAVE_PATH
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
@@ -53,7 +53,7 @@ class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
 
         Sets a specific save path used to save Admin Fiscal.
         """
-        save_path = DRIVE_SAVE_PATH
+        save_path = FISCAL_SAVE_PATH
         super().create_entry(save_path)
 
     def set_document_name(self) -> str:
@@ -77,13 +77,10 @@ class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
 
     def set_account_numbers_and_date(self):
         self.model.judicial_officer = self.dialog.judicial_officer
-
         account_number_box_string = self.dialog.account_number_box.currentText()
         self.model.account_name, self.model.account_number = account_number_box_string.split(' - ')
-
         subaccount_number_box_string = self.dialog.subaccount_number_box.currentText()
         self.model.subaccount_name, self.model.subaccount_number = subaccount_number_box_string.split(' - ')
-
         self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
 
     def set_payment_information(self):

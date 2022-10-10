@@ -34,10 +34,13 @@ ICON_PATH = fr'{PATH}\resources\icons\\'
 paths = config['paths']
 logger.info(f'Path is: {PATH[:14]}')
 if PATH[:14] == r'C:\Users\justi':
+    FISCAL_SAVE_PATH = paths['fiscal_save_path_home_test']
     DRIVE_SAVE_PATH = paths['drive_save_path_home_test']
 else:
+    FISCAL_SAVE_PATH = paths['fiscal_save_path']
     DRIVE_SAVE_PATH = paths['drive_save_path']
 logger.info(f'DRIVING PRIVILEGES SAVE PATH set to: {DRIVE_SAVE_PATH}')
+logger.info(f'FISCAL SAVE PATH set to: {FISCAL_SAVE_PATH}')
 
 
 DB_PATH = fr'{PATH}\db\\'
