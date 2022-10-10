@@ -80,7 +80,7 @@ class MainWindowSlotFunctionsMixin(object):
 
     def start_admin_fiscal_entry(self) -> None:
         """Starts the Admin Fiscal Dialog."""
-        if DialogPreloadChecker(self).admin_checks():
+        if DialogPreloadChecker(self).admin_fiscal_checks():
             self.dialog = DialogLoader(self).load_admin_fiscal_entry()
             return self.dialog.exec()
 

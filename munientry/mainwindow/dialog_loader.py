@@ -103,19 +103,8 @@ class DialogLoader(object):
 
     def set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
-            if self.is_daily_case_list_selected():
-                return self.mainwindow.daily_case_list.name
+            return self.mainwindow.daily_case_list.name
         return None
-
-    def is_daily_case_list_selected(self):
-        daily_case_lists = self.mainwindow.daily_case_lists
-        if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
-            RequiredBox(
-                'You must select a case list. If not loading a case in the case list '
-                + 'leave the case list field blank.', 'Daily Case List Required',
-            ).exec()
-            return False
-        return True
 
     def get_cms_case_data(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
@@ -173,6 +162,44 @@ class DialogPreloadChecker(object):
         self.mainwindow = mainwindow
 
     def crimtraffic_checks(self) -> bool:
+        if self.is_crimtraffic_officer_selected():
+            if self.is_daily_case_list_selected():
+                return True
+        return False
+
+    def scheduling_checks(self) -> bool:
+        if self.is_scheduling_officer_selected():
+            if self.is_daily_case_list_selected():
+                return True
+        return False
+
+    def admin_checks(self) -> bool:
+        if self.is_admin_officer_selected():
+            if self.is_daily_case_list_selected():
+                return True
+        return False
+
+    def admin_fiscal_checks(self) -> bool:
+        if self.is_admin_officer_selected():
+            return True
+
+    def is_daily_case_list_selected(self):
+        """Checks if daily case list is selected if loading case from daily case lists.
+
+        Returns True if loading from case_search_tab.
+        """
+        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+            daily_case_lists = self.mainwindow.daily_case_lists
+            if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
+                RequiredBox(
+                    'You must select a case list. If not loading a case in the case list '
+                    + 'leave the case list field blank.', 'Daily Case List Required',
+                    ).exec()
+                return False
+            return True
+        return True
+
+    def is_crimtraffic_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.hemmeter_radioButton.isChecked(),
             self.mainwindow.rohrer_radioButton.isChecked(),
@@ -186,7 +213,7 @@ class DialogPreloadChecker(object):
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
 
-    def scheduling_checks(self) -> bool:
+    def is_scheduling_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.dattilo_radioButton.isChecked(),
             self.mainwindow.patterson_radioButton.isChecked(),
@@ -199,7 +226,7 @@ class DialogPreloadChecker(object):
         ).exec()
         return False
 
-    def admin_checks(self) -> bool:
+    def is_admin_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
             self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
