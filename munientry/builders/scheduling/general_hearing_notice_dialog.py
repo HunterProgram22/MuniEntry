@@ -7,7 +7,7 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
 from munientry.data.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
 from munientry.views.general_notice_of_hearing_dialog_ui import (
     Ui_GeneralNoticeOfHearingDialog,
 )
@@ -42,39 +42,20 @@ class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """
 
 
-class GeneralNoticeOfHearingCaseInformationUpdater(CaseInformationUpdater):
+class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class that updates case information for General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.view = dialog
-        self.update_model_with_case_information_frame_data()
-
-    def update_model_with_case_information_frame_data(self):
-        self.set_case_number_and_date()
-        self.set_party_information()
-        self.set_defense_counsel_information()
-        self.set_scheduling_dates()
-        self.model.assigned_judge = self.view.assigned_judge
-        self.model.courtroom = self.view.courtroom
-        self.model.judicial_officer = self.view.judicial_officer
-
-    def set_case_number_and_date(self):
-        self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString('MMMM dd, yyyy')
-
-    def set_party_information(self):
-        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
-        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self):
-        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
+        self.model.assigned_judge = self.dialog.assigned_judge
+        self.model.courtroom = self.dialog.courtroom
+        self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self):
-        self.model.hearing_date = self.view.hearing_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.hearing_time = self.view.hearing_time_box.currentText()
-        self.model.hearing_type = self.view.hearing_type_box.currentText()
-        self.model.hearing_location = self.view.hearing_location_box.currentText()
+        self.model.hearing_date = self.dialog.hearing_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.hearing_time = self.dialog.hearing_time_box.currentText()
+        self.model.hearing_type = self.dialog.hearing_type_box.currentText()
+        self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
 class GeneralNoticeOfHearingInfoChecker(BaseChecker):

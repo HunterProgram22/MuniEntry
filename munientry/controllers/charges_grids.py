@@ -151,6 +151,18 @@ class NotGuiltyPleaGrid(ChargeGridBuilder):
         self.add_delete_button_to_grid(column, charge, dialog)
 
 
+    def set_pleas_to_not_guilty(self) -> None:
+        """Sets all pleas to Not Guilty for Not Guilty Plea / Bond Dialog."""
+        logger.button(f'{self.sender().text()} Pressed')
+        plea = 'Not Guilty'
+        for column in range(0, self.columnCount()):
+            column += 1
+            if self.check_if_column_empty(column):
+                continue
+            plea_box = self.itemAtPosition(self.row_plea, column).widget()
+            plea_box.setCurrentText(plea)
+
+
 class LeapAdmissionPleaGrid(ChargeGridBuilder):
     """Charge Grid for LeapAdmissionPlea Dialog.
 

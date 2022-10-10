@@ -17,6 +17,11 @@ class Template:
         self.template_path = TEMPLATE_PATH + template_path
 
 
+Admin_Fiscal_Template = Template(
+    "Admin Fiscal Journal Entry",
+    "Admin_Fiscal_Template.docx",
+)
+
 Driving_Privileges_Template = Template(
     "Driving Privileges Journal Entry",
     "Driving_Privileges_Template.docx",
@@ -148,6 +153,8 @@ TEMPLATE_DICT = {
     "Trial To Court Notice Of Hearing Entry": Trial_To_Court_Hearing_Notice_Template,
 
     'Driving Privileges Entry': Driving_Privileges_Template,
+
+    'Admin Fiscal Entry': Admin_Fiscal_Template,
 }
 
 

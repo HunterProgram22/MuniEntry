@@ -14,7 +14,7 @@ from munientry.settings import (
     TODAY,
     TYPE_CHECKING,
 )
-from munientry.updaters.general_updaters import CaseInformationUpdater
+from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 if TYPE_CHECKING:
@@ -218,38 +218,20 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         return continuance_days
 
 
-class SchedulingEntryDialogCaseInformationUpdater(CaseInformationUpdater):
+class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Case Information for the Scheduling Entry Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.view = dialog
         self.update_model_with_case_information_frame_data()
 
-    def update_model_with_case_information_frame_data(self):
-        self.set_case_number_and_date()
-        self.set_party_information()
-        self.set_defense_counsel_information()
-        self.set_scheduling_dates()
-
-    def set_case_number_and_date(self):
-        self.model.case_number = self.view.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.view.plea_trial_date.date().toString(ENTRY_DATE_FORMAT)
-
-    def set_party_information(self):
-        self.model.defendant.first_name = self.view.defendant_first_name_lineEdit.text()
-        self.model.defendant.last_name = self.view.defendant_last_name_lineEdit.text()
-
-    def set_defense_counsel_information(self):
-        self.model.defense_counsel = self.view.defense_counsel_name_box.currentText()
-
     def set_scheduling_dates(self):
-        self.model.trial_date = self.view.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
-        self.model.final_pretrial_date = self.view.final_pretrial_dateEdit.date().toString(
+        self.model.trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+        self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             ENTRY_DATE_FORMAT,
         )
-        self.model.pretrial_date = self.view.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
-        self.model.final_pretrial_time = self.view.final_pretrial_time_box.currentText()
+        self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+        self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
 
 
 class SchedulingEntryDialogInfoChecker(BaseChecker):

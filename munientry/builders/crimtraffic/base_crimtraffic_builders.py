@@ -185,6 +185,12 @@ class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
 class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
     """Extends Base Dialog Signal Connector for CrimTraffic Entries."""
 
+    def connect_main_dialog_common_signals(self):
+        super().connect_main_dialog_common_signals()
+        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
+            self.dialog.functions.set_defense_counsel,
+        )
+
     def connect_fra_signals(self):
         self.dialog.fra_in_file_box.currentTextChanged.connect(
             self.dialog.functions.set_fra_in_file,
@@ -208,11 +214,6 @@ class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
         )
         self.dialog.no_contest_all_Button.pressed.connect(
             self.dialog.charges_gridLayout.set_all_findings,
-        )
-
-    def connect_not_guilty_all_button(self):
-        self.dialog.not_guilty_all_Button.pressed.connect(
-            self.dialog.charges_gridLayout.set_all_pleas,
         )
 
     def connect_add_charge_button(self):

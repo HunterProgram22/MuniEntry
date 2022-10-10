@@ -3,12 +3,9 @@ from loguru import logger
 from PyQt5.QtCore import QDate
 from PyQt5.QtWidgets import QDialog, QMessageBox
 
-from munientry.widgets.message_boxes import RequiredBox, WarningBox
+from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
 
 TODAY = QDate.currentDate()
-FAIL = 'Fail'
-PASS = 'Pass'
-BLANK = ''
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 
 
@@ -198,6 +195,10 @@ class ChargeGridInfoChecker(DefenseCounselChecker):
         The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
         columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
         column from a grid_layout when it is deleted, it actually just hides the column.
+
+        Try/Except is used instead of an If None check because by setting the col to 2 and
+        incrementing by 2, the error is only raised and addressed if charges are added or deleted,
+        which is a low occurrence event.
         """
         col = 2
         while col < self.grid.columnCount():
@@ -224,6 +225,10 @@ class ChargeGridInfoChecker(DefenseCounselChecker):
         The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
         columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
         column from a grid_layout when it is deleted, it actually just hides the column.
+        
+        Try/Except is used instead of an If None check because by setting the col to 2 and
+        incrementing by 2, the error is only raised and addressed if charges are added or deleted,
+        which is a low occurrence event.
         """
         col = 2
         while col < self.view.charges_gridLayout.columnCount():

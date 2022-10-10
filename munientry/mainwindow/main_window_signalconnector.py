@@ -10,6 +10,8 @@ class MainWindowSignalConnector(object):
         self.connect_judicial_officers_to_set_officer()
         self.connect_crim_traffic_buttons_to_start_dialog()
         self.connect_scheduling_buttons_to_start_dialog()
+        self.connect_admin_buttons_to_start_dialog()
+        self.connect_admin_no_case_buttons_to_start_dialog()
 
     def connect_general_buttons(self):
         self.main_window.reload_cases_Button.released.connect(self.main_window.reload_case_lists)
@@ -35,3 +37,11 @@ class MainWindowSignalConnector(object):
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.scheduling_dialog_buttons_dict:
             key.pressed.connect(self.main_window.start_scheduling_entry)
+
+    def connect_admin_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.admin_dialog_buttons_dict:
+            key.pressed.connect(self.main_window.start_admin_entry)
+
+    def connect_admin_no_case_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.admin_dialog_no_case_buttons_dict:
+            key.pressed.connect(self.main_window.start_admin_fiscal_entry)

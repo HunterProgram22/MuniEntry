@@ -51,6 +51,7 @@ def driving_case_search_query(case_number: str) -> str:
       ti.DefendantDLNumber as DefLicenseNumber,
       cp.AddressLine1 as CaseAddress,
       cp.City as CaseCity,
+--       cp.StateID as CaseState,
       cd.Code as CaseState,
       cp.ZipCode as CaseZipcode
 

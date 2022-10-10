@@ -2,21 +2,23 @@
 from loguru import logger
 from PyQt5.QtCore import QDate
 
-from munientry.builders.scheduling import base_scheduling_builders as sched
+from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
+from munientry.settings import DRIVE_SAVE_PATH
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
+from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 
 TODAY = QDate.currentDate()
 
 
-class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
-    """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
+class DrivingPrivilegesViewModifier(admin.AdminViewModifier):
+    """View class that creates and modifies the view for the Driving Privileges Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
@@ -26,7 +28,7 @@ class DrivingPrivilegesViewModifier(sched.SchedulingViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
-class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
+class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
     """Connects signals to slots for Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -46,7 +48,7 @@ class DrivingPrivilegesSignalConnector(sched.SchedulingSignalConnector):
         )
 
 
-class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
+class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
     def __init__(self, dialog):
@@ -75,6 +77,14 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.other_conditions_checkBox,
         ]
 
+    def create_entry(self, save_path: str=None) -> None:
+        """Overrides BaseDialogSlotFunctions create_entry.
+
+        Sets a specific save path used to save Driving Privileges.
+        """
+        save_path = DRIVE_SAVE_PATH
+        super().create_entry(save_path)
+
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.
 
@@ -89,6 +99,7 @@ class DrivingPrivilegesSlotFunctions(sched.SchedulingSlotFunctions):
         suspension_days_dict = {
             '90 Days': 90,
             '1 Year': 365,
+            '18 Months': 547,
             '2 Years': 730,
             '3 Years': 1095,
             '4 Years': 1460,
@@ -226,11 +237,23 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list = [
+            'check_drivers_license',
+        ]
         self.check_status = self.perform_check_list()
 
+    def check_drivers_license(self):
+        if self.view.defendant_driver_license_lineEdit.text().strip() == BLANK:
+            message = (
+                'The Defendant Driver License field is blank. Please enter a Driver License'
+                + ' number. If unkown please enter None or Unknown.'
+            )
+            RequiredBox(message).exec()
+            return FAIL
+        return PASS
 
-class DrivingPrivilegesDialog(sched.SchedulingBaseDialog, Ui_DrivingPrivilegesDialog):
+
+class DrivingPrivilegesDialog(admin.AdminBaseDialog, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

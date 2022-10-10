@@ -3,6 +3,10 @@ from PyQt5.QtWidgets import QMessageBox, QPushButton
 from loguru import logger
 from munientry.settings import ICON_PATH
 
+FAIL = 'Fail'
+PASS = 'Pass'
+BLANK = ''
+
 
 class RequiredBox(QMessageBox):
     def __init__(self, message, title='Required', parent=None):
