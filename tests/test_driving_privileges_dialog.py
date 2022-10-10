@@ -14,5 +14,4 @@ def test_dialog_opens(driving_priv_dialog):
 def test_other_conditions_checkbox(driving_priv_dialog):
     """Test if checking other conditions checkbox shows other conditions field."""
     mouse_click(driving_priv_dialog.other_conditions_checkBox)
-    assert driving_priv_dialog.other_conditions_lineEdit.isHidden() is False
     assert driving_priv_dialog.other_conditions_lineEdit.isEnabled() is True
