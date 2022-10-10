@@ -83,6 +83,12 @@ class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
 class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
 
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.model.assigned_judge = self.dialog.assigned_judge
+        self.model.courtroom = self.dialog.courtroom
+        self.model.judicial_officer = self.dialog.judicial_officer
+
     def set_scheduling_dates(self) -> None:
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
         self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')

@@ -12,12 +12,10 @@ class SchedulingDialogCaseInformationUpdater(BaseDialogUpdater):
         self.update_model_with_case_information_frame_data()
 
     def update_model_with_case_information_frame_data(self) -> None:
+        """The set_scheduling_dates method is called by subclassed dialogs."""
         self.set_case_number_and_date()
         self.set_party_information()
         self.set_defense_counsel_information()
-        self.model.assigned_judge = self.dialog.assigned_judge
-        self.model.courtroom = self.dialog.courtroom
-        self.model.judicial_officer = self.dialog.judicial_officer
         self.set_scheduling_dates()
 
     def set_case_number_and_date(self) -> None:

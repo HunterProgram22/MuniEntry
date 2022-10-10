@@ -42,6 +42,11 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
 
 class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
+    def __init__(self, dialog):
+        super().__init__(dialog)
+        self.model.assigned_judge = self.dialog.assigned_judge
+        self.model.courtroom = self.dialog.courtroom
+        self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self) -> None:
         self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
