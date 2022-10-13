@@ -32,10 +32,10 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
 
     def complete_workflow(self):
         row_count = self.dialog.approved_entries_listWidget.count()
-        row = 1
+        row = 0
         logger.debug(row_count)
-        while row <= row_count:
-            entry = self.dialog.approved_entries_listWidget.takeItem(row)
+        while row < row_count:
+            entry = self.dialog.approved_entries_listWidget.takeItem(0)
             logger.debug(entry)
             logger.debug(row)
             entry_name = entry.text()
