@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
-    <height>835</height>
+    <width>1006</width>
+    <height>828</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -79,7 +79,7 @@ font-weight: bold;</string>
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="complete_workflow_Button">
      <property name="styleSheet">
       <string notr="true">background-color: rgb(0, 255, 0);
 font: 75 11pt &quot;Palatino Linotype&quot;;
@@ -171,7 +171,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="6" column="0" colspan="2">
-       <widget class="QListWidget" name="listWidget"/>
+       <widget class="QListWidget" name="approved_entries_listWidget"/>
       </item>
       <item row="7" column="0" colspan="2">
        <widget class="Line" name="line_2">
@@ -207,7 +207,7 @@ font-weight: bold;</string>
        </widget>
       </item>
       <item row="9" column="0" colspan="2">
-       <widget class="QListWidget" name="listWidget_2"/>
+       <widget class="QListWidget" name="rejected_entries_listWidget"/>
       </item>
       <item row="3" column="0">
        <widget class="QPushButton" name="show_docket_Button">

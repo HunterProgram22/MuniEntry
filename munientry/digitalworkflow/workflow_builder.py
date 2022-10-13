@@ -49,9 +49,11 @@ class DigitalWorkflow(object):
 
 class PdfDialogView(QMainWindow):
 
-    def __init__(self, document, parent=None):
+    def __init__(self, document, entry_widget, dialog, parent=None):
         super().__init__(parent)
         self.document = document
+        self.entry_widget = entry_widget
+        self.dialog = dialog
         self.initUI()
 
     def initUI(self):
@@ -86,6 +88,7 @@ class PdfDialogView(QMainWindow):
         self.close()
 
     def approve_entry(self):
-        approved_directory = DW_APPROVED_DIR
-        shutil.move(self.document, approved_directory)
+        row = self.dialog.pending_entries_listWidget.row(self.entry_widget)
+        entry = self.dialog.pending_entries_listWidget.takeItem(row)
+        self.dialog.approved_entries_listWidget.addItem(entry)
         self.close()
