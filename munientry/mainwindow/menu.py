@@ -11,7 +11,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
-from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, SAVE_PATH, USER_LOG_NAME
+from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, BATCH_SAVE_PATH, USER_LOG_NAME
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
@@ -30,7 +30,7 @@ def open_current_log(signal=None) -> None:
 
 def open_batch_entries_folder(_signal=None) -> None:
     """Menu function that opens the folder where batch entries are saved."""
-    os.startfile(f'{SAVE_PATH}batch\\')
+    os.startfile(f'{BATCH_SAVE_PATH}')
     logger.info('Batch entries folder opened.')
 
 
@@ -45,7 +45,7 @@ def run_batch_fta_process(_signal=None) -> None:
     entries_created = run_batch_fta_arraignments()
     message = f'The batch process created {entries_created} entries.'
     message_boxes.InfoBox(message, 'Entries Created').exec()
-    os.startfile(f'{SAVE_PATH}batch\\')
+    os.startfile(f'{BATCH_SAVE_PATH}')
     logger.info(f'{message}')
 
 

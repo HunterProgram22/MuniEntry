@@ -10,7 +10,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog
 
-from munientry.settings import ICON_PATH, SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
+from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox
 
 
@@ -102,6 +102,8 @@ class BaseDialogViewModifier(object):
 class BaseDialogSlotFunctions(object):
     """Base functions used by all dialogs."""
 
+    save_path = DEFAULT_SAVE_PATH
+
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -111,14 +113,12 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def create_entry(self, save_path: str=None) -> None:
+    def create_entry(self) -> None:
         """Loads the proper template and creates the entry.
 
         Uses the default SAVE_PATH from settings.py. This is overridden in the create_entry
         method in DrivingPrivilegesSlotFunctions with DRIVE_SAVE_PATH.
         """
-        if save_path is None:
-            save_path = SAVE_PATH
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
@@ -126,7 +126,7 @@ class BaseDialogSlotFunctions(object):
         docname = self.set_document_name()
         logger.info(f'Entry Created: {docname}')
         try:
-            doc.save(f'{save_path}{docname}')
+            doc.save(f'{self.save_path}{docname}')
         except PermissionError as error:
             logger.warning(error)
             self.dialog.message_box = RequiredBox(
@@ -134,7 +134,7 @@ class BaseDialogSlotFunctions(object):
                 + 'You must close the Word document first.',
             )
             self.dialog.message_box.exec()
-        startfile(f'{save_path}{docname}')
+        startfile(f'{self.save_path}{docname}')
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""

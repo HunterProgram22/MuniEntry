@@ -6,7 +6,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.no_jail_sentencing_checkers import DiversionDialogInfoChecker
 from munientry.controllers import charges_grids as cg
 from munientry.controllers.helper_functions import set_future_date
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     DiversionEntryCaseInformation,
 )

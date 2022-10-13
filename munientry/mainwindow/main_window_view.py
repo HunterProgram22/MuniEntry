@@ -1,4 +1,5 @@
 """Module for building the view of the MainWindow."""
+import munientry.digitalworkflow.hemmeter_dw_dialog
 from PyQt5 import QtGui
 
 from munientry.builders.administrative import (
@@ -28,6 +29,7 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
+from munientry.digitalworkflow import workflow_builder as dw
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -50,7 +52,7 @@ class MainWindowViewModifier(object):
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
         self.main_window.admin_dialog_no_case_buttons_dict = self.connect_admin_no_case_dialog_buttons()
-
+        self.main_window.digital_workflow_buttons_dict = self.connect_digital_workflow_dialog_buttons()
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
             self.main_window.slated_cases_box,
@@ -135,6 +137,12 @@ class MainWindowViewModifier(object):
         return {
             self.main_window.fiscal_entriesButton:
                 admin_fiscal_dialog.AdminFiscalDialog,
+        }
+
+    def connect_digital_workflow_dialog_buttons(self) -> dict:
+        return {
+            self.main_window.hemmeter_workflowButton: munientry.digitalworkflow.hemmeter_dw_dialog.HemmeterWorkflowDialog,
+            self.main_window.rohrer_workflowButton: dw.RohrerWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:
