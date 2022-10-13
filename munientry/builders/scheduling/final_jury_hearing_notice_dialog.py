@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import DAY_DICT, EVENT_DICT, TODAY
 from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
@@ -111,7 +111,7 @@ class FinalJuryNoticeHearingInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class FinalJuryNoticeHearingDialog(sched.SchedulingBaseDialog, Ui_FinalJuryNoticeOfHearingDialog):
+class FinalJuryNoticeHearingDialog(sched.SchedulingDialogBuilder, Ui_FinalJuryNoticeOfHearingDialog):
     """Builder class for the Final and Jury Trial Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

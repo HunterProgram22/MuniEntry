@@ -7,7 +7,7 @@ from munientry.builders.crimtraffic.leap_plea_dialog import (
     LeapAdmissionPleaDialogViewModifier,
 )
 from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
-from munientry.data.cms_case_loaders import CmsChargeLoader
+from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
 )

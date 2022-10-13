@@ -3,9 +3,10 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.models.template_types import TEMPLATE_DICT
+from munientry.settings import SCHEDULING_SAVE_PATH
 
 
-class SchedulingBaseDialog(base.BaseDialogBuilder):
+class SchedulingDialogBuilder(base.BaseDialogBuilder):
     """The base class for all Scheduling Dialogs."""
 
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None):
@@ -34,3 +35,5 @@ class SchedulingSignalConnector(base.BaseDialogSignalConnector):
 
 class SchedulingSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional functions for Scheduling Dialogs."""
+
+    save_path = SCHEDULING_SAVE_PATH

@@ -12,6 +12,7 @@ class MainWindowSignalConnector(object):
         self.connect_scheduling_buttons_to_start_dialog()
         self.connect_admin_buttons_to_start_dialog()
         self.connect_admin_no_case_buttons_to_start_dialog()
+        self.connect_digital_workflow_buttons_to_start_dialog()
 
     def connect_general_buttons(self):
         self.main_window.reload_cases_Button.released.connect(self.main_window.reload_case_lists)
@@ -45,3 +46,7 @@ class MainWindowSignalConnector(object):
     def connect_admin_no_case_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.admin_dialog_no_case_buttons_dict:
             key.pressed.connect(self.main_window.start_admin_fiscal_entry)
+
+    def connect_digital_workflow_buttons_to_start_dialog(self) -> None:
+        for key in self.main_window.digital_workflow_buttons_dict:
+            key.pressed.connect(self.main_window.start_digital_workflow)

@@ -907,6 +907,36 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="digital_workflow_Tab">
+           <attribute name="title">
+            <string>Digital Workflow</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_18" rowstretch="1" columnstretch="1,1">
+            <property name="horizontalSpacing">
+             <number>48</number>
+            </property>
+            <item row="0" column="0">
+             <widget class="QPushButton" name="hemmeter_workflowButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Judge Hemmeter Digital Workflow</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QPushButton" name="rohrer_workflowButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Judge Rohrer Digital Workflow</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item row="0" column="0">
@@ -954,7 +984,7 @@ font-weight: bold;</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_11">
           <item row="0" column="0">
-           <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,1,0,0" columnstretch="1,1,1">
+           <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,1,1,1,1,1,0,0">
             <property name="verticalSpacing">
              <number>18</number>
             </property>
@@ -1256,6 +1286,166 @@ font-weight: bold;</string>
              <string>Show Docket</string>
             </property>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="digital_workflow_tab">
+         <attribute name="title">
+          <string>Digital Workflow Case Counts</string>
+         </attribute>
+         <layout class="QGridLayout" name="gridLayout_20">
+          <item row="0" column="0">
+           <layout class="QGridLayout" name="gridLayout_19" columnstretch="1,2,2">
+            <item row="2" column="0">
+             <widget class="QLabel" name="hemmeter_dw_count">
+              <property name="text">
+               <string>Diversion Program:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="2">
+             <widget class="QLabel" name="jour_count_jr_label">
+              <property name="text">
+               <string>Jour_Count_JR</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLabel" name="garn_count_jr_label">
+              <property name="text">
+               <string>Garn_Count_JR</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_20">
+              <property name="text">
+               <string>Journal Entries:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="jour_count_jh_label">
+              <property name="text">
+               <string>Jour_Count_JH</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QLabel" name="dive_count_jh_label">
+              <property name="text">
+               <string>Dive_Count_JH</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>Garnishment: </string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLabel" name="garn_count_jh_label">
+              <property name="text">
+               <string>Garn_Count_JH</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLabel" name="dive_count_jr_label">
+              <property name="text">
+               <string>Dive_Count_JR</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_25">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Entry Type</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLabel" name="label_17">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Judge Hemmeter Pending Entries</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="2">
+             <widget class="QLabel" name="label_18">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="text">
+               <string>Judge Rohrer Pending Entries</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0" colspan="3">
+             <widget class="Line" name="line_4">
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="lineWidth">
+               <number>2</number>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>

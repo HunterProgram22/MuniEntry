@@ -4,7 +4,7 @@ from PyQt5.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
+from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
@@ -51,6 +51,8 @@ class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
 class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
+    save_path = DRIVE_SAVE_PATH
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self._driving_days_list = [
@@ -76,14 +78,6 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.varied_hours_checkBox,
             self.dialog.other_conditions_checkBox,
         ]
-
-    def create_entry(self, save_path: str=None) -> None:
-        """Overrides BaseDialogSlotFunctions create_entry.
-
-        Sets a specific save path used to save Driving Privileges.
-        """
-        save_path = DRIVE_SAVE_PATH
-        super().create_entry(save_path)
 
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.
@@ -253,7 +247,7 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
         return PASS
 
 
-class DrivingPrivilegesDialog(admin.AdminBaseDialog, Ui_DrivingPrivilegesDialog):
+class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

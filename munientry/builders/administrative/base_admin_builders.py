@@ -5,7 +5,7 @@ from munientry.builders import base_builders as base
 from munientry.models.template_types import TEMPLATE_DICT
 
 
-class AdminBaseDialog(base.BaseDialogBuilder):
+class AdminDialogBuilder(base.BaseDialogBuilder):
     """The base class for all Admin Dialogs."""
 
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None):

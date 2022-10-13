@@ -7,7 +7,7 @@ from munientry.checkers.no_jail_sentencing_checkers import (
     LeapSentencingDialogInfoChecker,
 )
 from munientry.controllers import charges_grids as cg
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     LeapSentencingEntryCaseInformation,
 )

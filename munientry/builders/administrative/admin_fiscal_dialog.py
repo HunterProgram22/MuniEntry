@@ -41,20 +41,14 @@ class AdminFiscalSignalConnector(admin.AdminSignalConnector):
 class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Admin Fiscal Dialog."""
 
+    save_path = FISCAL_SAVE_PATH
+
     def __init__(self, dialog):
         super().__init__(dialog)
 
     def clear_case_information_fields(self):
         self.dialog.account_number_box.clear()
         self.dialog.subaccount_number_box.clear()
-
-    def create_entry(self, save_path: str=None) -> None:
-        """Overrides BaseDialogSlotFunctions create_entry.
-
-        Sets a specific save path used to save Admin Fiscal.
-        """
-        save_path = FISCAL_SAVE_PATH
-        super().create_entry(save_path)
 
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.

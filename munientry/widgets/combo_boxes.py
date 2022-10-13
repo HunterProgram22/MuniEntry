@@ -49,7 +49,7 @@ class DailyCaseListComboBox(QComboBox):
         self.removeItem(index)
         logger.action(f'Case {case} deleted from {self.objectName()}.')
 
-    def all_items(self):
+    def all_items(self) -> list:
         return [self.itemText(index) for index in range(self.count())]
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
