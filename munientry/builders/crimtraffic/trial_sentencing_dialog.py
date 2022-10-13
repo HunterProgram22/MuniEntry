@@ -11,7 +11,7 @@ from munientry.checkers.jail_charge_grid_checkers import (
     TrialSentencingDialogInfoChecker,
 )
 from munientry.controllers import charges_grids as cg
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     TrialSentencingEntryCaseInformation,
 )

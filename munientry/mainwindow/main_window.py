@@ -1,7 +1,9 @@
 """Module containing the Main Window of the application."""
-from loguru import logger
-from PyQt5.QtWidgets import QInputDialog, QMainWindow, QMessageBox
 
+from loguru import logger
+from PyQt5.QtWidgets import QInputDialog, QMainWindow
+
+from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.mainwindow.menu import MainWindowMenu
@@ -15,6 +17,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.modify_view()
+        self.digital_workflow = DigitalWorkflow(self)
         self.connect_signals_to_slots()
         self.menu = MainWindowMenu(self)
         self.load_case_lists()

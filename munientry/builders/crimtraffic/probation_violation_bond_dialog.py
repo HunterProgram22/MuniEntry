@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import ProbationViolationBondDialogInfoChecker
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     CommunityControlViolationEntryCaseInformation,
 )

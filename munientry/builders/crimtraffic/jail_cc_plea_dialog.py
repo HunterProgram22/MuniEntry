@@ -9,7 +9,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
 from munientry.controllers import charges_grids as cg
-from munientry.data.cms_case_loaders import CmsFraLoader
+from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
 )

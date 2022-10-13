@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import FreeformDialogInfoChecker
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import FreeformEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import FreeformDialogUpdater
 from munientry.views.freeform_dialog_ui import Ui_FreeformEntryDialog

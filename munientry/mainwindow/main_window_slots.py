@@ -6,7 +6,8 @@ from munientry.controllers.helper_functions import set_random_judge
 from munientry.data import sql_lite_functions as sql_lite
 from munientry.data import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.mainwindow.dialog_loader import DialogLoader, DialogPreloadChecker
+from munientry.loaders.dialog_loader import DialogLoader
+from munientry.checkers.dialog_preload_checkers import DialogPreloadChecker
 from munientry.widgets.table_widgets import ReportWindow
 
 
@@ -63,26 +64,31 @@ class MainWindowSlotFunctionsMixin(object):
     def start_crim_traffic_entry(self) -> None:
         """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).crimtraffic_checks():
-            self.dialog = DialogLoader(self).load_crimtraffic_entry()
+            self.dialog = DialogLoader(self).load_crimtraffic_dialog()
             return self.dialog.exec()
 
     def start_scheduling_entry(self) -> None:
         """Starts a scheduling dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).scheduling_checks():
-            self.dialog = DialogLoader(self).load_scheduling_entry()
+            self.dialog = DialogLoader(self).load_scheduling_dialog()
             return self.dialog.exec()
 
     def start_admin_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).admin_checks():
-            self.dialog = DialogLoader(self).load_admin_entry()
+            self.dialog = DialogLoader(self).load_admin_dialog()
             return self.dialog.exec()
 
     def start_admin_fiscal_entry(self) -> None:
         """Starts the Admin Fiscal Dialog."""
         if DialogPreloadChecker(self).admin_fiscal_checks():
-            self.dialog = DialogLoader(self).load_admin_fiscal_entry()
+            self.dialog = DialogLoader(self).load_admin_fiscal_dialog()
             return self.dialog.exec()
+
+    def start_digital_workflow(self) -> None:
+        """Starts a Digital Workflow Dialogs."""
+        self.dialog = DialogLoader(self).load_digital_workflow_dialog()
+        return self.dialog.exec()
 
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')

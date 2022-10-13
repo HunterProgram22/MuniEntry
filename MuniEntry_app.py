@@ -15,6 +15,7 @@ except ModuleNotFoundError:
 import multiprocessing
 import sys
 
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEngineView
 from loguru import logger
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap

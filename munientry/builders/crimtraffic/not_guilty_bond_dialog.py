@@ -7,7 +7,7 @@ from munientry.builders.secondary.add_special_bond_conditions_dialog import (
 )
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.controllers import charges_grids as cg
-from munientry.data.cms_case_loaders import CmsChargeLoader
+from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     NotGuiltyBondEntryCaseInformation,
 )

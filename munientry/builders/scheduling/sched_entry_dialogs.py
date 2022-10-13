@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import (
@@ -243,7 +243,7 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class SchedulingEntryDialog(sched.SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
     """The builder class for the Scheduling Entry Dialog."""
 
     build_dict = {
