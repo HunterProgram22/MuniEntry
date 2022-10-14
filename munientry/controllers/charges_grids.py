@@ -2,7 +2,7 @@
 
 import munientry.widgets.combo_boxes
 from loguru import logger
-from PyQt5.QtWidgets import QGridLayout, QLabel
+from PyQt6.QtWidgets import QGridLayout, QLabel
 
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.widgets import custom_widgets as cw

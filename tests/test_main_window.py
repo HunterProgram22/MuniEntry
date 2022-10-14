@@ -1,5 +1,5 @@
 import pytest
-from PyQt5 import QtCore
+from PyQt6 import QtCore
 
 from munientry.settings import VERSION_NUMBER
 from tests.conftest import mouse_click, enter_data

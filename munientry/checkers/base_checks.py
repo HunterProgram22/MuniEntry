@@ -1,7 +1,7 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
-from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt6.QtCore import QDate
+from PyQt6.QtWidgets import QDialog, QMessageBox
 
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
 

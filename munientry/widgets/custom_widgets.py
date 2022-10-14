@@ -1,12 +1,12 @@
 import re
 
 from loguru import logger
-from PyQt5 import QtCore
-from PyQt5.QtCore import QDate, QTime
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QLineEdit, QCheckBox, QInputDialog, QDateEdit, QTimeEdit, \
+from PyQt6 import QtCore
+from PyQt6.QtCore import QDate, QTime
+from PyQt6.QtGui import QIntValidator
+from PyQt6.QtWidgets import QPushButton, QMessageBox, QLineEdit, QCheckBox, QInputDialog, QDateEdit, QTimeEdit, \
     QLabel
-from PyQt5 import QtGui
+from PyQt6 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
 from munientry.settings import ICON_PATH

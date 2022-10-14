@@ -1,6 +1,6 @@
 """Contains classes for building the Driving Privileges Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker

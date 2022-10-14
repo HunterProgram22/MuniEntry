@@ -1,6 +1,6 @@
 """Module containing classes for building the General Hearing Notice Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker

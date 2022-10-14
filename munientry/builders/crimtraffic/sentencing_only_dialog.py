@@ -1,6 +1,6 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
-from PyQt5.QtGui import QIntValidator
+from PyQt6.QtGui import QIntValidator
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_community_control_dialog import (

@@ -3,9 +3,9 @@ import os
 from collections import namedtuple
 
 from loguru import logger
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QInputDialog, QShortcut, QTableWidgetItem
+from PyQt6.QtGui import QKeySequence
+from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtWidgets import QInputDialog, QShortcut, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name

@@ -2,10 +2,10 @@ import os
 import shutil
 
 from loguru import logger
-from PyQt5 import QtGui
-from PyQt5.QtCore import QUrl
-from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEngineSettings
-from PyQt5.QtWidgets import QMainWindow, QToolBar, QPushButton
+from PyQt6 import QtGui
+from PyQt6.QtCore import QUrl
+from PyQt6.QtWebEngineWidgets import QWebEngineView  #  Removed for PyQt6 QWebEngineSettings
+from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
 
 from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH
 from munientry.builders import base_builders as base
@@ -73,8 +73,8 @@ class PdfDialogView(QMainWindow):
         self.toolBar.addWidget(self.approve_Button)
 
         self.webEngineView = QWebEngineView(self)
-        self.webEngineView.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-        self.webEngineView.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+        # self.webEngineView.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+        # self.webEngineView.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
         self.setCentralWidget(self.webEngineView)
 
         self.setGeometry(600, 600, 1000, 800)

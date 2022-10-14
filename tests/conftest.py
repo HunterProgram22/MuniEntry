@@ -4,9 +4,9 @@ import inspect
 
 import pytest
 from pytestqt.plugin import QtBot
-from PyQt5.QtSql import QSqlDatabase
-from PyQt5 import QtCore
-from PyQt5.QtCore import QTimer
+from PyQt6.QtSql import QSqlDatabase
+from PyQt6 import QtCore
+from PyQt6.QtCore import QTimer
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)

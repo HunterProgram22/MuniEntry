@@ -1,6 +1,6 @@
 """Module containing all functions that query the internal SQL Lite database."""
 from loguru import logger
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.data.excel_getters import return_cases_data_from_excel
 from munientry.data.sql_lite_queries import (

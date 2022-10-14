@@ -1,6 +1,6 @@
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QComboBox, QMenu
+from PyQt6 import QtCore, QtGui
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QComboBox, QMenu
 from loguru import logger
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_lite_functions import query_attorney_list

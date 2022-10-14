@@ -7,7 +7,7 @@ from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.settings import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
+    from PyQt6.QtWidgets import QDialog
 
 
 class CmsNoChargeLoader(object):

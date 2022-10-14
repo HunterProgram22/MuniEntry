@@ -18,7 +18,7 @@ from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformati
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 if TYPE_CHECKING:
-    from PyQt5.QtCore import QDate
+    from PyQt6.QtCore import QDate
 
 ROHRER_SCHEDULING_ENTRY = 'Rohrer Scheduling Entry'
 HEMMETER_SCHEDULING_ENTRY = 'Hemmeter Scheduling Entry'

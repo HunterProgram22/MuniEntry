@@ -1,6 +1,6 @@
 """Module that contains data checks for dialogs that potentially impose jail time."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt6.QtWidgets import QDialog, QMessageBox
 
 from munientry.checkers.base_checks import (
     BLANK,

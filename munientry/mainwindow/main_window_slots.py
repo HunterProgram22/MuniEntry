@@ -1,6 +1,6 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt6.QtWidgets import QTableWidgetItem
 
 from munientry.controllers.helper_functions import set_random_judge
 from munientry.data import sql_lite_functions as sql_lite

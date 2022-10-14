@@ -1,5 +1,5 @@
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMessageBox, QPushButton
+from PyQt6 import QtGui
+from PyQt6.QtWidgets import QMessageBox, QPushButton
 from loguru import logger
 from munientry.settings import ICON_PATH
 

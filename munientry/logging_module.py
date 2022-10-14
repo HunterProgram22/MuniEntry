@@ -4,8 +4,8 @@ import traceback
 from functools import partialmethod
 
 from loguru import logger
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt6 import QtCore, QtGui
+from PyQt6.QtWidgets import QApplication, QMessageBox
 
 from munientry.settings import ICON_PATH, LOG_PATH, USER_LOG_NAME
 

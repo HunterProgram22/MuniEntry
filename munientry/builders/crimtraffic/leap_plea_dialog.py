@@ -1,6 +1,6 @@
 """Builder module for the Leap Plea Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker

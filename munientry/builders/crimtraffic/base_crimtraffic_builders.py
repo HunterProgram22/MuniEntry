@@ -1,6 +1,6 @@
 """Base Classes for CrimTraffic Entries."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder

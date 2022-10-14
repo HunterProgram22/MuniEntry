@@ -5,7 +5,7 @@ Module Level Parameters - fixtures setup and imported automatically from the con
     add_charge_dialog
 """
 import pytest
-from PyQt5.QtCore import QTimer
+from PyQt6.QtCore import QTimer
 
 from tests.conftest import CLOSE_TIMER, enter_data, mouse_click
 

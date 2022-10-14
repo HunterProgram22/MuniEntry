@@ -6,9 +6,9 @@ from typing import Any
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog
 
 from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox

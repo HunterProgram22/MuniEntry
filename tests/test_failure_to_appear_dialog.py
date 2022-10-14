@@ -1,6 +1,6 @@
 import pytest
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer, Qt
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import QTimer, Qt
 from tests.conftest import mouse_click, enter_data, key_click
 
 
