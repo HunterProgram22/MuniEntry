@@ -8,14 +8,14 @@ from munientry.data.sql_lite_functions import query_attorney_list
 
 class DailyCaseListComboBox(QComboBox):
     def __init__(self, parent=None):
-        super(DailyCaseListComboBox, self).__init__(parent)
-        self.setFocusPolicy(Qt.StrongFocus)
+        super().__init__(parent)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setEnabled(False)
         self.setMinimumSize(QtCore.QSize(0, 40))
         self.setStyleSheet( "background-color: rgb(255, 255, 255);\n"
                             "selection-background-color: rgb(85, 170, 255);")
         self.setEditable(False)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_menu)
 
     def setup_combo_box(self, name, radio_button, main_window):

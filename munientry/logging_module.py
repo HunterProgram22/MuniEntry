@@ -33,10 +33,10 @@ class CriticalErrorBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
-        self.setIcon(QMessageBox.Critical)
+        self.setIcon(QMessageBox.Icon.Critical)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Ok)
+        self.setStandardButtons(QMessageBox.StandardButton.Ok)
 
 
 FMT = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'

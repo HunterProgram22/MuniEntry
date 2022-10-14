@@ -92,9 +92,9 @@ class BaseDialogViewModifier(object):
         self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.dialog.setWindowFlags(
             self.dialog.windowFlags()
-            | Qt.CustomizeWindowHint
-            | Qt.WindowMaximizeButtonHint
-            | Qt.WindowCloseButtonHint,
+            | Qt.WindowType.CustomizeWindowHint
+            | Qt.WindowType.WindowMaximizeButtonHint
+            | Qt.WindowType.WindowCloseButtonHint,
         )
         self.dialog.setupUi(self.dialog)
 
