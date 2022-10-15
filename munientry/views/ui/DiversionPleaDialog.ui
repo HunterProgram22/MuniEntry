@@ -162,7 +162,7 @@ font-weight: bold;</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>973</width>
+        <width>969</width>
         <height>1073</height>
        </rect>
       </property>
@@ -665,6 +665,9 @@ background-color: rgb(255, 255, 255);</string>
           </item>
           <item row="2" column="2">
            <widget class="NoScrollComboBox" name="defense_counsel_type_box">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgb(255, 255, 255);</string>
             </property>
@@ -944,17 +947,17 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>

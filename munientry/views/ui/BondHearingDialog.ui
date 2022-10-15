@@ -816,6 +816,9 @@ background-color: rgb(255, 255, 255);</string>
              </item>
              <item row="2" column="1">
               <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -901,6 +904,11 @@ font-weight: bold;</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>munientry.widgets.custom_widgets</header>
+  </customwidget>
+  <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
    <header>munientry.widgets.custom_widgets</header>
@@ -908,17 +916,12 @@ font-weight: bold;</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
-  </customwidget>
-  <customwidget>
-   <class>ConditionCheckbox</class>
-   <extends>QCheckBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>

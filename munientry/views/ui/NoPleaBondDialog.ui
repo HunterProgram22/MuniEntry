@@ -5,6 +5,9 @@
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -862,6 +865,11 @@ font-weight: bold;</string>
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ConditionCheckbox</class>
+   <extends>QCheckBox</extends>
+   <header>munientry.widgets.custom_widgets</header>
+  </customwidget>
+  <customwidget>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
    <header>munientry.widgets.custom_widgets</header>
@@ -869,17 +877,12 @@ font-weight: bold;</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
    <class>DefenseCounselComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
-  </customwidget>
-  <customwidget>
-   <class>ConditionCheckbox</class>
-   <extends>QCheckBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>

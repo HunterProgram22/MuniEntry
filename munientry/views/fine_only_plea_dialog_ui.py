@@ -8,14 +8,12 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.custom_widgets import NoScrollDateEdit
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-
 
 class Ui_FineOnlyPleaDialog(object):
     def setupUi(self, FineOnlyPleaDialog):
         FineOnlyPleaDialog.setObjectName("FineOnlyPleaDialog")
         FineOnlyPleaDialog.setWindowModality(QtCore.Qt.WindowModality.NonModal)
+        FineOnlyPleaDialog.setEnabled(True)
         FineOnlyPleaDialog.resize(1020, 722)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Minimum)
         sizePolicy.setHorizontalStretch(0)
@@ -550,3 +548,5 @@ class Ui_FineOnlyPleaDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("FineOnlyPleaDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("FineOnlyPleaDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("FineOnlyPleaDialog", "No"))
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit

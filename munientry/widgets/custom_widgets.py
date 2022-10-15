@@ -18,7 +18,7 @@ TODAY_STRING = TODAY.toString("MMMM dd, yyyy")
 class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super(QDateEdit, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setDate(TODAY)
 
     def get_date(self) -> str:
@@ -38,7 +38,7 @@ class NoScrollDateEdit(QDateEdit):
 class NoScrollTimeEdit(QTimeEdit):
     def __init__(self, parent=None):
         super(QTimeEdit, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def get_time(self) -> str:
         return self.time().toString("hh:mm A")
@@ -173,7 +173,7 @@ class AlliedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
@@ -209,7 +209,7 @@ class DismissedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Offense Dismissed")
         self.setObjectName("dismissed_checkBox")
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):

@@ -320,7 +320,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QComboBox" name="account_number_box">
+              <widget class="NoScrollComboBox" name="account_number_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -352,7 +352,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QComboBox" name="subaccount_number_box">
+              <widget class="NoScrollComboBox" name="subaccount_number_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -512,6 +512,11 @@ font-weight: bold;</string>
    <class>NoScrollDateEdit</class>
    <extends>QDateEdit</extends>
    <header>munientry.widgets.custom_widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>NoScrollComboBox</class>
+   <extends>QComboBox</extends>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>

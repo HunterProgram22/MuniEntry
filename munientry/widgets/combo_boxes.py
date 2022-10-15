@@ -61,7 +61,7 @@ class DailyCaseListComboBox(QComboBox):
 class NoScrollComboBox(QComboBox):
     def __init__(self, parent=None):
         super(QComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
@@ -71,7 +71,7 @@ class NoScrollComboBox(QComboBox):
 class DefenseCounselComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
         super(NoScrollComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def load_attorneys(self):
         db_connection = open_db_connection('con_attorneys')
@@ -93,7 +93,7 @@ class DegreeComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("degree_choice_box")
         self.addItem("")
         self.addItem("M1")
@@ -118,7 +118,7 @@ class PleaComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("plea_choice_box")
         if self.dialog.objectName() == 'TrialSentencingDialog':
             self.addItem('Court')
@@ -142,7 +142,7 @@ class FindingComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("finding_choice_box")
         self.addItem("")
         self.addItem("Guilty")
