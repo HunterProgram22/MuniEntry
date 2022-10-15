@@ -18,7 +18,7 @@ class FineOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
+        # self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
         self.set_appearance_reason()
 
 

@@ -90,7 +90,7 @@ class DefenseCounselChecker(BaseChecker):
         return PASS
 
     def set_defense_counsel_waived_or_fail_check(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.Yes:
+        if message_response == QMessageBox.StandardButton.Yes:
             self.view.defense_counsel_waived_checkBox.setChecked(True)
             return PASS
         return FAIL
@@ -119,9 +119,9 @@ class InsuranceInfoChecker(BaseChecker):
         return PASS
 
     def set_fra_in_court_box(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.No:
+        if message_response == QMessageBox.StandardButton.No:
             self.view.fra_in_court_box.setCurrentText('No')
-        if message_response == QMessageBox.Yes:
+        if message_response == QMessageBox.StandardButton.Yes:
             self.view.fra_in_court_box.setCurrentText('Yes')
         return PASS
 

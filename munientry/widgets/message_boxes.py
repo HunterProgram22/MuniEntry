@@ -69,8 +69,8 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.setIcon(QMessageBox.Icon.Question)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
-        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
+        self.addButton(QPushButton(yes_choice), QMessageBox.StandardButton.Yes) # YesRole returns 5
+        self.addButton(QPushButton(no_choice), QMessageBox.StandardButton.No)  # NoRole returns 6
 
 
 class JailWarningBox(QMessageBox):
