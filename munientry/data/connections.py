@@ -46,7 +46,7 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
     Returns the connection as a QSqlDatabase object.
     """
-    db_connection = QSqlDatabase.addDatabase('QODBC3', connection_name)
+    db_connection = QSqlDatabase.addDatabase('QODBC', connection_name)
     server, database = set_server_and_database()
     connection_string = (
         'DRIVER=SQL Server;'

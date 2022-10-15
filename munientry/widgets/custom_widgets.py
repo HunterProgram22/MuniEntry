@@ -120,7 +120,7 @@ class ChargeGridDeleteButton(QPushButton):
         self.setStyleSheet("background-color: rgb(170, 58, 63);")
         self.setText("Delete")
         self.setObjectName("charge_grid_delete_Button")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.pressed.connect(self.delete_charge_from_grid_and_charges_list)
 
     def delete_charge_from_grid_and_charges_list(self):
@@ -147,7 +147,7 @@ class ChargeGridAmendButton(QPushButton):
         self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
         self.setObjectName("charge_grid_amend_Button")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.released.connect(self.dialog.functions.start_amend_offense_dialog)
 
 
