@@ -10,7 +10,6 @@ from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.checkers.jail_charge_grid_checkers import (
     TrialSentencingDialogInfoChecker,
 )
-from munientry.controllers import charges_grids as cg
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     TrialSentencingEntryCaseInformation,
@@ -28,7 +27,6 @@ class TrialSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
 class TrialSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):

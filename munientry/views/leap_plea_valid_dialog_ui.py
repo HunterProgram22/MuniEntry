@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.charges_grids import LeapAdmissionPleaGrid
+
 
 class Ui_LeapPleaValidDialog(object):
     def setupUi(self, LeapPleaValidDialog):
@@ -97,7 +99,8 @@ class Ui_LeapPleaValidDialog(object):
 "font-weight: bold;")
         self.add_charge_Button.setObjectName("add_charge_Button")
         self.gridLayout_2.addWidget(self.add_charge_Button, 2, 0, 1, 1)
-        self.charges_gridLayout = QtWidgets.QGridLayout()
+        # self.charges_gridLayout = QtWidgets.QGridLayout()
+        self.charges_gridLayout = LeapAdmissionPleaGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.label_5 = QtWidgets.QLabel(self.frame_6)
         self.label_5.setObjectName("label_5")

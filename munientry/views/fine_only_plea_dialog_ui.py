@@ -7,7 +7,7 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
-from munientry.controllers.charges_grids import FineOnlyChargeGrid
+from munientry.widgets.charges_grids import FineOnlyChargeGrid
 
 class Ui_FineOnlyPleaDialog(object):
     def setupUi(self, FineOnlyPleaDialog):

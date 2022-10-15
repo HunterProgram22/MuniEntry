@@ -33,13 +33,13 @@ def enter_data(field, data: str):
     return QtBot.keyClicks(field, data)
 
 def mouse_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
+    return QtBot.mouseClick(button, QtCore.Qt.MouseButton.LeftButton)
 
 def key_click(field, key):
     return QtBot.keyClick(field, key)
 
 def right_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.RightButton)
+    return QtBot.mouseClick(button, QtCore.Qt.MouseButton.RightButton)
 
 
 @pytest.fixture

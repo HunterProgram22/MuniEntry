@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.charges_grids import JailChargesGrid
+
 
 class Ui_SentencingOnlyDialog(object):
     def setupUi(self, SentencingOnlyDialog):
@@ -375,7 +377,8 @@ class Ui_SentencingOnlyDialog(object):
         self.add_charge_Button.setStyleSheet("background-color: rgb(62, 146, 255)")
         self.add_charge_Button.setObjectName("add_charge_Button")
         self.gridLayout_3.addWidget(self.add_charge_Button, 2, 0, 1, 1)
-        self.charges_gridLayout = QtWidgets.QGridLayout()
+        # self.charges_gridLayout = QtWidgets.QGridLayout()
+        self.charges_gridLayout = JailChargesGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.label_14 = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()

@@ -6,7 +6,6 @@ from munientry.builders.secondary.add_conditions_dialog import AddConditionsDial
 from munientry.checkers.no_jail_sentencing_checkers import (
     LeapSentencingDialogInfoChecker,
 )
-from munientry.controllers import charges_grids as cg
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     LeapSentencingEntryCaseInformation,
@@ -20,7 +19,6 @@ class LeapSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.FineOnlyChargeGrid
 
 
 class LeapSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):

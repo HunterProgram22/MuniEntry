@@ -186,7 +186,7 @@ def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
     mouse_click(main_window_noclose.bunner_radioButton)
     mouse_click(main_window_noclose.final_pretrial_radioButton)
     enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
-    qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key_Delete)
+    qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key.Key_Delete)
     assert len(main_window_noclose.final_pretrial_cases_box) == 11
 
 
@@ -206,7 +206,7 @@ def test_reload_case_lists(qtbot, main_window_noclose, case_list_button, case_li
     mouse_click(getattr(main_window_noclose, case_list_button))
     enter_data(getattr(main_window_noclose, case_list_box), case_number)
     assert len(getattr(main_window_noclose, case_list_box)) == initial_count
-    qtbot.keyPress(getattr(main_window_noclose, case_list_box), QtCore.Qt.Key_Delete)
+    qtbot.keyPress(getattr(main_window_noclose, case_list_box), QtCore.Qt.Key.Key_Delete)
     assert len(getattr(main_window_noclose, case_list_box)) == delete_count
     mouse_click(main_window_noclose.reload_cases_Button)
     assert len(getattr(main_window_noclose, case_list_box)) == initial_count

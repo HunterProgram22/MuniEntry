@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.charges_grids import FineOnlyChargeGrid
+
 
 class Ui_LeapSentencingDialog(object):
     def setupUi(self, LeapSentencingDialog):
@@ -100,7 +102,8 @@ class Ui_LeapSentencingDialog(object):
         self.no_contest_all_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
         self.no_contest_all_Button.setObjectName("no_contest_all_Button")
         self.gridLayout_3.addWidget(self.no_contest_all_Button, 2, 1, 1, 1)
-        self.charges_gridLayout = QtWidgets.QGridLayout()
+        # self.charges_gridLayout = QtWidgets.QGridLayout()
+        self.charges_gridLayout = FineOnlyChargeGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.statute_label = QtWidgets.QLabel(self.frame)
         font = QtGui.QFont()

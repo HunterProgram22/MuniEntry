@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.charges_grids import NotGuiltyPleaGrid
+
 
 class Ui_NotGuiltyBondDialog(object):
     def setupUi(self, NotGuiltyBondDialog):
@@ -253,7 +255,8 @@ class Ui_NotGuiltyBondDialog(object):
 "font-weight: bold;")
         self.not_guilty_all_Button.setObjectName("not_guilty_all_Button")
         self.gridLayout_3.addWidget(self.not_guilty_all_Button, 2, 1, 1, 1)
-        self.charges_gridLayout = QtWidgets.QGridLayout()
+        # self.charges_gridLayout = QtWidgets.QGridLayout()
+        self.charges_gridLayout = NotGuiltyPleaGrid()
         self.charges_gridLayout.setObjectName("charges_gridLayout")
         self.label_20 = QtWidgets.QLabel(self.frame_6)
         font = QtGui.QFont()

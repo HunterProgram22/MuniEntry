@@ -175,7 +175,7 @@ class BaseDialogSlotFunctions(object):
             if checkbox.isChecked():
                 hidden_checkbox.setEnabled(True)
                 hidden_checkbox.setHidden(False)
-                hidden_checkbox.setFocus(True)
+                hidden_checkbox.setFocus()
             else:
                 hidden_checkbox.setEnabled(False)
                 hidden_checkbox.setHidden(True)

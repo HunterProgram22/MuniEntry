@@ -4,7 +4,6 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.no_jail_sentencing_checkers import DiversionDialogInfoChecker
-from munientry.controllers import charges_grids as cg
 from munientry.controllers.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
@@ -22,7 +21,6 @@ class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
     def __init__(self, dialog):
         """Diversion uses the JailCharges Grid because all aspects of the grid are the same."""
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
         self.set_appearance_reason()
         self.set_diversion_fine_pay_date_box()
         self.set_diversion_jail_report_date_box()

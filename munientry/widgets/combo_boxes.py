@@ -54,7 +54,7 @@ class DailyCaseListComboBox(QComboBox):
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         super(DailyCaseListComboBox, self).keyPressEvent(event)
-        if event.key() == QtCore.Qt.Key_Delete:
+        if event.key() == QtCore.Qt.Key.Key_Delete:
             self.delete_case()
 
 
