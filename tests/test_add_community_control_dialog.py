@@ -41,7 +41,7 @@ def test_all_checkbox_conditions(com_control_dialog_com_control_conditions, chec
     assert getattr(com_control_dialog_com_control_conditions, checkbox).isChecked()
 
 
-@pytest.mark.skip
+@pytest.mark.skip('Requires manual interaction - comment out to run if needed')
 @pytest.mark.parametrize('checkbox', all_community_control_checkbox_conditions)
 def test_conditions_hold_if_dialog_closed_opened(qtbot, main_window, checkbox):
     mouse_click(main_window.hemmeter_radioButton)
