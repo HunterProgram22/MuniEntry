@@ -1,12 +1,12 @@
 import re
 
 from loguru import logger
-from PyQt5 import QtCore
-from PyQt5.QtCore import QDate, QTime
-from PyQt5.QtGui import QIntValidator
-from PyQt5.QtWidgets import QPushButton, QMessageBox, QLineEdit, QCheckBox, QInputDialog, QDateEdit, QTimeEdit, \
+from PyQt6 import QtCore
+from PyQt6.QtCore import QDate, QTime
+from PyQt6.QtGui import QIntValidator
+from PyQt6.QtWidgets import QPushButton, QMessageBox, QLineEdit, QCheckBox, QInputDialog, QDateEdit, QTimeEdit, \
     QLabel
-from PyQt5 import QtGui
+from PyQt6 import QtGui
 from openpyxl import load_workbook  # type: ignore
 
 from munientry.settings import ICON_PATH
@@ -18,7 +18,7 @@ TODAY_STRING = TODAY.toString("MMMM dd, yyyy")
 class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super(QDateEdit, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setDate(TODAY)
 
     def get_date(self) -> str:
@@ -38,7 +38,7 @@ class NoScrollDateEdit(QDateEdit):
 class NoScrollTimeEdit(QTimeEdit):
     def __init__(self, parent=None):
         super(QTimeEdit, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def get_time(self) -> str:
         return self.time().toString("hh:mm A")
@@ -120,7 +120,7 @@ class ChargeGridDeleteButton(QPushButton):
         self.setStyleSheet("background-color: rgb(170, 58, 63);")
         self.setText("Delete")
         self.setObjectName("charge_grid_delete_Button")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.pressed.connect(self.delete_charge_from_grid_and_charges_list)
 
     def delete_charge_from_grid_and_charges_list(self):
@@ -147,7 +147,7 @@ class ChargeGridAmendButton(QPushButton):
         self.setStyleSheet("background-color: rgb(62, 146, 255);")
         self.setText("Amend")
         self.setObjectName("charge_grid_amend_Button")
-        self.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.released.connect(self.dialog.functions.start_amend_offense_dialog)
 
 
@@ -173,7 +173,7 @@ class AlliedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Allied Offense")
         self.setObjectName("allied_checkBox")
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.toggled.connect(self.set_to_allied)
 
     def set_to_allied(self):
@@ -209,7 +209,7 @@ class DismissedCheckbox(QCheckBox):
     def set_up_widget(self):
         self.setText("Offense Dismissed")
         self.setObjectName("dismissed_checkBox")
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):

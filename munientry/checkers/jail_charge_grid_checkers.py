@@ -1,6 +1,6 @@
 """Module that contains data checks for dialogs that potentially impose jail time."""
 from loguru import logger
-from PyQt5.QtWidgets import QDialog, QMessageBox
+from PyQt6.QtWidgets import QDialog, QMessageBox
 
 from munientry.checkers.base_checks import (
     BLANK,
@@ -58,9 +58,9 @@ class JailTimeCreditChecker(BaseChecker):
         return PASS
 
     def set_in_jail_box(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.No:
+        if message_response == QMessageBox.StandardButton.No:
             self.view.in_jail_box.setCurrentText('No')
-        elif message_response == QMessageBox.Yes:
+        elif message_response == QMessageBox.StandardButton.Yes:
             self.view.in_jail_box.setCurrentText(YES)
         return PASS
 
@@ -181,13 +181,13 @@ class JailCCPleaDialogInfoChecker(
         return PASS
 
     def add_jail_report_terms(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.No:
+        if message_response == QMessageBox.StandardButton.No:
             return PASS
-        if message_response == QMessageBox.Yes:
+        if message_response == QMessageBox.StandardButton.Yes:
             self.view.jail_checkBox.setChecked(True)
             self.view.functions.start_add_jail_report_dialog()
             return PASS
-        if message_response == QMessageBox.Cancel:
+        if message_response == QMessageBox.StandardButton.Cancel:
             return FAIL
         return PASS
 
@@ -208,10 +208,10 @@ class JailCCPleaDialogInfoChecker(
         return PASS
 
     def unset_jail_reporting(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.No:
+        if message_response == QMessageBox.StandardButton.No:
             self.view.jail_checkBox.setChecked(False)
             return PASS
-        if message_response == QMessageBox.Yes:
+        if message_response == QMessageBox.StandardButton.Yes:
             return PASS
         return PASS
 

@@ -1,6 +1,6 @@
 import pytest
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import QTimer
+from PyQt6 import QtWidgets
+from PyQt6.QtCore import QTimer
 from tests.conftest import mouse_click, enter_data, check_barkschat
 
 

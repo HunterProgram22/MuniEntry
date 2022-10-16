@@ -1,5 +1,5 @@
-from PyQt5 import QtGui, QtPrintSupport
-from PyQt5.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout, QDialog
+from PyQt6 import QtGui, QtPrintSupport
+from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout, QDialog
 from loguru import logger
 from munientry.settings import ICON_PATH
 

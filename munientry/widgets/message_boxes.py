@@ -1,5 +1,5 @@
-from PyQt5 import QtGui
-from PyQt5.QtWidgets import QMessageBox, QPushButton
+from PyQt6 import QtGui
+from PyQt6.QtWidgets import QMessageBox, QPushButton
 from loguru import logger
 from munientry.settings import ICON_PATH
 
@@ -18,10 +18,10 @@ class RequiredBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Critical)
+        self.setIcon(QMessageBox.Icon.Critical)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Ok)
+        self.setStandardButtons(QMessageBox.StandardButton.Ok)
 
 
 class InfoBox(QMessageBox):
@@ -34,10 +34,10 @@ class InfoBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Information)
+        self.setIcon(QMessageBox.Icon.Information)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Ok)
+        self.setStandardButtons(QMessageBox.StandardButton.Ok)
 
 
 class WarningBox(QMessageBox):
@@ -50,10 +50,10 @@ class WarningBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Warning)
+        self.setIcon(QMessageBox.Icon.Warning)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+        self.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
 
 class TwoChoiceQuestionBox(QMessageBox):
@@ -66,11 +66,11 @@ class TwoChoiceQuestionBox(QMessageBox):
 
     def set_up_widget(self, yes_choice, no_choice):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Question)
+        self.setIcon(QMessageBox.Icon.Question)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.addButton(QPushButton(yes_choice), QMessageBox.YesRole) # YesRole returns 5
-        self.addButton(QPushButton(no_choice), QMessageBox.NoRole)  # NoRole returns 6
+        self.addButton(QPushButton(yes_choice), QMessageBox.StandardButton.Yes) # YesRole returns 5
+        self.addButton(QPushButton(no_choice), QMessageBox.StandardButton.No)  # NoRole returns 6
 
 
 class JailWarningBox(QMessageBox):
@@ -83,7 +83,9 @@ class JailWarningBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setIcon(QMessageBox.Warning)
+        self.setIcon(QMessageBox.Icon.Warning)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel)
+        self.setStandardButtons(QMessageBox.StandardButton.Yes |
+                                QMessageBox.StandardButton.No |
+                                QMessageBox.StandardButton.Cancel)

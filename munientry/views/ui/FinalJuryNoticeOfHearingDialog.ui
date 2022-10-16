@@ -177,7 +177,7 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>1031</width>
+           <width>1027</width>
            <height>704</height>
           </rect>
          </property>
@@ -253,6 +253,9 @@ font-weight: bold;</string>
                </item>
                <item row="6" column="1">
                 <widget class="NoScrollComboBox" name="final_pretrial_time_box">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
                  <property name="styleSheet">
                   <string notr="true">background-color: rgb(255, 255, 255);</string>
                  </property>
@@ -658,7 +661,7 @@ background-color: rgb(255, 255, 255);</string>
   <customwidget>
    <class>NoScrollComboBox</class>
    <extends>QComboBox</extends>
-   <header>munientry.widgets.custom_widgets</header>
+   <header>munientry.widgets.combo_boxes</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -4,8 +4,8 @@ import traceback
 from functools import partialmethod
 
 from loguru import logger
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt6 import QtCore, QtGui
+from PyQt6.QtWidgets import QApplication, QMessageBox
 
 from munientry.settings import ICON_PATH, LOG_PATH, USER_LOG_NAME
 
@@ -33,10 +33,10 @@ class CriticalErrorBox(QMessageBox):
 
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
-        self.setIcon(QMessageBox.Critical)
+        self.setIcon(QMessageBox.Icon.Critical)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.setStandardButtons(QMessageBox.Ok)
+        self.setStandardButtons(QMessageBox.StandardButton.Ok)
 
 
 FMT = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
@@ -80,7 +80,7 @@ def show_exception_box(log_msg):
             + ' OK, but must choose an option other than the one the caused this error message.'
             + f' The error is:\n\n\n{log_msg}',
         )
-        errorbox.exec_()
+        errorbox.exec()
     else:
         logger.debug('No QApplication instance available.')
 

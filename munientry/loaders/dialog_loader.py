@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Optional
 
 from loguru import logger
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox
 
 from munientry.data import sql_server_getters as sql_server
 from munientry.models.cms_models import CmsCaseInformation

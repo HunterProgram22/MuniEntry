@@ -4,9 +4,9 @@ import inspect
 
 import pytest
 from pytestqt.plugin import QtBot
-from PyQt5.QtSql import QSqlDatabase
-from PyQt5 import QtCore
-from PyQt5.QtCore import QTimer
+from PyQt6.QtSql import QSqlDatabase
+from PyQt6 import QtCore
+from PyQt6.QtCore import QTimer
 
 current_dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
@@ -33,13 +33,13 @@ def enter_data(field, data: str):
     return QtBot.keyClicks(field, data)
 
 def mouse_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.LeftButton)
+    return QtBot.mouseClick(button, QtCore.Qt.MouseButton.LeftButton)
 
 def key_click(field, key):
     return QtBot.keyClick(field, key)
 
 def right_click(button):
-    return QtBot.mouseClick(button, QtCore.Qt.RightButton)
+    return QtBot.mouseClick(button, QtCore.Qt.MouseButton.RightButton)
 
 
 @pytest.fixture

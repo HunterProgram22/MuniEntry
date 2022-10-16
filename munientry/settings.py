@@ -7,7 +7,7 @@ from typing import (
     TYPE_CHECKING,  # Import used so TYPE_CHECKING can be imported with other settings
 )
 
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 config = configparser.SafeConfigParser()
 config.read('config.ini')

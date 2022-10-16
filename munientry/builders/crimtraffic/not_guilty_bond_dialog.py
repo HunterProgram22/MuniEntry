@@ -6,7 +6,6 @@ from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
-from munientry.controllers import charges_grids as cg
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     NotGuiltyBondEntryCaseInformation,
@@ -20,7 +19,6 @@ class NotGuiltyBondDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.NotGuiltyPleaGrid
         self.set_appearance_reason()
         self.dialog.monitoring_type_box.setHidden(True)
         self.dialog.specialized_docket_type_box.setHidden(True)

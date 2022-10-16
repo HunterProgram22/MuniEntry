@@ -1,5 +1,5 @@
 import pytest
-from PyQt5.QtSql import QSqlDatabase
+from PyQt6.QtSql import QSqlDatabase
 
 from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
 from munientry.data.sql_lite_getters import (

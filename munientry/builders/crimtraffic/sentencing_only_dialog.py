@@ -1,6 +1,6 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
-from PyQt5.QtGui import QIntValidator
+from PyQt6.QtGui import QIntValidator
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_community_control_dialog import (
@@ -8,7 +8,6 @@ from munientry.builders.secondary.add_community_control_dialog import (
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
 from munientry.checkers.jail_charge_grid_checkers import SentencingOnlyDialogInfoChecker
-from munientry.controllers import charges_grids as cg
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     SentencingOnlyEntryCaseInformation,
@@ -22,7 +21,6 @@ class SentencingOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.JailChargesGrid
 
 
 class SentencingOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):

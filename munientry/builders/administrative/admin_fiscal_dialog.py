@@ -1,6 +1,6 @@
 """Contains classes for building the Admin Fiscal Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin

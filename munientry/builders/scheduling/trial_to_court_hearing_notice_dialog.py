@@ -13,7 +13,7 @@ from munientry.views.trial_to_court_hearing_dialog_ui import (
 )
 
 if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
+    from PyQt6.QtWidgets import QDialog
 
 
 class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):

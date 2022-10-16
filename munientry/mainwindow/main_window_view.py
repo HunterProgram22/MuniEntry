@@ -1,6 +1,6 @@
 """Module for building the view of the MainWindow."""
 import munientry.digitalworkflow.hemmeter_dw_dialog
-from PyQt5 import QtGui
+from PyQt6 import QtGui
 
 from munientry.builders.administrative import (
     driving_privileges_dialog,

@@ -6,9 +6,9 @@ from typing import Any
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog
 
 from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox
@@ -92,9 +92,9 @@ class BaseDialogViewModifier(object):
         self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.dialog.setWindowFlags(
             self.dialog.windowFlags()
-            | Qt.CustomizeWindowHint
-            | Qt.WindowMaximizeButtonHint
-            | Qt.WindowCloseButtonHint,
+            | Qt.WindowType.CustomizeWindowHint
+            | Qt.WindowType.WindowMaximizeButtonHint
+            | Qt.WindowType.WindowCloseButtonHint,
         )
         self.dialog.setupUi(self.dialog)
 
@@ -175,7 +175,7 @@ class BaseDialogSlotFunctions(object):
             if checkbox.isChecked():
                 hidden_checkbox.setEnabled(True)
                 hidden_checkbox.setHidden(False)
-                hidden_checkbox.setFocus(True)
+                hidden_checkbox.setFocus()
             else:
                 hidden_checkbox.setEnabled(False)
                 hidden_checkbox.setHidden(True)

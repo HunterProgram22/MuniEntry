@@ -1,6 +1,6 @@
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QComboBox, QMenu
+from PyQt6 import QtCore, QtGui
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QComboBox, QMenu
 from loguru import logger
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_lite_functions import query_attorney_list
@@ -8,14 +8,14 @@ from munientry.data.sql_lite_functions import query_attorney_list
 
 class DailyCaseListComboBox(QComboBox):
     def __init__(self, parent=None):
-        super(DailyCaseListComboBox, self).__init__(parent)
-        self.setFocusPolicy(Qt.StrongFocus)
+        super().__init__(parent)
+        self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setEnabled(False)
         self.setMinimumSize(QtCore.QSize(0, 40))
         self.setStyleSheet( "background-color: rgb(255, 255, 255);\n"
                             "selection-background-color: rgb(85, 170, 255);")
         self.setEditable(False)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_menu)
 
     def setup_combo_box(self, name, radio_button, main_window):
@@ -54,14 +54,14 @@ class DailyCaseListComboBox(QComboBox):
 
     def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
         super(DailyCaseListComboBox, self).keyPressEvent(event)
-        if event.key() == QtCore.Qt.Key_Delete:
+        if event.key() == QtCore.Qt.Key.Key_Delete:
             self.delete_case()
 
 
 class NoScrollComboBox(QComboBox):
     def __init__(self, parent=None):
         super(QComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def wheelEvent(self, event):
         if event == QtCore.QEvent.Wheel:
@@ -71,7 +71,7 @@ class NoScrollComboBox(QComboBox):
 class DefenseCounselComboBox(NoScrollComboBox):
     def __init__(self, parent=None):
         super(NoScrollComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def load_attorneys(self):
         db_connection = open_db_connection('con_attorneys')
@@ -93,7 +93,7 @@ class DegreeComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("degree_choice_box")
         self.addItem("")
         self.addItem("M1")
@@ -118,7 +118,7 @@ class PleaComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("plea_choice_box")
         if self.dialog.objectName() == 'TrialSentencingDialog':
             self.addItem('Court')
@@ -142,7 +142,7 @@ class FindingComboBox(NoScrollComboBox):
         self.setMaximumSize(QtCore.QSize(200, 50))
         self.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
         self.setObjectName("finding_choice_box")
         self.addItem("")
         self.addItem("Guilty")

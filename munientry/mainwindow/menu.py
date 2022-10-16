@@ -3,9 +3,9 @@ import os
 from collections import namedtuple
 
 from loguru import logger
-from PyQt5.QtGui import QKeySequence
-from PyQt5.QtSql import QSqlQuery
-from PyQt5.QtWidgets import QInputDialog, QShortcut, QTableWidgetItem
+from PyQt6.QtGui import QKeySequence
+from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem  # Removed for PyQt6 QShortcut
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
@@ -74,8 +74,8 @@ class MainWindowMenu(object):
         self.connect_menu_functions()
 
     def connect_menu_functions(self) -> None:
-        self.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self.mainwindow)
-        self.log_shortcut.activated.connect(open_current_log)
+        # self.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self.mainwindow)
+        # self.log_shortcut.activated.connect(open_current_log)
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
         self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
             open_batch_entries_folder,
