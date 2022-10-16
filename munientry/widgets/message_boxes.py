@@ -1,5 +1,5 @@
 from PyQt6 import QtGui
-from PyQt6.QtWidgets import QMessageBox, QPushButton
+from PyQt6.QtWidgets import QMessageBox, QAbstractButton, QPushButton
 from loguru import logger
 from munientry.settings import ICON_PATH
 
@@ -69,8 +69,8 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.setIcon(QMessageBox.Icon.Question)
         self.setWindowTitle(self.title)
         self.setText(self.message)
-        self.addButton(QPushButton(yes_choice), QMessageBox.StandardButton.Yes) # YesRole returns 5
-        self.addButton(QPushButton(no_choice), QMessageBox.StandardButton.No)  # NoRole returns 6
+        self.addButton(QPushButton(yes_choice), QMessageBox.ButtonRole.YesRole) # YesRole returns 5
+        self.addButton(QPushButton(no_choice), QMessageBox.ButtonRole.NoRole)  # NoRole returns 6
 
 
 class JailWarningBox(QMessageBox):
