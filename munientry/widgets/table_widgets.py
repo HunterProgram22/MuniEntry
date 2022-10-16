@@ -1,3 +1,10 @@
+"""Module containing custom Table Widgets.
+
+If using QtDesigner for creation of the Ui file you must promote the widget to one of the custom
+widgets that is used. The header file for this module must then be added in QtDesigner so that
+when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
+module will be imported as part of the python_view_file.py.
+"""
 from PyQt6 import QtGui, QtPrintSupport
 from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout, QDialog
 from loguru import logger

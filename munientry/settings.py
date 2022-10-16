@@ -52,6 +52,7 @@ ICON_PATH = fr'{PATH}\resources\icons\\'
 DB_PATH = fr'{PATH}\db\\'
 CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
 CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
+GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
 
 
 # Logging Settings

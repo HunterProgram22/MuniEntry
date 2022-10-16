@@ -1,3 +1,10 @@
+"""Module containing custom widget Combo Boxes.
+
+If using QtDesigner for creation of the Ui file you must promote the widget to one of the custom
+widgets that is used. The header file for this module must then be added in QtDesigner so that
+when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
+module will be imported as part of the python_view_file.py.
+"""
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QComboBox, QMenu
