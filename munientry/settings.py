@@ -72,6 +72,7 @@ SOCKET_NAME = get_host()
 FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
 USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
 
+
 # Costs Settings
 SPECIAL_DOCKETS_COSTS = [
     'while on Community Control',

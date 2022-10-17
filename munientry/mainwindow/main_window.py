@@ -9,6 +9,7 @@ from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.mainwindow.menu import MainWindowMenu
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
+from munientry.settings import SOCKET_NAME
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
@@ -25,6 +26,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.judicial_officer = None
         self.dialog = None
         self.daily_case_list = None
+        self.load_user_settings()
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
@@ -53,3 +55,24 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.judicial_officer = self.judicial_officer_buttons_dict.get(self.sender())
         judicial_officer = self.judicial_officer.last_name
         logger.action(f'Judicial Officer set to: {judicial_officer}')
+
+    def load_user_settings(self) -> None:
+        if SOCKET_NAME in ['Justin_Home_PC', 'Justin_Work_Desktop_PC']:
+            return AdminUserSettings(self)
+        return GeneralUserSettings(self)
+
+
+class AdminUserSettings(object):
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
+        logger.info('Setting Admin User Settings')
+        self.mainwindow.tabWidget.setTabVisible(3, True)
+        self.mainwindow.search_tabWidget.setTabVisible(2, True)
+
+
+class GeneralUserSettings(object):
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
+        logger.info('Setting General User Settings')
+        self.mainwindow.tabWidget.setTabVisible(3, False)
+        self.mainwindow.search_tabWidget.setTabVisible(2, False)
