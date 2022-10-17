@@ -57,7 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         logger.action(f'Judicial Officer set to: {judicial_officer}')
 
     def load_user_settings(self) -> None:
-        if SOCKET_NAME in ['Justin_Home_PC', 'Justin_Work_Desktop_PC']:
+        if SOCKET_NAME in ['Justin_Home_PC', 'Justin_Work_Laptop_PC']:
             return AdminUserSettings(self)
         return GeneralUserSettings(self)
 
