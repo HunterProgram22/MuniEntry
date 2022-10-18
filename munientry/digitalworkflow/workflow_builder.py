@@ -4,24 +4,26 @@ import fitz
 
 from loguru import logger
 from PyQt6 import QtGui
-from PyQt6.QtCore import QUrl
+from PyQt6.QtCore import QUrl, Qt
 from PyQt6.QtWebEngineCore import QWebEngineSettings
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
 
-from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH
+from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH, TODAY
 from munientry.builders import base_builders as base
 
 
 def add_approved_stamp(file):
-    img_rect = fitz.Rect(55, 30, 150, 390)
+    img_rect = fitz.Rect(475, 50, 575, 150)
     img_filename = fr'{ICON_PATH}\approved_stamp.png'
+    text_start_point = fitz.Point(475, 100)
+    file_time = TODAY.toString('MMM dd, yyyy')
+    filestamp_text = f'FILED {file_time}\nCindy Dinovo\nClerk of Court'
     document = fitz.open(file)
-    logger.debug(document)
     page = document[0]
-    logger.debug(page)
     page.insert_image(img_rect, filename=img_filename)
-    document.save(f'{DW_HEMMETER}/Test.pdf')
+    page.insert_text(text_start_point, filestamp_text, color=(0.7, 0.0, 0.1))
+    document.save(f'{DW_APPROVED_DIR}/Test.pdf')
     document.close()
 
 
