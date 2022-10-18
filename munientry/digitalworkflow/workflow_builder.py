@@ -88,6 +88,9 @@ class PdfDialogView(QMainWindow):
         self.webEngineView.load(QUrl.fromLocalFile(self.document))
 
     def reject_entry(self):
+        row = self.dialog.pending_entries_listWidget.row(self.entry_widget)
+        entry = self.dialog.pending_entries_listWidget.takeItem(row)
+        self.dialog.rejected_entries_listWidget.addItem(entry)
         self.close()
 
     def approve_entry(self):

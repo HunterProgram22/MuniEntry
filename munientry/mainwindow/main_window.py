@@ -2,6 +2,7 @@
 
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
+from PyQt6.QtGui import QAction, QKeySequence
 
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view

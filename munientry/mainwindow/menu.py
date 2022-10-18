@@ -74,9 +74,8 @@ class MainWindowMenu(object):
         self.connect_menu_functions()
 
     def connect_menu_functions(self) -> None:
-        # self.log_shortcut = QShortcut(QKeySequence('Ctrl+L'), self.mainwindow)
-        # self.log_shortcut.activated.connect(open_current_log)
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
+        self.mainwindow.actionOpen_Current_Log.setShortcut(QKeySequence('Ctrl+L'))
         self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
             open_batch_entries_folder,
         )

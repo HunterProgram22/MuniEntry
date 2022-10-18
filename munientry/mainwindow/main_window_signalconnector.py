@@ -33,20 +33,20 @@ class MainWindowSignalConnector(object):
 
     def connect_crim_traffic_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.crim_traffic_dialog_buttons_dict:
-            key.pressed.connect(self.main_window.start_crim_traffic_entry)
+            key.released.connect(self.main_window.start_crim_traffic_entry)
 
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.scheduling_dialog_buttons_dict:
-            key.pressed.connect(self.main_window.start_scheduling_entry)
+            key.released.connect(self.main_window.start_scheduling_entry)
 
     def connect_admin_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.admin_dialog_buttons_dict:
-            key.pressed.connect(self.main_window.start_admin_entry)
+            key.released.connect(self.main_window.start_admin_entry)
 
     def connect_admin_no_case_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.admin_dialog_no_case_buttons_dict:
-            key.pressed.connect(self.main_window.start_admin_fiscal_entry)
+            key.released.connect(self.main_window.start_admin_fiscal_entry)
 
     def connect_digital_workflow_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.digital_workflow_buttons_dict:
-            key.pressed.connect(self.main_window.start_digital_workflow)
+            key.released.connect(self.main_window.start_digital_workflow)

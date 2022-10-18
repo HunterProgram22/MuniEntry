@@ -5,7 +5,7 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
-from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER
+from munientry.settings import DW_APPROVED_DIR, DW_REJECTED_DIR, DW_HEMMETER
 from munientry.digitalworkflow.workflow_builder import PdfDialogView
 
 class HemmeterWorkflowDialogViewModifier(base.BaseDialogViewModifier):
@@ -31,14 +31,23 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         self.dialog.entry_view = PdfDialogView(document, selected_entry_widget, self.dialog)
 
     def complete_workflow(self):
-        row_count = self.dialog.approved_entries_listWidget.count()
+        approved_row_count = self.dialog.approved_entries_listWidget.count()
+        rejected_row_count = self.dialog.rejected_entries_listWidget.count()
         row = 0
-        while row < row_count:
+        while row < approved_row_count:
             entry = self.dialog.approved_entries_listWidget.takeItem(0)
             entry_name = entry.text()
             document = f'{DW_HEMMETER}{entry_name}'
             shutil.move(document, DW_APPROVED_DIR)
             row +=1
+        row = 0
+        while row < rejected_row_count:
+            entry = self.dialog.rejected_entries_listWidget.takeItem(0)
+            entry_name = entry.text()
+            document = f'{DW_HEMMETER}{entry_name}'
+            shutil.move(document, DW_REJECTED_DIR)
+            row +=1
+        self.dialog.close()
 
 
 class HemmeterWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
