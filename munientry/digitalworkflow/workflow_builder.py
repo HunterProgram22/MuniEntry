@@ -1,5 +1,6 @@
 import os
 import shutil
+import fitz
 
 from loguru import logger
 from PyQt6 import QtGui
@@ -10,6 +11,18 @@ from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
 
 from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH
 from munientry.builders import base_builders as base
+
+
+def add_approved_stamp(file):
+    img_rect = fitz.Rect(55, 30, 150, 390)
+    img_filename = fr'{ICON_PATH}\approved_stamp.png'
+    document = fitz.open(file)
+    logger.debug(document)
+    page = document[0]
+    logger.debug(page)
+    page.insert_image(img_rect, filename=img_filename)
+    document.save(f'{DW_HEMMETER}/Test.pdf')
+    document.close()
 
 
 class RohrerWorkflowDialog(base.BaseDialogBuilder):
