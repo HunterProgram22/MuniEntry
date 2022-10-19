@@ -1,5 +1,6 @@
 """Module for building the view of the MainWindow."""
 import munientry.digitalworkflow.hemmeter_dw_dialog
+import munientry.digitalworkflow.rohrer_dw_dialog
 from PyQt6 import QtGui
 
 from munientry.builders.administrative import (
@@ -142,7 +143,7 @@ class MainWindowViewModifier(object):
     def connect_digital_workflow_dialog_buttons(self) -> dict:
         return {
             self.main_window.hemmeter_workflowButton: munientry.digitalworkflow.hemmeter_dw_dialog.HemmeterWorkflowDialog,
-            self.main_window.rohrer_workflowButton: dw.RohrerWorkflowDialog,
+            self.main_window.rohrer_workflowButton: munientry.digitalworkflow.rohrer_dw_dialog.RohrerWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:

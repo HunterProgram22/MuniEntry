@@ -3,11 +3,11 @@ import os
 import shutil
 from loguru import logger
 
-from munientry.digitalworkflow.workflow_builder import add_approved_stamp
+from munientry.digitalworkflow.workflow_tools import add_approved_stamp, PdfViewer
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
 from munientry.settings import DW_APPROVED_DIR, DW_REJECTED_DIR, DW_HEMMETER
-from munientry.digitalworkflow.workflow_builder import PdfDialogView
+
 
 class HemmeterWorkflowDialogViewModifier(base.BaseDialogViewModifier):
     """View builder for Hemeter Workflow Dialog."""
@@ -29,7 +29,7 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         selected_entry_widget = self.dialog.pending_entries_listWidget.selectedItems()[0]
         entry_name = selected_entry_widget.text()
         document = f'{DW_HEMMETER}{entry_name}'
-        self.dialog.entry_view = PdfDialogView(document, selected_entry_widget, self.dialog)
+        self.dialog.entry_view = PdfViewer(document, selected_entry_widget, self.dialog)
 
     def complete_workflow(self):
         approved_row_count = self.dialog.approved_entries_listWidget.count()
