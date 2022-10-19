@@ -1,15 +1,13 @@
 import os
-import shutil
 import fitz
 
 from loguru import logger
 from PyQt6 import QtGui
-from PyQt6.QtCore import QUrl, Qt
-from PyQt6.QtWebEngineCore import QWebEngineSettings
+from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
 
-from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH, TODAY, TIMENOW
+from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH, TIMENOW
 from munientry.builders import base_builders as base
 
 
