@@ -7,7 +7,11 @@ from typing import (
     TYPE_CHECKING,  # Import used so TYPE_CHECKING can be imported with other settings
 )
 
-from PyQt6.QtCore import QDate
+from PyQt6.QtCore import QDate, QDateTime
+
+TODAY = QDate.currentDate()
+TIMENOW = QDateTime.currentDateTime()
+
 
 config = configparser.SafeConfigParser()
 config.read('config.ini')
@@ -116,7 +120,6 @@ WIDGET_TYPE_SET_DICT = {
     'NoScrollTimeEdit': 'set_time',
 }
 
-TODAY = QDate.currentDate()
 
 DAY_DICT = {
     'Monday': 1,

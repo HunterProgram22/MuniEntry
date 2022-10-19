@@ -2,6 +2,7 @@
 
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
+from PyQt6.QtGui import QKeySequence, QShortcut
 
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
@@ -27,6 +28,11 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.dialog = None
         self.daily_case_list = None
         self.load_user_settings()
+        self.set_shortcuts()
+
+    def set_shortcuts(self):
+        """This should be moved to own class, adding here for quick access during testing."""
+        self.hemmeter_workflowButton.setShortcut('Ctrl+D')
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)

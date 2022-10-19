@@ -9,16 +9,19 @@ from PyQt6.QtWebEngineCore import QWebEngineSettings
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
 
-from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH, TODAY
+from munientry.settings import DW_APPROVED_DIR, DW_HEMMETER, DW_ROHRER, ICON_PATH, TODAY, TIMENOW
 from munientry.builders import base_builders as base
 
 
 def add_approved_stamp(file):
-    img_rect = fitz.Rect(475, 50, 575, 150)
+    """Move this to a TextWriter box for centering."""
+    img_rect = fitz.Rect(475, 50, 555, 130)
     img_filename = fr'{ICON_PATH}\approved_stamp.png'
-    text_start_point = fitz.Point(475, 100)
-    file_time = TODAY.toString('MMM dd, yyyy')
-    filestamp_text = f'FILED {file_time}\nCindy Dinovo\nClerk of Court'
+    text_start_point = fitz.Point(465, 65)
+    file_time = TIMENOW.toString('MMM dd, yyyy hh:mm')
+    filestamp_text = \
+        f'FILED\nDELAWARE\nMUNICIPAL COURT\n'\
+        + f'{file_time}\nCindy Dinovo\nClerk of Court'
     document = fitz.open(file)
     page = document[0]
     page.insert_image(img_rect, filename=img_filename)
