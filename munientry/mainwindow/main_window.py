@@ -31,6 +31,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
     def set_shortcuts(self):
         """This should be moved to own class, adding here for quick access during testing."""
+        self.tabWidget.setCurrentIndex(3)
         self.hemmeter_workflowButton.setShortcut('Ctrl+D')
 
     def modify_view(self) -> None:
