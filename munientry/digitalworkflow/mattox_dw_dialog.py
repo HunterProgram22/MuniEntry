@@ -15,9 +15,12 @@ class MattoxWorkflowDialogViewModifier(base.BaseDialogViewModifier):
         self.load_pending_entries_list()
 
     def load_pending_entries_list(self):
-        pending_entries_list = os.listdir(DW_MATTOX)
-        for file in pending_entries_list:
+        pending_scram_gps_entries = os.listdir(f'{DW_MATTOX}/Scram_Gps//')
+        for file in pending_scram_gps_entries:
             self.dialog.scram_gps_entries_listWidget.addItem(file)
+        pending_comm_control_entries = os.listdir(f'{DW_MATTOX}/Comm_Control//')
+        for file in pending_comm_control_entries:
+            self.dialog.community_control_entries_listWidget.addItem(file)
 
 
 class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
@@ -26,7 +29,7 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     def open_entry(self):
         selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
         entry_name = selected_entry_widget.text()
-        document = f'{DW_MATTOX}{entry_name}'
+        document = f'{DW_MATTOX}/Scram_GPS/{entry_name}'
         self.dialog.entry_view = PdfViewer(document, selected_entry_widget, self.dialog)
 
 
