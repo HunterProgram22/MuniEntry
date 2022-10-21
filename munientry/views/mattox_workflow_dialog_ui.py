@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/ProbationWorkflowDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/MattoxWorkflowDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -9,29 +9,29 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_ProbationWorkflowDialog(object):
-    def setupUi(self, ProbationWorkflowDialog):
-        ProbationWorkflowDialog.setObjectName("ProbationWorkflowDialog")
-        ProbationWorkflowDialog.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-        ProbationWorkflowDialog.resize(1006, 828)
+class Ui_MattoxWorkflowDialog(object):
+    def setupUi(self, MattoxWorkflowDialog):
+        MattoxWorkflowDialog.setObjectName("MattoxWorkflowDialog")
+        MattoxWorkflowDialog.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
+        MattoxWorkflowDialog.resize(1006, 828)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(ProbationWorkflowDialog.sizePolicy().hasHeightForWidth())
-        ProbationWorkflowDialog.setSizePolicy(sizePolicy)
-        ProbationWorkflowDialog.setMinimumSize(QtCore.QSize(0, 0))
+        sizePolicy.setHeightForWidth(MattoxWorkflowDialog.sizePolicy().hasHeightForWidth())
+        MattoxWorkflowDialog.setSizePolicy(sizePolicy)
+        MattoxWorkflowDialog.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(9)
-        ProbationWorkflowDialog.setFont(font)
-        ProbationWorkflowDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
+        MattoxWorkflowDialog.setFont(font)
+        MattoxWorkflowDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
 "font: 75 11pt \"Palatino Linotype\";")
-        self.gridLayout = QtWidgets.QGridLayout(ProbationWorkflowDialog)
+        self.gridLayout = QtWidgets.QGridLayout(MattoxWorkflowDialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame = QtWidgets.QFrame(ProbationWorkflowDialog)
+        self.frame = QtWidgets.QFrame(MattoxWorkflowDialog)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -52,13 +52,13 @@ class Ui_ProbationWorkflowDialog(object):
         self.cancel_Button.setObjectName("cancel_Button")
         self.gridLayout_4.addWidget(self.cancel_Button, 1, 1, 1, 1)
         self.gridLayout.addWidget(self.frame, 1, 0, 1, 1)
-        self.reload_entries_Button = QtWidgets.QPushButton(ProbationWorkflowDialog)
+        self.reload_entries_Button = QtWidgets.QPushButton(MattoxWorkflowDialog)
         self.reload_entries_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.reload_entries_Button.setObjectName("reload_entries_Button")
         self.gridLayout.addWidget(self.reload_entries_Button, 1, 1, 1, 1)
-        self.frame_3 = QtWidgets.QFrame(ProbationWorkflowDialog)
+        self.frame_3 = QtWidgets.QFrame(MattoxWorkflowDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -136,17 +136,17 @@ class Ui_ProbationWorkflowDialog(object):
         self.gridLayout.addWidget(self.frame_3, 0, 0, 1, 2)
         self.gridLayout.setRowStretch(0, 4)
 
-        self.retranslateUi(ProbationWorkflowDialog)
-        QtCore.QMetaObject.connectSlotsByName(ProbationWorkflowDialog)
+        self.retranslateUi(MattoxWorkflowDialog)
+        QtCore.QMetaObject.connectSlotsByName(MattoxWorkflowDialog)
 
-    def retranslateUi(self, ProbationWorkflowDialog):
+    def retranslateUi(self, MattoxWorkflowDialog):
         _translate = QtCore.QCoreApplication.translate
-        ProbationWorkflowDialog.setWindowTitle(_translate("ProbationWorkflowDialog", "Probation Workflow"))
-        self.cancel_Button.setText(_translate("ProbationWorkflowDialog", "Cancel"))
-        self.reload_entries_Button.setText(_translate("ProbationWorkflowDialog", "Reload Entries"))
-        self.label.setText(_translate("ProbationWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">SCRAM AND GPS BOND ENTRIES</span></p></body></html>"))
-        self.open_entry_Button.setText(_translate("ProbationWorkflowDialog", "Open Entry for Review"))
-        self.show_docket_Button.setText(_translate("ProbationWorkflowDialog", "Show Case Docket"))
-        self.label_2.setText(_translate("ProbationWorkflowDialog", "COMMUNITY CONTROL ENTRIES"))
-        self.pushButton.setText(_translate("ProbationWorkflowDialog", "PushButton"))
-        self.pushButton_2.setText(_translate("ProbationWorkflowDialog", "PushButton"))
+        MattoxWorkflowDialog.setWindowTitle(_translate("MattoxWorkflowDialog", "Mattox Workflow"))
+        self.cancel_Button.setText(_translate("MattoxWorkflowDialog", "Cancel"))
+        self.reload_entries_Button.setText(_translate("MattoxWorkflowDialog", "Reload Entries"))
+        self.label.setText(_translate("MattoxWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">SCRAM AND GPS BOND ENTRIES</span></p></body></html>"))
+        self.open_entry_Button.setText(_translate("MattoxWorkflowDialog", "Open Entry for Review"))
+        self.show_docket_Button.setText(_translate("MattoxWorkflowDialog", "Show Case Docket"))
+        self.label_2.setText(_translate("MattoxWorkflowDialog", "COMMUNITY CONTROL ENTRIES"))
+        self.pushButton.setText(_translate("MattoxWorkflowDialog", "PushButton"))
+        self.pushButton_2.setText(_translate("MattoxWorkflowDialog", "PushButton"))

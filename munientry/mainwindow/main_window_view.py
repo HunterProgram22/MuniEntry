@@ -31,7 +31,7 @@ from munientry.builders.scheduling import (
 from munientry.digitalworkflow import hemmeter_dw_dialog as hemmeter
 from munientry.digitalworkflow import bunner_dw_dialog as bunner
 from munientry.digitalworkflow import rohrer_dw_dialog as rohrer
-from munientry.digitalworkflow import probation_dw_dialog as probation
+from munientry.digitalworkflow import mattox_dw_dialog as mattox
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -155,7 +155,7 @@ class MainWindowViewModifier(object):
     def connect_probation_workflow_dialog_buttons(self) -> dict:
         return {
             self.main_window.probation_workflowButton:
-                probation.ProbationWorkflowDialog,
+                mattox.MattoxWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:
