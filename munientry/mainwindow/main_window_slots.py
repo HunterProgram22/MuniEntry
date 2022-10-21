@@ -90,6 +90,11 @@ class MainWindowSlotFunctionsMixin(object):
         self.dialog = DialogLoader(self).load_digital_workflow_dialog()
         return self.dialog.exec()
 
+    def start_probation_workflow(self) -> None:
+        """Starts a Probation Workflow Dialogs."""
+        self.dialog = DialogLoader(self).load_probation_workflow_dialog()
+        return self.dialog.exec()
+
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
         judicial_officers = self.judicial_officers_Stack

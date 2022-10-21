@@ -45,6 +45,7 @@ DW_PATH = paths['digital_workflow_base_path']
 DW_HEMMETER = paths['digital_workflow_hemmeter_path']
 DW_ROHRER = paths['digital_workflow_rohrer_path']
 DW_BUNNER = paths['digital_workflow_bunner_path']
+DW_PROBATION = paths['digital_workflow_probation_path']
 DW_APPROVED_DIR = paths['digital_workflow_approved_path']
 DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 

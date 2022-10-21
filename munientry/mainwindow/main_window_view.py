@@ -1,6 +1,4 @@
 """Module for building the view of the MainWindow."""
-import munientry.digitalworkflow.hemmeter_dw_dialog
-import munientry.digitalworkflow.rohrer_dw_dialog
 from PyQt6 import QtGui
 
 from munientry.builders.administrative import (
@@ -30,7 +28,10 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
-from munientry.digitalworkflow import workflow_builder as dw
+from munientry.digitalworkflow import hemmeter_dw_dialog as hemmeter
+from munientry.digitalworkflow import bunner_dw_dialog as bunner
+from munientry.digitalworkflow import rohrer_dw_dialog as rohrer
+from munientry.digitalworkflow import probation_dw_dialog as probation
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -54,6 +55,7 @@ class MainWindowViewModifier(object):
         self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
         self.main_window.admin_dialog_no_case_buttons_dict = self.connect_admin_no_case_dialog_buttons()
         self.main_window.digital_workflow_buttons_dict = self.connect_digital_workflow_dialog_buttons()
+        self.main_window.probation_workflow_buttons_dict = self.connect_probation_workflow_dialog_buttons()
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
             self.main_window.slated_cases_box,
@@ -142,8 +144,18 @@ class MainWindowViewModifier(object):
 
     def connect_digital_workflow_dialog_buttons(self) -> dict:
         return {
-            self.main_window.hemmeter_workflowButton: munientry.digitalworkflow.hemmeter_dw_dialog.HemmeterWorkflowDialog,
-            self.main_window.rohrer_workflowButton: munientry.digitalworkflow.rohrer_dw_dialog.RohrerWorkflowDialog,
+            self.main_window.hemmeter_workflowButton:
+                hemmeter.HemmeterWorkflowDialog,
+            self.main_window.rohrer_workflowButton:
+                rohrer.RohrerWorkflowDialog,
+            self.main_window.bunner_workflowButton:
+                bunner.BunnerWorkflowDialog,
+        }
+
+    def connect_probation_workflow_dialog_buttons(self) -> dict:
+        return {
+            self.main_window.probation_workflowButton:
+                probation.ProbationWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:

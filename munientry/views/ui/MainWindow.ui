@@ -309,7 +309,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(208, 208, 208);</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>4</number>
           </property>
           <widget class="QWidget" name="crim_traffic_Tab">
            <attribute name="title">
@@ -1034,7 +1034,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="bunner_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(206, 104, 171);</string>
                 </property>
@@ -1044,6 +1044,63 @@ font-weight: bold;</string>
                </widget>
               </item>
              </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="probation_workflow_Tab">
+           <attribute name="title">
+            <string>Probation Workflow</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_20">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_20">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="text">
+               <string>Probation Pending Entries</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_21">
+              <property name="text">
+               <string>Count_SCRAM_GPS</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_22">
+              <property name="text">
+               <string>Count_Comm_Control</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QPushButton" name="probation_workflowButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(206, 104, 171);</string>
+              </property>
+              <property name="text">
+               <string>Open Probation Workflow</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>

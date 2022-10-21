@@ -115,6 +115,14 @@ class DialogLoader(object):
         button_dict = self.mainwindow.digital_workflow_buttons_dict
         return self._load_digital_workflow_dialog_process(button_dict)
 
+    def load_probation_workflow_dialog(self) -> base.BaseDialogBuilder:
+        """This methis is the same as load digital workflow dialog for now.
+
+        May need changes later or can refactor into single method.
+        """
+        button_dict = self.mainwindow.probation_workflow_buttons_dict
+        return self._load_digital_workflow_dialog_process(button_dict)
+
     def load_crimtraffic_dialog(self) -> crim.CrimTrafficDialogBuilder:
         button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
         return self._load_dialog_process(button_dict)
