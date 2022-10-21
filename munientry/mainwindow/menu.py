@@ -11,7 +11,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
-from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, BATCH_SAVE_PATH, USER_LOG_NAME
+from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, BATCH_SAVE_PATH, USER_LOG_NAME, CRIMTRAFFIC_SAVE_PATH, SCHEDULING_SAVE_PATH
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
@@ -38,6 +38,18 @@ def open_driving_privileges_folder(_signal=None) -> None:
     """Menu function that opens the folder where Driving Privileges entries are saved."""
     os.startfile(f'{DRIVE_SAVE_PATH}')
     logger.info('Driving Privileges entries folder opened.')
+
+
+def open_crimtraffic_entries_folder(_signal=None) -> None:
+    """Menu function that opens the folder where Driving Privileges entries are saved."""
+    os.startfile(f'{CRIMTRAFFIC_SAVE_PATH}')
+    logger.info('Crim Traffic entries folder opened.')
+
+
+def open_scheduling_entries_folder(_signal=None) -> None:
+    """Menu function that opens the folder where Driving Privileges entries are saved."""
+    os.startfile(f'{SCHEDULING_SAVE_PATH}')
+    logger.info('Scheduling entries folder opened.')
 
 
 def run_batch_fta_process(_signal=None) -> None:
@@ -84,6 +96,12 @@ class MainWindowMenu(object):
         self.mainwindow.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
         self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
             open_driving_privileges_folder,
+        )
+        self.mainwindow.actionCrimTraffic_Folder.triggered.connect(
+            open_crimtraffic_entries_folder,
+        )
+        self.mainwindow.actionScheduling_Entries_Folder.triggered.connect(
+            open_scheduling_entries_folder,
         )
 
     def run_arraignments_report(self) -> None:

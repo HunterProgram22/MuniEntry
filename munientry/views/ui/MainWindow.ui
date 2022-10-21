@@ -39,7 +39,7 @@ font-weight: bold;</string>
     <item row="0" column="0">
      <widget class="QTabWidget" name="main_TabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="entries_Tab">
        <attribute name="title">
@@ -1585,8 +1585,8 @@ font-weight: bold;</string>
     <property name="title">
      <string>Open</string>
     </property>
-    <addaction name="actionDriving_Privileges_Folder"/>
     <addaction name="actionCrimTraffic_Folder"/>
+    <addaction name="actionDriving_Privileges_Folder"/>
     <addaction name="actionScheduling_Entries_Folder"/>
    </widget>
    <addaction name="menuOpen"/>
