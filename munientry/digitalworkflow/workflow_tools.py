@@ -1,4 +1,5 @@
 """Module for PDF Viewers and tools used by Viewers."""
+import os
 import webbrowser
 import fitz
 from PyQt6 import QtGui, QtPrintSupport
@@ -72,6 +73,8 @@ class BasePdfViewer(QMainWindow):
 
         self.webEngineView.load(QUrl.fromLocalFile(self.document))
 
+    def print_entry(self):
+        webbrowser.open_new(self.document)
 
 class PdfViewer(BasePdfViewer):
 
@@ -79,16 +82,13 @@ class PdfViewer(BasePdfViewer):
         super().__init__(document, entry_widget, dialog, parent)
 
     def add_viewer_buttons(self):
-        self.reject_Button = QToolButton(self)
-        self.reject_Button.setText('REJECT')
-        self.reject_Button.setStyleSheet('background-color : red')
-        self.reject_Button.clicked.connect(self.reject_entry)
+        self.reject_Button = ToolButton('REJECT', 'red', self.reject_entry)
         self.toolBar.addWidget(self.reject_Button)
 
-        self.approve_Button = QToolButton(self)
-        self.approve_Button.setText('APPROVE')
-        self.approve_Button.setStyleSheet('background-color : green')
-        self.approve_Button.clicked.connect(self.approve_entry)
+        self.print_Button = ToolButton('OPEN TO PRINT', 'gray', self.print_entry)
+        self.toolBar.addWidget(self.print_Button)
+
+        self.approve_Button = ToolButton('APPROVE', 'green', self.approve_entry)
         self.toolBar.addWidget(self.approve_Button)
 
     def reject_entry(self):
@@ -116,10 +116,8 @@ class MattoxPdfViewer(BasePdfViewer):
         self.complete_Button = ToolButton('COMPLETE', 'green', self.complete_entry)
         self.toolBar.addWidget(self.complete_Button)
 
-    def print_entry(self):
-        webbrowser.open_new(self.document)
-
     def complete_entry(self):
         row = self.widget_list.row(self.entry_widget)
         self.widget_list.takeItem(row)
+        os.remove(self.document)
         self.close()
