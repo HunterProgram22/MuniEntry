@@ -28,16 +28,18 @@ def add_approved_stamp(file):
 class ToolButton(QToolButton):
     """Custom tool button for PDF Viewers."""
 
-    def __init__(self, button_text, button_color, parent=None):
+    def __init__(self, button_text, button_color, slot_function, parent=None):
         super().__init__(parent)
         self.button_text = button_text
         self.button_color = button_color
+        self.slot_function = slot_function
         self._set_up_button()
 
     def _set_up_button(self):
         self.setText(self.button_text)
         self.setStyleSheet(f'background-color: {self.button_color}; padding: 10px;')
         self.setFixedSize(150, 50)
+        self.clicked.connect(self.slot_function)
 
 
 class BasePdfViewer(QMainWindow):
@@ -106,16 +108,14 @@ class MattoxPdfViewer(BasePdfViewer):
         super().__init__(document, entry_widget, dialog, parent)
 
     def add_viewer_buttons(self):
-        self.print_Button = ToolButton('PRINT', 'gray')
-        self.print_Button.clicked.connect(self.print_entry)
+        self.print_Button = ToolButton('PRINT', 'gray', self.print_entry)
         self.toolBar.addWidget(self.print_Button)
 
-        self.remove_Button = ToolButton('REMOVE', 'green')
-        self.remove_Button.clicked.connect(self.remove_entry)
+        self.remove_Button = ToolButton('REMOVE', 'green', self.remove_entry)
         self.toolBar.addWidget(self.remove_Button)
 
     def print_entry(self):
-        pass
+        print('printed')
 
     def remove_entry(self):
         pass
