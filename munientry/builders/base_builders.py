@@ -1,6 +1,7 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-
+import time
+from threading import Thread
 from os import startfile
 from typing import Any
 
@@ -149,9 +150,16 @@ class BaseDialogSlotFunctions(object):
             self.dialog.message_box.exec()
 
         saved_entry = f'{self.save_path}{docname}'
-        check_for_probation_workflow(case_information, saved_entry, docname)
-
-        startfile(saved_entry)
+        t1 = Thread(target=check_for_probation_workflow(case_information, saved_entry, docname))
+        # check_for_probation_workflow(case_information, saved_entry, docname)
+        t2 = Thread(target=startfile(saved_entry))
+        # t1.start()
+        t2.start()
+        time.sleep(2)
+        t1.start()
+        t1.join()
+        t2.join()
+        # startfile(saved_entry)
 
 
     def create_entry_process(self) -> None:
