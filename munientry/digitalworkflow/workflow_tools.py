@@ -1,6 +1,7 @@
 """Module for PDF Viewers and tools used by Viewers."""
+import webbrowser
 import fitz
-from PyQt6 import QtGui
+from PyQt6 import QtGui, QtPrintSupport
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QMainWindow, QToolBar, QToolButton, QHBoxLayout
@@ -44,10 +45,11 @@ class ToolButton(QToolButton):
 
 class BasePdfViewer(QMainWindow):
 
-    def __init__(self, document, entry_widget, dialog, parent=None):
+    def __init__(self, document, entry_widget, widget_list, dialog, parent=None):
         super().__init__(parent)
         self.document = document
         self.entry_widget = entry_widget
+        self.widget_list = widget_list
         self.dialog = dialog
         self.initUI()
         self.add_viewer_buttons()
@@ -104,18 +106,20 @@ class PdfViewer(BasePdfViewer):
 
 class MattoxPdfViewer(BasePdfViewer):
 
-    def __init__(self, document, entry_widget, dialog, parent=None):
-        super().__init__(document, entry_widget, dialog, parent)
+    def __init__(self, document, entry_widget, widget_list, dialog, parent=None):
+        super().__init__(document, entry_widget, widget_list, dialog, parent)
 
     def add_viewer_buttons(self):
-        self.print_Button = ToolButton('PRINT', 'gray', self.print_entry)
+        self.print_Button = ToolButton('OPEN TO PRINT', 'gray', self.print_entry)
         self.toolBar.addWidget(self.print_Button)
 
-        self.remove_Button = ToolButton('REMOVE', 'green', self.remove_entry)
-        self.toolBar.addWidget(self.remove_Button)
+        self.complete_Button = ToolButton('COMPLETE', 'green', self.complete_entry)
+        self.toolBar.addWidget(self.complete_Button)
 
     def print_entry(self):
-        print('printed')
+        webbrowser.open_new(self.document)
 
-    def remove_entry(self):
-        pass
+    def complete_entry(self):
+        row = self.widget_list.row(self.entry_widget)
+        self.widget_list.takeItem(row)
+        self.close()

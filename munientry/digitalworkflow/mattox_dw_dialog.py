@@ -31,15 +31,17 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
+            widget_list = self.dialog.scram_gps_entries_listWidget
             document = f'{DW_MATTOX}/Scram_GPS/{entry_name}'
         elif len(self.dialog.community_control_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.community_control_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
+            widget_list = self.dialog.community_control_entries_listWidget
             document = f'{DW_MATTOX}/Comm_Control/{entry_name}'
         else:
             message = 'No entry is selected. You must select an entry to open.'
             return RequiredBox(message).exec()
-        self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, self.dialog)
+        self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, widget_list, self.dialog)
 
 
 class MattoxWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
