@@ -1,7 +1,7 @@
 """Builder for Mattox Digital Workflow Dialog."""
 import os
 
-from munientry.digitalworkflow.workflow_tools import PdfViewer
+from munientry.digitalworkflow.workflow_tools import MattoxPdfViewer
 from munientry.builders import base_builders as base
 from munientry.views.mattox_workflow_dialog_ui import Ui_MattoxWorkflowDialog
 from munientry.widgets.message_boxes import RequiredBox
@@ -39,7 +39,7 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         else:
             message = 'No entry is selected. You must select an entry to open.'
             return RequiredBox(message).exec()
-        self.dialog.entry_view = PdfViewer(document, selected_entry_widget, self.dialog)
+        self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, self.dialog)
 
 
 class MattoxWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):

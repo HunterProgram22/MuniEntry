@@ -1,8 +1,9 @@
+"""Module for PDF Viewers and tools used by Viewers."""
 import fitz
 from PyQt6 import QtGui
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtWidgets import QMainWindow, QToolBar, QPushButton
+from PyQt6.QtWidgets import QMainWindow, QToolBar, QToolButton, QHBoxLayout
 from loguru import logger
 from munientry.settings import ICON_PATH, TIMENOW, DW_APPROVED_DIR
 
@@ -24,7 +25,22 @@ def add_approved_stamp(file):
     document.close()
 
 
-class PdfViewer(QMainWindow):
+class ToolButton(QToolButton):
+    """Custom tool button for PDF Viewers."""
+
+    def __init__(self, button_text, button_color, parent=None):
+        super().__init__(parent)
+        self.button_text = button_text
+        self.button_color = button_color
+        self._set_up_button()
+
+    def _set_up_button(self):
+        self.setText(self.button_text)
+        self.setStyleSheet(f'background-color: {self.button_color}; padding: 10px;')
+        self.setFixedSize(150, 50)
+
+
+class BasePdfViewer(QMainWindow):
 
     def __init__(self, document, entry_widget, dialog, parent=None):
         super().__init__(parent)
@@ -32,25 +48,15 @@ class PdfViewer(QMainWindow):
         self.entry_widget = entry_widget
         self.dialog = dialog
         self.initUI()
+        self.add_viewer_buttons()
+        self.show()
 
     def initUI(self):
         self.toolBar = QToolBar(self)
+        self.toolBar.setStyleSheet('spacing: 10px; padding: 10px;')
         self.addToolBar(self.toolBar)
 
-        self.reject_Button = QPushButton(self)
-        self.reject_Button.setText('REJECT')
-        self.reject_Button.setStyleSheet('background-color : red')
-        self.reject_Button.clicked.connect(self.reject_entry)
-        self.toolBar.addWidget(self.reject_Button)
-
-        self.approve_Button = QPushButton(self)
-        self.approve_Button.setText('APPROVE')
-        self.approve_Button.setStyleSheet('background-color : green')
-        self.approve_Button.clicked.connect(self.approve_entry)
-        self.toolBar.addWidget(self.approve_Button)
-
         self.webEngineView = QWebEngineView(self)
-        logger.debug(self.webEngineView.settings())
         settings = self.webEngineView.settings()
         settings.setAttribute(settings.WebAttribute.PluginsEnabled, True)
         settings.setAttribute(settings.WebAttribute.PdfViewerEnabled, True)
@@ -59,9 +65,27 @@ class PdfViewer(QMainWindow):
         self.setGeometry(600, 600, 1000, 800)
         self.setWindowTitle('Digital Workflow Viewer')
         self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
-        self.show()
 
         self.webEngineView.load(QUrl.fromLocalFile(self.document))
+
+
+class PdfViewer(BasePdfViewer):
+
+    def __init__(self, document, entry_widget, dialog, parent=None):
+        super().__init__(document, entry_widget, dialog, parent)
+
+    def add_viewer_buttons(self):
+        self.reject_Button = QToolButton(self)
+        self.reject_Button.setText('REJECT')
+        self.reject_Button.setStyleSheet('background-color : red')
+        self.reject_Button.clicked.connect(self.reject_entry)
+        self.toolBar.addWidget(self.reject_Button)
+
+        self.approve_Button = QToolButton(self)
+        self.approve_Button.setText('APPROVE')
+        self.approve_Button.setStyleSheet('background-color : green')
+        self.approve_Button.clicked.connect(self.approve_entry)
+        self.toolBar.addWidget(self.approve_Button)
 
     def reject_entry(self):
         row = self.dialog.pending_entries_listWidget.row(self.entry_widget)
@@ -74,3 +98,24 @@ class PdfViewer(QMainWindow):
         entry = self.dialog.pending_entries_listWidget.takeItem(row)
         self.dialog.approved_entries_listWidget.addItem(entry)
         self.close()
+
+
+class MattoxPdfViewer(BasePdfViewer):
+
+    def __init__(self, document, entry_widget, dialog, parent=None):
+        super().__init__(document, entry_widget, dialog, parent)
+
+    def add_viewer_buttons(self):
+        self.print_Button = ToolButton('PRINT', 'gray')
+        self.print_Button.clicked.connect(self.print_entry)
+        self.toolBar.addWidget(self.print_Button)
+
+        self.remove_Button = ToolButton('REMOVE', 'green')
+        self.remove_Button.clicked.connect(self.remove_entry)
+        self.toolBar.addWidget(self.remove_Button)
+
+    def print_entry(self):
+        pass
+
+    def remove_entry(self):
+        pass
