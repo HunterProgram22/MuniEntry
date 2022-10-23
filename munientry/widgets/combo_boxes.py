@@ -71,7 +71,7 @@ class NoScrollComboBox(QComboBox):
         self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def wheelEvent(self, event):
-        if event == QtCore.QEvent.Wheel:
+        if event == QtCore.Qt.MouseEventSource.Wheel:
             event.ignore()
 
 

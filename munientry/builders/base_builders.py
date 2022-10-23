@@ -1,30 +1,18 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-from time import sleep, perf_counter
-from threading import Thread
 from os import startfile
 from typing import Any
 
-from docx2pdf import convert
 from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
+from munientry.digitalworkflow.workflow_checker import WorkflowCheck
 from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, \
-    WIDGET_TYPE_ACCESS_DICT, DW_MATTOX
+    WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox
-
-
-def check_for_probation_workflow(case_information, saved_entry, docname):
-    SCRAM_PATH = f'{DW_MATTOX}/Scram_Gps//'
-    pdf_docname = docname[:-4]
-    new_save_path = f'{SCRAM_PATH}{pdf_docname}pdf'
-    if case_information.__class__.__name__ == 'NotGuiltyBondEntryCaseInformation':
-        if case_information.bond_conditions.monitoring is True:
-            convert(saved_entry, f'{SCRAM_PATH}{pdf_docname}pdf')
-            logger.debug('Move to workflow')
 
 
 class BuildMixin(object):
@@ -148,22 +136,9 @@ class BaseDialogSlotFunctions(object):
                 + 'You must close the Word document first.',
             )
             self.dialog.message_box.exec()
-
         saved_entry = f'{self.save_path}{docname}'
-        start_time = perf_counter()
-        # t1 = Thread(target=check_for_probation_workflow(case_information, saved_entry, docname))
-        check_for_probation_workflow(case_information, saved_entry, docname)
-        # t2 = Thread(target=startfile(saved_entry))
-        # t1.start()
-        # t2.start()
-        # sleep(2)
-        # t1.start()
-        # t1.join()
-        # t2.join()
         startfile(saved_entry)
-        end_time = perf_counter()
-        logger.debug(f'It took {end_time - start_time: 0.2f} second(s) to complete')
-
+        return WorkflowCheck(case_information, saved_entry, docname)
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
