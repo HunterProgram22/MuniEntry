@@ -46,10 +46,10 @@ class NoScrollDateEdit(QDateEdit):
         self.setFocusPolicy(STRONG_FOCUS)
         self.setDate(TODAY)
 
-    def get_date(self) -> str:
+    def get_date_as_string(self) -> str:
         return self.date().toString(DATE_FORMAT)
 
-    def set_date(self, date_str: str) -> QDate:
+    def set_date_from_string(self, date_str: str) -> QDate:
         if date_str is None:
             date_str = TODAY_STRING
         date_str = QDate.fromString(date_str, DATE_FORMAT)
@@ -67,10 +67,10 @@ class NoScrollTimeEdit(QTimeEdit):
         super().__init__(parent)
         self.setFocusPolicy(STRONG_FOCUS)
 
-    def get_time(self) -> str:
+    def get_time_as_string(self) -> str:
         return self.time().toString(TIME_FORMAT)
 
-    def set_time(self, time_str: str) -> QTime:
+    def set_time_from_string(self, time_str: str) -> QTime:
         if time_str is None:
             time_str = DEFAULT_TIME_STRING
         time_str = QTime.fromString(time_str, TIME_FORMAT)

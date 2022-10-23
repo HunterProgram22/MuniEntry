@@ -220,8 +220,8 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         ]
         suspension_type = [button for button in radio_buttons if button.isChecked()]
         self.model.suspension_type = suspension_type[0].text()
-        self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()
-        self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
+        self.model.suspension_start_date = self.dialog.suspension_start_date.get_date_as_string()
+        self.model.suspension_end_date = self.dialog.suspension_end_date.get_date_as_string()
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
 

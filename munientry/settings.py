@@ -99,6 +99,7 @@ EXCEL_DAILY_CASE_LISTS = [
 ]
 
 # Dictionary that provides name of method to access the data in the widget.
+# TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
 WIDGET_TYPE_ACCESS_DICT = {
     'NoScrollComboBox': 'currentText',
     'ConditionCheckbox': 'isChecked',
@@ -106,11 +107,12 @@ WIDGET_TYPE_ACCESS_DICT = {
     'QRadioButton': 'isChecked',
     'QLineEdit': 'text',
     'QTextEdit': 'toPlainText',
-    'NoScrollDateEdit': 'get_date',
-    'NoScrollTimeEdit': 'get_time',
+    'NoScrollDateEdit': 'get_date_as_string',
+    'NoScrollTimeEdit': 'get_time_as_string',
 }
 
 # Dictionary that provides the name of the method to set the data in the widget.
+# TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
 WIDGET_TYPE_SET_DICT = {
     'NoScrollComboBox': 'setCurrentText',
     'QCheckBox': 'setChecked',
@@ -118,8 +120,8 @@ WIDGET_TYPE_SET_DICT = {
     'QRadioButton': 'setChecked',
     'QLineEdit': 'setText',
     'QTextEdit': 'setPlainText',
-    'NoScrollDateEdit': 'set_date',
-    'NoScrollTimeEdit': 'set_time',
+    'NoScrollDateEdit': 'set_date_from_string',
+    'NoScrollTimeEdit': 'set_time_from_string',
 }
 
 
