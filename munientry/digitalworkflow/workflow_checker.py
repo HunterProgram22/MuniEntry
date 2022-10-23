@@ -42,6 +42,9 @@ class WorkflowCheck(object):
         The enum for wdFormatPDF for FileFormat is 17 to convert to PDF.
 
         https://learn.microsoft.com/en-us/office/vba/api/word.wdsaveformat?source=recommendations
+
+        TODO: There is an issue of a document locking because the Word Doc is not closed.
+        TODO: NOT PRODUCTION READY!
         """
         no_type_docname = self.docname[:-5]
         pdf_docname = f'{path}{no_type_docname}.pdf'

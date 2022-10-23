@@ -6,25 +6,20 @@ when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui
 module will be imported as part of the python_view_file.py.
 """
 from loguru import logger
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QComboBox, QMenu, QWidget
+from PyQt6.QtWidgets import QComboBox, QMenu
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_lite_functions import query_attorney_list
-
-CASE_LIST_BOX_MIN_WIDTH = 0
-CASE_LIST_BOX_MIN_HEIGHT = 40
-CASE_LIST_BOX_MIN_SIZE = QSize(CASE_LIST_BOX_MIN_WIDTH, CASE_LIST_BOX_MIN_HEIGHT)
-CONTEXT_MENU_POLICY = Qt.ContextMenuPolicy.CustomContextMenu
-COMBO_BOX_MIN_HEIGHT = 0
-COMBO_BOX_MAX_HEIGHT = 50
-COMBO_BOX_WIDTH = 200
-COMBO_BOX_MIN_SIZE = QSize(COMBO_BOX_WIDTH, COMBO_BOX_MIN_HEIGHT)
-COMBO_BOX_MAX_SIZE = QSize(COMBO_BOX_WIDTH, COMBO_BOX_MAX_HEIGHT)
-STRONG_FOCUS = Qt.FocusPolicy.StrongFocus
-EVENT_KEY_DELETE = Qt.Key.Key_Delete
-EVENT_WHEEL_EVENT = QWidget.wheelEvent
-WHITE_BACKGROUND_STYLE_SHEET = 'background-color: rgb(255, 255, 255);'
+from munientry.widgets.widget_settings import (
+    CASE_LIST_BOX_MIN_SIZE,
+    COMBO_BOX_MAX_SIZE,
+    COMBO_BOX_MIN_SIZE,
+    CONTEXT_MENU_POLICY,
+    EVENT_KEY_DELETE,
+    EVENT_WHEEL_EVENT,
+    STRONG_FOCUS,
+    WHITE_BACKGROUND_STYLE_SHEET,
+)
 
 
 class DailyCaseListComboBox(QComboBox):
