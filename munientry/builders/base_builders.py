@@ -138,7 +138,7 @@ class BaseDialogSlotFunctions(object):
             self.dialog.message_box.exec()
         saved_entry = f'{self.save_path}{docname}'
         startfile(saved_entry)
-        return WorkflowCheck(case_information, saved_entry, docname)
+        # return WorkflowCheck(case_information, saved_entry, docname)
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
