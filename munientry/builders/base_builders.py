@@ -136,8 +136,7 @@ class BaseDialogSlotFunctions(object):
                 + 'You must close the Word document first.',
             )
             self.dialog.message_box.exec()
-        saved_entry = f'{self.save_path}{docname}'
-        startfile(saved_entry)
+        startfile(f'{self.save_path}{docname}')
         # return WorkflowCheck(case_information, saved_entry, docname)
 
     def create_entry_process(self) -> None:
