@@ -29,8 +29,9 @@ class ReportWindow(QWidget):
         self.resize(1000, 800)
 
     def handlePrint(self):
-        dialog = QtPrintSupport.QPrintDialog()
-        if dialog.exec_() == QDialog.Accepted:
+        printer = QtPrintSupport.QPrinter()
+        dialog = QtPrintSupport.QPrintDialog(printer)
+        if dialog.exec() == 1:
             self.handlePaintRequest(dialog.printer())
 
     def handlePreview(self):
@@ -38,7 +39,7 @@ class ReportWindow(QWidget):
         dialog.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         dialog.resize(1000, 800)
         dialog.paintRequested.connect(self.handlePaintRequest)
-        dialog.exec_()
+        dialog.exec()
 
     def handlePaintRequest(self, printer):
         document = QtGui.QTextDocument()
@@ -59,7 +60,7 @@ class ReportWindow(QWidget):
                 for col in range(table.columns()):
                     cursor.insertText(self.table.item(row, col).text())
                     cursor.movePosition(QtGui.QTextCursor.NextCell)
-        document.print_(printer)
+        document.print(printer)
 
 
 class ReportTable(QTableWidget):
@@ -72,11 +73,11 @@ class ReportTable(QTableWidget):
     def set_up_widget(self):
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
         self.setWindowTitle(self.title)
-        self.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         header = self.horizontalHeader()
         header.setStretchLastSection(True)
-        header.setSectionResizeMode(QHeaderView.ResizeToContents)
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         self.setSortingEnabled(False)
         self.setAlternatingRowColors(True)
         self.resize(1000, 800)

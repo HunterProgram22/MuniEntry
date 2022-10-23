@@ -1,6 +1,5 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-
 from os import startfile
 from typing import Any
 
@@ -10,7 +9,9 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
-from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
+from munientry.digitalworkflow.workflow_checker import WorkflowCheck
+from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, \
+    WIDGET_TYPE_ACCESS_DICT
 from munientry.widgets.message_boxes import RequiredBox
 
 
@@ -121,6 +122,7 @@ class BaseDialogSlotFunctions(object):
         """
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
+        case_information = self.dialog.entry_case_information
         case_data = self.dialog.entry_case_information.get_case_information()
         doc.render(case_data)
         docname = self.set_document_name()
@@ -134,7 +136,9 @@ class BaseDialogSlotFunctions(object):
                 + 'You must close the Word document first.',
             )
             self.dialog.message_box.exec()
-        startfile(f'{self.save_path}{docname}')
+        saved_entry = f'{self.save_path}{docname}'
+        startfile(saved_entry)
+        return WorkflowCheck(case_information, saved_entry, docname)
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""

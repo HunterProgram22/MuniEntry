@@ -7,7 +7,7 @@ module will be imported as part of the python_view_file.py.
 """
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QComboBox, QMenu
+from PyQt6.QtWidgets import QComboBox, QMenu, QWidget
 from loguru import logger
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.sql_lite_functions import query_attorney_list
@@ -71,7 +71,7 @@ class NoScrollComboBox(QComboBox):
         self.setFocusPolicy(QtCore.Qt.FocusPolicy.StrongFocus)
 
     def wheelEvent(self, event):
-        if event == QtCore.QEvent.Wheel:
+        if event == QWidget.wheelEvent:
             event.ignore()
 
 

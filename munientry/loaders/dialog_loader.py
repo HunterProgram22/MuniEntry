@@ -51,7 +51,7 @@ def check_for_companion_cases(daily_case_list: DailyCaseListComboBox) -> CmsCase
     case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
-        if response == QMessageBox.Yes:
+        if response == QMessageBox.StandardButton.Yes:
             return load_multiple_cases(matched_cases_list)
     return load_single_case(case_number)
 
