@@ -4,7 +4,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
-from munientry.controllers.helper_functions import set_future_date
+from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,

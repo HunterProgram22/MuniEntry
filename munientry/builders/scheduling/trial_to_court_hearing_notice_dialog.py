@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
+from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import TODAY, TYPE_CHECKING

@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
 
-from munientry.controllers.helper_functions import set_random_judge
+from munientry.helper_functions import set_random_judge
 from munientry.data import sql_lite_functions as sql_lite
 from munientry.data import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
