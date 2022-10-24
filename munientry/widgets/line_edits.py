@@ -18,8 +18,16 @@ from munientry.widgets.widget_settings import (
 
 OAC_CODE_STRING = 'https://codes.ohio.gov/ohio-administrative-code/rule-'
 ORC_CODE_STRING = 'https://codes.ohio.gov/ohio-revised-code/section-'
-MUNI_CODE_STRING = r'https://library.municode.com/oh\\'
+MUNI_CODE_STRING = 'https://library.municode.com/oh'
 GOOGLE_STRING = 'https://www.google.com/'
+
+URL_PATTERN = {
+    'admin_code_one': r'\d\d\d\d.\d\d-\d-\d\d',
+    'admin_code_two': r'\d\d\d\d\.\d\d-\d\d-\d\d',
+    'revised_code_seven': r'\d\d\d\d.\d\d\d',
+    'revised_code_six': r'\d\d\d\d.\d\d',
+    'muni_code_five': r'\d\d\d.\d\d',
+}
 
 
 def set_url_link(statute: str) -> str:
@@ -27,37 +35,36 @@ def set_url_link(statute: str) -> str:
 
     Returns a hyperlink to www.google.com if no match found.
     """
-    admin_code = r'\d\d\d\d.\d\d-\d-\d\d'
-    url_statute = re.search(admin_code, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        url_statute = url_statute.replace('.', ':')
-        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
-    admin_code_two = r'\d\d\d\d.\d\d-\d\d-\d\d'
-    url_statute = re.search(admin_code_two, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        url_statute = url_statute.replace('.', ':')
-        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
+    url_statute, pattern = get_url_pattern(statute)
+    match pattern:
+        case r'\d\d\d\d.\d\d-\d-\d\d':  # Ohio Administrative Code
+            url_statute = url_statute.replace('.', ':')
+            html_attr = f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
+        case r'\d\d\d\d.\d\d-\d\d-\d\d':  # Ohio Administrative Code
+            url_statute = url_statute.replace('.', ':')
+            html_attr = f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
+        case r'\d\d\d\d.\d\d\d':  # Ohio Revised Code
+            html_attr = f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
+        case r'\d\d\d\d.\d\d':  # Ohio Revised Code
+            html_attr = f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
+        case r'\d\d\d.\d\d':  # Ohio Muni Code
+            html_attr = f'<a href="{MUNI_CODE_STRING}">{statute}</a>'
+        case _:  # No Match
+            html_attr = f'<a href="{GOOGLE_STRING}">{statute}</a>'
+    return html_attr
 
-    seven_digit_stat = r'\d\d\d\d.\d\d\d'
-    url_statute = re.search(seven_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
-    six_digit_stat = r'\d\d\d\d.\d\d'
-    url_statute = re.search(six_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
 
-    five_digit_stat = r'\d\d\d.\d\d'
-    url_statute = re.search(five_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{MUNI_CODE_STRING}">{statute}</a>'
+def get_url_pattern(statute: str) -> tuple:
+    """Uses regex to check for a pattern match in a provided statute.
 
-    return f'<a href="{GOOGLE_STRING}">{statute}</a>'
+    Returns a tuple with the match and the pattern, unless no match is found, then returns
+    a tuple with 'None' strings.
+    """
+    for pattern in URL_PATTERN.values():
+        url_statute = re.search(pattern, statute)
+        if url_statute is not None:
+            return (url_statute.group(), pattern)
+    return ('None', 'None')
 
 
 class StatuteLineEdit(QLabel):
