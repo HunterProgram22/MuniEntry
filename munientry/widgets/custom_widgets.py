@@ -37,6 +37,49 @@ LABEL_HEIGH_MIN = 0
 LABEL_MIN_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGH_MIN)
 LABEL_MAX_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGHT_MAX)
 
+OAC_CODE_STRING = 'https://codes.ohio.gov/ohio-administrative-code/rule-'
+ORC_CODE_STRING = 'https://codes.ohio.gov/ohio-revised-code/section-'
+MUNI_CODE_STRING = r'https://library.municode.com/oh\\'
+GOOGLE_STRING = 'https://www.google.com/'
+
+
+def set_url_link(statute: str) -> str:
+    """Matches pattern of statute and sets appropriate URL for hyperlink.
+
+    Returns a hyperlink to www.google.com if no match found.
+    """
+    admin_code = r'\d\d\d\d.\d\d-\d-\d\d'
+    url_statute = re.search(admin_code, statute)
+    if url_statute is not None:
+        url_statute = url_statute.group()
+        url_statute = url_statute.replace('.', ':')
+        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
+    admin_code_two = r'\d\d\d\d.\d\d-\d\d-\d\d'
+    url_statute = re.search(admin_code_two, statute)
+    if url_statute is not None:
+        url_statute = url_statute.group()
+        url_statute = url_statute.replace('.', ':')
+        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
+
+    seven_digit_stat = r'\d\d\d\d.\d\d\d'
+    url_statute = re.search(seven_digit_stat, statute)
+    if url_statute is not None:
+        url_statute = url_statute.group()
+        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
+    six_digit_stat = r'\d\d\d\d.\d\d'
+    url_statute = re.search(six_digit_stat, statute)
+    if url_statute is not None:
+        url_statute = url_statute.group()
+        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
+
+    five_digit_stat = r'\d\d\d.\d\d'
+    url_statute = re.search(five_digit_stat, statute)
+    if url_statute is not None:
+        url_statute = url_statute.group()
+        return f'<a href="{MUNI_CODE_STRING}">{statute}</a>'
+
+    return f'<a href="{GOOGLE_STRING}">{statute}</a>'
+
 
 class NoScrollDateEdit(QDateEdit):
     """Custom DateEdit used to ignore wheel scroll from the mouse."""
@@ -84,16 +127,19 @@ class NoScrollTimeEdit(QTimeEdit):
 class StatuteLineEdit(QLabel):
     """Custom QLabel widget to allow for setting hyperlinks for statutes."""
 
-    def __init__(self, statute: str=None, parent=None):
+    def __init__(self, statute: str = None, parent=None):
         super().__init__(parent)
-        self.setStyleSheet('font: bold "Palatino Linotype";'
-                           'font-size: 10pt')
+        self.setStyleSheet(
+            'font: bold "Palatino Linotype"; font-size: 10pt',
+        )
         self.set_up_widget(statute)
         self.statute = statute
 
     def get_text(self) -> str:
-        """This method exists to return the string of the statute that is used in the entry
-        as opposed to the text that is displayed which is a hyperlink."""
+        """Returns the string of the statute that is used in the entry.
+
+        This is used to provide the text as a string in lieu of the displayed hyperlink.
+        """
         return self.statute
 
     def set_up_widget(self, statute: str):
@@ -101,39 +147,9 @@ class StatuteLineEdit(QLabel):
         self.setMinimumSize(LABEL_MIN_SIZE)
         self.setMaximumSize(LABEL_MAX_SIZE)
         self.setObjectName('statute_lineEdit')
-        url_link = self.set_url_link(self.statute)
+        url_link = set_url_link(self.statute)
         self.setText(url_link)
         self.setOpenExternalLinks(True)
-
-    def set_url_link(self, statute: str) -> str:
-        admin_code = r'\d\d\d\d.\d\d-\d-\d\d'
-        url_statute = re.search(admin_code, statute)
-        if url_statute is not None:
-            url_statute = url_statute.group()
-            url_statute = url_statute.replace('.', ':')
-            return fr'<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>'
-        admin_code_two = r'\d\d\d\d.\d\d-\d\d-\d\d'
-        url_statute = re.search(admin_code_two, statute)
-        if url_statute is not None:
-            url_statute = url_statute.group()
-            url_statute = url_statute.replace('.', ':')
-            return fr'<a href=\'https://codes.ohio.gov/ohio-administrative-code/rule-{url_statute}\'>{statute}</a>'
-        seven_digit_stat = r'\d\d\d\d.\d\d\d'
-        url_statute = re.search(seven_digit_stat, statute)
-        if url_statute is not None:
-            url_statute = url_statute.group()
-            return fr'<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>'
-        six_digit_stat = r'\d\d\d\d.\d\d'
-        url_statute = re.search(six_digit_stat, statute)
-        if url_statute is not None:
-            url_statute = url_statute.group()
-            return fr'<a href=\'https://codes.ohio.gov/ohio-revised-code/section-{url_statute}\'>{statute}</a>'
-        five_digit_stat = r'\d\d\d.\d\d'
-        url_statute = re.search(five_digit_stat, statute)
-        if url_statute is not None:
-            url_statute = url_statute.group()
-            return fr'<a href=\'https://library.municode.com/oh\'>{statute}</a>'
-        return fr'<a href=\'https://www.google.com/\'>{statute}</a>'
 
 
 class ChargeGridDeleteButton(QPushButton):
@@ -155,9 +171,7 @@ class ChargeGridDeleteButton(QPushButton):
 
     def delete_charge_from_grid_and_charges_list(self):
         """Uses the delete_button indexed to the column to delete the QLabels for the charge."""
-        logger.info(
-            f'Deleted Charge: {self.charge.offense}, {self.charge.statute}, col={self.column_index}'
-        )
+        logger.info(f'Deleted Charge: {self.charge}, col={self.column_index}')
         self.dialog.entry_case_information.charges_list.remove(self.charge)
         for row in range(self.dialog.charges_gridLayout.rowCount()):
             layout_item = self.dialog.charges_gridLayout.itemAtPosition(row, self.column_index)
@@ -195,7 +209,9 @@ class ConditionCheckbox(QCheckBox):
         self.toggled.connect(self.log_toggle)
 
     def log_toggle(self):
-        logger.button(f'{self.sender().text()} Checkbox Set: {self.sender().isChecked()}')
+        checkbox_text = self.sender().text()
+        checkbox_bool = self.sender().isChecked()
+        logger.button(f'{checkbox_text} Checkbox Set: {checkbox_bool}')
 
 
 class AlliedCheckbox(QCheckBox):
@@ -216,24 +232,23 @@ class AlliedCheckbox(QCheckBox):
     def set_to_allied(self):
         logger.button(f'Allied Checkbox Set: {self.isChecked()}')
         grid = self.dialog.charges_gridLayout
+        finding_box = grid.itemAtPosition(grid.row_finding, self.column_index).widget()
         if self.isChecked():
             try:
-                if grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == 'Guilty':
-                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText('Guilty - Allied Offense')
-                elif grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == 'Not Guilty':
-                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText('Not Guilty - Allied Offense')
+                if finding_box.currentText() == 'Guilty':
+                    finding_box.setCurrentText('Guilty - Allied Offense')
+                elif finding_box.currentText() == 'Not Guilty':
+                    finding_box.setCurrentText('Not Guilty - Allied Offense')
             except AttributeError as error:
                 logger.warning(error)
         else:
             try:
-                if grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == 'Guilty - Allied Offense':
-                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText(
-                        'Guilty')
-                elif grid.itemAtPosition(grid.row_finding, self.column_index).widget().currentText() == 'Not Guilty - Allied Offense':
-                    grid.itemAtPosition(grid.row_finding, self.column_index).widget().setCurrentText(
-                        'Not Guilty')
-            except AttributeError(error_1):
-                logger.warning(error_1)
+                if finding_box.currentText() == 'Guilty - Allied Offense':
+                    finding_box.setCurrentText('Guilty')
+                elif finding_box.currentText() == 'Not Guilty - Allied Offense':
+                    finding_box.setCurrentText('Not Guilty')
+            except AttributeError as error_two:
+                logger.warning(error_two)
 
 
 class DismissedCheckbox(QCheckBox):
@@ -252,43 +267,46 @@ class DismissedCheckbox(QCheckBox):
         self.toggled.connect(self.set_to_dismissed)
 
     def set_to_dismissed(self):
-        """TODO: the try except block is to account for the Leap Dialogs and NoJail not having same # rows. Fix."""
+        """TODO: the try except block is bc Leap Dialogs and NoJail not having same # rows. Fix."""
         logger.button(f'Dismissed Checkbox Set: {self.isChecked()}')
         grid = self.dialog.charges_gridLayout
+        col = self.column_index
         if self.isChecked():
             try:
-                grid.itemAtPosition(grid.row_plea, self.column_index).widget().setCurrentText('Dismissed')
+                grid.itemAtPosition(grid.row_plea, col).widget().setCurrentText('Dismissed')
             except AttributeError as error:
                 logger.warning(error)
             try:
-                grid.itemAtPosition(grid.row_finding, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_fine, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_fine_suspended, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_jail_days, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_jail_days_suspended, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_amend_button, self.column_index).widget().setHidden(True)
-                grid.itemAtPosition(grid.row_delete_button, self.column_index).widget().setHidden(True)
-            except AttributeError as error_1:
-                logger.warning(error_1)
+                grid.itemAtPosition(grid.row_finding, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_fine, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_fine_suspended, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_jail_days, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_jail_days_suspended, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_amend_button, col).widget().setHidden(True)
+                grid.itemAtPosition(grid.row_delete_button, col).widget().setHidden(True)
+            except AttributeError as error_one:
+                logger.warning(error_one)
         else:
             try:
-                grid.itemAtPosition(grid.row_plea, self.column_index).widget().setCurrentText('')
-            except AttributeError as error_2:
-                logger.warning(error_2)
+                grid.itemAtPosition(grid.row_plea, col).widget().setCurrentText('')
+            except AttributeError as error_two:
+                logger.warning(error_two)
             try:
-                grid.itemAtPosition(grid.row_finding, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_fine, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_fine_suspended, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_jail_days, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_jail_days_suspended, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_amend_button, self.column_index).widget().setHidden(False)
-                grid.itemAtPosition(grid.row_delete_button, self.column_index).widget().setHidden(False)
-            except AttributeError as error_3:
-                logger.warning(error_3)
+                grid.itemAtPosition(grid.row_finding, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_fine, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_fine_suspended, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_jail_days, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_jail_days_suspended, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_amend_button, col).widget().setHidden(False)
+                grid.itemAtPosition(grid.row_delete_button, col).widget().setHidden(False)
+            except AttributeError as error_three:
+                logger.warning(error_three)
 
 
 # DataValidator Widgets
 class IntegerValidator(QLineEdit):
+    """Custom LineEdit class for adding a integer validator."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.validator = QIntValidator(0, 1000, self)
@@ -296,6 +314,8 @@ class IntegerValidator(QLineEdit):
 
 
 class ChargeGridIntegerWidget(IntegerValidator):
+    """Base Custom Class for common Charge Grid Line Edit fields."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.set_up_widget()
@@ -307,6 +327,8 @@ class ChargeGridIntegerWidget(IntegerValidator):
 
 
 class FineLineEdit(ChargeGridIntegerWidget):
+    """Custom LineEdit for Fines."""
+
     def __init__(self, offense=None, parent=None):
         super().__init__(parent)
         self.setObjectName('fines_amount')
@@ -324,32 +346,36 @@ class FineLineEdit(ChargeGridIntegerWidget):
 
 
 class FineSuspendedLineEdit(ChargeGridIntegerWidget):
+    """Custom LineEdit for Fines Suspended."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName('fines_suspended')
 
 
 class JailLineEdit(ChargeGridIntegerWidget):
+    """Custom LineEdit for Jail Days."""
+
     def __init__(self, offense=None, parent=None):
         super().__init__(parent)
         self.setObjectName('jail_days')
 
 
 class JailSuspendedLineEdit(ChargeGridIntegerWidget):
+    """Custom LineEdit for Jail Days Suspended."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName('jail_days_suspended')
 
 
 class JailTimeCreditLineEdit(ChargeGridIntegerWidget):
+    """Custom LineEdit for Jail Credit."""
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName('jail_time_credit_box')
 
 
-def main():
-    pass
-
 if __name__ == '__main__':
-   # stuff only to run when not called via 'import' here
-   main()
+    logger.log('IMPORT', f'{__name__} run directly.')
