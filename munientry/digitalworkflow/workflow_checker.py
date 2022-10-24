@@ -21,20 +21,22 @@ class WorkflowCheck(object):
         'TrialSentencingEntryCaseInformation',
     ]
 
-    def __init__(self, case_information, saved_entry, docname):
+    def __init__(self, case_information):
         self.case_information = case_information
-        self.saved_entry = saved_entry
-        logger.debug(self.saved_entry)
-        self.docname = docname
-        self.check_for_probation_workflow()
+        # self.saved_entry = saved_entry
+        # logger.debug(self.saved_entry)
+        # self.docname = docname
+        # self.check_for_probation_workflow()
 
-    def check_for_probation_workflow(self):
+    def check_for_probation_workflow(self) -> (bool, str):
         if self.case_information.__class__.__name__ in self.scram_gps_entries:
             if self.case_information.bond_conditions.monitoring is True:
-                self.move_to_probation_workflow(SCRAM_PATH)
+                return (True, SCRAM_PATH)
+                # self.move_to_probation_workflow(SCRAM_PATH)
         if self.case_information.__class__.__name__ in self.comm_control_entries:
             if self.case_information.community_control.ordered is True:
-                self.move_to_probation_workflow(COMM_CONTROL_PATH)
+                return (True, COMM_CONTROL_PATH)
+                # self.move_to_probation_workflow(COMM_CONTROL_PATH)
 
     def move_to_probation_workflow(self, path):
         """The conversion from Word to PDF is done using win32com.

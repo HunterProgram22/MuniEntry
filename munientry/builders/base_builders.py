@@ -1,6 +1,7 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-from os import startfile
+import win32com.client
+from os import startfile, remove
 from typing import Any
 
 from docxtpl import DocxTemplate
@@ -137,7 +138,18 @@ class BaseDialogSlotFunctions(object):
             )
             self.dialog.message_box.exec()
         startfile(f'{self.save_path}{docname}')
-        # return WorkflowCheck(case_information, saved_entry, docname)
+
+        if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
+            logger.debug('Go to workflow')
+            workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
+            doc.save(f'{workflow_path}{docname}')
+            no_type_docname = docname[:-5]
+            pdf_docname = f'{workflow_path}{no_type_docname}.pdf'
+            word_app = win32com.client.Dispatch('Word.Application')
+            word_doc = word_app.Documents.Open(f'{workflow_path}{docname}')
+            word_doc.SaveAs(pdf_docname, FileFormat=17)
+            word_doc.Close(0)
+            remove(f'{workflow_path}{docname}')
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
