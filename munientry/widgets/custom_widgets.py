@@ -5,80 +5,20 @@ widgets that is used. The header file for this module must then be added in QtDe
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
 """
-import re
-
 from loguru import logger
-from PyQt6.QtCore import QDate, QSize, QTime
-from PyQt6.QtGui import QIntValidator
-from PyQt6.QtWidgets import (
-    QCheckBox,
-    QDateEdit,
-    QLabel,
-    QLineEdit,
-    QPushButton,
-    QTimeEdit,
-)
+from PyQt6.QtCore import QDate, QTime
+from PyQt6.QtWidgets import QCheckBox, QDateEdit, QPushButton, QTimeEdit
 
 from munientry.widgets.widget_settings import (
+    DATE_FORMAT,
+    DEFAULT_TIME_STRING,
     EVENT_WHEEL_EVENT,
     NO_FOCUS,
     STRONG_FOCUS,
-    WHITE_BACKGROUND_STYLE_SHEET,
+    TIME_FORMAT,
+    TODAY,
+    TODAY_STRING,
 )
-
-DATE_FORMAT = 'MMMM dd, yyyy'
-TIME_FORMAT = 'hh:mm A'
-TODAY = QDate.currentDate()
-TODAY_STRING = TODAY.toString(DATE_FORMAT)
-DEFAULT_TIME_STRING = '08:30 AM'
-LABEL_WIDTH = 200
-LABEL_HEIGHT_MAX = 50
-LABEL_HEIGH_MIN = 0
-LABEL_MIN_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGH_MIN)
-LABEL_MAX_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGHT_MAX)
-
-OAC_CODE_STRING = 'https://codes.ohio.gov/ohio-administrative-code/rule-'
-ORC_CODE_STRING = 'https://codes.ohio.gov/ohio-revised-code/section-'
-MUNI_CODE_STRING = r'https://library.municode.com/oh\\'
-GOOGLE_STRING = 'https://www.google.com/'
-
-
-def set_url_link(statute: str) -> str:
-    """Matches pattern of statute and sets appropriate URL for hyperlink.
-
-    Returns a hyperlink to www.google.com if no match found.
-    """
-    admin_code = r'\d\d\d\d.\d\d-\d-\d\d'
-    url_statute = re.search(admin_code, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        url_statute = url_statute.replace('.', ':')
-        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
-    admin_code_two = r'\d\d\d\d.\d\d-\d\d-\d\d'
-    url_statute = re.search(admin_code_two, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        url_statute = url_statute.replace('.', ':')
-        return f'<a href="{OAC_CODE_STRING}{url_statute}">{statute}</a>'
-
-    seven_digit_stat = r'\d\d\d\d.\d\d\d'
-    url_statute = re.search(seven_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
-    six_digit_stat = r'\d\d\d\d.\d\d'
-    url_statute = re.search(six_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{ORC_CODE_STRING}{url_statute}">{statute}</a>'
-
-    five_digit_stat = r'\d\d\d.\d\d'
-    url_statute = re.search(five_digit_stat, statute)
-    if url_statute is not None:
-        url_statute = url_statute.group()
-        return f'<a href="{MUNI_CODE_STRING}">{statute}</a>'
-
-    return f'<a href="{GOOGLE_STRING}">{statute}</a>'
 
 
 class NoScrollDateEdit(QDateEdit):
@@ -122,34 +62,6 @@ class NoScrollTimeEdit(QTimeEdit):
     def wheelEvent(self, event):
         if event == EVENT_WHEEL_EVENT:
             event.ignore()
-
-
-class StatuteLineEdit(QLabel):
-    """Custom QLabel widget to allow for setting hyperlinks for statutes."""
-
-    def __init__(self, statute: str = None, parent=None):
-        super().__init__(parent)
-        self.setStyleSheet(
-            'font: bold "Palatino Linotype"; font-size: 10pt',
-        )
-        self.set_up_widget(statute)
-        self.statute = statute
-
-    def get_text(self) -> str:
-        """Returns the string of the statute that is used in the entry.
-
-        This is used to provide the text as a string in lieu of the displayed hyperlink.
-        """
-        return self.statute
-
-    def set_up_widget(self, statute: str):
-        self.statute = statute
-        self.setMinimumSize(LABEL_MIN_SIZE)
-        self.setMaximumSize(LABEL_MAX_SIZE)
-        self.setObjectName('statute_lineEdit')
-        url_link = set_url_link(self.statute)
-        self.setText(url_link)
-        self.setOpenExternalLinks(True)
 
 
 class ChargeGridDeleteButton(QPushButton):
@@ -304,77 +216,6 @@ class DismissedCheckbox(QCheckBox):
 
 
 # DataValidator Widgets
-class IntegerValidator(QLineEdit):
-    """Custom LineEdit class for adding a integer validator."""
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.validator = QIntValidator(0, 1000, self)
-        self.setValidator(self.validator)
-
-
-class ChargeGridIntegerWidget(IntegerValidator):
-    """Base Custom Class for common Charge Grid Line Edit fields."""
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.set_up_widget()
-
-    def set_up_widget(self):
-        self.setMinimumSize(LABEL_MIN_SIZE)
-        self.setMaximumSize(LABEL_MAX_SIZE)
-        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
-
-
-class FineLineEdit(ChargeGridIntegerWidget):
-    """Custom LineEdit for Fines."""
-
-    def __init__(self, offense=None, parent=None):
-        super().__init__(parent)
-        self.setObjectName('fines_amount')
-        self.set_fine_amount(offense)
-
-    def set_fine_amount(self, offense):
-        if offense == 'Seatbelt - Driver':
-            self.setText('30')
-        elif offense == 'Seatbelt - Passenger':
-            self.setText('20')
-        elif offense == 'Failure to Stop for School Bus':
-            self.setText('500')
-        else:
-            self.setText('')
-
-
-class FineSuspendedLineEdit(ChargeGridIntegerWidget):
-    """Custom LineEdit for Fines Suspended."""
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName('fines_suspended')
-
-
-class JailLineEdit(ChargeGridIntegerWidget):
-    """Custom LineEdit for Jail Days."""
-
-    def __init__(self, offense=None, parent=None):
-        super().__init__(parent)
-        self.setObjectName('jail_days')
-
-
-class JailSuspendedLineEdit(ChargeGridIntegerWidget):
-    """Custom LineEdit for Jail Days Suspended."""
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName('jail_days_suspended')
-
-
-class JailTimeCreditLineEdit(ChargeGridIntegerWidget):
-    """Custom LineEdit for Jail Credit."""
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setObjectName('jail_time_credit_box')
 
 
 if __name__ == '__main__':

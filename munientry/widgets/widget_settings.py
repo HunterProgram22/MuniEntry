@@ -1,4 +1,4 @@
-from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import Qt, QSize, QDate
 from PyQt6.QtWidgets import QWidget
 
 NO_FOCUS = Qt.FocusPolicy.NoFocus
@@ -15,3 +15,13 @@ COMBO_BOX_MAX_SIZE = QSize(COMBO_BOX_WIDTH, COMBO_BOX_MAX_HEIGHT)
 EVENT_KEY_DELETE = Qt.Key.Key_Delete
 EVENT_WHEEL_EVENT = QWidget.wheelEvent
 WHITE_BACKGROUND_STYLE_SHEET = 'background-color: rgb(255, 255, 255);'
+DATE_FORMAT = 'MMMM dd, yyyy'
+TIME_FORMAT = 'hh:mm A'
+TODAY = QDate.currentDate()
+TODAY_STRING = TODAY.toString(DATE_FORMAT)
+DEFAULT_TIME_STRING = '08:30 AM'
+LABEL_WIDTH = 200
+LABEL_HEIGHT_MAX = 50
+LABEL_HEIGH_MIN = 0
+LABEL_MIN_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGH_MIN)
+LABEL_MAX_SIZE = QSize(LABEL_WIDTH, LABEL_HEIGHT_MAX)
