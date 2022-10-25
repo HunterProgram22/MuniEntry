@@ -134,7 +134,11 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
             self.workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
 
     def create_workflow_pdf(self):
-        logger.debug('Go to workflow')
+        """Creates a PDF version of the DOCX draft copy version of the entry.
+
+        The draft copy is removed after the PDF is created.
+        """
+        logger.info(f'Created PDF for {self.workflow_docname}')
         no_type_docname = self.workflow_docname[:-5]
         pdf_docname = f'{self.workflow_path}{no_type_docname}.pdf'
         word_app = Dispatch('Word.Application')
@@ -145,6 +149,16 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         remove(f'{self.save_path}{self.workflow_docname}')
 
     def create_workflow_entry_process(self):
+        """If called uses multiprocessing to open Word doc for user and create PDF for workflow.
+
+        Multiprocessing is used to speed up opening of Word doc because otherwise there is a 2 to 4
+        second delay in opening the entry.
+
+        ISSUE: Because the create_workflow_pdf needs to Open Word to create the PDF, this can
+        cause an issue where Windows blocks the entry saving as a PDF/DOCX because it uses a temp
+        file. Need to add Users AppData folders to a TrustedSource in Word (probably Local and
+        Roaming - to account for users using Courtroom PC's with their credentials).
+        """
         self.workflow_doc.render(self.case_data)
         self.workflow_docname = f'DRAFT_{self.docname}'
         self.workflow_doc.save(f'{self.save_path}{self.workflow_docname}')
