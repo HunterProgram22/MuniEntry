@@ -116,18 +116,31 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def create_entry(self) -> None:
-        """Loads the proper template and creates the entry.
+    def check_if_workflow_entry_needed(self) -> tuple(object, str):
+        """Checks the case information of the Dialog.
 
-        Uses the default SAVE_PATH from settings.py. This is overridden in the create_entry
-        method in DrivingPrivilegesSlotFunctions with DRIVE_SAVE_PATH.
+        If the case information meets workflow dialog requirements a worklow copy of the entry
+        is created.
         """
-        self.dialog.update_entry_case_information()
-        doc = DocxTemplate(self.dialog.template.template_path)
         case_information = self.dialog.entry_case_information
+        workflow_doc = None
         workflow_doc = None
         if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
             workflow_doc = DocxTemplate(self.dialog.template.template_path)
+            workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
+        return (workflow_doc, workflow_path)
+
+    def create_entry(self) -> None:
+        """Loads the proper template and creates the entry.
+
+        Uses the default SAVE_PATH from settings.py.
+
+        This is overridden in the create_entry method in subpackages (Administrative, CrimTraffic,
+        etc.) with the specific path for saving those entry types.
+        """
+        workflow_doc, workflow_path = self.check_if_workflow_entry_needed()
+
+        doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
         doc.render(case_data)
         docname = self.set_document_name()
@@ -141,22 +154,24 @@ class BaseDialogSlotFunctions(object):
                 )
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {docname}')
+
         if workflow_doc is not None:
-            workflow_doc.render(case_data)
-            workflow_docname = f'DRAFT{docname}'
-            workflow_doc.save(f'{self.save_path}{workflow_docname}')
-            saved_entry = f'{self.save_path}{docname}'
-            process_open_entry = Process(target=startfile(saved_entry))
-            process_create_pdf = Process(target=self.check_workflow(case_information, workflow_docname))
-            process_create_pdf.start()
-            process_open_entry.start()
+            self.create_workflow_entry_process()
         else:
             startfile(f'{self.save_path}{docname}')
 
+    def create_workflow_entry_process(self):
+        workflow_doc.render(case_data)
+        workflow_docname = f'DRAFT_{docname}'
+        workflow_doc.save(f'{self.save_path}{workflow_docname}')
+        saved_entry = f'{self.save_path}{docname}'
+        process_open_entry = Process(target=startfile(saved_entry))
+        process_create_pdf = Process(target=self.check_workflow(workflow_path, workflow_docname))
+        process_create_pdf.start()
+        process_open_entry.start()
 
-    def check_workflow(self, case_information, docname):
+    def check_workflow(self, workflow_path, docname):
         logger.debug('Go to workflow')
-        workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
         no_type_docname = docname[:-5]
         pdf_docname = f'{workflow_path}{no_type_docname}.pdf'
         word_app = win32com.client.Dispatch('Word.Application')
@@ -168,8 +183,15 @@ class BaseDialogSlotFunctions(object):
         remove(f'{self.save_path}{docname}')
 
     def create_entry_process(self) -> None:
-        """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
+        """Only creates the entry if the dialog passes all checks and returns 'Pass'.
+
+        Updates the entry case information after checks in case anything was updated as a result
+        of the checks.
+        """
+        BaseEntryCreator(self.dialog)
+
         if self.update_info_and_perform_checks() == 'Pass':
+            self.dialog.update_entry_case_information()
             self.create_entry()
 
     def set_document_name(self) -> str:
