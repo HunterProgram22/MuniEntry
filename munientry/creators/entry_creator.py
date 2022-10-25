@@ -28,8 +28,6 @@ class BaseEntryCreator(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        logger.debug(MainWindow.digital_workflow.workflow_status)
-
 
     def create_entry_process(self):
         if self.update_info_and_perform_checks() == 'Pass':
@@ -108,7 +106,8 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
 
     def create_entry(self) -> None:
         """Overrides BaseEntryCreator and Loads the proper template and creates the entry."""
-        self.check_if_workflow_entry_needed()
+        if self.dialog.workflow_status == 'ON':
+            self.check_if_workflow_entry_needed()
         doc = DocxTemplate(self.dialog.template.template_path)
         doc.render(self.case_data)
         try:

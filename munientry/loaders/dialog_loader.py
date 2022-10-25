@@ -125,11 +125,11 @@ class DialogLoader(object):
 
     def load_crimtraffic_dialog(self) -> crim.CrimTrafficDialogBuilder:
         button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
-        return self._load_dialog_process(button_dict)
+        return self._load_crimtraffic_dialog_process(button_dict)
 
     def load_scheduling_dialog(self) -> sched.SchedulingDialogBuilder:
         button_dict = self.mainwindow.scheduling_dialog_buttons_dict
-        return self._load_dialog_process(button_dict)
+        return self._load_scheduling_dialog_process(button_dict)
 
     def _set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
@@ -152,7 +152,21 @@ class DialogLoader(object):
             return case_number
         return self.mainwindow.case_search_box.text()
 
-    def _load_dialog_process(self, button_dict):
+    def _load_crimtraffic_dialog_process(self, button_dict):
+        """CrimTraffic Load dialog process."""
+        case_table = self._set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self._get_cms_case_data()
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return button_dict.get(self.mainwindow.sender())(
+            judicial_officer,
+            cms_case=cms_case_data,
+            case_table=case_table,
+            workflow_status=self.mainwindow.digital_workflow.workflow_status
+        )
+
+    def _load_scheduling_dialog_process(self, button_dict):
+        """Scheduling Dialog Load process."""
         case_table = self._set_case_table()
         judicial_officer = self.mainwindow.judicial_officer
         cms_case_data = self._get_cms_case_data()

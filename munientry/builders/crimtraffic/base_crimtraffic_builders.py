@@ -16,7 +16,9 @@ ORDERED = 'ordered'
 class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
     """The base class for all criminal and traffic main entry dialogs."""
 
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+    def __init__(
+        self, judicial_officer, cms_case=None, case_table=None, workflow_status=None, parent=None
+    ):
         """Self.case_table must be set before the call to super().__init__.
 
         The init of BaseDialog, called by super().__init__ calls ModifyView which will use the
@@ -28,6 +30,8 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        self.workflow_status = workflow_status
+        logger.debug(self.workflow_status)
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()
