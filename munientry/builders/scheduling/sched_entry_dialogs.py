@@ -14,7 +14,9 @@ from munientry.settings import (
     TODAY,
     TYPE_CHECKING,
 )
-from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
+from munientry.updaters.scheduling_updaters import (
+    SchedulingDialogCaseInformationUpdater,
+)
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 if TYPE_CHECKING:
