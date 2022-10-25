@@ -5,13 +5,20 @@ from collections import namedtuple
 from loguru import logger
 from PyQt6.QtGui import QKeySequence
 from PyQt6.QtSql import QSqlQuery
-from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem  # Removed for PyQt6 QShortcut
+from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
-from munientry.settings import DRIVE_SAVE_PATH, LOG_PATH, BATCH_SAVE_PATH, USER_LOG_NAME, CRIMTRAFFIC_SAVE_PATH, SCHEDULING_SAVE_PATH
+from munientry.settings import (
+    BATCH_SAVE_PATH,
+    CRIMTRAFFIC_SAVE_PATH,
+    DRIVE_SAVE_PATH,
+    LOG_PATH,
+    SCHEDULING_SAVE_PATH,
+    USER_LOG_NAME,
+)
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')

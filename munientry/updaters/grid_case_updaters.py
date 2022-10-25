@@ -1,15 +1,16 @@
 """Module that contains case updaters for dialogs that have a charge grid."""
 
 from loguru import logger
+
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
     FineOnlyGridModelUpdater,
     JailCCGridModelUpdater,
-    TrialSentencingGridModelUpdater,
+    LeapAdmissionPleaGridModelUpdater,
     NotGuiltyGridModelUpdater,
     PleaOnlyGridModelUpdater,
-    LeapAdmissionPleaGridModelUpdater,
+    TrialSentencingGridModelUpdater,
 )
 from munientry.updaters.general_updaters import (
     CaseInformationUpdater,

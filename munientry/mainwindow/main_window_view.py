@@ -1,5 +1,5 @@
 """Module for building the view of the MainWindow."""
-from PyQt6 import QtGui
+from PyQt6.QtGui import QIcon
 
 from munientry.builders.administrative import (
     driving_privileges_dialog,
@@ -43,7 +43,7 @@ class MainWindowViewModifier(object):
         self.main_window = main_window
         self.main_window.setupUi(self.main_window)
         self.create_daily_case_lists()
-        self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
+        self.main_window.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
 
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
