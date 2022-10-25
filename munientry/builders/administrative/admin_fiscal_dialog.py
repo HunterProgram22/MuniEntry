@@ -5,8 +5,8 @@ from PyQt6.QtCore import QDate
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
+from munientry.creators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
-from munientry.settings import FISCAL_SAVE_PATH
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
@@ -41,24 +41,15 @@ class AdminFiscalSignalConnector(admin.AdminSignalConnector):
 class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Admin Fiscal Dialog."""
 
-    save_path = FISCAL_SAVE_PATH
-
     def __init__(self, dialog):
         super().__init__(dialog)
+
+    def create_entry_process(self) -> None:
+        AdminFiscalEntryCreator(self.dialog)
 
     def clear_case_information_fields(self):
         self.dialog.account_number_box.clear()
         self.dialog.subaccount_number_box.clear()
-
-    def set_document_name(self) -> str:
-        """Overrides BaseDialogSlotFunctions set_document_name.
-
-        Sets the document name based on driver name instead of case number.
-        """
-        account_number = self.dialog.entry_case_information.account_number
-        vendor_name = self.dialog.entry_case_information.disbursement_vendor
-        invoice = self.dialog.entry_case_information.invoice_number
-        return f'{account_number}_{vendor_name}_{invoice}.docx'
 
 
 class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):

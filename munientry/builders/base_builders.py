@@ -1,20 +1,15 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-import win32com.client
-from multiprocessing import Process
-from os import startfile, remove
 from typing import Any
 
-from docxtpl import DocxTemplate
 from loguru import logger
+
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
-from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.settings import ICON_PATH, DEFAULT_SAVE_PATH, \
-    WIDGET_TYPE_ACCESS_DICT
-from munientry.widgets.message_boxes import RequiredBox
+from munientry.creators.entry_creator import BaseEntryCreator
+from munientry.settings import ICON_PATH, WIDGET_TYPE_ACCESS_DICT
 
 
 class BuildMixin(object):
@@ -105,8 +100,6 @@ class BaseDialogViewModifier(object):
 class BaseDialogSlotFunctions(object):
     """Base functions used by all dialogs."""
 
-    save_path = DEFAULT_SAVE_PATH
-
     def __init__(self, dialog):
         self.dialog = dialog
 
@@ -116,108 +109,9 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def check_if_workflow_entry_needed(self) -> tuple(object, str):
-        """Checks the case information of the Dialog.
-
-        If the case information meets workflow dialog requirements a worklow copy of the entry
-        is created.
-        """
-        case_information = self.dialog.entry_case_information
-        workflow_doc = None
-        workflow_doc = None
-        if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
-            workflow_doc = DocxTemplate(self.dialog.template.template_path)
-            workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
-        return (workflow_doc, workflow_path)
-
-    def create_entry(self) -> None:
-        """Loads the proper template and creates the entry.
-
-        Uses the default SAVE_PATH from settings.py.
-
-        This is overridden in the create_entry method in subpackages (Administrative, CrimTraffic,
-        etc.) with the specific path for saving those entry types.
-        """
-        workflow_doc, workflow_path = self.check_if_workflow_entry_needed()
-
-        doc = DocxTemplate(self.dialog.template.template_path)
-        case_data = self.dialog.entry_case_information.get_case_information()
-        doc.render(case_data)
-        docname = self.set_document_name()
-        try:
-            doc.save(f'{self.save_path}{docname}')
-        except PermissionError as error:
-            logger.warning(error)
-            self.dialog.message_box = RequiredBox(
-                'An entry for this case is already open in Word.\n'
-                + 'You must close the Word document first.',
-                )
-            self.dialog.message_box.exec()
-        logger.info(f'Entry Created: {docname}')
-
-        if workflow_doc is not None:
-            self.create_workflow_entry_process()
-        else:
-            startfile(f'{self.save_path}{docname}')
-
-    def create_workflow_entry_process(self):
-        workflow_doc.render(case_data)
-        workflow_docname = f'DRAFT_{docname}'
-        workflow_doc.save(f'{self.save_path}{workflow_docname}')
-        saved_entry = f'{self.save_path}{docname}'
-        process_open_entry = Process(target=startfile(saved_entry))
-        process_create_pdf = Process(target=self.check_workflow(workflow_path, workflow_docname))
-        process_create_pdf.start()
-        process_open_entry.start()
-
-    def check_workflow(self, workflow_path, docname):
-        logger.debug('Go to workflow')
-        no_type_docname = docname[:-5]
-        pdf_docname = f'{workflow_path}{no_type_docname}.pdf'
-        word_app = win32com.client.Dispatch('Word.Application')
-        word_doc = word_app.Documents.Open(f'{self.save_path}{docname}')
-        word_doc.SaveAs(pdf_docname, FileFormat=17)
-        word_doc.Save()
-        word_doc.Close(0)
-        # word_app.Quit()
-        remove(f'{self.save_path}{docname}')
-
     def create_entry_process(self) -> None:
-        """Only creates the entry if the dialog passes all checks and returns 'Pass'.
-
-        Updates the entry case information after checks in case anything was updated as a result
-        of the checks.
-        """
+        """Calls the class for creating an entry triggered when create entry button is pressed."""
         BaseEntryCreator(self.dialog)
-
-        if self.update_info_and_perform_checks() == 'Pass':
-            self.dialog.update_entry_case_information()
-            self.create_entry()
-
-    def set_document_name(self) -> str:
-        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
-
-        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
-        """
-        case_number = self.dialog.entry_case_information.case_number
-        template_name = self.dialog.template.template_name
-        return f'{case_number}_{template_name}.docx'
-
-    def update_info_and_perform_checks(self):
-        """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
-
-        The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
-        meaning the warning message doesn't allow immediate correction.
-
-        The dialog.update_entry_case_information is called a second time to update the model
-        with any changes to information that was made by the InfoChecker checks.
-        """
-        self.dialog.update_entry_case_information()
-        self.dialog.perform_info_checks()
-        if self.dialog.dialog_checks.check_status == 'Fail':
-            return 'Fail'
-        self.dialog.update_entry_case_information()
-        return 'Pass'
 
     def show_hide_checkbox_connected_fields(self):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""

@@ -14,6 +14,7 @@ sys.path.insert(0, parent_dir)
 
 from munientry import logging_module
 from munientry.mainwindow.main_window import MainWindow
+from munientry.creators.entry_creator import CrimTrafficEntryCreator
 
 CLOSE_TIMER = 50
 
@@ -24,6 +25,13 @@ Use pytest -m 'not manual' to skip tests that require manual interaction
 Use pytest -m 'not create_entry_test' to skip tests that open actual Word docx files
 
 """
+
+
+@pytest.fixture
+def mock_entry(monkeypatch):
+    def mock_create_entry(self):
+        return "Entry Created"
+    monkeypatch.setattr(CrimTrafficEntryCreator, 'create_entry', mock_create_entry)
 
 
 def open_daily_case_list_db_connection():

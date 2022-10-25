@@ -4,12 +4,12 @@ from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
+from munientry.creators.entry_creator import DrivingPrivilegesEntryCreator
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.settings import DRIVE_SAVE_PATH
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
@@ -51,8 +51,6 @@ class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
 class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Driving Privileges Dialog."""
 
-    save_path = DRIVE_SAVE_PATH
-
     def __init__(self, dialog):
         super().__init__(dialog)
         self._driving_days_list = [
@@ -78,6 +76,9 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.varied_hours_checkBox,
             self.dialog.other_conditions_checkBox,
         ]
+
+    def create_entry_process(self) -> None:
+        DrivingPrivilegesEntryCreator(self.dialog)
 
     def set_document_name(self) -> str:
         """Overrides BaseDialogSlotFunctions set_document_name.

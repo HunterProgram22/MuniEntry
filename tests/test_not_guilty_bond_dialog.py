@@ -1,10 +1,8 @@
 import pytest
-from PyQt6 import QtWidgets
-from PyQt6.QtCore import QTimer
 from tests.conftest import mouse_click, enter_data, check_barkschat
 
 
-@pytest.fixture()
+@pytest.fixture
 def ngb_dialog(qtbot, main_window):
     """Not Guilty Bond Dialog is ngb_dialog"""
     mouse_click(main_window.rohrer_radioButton)
@@ -13,13 +11,6 @@ def ngb_dialog(qtbot, main_window):
     mouse_click(main_window.NotGuiltyBondButton)
     mouse_click(main_window.dialog.not_guilty_all_Button)
     return main_window.dialog
-
-
-@pytest.fixture
-def mock_entry(ngb_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(ngb_dialog.functions, 'create_entry', mock_create_entry)
 
 
 def test_dialog_opens(ngb_dialog):

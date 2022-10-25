@@ -1,6 +1,4 @@
 import pytest
-from PyQt6 import QtWidgets
-from PyQt6.QtCore import QTimer, Qt
 from tests.conftest import mouse_click, enter_data, key_click
 
 
@@ -11,13 +9,6 @@ def fta_dialog(qtbot, main_window):
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.FailureToAppearButton)
     return main_window.dialog
-
-
-@pytest.fixture
-def mock_entry(fta_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(fta_dialog.functions, 'create_entry', mock_create_entry)
 
 
 def test_dialog_opens(fta_dialog):

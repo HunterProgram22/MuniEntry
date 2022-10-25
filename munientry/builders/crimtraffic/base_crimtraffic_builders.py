@@ -5,9 +5,10 @@ from PyQt6.QtCore import QDate
 from munientry.builders import base_builders as base
 from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
 from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
+from munientry.creators.entry_creator import CrimTrafficEntryCreator
 from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import CRIMTRAFFIC_SAVE_PATH, SPECIAL_DOCKETS_COSTS
+from munientry.settings import SPECIAL_DOCKETS_COSTS
 from munientry.widgets.message_boxes import InfoBox
 
 ORDERED = 'ordered'
@@ -119,7 +120,8 @@ class FineCostsMixin(object):
 class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
 
-    save_path = CRIMTRAFFIC_SAVE_PATH
+    def create_entry_process(self) -> None:
+        CrimTrafficEntryCreator(self.dialog)
 
     def start_add_charge_dialog(self):
         self.dialog.update_entry_case_information()

@@ -7,12 +7,6 @@ from munientry.helper_functions import set_future_date
 
 TODAY = date.today()
 
-@pytest.fixture
-def mock_entry(leap_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(leap_dialog.functions, 'create_entry', mock_create_entry)
-
 
 @pytest.fixture
 def leap_dialog(qtbot, main_window):
