@@ -1,13 +1,15 @@
 """Module for PDF Viewers and tools used by Viewers."""
 import os
 import webbrowser
+
 import fitz
+from loguru import logger
 from PyQt6 import QtGui, QtPrintSupport
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtWidgets import QMainWindow, QToolBar, QToolButton, QHBoxLayout
-from loguru import logger
-from munientry.settings import ICON_PATH, TIMENOW, DW_APPROVED_DIR
+from PyQt6.QtWidgets import QHBoxLayout, QMainWindow, QToolBar, QToolButton
+
+from munientry.settings import DW_APPROVED_DIR, ICON_PATH, TIMENOW
 
 
 def add_approved_stamp(file):

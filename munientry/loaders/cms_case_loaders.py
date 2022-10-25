@@ -1,13 +1,7 @@
 """Module for loading the CMS case data into the main_entry_dialog view."""
-from __future__ import annotations
-
 from loguru import logger
 
 from munientry.models.criminal_charge_models import CriminalCharge
-from munientry.settings import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from PyQt6.QtWidgets import QDialog
 
 
 class CmsNoChargeLoader(object):
@@ -16,7 +10,7 @@ class CmsNoChargeLoader(object):
     This is for dialogs with no ChargeGrid.
     """
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         self.dialog = dialog
         self.cms_case = dialog.cms_case
         if self.cms_case.case_number is not None:
@@ -65,7 +59,7 @@ class CmsNoChargeLoader(object):
 class CmsDrivingInfoLoader(CmsNoChargeLoader):
     """Loader for CMS data for Driving Privileges."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
 
     def load_cms_data(self) -> None:
@@ -91,7 +85,7 @@ class CmsChargeLoader(CmsNoChargeLoader):
     This is for dialogs with a Charge Grid, but no FRA (insurance) information.
     """
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         self.criminal_charge = None
         super().__init__(dialog)
 
@@ -144,7 +138,7 @@ class CmsFraLoader(CmsChargeLoader):
 
     fra_value = {'Y': 'Yes', 'N': 'No', 'U': 'N/A'}
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.load_fra_data()
         self.hide_fra_if_criminal_case()

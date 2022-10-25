@@ -1,4 +1,6 @@
 """Module for creating entries."""
+from __future__ import annotations
+
 from multiprocessing import Process
 from os import remove, startfile
 
