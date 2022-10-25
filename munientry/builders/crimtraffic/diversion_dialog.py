@@ -1,6 +1,5 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
 from loguru import logger
-from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.no_jail_sentencing_checkers import DiversionDialogInfoChecker
@@ -9,6 +8,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     DiversionEntryCaseInformation,
 )
+from munientry.settings import TODAY
 from munientry.updaters.grid_case_updaters import DiversionDialogUpdater
 from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 
@@ -32,7 +32,7 @@ class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
         """
         diversion_pay_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Tuesday')
         self.dialog.diversion_fine_pay_date_box.setDate(
-            QDate.currentDate().addDays(diversion_pay_days_to_add),
+            TODAY.addDays(diversion_pay_days_to_add),
         )
 
     def set_diversion_jail_report_date_box(self):
@@ -42,7 +42,7 @@ class DiversionDialogViewModifier(crim.CrimTrafficViewModifier):
         """
         jail_report_days_to_add = set_future_date(DIVERSION_ADD_DAYS, 'Friday')
         self.dialog.diversion_jail_report_date_box.setDate(
-            QDate.currentDate().addDays(jail_report_days_to_add),
+            TODAY.addDays(jail_report_days_to_add),
         )
 
 

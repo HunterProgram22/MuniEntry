@@ -17,9 +17,6 @@ from munientry.views.leap_sentencing_dialog_ui import Ui_LeapSentencingDialog
 class LeapSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for LEAP Sentencing Dialog."""
 
-    def __init__(self, dialog):
-        super().__init__(dialog)
-
 
 class LeapSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
     """Additional functions for LEAP Sentencing Dialog."""

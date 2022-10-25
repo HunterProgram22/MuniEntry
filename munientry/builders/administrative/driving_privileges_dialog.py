@@ -1,6 +1,5 @@
 """Contains classes for building the Driving Privileges Dialog."""
 from loguru import logger
-from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
@@ -10,11 +9,10 @@ from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
+from munientry.settings import TODAY
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
-
-TODAY = QDate.currentDate()
 
 
 class DrivingPrivilegesViewModifier(admin.AdminViewModifier):

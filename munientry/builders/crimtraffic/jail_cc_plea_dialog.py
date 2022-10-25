@@ -1,6 +1,5 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
-from PyQt6.QtGui import QIntValidator
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_community_control_dialog import (
@@ -12,6 +11,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
 )
+from munientry.settings import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 
@@ -95,7 +95,7 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
 
     def additional_setup(self):
         """TODO: same refactor for all additional conditions list should be made."""
-        validator = QIntValidator(0, 1000, self)
+        validator = MAX_JAIL_TIME_VALIDATOR
         self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),

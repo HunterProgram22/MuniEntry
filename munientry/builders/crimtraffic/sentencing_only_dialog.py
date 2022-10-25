@@ -1,6 +1,5 @@
 """Builder module for the Jail CC Plea Dialog."""
 from loguru import logger
-from PyQt6.QtGui import QIntValidator
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_community_control_dialog import (
@@ -12,15 +11,13 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     SentencingOnlyEntryCaseInformation,
 )
+from munientry.settings import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import SentencingOnlyDialogUpdater
 from munientry.views.sentencing_only_dialog_ui import Ui_SentencingOnlyDialog
 
 
 class SentencingOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Sentencing Only Dialog."""
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
 
 
 class SentencingOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
@@ -93,7 +90,7 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
     }
 
     def additional_setup(self):
-        validator = QIntValidator(0, 1000, self)
+        validator = MAX_JAIL_TIME_VALIDATOR
         self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),

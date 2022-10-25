@@ -1,6 +1,5 @@
 """Builder module for Trial Sentencing Dialog."""
 from loguru import logger
-from PyQt6.QtGui import QIntValidator
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_community_control_dialog import (
@@ -14,6 +13,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     TrialSentencingEntryCaseInformation,
 )
+from munientry.settings import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import TrialSentencingDialogUpdater
 from munientry.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 
@@ -21,12 +21,9 @@ from munientry.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 class TrialSentencingDialogViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Trial Sentencing Dialog.
 
-    Uses the JailChargesGrid but the template does not have a plea field and instead uses tried
-    to (either 'court' or 'jury') instead of the plea field.
+    The view uses the JailChargesGrid but the template does not have a plea field and instead uses
+    tried to (either 'court' or 'jury') instead of the plea field.
     """
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
 
 
 class TrialSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.FineCostsMixin):
@@ -112,7 +109,7 @@ class TrialSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_TrialSentencingDia
     }
 
     def additional_setup(self):
-        validator = QIntValidator(0, 1000, self)
+        validator = MAX_JAIL_TIME_VALIDATOR
         self.jail_time_credit_box.setValidator(validator)
         self.additional_conditions_list = [
             ('community_control_checkBox', self.entry_case_information.community_control),

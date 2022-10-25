@@ -1,6 +1,5 @@
 """Builder module for the Leap Plea Dialog."""
 from loguru import logger
-from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
@@ -9,6 +8,7 @@ from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
 )
+from munientry.settings import TODAY
 from munientry.updaters.grid_case_updaters import LeapAdmissionPleaDialogUpdater
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 
@@ -27,12 +27,12 @@ class LeapAdmissionPleaDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     def set_leap_sentencing_date(self, days_to_add_string):
         """Sets the sentencing date to the Monday after the number of days added."""
         if days_to_add_string == 'forthwith':
-            self.dialog.sentencing_date.setDate(QDate.currentDate())
+            self.dialog.sentencing_date.setDate(TODAY)
         else:
             days_to_add = self.get_days_to_add(days_to_add_string)
             total_days_to_add = set_future_date(days_to_add, 'Monday')
             self.dialog.sentencing_date.setDate(
-                QDate.currentDate().addDays(total_days_to_add),
+                TODAY.addDays(total_days_to_add),
             )
 
     def get_days_to_add(self, days_to_add_string):
