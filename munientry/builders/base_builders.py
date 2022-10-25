@@ -1,6 +1,7 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
 import win32com.client
+from multiprocessing import Process
 from os import startfile, remove
 from typing import Any
 
@@ -124,40 +125,47 @@ class BaseDialogSlotFunctions(object):
         self.dialog.update_entry_case_information()
         doc = DocxTemplate(self.dialog.template.template_path)
         case_information = self.dialog.entry_case_information
+        workflow_doc = None
+        if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
+            workflow_doc = DocxTemplate(self.dialog.template.template_path)
         case_data = self.dialog.entry_case_information.get_case_information()
         doc.render(case_data)
         docname = self.set_document_name()
-        logger.info(f'Entry Created: {docname}')
         try:
             doc.save(f'{self.save_path}{docname}')
-            self.check_workflow(case_information, docname)
         except PermissionError as error:
             logger.warning(error)
             self.dialog.message_box = RequiredBox(
                 'An entry for this case is already open in Word.\n'
                 + 'You must close the Word document first.',
-            )
+                )
             self.dialog.message_box.exec()
-        startfile(f'{self.save_path}{docname}')
+        logger.info(f'Entry Created: {docname}')
+        if workflow_doc is not None:
+            workflow_doc.render(case_data)
+            workflow_docname = f'DRAFT{docname}'
+            workflow_doc.save(f'{self.save_path}{workflow_docname}')
+            saved_entry = f'{self.save_path}{docname}'
+            process_open_entry = Process(target=startfile(saved_entry))
+            process_create_pdf = Process(target=self.check_workflow(case_information, workflow_docname))
+            process_create_pdf.start()
+            process_open_entry.start()
+        else:
+            startfile(f'{self.save_path}{docname}')
 
 
     def check_workflow(self, case_information, docname):
-        try:
-            if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
-                logger.debug('Go to workflow')
-                workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
-                # doc.save(f'{workflow_path}{docname}')
-                no_type_docname = docname[:-5]
-                pdf_docname = f'{workflow_path}{no_type_docname}.pdf'
-                word_app = win32com.client.Dispatch('Word.Application')
-                word_doc = word_app.Documents.Open(f'{self.save_path}{docname}')
-                word_doc.SaveAs(pdf_docname, FileFormat=17)
-                word_doc.Save()
-                word_doc.Close(0)
-                word_app.Quit()
-                # remove(f'{workflow_path}{docname}')
-        except TypeError as e:
-            logger.warning(e)
+        logger.debug('Go to workflow')
+        workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
+        no_type_docname = docname[:-5]
+        pdf_docname = f'{workflow_path}{no_type_docname}.pdf'
+        word_app = win32com.client.Dispatch('Word.Application')
+        word_doc = word_app.Documents.Open(f'{self.save_path}{docname}')
+        word_doc.SaveAs(pdf_docname, FileFormat=17)
+        word_doc.Save()
+        word_doc.Close(0)
+        # word_app.Quit()
+        remove(f'{self.save_path}{docname}')
 
     def create_entry_process(self) -> None:
         """Only creates the entry if the dialog passes all checks and returns 'Pass'."""

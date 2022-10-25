@@ -37,6 +37,7 @@ class WorkflowCheck(object):
             if self.case_information.community_control.ordered is True:
                 return (True, COMM_CONTROL_PATH)
                 # self.move_to_probation_workflow(COMM_CONTROL_PATH)
+        return (False, 'NONE')
 
     def move_to_probation_workflow(self, path):
         """The conversion from Word to PDF is done using win32com.
