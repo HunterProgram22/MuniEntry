@@ -10,6 +10,7 @@ class DigitalWorkflow(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
+        self.workflow_status = 'OFF'
         self.load_digital_workflow_counts()
 
     def load_digital_workflow_counts(self):

@@ -3,9 +3,9 @@ import os
 from collections import namedtuple
 
 from loguru import logger
-from PyQt6.QtGui import QKeySequence
+from PyQt6.QtGui import QIcon, QKeySequence
 from PyQt6.QtSql import QSqlQuery
-from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
+from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QInputDialog, QTableWidgetItem, QGroupBox, QVBoxLayout, QRadioButton
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
@@ -15,6 +15,7 @@ from munientry.settings import (
     BATCH_SAVE_PATH,
     CRIMTRAFFIC_SAVE_PATH,
     DRIVE_SAVE_PATH,
+    ICON_PATH,
     LOG_PATH,
     SCHEDULING_SAVE_PATH,
     USER_LOG_NAME,
@@ -29,7 +30,50 @@ ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
 
 
-def open_current_log(signal=None) -> None:
+
+
+class SettingDialog(QDialog):
+    def __init__(self, mainwindow, parent=None):
+        super().__init__(parent)
+        self.mainwindow = mainwindow
+        self.setWindowIcon(QIcon(f'{ICON_PATH}.gavel.ico'))
+        self.setWindowTitle('Workflow Settings')
+        button_group = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
+
+        group_box = QGroupBox('Workflow Setting')
+
+        self.workflow_on_radioButton = QRadioButton('Workflow On')
+        self.workflow_off_radioButton = QRadioButton('Workflow Off')
+
+        self.workflow_on_radioButton.toggled.connect(self.set_workflow)
+        self.workflow_off_radioButton.toggled.connect(self.set_workflow)
+
+        radio_layout = QVBoxLayout()
+        radio_layout.addWidget(self.workflow_on_radioButton)
+        radio_layout.addWidget(self.workflow_off_radioButton)
+
+        group_box.setLayout(radio_layout)
+
+        button_box = QDialogButtonBox(button_group)
+        button_box.accepted.connect(self.accept)
+        button_box.rejected.connect(self.reject)
+
+        layout = QVBoxLayout()
+        layout.addWidget(group_box)
+        layout.addWidget(button_box)
+        self.setLayout(layout)
+
+    def set_workflow(self):
+        if self.sender().isChecked():
+            if self.sender().text() == 'Workflow On':
+                self.mainwindow.digital_workflow.workflow_status = 'ON'
+                logger.info(self.mainwindow.digital_workflow.workflow_status)
+            else:
+                self.mainwindow.digital_workflow.workflow_status = 'OFF'
+                logger.info(self.mainwindow.digital_workflow.workflow_status)
+
+
+def open_current_log(_signal=None) -> None:
     """Menu function that opens the user logs directly or with keyboard shortcut."""
     os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
     logger.info(f'Current system log opened.')
@@ -110,6 +154,11 @@ class MainWindowMenu(object):
         self.mainwindow.actionScheduling_Entries_Folder.triggered.connect(
             open_scheduling_entries_folder,
         )
+        self.mainwindow.actionWorkflow.triggered.connect(self.open_workflow_settings)
+
+    def open_workflow_settings(self, _signal=None) -> None:
+        self.settings_menu = SettingDialog(self.mainwindow)
+        self.settings_menu.exec()
 
     def run_arraignments_report(self) -> None:
         report_date = self.get_report_date('Arraignments')

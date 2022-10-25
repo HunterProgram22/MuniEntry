@@ -1565,10 +1565,17 @@ font-weight: bold;</string>
     <addaction name="actionDriving_Privileges_Folder"/>
     <addaction name="actionScheduling_Entries_Folder"/>
    </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionWorkflow"/>
+   </widget>
    <addaction name="menuOpen"/>
    <addaction name="menuBatch"/>
    <addaction name="menuReports"/>
    <addaction name="menuLogs"/>
+   <addaction name="menuSettings"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpen_Current_Log">
@@ -1609,6 +1616,11 @@ font-weight: bold;</string>
   <action name="actionScheduling_Entries_Folder">
    <property name="text">
     <string>Scheduling Entries Folder</string>
+   </property>
+  </action>
+  <action name="actionWorkflow">
+   <property name="text">
+    <string>Workflow</string>
    </property>
   </action>
  </widget>

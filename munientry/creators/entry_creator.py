@@ -28,6 +28,8 @@ class BaseEntryCreator(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
+        logger.debug(MainWindow.digital_workflow.workflow_status)
+
 
     def create_entry_process(self):
         if self.update_info_and_perform_checks() == 'Pass':
