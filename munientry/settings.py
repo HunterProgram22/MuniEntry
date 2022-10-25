@@ -7,13 +7,16 @@ from typing import (
     TYPE_CHECKING,  # Import used so TYPE_CHECKING can be imported with other settings
 )
 
+from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import QDate, QDateTime
 from PyQt6.QtGui import QIntValidator
 
 MAX_JAIL_TIME_VALIDATOR = QIntValidator(0, 1000)
 TODAY = QDate.currentDate()
 TIMENOW = QDateTime.currentDateTime()
-
+YES_BUTTON_RESPONSE = QMessageBox.StandardButton.Yes
+NO_BUTTON_RESPONSE = QMessageBox.StandardButton.No
+CANCEL_BUTTON_RESPONSE = QMessageBox.StandardButton.Cancel
 
 config = configparser.SafeConfigParser()
 config.read('config.ini')

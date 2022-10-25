@@ -1,6 +1,5 @@
 """Module that contains data checks for dialogs that potentially impose jail time."""
 from loguru import logger
-from PyQt6.QtWidgets import QDialog, QMessageBox
 
 from munientry.checkers.base_checks import (
     BLANK,
@@ -9,6 +8,11 @@ from munientry.checkers.base_checks import (
     BaseChecker,
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
+)
+from munientry.settings import (
+    CANCEL_BUTTON_RESPONSE,
+    NO_BUTTON_RESPONSE,
+    YES_BUTTON_RESPONSE,
 )
 from munientry.widgets.message_boxes import (
     JailWarningBox,
@@ -23,7 +27,7 @@ YES = 'Yes'
 class JailTimeCreditChecker(BaseChecker):
     """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model = self.view.entry_case_information
         self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
@@ -57,10 +61,10 @@ class JailTimeCreditChecker(BaseChecker):
                 return self.set_in_jail_box(WarningBox(message, 'Is Defendant in Jail').exec())
         return PASS
 
-    def set_in_jail_box(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.StandardButton.No:
+    def set_in_jail_box(self, message_response) -> str:
+        if message_response == NO_BUTTON_RESPONSE:
             self.view.in_jail_box.setCurrentText('No')
-        elif message_response == QMessageBox.StandardButton.Yes:
+        elif message_response == YES_BUTTON_RESPONSE:
             self.view.in_jail_box.setCurrentText(YES)
         return PASS
 
@@ -80,7 +84,7 @@ class JailTimeCreditChecker(BaseChecker):
                 )
         return PASS
 
-    def set_jtc_apply_box(self, message_response: QMessageBox) -> str:
+    def set_jtc_apply_box(self, message_response) -> str:
         if message_response == 0:
             self.view.jail_time_credit_apply_box.setCurrentText('Sentence')
         elif message_response == 1:
@@ -117,7 +121,7 @@ class JailCCPleaDialogInfoChecker(
         ('impoundment', 'vehicle_make_model', 'Immobilize/Impound'),
     ]
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model = self.view.entry_case_information
         self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
@@ -180,14 +184,14 @@ class JailCCPleaDialogInfoChecker(
             return self.add_jail_report_terms(JailWarningBox(message, 'Add Jail Reporting').exec())
         return PASS
 
-    def add_jail_report_terms(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.StandardButton.No:
+    def add_jail_report_terms(self, message_response) -> str:
+        if message_response == NO_BUTTON_RESPONSE:
             return PASS
-        if message_response == QMessageBox.StandardButton.Yes:
+        if message_response == YES_BUTTON_RESPONSE:
             self.view.jail_checkBox.setChecked(True)
             self.view.functions.start_add_jail_report_dialog()
             return PASS
-        if message_response == QMessageBox.StandardButton.Cancel:
+        if message_response == CANCEL_BUTTON_RESPONSE:
             return FAIL
         return PASS
 
@@ -207,11 +211,11 @@ class JailCCPleaDialogInfoChecker(
                 return self.unset_jail_reporting(WarningBox(message, 'Unset Jail Reporting').exec())
         return PASS
 
-    def unset_jail_reporting(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.StandardButton.No:
+    def unset_jail_reporting(self, message_response) -> str:
+        if message_response == NO_BUTTON_RESPONSE:
             self.view.jail_checkBox.setChecked(False)
             return PASS
-        if message_response == QMessageBox.StandardButton.Yes:
+        if message_response == YES_BUTTON_RESPONSE:
             return PASS
         return PASS
 

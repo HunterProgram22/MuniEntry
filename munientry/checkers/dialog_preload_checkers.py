@@ -1,6 +1,4 @@
 """Module for performing checks prior to a dialog loading."""
-from __future__ import annotations
-
 from munientry.widgets.message_boxes import RequiredBox
 
 
@@ -43,7 +41,7 @@ class DialogPreloadChecker(object):
                 RequiredBox(
                     'You must select a case list. If not loading a case in the case list '
                     + 'leave the case list field blank.', 'Daily Case List Required',
-                    ).exec()
+                ).exec()
                 return False
             return True
         return True

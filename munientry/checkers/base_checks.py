@@ -1,18 +1,16 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
-from PyQt6.QtCore import QDate
-from PyQt6.QtWidgets import QDialog, QMessageBox
 
+from munientry.settings import NO_BUTTON_RESPONSE, TODAY, YES_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
 
-TODAY = QDate.currentDate()
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 
 
 class BaseChecker(object):
     """Class for initializing InfoChecker objects."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         self.view = dialog
         self.dialog_check_list: list = []
         self.conditions_list: list = []
@@ -89,8 +87,8 @@ class DefenseCounselChecker(BaseChecker):
             return self.set_defense_counsel_waived_or_fail_check(msg_response)
         return PASS
 
-    def set_defense_counsel_waived_or_fail_check(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.StandardButton.Yes:
+    def set_defense_counsel_waived_or_fail_check(self, message_response) -> str:
+        if message_response == YES_BUTTON_RESPONSE:
             self.view.defense_counsel_waived_checkBox.setChecked(True)
             return PASS
         return FAIL
@@ -118,10 +116,10 @@ class InsuranceInfoChecker(BaseChecker):
             return self.set_fra_in_court_box(msg_response)
         return PASS
 
-    def set_fra_in_court_box(self, message_response: QMessageBox) -> str:
-        if message_response == QMessageBox.StandardButton.No:
+    def set_fra_in_court_box(self, message_response) -> str:
+        if message_response == NO_BUTTON_RESPONSE:
             self.view.fra_in_court_box.setCurrentText('No')
-        if message_response == QMessageBox.StandardButton.Yes:
+        if message_response == YES_BUTTON_RESPONSE:
             self.view.fra_in_court_box.setCurrentText('Yes')
         return PASS
 
@@ -225,7 +223,7 @@ class ChargeGridInfoChecker(DefenseCounselChecker):
         The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
         columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
         column from a grid_layout when it is deleted, it actually just hides the column.
-        
+
         Try/Except is used instead of an If None check because by setting the col to 2 and
         incrementing by 2, the error is only raised and addressed if charges are added or deleted,
         which is a low occurrence event.
@@ -254,7 +252,7 @@ class ChargeGridInfoChecker(DefenseCounselChecker):
 class FailureToAppearDialogInfoChecker(DefenseCounselChecker):
     """Class with all checks for Failure to Appear Dialog."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -265,7 +263,7 @@ class FailureToAppearDialogInfoChecker(DefenseCounselChecker):
 class FreeformDialogInfoChecker(DefenseCounselChecker):
     """Class with all checks for Freeform Entry Dialog."""
 
-    def __init__(self, dialog: QDialog) -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
