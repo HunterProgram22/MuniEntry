@@ -1,15 +1,22 @@
 """Module for creating entries."""
-from __future__ import annotations
-
-import win32com.client
 from multiprocessing import Process
-from os import startfile, remove
+from os import remove, startfile
+
 from docxtpl import DocxTemplate
 from loguru import logger
+from win32com.client import Dispatch
 
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.settings import DRIVE_SAVE_PATH, DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, SCHEDULING_SAVE_PATH, FISCAL_SAVE_PATH
+from munientry.settings import (
+    CRIMTRAFFIC_SAVE_PATH,
+    DEFAULT_SAVE_PATH,
+    DRIVE_SAVE_PATH,
+    FISCAL_SAVE_PATH,
+    SCHEDULING_SAVE_PATH,
+)
 from munientry.widgets.message_boxes import RequiredBox
+
+WORD_PDF_FORMAT_NUMBER = 17
 
 
 class BaseEntryCreator(object):
@@ -43,19 +50,10 @@ class BaseEntryCreator(object):
             self.dialog.message_box = RequiredBox(
                 'An entry for this case is already open in Word.\n'
                 + 'You must close the Word document first.',
-                )
+            )
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
-
-    def _set_document_name(self) -> str:
-        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
-
-        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
-        """
-        case_number = self.dialog.entry_case_information.case_number
-        template_name = self.dialog.template.template_name
-        return f'{case_number}_{template_name}.docx'
 
     def update_info_and_perform_checks(self):
         """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
@@ -73,8 +71,23 @@ class BaseEntryCreator(object):
         self.dialog.update_entry_case_information()
         return 'Pass'
 
+    def _set_document_name(self) -> str:
+        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
+
+        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
+        """
+        case_number = self.dialog.entry_case_information.case_number
+        template_name = self.dialog.template.template_name
+        return f'{case_number}_{template_name}.docx'
+
 
 class CrimTrafficEntryCreator(BaseEntryCreator):
+    """Entry Creator for CrimTraffic entries.
+
+    Contains a check to see if a workflow entry needs to be created.
+
+    TODO: Add setting to turn off workflow.
+    """
 
     save_path = CRIMTRAFFIC_SAVE_PATH
 
@@ -91,7 +104,6 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
 
     def create_entry(self) -> None:
         """Overrides BaseEntryCreator and Loads the proper template and creates the entry."""
-
         self.check_if_workflow_entry_needed()
         doc = DocxTemplate(self.dialog.template.template_path)
         doc.render(self.case_data)
@@ -102,7 +114,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
             self.dialog.message_box = RequiredBox(
                 'An entry for this case is already open in Word.\n'
                 + 'You must close the Word document first.',
-                )
+            )
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {self.docname}')
         if self.workflow_doc is not None:
@@ -125,9 +137,9 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         logger.debug('Go to workflow')
         no_type_docname = self.workflow_docname[:-5]
         pdf_docname = f'{self.workflow_path}{no_type_docname}.pdf'
-        word_app = win32com.client.Dispatch('Word.Application')
+        word_app = Dispatch('Word.Application')
         word_doc = word_app.Documents.Open(f'{self.save_path}{self.workflow_docname}')
-        word_doc.SaveAs(pdf_docname, FileFormat=17)
+        word_doc.SaveAs(pdf_docname, FileFormat=WORD_PDF_FORMAT_NUMBER)
         word_doc.Save()
         word_doc.Close(0)
         remove(f'{self.save_path}{self.workflow_docname}')
@@ -144,11 +156,13 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
 
 
 class SchedulingEntryCreator(BaseEntryCreator):
+    """Entry Creator for Scheduling entries."""
 
     save_path = SCHEDULING_SAVE_PATH
 
 
 class DrivingPrivilegesEntryCreator(BaseEntryCreator):
+    """Entry Creator for Driving Privilege entries."""
 
     save_path = DRIVE_SAVE_PATH
 
@@ -164,6 +178,7 @@ class DrivingPrivilegesEntryCreator(BaseEntryCreator):
 
 
 class AdminFiscalEntryCreator(BaseEntryCreator):
+    """Entry Creator for Admin Fiscal entries."""
 
     save_path = FISCAL_SAVE_PATH
 
