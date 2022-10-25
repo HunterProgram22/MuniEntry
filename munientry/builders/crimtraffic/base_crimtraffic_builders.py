@@ -121,7 +121,7 @@ class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
 
     def create_entry_process(self) -> None:
-        CrimTrafficEntryCreator(self.dialog)
+        CrimTrafficEntryCreator(self.dialog).create_entry_process()
 
     def start_add_charge_dialog(self):
         self.dialog.update_entry_case_information()

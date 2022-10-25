@@ -37,4 +37,4 @@ class SchedulingSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional functions for Scheduling Dialogs."""
 
     def create_entry_process(self) -> None:
-        SchedulingEntryCreator(self.dialog)
+        SchedulingEntryCreator(self.dialog).create_entry_process()

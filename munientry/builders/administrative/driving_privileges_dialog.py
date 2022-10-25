@@ -78,17 +78,7 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
         ]
 
     def create_entry_process(self) -> None:
-        DrivingPrivilegesEntryCreator(self.dialog)
-
-    def set_document_name(self) -> str:
-        """Overrides BaseDialogSlotFunctions set_document_name.
-
-        Sets the document name based on driver name instead of case number.
-        """
-        first_name = self.dialog.entry_case_information.defendant.first_name
-        last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
-        return f'{first_name}_{last_name}_{template_name}.docx'
+        DrivingPrivilegesEntryCreator(self.dialog).create_entry_process()
 
     def update_end_suspension_date(self) -> None:
         suspension_days_dict = {

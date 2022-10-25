@@ -45,7 +45,7 @@ class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
         super().__init__(dialog)
 
     def create_entry_process(self) -> None:
-        AdminFiscalEntryCreator(self.dialog)
+        AdminFiscalEntryCreator(self.dialog).create_entry_process()
 
     def clear_case_information_fields(self):
         self.dialog.account_number_box.clear()

@@ -111,7 +111,7 @@ class BaseDialogSlotFunctions(object):
 
     def create_entry_process(self) -> None:
         """Calls the class for creating an entry triggered when create entry button is pressed."""
-        BaseEntryCreator(self.dialog)
+        BaseEntryCreator(self.dialog).create_entry_process()
 
     def show_hide_checkbox_connected_fields(self):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
