@@ -30,6 +30,7 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional Functions for Mattox Workflow Dialog."""
 
     def open_entry(self):
+        """TODO: There is a bug here when an item is highlighted in both lists it only uses scram."""
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
@@ -66,6 +67,13 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     def load_new_entries(self):
         """Need to fix as message shows no cases loaded if one loads cases and other list doesnt."""
         pending_scram_gps_entries = os.listdir(f'{DW_MATTOX}/Scram_Gps//')
+        pending_comm_control_entries = os.listdir(f'{DW_MATTOX}/Comm_Control//')
+        if (
+            len(pending_scram_gps_entries) == self.dialog.scram_gps_entries_listWidget.count()
+            and len(pending_comm_control_entries) == self.dialog.community_control_entries_listWidget.count()
+        ):
+            message = 'There were no new entries availalbe to load.'
+            return InfoBox(message, 'No Entries to Load').exec()
         if len(pending_scram_gps_entries) != self.dialog.scram_gps_entries_listWidget.count():
             scram_entry_count = self.dialog.scram_gps_entries_listWidget.count()
             while scram_entry_count >= 0:
@@ -73,7 +81,6 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 scram_entry_count -= 1
             for file in pending_scram_gps_entries:
                 self.dialog.scram_gps_entries_listWidget.addItem(file)
-        pending_comm_control_entries = os.listdir(f'{DW_MATTOX}/Comm_Control//')
         if len(pending_comm_control_entries) != self.dialog.community_control_entries_listWidget.count():
             comm_entry_count = self.dialog.community_control_entries_listWidget.count()
             while comm_entry_count >= 0:
@@ -81,13 +88,6 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 comm_entry_count -= 1
             for file in pending_comm_control_entries:
                 self.dialog.community_control_entries_listWidget.addItem(file)
-        else:
-            if (
-                len(pending_scram_gps_entries) == self.dialog.scram_gps_entries_listWidget.count()
-                and len (pending_comm_control_entries) == self.dialog.community_control_entries_listWidget.count()
-            ):
-                message = 'There were no new entries availalbe to load.'
-                return InfoBox(message, 'No Entries to Load').exec()
 
 
 class MattoxWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
