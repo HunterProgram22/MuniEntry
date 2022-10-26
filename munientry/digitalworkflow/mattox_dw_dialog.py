@@ -2,9 +2,8 @@
 import os
 import webbrowser
 
-# from loguru import logger
+from loguru import logger
 
-# from munientry.digitalworkflow.workflow_tools import MattoxPdfViewer
 from munientry.builders import base_builders as base
 from munientry.views.mattox_workflow_dialog_ui import Ui_MattoxWorkflowDialog
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
@@ -35,18 +34,16 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
-            widget_list = self.dialog.scram_gps_entries_listWidget
             document = f'{DW_MATTOX}/Scram_GPS/{entry_name}'
         elif len(self.dialog.community_control_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.community_control_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
-            widget_list = self.dialog.community_control_entries_listWidget
             document = f'{DW_MATTOX}/Comm_Control/{entry_name}'
         else:
             message = 'No entry is selected. You must select an entry to open.'
             return RequiredBox(message).exec()
         webbrowser.open_new(document)
-        # self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, widget_list, self.dialog)
+        logger.info(f'{document} opened in workflow.')
 
     def delete_entry(self):
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
@@ -65,6 +62,7 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         row = widget_list.row(selected_entry_widget)
         widget_list.takeItem(row)
         os.remove(document)
+        logger.info(f'{document} deleted in workflow.')
 
     def load_new_entries(self):
         """Need to fix as message shows no cases loaded if one loads cases and other list doesnt."""

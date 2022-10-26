@@ -2,7 +2,6 @@ import os
 
 from loguru import logger
 
-from munientry.digitalworkflow.workflow_tools import PdfViewer
 from munientry.settings import DW_HEMMETER, DW_ROHRER, DW_BUNNER, DW_MATTOX
 
 
@@ -30,12 +29,3 @@ class DigitalWorkflow(object):
             return len(os.listdir(directory))
         except FileNotFoundError as error:
             logger.warning(error)
-
-    def open(self, entry):
-        self.mainwindow.webview = self.create_pdf_view(entry)
-
-    def create_pdf_view(self, entry):
-        webview = PdfViewer(entry)
-        return webview
-
-
