@@ -1,9 +1,9 @@
 """Module contains all versions of QGridLayout that are used as charges grids on dialogs."""
+from loguru import logger
+from PyQt6.QtWidgets import QGridLayout, QLabel
 
 import munientry.widgets.combo_boxes
-from loguru import logger
-from PyQt5.QtWidgets import QGridLayout, QLabel
-
+import munientry.widgets.line_edits
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.widgets import custom_widgets as cw
 
@@ -100,7 +100,7 @@ class ChargeGridBuilder(BaseChargeGrid):
     def add_charge_to_grid(self, column: int, charge: CriminalCharge) -> None:
         """Adds three required charge fields - offense, statute and degree - to the charge grid."""
         self.addWidget(QLabel(charge.offense), self.row_offense, column)
-        self.addWidget(cw.StatuteLineEdit(charge.statute), self.row_statute, column)
+        self.addWidget(munientry.widgets.line_edits.StatuteLineEdit(charge.statute), self.row_statute, column)
         self.addWidget(munientry.widgets.combo_boxes.DegreeComboBox(charge.degree), self.row_degree, column)
 
     def add_delete_button_to_grid(self, column: int, charge: CriminalCharge, dialog) -> None:
@@ -249,8 +249,8 @@ class FineOnlyChargeGrid(ChargeGridBuilder):
         self.add_delete_button_to_grid(column, charge, dialog)
 
     def add_fine_boxes_to_grid(self, column: int, charge: CriminalCharge) -> None:
-        self.addWidget(cw.FineLineEdit(charge.offense), self.row_fine, column)
-        self.addWidget(cw.FineSuspendedLineEdit(), self.row_fine_suspended, column)
+        self.addWidget(munientry.widgets.line_edits.FineLineEdit(charge.offense), self.row_fine, column)
+        self.addWidget(munientry.widgets.line_edits.FineSuspendedLineEdit(), self.row_fine_suspended, column)
 
 
 class JailChargesGrid(FineOnlyChargeGrid):
@@ -287,8 +287,8 @@ class JailChargesGrid(FineOnlyChargeGrid):
         self.add_delete_button_to_grid(column, charge, dialog)
 
     def add_jail_boxes_to_grid(self, column: int, charge: CriminalCharge) -> None:
-        self.addWidget(cw.JailLineEdit(charge.offense), self.row_jail_days, column)
-        self.addWidget(cw.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
+        self.addWidget(munientry.widgets.line_edits.JailLineEdit(charge.offense), self.row_jail_days, column)
+        self.addWidget(munientry.widgets.line_edits.JailSuspendedLineEdit(), self.row_jail_days_suspended, column)
 
     def set_all_trial_findings(self) -> None:
         logger.button(f'{self.sender().text()} Pressed')

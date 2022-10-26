@@ -307,6 +307,9 @@ font-weight: bold;</string>
       </item>
       <item row="1" column="2">
        <widget class="ConditionCheckbox" name="freeform_entry_checkBox">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="font">
          <font>
           <family>Palatino Linotype</family>
@@ -337,7 +340,7 @@ font-weight: bold;</string>
   <customwidget>
    <class>ConditionCheckbox</class>
    <extends>QCheckBox</extends>
-   <header>.custom_widgets</header>
+   <header>munientry.widgets.custom_widgets</header>
   </customwidget>
  </customwidgets>
  <tabstops>

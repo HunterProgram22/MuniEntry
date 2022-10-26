@@ -3,13 +3,6 @@ from tests.conftest import mouse_click, enter_data, check_barkschat
 
 
 @pytest.fixture
-def mock_entry(jcp_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(jcp_dialog.functions, 'create_entry', mock_create_entry)
-
-
-@pytest.fixture()
 def jcp_dialog(qtbot, main_window):
     "Jail CC Plea Dialog = jcp_dialog."
     mouse_click(main_window.rohrer_radioButton)

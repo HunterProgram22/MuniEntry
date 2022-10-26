@@ -3,8 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import PleaOnlyDialogInfoChecker
-from munientry.controllers import charges_grids as cg
-from munientry.data.cms_case_loaders import CmsChargeLoader
+from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import PleaOnlyEntryCaseInformation
 from munientry.updaters.grid_case_updaters import PleaOnlyDialogUpdater
 from munientry.views.plea_only_dialog_ui import Ui_PleaOnlyDialog
@@ -15,7 +14,6 @@ class PleaOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.dialog.charges_gridLayout.__class__ = cg.PleaOnlyGrid
         self.set_appearance_reason()
 
 

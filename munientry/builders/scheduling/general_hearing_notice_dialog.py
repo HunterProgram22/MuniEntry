@@ -1,13 +1,15 @@
 """Module containing classes for building the General Hearing Notice Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
+from PyQt6.QtCore import QDate
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.helper_functions import set_assigned_judge, set_courtroom
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
+from munientry.updaters.scheduling_updaters import (
+    SchedulingDialogCaseInformationUpdater,
+)
 from munientry.views.general_notice_of_hearing_dialog_ui import (
     Ui_GeneralNoticeOfHearingDialog,
 )
@@ -67,7 +69,7 @@ class GeneralNoticeOfHearingInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class GeneralNoticeOfHearingDialog(sched.SchedulingBaseDialog, Ui_GeneralNoticeOfHearingDialog):
+class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoticeOfHearingDialog):
     """Builder class for the General Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

@@ -1,5 +1,6 @@
 """Module that contains general dialogs for specific parts of a dialog dialog."""
 from typing import Any
+
 from loguru import logger
 
 from munientry.settings import (
@@ -17,7 +18,7 @@ class CaseInformationUpdater(BaseDialogUpdater):
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.model.case_number = self.dialog.case_number_lineEdit.text()
-        self.model.plea_trial_date = self.dialog.plea_trial_date.get_date()
+        self.model.plea_trial_date = self.dialog.plea_trial_date.get_date_as_string()
         try:
             self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
         except AttributeError as error:
@@ -60,7 +61,7 @@ class CourtCostsUpdater(BaseDialogUpdater):
         """Sets the balance due date to the name of the specialized docket or specific due date."""
         if self.dialog.ability_to_pay_box.currentText() in SPECIAL_DOCKETS_COSTS:
             return self.dialog.ability_to_pay_box.currentText()
-        return self.dialog.balance_due_date.get_date()
+        return self.dialog.balance_due_date.get_date_as_string()
 
     def calculate_court_costs(self) -> int:
         court_costs = 0
@@ -166,5 +167,3 @@ class JailDataUpdater(BaseDialogUpdater):
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

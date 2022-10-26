@@ -1,18 +1,15 @@
 """Contains classes for building the Admin Fiscal Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
+from munientry.creators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
-from munientry.settings import FISCAL_SAVE_PATH
-from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
-from munientry.updaters.base_updaters import BaseDialogUpdater
-from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
 from munientry.models.template_types import TEMPLATE_DICT
-
-TODAY = QDate.currentDate()
+from munientry.settings import TODAY
+from munientry.updaters.base_updaters import BaseDialogUpdater
+from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 
 
 class AdminFiscalViewModifier(admin.AdminViewModifier):
@@ -32,39 +29,17 @@ class AdminFiscalSignalConnector(admin.AdminSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
-        self.connect_other_dialog_signals()
-
-    def connect_other_dialog_signals(self):
-        pass
 
 
 class AdminFiscalSlotFunctions(admin.AdminSlotFunctions):
     """Slot functions used only by Admin Fiscal Dialog."""
 
-    def __init__(self, dialog):
-        super().__init__(dialog)
+    def create_entry_process(self) -> None:
+        AdminFiscalEntryCreator(self.dialog).create_entry_process()
 
     def clear_case_information_fields(self):
         self.dialog.account_number_box.clear()
         self.dialog.subaccount_number_box.clear()
-
-    def create_entry(self, save_path: str=None) -> None:
-        """Overrides BaseDialogSlotFunctions create_entry.
-
-        Sets a specific save path used to save Admin Fiscal.
-        """
-        save_path = FISCAL_SAVE_PATH
-        super().create_entry(save_path)
-
-    def set_document_name(self) -> str:
-        """Overrides BaseDialogSlotFunctions set_document_name.
-
-        Sets the document name based on driver name instead of case number.
-        """
-        account_number = self.dialog.entry_case_information.account_number
-        vendor_name = self.dialog.entry_case_information.disbursement_vendor
-        invoice = self.dialog.entry_case_information.invoice_number
-        return f'{account_number}_{vendor_name}_{invoice}.docx'
 
 
 class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
@@ -72,16 +47,23 @@ class AdminFiscalCaseInformationUpdater(BaseDialogUpdater):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_account_numbers_and_date()
+        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
+        self.set_account_numbers()
+        self.set_subaccount_numbers()
         self.set_payment_information()
 
-    def set_account_numbers_and_date(self):
+    def set_account_numbers(self):
         self.model.judicial_officer = self.dialog.judicial_officer
         account_number_box_string = self.dialog.account_number_box.currentText()
-        self.model.account_name, self.model.account_number = account_number_box_string.split(' - ')
+        acount_name, account_number = account_number_box_string.split(' - ')
+        self.model.account_name = acount_name
+        self.model.account_number = account_number
+
+    def set_subaccount_numbers(self):
         subaccount_number_box_string = self.dialog.subaccount_number_box.currentText()
-        self.model.subaccount_name, self.model.subaccount_number = subaccount_number_box_string.split(' - ')
-        self.model.plea_trial_date = self.dialog.plea_trial_date.date().toString('MMMM dd, yyyy')
+        subaccount_name, subaccount_number = subaccount_number_box_string.split(' - ')
+        self.model.subaccount_name = subaccount_name
+        self.model.subaccount_number = subaccount_number
 
     def set_payment_information(self):
         self.model.disbursement_reason = self.dialog.disbursement_reason_lineEdit.text()
@@ -115,6 +97,7 @@ class AdminFiscalDialog(base.BaseDialogBuilder, Ui_AdminFiscalDialog):
         'updater': AdminFiscalCaseInformationUpdater,
         'info_checker': AdminFiscalInfoChecker,
     }
+
     def __init__(self, judicial_officer=None, parent=None):
         super().__init__(parent)
         self.template = TEMPLATE_DICT.get(self.dialog_name)

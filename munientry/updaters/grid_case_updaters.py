@@ -1,15 +1,16 @@
 """Module that contains case updaters for dialogs that have a charge grid."""
 
 from loguru import logger
+
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.updaters.charge_grid_updaters import (
     DiversionGridModelUpdater,
     FineOnlyGridModelUpdater,
     JailCCGridModelUpdater,
-    TrialSentencingGridModelUpdater,
+    LeapAdmissionPleaGridModelUpdater,
     NotGuiltyGridModelUpdater,
     PleaOnlyGridModelUpdater,
-    LeapAdmissionPleaGridModelUpdater,
+    TrialSentencingGridModelUpdater,
 )
 from munientry.updaters.general_updaters import (
     CaseInformationUpdater,
@@ -76,7 +77,7 @@ class SentencingOnlyDialogUpdater(JailCCDialogUpdater):
         self.update_plea_date()
 
     def update_plea_date(self):
-        self.model.plea_date = self.dialog.plea_date.get_date()
+        self.model.plea_date = self.dialog.plea_date.get_date_as_string()
 
 
 class TrialSentencingDialogUpdater(JailCCDialogUpdater):
@@ -150,7 +151,7 @@ class LeapSentencingDialogUpdater(BaseDialogUpdater):
         self.model.fine_jail_days = self.dialog.jail_time_credit_box.text()
 
     def update_leap_plea_date(self):
-        self.model.leap_plea_date = self.dialog.leap_plea_date.get_date()
+        self.model.leap_plea_date = self.dialog.leap_plea_date.get_date_as_string()
 
 
 class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
@@ -165,7 +166,7 @@ class LeapAdmissionPleaDialogUpdater(BaseDialogUpdater):
         self.update_case_information()
         self.update_model_with_charge_grid_data()
         try:
-            self.model.leap_sentencing_date = self.dialog.sentencing_date.get_date()
+            self.model.leap_sentencing_date = self.dialog.sentencing_date.get_date_as_string()
         except AttributeError as error:
             logger.warning(error)
 

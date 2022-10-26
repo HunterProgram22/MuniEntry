@@ -1,6 +1,6 @@
 """Module for packaging data from SQL Server database for use in application."""
 from loguru import logger
-from PyQt5.QtSql import QSqlQuery
+from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name, clean_statute_name
@@ -24,7 +24,7 @@ class CaseDocketSQLServer(object):
 
     def get_docket(self) -> list:
         query_string = get_case_docket_query(self.case_number)
-        logger.info(query_string)
+        logger.info(f'Querying Authority Court for: {self.case_number}')
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         self.query.exec()
@@ -62,8 +62,7 @@ class CriminalCaseSQLServer(object):
         query_string = general_case_search_query(self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
-        logger.database(f'Querying {self.database_connection_name}')
-        logger.database(f'Query: {query_string}')
+        logger.info(f'Querying Authority Court for: {self.case_number}')
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
@@ -96,7 +95,6 @@ class CriminalCaseSQLServer(object):
 class MultipleCriminalCaseSQLServer(CriminalCaseSQLServer):
 
     def __init__(self, matched_case_numbers_list: list) -> None:
-        logger.debug(matched_case_numbers_list)
         self.all_case_numbers = matched_case_numbers_list
         self.database_connection_name = 'con_authority_court'
         self.database = open_db_connection(self.database_connection_name)
@@ -112,8 +110,7 @@ class MultipleCriminalCaseSQLServer(CriminalCaseSQLServer):
             query_string = general_case_search_query(self.case_number)
             self.query = QSqlQuery(self.database)
             self.query.prepare(query_string)
-            logger.database(f'Querying {self.database_connection_name}')
-            logger.database(f'Query: {query_string}')
+            logger.info(f'Querying Authority Court for: {self.case_number}')
             self.query.bindValue(self.case_number, self.case_number)
             self.query.exec()
             self.load_query_data_into_case()
@@ -150,8 +147,7 @@ class DrivingInfoSQLServer(object):
         query_string = driving_case_search_query(self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
-        logger.database(f'Querying {self.database_connection_name}')
-        logger.database(f'Query: {query_string}')
+        logger.info(f'Querying Authority Court for: {self.case_number}')
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
@@ -202,5 +198,3 @@ class DrivingInfoSQLServer(object):
 
 if __name__ == '__main__':
     logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')

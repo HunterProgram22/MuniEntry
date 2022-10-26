@@ -1,17 +1,15 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
 
-from os import startfile
 from typing import Any
 
-from docxtpl import DocxTemplate
 from loguru import logger
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import QDialog
 
-from munientry.settings import ICON_PATH, SAVE_PATH, WIDGET_TYPE_ACCESS_DICT
-from munientry.widgets.message_boxes import RequiredBox
+from munientry.creators.entry_creator import BaseEntryCreator
+from munientry.settings import ICON_PATH, WIDGET_TYPE_ACCESS_DICT
 
 
 class BuildMixin(object):
@@ -92,9 +90,9 @@ class BaseDialogViewModifier(object):
         self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.dialog.setWindowFlags(
             self.dialog.windowFlags()
-            | Qt.CustomizeWindowHint
-            | Qt.WindowMaximizeButtonHint
-            | Qt.WindowCloseButtonHint,
+            | Qt.WindowType.CustomizeWindowHint
+            | Qt.WindowType.WindowMaximizeButtonHint
+            | Qt.WindowType.WindowCloseButtonHint,
         )
         self.dialog.setupUi(self.dialog)
 
@@ -111,60 +109,9 @@ class BaseDialogSlotFunctions(object):
         self.dialog.case_number_lineEdit.clear()
         self.dialog.defendant_first_name_lineEdit.setFocus()
 
-    def create_entry(self, save_path: str=None) -> None:
-        """Loads the proper template and creates the entry.
-
-        Uses the default SAVE_PATH from settings.py. This is overridden in the create_entry
-        method in DrivingPrivilegesSlotFunctions with DRIVE_SAVE_PATH.
-        """
-        if save_path is None:
-            save_path = SAVE_PATH
-        self.dialog.update_entry_case_information()
-        doc = DocxTemplate(self.dialog.template.template_path)
-        case_data = self.dialog.entry_case_information.get_case_information()
-        doc.render(case_data)
-        docname = self.set_document_name()
-        logger.info(f'Entry Created: {docname}')
-        try:
-            doc.save(f'{save_path}{docname}')
-        except PermissionError as error:
-            logger.warning(error)
-            self.dialog.message_box = RequiredBox(
-                'An entry for this case is already open in Word.\n'
-                + 'You must close the Word document first.',
-            )
-            self.dialog.message_box.exec()
-        startfile(f'{save_path}{docname}')
-
     def create_entry_process(self) -> None:
-        """Only creates the entry if the dialog passes all checks and returns 'Pass'."""
-        if self.update_info_and_perform_checks() == 'Pass':
-            self.create_entry()
-
-    def set_document_name(self) -> str:
-        """Returns a name for the document in the format CaseNumber_TemplateName.docx.
-
-        Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
-        """
-        case_number = self.dialog.entry_case_information.case_number
-        template_name = self.dialog.template.template_name
-        return f'{case_number}_{template_name}.docx'
-
-    def update_info_and_perform_checks(self):
-        """This method performs an update then calls to the main_entry_dialog's InfoChecker class.
-
-        The InfoChecker check_status will return as 'Fail' if any of the checks are hard stops -
-        meaning the warning message doesn't allow immediate correction.
-
-        The dialog.update_entry_case_information is called a second time to update the model
-        with any changes to information that was made by the InfoChecker checks.
-        """
-        self.dialog.update_entry_case_information()
-        self.dialog.perform_info_checks()
-        if self.dialog.dialog_checks.check_status == 'Fail':
-            return 'Fail'
-        self.dialog.update_entry_case_information()
-        return 'Pass'
+        """Calls the class for creating an entry triggered when create entry button is pressed."""
+        BaseEntryCreator(self.dialog).create_entry_process()
 
     def show_hide_checkbox_connected_fields(self):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
@@ -175,7 +122,7 @@ class BaseDialogSlotFunctions(object):
             if checkbox.isChecked():
                 hidden_checkbox.setEnabled(True)
                 hidden_checkbox.setHidden(False)
-                hidden_checkbox.setFocus(True)
+                hidden_checkbox.setFocus()
             else:
                 hidden_checkbox.setEnabled(False)
                 hidden_checkbox.setHidden(True)

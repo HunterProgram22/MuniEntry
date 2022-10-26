@@ -1,5 +1,5 @@
 """Module for building the view of the MainWindow."""
-from PyQt5 import QtGui
+from PyQt6.QtGui import QIcon
 
 from munientry.builders.administrative import (
     driving_privileges_dialog,
@@ -28,6 +28,10 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
+from munientry.digitalworkflow import hemmeter_dw_dialog as hemmeter
+from munientry.digitalworkflow import bunner_dw_dialog as bunner
+from munientry.digitalworkflow import rohrer_dw_dialog as rohrer
+from munientry.digitalworkflow import mattox_dw_dialog as mattox
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import ICON_PATH, VERSION_NUMBER
 
@@ -39,7 +43,7 @@ class MainWindowViewModifier(object):
         self.main_window = main_window
         self.main_window.setupUi(self.main_window)
         self.create_daily_case_lists()
-        self.main_window.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
+        self.main_window.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
 
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
@@ -50,7 +54,8 @@ class MainWindowViewModifier(object):
         self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
         self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
         self.main_window.admin_dialog_no_case_buttons_dict = self.connect_admin_no_case_dialog_buttons()
-
+        self.main_window.digital_workflow_buttons_dict = self.connect_digital_workflow_dialog_buttons()
+        self.main_window.probation_workflow_buttons_dict = self.connect_probation_workflow_dialog_buttons()
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
             self.main_window.slated_cases_box,
@@ -135,6 +140,22 @@ class MainWindowViewModifier(object):
         return {
             self.main_window.fiscal_entriesButton:
                 admin_fiscal_dialog.AdminFiscalDialog,
+        }
+
+    def connect_digital_workflow_dialog_buttons(self) -> dict:
+        return {
+            self.main_window.hemmeter_workflowButton:
+                hemmeter.HemmeterWorkflowDialog,
+            self.main_window.rohrer_workflowButton:
+                rohrer.RohrerWorkflowDialog,
+            self.main_window.bunner_workflowButton:
+                bunner.BunnerWorkflowDialog,
+        }
+
+    def connect_probation_workflow_dialog_buttons(self) -> dict:
+        return {
+            self.main_window.probation_workflowButton:
+                mattox.MattoxWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:

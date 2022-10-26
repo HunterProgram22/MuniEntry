@@ -3,23 +3,22 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.controllers.helper_functions import set_assigned_judge, set_courtroom
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.helper_functions import set_assigned_judge, set_courtroom
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.settings import TODAY, TYPE_CHECKING
-from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
+from munientry.settings import TODAY
+from munientry.updaters.scheduling_updaters import (
+    SchedulingDialogCaseInformationUpdater,
+)
 from munientry.views.trial_to_court_hearing_dialog_ui import (
     Ui_TrialToCourtHearingDialog,
 )
-
-if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
 
 
 class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
     """Class for building and modifying the Trial to Court Hearing Notice Dialog."""
 
-    def __init__(self, dialog: 'QDialog') -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.set_view_dates()
 
@@ -42,6 +41,7 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
 
 class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
+
     def __init__(self, dialog):
         super().__init__(dialog)
         self.model.assigned_judge = self.dialog.assigned_judge
@@ -63,7 +63,7 @@ class TrialToCourtDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class TrialToCourtHearingDialog(sched.SchedulingBaseDialog, Ui_TrialToCourtHearingDialog):
+class TrialToCourtHearingDialog(sched.SchedulingDialogBuilder, Ui_TrialToCourtHearingDialog):
     """Builder class for the Trial to Court Notice of Hearing.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

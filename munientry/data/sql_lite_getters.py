@@ -1,7 +1,7 @@
 """Module for packaging data from SQL Lite internal database for use in application."""
 
 from loguru import logger
-from PyQt5.QtSql import QSqlQuery
+from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_lite_queries import select_case_data_sql_query

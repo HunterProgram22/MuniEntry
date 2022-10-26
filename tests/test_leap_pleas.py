@@ -1,17 +1,11 @@
 from datetime import date, timedelta
 
 import pytest
-from tests.conftest import mouse_click, enter_data, check_barkschat
+from tests.conftest import mouse_click, enter_data
 
-from munientry.controllers.helper_functions import set_future_date
+from munientry.helper_functions import set_future_date
 
 TODAY = date.today()
-
-@pytest.fixture
-def mock_entry(leap_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(leap_dialog.functions, 'create_entry', mock_create_entry)
 
 
 @pytest.fixture

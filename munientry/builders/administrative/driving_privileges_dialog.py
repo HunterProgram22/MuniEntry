@@ -1,20 +1,18 @@
 """Contains classes for building the Driving Privileges Dialog."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.data.cms_case_loaders import CmsDrivingInfoLoader
+from munientry.creators.entry_creator import DrivingPrivilegesEntryCreator
+from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.settings import DRIVE_SAVE_PATH
+from munientry.settings import TODAY
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
-
-TODAY = QDate.currentDate()
 
 
 class DrivingPrivilegesViewModifier(admin.AdminViewModifier):
@@ -77,23 +75,8 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
             self.dialog.other_conditions_checkBox,
         ]
 
-    def create_entry(self, save_path: str=None) -> None:
-        """Overrides BaseDialogSlotFunctions create_entry.
-
-        Sets a specific save path used to save Driving Privileges.
-        """
-        save_path = DRIVE_SAVE_PATH
-        super().create_entry(save_path)
-
-    def set_document_name(self) -> str:
-        """Overrides BaseDialogSlotFunctions set_document_name.
-
-        Sets the document name based on driver name instead of case number.
-        """
-        first_name = self.dialog.entry_case_information.defendant.first_name
-        last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
-        return f'{first_name}_{last_name}_{template_name}.docx'
+    def create_entry_process(self) -> None:
+        DrivingPrivilegesEntryCreator(self.dialog).create_entry_process()
 
     def update_end_suspension_date(self) -> None:
         suspension_days_dict = {
@@ -226,8 +209,8 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         ]
         suspension_type = [button for button in radio_buttons if button.isChecked()]
         self.model.suspension_type = suspension_type[0].text()
-        self.model.suspension_start_date = self.dialog.suspension_start_date.get_date()
-        self.model.suspension_end_date = self.dialog.suspension_end_date.get_date()
+        self.model.suspension_start_date = self.dialog.suspension_start_date.get_date_as_string()
+        self.model.suspension_end_date = self.dialog.suspension_end_date.get_date_as_string()
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
 
@@ -253,7 +236,7 @@ class DrivingPrivilegesDialogInfoChecker(BaseChecker):
         return PASS
 
 
-class DrivingPrivilegesDialog(admin.AdminBaseDialog, Ui_DrivingPrivilegesDialog):
+class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDialog):
     """Builder for the Driving Privileges Dialog.
 
     The judicial_officer for this entry is the selected Assignment Commissioner.

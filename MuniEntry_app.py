@@ -15,10 +15,12 @@ except ModuleNotFoundError:
 import multiprocessing
 import sys
 
+# from PyQt6.QtWebEngineCore import QWebEngineSettings
+from PyQt6.QtWebEngineWidgets import QWebEngineView
 from loguru import logger
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QSplashScreen
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
+from PyQt6.QtWidgets import QApplication, QSplashScreen
 
 from munientry import logging_module
 from munientry.settings import ICON_PATH, SOCKET_NAME, VERSION_NUMBER
@@ -45,7 +47,7 @@ def main():
     splash.show()
     splash.showMessage(
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>',
-        Qt.AlignBottom | Qt.AlignCenter,
+        Qt.AlignmentFlag.AlignBottom | Qt.AlignmentFlag.AlignCenter,
     )
     logger.info('Splash Screen Shown')
     try:

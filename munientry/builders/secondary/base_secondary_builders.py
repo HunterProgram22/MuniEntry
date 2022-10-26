@@ -1,7 +1,7 @@
 """Contains base classes for secondary dialogs."""
 from loguru import logger
-from PyQt5.QtCore import QDate
-from PyQt5.QtWidgets import QLabel
+from PyQt6.QtCore import QDate
+from PyQt6.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
 from munientry.settings import WIDGET_TYPE_SET_DICT

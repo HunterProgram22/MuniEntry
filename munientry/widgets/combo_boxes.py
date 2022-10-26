@@ -1,21 +1,41 @@
-from PyQt5 import QtCore, QtGui
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QComboBox, QMenu
+"""Module containing custom widget Combo Boxes.
+
+If using QtDesigner for creation of the Ui file you must promote the widget to one of the custom
+widgets that is used. The header file for this module must then be added in QtDesigner so that
+when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
+module will be imported as part of the python_view_file.py.
+"""
 from loguru import logger
-from munientry.data.connections import open_db_connection, close_db_connection
+from PyQt6.QtWidgets import QComboBox, QMenu
+
+from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.sql_lite_functions import query_attorney_list
+from munientry.widgets.widget_settings import (
+    CASE_LIST_BOX_MIN_SIZE,
+    COMBO_BOX_MAX_SIZE,
+    COMBO_BOX_MIN_SIZE,
+    CONTEXT_MENU_POLICY,
+    EVENT_KEY_DELETE,
+    EVENT_WHEEL_EVENT,
+    STRONG_FOCUS,
+    WHITE_BACKGROUND_STYLE_SHEET,
+)
 
 
 class DailyCaseListComboBox(QComboBox):
+    """Custom ComboBox used for Daily Case Lists on Main Window."""
+
     def __init__(self, parent=None):
-        super(DailyCaseListComboBox, self).__init__(parent)
-        self.setFocusPolicy(Qt.StrongFocus)
+        super().__init__(parent)
+        self.setFocusPolicy(STRONG_FOCUS)
         self.setEnabled(False)
-        self.setMinimumSize(QtCore.QSize(0, 40))
-        self.setStyleSheet( "background-color: rgb(255, 255, 255);\n"
-                            "selection-background-color: rgb(85, 170, 255);")
+        self.setMinimumSize(CASE_LIST_BOX_MIN_SIZE)
+        self.setStyleSheet(
+            'background-color: rgb(255, 255, 255);'
+            + 'selection-background-color: rgb(85, 170, 255);',
+        )
         self.setEditable(False)
-        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.setContextMenuPolicy(CONTEXT_MENU_POLICY)
         self.customContextMenuRequested.connect(self.show_menu)
 
     def setup_combo_box(self, name, radio_button, main_window):
@@ -40,8 +60,8 @@ class DailyCaseListComboBox(QComboBox):
 
     def show_menu(self, pos):
         menu = QMenu()
-        menu.addAction("Delete Case", self.delete_case)
-        menu.exec_(self.mapToGlobal(pos))
+        menu.addAction('Delete Case', self.delete_case)
+        menu.exec(self.mapToGlobal(pos))
 
     def delete_case(self):
         index = self.currentIndex()
@@ -49,29 +69,33 @@ class DailyCaseListComboBox(QComboBox):
         self.removeItem(index)
         logger.action(f'Case {case} deleted from {self.objectName()}.')
 
-    def all_items(self):
+    def all_items(self) -> list:
         return [self.itemText(index) for index in range(self.count())]
 
-    def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
-        super(DailyCaseListComboBox, self).keyPressEvent(event)
-        if event.key() == QtCore.Qt.Key_Delete:
+    def keyPressEvent(self, event) -> None:
+        super().keyPressEvent(event)
+        if event.key() == EVENT_KEY_DELETE:
             self.delete_case()
 
 
 class NoScrollComboBox(QComboBox):
+    """Custom ComboBox used to ignore scroll wheel when mouse hovers over a ComboBox."""
+
     def __init__(self, parent=None):
-        super(QComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        super().__init__(parent)
+        self.setFocusPolicy(STRONG_FOCUS)
 
     def wheelEvent(self, event):
-        if event == QtCore.QEvent.Wheel:
+        if event == EVENT_WHEEL_EVENT:
             event.ignore()
 
 
 class DefenseCounselComboBox(NoScrollComboBox):
+    """Custom ComboBox for loading attorneys from internal DB (MuniEntryDB.sqlite)."""
+
     def __init__(self, parent=None):
-        super(NoScrollComboBox, self).__init__(parent)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        super().__init__(parent)
+        self.setFocusPolicy(STRONG_FOCUS)
 
     def load_attorneys(self):
         db_connection = open_db_connection('con_attorneys')
@@ -84,69 +108,84 @@ class DefenseCounselComboBox(NoScrollComboBox):
 
 
 class DegreeComboBox(NoScrollComboBox):
+    """Custom ComboBox used for charges grid degree boxes."""
+
     def __init__(self, degree, parent=None):
-        super(NoScrollComboBox, self).__init__(parent)
+        super().__init__(parent)
         self.set_up_widget(degree)
 
     def set_up_widget(self, degree):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setMinimumSize(COMBO_BOX_MIN_SIZE)
+        self.setMaximumSize(COMBO_BOX_MAX_SIZE)
+        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setObjectName("degree_choice_box")
-        self.addItem("")
-        self.addItem("M1")
-        self.addItem("M2")
-        self.addItem("M3")
-        self.addItem("M4")
-        self.addItem("MM")
-        self.addItem("UCM")
-        self.addItem("No Data")
+        self.setFocusPolicy(STRONG_FOCUS)
+        self.setObjectName('degree_choice_box')
+        self.add_degree_box_items(degree)
+
+    def add_degree_box_items(self, degree):
+        self.addItem('')
+        self.addItem('M1')
+        self.addItem('M2')
+        self.addItem('M3')
+        self.addItem('M4')
+        self.addItem('MM')
+        self.addItem('UCM')
+        self.addItem('No Data')
         self.setCurrentText(degree)
 
 
 class PleaComboBox(NoScrollComboBox):
+    """Custom ComboBox used for charges grid plea boxes."""
+
     def __init__(self, column, dialog=None, parent=None):
-        super(NoScrollComboBox, self).__init__(parent)
+        super().__init__(parent)
         self.column = column
         self.dialog = dialog
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setMinimumSize(COMBO_BOX_MIN_SIZE)
+        self.setMaximumSize(COMBO_BOX_MAX_SIZE)
+        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setObjectName("plea_choice_box")
+        self.setFocusPolicy(STRONG_FOCUS)
+        self.setObjectName('plea_choice_box')
+        self.add_plea_box_items()
+
+    def add_plea_box_items(self):
         if self.dialog.objectName() == 'TrialSentencingDialog':
             self.addItem('Court')
             self.addItem('Jury')
             self.addItem('Dismissed')
         else:
-            self.addItem("")
-            self.addItem("Guilty")
-            self.addItem("No Contest")
-            self.addItem("Not Guilty")
-            self.addItem("Dismissed")
+            self.addItem('')
+            self.addItem('Guilty')
+            self.addItem('No Contest')
+            self.addItem('Not Guilty')
+            self.addItem('Dismissed')
 
 
 class FindingComboBox(NoScrollComboBox):
+    """Custom ComboBox used for charges grid finding boxes."""
+
     def __init__(self, parent=None):
-        super(NoScrollComboBox, self).__init__(parent)
+        super().__init__(parent)
         self.set_up_widget()
 
     def set_up_widget(self):
-        self.setMinimumSize(QtCore.QSize(200, 0))
-        self.setMaximumSize(QtCore.QSize(200, 50))
-        self.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.setMinimumSize(COMBO_BOX_MIN_SIZE)
+        self.setMaximumSize(COMBO_BOX_MAX_SIZE)
+        self.setStyleSheet(WHITE_BACKGROUND_STYLE_SHEET)
         self.setEditable(False)
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setObjectName("finding_choice_box")
-        self.addItem("")
-        self.addItem("Guilty")
-        self.addItem("Not Guilty")
-        self.addItem("Lesser Included")
-        self.addItem("Guilty - Allied Offense")
-        self.addItem("Not Guilty - Allied Offense")
+        self.setFocusPolicy(STRONG_FOCUS)
+        self.setObjectName('finding_choice_box')
+        self.add_finding_box_items()
+
+    def add_finding_box_items(self):
+        self.addItem('')
+        self.addItem('Guilty')
+        self.addItem('Not Guilty')
+        self.addItem('Lesser Included')
+        self.addItem('Guilty - Allied Offense')
+        self.addItem('Not Guilty - Allied Offense')

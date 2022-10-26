@@ -3,7 +3,7 @@
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
 """
 from loguru import logger
-from PyQt5.QtSql import QSqlDatabase
+from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.settings import DB_PATH, set_server_and_database
@@ -46,7 +46,7 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
     Returns the connection as a QSqlDatabase object.
     """
-    db_connection = QSqlDatabase.addDatabase('QODBC3', connection_name)
+    db_connection = QSqlDatabase.addDatabase('QODBC', connection_name)
     server, database = set_server_and_database()
     connection_string = (
         'DRIVER=SQL Server;'

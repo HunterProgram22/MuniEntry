@@ -7,11 +7,7 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import RequiredBox
-
-if TYPE_CHECKING:
-    from PyQt5.QtWidgets import QDialog
 
 
 class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
@@ -23,7 +19,7 @@ class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog: 'QDialog') -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -44,7 +40,7 @@ class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecke
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog: 'QDialog') -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',
@@ -60,7 +56,7 @@ class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecke
 class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
     """Class with checks for Diversion Dialog."""
 
-    def __init__(self, dialog: 'QDialog') -> None:
+    def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.dialog_check_list = [
             'check_defense_counsel',

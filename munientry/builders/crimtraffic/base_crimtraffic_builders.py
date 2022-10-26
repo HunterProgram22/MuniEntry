@@ -1,13 +1,13 @@
 """Base Classes for CrimTraffic Entries."""
 from loguru import logger
-from PyQt5.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
 from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
-from munientry.controllers.helper_functions import set_future_date
+from munientry.creators.entry_creator import CrimTrafficEntryCreator
+from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import SPECIAL_DOCKETS_COSTS
+from munientry.settings import SPECIAL_DOCKETS_COSTS, TODAY
 from munientry.widgets.message_boxes import InfoBox
 
 ORDERED = 'ordered'
@@ -16,7 +16,9 @@ ORDERED = 'ordered'
 class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
     """The base class for all criminal and traffic main entry dialogs."""
 
-    def __init__(self, judicial_officer, cms_case=None, case_table=None, parent=None):
+    def __init__(
+        self, judicial_officer, cms_case=None, case_table=None, workflow_status=None, parent=None
+    ):
         """Self.case_table must be set before the call to super().__init__.
 
         The init of BaseDialog, called by super().__init__ calls ModifyView which will use the
@@ -28,6 +30,8 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
+        self.workflow_status = workflow_status
+        logger.debug(self.workflow_status)
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()
@@ -68,7 +72,7 @@ class FineCostsMixin(object):
         """
         if days_to_add_string == 'forthwith':
             self.dialog.balance_due_date.setHidden(False)
-            self.dialog.balance_due_date.setDate(QDate.currentDate())
+            self.dialog.balance_due_date.setDate(TODAY)
         elif days_to_add_string in SPECIAL_DOCKETS_COSTS:
             self.dialog.balance_due_date.setHidden(True)
         else:
@@ -76,7 +80,7 @@ class FineCostsMixin(object):
             days_to_add = self.get_days_to_add(days_to_add_string)
             total_days_to_add = set_future_date(days_to_add, 'Tuesday')
             self.dialog.balance_due_date.setDate(
-                QDate.currentDate().addDays(total_days_to_add),
+                TODAY.addDays(total_days_to_add),
             )
 
     def get_days_to_add(self, days_to_add_string):
@@ -118,6 +122,9 @@ class FineCostsMixin(object):
 
 class CrimTrafficSlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for CrimTraffic Entries."""
+
+    def create_entry_process(self) -> None:
+        CrimTrafficEntryCreator(self.dialog).create_entry_process()
 
     def start_add_charge_dialog(self):
         self.dialog.update_entry_case_information()

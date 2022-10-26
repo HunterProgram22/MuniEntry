@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.data.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import (
@@ -14,11 +14,13 @@ from munientry.settings import (
     TODAY,
     TYPE_CHECKING,
 )
-from munientry.updaters.scheduling_updaters import SchedulingDialogCaseInformationUpdater
+from munientry.updaters.scheduling_updaters import (
+    SchedulingDialogCaseInformationUpdater,
+)
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
 if TYPE_CHECKING:
-    from PyQt5.QtCore import QDate
+    from PyQt6.QtCore import QDate
 
 ROHRER_SCHEDULING_ENTRY = 'Rohrer Scheduling Entry'
 HEMMETER_SCHEDULING_ENTRY = 'Hemmeter Scheduling Entry'
@@ -243,7 +245,7 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class SchedulingEntryDialog(sched.SchedulingBaseDialog, Ui_SchedulingEntryDialog):
+class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
     """The builder class for the Scheduling Entry Dialog."""
 
     build_dict = {

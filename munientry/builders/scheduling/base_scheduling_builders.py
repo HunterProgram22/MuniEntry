@@ -2,10 +2,11 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
+from munientry.creators.entry_creator import SchedulingEntryCreator
 from munientry.models.template_types import TEMPLATE_DICT
 
 
-class SchedulingBaseDialog(base.BaseDialogBuilder):
+class SchedulingDialogBuilder(base.BaseDialogBuilder):
     """The base class for all Scheduling Dialogs."""
 
     def __init__(self, judicial_officer=None, cms_case=None, case_table=None, parent=None):
@@ -34,3 +35,6 @@ class SchedulingSignalConnector(base.BaseDialogSignalConnector):
 
 class SchedulingSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional functions for Scheduling Dialogs."""
+
+    def create_entry_process(self) -> None:
+        SchedulingEntryCreator(self.dialog).create_entry_process()

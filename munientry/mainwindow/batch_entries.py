@@ -10,7 +10,7 @@ from munientry.data.excel_functions import (
     load_active_worksheet,
 )
 from munientry.models.excel_models import BatchCaseInformation
-from munientry.settings import DB_PATH, SAVE_PATH, TEMPLATE_PATH, TYPE_CHECKING
+from munientry.settings import DB_PATH, BATCH_SAVE_PATH, TEMPLATE_PATH, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from openpyxl import Workbook
@@ -27,7 +27,7 @@ def create_entry(case_data):
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
     doc.render(case_data.get_case_information())
     docname = set_document_name(case_data.case_number)
-    doc.save(fr'{SAVE_PATH}\batch\{docname}')
+    doc.save(f'{BATCH_SAVE_PATH}{docname}')
 
 
 def set_document_name(case_number: str) -> str:

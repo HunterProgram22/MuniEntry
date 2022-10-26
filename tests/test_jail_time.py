@@ -1,7 +1,7 @@
 import pytest
 from tests.conftest import mouse_click, enter_data, check_barkschat
 
-@pytest.fixture()
+@pytest.fixture
 def jcp_dialog(qtbot, main_window):
     "Jail CC Plea Dialog = jcp_dialog."
     mouse_click(main_window.rohrer_radioButton)
@@ -13,13 +13,6 @@ def jcp_dialog(qtbot, main_window):
     enter_data(main_window.dialog.charges_gridLayout.itemAtPosition(9, 2).widget(), "40")
     mouse_click(main_window.dialog.jail_checkBox)
     return main_window.dialog
-
-
-@pytest.fixture
-def mock_entry(jcp_dialog, monkeypatch):
-    def mock_create_entry():
-        return "Entry Created"
-    monkeypatch.setattr(jcp_dialog.functions, 'create_entry', mock_create_entry)
 
 
 def test_create_jail_cc_plea_entry(qtbot, jcp_dialog, mock_entry):
