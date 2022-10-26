@@ -1,9 +1,10 @@
 """Builder for Mattox Digital Workflow Dialog."""
 import os
+import webbrowser
 
-from loguru import logger
+# from loguru import logger
 
-from munientry.digitalworkflow.workflow_tools import MattoxPdfViewer
+# from munientry.digitalworkflow.workflow_tools import MattoxPdfViewer
 from munientry.builders import base_builders as base
 from munientry.views.mattox_workflow_dialog_ui import Ui_MattoxWorkflowDialog
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
@@ -44,7 +45,8 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         else:
             message = 'No entry is selected. You must select an entry to open.'
             return RequiredBox(message).exec()
-        self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, widget_list, self.dialog)
+        webbrowser.open_new(document)
+        # self.dialog.entry_view = MattoxPdfViewer(document, selected_entry_widget, widget_list, self.dialog)
 
     def delete_entry(self):
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
