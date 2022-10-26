@@ -36,7 +36,7 @@ class SettingDialog(QDialog):
     def __init__(self, mainwindow, parent=None):
         super().__init__(parent)
         self.mainwindow = mainwindow
-        self.setWindowIcon(QIcon(f'{ICON_PATH}.gavel.ico'))
+        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.setWindowTitle('Workflow Settings')
         button_group = QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel
 

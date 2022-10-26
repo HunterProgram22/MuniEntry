@@ -82,3 +82,6 @@ class GeneralUserSettings(object):
         logger.info('Setting General User Settings')
         self.mainwindow.tabWidget.setTabVisible(3, False)
         self.mainwindow.search_tabWidget.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(1, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(3, False)

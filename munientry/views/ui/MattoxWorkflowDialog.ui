@@ -41,54 +41,7 @@
    <string notr="true">background-color: rgb(25, 49, 91);
 font: 75 11pt &quot;Palatino Linotype&quot;;</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="4,0">
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="font">
-      <font>
-       <family>Palatino Linotype</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="1">
-       <widget class="QPushButton" name="cancel_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="reload_entries_Button">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-     </property>
-     <property name="text">
-      <string>Reload Entries</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="4">
    <item row="0" column="0" colspan="2">
     <widget class="QFrame" name="frame_3">
      <property name="sizePolicy">
@@ -116,10 +69,27 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0,0">
       <property name="verticalSpacing">
        <number>24</number>
       </property>
+      <item row="4" column="0">
+       <widget class="QListWidget" name="community_control_entries_listWidget"/>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="cancel_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QListWidget" name="scram_gps_entries_listWidget"/>
+      </item>
       <item row="6" column="0" colspan="2">
        <widget class="Line" name="line_2">
         <property name="frameShadow">
@@ -133,34 +103,21 @@ font-weight: bold;</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
-       <widget class="QPushButton" name="show_docket_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
+      <item row="0" column="1">
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>40</height>
+         </size>
         </property>
         <property name="text">
-         <string>Show Case Docket</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SCRAM AND GPS BOND ENTRIES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QPushButton" name="open_entry_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Open Selected Entry for Review</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QListWidget" name="scram_gps_entries_listWidget"/>
-      </item>
-      <item row="4" column="0">
-       <widget class="QListWidget" name="community_control_entries_listWidget"/>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
@@ -182,19 +139,38 @@ font-weight: bold;</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="label">
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>40</height>
-         </size>
+      <item row="7" column="0">
+       <widget class="QPushButton" name="load_new_entries_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;SCRAM AND GPS BOND ENTRIES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>Check For New Entries</string>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QPushButton" name="open_entry_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Open Selected Entry for Review</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QPushButton" name="delete_entry_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 96, 82);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Delete Entry from Workflow</string>
         </property>
        </widget>
       </item>
