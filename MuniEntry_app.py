@@ -16,7 +16,7 @@ import multiprocessing
 import sys
 
 # from PyQt6.QtWebEngineCore import QWebEngineSettings
-from PyQt6.QtWebEngineWidgets import QWebEngineView
+# from PyQt6.QtWebEngineWidgets import QWebEngineView
 from loguru import logger
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap

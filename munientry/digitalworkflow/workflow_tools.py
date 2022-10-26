@@ -6,7 +6,7 @@ import fitz
 from loguru import logger
 from PyQt6 import QtGui, QtPrintSupport
 from PyQt6.QtCore import QUrl
-from PyQt6.QtWebEngineWidgets import QWebEngineView
+# from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtWidgets import QHBoxLayout, QMainWindow, QToolBar, QToolButton
 
 from munientry.settings import DW_APPROVED_DIR, ICON_PATH, TIMENOW
@@ -54,7 +54,7 @@ class BasePdfViewer(QMainWindow):
         self.entry_widget = entry_widget
         self.widget_list = widget_list
         self.dialog = dialog
-        self.initUI()
+        # self.initUI()
         self.add_viewer_buttons()
         self.show()
 
@@ -63,17 +63,17 @@ class BasePdfViewer(QMainWindow):
         self.toolBar.setStyleSheet('spacing: 10px; padding: 10px;')
         self.addToolBar(self.toolBar)
 
-        self.webEngineView = QWebEngineView(self)
-        settings = self.webEngineView.settings()
-        settings.setAttribute(settings.WebAttribute.PluginsEnabled, True)
-        settings.setAttribute(settings.WebAttribute.PdfViewerEnabled, True)
-        self.setCentralWidget(self.webEngineView)
+        # self.webEngineView = QWebEngineView(self)
+        # settings = self.webEngineView.settings()
+        # settings.setAttribute(settings.WebAttribute.PluginsEnabled, True)
+        # settings.setAttribute(settings.WebAttribute.PdfViewerEnabled, True)
+        # self.setCentralWidget(self.webEngineView)
+        #
+        # self.setGeometry(600, 600, 1000, 800)
+        # self.setWindowTitle('Digital Workflow Viewer')
+        # self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
 
-        self.setGeometry(600, 600, 1000, 800)
-        self.setWindowTitle('Digital Workflow Viewer')
-        self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
-
-        self.webEngineView.load(QUrl.fromLocalFile(self.document))
+        # self.webEngineView.load(QUrl.fromLocalFile(self.document))
 
     def print_entry(self):
         webbrowser.open_new(self.document)
