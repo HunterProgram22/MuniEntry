@@ -59,7 +59,7 @@ class ReportWindow(QWidget):
             for row in range(table.rows()):
                 for col in range(table.columns()):
                     cursor.insertText(self.table.item(row, col).text())
-                    cursor.movePosition(QtGui.QTextCursor.NextCell)
+                    cursor.movePosition(QtGui.QTextCursor.MoveOperation.NextCell)
         document.print(printer)
 
 
