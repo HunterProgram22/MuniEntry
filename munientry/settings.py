@@ -84,6 +84,10 @@ DW_MATTOX = paths['digital_workflow_mattox_path']
 DW_APPROVED_DIR = paths['digital_workflow_approved_path']
 DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 
+# Database Path Information for MuniEntryDB.Sqlite Internal Database
+DB_PATH = paths['munientry_sqlite_db']
+
+
 # Logging Settings
 now = datetime.now()
 now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
