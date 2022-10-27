@@ -59,12 +59,14 @@ DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 # Path strings require double backslash even with raw f-strings (fr)
 # otherwise the string is not properly terminated.
 PATH = str(pathlib.Path().absolute())
+CASE_LISTS_PATH = fr'{PATH}\db\\'
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
-DB_PATH = fr'{PATH}\db\\'
-CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
-CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
+
+
+# Database Path Information for MuniEntryDB.Sqlite Internal Database
+DB_PATH = paths['munientry_sqlite_db']
 
 
 # Logging Settings
@@ -74,7 +76,11 @@ LOG_TIME = f'{now_string}'
 
 
 def get_host() -> str:
-    """Gets the host name of the PC that launches the application."""
+    """Gets the host name of the PC that launches the application.
+
+    If there is no key and value for the socket in the config file it sets the host to the
+    socket name.
+    """
     sockets = config['sockets']
     key = socket.gethostname()
     return sockets.get(key, key)
