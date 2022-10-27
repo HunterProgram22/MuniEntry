@@ -83,8 +83,14 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             document = f'{DW_MATTOX}/Comm_Control/{entry_name}'
         row = widget_list.row(selected_entry_widget)
         widget_list.takeItem(row)
-        os.remove(document)
-        logger.info(f'{document} deleted in workflow.')
+        try:
+            os.remove(document)
+            logger.info(f'{document} deleted in workflow.')
+        except PermissionError as error:
+            message = 'The document is currently in use by another user and cannot be deleted until' \
+                      ' they close the document.'
+            InfoBox(message).exec()
+            logger.warning(error)
 
     def load_new_entries(self):
         """Need to fix as message shows no cases loaded if one loads cases and other list doesnt."""
