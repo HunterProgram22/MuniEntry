@@ -12,7 +12,7 @@ from munientry.data.sql_lite_queries import (
     select_type_for_statute_in_charges,
     select_off_stat_deg_from_charges_query,
 )
-from munientry.settings import DB_PATH, EXCEL_DAILY_CASE_LISTS
+from munientry.settings import CASE_LISTS_PATH, EXCEL_DAILY_CASE_LISTS
 
 OFFENSE = 'offense'
 STATUTE = 'statute'
@@ -45,7 +45,7 @@ def insert_daily_case_list_sql_data(
     :table_name: The name of the SQL Lite table the data is being inserted into in the SQL Lite
         database.
     """
-    cases_list = return_cases_data_from_excel(f'{DB_PATH}{excel_report}')
+    cases_list = return_cases_data_from_excel(f'{CASE_LISTS_PATH}{excel_report}')
     query = QSqlQuery(database)
     query.prepare(insert_daily_case_list_tables_sql_query(table_name))
     for case in cases_list:

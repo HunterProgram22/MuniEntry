@@ -1,18 +1,18 @@
 import pytest
 
-from munientry.settings import DB_PATH
+from munientry.settings import CASE_LISTS_PATH
 from munientry.data.excel_getters import return_cases_data_from_excel
 from munientry.data.excel_functions import load_active_worksheet, get_excel_file_headers, \
     create_headers_dict
 
 
 all_daily_case_list_excel_files = [
-    (f'{DB_PATH}Arraignments.xlsx', 21),
-    (f'{DB_PATH}Final_Pretrials.xlsx', 28),
-    (f'{DB_PATH}PCVH_FCVH.xlsx', 30),
-    (f'{DB_PATH}Pleas.xlsx', 28),
-    (f'{DB_PATH}Slated.xlsx', 28),
-    (f'{DB_PATH}Trials_to_Court.xlsx', 28),
+    (f'{CASE_LISTS_PATH}Arraignments.xlsx', 21),
+    (f'{CASE_LISTS_PATH}Final_Pretrials.xlsx', 28),
+    (f'{CASE_LISTS_PATH}PCVH_FCVH.xlsx', 30),
+    (f'{CASE_LISTS_PATH}Pleas.xlsx', 28),
+    (f'{CASE_LISTS_PATH}Slated.xlsx', 28),
+    (f'{CASE_LISTS_PATH}Trials_to_Court.xlsx', 28),
 ]
 
 
@@ -24,12 +24,12 @@ def test_return_cases_data_from_excel(db_file, sub_case_count):
 
 
 all_daily_case_list_excel_columns = [
-    (f'{DB_PATH}Arraignments.xlsx', 12),
-    (f'{DB_PATH}Final_Pretrials.xlsx', 12),
-    (f'{DB_PATH}PCVH_FCVH.xlsx', 12),
-    (f'{DB_PATH}Pleas.xlsx', 12),
-    (f'{DB_PATH}Slated.xlsx', 12),
-    (f'{DB_PATH}Trials_to_Court.xlsx', 12),
+    (f'{CASE_LISTS_PATH}Arraignments.xlsx', 12),
+    (f'{CASE_LISTS_PATH}Final_Pretrials.xlsx', 12),
+    (f'{CASE_LISTS_PATH}PCVH_FCVH.xlsx', 12),
+    (f'{CASE_LISTS_PATH}Pleas.xlsx', 12),
+    (f'{CASE_LISTS_PATH}Slated.xlsx', 12),
+    (f'{CASE_LISTS_PATH}Trials_to_Court.xlsx', 12),
 ]
 
 
@@ -41,12 +41,12 @@ def test_get_excel_file_headers(db_file, total_col):
 
 
 all_daily_case_list_header_check = [
-    (f'{DB_PATH}Arraignments.xlsx', 1),
-    (f'{DB_PATH}Final_Pretrials.xlsx', 4),
-    (f'{DB_PATH}PCVH_FCVH.xlsx', 4),
-    (f'{DB_PATH}Pleas.xlsx', 4),
-    (f'{DB_PATH}Slated.xlsx', 4),
-    (f'{DB_PATH}Trials_to_Court.xlsx', 4),
+    (f'{CASE_LISTS_PATH}Arraignments.xlsx', 1),
+    (f'{CASE_LISTS_PATH}Final_Pretrials.xlsx', 4),
+    (f'{CASE_LISTS_PATH}PCVH_FCVH.xlsx', 4),
+    (f'{CASE_LISTS_PATH}Pleas.xlsx', 4),
+    (f'{CASE_LISTS_PATH}Slated.xlsx', 4),
+    (f'{CASE_LISTS_PATH}Trials_to_Court.xlsx', 4),
 ]
 
 

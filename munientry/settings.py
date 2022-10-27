@@ -59,13 +59,30 @@ DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 # Path strings require double backslash even with raw f-strings (fr)
 # otherwise the string is not properly terminated.
 PATH = str(pathlib.Path().absolute())
+CASE_LISTS_PATH = fr'{PATH}\db\\'
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
-DB_PATH = fr'{PATH}\db\\'
-CHARGES_DATABASE = fr'{DB_PATH}\Charges.sqlite'
-CHARGES_TABLE = fr'{DB_PATH}\Charges.xlsx'
 GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
 
+LOG_PATH = paths['logs_save_path']
+BATCH_SAVE_PATH = paths['batch_save_path']
+DEFAULT_SAVE_PATH = paths['default_entries_save_path']
+CRIMTRAFFIC_SAVE_PATH = paths['crimtraffic_save_path']
+FISCAL_SAVE_PATH = paths['fiscal_save_path']
+DRIVE_SAVE_PATH = paths['drive_save_path']
+SCHEDULING_SAVE_PATH = paths['scheduling_save_path']
+
+# Database Path Information for MuniEntryDB.Sqlite Internal Database
+DB_PATH = paths['munientry_sqlite_db']
+
+# Digital Workflow Path Information
+DW_PATH = paths['digital_workflow_base_path']
+DW_HEMMETER = paths['digital_workflow_hemmeter_path']
+DW_ROHRER = paths['digital_workflow_rohrer_path']
+DW_BUNNER = paths['digital_workflow_bunner_path']
+DW_MATTOX = paths['digital_workflow_mattox_path']
+DW_APPROVED_DIR = paths['digital_workflow_approved_path']
+DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 
 # Logging Settings
 now = datetime.now()
@@ -74,7 +91,11 @@ LOG_TIME = f'{now_string}'
 
 
 def get_host() -> str:
-    """Gets the host name of the PC that launches the application."""
+    """Gets the host name of the PC that launches the application.
+
+    If there is no key and value for the socket in the config file it sets the host to the
+    socket name.
+    """
     sockets = config['sockets']
     key = socket.gethostname()
     return sockets.get(key, key)

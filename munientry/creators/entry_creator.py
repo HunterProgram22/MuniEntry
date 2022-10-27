@@ -1,7 +1,6 @@
 """Module for creating entries."""
 from __future__ import annotations
 
-from multiprocessing import Process
 from os import remove, startfile
 
 from docxtpl import DocxTemplate
@@ -122,8 +121,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         logger.info(f'Entry Created: {self.docname}')
         if self.workflow_doc is not None:
             self.create_workflow_entry_process()
-        else:
-            startfile(f'{self.save_path}{self.docname}')
+        startfile(f'{self.save_path}{self.docname}')
 
     def check_if_workflow_entry_needed(self) -> tuple(object, str):
         """Checks the case information of the Dialog.
@@ -136,40 +134,18 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
             self.workflow_doc = DocxTemplate(self.dialog.template.template_path)
             self.workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
 
-    def create_workflow_pdf(self):
-        """Creates a PDF version of the DOCX draft copy version of the entry.
-
-        The draft copy is removed after the PDF is created.
-        """
-        logger.info(f'Created PDF for {self.workflow_docname}')
-        no_type_docname = self.workflow_docname[:-5]
-        pdf_docname = f'{self.workflow_path}{no_type_docname}.pdf'
-        word_app = Dispatch('Word.Application')
-        word_doc = word_app.Documents.Open(f'{self.save_path}{self.workflow_docname}')
-        word_doc.SaveAs(pdf_docname, FileFormat=WORD_PDF_FORMAT_NUMBER)
-        word_doc.Save()
-        word_doc.Close(0)
-        remove(f'{self.save_path}{self.workflow_docname}')
-
     def create_workflow_entry_process(self):
-        """If called uses multiprocessing to open Word doc for user and create PDF for workflow.
+        """Creates a copy of the main entry that is created.
 
-        Multiprocessing is used to speed up opening of Word doc because otherwise there is a 2 to 4
-        second delay in opening the entry.
-
-        ISSUE: Because the create_workflow_pdf needs to Open Word to create the PDF, this can
-        cause an issue where Windows blocks the entry saving as a PDF/DOCX because it uses a temp
-        file. Need to add Users AppData folders to a TrustedSource in Word (probably Local and
-        Roaming - to account for users using Courtroom PC's with their credentials).
+        Labels the entry as a Draft entry and modfies case number to indicate draft entry.
         """
-        self.workflow_doc.render(self.case_data)
+        local_case_data = self.case_data
+        case_number = local_case_data.get('case_number')
+        local_case_data['case_number'] = f'{case_number}_DRAFT_ENTRY'
+        self.workflow_doc.render(local_case_data)
         self.workflow_docname = f'DRAFT_{self.docname}'
-        self.workflow_doc.save(f'{self.save_path}{self.workflow_docname}')
-        saved_entry = f'{self.save_path}{self.docname}'
-        process_open_entry = Process(target=startfile(saved_entry))
-        process_create_pdf = Process(target=self.create_workflow_pdf())
-        process_create_pdf.start()
-        process_open_entry.start()
+        self.workflow_doc.save(f'{self.workflow_path}{self.workflow_docname}')
+        logger.info(f'Created Draft entry for {self.workflow_docname}')
 
 
 class SchedulingEntryCreator(BaseEntryCreator):
