@@ -47,6 +47,10 @@ class SettingDialog(QDialog):
 
         self.workflow_on_radioButton.toggled.connect(self.set_workflow)
         self.workflow_off_radioButton.toggled.connect(self.set_workflow)
+        if self.mainwindow.digital_workflow.workflow_status == 'ON':
+            self.workflow_on_radioButton.setChecked(True)
+        else:
+            self.workflow_off_radioButton.setChecked(True)
 
         radio_layout = QVBoxLayout()
         radio_layout.addWidget(self.workflow_on_radioButton)
