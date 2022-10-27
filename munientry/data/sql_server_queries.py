@@ -21,7 +21,7 @@ def general_case_search_query(case_number: str) -> str:
 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
-    ON cm.Id = sc.CaseMasterID
+    ON cm.Id = sc.CaseMasterID and sc.IsDeleted = '0'
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[Violation] v
     ON sc.ViolationId = v.Id
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
