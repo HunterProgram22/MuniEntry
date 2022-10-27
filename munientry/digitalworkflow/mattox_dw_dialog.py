@@ -1,6 +1,5 @@
 """Builder for Mattox Digital Workflow Dialog."""
 import os
-import webbrowser
 
 from loguru import logger
 
@@ -30,7 +29,23 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional Functions for Mattox Workflow Dialog."""
 
     def open_entry(self):
-        """TODO: There is a bug here when an item is highlighted in both lists it only uses scram."""
+        """Opens the selected entry.
+
+        Provides instructions if multiple entries or no entries are selected.
+        """
+        if (
+            len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 0
+            and len(self.dialog.community_control_entries_listWidget.selectedItems()) == 0
+        ):
+            message = 'No entry is selected. You must select an entry to open.'
+            return RequiredBox(message).exec()
+        if (
+            len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1
+            and len(self.dialog.community_control_entries_listWidget.selectedItems()) == 1
+        ):
+            message = 'You have selected an entry in both lists. Please unselect an entry by ' \
+                      'by clicking in blank space of the list for the entry you want to unselect.'
+            return RequiredBox(message).exec()
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
@@ -39,13 +54,23 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             selected_entry_widget = self.dialog.community_control_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
             document = f'{DW_MATTOX}/Comm_Control/{entry_name}'
-        else:
-            message = 'No entry is selected. You must select an entry to open.'
-            return RequiredBox(message).exec()
-        webbrowser.open_new(document)
+        os.startfile(document)
         logger.info(f'{document} opened in workflow.')
 
     def delete_entry(self):
+        if (
+                len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 0
+                and len(self.dialog.community_control_entries_listWidget.selectedItems()) == 0
+        ):
+            message = 'No entry is selected. You must select an entry to delete.'
+            return RequiredBox(message).exec()
+        if (
+                len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1
+                and len(self.dialog.community_control_entries_listWidget.selectedItems()) == 1
+        ):
+            message = 'You have selected an entry in both lists. Please unselect an entry by ' \
+                      'by clicking in blank space of the list for the entry you want to unselect.'
+            return RequiredBox(message).exec()
         if len(self.dialog.scram_gps_entries_listWidget.selectedItems()) == 1:
             selected_entry_widget = self.dialog.scram_gps_entries_listWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
@@ -56,9 +81,6 @@ class MattoxWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             entry_name = selected_entry_widget.text()
             widget_list = self.dialog.community_control_entries_listWidget
             document = f'{DW_MATTOX}/Comm_Control/{entry_name}'
-        else:
-            message = 'No entry is selected. You must select an entry to delete.'
-            return RequiredBox(message).exec()
         row = widget_list.row(selected_entry_widget)
         widget_list.takeItem(row)
         os.remove(document)
