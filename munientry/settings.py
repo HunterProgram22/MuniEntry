@@ -18,7 +18,7 @@ YES_BUTTON_RESPONSE = QMessageBox.StandardButton.Yes
 NO_BUTTON_RESPONSE = QMessageBox.StandardButton.No
 CANCEL_BUTTON_RESPONSE = QMessageBox.StandardButton.Cancel
 
-config = configparser.SafeConfigParser()
+config = configparser.ConfigParser()
 config.read('config.ini')
 
 # Version Information
