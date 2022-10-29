@@ -5,7 +5,6 @@ import webbrowser
 
 from loguru import logger
 
-from munientry.digitalworkflow.workflow_tools import add_approved_stamp
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
 from munientry.settings import DW_APPROVED_DIR, DW_REJECTED_DIR, DW_HEMMETER
@@ -42,7 +41,7 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             entry = self.dialog.approved_entries_listWidget.takeItem(0)
             entry_name = entry.text()
             document = f'{DW_HEMMETER}{entry_name}'
-            add_approved_stamp(document)
+            # add_approved_stamp(document)  ## This was removed as PyMuPDF is not installed
             shutil.move(document, DW_APPROVED_DIR)
             row +=1
         row = 0
