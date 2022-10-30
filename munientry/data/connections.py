@@ -6,7 +6,8 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
-from munientry.settings import DB_PATH, set_server_and_database
+from munientry.settings import set_server_and_database
+from munientry.paths import DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'

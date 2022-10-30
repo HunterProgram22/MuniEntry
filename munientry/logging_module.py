@@ -1,13 +1,24 @@
 """Module for setting up logging for the application."""
 import sys
 import traceback
+from datetime import datetime
 from functools import partialmethod
 
 from loguru import logger
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
-from munientry.settings import ICON_PATH, LOG_PATH, USER_LOG_NAME
+from munientry.paths import LOG_PATH, ICON_PATH
+from munientry.settings import SOCKET_NAME
+
+
+# Logging Settings
+NOW = datetime.now()
+NOW_STRING = NOW.strftime('%m_%d_%Y__%H_%M_%S')
+LOG_TIME = f'{NOW_STRING}'
+
+FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
+USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
 
 APP_LOGGING_LEVEL = 20
 

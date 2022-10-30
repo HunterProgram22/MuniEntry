@@ -11,15 +11,9 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
-from munientry.settings import (
-    BATCH_SAVE_PATH,
-    CRIMTRAFFIC_SAVE_PATH,
-    DRIVE_SAVE_PATH,
-    ICON_PATH,
-    LOG_PATH,
-    SCHEDULING_SAVE_PATH,
-    USER_LOG_NAME,
-)
+from munientry.logging_module import USER_LOG_NAME
+from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DRIVE_SAVE_PATH, \
+    SCHEDULING_SAVE_PATH, ICON_PATH
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')

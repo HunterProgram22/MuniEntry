@@ -12,7 +12,8 @@ from munientry.data.sql_lite_queries import (
     select_type_for_statute_in_charges,
     select_off_stat_deg_from_charges_query,
 )
-from munientry.settings import CASE_LISTS_PATH, EXCEL_DAILY_CASE_LISTS
+from munientry.settings import EXCEL_DAILY_CASE_LISTS
+from munientry.paths import CASE_LISTS_PATH
 
 OFFENSE = 'offense'
 STATUTE = 'statute'

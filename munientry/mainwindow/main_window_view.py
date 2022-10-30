@@ -33,7 +33,8 @@ from munientry.digitalworkflow import bunner_dw_dialog as bunner
 from munientry.digitalworkflow import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow import mattox_dw_dialog as mattox
 from munientry.models.party_types import JudicialOfficer
-from munientry.settings import ICON_PATH, VERSION_NUMBER
+from munientry.settings import VERSION_NUMBER
+from munientry.paths import ICON_PATH
 
 
 class MainWindowViewModifier(object):

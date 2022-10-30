@@ -2,7 +2,7 @@ import os
 
 from loguru import logger
 
-from munientry.settings import DW_HEMMETER, DW_ROHRER, DW_BUNNER, DW_MATTOX
+from munientry.paths import DW_HEMMETER, DW_ROHRER, DW_BUNNER, DW_MATTOX
 
 
 class DigitalWorkflow(object):

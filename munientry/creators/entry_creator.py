@@ -8,13 +8,8 @@ from loguru import logger
 from win32com.client import Dispatch
 
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.settings import (
-    CRIMTRAFFIC_SAVE_PATH,
-    DEFAULT_SAVE_PATH,
-    DRIVE_SAVE_PATH,
-    FISCAL_SAVE_PATH,
-    SCHEDULING_SAVE_PATH,
-)
+from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
+    DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH
 from munientry.widgets.message_boxes import RequiredBox
 
 WORD_PDF_FORMAT_NUMBER = 17
