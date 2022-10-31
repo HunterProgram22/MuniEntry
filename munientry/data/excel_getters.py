@@ -83,6 +83,12 @@ def clean_offense_name(offense: str) -> str:
     clean_offense = ' '.join([str(clean_word) for clean_word in clean_offense_word_list])
     return clean_offense.rstrip(' ')
 
+
+def clean_last_name(last_name:str) -> str:
+    """Removes spaces between hyphenated last names which caused a bug."""
+    return last_name.replace(' - ', '-')
+
+
 def create_case_data_list(worksheet: 'Workbook.active', headers_dict: dict) -> list[CaseExcelData]:
     """Returns a list of CaseExcelData objects.
 
@@ -94,9 +100,12 @@ def create_case_data_list(worksheet: 'Workbook.active', headers_dict: dict) -> l
     for row in range(2, worksheet.max_row + 1):
         case = CaseExcelData()
         case.case_number = get_cell_value(worksheet, row, headers_dict[COL_CASE])
-        case.defendant_last_name = (
+
+        defendant_last_name = (
             get_cell_value(worksheet, row, headers_dict[COL_DEF_LAST_NAME]).title()
         )
+        case.defendant_last_name = clean_last_name(defendant_last_name)
+
         case.defendant_first_name = (
             get_cell_value(worksheet, row, headers_dict[COL_DEF_FIRST_NAME]).title()
         )
