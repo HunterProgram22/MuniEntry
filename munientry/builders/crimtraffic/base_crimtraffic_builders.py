@@ -108,7 +108,7 @@ class FineCostsMixin(object):
             + '\n\n*Does not include possible bond forfeiture or other costs that'
             + ' may be assessed as a result of prior actions in the case.',
         )
-        message_box.exec_()
+        message_box.exec()
 
     def get_total_fines_and_costs(self) -> int:
         return (
