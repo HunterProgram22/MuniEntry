@@ -4,6 +4,7 @@ from PyQt6.QtGui import QIcon
 from munientry.builders.administrative import (
     driving_privileges_dialog,
     admin_fiscal_dialog,
+    jury_payment_dialog,
 )
 from munientry.builders.crimtraffic import (
     bond_hearing_dialog,
@@ -136,7 +137,7 @@ class MainWindowViewModifier(object):
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
             self.main_window.juror_paymentButton:
-                juror_payment_dialog.JuroryPaymentDialog,
+                jury_payment_dialog.JuryPaymentDialog,
         }
 
     def connect_admin_no_case_dialog_buttons(self) -> dict:
