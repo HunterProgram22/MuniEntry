@@ -2,7 +2,10 @@
 from loguru import logger
 
 from munientry.builders.administrative import base_admin_builders as admin
+from munientry.models.jury_models import JuryPaymentInformation
+from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.views.juror_payment_dialog_ui import Ui_JurorPaymentDialog
+from munientry.appsettings.pyqt_constants import TODAY
 
 
 class JuryPaymentViewModifier(admin.AdminViewModifier):
@@ -16,16 +19,23 @@ class JuryPaymentViewModifier(admin.AdminViewModifier):
         self.dialog.plea_trial_date.setDate(TODAY)
 
 
+class JuryPaymentSlotFunctions(admin.AdminSlotFunctions):
+    """Additional functions for the Jury Payment Dialog"""
+
+    def calculate_juror_pay(self):
+        logger.debug('Pay those jurors!')
+
+
 class JuryPaymentSignalConnector(admin.AdminSignalConnector):
     """Connects signals to slots for Jury Payment Dialog."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_other_dialog_signals()
 
-
-class JuryPaymentSlotFunctions(admin.AdminSignalConnector):
-    """Additional functions for the Jury Payment Dialog"""
+    def connect_other_dialog_signals(self):
+        self.dialog.calculate_payment_Button.released.connect(self.dialog.functions.calculate_juror_pay)
 
 
 class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
@@ -40,4 +50,5 @@ class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
         'slots': JuryPaymentSlotFunctions,
         'signals': JuryPaymentSignalConnector,
         'case_information_model': JuryPaymentInformation,
+        'loader': CmsNoChargeLoader,
     }

@@ -41,8 +41,12 @@ class MainWindowSignalConnector(object):
             key.released.connect(self.main_window.start_scheduling_entry)
 
     def connect_admin_buttons_to_start_dialog(self) -> None:
-        for key in self.main_window.admin_dialog_buttons_dict:
-            key.released.connect(self.main_window.start_admin_entry)
+        self.main_window.limited_driving_privilegesButton.released.connect(
+            self.main_window.start_admin_driving_entry
+        )
+        self.main_window.juror_paymentButton.released.connect(
+            self.main_window.start_admin_jury_entry
+        )
 
     def connect_admin_no_case_buttons_to_start_dialog(self) -> None:
         for key in self.main_window.admin_dialog_no_case_buttons_dict:

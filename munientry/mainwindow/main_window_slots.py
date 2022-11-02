@@ -73,10 +73,16 @@ class MainWindowSlotFunctionsMixin(object):
             self.dialog = DialogLoader(self).load_scheduling_dialog()
             return self.dialog.exec()
 
-    def start_admin_entry(self) -> None:
+    def start_admin_jury_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
         if DialogPreloadChecker(self).admin_checks():
-            self.dialog = DialogLoader(self).load_admin_dialog()
+            self.dialog = DialogLoader(self).load_admin_jury_dialog()
+            return self.dialog.exec()
+
+    def start_admin_driving_entry(self) -> None:
+        """Starts a admin dialog based on the dialog button that is pressed."""
+        if DialogPreloadChecker(self).admin_checks():
+            self.dialog = DialogLoader(self).load_admin_driving_dialog()
             return self.dialog.exec()
 
     def start_admin_fiscal_entry(self) -> None:

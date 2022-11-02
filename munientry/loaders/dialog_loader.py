@@ -103,9 +103,13 @@ class DialogLoader(object):
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
 
-    def load_admin_dialog(self) -> admin.AdminDialogBuilder:
+    def load_admin_jury_dialog(self) -> base.BaseDialogBuilder:
         button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self._load_admin_dialog_process(button_dict)
+        return self._load_admin_jury_pay_dialog_process(button_dict)
+
+    def load_admin_driving_dialog(self) -> base.BaseDialogBuilder:
+        button_dict = self.mainwindow.admin_dialog_buttons_dict
+        return self._load_admin_driving_dialog_process(button_dict)
 
     def load_admin_fiscal_dialog(self) -> base.BaseDialogBuilder:
         button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
@@ -116,7 +120,7 @@ class DialogLoader(object):
         return self._load_digital_workflow_dialog_process(button_dict)
 
     def load_probation_workflow_dialog(self) -> base.BaseDialogBuilder:
-        """This methis is the same as load digital workflow dialog for now.
+        """This method is the same as load digital workflow dialog for now.
 
         May need changes later or can refactor into single method.
         """
@@ -177,7 +181,18 @@ class DialogLoader(object):
             case_table=case_table,
         )
 
-    def _load_admin_dialog_process(self, button_dict):
+    def _load_admin_jury_pay_dialog_process(self, button_dict):
+        case_table = self._set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self._get_cms_case_data()
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return button_dict.get(self.mainwindow.sender())(
+            judicial_officer,
+            cms_case=cms_case_data,
+            case_table=case_table,
+        )
+
+    def _load_admin_driving_dialog_process(self, button_dict):
         """Used for driving privileges entry because case search query is unique."""
         case_table = None
         judicial_officer = self.mainwindow.judicial_officer
@@ -197,6 +212,7 @@ class DialogLoader(object):
         """Used for Admin Fiscal entry because there is no case search used."""
         judicial_officer = self.mainwindow.judicial_officer
         return button_dict.get(self.mainwindow.sender())(judicial_officer)
+
 
     def _load_digital_workflow_dialog_process(self, button_dict):
         """Used for loading digital workflow dialogs."""
