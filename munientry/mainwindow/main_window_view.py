@@ -135,6 +135,8 @@ class MainWindowViewModifier(object):
         return {
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
+            self.main_window.juror_paymentButton:
+                juror_payment_dialog.JuroryPaymentDialog,
         }
 
     def connect_admin_no_case_dialog_buttons(self) -> dict:

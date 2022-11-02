@@ -1,0 +1,1 @@
+"""Contains classes for building the Juror Payment Dialog."""

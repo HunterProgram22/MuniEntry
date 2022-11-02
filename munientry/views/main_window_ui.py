@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.combo_boxes import DailyCaseListComboBox
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -458,6 +456,10 @@ class Ui_MainWindow(object):
         self.fiscal_entriesButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.fiscal_entriesButton.setObjectName("fiscal_entriesButton")
         self.gridLayout_15.addWidget(self.fiscal_entriesButton, 0, 1, 1, 1)
+        self.juror_paymentButton = QtWidgets.QPushButton(self.admin_Tab)
+        self.juror_paymentButton.setStyleSheet("background-color: rgb(85, 170, 255);")
+        self.juror_paymentButton.setObjectName("juror_paymentButton")
+        self.gridLayout_15.addWidget(self.juror_paymentButton, 1, 1, 1, 1)
         self.tabWidget.addTab(self.admin_Tab, "")
         self.gridLayout_5.addWidget(self.tabWidget, 1, 0, 1, 1)
         self.gridLayout_5.setRowStretch(0, 1)
@@ -598,21 +600,21 @@ class Ui_MainWindow(object):
         self.workflows_person_tab.setObjectName("workflows_person_tab")
         self.mattox_tab = QtWidgets.QWidget()
         self.mattox_tab.setObjectName("mattox_tab")
-        self.widget = QtWidgets.QWidget(self.mattox_tab)
-        self.widget.setGeometry(QtCore.QRect(10, 10, 1101, 171))
-        self.widget.setObjectName("widget")
-        self.gridLayout_20 = QtWidgets.QGridLayout(self.widget)
+        self.layoutWidget = QtWidgets.QWidget(self.mattox_tab)
+        self.layoutWidget.setGeometry(QtCore.QRect(10, 10, 1101, 171))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.gridLayout_20 = QtWidgets.QGridLayout(self.layoutWidget)
         self.gridLayout_20.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_20.setHorizontalSpacing(64)
         self.gridLayout_20.setObjectName("gridLayout_20")
-        self.probation_workflowButton = QtWidgets.QPushButton(self.widget)
+        self.probation_workflowButton = QtWidgets.QPushButton(self.layoutWidget)
         self.probation_workflowButton.setStyleSheet("background-color: rgb(206, 104, 171);")
         self.probation_workflowButton.setObjectName("probation_workflowButton")
         self.gridLayout_20.addWidget(self.probation_workflowButton, 1, 0, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.widget)
+        self.pushButton = QtWidgets.QPushButton(self.layoutWidget)
         self.pushButton.setObjectName("pushButton")
         self.gridLayout_20.addWidget(self.pushButton, 1, 1, 1, 1)
-        self.label_20 = QtWidgets.QLabel(self.widget)
+        self.label_20 = QtWidgets.QLabel(self.layoutWidget)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -896,6 +898,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.scheduling_Tab), _translate("MainWindow", "Scheduling"))
         self.limited_driving_privilegesButton.setText(_translate("MainWindow", "Limited Driving Privileges"))
         self.fiscal_entriesButton.setText(_translate("MainWindow", "Fiscal Journal Entries"))
+        self.juror_paymentButton.setText(_translate("MainWindow", "Juror Payment Entry"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.admin_Tab), _translate("MainWindow", "Administrative"))
         self.hemmeter_radioButton.setText(_translate("MainWindow", "Judge Hemmeter"))
         self.rohrer_radioButton.setText(_translate("MainWindow", "Judge Rohrer"))
@@ -945,3 +948,4 @@ class Ui_MainWindow(object):
         self.actionCrimTraffic_Folder.setText(_translate("MainWindow", "CrimTraffic Entries Folder"))
         self.actionScheduling_Entries_Folder.setText(_translate("MainWindow", "Scheduling Entries Folder"))
         self.actionWorkflow.setText(_translate("MainWindow", "Workflow"))
+from munientry.widgets.combo_boxes import DailyCaseListComboBox

@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>681</width>
-    <height>592</height>
+    <width>961</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -317,6 +317,11 @@ font-weight: bold;</string>
         <item>
          <property name="text">
           <string>0</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>10</string>
          </property>
         </item>
        </widget>
