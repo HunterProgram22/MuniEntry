@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import QDialog
 
 from munientry.creators.entry_creator import BaseEntryCreator
 from munientry.settings import WIDGET_TYPE_ACCESS_DICT
-from munientry.paths import ICON_PATH
+from munientry.appsettings.paths import ICON_PATH
 
 
 class BuildMixin(object):
@@ -147,4 +147,4 @@ class BaseDialogSignalConnector(object):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

@@ -13,7 +13,7 @@ from munientry.data.sql_lite_queries import (
     select_off_stat_deg_from_charges_query,
 )
 from munientry.settings import EXCEL_DAILY_CASE_LISTS
-from munientry.paths import CASE_LISTS_PATH
+from munientry.appsettings.paths import CASE_LISTS_PATH
 
 OFFENSE = 'offense'
 STATUTE = 'statute'
@@ -176,6 +176,4 @@ def query_charges_database(database: QSqlDatabase, key: str, field: str) -> tupl
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+    logger.info(f'{__name__} run directly.')

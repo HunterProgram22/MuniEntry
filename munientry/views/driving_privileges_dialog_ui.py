@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_DrivingPrivilegesDialog(object):
     def setupUi(self, DrivingPrivilegesDialog):
@@ -585,4 +587,3 @@ class Ui_DrivingPrivilegesDialog(object):
         self.restricted_tags_checkBox.setText(_translate("DrivingPrivilegesDialog", "Restricted Vehicle ID Tags"))
         self.ignition_interlock_checkBox.setText(_translate("DrivingPrivilegesDialog", "Certified Ignition Interlock Device"))
         self.create_entry_Button.setText(_translate("DrivingPrivilegesDialog", "Open Entry"))
-from munientry.widgets.custom_widgets import NoScrollDateEdit

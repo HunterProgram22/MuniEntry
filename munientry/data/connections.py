@@ -7,7 +7,7 @@ from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.settings import set_server_and_database
-from munientry.paths import DB_PATH
+from munientry.appsettings.paths import DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
@@ -139,7 +139,7 @@ def main():
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')
 else:
     main()
-    logger.log('IMPORT', f'{__name__} imported.')
+    logger.info(f'{__name__} imported.')

@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+
 
 class Ui_NoPleaBondDialog(object):
     def setupUi(self, NoPleaBondDialog):
@@ -468,5 +471,3 @@ class Ui_NoPleaBondDialog(object):
         self.bond_amount_box.setItemText(8, _translate("NoPleaBondDialog", "$7,500"))
         self.bond_amount_box.setItemText(9, _translate("NoPleaBondDialog", "$10,000"))
         self.label_5.setText(_translate("NoPleaBondDialog", "BOND"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

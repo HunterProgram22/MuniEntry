@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_AdminFiscalDialog(object):
     def setupUi(self, AdminFiscalDialog):
@@ -264,5 +267,3 @@ class Ui_AdminFiscalDialog(object):
         self.label_7.setText(_translate("AdminFiscalDialog", "PAYMENT INFORMATION"))
         self.label_2.setText(_translate("AdminFiscalDialog", "Disbursement Reason:"))
         self.label_8.setText(_translate("AdminFiscalDialog", "Invoice Number:"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

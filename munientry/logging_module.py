@@ -8,7 +8,7 @@ from loguru import logger
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
-from munientry.paths import LOG_PATH, ICON_PATH
+from munientry.appsettings.paths import LOG_PATH, ICON_PATH
 from munientry.settings import SOCKET_NAME
 
 
@@ -22,7 +22,6 @@ USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
 
 APP_LOGGING_LEVEL = 20
 
-IMPORT_LOGLEVEL = 18
 DATABASE_LOGLEVEL = 21
 DIALOG_LOGLEVEL = 22
 BUTTON_LOGLEVEL = 24
@@ -53,8 +52,6 @@ class CriticalErrorBox(QMessageBox):
 FMT = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {function}:{name}:{line}'
 
 logger.add(f'{LOG_PATH}{USER_LOG_NAME}', format=FMT, level=APP_LOGGING_LEVEL)
-
-logger.level('IMPORT', no=IMPORT_LOGLEVEL, color='<white>')
 
 logger.level('DATABASE', no=DATABASE_LOGLEVEL, color='<green>')
 logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')

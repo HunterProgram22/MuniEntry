@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import JailChargesGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 
 
 class Ui_JailCCPleaDialog(object):
@@ -689,5 +691,3 @@ class Ui_JailCCPleaDialog(object):
         self.label_25.setText(_translate("JailCCPleaDialog", "Dismissed:"))
         self.label_7.setText(_translate("JailCCPleaDialog", "Allied:"))
         self.plea_label_1.setText(_translate("JailCCPleaDialog", "Plea:"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+
 
 class Ui_JurorPaymentDialog(object):
     def setupUi(self, JurorPaymentDialog):
@@ -224,4 +226,3 @@ class Ui_JurorPaymentDialog(object):
         self.label_9.setText(_translate("JurorPaymentDialog", "Total Payment:"))
         self.create_entry_Button.setText(_translate("JurorPaymentDialog", "Create Entry"))
         self.cancel_Button.setText(_translate("JurorPaymentDialog", "Cancel"))
-from munientry.widgets.combo_boxes import NoScrollComboBox

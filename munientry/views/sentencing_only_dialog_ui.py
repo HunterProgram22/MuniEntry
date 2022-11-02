@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import JailChargesGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 
 
 class Ui_SentencingOnlyDialog(object):
@@ -694,5 +696,3 @@ class Ui_SentencingOnlyDialog(object):
         self.defense_counsel_type_box.setItemText(1, _translate("SentencingOnlyDialog", "Private Counsel"))
         self.label_26.setText(_translate("SentencingOnlyDialog", "Date:"))
         self.label_3.setText(_translate("SentencingOnlyDialog", "Case Number:"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

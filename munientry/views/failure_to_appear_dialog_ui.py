@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_FailureToAppearDialog(object):
     def setupUi(self, FailureToAppearDialog):
@@ -395,5 +398,3 @@ class Ui_FailureToAppearDialog(object):
         self.surety_appear_checkBox.setText(_translate("FailureToAppearDialog", "Surety to appear and show cause to avoid judgment"))
         self.arrest_warrant_checkBox.setText(_translate("FailureToAppearDialog", "Issue Warrant for Arrest forthwith"))
         self.arrest_warrant_radius_label.setText(_translate("FailureToAppearDialog", "Warrant Radius:"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

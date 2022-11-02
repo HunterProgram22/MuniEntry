@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DailyCaseListComboBox
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -943,4 +945,3 @@ class Ui_MainWindow(object):
         self.actionCrimTraffic_Folder.setText(_translate("MainWindow", "CrimTraffic Entries Folder"))
         self.actionScheduling_Entries_Folder.setText(_translate("MainWindow", "Scheduling Entries Folder"))
         self.actionWorkflow.setText(_translate("MainWindow", "Workflow"))
-from munientry.widgets.combo_boxes import DailyCaseListComboBox

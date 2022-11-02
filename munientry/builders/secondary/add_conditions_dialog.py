@@ -80,4 +80,4 @@ class AddConditionsDialog(second.SecondaryDialogBuilder, Ui_AddConditionsDialog)
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

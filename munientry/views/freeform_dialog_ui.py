@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_FreeformEntryDialog(object):
     def setupUi(self, FreeformEntryDialog):
@@ -266,5 +269,3 @@ class Ui_FreeformEntryDialog(object):
         self.create_entry_Button.setText(_translate("FreeformEntryDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("FreeformEntryDialog", "Close Dialog"))
         self.label_4.setText(_translate("FreeformEntryDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">ENTRY CONTENT</span></p></body></html>"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

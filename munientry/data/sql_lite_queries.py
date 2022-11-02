@@ -89,6 +89,4 @@ def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+    logger.info(f'{__name__} run directly.')

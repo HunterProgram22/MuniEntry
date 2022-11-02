@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+
 
 class Ui_BondHearingDialog(object):
     def setupUi(self, BondHearingDialog):
@@ -482,5 +485,3 @@ class Ui_BondHearingDialog(object):
         self.defense_counsel_waived_checkBox.setText(_translate("BondHearingDialog", "Defendant appeared without counsel"))
         self.close_dialog_Button.setText(_translate("BondHearingDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("BondHearingDialog", "Open Entry"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

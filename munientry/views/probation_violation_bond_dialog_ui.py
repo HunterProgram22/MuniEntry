@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_ProbationViolationBondDialog(object):
     def setupUi(self, ProbationViolationBondDialog):
@@ -419,5 +422,3 @@ class Ui_ProbationViolationBondDialog(object):
         self.probable_cause_finding_box.setItemText(2, _translate("ProbationViolationBondDialog", "No probable cause"))
         self.close_dialog_Button.setText(_translate("ProbationViolationBondDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("ProbationViolationBondDialog", "Open Entry"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox
+
 
 class Ui_AmendChargeDialog(object):
     def setupUi(self, AmendChargeDialog):
@@ -240,5 +243,3 @@ class Ui_AmendChargeDialog(object):
         self.label_23.setText(_translate("AmendChargeDialog", "Degree:"))
         self.label_3.setText(_translate("AmendChargeDialog", "Amended Charge Details"))
         self.original_charge_label.setText(_translate("AmendChargeDialog", "Original Charge Label"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox

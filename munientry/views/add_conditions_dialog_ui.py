@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+
 
 class Ui_AddConditionsDialog(object):
     def setupUi(self, AddConditionsDialog):
@@ -345,5 +348,3 @@ class Ui_AddConditionsDialog(object):
         self.label_14.setText(_translate("AddConditionsDialog", "Finding:"))
         self.label_19.setText(_translate("AddConditionsDialog", "Statute:"))
         self.label_28.setText(_translate("AddConditionsDialog", "Other Conditions"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

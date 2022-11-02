@@ -1,14 +1,13 @@
 """Module for creating entries."""
 from __future__ import annotations
 
-from os import remove, startfile
+from os import startfile
 
 from docxtpl import DocxTemplate
 from loguru import logger
-from win32com.client import Dispatch
 
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
+from munientry.appsettings.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
     DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH
 from munientry.widgets.message_boxes import RequiredBox
 
@@ -182,4 +181,4 @@ class AdminFiscalEntryCreator(BaseEntryCreator):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

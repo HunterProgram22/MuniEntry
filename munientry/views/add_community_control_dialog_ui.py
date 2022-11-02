@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+
 
 class Ui_AddCommunityControlDialog(object):
     def setupUi(self, AddCommunityControlDialog):
@@ -928,5 +931,3 @@ class Ui_AddCommunityControlDialog(object):
         self.label_22.setText(_translate("AddCommunityControlDialog", "Date to Complete:"))
         self.label.setText(_translate("AddCommunityControlDialog", "Days to Complete:"))
         self.label_15.setText(_translate("AddCommunityControlDialog", "Hours:"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
