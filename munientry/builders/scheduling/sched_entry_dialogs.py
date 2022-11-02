@@ -11,9 +11,9 @@ from munientry.settings import (
     EVENT_DICT,
     PRETRIAL_TIME_DICT,
     SPEEDY_TRIAL_TIME_DICT,
-    TODAY,
     TYPE_CHECKING,
 )
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
 )

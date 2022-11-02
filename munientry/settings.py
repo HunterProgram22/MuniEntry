@@ -1,20 +1,8 @@
 """A module containing common variables used throughout the application."""
 import configparser
 import socket
-
-from PyQt6.QtWidgets import QMessageBox
-from PyQt6.QtCore import QDate, QDateTime
-from PyQt6.QtGui import QIntValidator
-
 from typing import TYPE_CHECKING
 
-
-MAX_JAIL_TIME_VALIDATOR = QIntValidator(0, 1000)
-TODAY = QDate.currentDate()
-TIMENOW = QDateTime.currentDateTime()
-YES_BUTTON_RESPONSE = QMessageBox.StandardButton.Yes
-NO_BUTTON_RESPONSE = QMessageBox.StandardButton.No
-CANCEL_BUTTON_RESPONSE = QMessageBox.StandardButton.Cancel
 
 config = configparser.ConfigParser()
 config.read('config.ini')

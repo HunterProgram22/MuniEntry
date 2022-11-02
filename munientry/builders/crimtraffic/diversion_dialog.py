@@ -8,7 +8,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     DiversionEntryCaseInformation,
 )
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.grid_case_updaters import DiversionDialogUpdater
 from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 

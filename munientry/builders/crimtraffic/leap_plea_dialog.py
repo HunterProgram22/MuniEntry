@@ -8,7 +8,7 @@ from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
     LeapAdmissionEntryCaseInformation,
 )
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.grid_case_updaters import LeapAdmissionPleaDialogUpdater
 from munientry.views.leap_admission_plea_dialog_ui import Ui_LeapAdmissionPleaDialog
 

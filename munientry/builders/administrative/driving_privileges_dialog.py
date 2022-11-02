@@ -9,7 +9,7 @@ from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
