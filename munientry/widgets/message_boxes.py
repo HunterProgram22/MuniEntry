@@ -9,7 +9,7 @@ from loguru import logger
 from PyQt6 import QtGui
 from PyQt6.QtWidgets import QMessageBox, QPushButton
 
-from munientry.appsettings.paths import GAVEL_PATH
+from munientry.paths import GAVEL_PATH
 
 FAIL = 'Fail'
 PASS = 'Pass'

@@ -8,7 +8,7 @@ from loguru import logger
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
-from munientry.appsettings.paths import LOG_PATH, ICON_PATH
+from munientry.paths import LOG_PATH, ICON_PATH
 from munientry.settings import SOCKET_NAME
 
 

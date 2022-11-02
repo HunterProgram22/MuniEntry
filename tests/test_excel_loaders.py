@@ -1,6 +1,6 @@
 import pytest
 
-from munientry.appsettings.paths import CASE_LISTS_PATH
+from munientry.paths import CASE_LISTS_PATH
 from munientry.data.excel_getters import return_cases_data_from_excel
 from munientry.data.excel_functions import load_active_worksheet, get_excel_file_headers, \
     create_headers_dict

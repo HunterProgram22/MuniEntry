@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import QDialog
 
 from munientry.creators.entry_creator import BaseEntryCreator
 from munientry.settings import WIDGET_TYPE_ACCESS_DICT
-from munientry.appsettings.paths import ICON_PATH
+from munientry.paths import ICON_PATH
 
 
 class BuildMixin(object):

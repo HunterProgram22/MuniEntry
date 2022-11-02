@@ -11,7 +11,7 @@ from munientry.data.excel_functions import (
 )
 from munientry.models.excel_models import BatchCaseInformation
 from munientry.settings import TYPE_CHECKING
-from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
+from munientry.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
 
 if TYPE_CHECKING:
     from openpyxl import Workbook

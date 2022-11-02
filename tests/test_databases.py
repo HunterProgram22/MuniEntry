@@ -2,7 +2,7 @@ import pytest
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.settings import EXCEL_DAILY_CASE_LISTS
-from munientry.appsettings.paths import DB_PATH
+from munientry.paths import DB_PATH
 from munientry.data.sql_lite_getters import (
     CriminalCaseSQLLite,
     # create_daily_case_list_sql_tables,

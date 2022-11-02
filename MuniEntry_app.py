@@ -20,8 +20,9 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QApplication, QSplashScreen
 
+from munientry import logging_module
+from munientry.paths import ICON_PATH
 from munientry.settings import SOCKET_NAME, VERSION_NUMBER
-from munientry.appsettings.paths import ICON_PATH
 
 
 def load_window():

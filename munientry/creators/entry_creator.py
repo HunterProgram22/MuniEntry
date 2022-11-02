@@ -7,7 +7,7 @@ from docxtpl import DocxTemplate
 from loguru import logger
 
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.appsettings.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
+from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
     DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH
 from munientry.widgets.message_boxes import RequiredBox
 
