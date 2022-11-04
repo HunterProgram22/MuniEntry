@@ -1,11 +1,13 @@
 """Contains classes for building the Juror Payment Dialog."""
 from loguru import logger
 
+from num2words import num2words
+
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.models.jury_models import JuryPaymentInformation
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
-from munientry.updaters.jury_updaters import JuryPaymentCaseInformationUpdater
+from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.juror_payment_dialog_ui import Ui_JurorPaymentDialog
 from munientry.appsettings.pyqt_constants import TODAY
 
@@ -26,7 +28,20 @@ class JuryPaymentSlotFunctions(admin.AdminSlotFunctions):
     """Additional functions for the Jury Payment Dialog"""
 
     def calculate_juror_pay(self):
-        logger.debug('Pay those jurors!')
+        jurors_reported = int(self.dialog.jurors_reported_lineEdit.text())
+        jurors_seated = int(self.dialog.jurors_seated_box.currentText())
+        jurors_not_seated_pay = self.calculate_jurors_not_seated_pay(jurors_reported, jurors_seated)
+        jurors_seated_pay = self.calculate_jurors_seated_pay(jurors_seated)
+        self.dialog.jurors_not_seated_pay_lineEdit.setText(str(jurors_not_seated_pay))
+        self.dialog.jurors_seated_pay_lineEdit.setText(str(jurors_seated_pay))
+        self.dialog.jurors_total_pay_lineEdit.setText(str(jurors_seated_pay + jurors_not_seated_pay))
+
+    def calculate_jurors_not_seated_pay(self, jurors_reported, jurors_seated):
+        jurors_not_seated = jurors_reported - jurors_seated
+        return (25*jurors_not_seated)
+
+    def calculate_jurors_seated_pay(self, jurors_seated):
+        return (40*jurors_seated)
 
 
 class JuryPaymentSignalConnector(admin.AdminSignalConnector):
@@ -42,7 +57,7 @@ class JuryPaymentSignalConnector(admin.AdminSignalConnector):
 
 
 class JuryPaymentInfoChecker(BaseChecker):
-    """Class with checks for the Admin Fiscal Dialog."""
+    """Class with checks for the Jury Payment Dialog."""
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
@@ -50,11 +65,49 @@ class JuryPaymentInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
-    """Builder for the Jury Payment Dialog.
+class JuryPaymentCaseInformationUpdater(BaseDialogUpdater):
+    """Base class for Jury Payment Updater."""
 
-    The judicial_officer for this entry should be the Jury Commissioner.
-    """
+    def __init__(self, dialog: 'QDialog') -> None:
+        super().__init__(dialog)
+        self.model.judicial_officer = self.dialog.judicial_officer
+        self.update_model_with_case_information_frame_data()
+        self.update_juror_information()
+        self.set_juror_pay_information()
+
+    def update_model_with_case_information_frame_data(self) -> None:
+        self.set_case_number_and_date()
+        self.set_party_information()
+
+    def set_case_number_and_date(self) -> None:
+        self.model.case_number = self.dialog.case_number_lineEdit.text()
+        self.model.trial_date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
+        self.model.entry_date = self.dialog.entry_date.date().toString('MMMM dd, yyyy')
+
+    def set_party_information(self) -> None:
+        self.model.defendant.first_name = self.dialog.defendant_first_name_lineEdit.text()
+        self.model.defendant.last_name = self.dialog.defendant_last_name_lineEdit.text()
+
+    def update_juror_information(self):
+        self.model.jurors_reported = self.dialog.jurors_reported_lineEdit.text()
+        self.model.jurors_reported_word = num2words(int(self.model.jurors_reported))
+        self.model.jurors_seated = self.dialog.jurors_seated_box.currentText()
+        self.model.jurors_seated_word = num2words(int(self.model.jurors_seated))
+        self.model.jurors_not_seated = int(self.model.jurors_reported) - int(self.model.jurors_seated)
+        self.model.jurors_not_seated_word = num2words(int(self.model.jurors_not_seated))
+
+    def set_juror_pay_information(self):
+        self.model.jurors_pay_not_seated = self.dialog.jurors_not_seated_pay_lineEdit.text()
+        self.model.jurors_pay_not_seated_word = num2words(int(self.model.jurors_pay_not_seated))
+        self.model.jurors_pay_seated = self.dialog.jurors_seated_pay_lineEdit.text()
+        self.model.jurors_pay_seated_word = num2words(int(self.model.jurors_pay_seated))
+        self.model.jury_panel_total_pay = self.dialog.jurors_total_pay_lineEdit.text()
+        self.model.jury_panel_total_pay_word = num2words(int(self.model.jury_panel_total_pay))
+
+
+
+class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
+    """Builder for the Jury Payment Dialog."""
 
     build_dict = {
         'dialog_name': 'Jury Payment Entry',
@@ -66,9 +119,3 @@ class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
         'updater': JuryPaymentCaseInformationUpdater,
         'info_checker': JuryPaymentInfoChecker,
     }
-
-    # def __init__(self, judicial_officer=None, parent=None):
-    #     super().__init__(parent)
-    #     self.template = TEMPLATE_DICT.get(self.dialog_name)
-    #     self.judicial_officer = judicial_officer
-    #     self.load_entry_case_information_model()

@@ -44,5 +44,5 @@ class GeneralUserSettings(UserSettings):
 
 USER_SETTINGS = {
     'Justin_Home_PC': AdminUserSettings,
-    'Justin_Work_Laptop_PC': AdminUserSettings,
+    'Justin_Work_Laptop': AdminUserSettings,
 }
