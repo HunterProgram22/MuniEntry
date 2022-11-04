@@ -201,6 +201,7 @@ class AdminFiscalDialogLoader(DialogLoader):
         judicial_officer = self.mainwindow.judicial_officer
         return button_dict.get(self.mainwindow.sender())(judicial_officer)
 
+
 class DigitalWorkflowDialogLoader(DialogLoader):
 
     def load_dialog(self) -> base.BaseDialogBuilder:

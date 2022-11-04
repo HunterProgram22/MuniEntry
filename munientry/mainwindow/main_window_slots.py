@@ -2,7 +2,12 @@
 from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
 
-from munientry.checkers.dialog_preload_checkers import DialogPreloadChecker
+from munientry.checkers.dialog_preload_checkers import (
+    AdminFiscalPreloadChecker,
+    AdminPreloadChecker,
+    CrimTrafficPreloadChecker,
+    SchedulingPreloadChecker,
+)
 from munientry.data import sql_lite_functions as sql_lite
 from munientry.data import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
@@ -70,31 +75,31 @@ class MainWindowSlotFunctionsMixin(object):
 
     def start_crim_traffic_entry(self) -> None:
         """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
-        if DialogPreloadChecker(self).crimtraffic_checks():
+        if CrimTrafficPreloadChecker(self).checks:
             self.dialog = CrimTrafficDialogLoader(self).dialog
             return self.dialog.exec()
 
     def start_scheduling_entry(self) -> None:
         """Starts a scheduling dialog based on the dialog button that is pressed."""
-        if DialogPreloadChecker(self).scheduling_checks():
+        if SchedulingPreloadChecker(self).checks:
             self.dialog = SchedulingDialogLoader(self).dialog
             return self.dialog.exec()
 
     def start_admin_jury_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
-        if DialogPreloadChecker(self).admin_checks():
+        if AdminPreloadChecker(self).checks:
             self.dialog = AdminJuryDialogLoader(self).dialog
             return self.dialog.exec()
 
     def start_admin_driving_entry(self) -> None:
         """Starts a admin dialog based on the dialog button that is pressed."""
-        if DialogPreloadChecker(self).admin_checks():
+        if AdminPreloadChecker(self).checks:
             self.dialog = AdminDrivingDialogLoader(self).dialog
             return self.dialog.exec()
 
     def start_admin_fiscal_entry(self) -> None:
         """Starts the Admin Fiscal Dialog."""
-        if DialogPreloadChecker(self).admin_fiscal_checks():
+        if AdminFiscalPreloadChecker(self).checks:
             self.dialog = AdminFiscalDialogLoader(self).dialog
             return self.dialog.exec()
 

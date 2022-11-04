@@ -7,28 +7,10 @@ class DialogPreloadChecker(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
+        self.checks = self._perform_checks()
 
-    def crimtraffic_checks(self) -> bool:
-        if self._is_crimtraffic_officer_selected():
-            if self._is_daily_case_list_selected():
-                return True
-        return False
-
-    def scheduling_checks(self) -> bool:
-        if self._is_scheduling_officer_selected():
-            if self._is_daily_case_list_selected():
-                return True
-        return False
-
-    def admin_checks(self) -> bool:
-        if self._is_admin_officer_selected():
-            if self._is_daily_case_list_selected():
-                return True
-        return False
-
-    def admin_fiscal_checks(self) -> bool:
-        if self._is_admin_officer_selected():
-            return True
+    def _perform_checks(self):
+        pass
 
     def _is_daily_case_list_selected(self):
         """Checks if daily case list is selected if loading case from daily case lists.
@@ -46,6 +28,15 @@ class DialogPreloadChecker(object):
             return True
         return True
 
+
+class CrimTrafficPreloadChecker(DialogPreloadChecker):
+
+    def _perform_checks(self) -> bool:
+        if self._is_crimtraffic_officer_selected():
+            if self._is_daily_case_list_selected():
+                return True
+        return False
+
     def _is_crimtraffic_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.hemmeter_radioButton.isChecked(),
@@ -60,6 +51,15 @@ class DialogPreloadChecker(object):
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
 
+
+class SchedulingPreloadChecker(DialogPreloadChecker):
+
+    def _perform_checks(self) -> bool:
+        if self._is_scheduling_officer_selected():
+            if self._is_daily_case_list_selected():
+                return True
+        return False
+
     def _is_scheduling_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.dattilo_radioButton.isChecked(),
@@ -72,6 +72,36 @@ class DialogPreloadChecker(object):
             'You must select an assignment commissioner.', 'Assignment Commissioner Required',
         ).exec()
         return False
+
+
+class AdminPreloadChecker(DialogPreloadChecker):
+
+    def _perform_checks(self) -> bool:
+        if self._is_admin_officer_selected():
+            if self._is_daily_case_list_selected():
+                return True
+        return False
+
+    def _is_admin_officer_selected(self) -> bool:
+        required_officers = [
+            self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
+            self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
+            self.mainwindow.court_admin_kudela_radioButton.isChecked(),
+            self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
+        ]
+        if any(required_officers):
+            return True
+        RequiredBox(
+            'You must select an administrative staff person.', 'Administrative Staff Required',
+        ).exec()
+        return False
+
+
+class AdminFiscalPreloadChecker(DialogPreloadChecker):
+
+    def _perform_checks(self) -> bool:
+        if self._is_admin_officer_selected():
+            return True
 
     def _is_admin_officer_selected(self) -> bool:
         required_officers = [
