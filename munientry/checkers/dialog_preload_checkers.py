@@ -7,12 +7,12 @@ class DialogPreloadChecker(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
-        self.checks = self._perform_checks()
+        self.checks = self.perform_checks()
 
-    def _perform_checks(self):
-        pass
+    def perform_checks(self):
+        """Method used in subclasses to run preload checks."""
 
-    def _is_daily_case_list_selected(self):
+    def is_daily_case_list_selected(self):
         """Checks if daily case list is selected if loading case from daily case lists.
 
         Returns True if loading from case_search_tab.
@@ -30,14 +30,15 @@ class DialogPreloadChecker(object):
 
 
 class CrimTrafficPreloadChecker(DialogPreloadChecker):
+    """Pre Dialog Load checks for CrimTraffic Tab Dialog Buttons."""
 
-    def _perform_checks(self) -> bool:
-        if self._is_crimtraffic_officer_selected():
-            if self._is_daily_case_list_selected():
+    def perform_checks(self) -> bool:
+        if self.is_crimtraffic_officer_selected():
+            if self.is_daily_case_list_selected():
                 return True
         return False
 
-    def _is_crimtraffic_officer_selected(self) -> bool:
+    def is_crimtraffic_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.hemmeter_radioButton.isChecked(),
             self.mainwindow.rohrer_radioButton.isChecked(),
@@ -53,14 +54,15 @@ class CrimTrafficPreloadChecker(DialogPreloadChecker):
 
 
 class SchedulingPreloadChecker(DialogPreloadChecker):
+    """Pre Dialog Load checks for Scheduling Tab Dialog Buttons."""
 
-    def _perform_checks(self) -> bool:
-        if self._is_scheduling_officer_selected():
-            if self._is_daily_case_list_selected():
+    def perform_checks(self) -> bool:
+        if self.is_scheduling_officer_selected():
+            if self.is_daily_case_list_selected():
                 return True
         return False
 
-    def _is_scheduling_officer_selected(self) -> bool:
+    def is_scheduling_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.dattilo_radioButton.isChecked(),
             self.mainwindow.patterson_radioButton.isChecked(),
@@ -75,14 +77,15 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
 
 
 class AdminPreloadChecker(DialogPreloadChecker):
+    """Pre Dialog Load checks for Admin Tab Dialog Buttons that load a case."""
 
-    def _perform_checks(self) -> bool:
-        if self._is_admin_officer_selected():
-            if self._is_daily_case_list_selected():
+    def perform_checks(self) -> bool:
+        if self.is_admin_officer_selected():
+            if self.is_daily_case_list_selected():
                 return True
         return False
 
-    def _is_admin_officer_selected(self) -> bool:
+    def is_admin_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
             self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
@@ -98,12 +101,14 @@ class AdminPreloadChecker(DialogPreloadChecker):
 
 
 class AdminFiscalPreloadChecker(DialogPreloadChecker):
+    """Pre Dialog Load checks for Admin Tab Fiscal Dialog Button."""
 
-    def _perform_checks(self) -> bool:
-        if self._is_admin_officer_selected():
+    def perform_checks(self) -> bool:
+        if self.is_admin_officer_selected():
             return True
+        return False
 
-    def _is_admin_officer_selected(self) -> bool:
+    def is_admin_officer_selected(self) -> bool:
         required_officers = [
             self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
             self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
