@@ -11,6 +11,7 @@ class JuryPaymentInformation:
     defendant: object = field(default_factory=Defendant)
     entry_date: str = None
     trial_date: str = None
+    trial_length: str = None
     jurors_reported: str = None
     jurors_reported_word: str = None
     jurors_seated: str = None

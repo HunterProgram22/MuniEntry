@@ -41,7 +41,15 @@ class JuryPaymentSlotFunctions(admin.AdminSlotFunctions):
         return (25*jurors_not_seated)
 
     def calculate_jurors_seated_pay(self, jurors_seated):
+        if self.dialog.trial_length_box.currentText() == 'Two Days':
+            return (40*2*jurors_seated)
         return (40*jurors_seated)
+
+    def set_seated_jurors(self):
+        if self.dialog.trial_length_box.currentText() == 'No Trial - Jury Not Seated':
+            self.dialog.jurors_seated_box.setCurrentText('0')
+        else:
+            self.dialog.jurors_seated_box.setCurrentText('9')
 
 
 class JuryPaymentSignalConnector(admin.AdminSignalConnector):
@@ -54,6 +62,7 @@ class JuryPaymentSignalConnector(admin.AdminSignalConnector):
 
     def connect_other_dialog_signals(self):
         self.dialog.calculate_payment_Button.released.connect(self.dialog.functions.calculate_juror_pay)
+        self.dialog.trial_length_box.currentTextChanged.connect(self.dialog.functions.set_seated_jurors)
 
 
 class JuryPaymentInfoChecker(BaseChecker):
@@ -89,6 +98,7 @@ class JuryPaymentCaseInformationUpdater(BaseDialogUpdater):
         self.model.defendant.last_name = self.dialog.defendant_last_name_lineEdit.text()
 
     def update_juror_information(self):
+        self.model.trial_length = self.dialog.trial_length_box.currentText()
         self.model.jurors_reported = self.dialog.jurors_reported_lineEdit.text()
         self.model.jurors_reported_word = num2words(int(self.model.jurors_reported))
         self.model.jurors_seated = self.dialog.jurors_seated_box.currentText()
