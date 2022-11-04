@@ -102,38 +102,10 @@ class DialogLoader(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
+        self.dialog = self.load_dialog()
 
-    def load_admin_jury_dialog(self) -> base.BaseDialogBuilder:
-        button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self._load_admin_jury_pay_dialog_process(button_dict)
-
-    def load_admin_driving_dialog(self) -> base.BaseDialogBuilder:
-        button_dict = self.mainwindow.admin_dialog_buttons_dict
-        return self._load_admin_driving_dialog_process(button_dict)
-
-    def load_admin_fiscal_dialog(self) -> base.BaseDialogBuilder:
-        button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
-        return self._load_admin_fiscal_dialog_process(button_dict)
-
-    def load_digital_workflow_dialog(self) -> base.BaseDialogBuilder:
-        button_dict = self.mainwindow.digital_workflow_buttons_dict
-        return self._load_digital_workflow_dialog_process(button_dict)
-
-    def load_probation_workflow_dialog(self) -> base.BaseDialogBuilder:
-        """This method is the same as load digital workflow dialog for now.
-
-        May need changes later or can refactor into single method.
-        """
-        button_dict = self.mainwindow.probation_workflow_buttons_dict
-        return self._load_digital_workflow_dialog_process(button_dict)
-
-    def load_crimtraffic_dialog(self) -> crim.CrimTrafficDialogBuilder:
-        button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
-        return self._load_crimtraffic_dialog_process(button_dict)
-
-    def load_scheduling_dialog(self) -> sched.SchedulingDialogBuilder:
-        button_dict = self.mainwindow.scheduling_dialog_buttons_dict
-        return self._load_scheduling_dialog_process(button_dict)
+    def load_dialog(self):
+        pass
 
     def _set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
@@ -156,6 +128,13 @@ class DialogLoader(object):
             return case_number
         return self.mainwindow.case_search_box.text()
 
+
+class CrimTrafficDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> crim.CrimTrafficDialogBuilder:
+        button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
+        return self._load_crimtraffic_dialog_process(button_dict)
+
     def _load_crimtraffic_dialog_process(self, button_dict):
         """CrimTraffic Load dialog process."""
         case_table = self._set_case_table()
@@ -169,17 +148,12 @@ class DialogLoader(object):
             workflow_status=self.mainwindow.digital_workflow.workflow_status
         )
 
-    def _load_scheduling_dialog_process(self, button_dict):
-        """Scheduling Dialog Load process."""
-        case_table = self._set_case_table()
-        judicial_officer = self.mainwindow.judicial_officer
-        cms_case_data = self._get_cms_case_data()
-        logger.info(f'CMS Case Data: {cms_case_data}')
-        return button_dict.get(self.mainwindow.sender())(
-            judicial_officer,
-            cms_case=cms_case_data,
-            case_table=case_table,
-        )
+
+class AdminJuryDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> base.BaseDialogBuilder:
+        button_dict = self.mainwindow.admin_dialog_buttons_dict
+        return self._load_admin_jury_pay_dialog_process(button_dict)
 
     def _load_admin_jury_pay_dialog_process(self, button_dict):
         case_table = self._set_case_table()
@@ -191,6 +165,13 @@ class DialogLoader(object):
             cms_case=cms_case_data,
             case_table=case_table,
         )
+
+
+class AdminDrivingDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> base.BaseDialogBuilder:
+        button_dict = self.mainwindow.admin_dialog_buttons_dict
+        return self._load_admin_driving_dialog_process(button_dict)
 
     def _load_admin_driving_dialog_process(self, button_dict):
         """Used for driving privileges entry because case search query is unique."""
@@ -208,12 +189,58 @@ class DialogLoader(object):
             case_table=case_table,
         )
 
+
+class AdminFiscalDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> base.BaseDialogBuilder:
+        button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
+        return self._load_admin_fiscal_dialog_process(button_dict)
+
     def _load_admin_fiscal_dialog_process(self, button_dict):
         """Used for Admin Fiscal entry because there is no case search used."""
         judicial_officer = self.mainwindow.judicial_officer
         return button_dict.get(self.mainwindow.sender())(judicial_officer)
 
+class DigitalWorkflowDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> base.BaseDialogBuilder:
+        button_dict = self.mainwindow.digital_workflow_buttons_dict
+        return self._load_digital_workflow_dialog_process(button_dict)
 
     def _load_digital_workflow_dialog_process(self, button_dict):
         """Used for loading digital workflow dialogs."""
         return button_dict.get(self.mainwindow.sender())()
+
+
+class ProbationWorkflowDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> base.BaseDialogBuilder:
+        """This method is the same as load digital workflow dialog for now.
+
+        May need changes later or can refactor into single method.
+        """
+        button_dict = self.mainwindow.probation_workflow_buttons_dict
+        return self._load_digital_workflow_dialog_process(button_dict)
+
+    def _load_digital_workflow_dialog_process(self, button_dict):
+        """Used for loading digital workflow dialogs."""
+        return button_dict.get(self.mainwindow.sender())()
+
+
+class SchedulingDialogLoader(DialogLoader):
+
+    def load_dialog(self) -> sched.SchedulingDialogBuilder:
+        button_dict = self.mainwindow.scheduling_dialog_buttons_dict
+        return self._load_scheduling_dialog_process(button_dict)
+
+    def _load_scheduling_dialog_process(self, button_dict):
+        """Scheduling Dialog Load process."""
+        case_table = self._set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self._get_cms_case_data()
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return button_dict.get(self.mainwindow.sender())(
+            judicial_officer,
+            cms_case=cms_case_data,
+            case_table=case_table,
+        )
