@@ -17,6 +17,7 @@ from munientry.loaders.dialog_loader import (
     AdminFiscalDialogLoader,
     AdminJuryDialogLoader,
     CrimTrafficDialogLoader,
+    DigitalWorkflowDialogLoader,
     ProbationWorkflowDialogLoader,
     SchedulingDialogLoader,
 )
@@ -147,12 +148,12 @@ class MainWindowSlotFunctionsMixin(object):
         self.case_charges_label_field.setText(charge_list_text)
 
     def show_case_docket_case_list(self):
-        """TODO: ValueError catch put in to handle empty daily case list - fix daily case lists."""
+        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
         try:
             last_name, case_number = self.daily_case_list.currentText().split(' - ')
         except ValueError as err:
             logger.warning(err)
-            return None
+            case_number = ''
         self.show_case_docket(case_number)
 
     def show_case_docket(self, case_number=None):
@@ -189,8 +190,7 @@ def update_case_number(case_number: str) -> str:
             case_year, case_five_number = case_number.split('B')
         case_year = case_year[:2]
         case_code = 'CRB'
-        new_case_number = reset_case_number(case_year, case_code, case_five_number)
-        return new_case_number
+        return reset_case_number(case_year, case_code, case_five_number)
     ovi_letter_list = ['C', 'c']
     if any(letter in case_number for letter in ovi_letter_list):
         try:
@@ -199,8 +199,7 @@ def update_case_number(case_number: str) -> str:
             case_year, case_five_number = case_number.split('C')
         case_year = case_year[:2]
         case_code = 'TRC'
-        new_case_number = reset_case_number(case_year, case_code, case_five_number)
-        return new_case_number
+        return reset_case_number(case_year, case_code, case_five_number)
     traffic_letter_list = ['D', 'd']
     if any(letter in case_number for letter in traffic_letter_list):
         try:
@@ -209,18 +208,24 @@ def update_case_number(case_number: str) -> str:
             case_year, case_five_number = case_number.split('D')
         case_year = case_year[:2]
         case_code = 'TRD'
-        new_case_number = reset_case_number(case_year, case_code, case_five_number)
-        return new_case_number
+        return reset_case_number(case_year, case_code, case_five_number)
 
 
 def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> str:
-        if len(case_five_number) == 5:
+    """Adds 0's to the last 5 digits of a case number to make it 5 digits.
+
+    22TRC1 -> 22TRC00001
+    22CRB12 -> 22CRB00012
+    22TRD205 -> 22TRD00205
+    """
+    match len(case_five_number):
+        case 5:
             return f'{case_year}{case_code}{case_five_number}'
-        elif len(case_five_number) == 4:
+        case 4:
             return f'{case_year}{case_code}0{case_five_number}'
-        elif len(case_five_number) == 3:
+        case 3:
             return f'{case_year}{case_code}00{case_five_number}'
-        elif len(case_five_number) == 2:
+        case 2:
             return f'{case_year}{case_code}000{case_five_number}'
-        elif len(case_five_number) == 1:
+        case 1:
             return f'{case_year}{case_code}0000{case_five_number}'
