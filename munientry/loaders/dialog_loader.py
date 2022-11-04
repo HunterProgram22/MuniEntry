@@ -9,19 +9,14 @@ from PyQt6.QtWidgets import QMessageBox
 from munientry.data import sql_server_getters as sql_server
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
-from munientry.settings import TYPE_CHECKING
 from munientry.widgets.message_boxes import WarningBox
 
-if TYPE_CHECKING:
-    from munientry.builders import base_builders as base
-    from munientry.builders.administrative import base_admin_builders as admin
-    from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-    from munientry.builders.scheduling import base_scheduling_builders as sched
-    from munientry.widgets.combo_boxes import DailyCaseListComboBox
 
+def search_daily_case_list(daily_case_list, last_name: str) -> tuple:
+    """Loops through all cases in daily case list to find matching last names.
 
-def search_daily_case_list(daily_case_list: DailyCaseListComboBox, last_name: str) -> tuple:
-    """Loops through all cases in daily case list to find matching last names."""
+    :daily_case_list: A DailyCaseListComboBox object.
+    """
     case_match_count = 0
     matched_cases_list = []
     for case in daily_case_list.all_items():
@@ -45,8 +40,11 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
     return WarningBox(message, 'Companion Cases').exec()
 
 
-def check_for_companion_cases(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformation:
-    """Checks for matching last names to find potential companion cases to load."""
+def check_for_companion_cases(daily_case_list) -> CmsCaseInformation:
+    """Checks for matching last names to find potential companion cases to load.
+
+    :daily_case_list: A DailyCaseListComboBox object.
+    """
     last_name, case_number = daily_case_list.currentText().split(' - ')
     case_match_count, matched_cases_list = search_daily_case_list(daily_case_list, last_name)
     if case_match_count > 1:
@@ -56,10 +54,10 @@ def check_for_companion_cases(daily_case_list: DailyCaseListComboBox) -> CmsCase
     return load_single_case(case_number)
 
 
-def set_case_to_load(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformation:
+def set_case_to_load(daily_case_list) -> CmsCaseInformation:
     """Returns CmsCaseInformation object model for loading to the template.
 
-    :daily_case_list: The daily case list table that is currently selected on the Main Window.
+    :daily_case_list: The DailyCaseListComboBox that is currently selected on the Main Window.
     """
     if daily_case_list.currentText() == '':
         return load_no_case()
@@ -98,14 +96,14 @@ def load_multiple_cases(matched_case_numbers: list) -> CmsCaseInformation:
 
 
 class DialogLoader(object):
-    """Loads the Dialog that is selected from the Main Window UI."""
+    """Base Loader class for loading a Dialog, actual Dialog is loaded by subclass."""
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
         self.dialog = self.load_dialog()
 
     def load_dialog(self):
-        pass
+        raise NotImplementedError
 
     def _set_case_table(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
@@ -130,13 +128,13 @@ class DialogLoader(object):
 
 
 class CrimTrafficDialogLoader(DialogLoader):
+    """Loader class for CrimTraffic Dialogs."""
 
-    def load_dialog(self) -> crim.CrimTrafficDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
         return self._load_crimtraffic_dialog_process(button_dict)
 
     def _load_crimtraffic_dialog_process(self, button_dict):
-        """CrimTraffic Load dialog process."""
         case_table = self._set_case_table()
         judicial_officer = self.mainwindow.judicial_officer
         cms_case_data = self._get_cms_case_data()
@@ -145,13 +143,14 @@ class CrimTrafficDialogLoader(DialogLoader):
             judicial_officer,
             cms_case=cms_case_data,
             case_table=case_table,
-            workflow_status=self.mainwindow.digital_workflow.workflow_status
+            workflow_status=self.mainwindow.digital_workflow.workflow_status,
         )
 
 
 class AdminJuryDialogLoader(DialogLoader):
+    """Loader class for Jury Payment Dialog."""
 
-    def load_dialog(self) -> base.BaseDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.admin_dialog_buttons_dict
         return self._load_admin_jury_pay_dialog_process(button_dict)
 
@@ -168,8 +167,9 @@ class AdminJuryDialogLoader(DialogLoader):
 
 
 class AdminDrivingDialogLoader(DialogLoader):
+    """Loader class for Driving Privileges Dialog."""
 
-    def load_dialog(self) -> base.BaseDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.admin_dialog_buttons_dict
         return self._load_admin_driving_dialog_process(button_dict)
 
@@ -191,31 +191,32 @@ class AdminDrivingDialogLoader(DialogLoader):
 
 
 class AdminFiscalDialogLoader(DialogLoader):
+    """Loader class for Admin Fiscal Entries Dialog."""
 
-    def load_dialog(self) -> base.BaseDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
         return self._load_admin_fiscal_dialog_process(button_dict)
 
     def _load_admin_fiscal_dialog_process(self, button_dict):
-        """Used for Admin Fiscal entry because there is no case search used."""
         judicial_officer = self.mainwindow.judicial_officer
         return button_dict.get(self.mainwindow.sender())(judicial_officer)
 
 
 class DigitalWorkflowDialogLoader(DialogLoader):
+    """Loader class for Judge and Magistrate Digital Workflow Dialogs."""
 
-    def load_dialog(self) -> base.BaseDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.digital_workflow_buttons_dict
         return self._load_digital_workflow_dialog_process(button_dict)
 
     def _load_digital_workflow_dialog_process(self, button_dict):
-        """Used for loading digital workflow dialogs."""
         return button_dict.get(self.mainwindow.sender())()
 
 
 class ProbationWorkflowDialogLoader(DialogLoader):
+    """Loader class for Probation Digital Workflow Dialogs."""
 
-    def load_dialog(self) -> base.BaseDialogBuilder:
+    def load_dialog(self):
         """This method is the same as load digital workflow dialog for now.
 
         May need changes later or can refactor into single method.
@@ -224,18 +225,17 @@ class ProbationWorkflowDialogLoader(DialogLoader):
         return self._load_digital_workflow_dialog_process(button_dict)
 
     def _load_digital_workflow_dialog_process(self, button_dict):
-        """Used for loading digital workflow dialogs."""
         return button_dict.get(self.mainwindow.sender())()
 
 
 class SchedulingDialogLoader(DialogLoader):
+    """Loader class for Scheduling Dialogs."""
 
-    def load_dialog(self) -> sched.SchedulingDialogBuilder:
+    def load_dialog(self):
         button_dict = self.mainwindow.scheduling_dialog_buttons_dict
         return self._load_scheduling_dialog_process(button_dict)
 
     def _load_scheduling_dialog_process(self, button_dict):
-        """Scheduling Dialog Load process."""
         case_table = self._set_case_table()
         judicial_officer = self.mainwindow.judicial_officer
         cms_case_data = self._get_cms_case_data()

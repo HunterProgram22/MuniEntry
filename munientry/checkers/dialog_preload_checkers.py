@@ -11,6 +11,7 @@ class DialogPreloadChecker(object):
 
     def perform_checks(self):
         """Method used in subclasses to run preload checks."""
+        raise NotImplementedError
 
     def is_daily_case_list_selected(self):
         """Checks if daily case list is selected if loading case from daily case lists.
