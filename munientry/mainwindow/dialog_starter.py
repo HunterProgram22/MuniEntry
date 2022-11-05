@@ -1,6 +1,4 @@
 """Module for starting dialogs when the dialog button is pressed (released)."""
-from loguru import logger
-
 from munientry.builders.administrative.admin_fiscal_dialog import AdminFiscalDialog
 from munientry.builders.administrative.driving_privileges_dialog import (
     DrivingPrivilegesDialog,
@@ -23,38 +21,34 @@ def start_dialog(sender, mainwindow):
 
     The dialog load process and associated preload checks are governed by the subclass of the
     dialog (in some cases Dialog Builder - TODO: rename all to dialog builder classes).
+
+    If a dialog is a subclass of a particular base class, then it attemps to load the dialog, in
+    some cases only after precheck conditions are met (i.e. the appropriate judicial officer is
+    selected, and/or a case list is selected.
     """
     if issubclass(sender, CrimTrafficDialogBuilder):
         if precheck.CrimTrafficPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.CrimTrafficDialogLoader(mainwindow).dialog
-            return mainwindow.dialog.exec()
+            mainwindow.dialog.exec()
     elif issubclass(sender, SchedulingDialogBuilder):
         if precheck.SchedulingPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.SchedulingDialogLoader(mainwindow).dialog
-            return mainwindow.dialog.exec()
+            mainwindow.dialog.exec()
     elif issubclass(sender, JuryPaymentDialog):
         if precheck.AdminPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.AdminJuryDialogLoader(mainwindow).dialog
-            return mainwindow.dialog.exec()
+            mainwindow.dialog.exec()
     elif issubclass(sender, DrivingPrivilegesDialog):
         if precheck.AdminPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.AdminDrivingDialogLoader(mainwindow).dialog
-            return mainwindow.dialog.exec()
+            mainwindow.dialog.exec()
     elif issubclass(sender, AdminFiscalDialog):
         if precheck.AdminFiscalPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.AdminFiscalDialogLoader(mainwindow).dialog
-            return mainwindow.dialog.exec()
+            mainwindow.dialog.exec()
     elif issubclass(sender, MattoxWorkflowDialog):
         mainwindow.dialog = loader.ProbationWorkflowDialogLoader(mainwindow).dialog
-        return mainwindow.dialog.exec()
+        mainwindow.dialog.exec()
     elif issubclass(sender, HemmeterWorkflowDialog):
         mainwindow.dialog = loader.DigitalWorkflowDialogLoader(mainwindow).dialog
-        return mainwindow.dialog.exec()
-    # logger.debug(mainwindow.dialog)
-    # return start_dialog_window(mainwindow.dialog)
-
-
-# def start_dialog_window(dialog):
-#     if dialog is None:
-#         return None
-#     return dialog.exec()
+        mainwindow.dialog.exec()
