@@ -132,7 +132,6 @@ class CrimTrafficDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.crim_traffic_dialog_buttons_dict
         return self._load_crimtraffic_dialog_process()
 
     def _load_crimtraffic_dialog_process(self):
@@ -153,7 +152,6 @@ class AdminJuryDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.admin_dialog_buttons_dict
         return self._load_admin_jury_pay_dialog_process()
 
     def _load_admin_jury_pay_dialog_process(self):
@@ -173,7 +171,6 @@ class AdminDrivingDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.admin_dialog_buttons_dict
         return self._load_admin_driving_dialog_process()
 
     def _load_admin_driving_dialog_process(self):
@@ -198,7 +195,6 @@ class AdminFiscalDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.admin_dialog_no_case_buttons_dict
         return self._load_admin_fiscal_dialog_process()
 
     def _load_admin_fiscal_dialog_process(self):
@@ -211,7 +207,6 @@ class DigitalWorkflowDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.digital_workflow_buttons_dict
         return self._load_digital_workflow_dialog_process()
 
     def _load_digital_workflow_dialog_process(self):
@@ -227,7 +222,6 @@ class ProbationWorkflowDialogLoader(DialogLoader):
         May need changes later or can refactor into single method.
         """
         super().load_dialog()
-        # button_dict = self.mainwindow.probation_workflow_buttons_dict
         return self._load_digital_workflow_dialog_process()
 
     def _load_digital_workflow_dialog_process(self):
@@ -239,7 +233,6 @@ class SchedulingDialogLoader(DialogLoader):
 
     def load_dialog(self):
         super().load_dialog()
-        # button_dict = self.mainwindow.scheduling_dialog_buttons_dict
         return self._load_scheduling_dialog_process()
 
     def _load_scheduling_dialog_process(self):

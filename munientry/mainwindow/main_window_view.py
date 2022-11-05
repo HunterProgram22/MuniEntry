@@ -45,19 +45,8 @@ class MainWindowViewModifier(object):
         self.create_daily_case_lists()
         self.main_window.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
-
         self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
-
         self.main_window.dialog_buttons_dict = self.connect_dialog_buttons()
-
-        # self.main_window.crim_traffic_dialog_buttons_dict = (
-        #     self.connect_crim_traffic_dialog_buttons()
-        # )
-        # self.main_window.scheduling_dialog_buttons_dict = self.connect_scheduling_dialog_buttons()
-        # self.main_window.admin_dialog_buttons_dict = self.connect_admin_dialog_buttons()
-        # self.main_window.admin_dialog_no_case_buttons_dict = self.connect_admin_no_case_dialog_buttons()
-        # self.main_window.digital_workflow_buttons_dict = self.connect_digital_workflow_dialog_buttons()
-        # self.main_window.probation_workflow_buttons_dict = self.connect_probation_workflow_dialog_buttons()
         self.main_window.daily_case_lists = [
             self.main_window.arraignments_cases_box,
             self.main_window.slated_cases_box,
@@ -92,7 +81,6 @@ class MainWindowViewModifier(object):
                 JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
         }
 
-    # def connect_crim_traffic_dialog_buttons(self) -> dict:
     def connect_dialog_buttons(self):
         return {
             self.main_window.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
@@ -111,10 +99,6 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: freeform_dialog.FreeformDialog,
-        # }
-    #
-    # def connect_scheduling_dialog_buttons(self) -> dict:
-    #     return {
             self.main_window.hemmeter_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
             self.main_window.rohrer_schedulingEntryButton:
@@ -131,36 +115,14 @@ class MainWindowViewModifier(object):
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
             self.main_window.rohrer_trial_court_hearingButton:
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
-        # }
-    #
-    # def connect_admin_dialog_buttons(self) -> dict:
-    #     return {
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
-            self.main_window.juror_paymentButton:
-                jury_payment_dialog.JuryPaymentDialog,
-        # }
-    #
-    # def connect_admin_no_case_dialog_buttons(self) -> dict:
-    #     return {
-            self.main_window.fiscal_entriesButton:
-                admin_fiscal_dialog.AdminFiscalDialog,
-        # }
-    #
-    # def connect_digital_workflow_dialog_buttons(self) -> dict:
-    #     return {
-            self.main_window.hemmeter_workflowButton:
-                hemmeter.HemmeterWorkflowDialog,
-            self.main_window.rohrer_workflowButton:
-                rohrer.RohrerWorkflowDialog,
-            self.main_window.bunner_workflowButton:
-                bunner.BunnerWorkflowDialog,
-        # }
-    #
-    # def connect_probation_workflow_dialog_buttons(self) -> dict:
-    #     return {
-            self.main_window.probation_workflowButton:
-                mattox.MattoxWorkflowDialog,
+            self.main_window.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
+            self.main_window.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
+            self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
+            self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
+            self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
+            self.main_window.probation_workflowButton: mattox.MattoxWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:
