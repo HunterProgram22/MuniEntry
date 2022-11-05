@@ -38,28 +38,18 @@ class MainWindowSignalConnector(object):
             key.released.connect(
                 lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
             )
-            # key.released.connect(self.main_window.start_crim_traffic_entry)
 
     def connect_scheduling_buttons_to_start_dialog(self) -> None:
         for key, value in self.main_window.scheduling_dialog_buttons_dict.items():
             key.released.connect(
                 lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
             )
-            # key.released.connect(self.main_window.start_scheduling_entry)
 
     def connect_admin_buttons_to_start_dialog(self) -> None:
         for key, value in self.main_window.admin_dialog_buttons_dict.items():
             key.released.connect(
                 lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
             )
-        # self.main_window.limited_driving_privilegesButton.released.connect(
-        #     lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
-        # self.main_window.start_admin_driving_entry
-        # )
-        # self.main_window.juror_paymentButton.released.connect(
-        #     lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
-        # self.main_window.start_admin_jury_entry
-        # )
 
     def connect_admin_no_case_buttons_to_start_dialog(self) -> None:
         for key, value in self.main_window.admin_dialog_no_case_buttons_dict.items():
@@ -72,11 +62,9 @@ class MainWindowSignalConnector(object):
             key.released.connect(
                 lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
             )
-            # key.released.connect(self.main_window.start_digital_workflow)
 
     def connect_probation_workflow_buttons_to_start_dialog(self) -> None:
         for key, value in self.main_window.probation_workflow_buttons_dict.items():
             key.released.connect(
                 lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
             )
-            # key.released.connect(self.main_window.start_probation_workflow)

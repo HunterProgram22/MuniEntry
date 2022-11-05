@@ -74,46 +74,6 @@ class MainWindowSlotFunctionsMixin(object):
             + f' The assignment was made at {time_now}.',
         )
 
-    # def start_crim_traffic_entry(self) -> None:
-    #     """Starts a criminal/traffic dialog based on the dialog button that is pressed."""
-    #     if CrimTrafficPreloadChecker(self).checks:
-    #         self.dialog = CrimTrafficDialogLoader(self).dialog
-    #         return self.dialog.exec()
-
-    # def start_scheduling_entry(self) -> None:
-    #     """Starts a scheduling dialog based on the dialog button that is pressed."""
-    #     if SchedulingPreloadChecker(self).checks:
-    #         self.dialog = SchedulingDialogLoader(self).dialog
-    #         return self.dialog.exec()
-
-    # def start_admin_jury_entry(self) -> None:
-    #     """Starts a admin dialog based on the dialog button that is pressed."""
-    #     if AdminPreloadChecker(self).checks:
-    #         self.dialog = AdminJuryDialogLoader(self).dialog
-    #         return self.dialog.exec()
-    #
-    # def start_admin_driving_entry(self) -> None:
-    #     """Starts a admin dialog based on the dialog button that is pressed."""
-    #     if AdminPreloadChecker(self).checks:
-    #         self.dialog = AdminDrivingDialogLoader(self).dialog
-    #         return self.dialog.exec()
-    #
-    # def start_admin_fiscal_entry(self) -> None:
-    #     """Starts the Admin Fiscal Dialog."""
-    #     if AdminFiscalPreloadChecker(self).checks:
-    #         self.dialog = AdminFiscalDialogLoader(self).dialog
-    #         return self.dialog.exec()
-    #
-    # def start_digital_workflow(self) -> None:
-    #     """Starts a Digital Workflow Dialogs."""
-    #     self.dialog = DigitalWorkflowDialogLoader(self).dialog
-    #     return self.dialog.exec()
-    #
-    # def start_probation_workflow(self) -> None:
-    #     """Starts a Probation Workflow Dialogs."""
-    #     self.dialog = ProbationWorkflowDialogLoader(self).dialog
-    #     return self.dialog.exec()
-
     def set_person_stack_widget(self) -> None:
         logger.action('Entry Tab Changed')
         judicial_officers = self.judicial_officers_Stack
