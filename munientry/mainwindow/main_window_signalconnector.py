@@ -1,4 +1,6 @@
 """Signal connector module for the MainWindow."""
+from functools import partial
+
 from munientry.mainwindow.dialog_starter import start_dialog
 
 
@@ -25,11 +27,15 @@ class MainWindowSignalConnector(object):
         )
 
     def connect_judicial_officers_to_set_officer(self) -> None:
+        """Updates the judicial officer whenever a judicial officer radio button is selected."""
         for key in self.main_window.judicial_officer_buttons_dict:
             key.clicked.connect(self.main_window.update_judicial_officer)
 
     def connect_dialog_buttons_to_start_dialog(self) -> None:
-        for key, value in self.main_window.dialog_buttons_dict.items():
-            key.released.connect(
-                lambda value=value, mainwindow=self.main_window: start_dialog(value, mainwindow)
-            )
+        """Connects all dialog buttons to the appropriate dialog.
+
+        Each dialog button is binded to the start_dialog function with the dialog itself. When
+        pressed the start_dialog function starts the dialog load process.
+        """
+        for button, dialog in self.main_window.dialog_buttons_dict.items():
+            button.released.connect(partial(start_dialog, dialog, self.main_window))
