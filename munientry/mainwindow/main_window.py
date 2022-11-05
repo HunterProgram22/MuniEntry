@@ -7,6 +7,7 @@ from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.mainwindow.menu import MainWindowMenu
+from munientry.mainwindow.shortcuts import Shortcuts
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
 
@@ -26,12 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
-        self.set_shortcuts()
-
-    def set_shortcuts(self):
-        """This should be moved to own class, adding here for quick access during testing."""
-        self.tabWidget.setCurrentIndex(3)
-        self.hemmeter_workflowButton.setShortcut('Ctrl+D')
+        self.shorcuts = Shortcuts(self)
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)

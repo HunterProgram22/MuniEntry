@@ -3,7 +3,7 @@ import os
 from collections import namedtuple
 
 from loguru import logger
-from PyQt6.QtGui import QIcon, QKeySequence
+from PyQt6.QtGui import QIcon
 from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QInputDialog, QTableWidgetItem, QGroupBox, QVBoxLayout, QRadioButton
 
@@ -136,7 +136,6 @@ class MainWindowMenu(object):
 
     def connect_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
-        self.mainwindow.actionOpen_Current_Log.setShortcut(QKeySequence('Ctrl+L'))
         self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
             open_batch_entries_folder,
         )
