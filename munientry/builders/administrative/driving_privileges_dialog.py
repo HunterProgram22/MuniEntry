@@ -35,6 +35,9 @@ class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
         self.connect_other_dialog_signals()
 
     def connect_other_dialog_signals(self):
+        self.dialog.bmv_suspension_radioButton.toggled.connect(
+            self.dialog.functions.show_hide_bmv_cases_fields,
+        )
         self.dialog.add_information_checkBox.toggled.connect(
             self.dialog.functions.enable_additional_information,
         )
@@ -116,6 +119,14 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
         else:
             self.dialog.other_conditions_lineEdit.setEnabled(False)
             self.dialog.other_conditions_lineEdit.setHidden(True)
+
+    def show_hide_bmv_cases_fields(self):
+        if self.dialog.bmv_suspension_radioButton.isChecked():
+            self.dialog.bmv_cases_label.setHidden(False)
+            self.dialog.bmv_cases_textEdit.setHidden(False)
+        else:
+            self.dialog.bmv_cases_label.setHidden(True)
+            self.dialog.bmv_cases_textEdit.setHidden(True)
 
     def add_employer_school(self):
         employer_school = EmployerSchoolInformation()
@@ -223,13 +234,14 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         ]
         suspension_type = [button for button in radio_buttons if button.isChecked()]
         self.model.suspension_type = suspension_type[0].text()
+        self.model.bmv_suspension = self.dialog.bmv_suspension_radioButton.isChecked()
+        self.model.bmv_cases = self.dialog.bmv_cases_textEdit.toPlainText()
         self.model.suspension_start_date = self.dialog.suspension_start_date.get_date_as_string()
         self.model.suspension_end_date = self.dialog.suspension_end_date.get_date_as_string()
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
         self.model.additional_information_ordered = self.dialog.add_information_checkBox.isChecked()
         self.model.additional_information_text = self.dialog.add_information_textEdit.toPlainText()
-        logger.debug(self.model)
 
 
 class DrivingPrivilegesDialogInfoChecker(BaseChecker):
@@ -274,6 +286,7 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.enable_other_conditions()
         self.functions.enable_additional_information()
+        self.functions.show_hide_bmv_cases_fields()
 
 
 if __name__ == '__main__':

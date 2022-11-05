@@ -12,6 +12,8 @@ class DrivingPrivilegesInformation:
     plea_trial_date: str = None
     defendant: object = field(default_factory=DefendantDriver)
     suspension_type: str = None
+    bmv_suspension: bool = False
+    bmv_cases: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
     additional_information_ordered: bool = False
