@@ -29,10 +29,8 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
-from munientry.digitalworkflow import hemmeter_dw_dialog as hemmeter
-from munientry.digitalworkflow import bunner_dw_dialog as bunner
-from munientry.digitalworkflow import rohrer_dw_dialog as rohrer
-from munientry.digitalworkflow import mattox_dw_dialog as mattox
+from munientry.builders.workflows import mattox_dw_dialog as mattox, rohrer_dw_dialog as rohrer, \
+    bunner_dw_dialog as bunner, hemmeter_dw_dialog as hemmeter
 from munientry.models.party_types import JudicialOfficer
 from munientry.settings import VERSION_NUMBER
 from munientry.paths import ICON_PATH
