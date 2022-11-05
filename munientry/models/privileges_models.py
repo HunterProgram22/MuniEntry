@@ -14,6 +14,8 @@ class DrivingPrivilegesInformation:
     suspension_type: str = None
     suspension_start_date: str = None
     suspension_end_date: str = None
+    additional_information_ordered: bool = False
+    additional_information_text: str = None
     ignition_interlock: bool = False
     restricted_tags: bool = False
     employer_school_list: list = field(default_factory=list)
