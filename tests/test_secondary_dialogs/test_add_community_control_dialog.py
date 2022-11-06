@@ -7,7 +7,7 @@ Module Level Parameters - fixtures setup and imported automatically from the con
 import pytest
 from PyQt6.QtCore import QTimer
 
-from tests.conftest import enter_data, mouse_click, CLOSE_TIMER
+from tests.conftest import CLOSE_TIMER, enter_data, mouse_click
 
 dialogs_with_community_control = [
     'JailCCPleaButton',
@@ -18,6 +18,7 @@ dialogs_with_community_control = [
 
 @pytest.mark.parametrize('dialog_button', dialogs_with_community_control)
 def test_community_control_opens_all_dialogs(main_window, dialog_button):
+    """Tests that the Community Control Dialog opens for all main Dialogs for which it is used."""
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
@@ -55,6 +56,14 @@ all_community_control_checkbox_conditions = [
 @pytest.mark.skip('Requires manual interaction - comment out to run if needed')
 @pytest.mark.parametrize('checkbox', all_community_control_checkbox_conditions)
 def test_conditions_hold_if_dialog_closed_opened(qtbot, main_window, checkbox):
+    """Tests that when a condition is checked in Community Control the condition is retained.
+
+    This selects a condition in the Community Control Dialog, then closes the dialog by adding
+    the condition then reopens it to check if the condition is still checked.
+
+    The test is set to skip because it requires manual interaction, but if changes are made that
+    affect community control it should be run.
+    """
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.final_pretrial_radioButton)
     mouse_click(main_window.JailCCPleaButton)
