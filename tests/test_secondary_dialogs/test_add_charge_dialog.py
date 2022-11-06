@@ -22,8 +22,8 @@ dialogs_with_add_charge = [
 ]
 
 
-@pytest.mark.parametrize('test_input', dialogs_with_add_charge)
-def test_add_charge_works_all_dialogs(main_window, test_input):
+@pytest.mark.parametrize('dialog_button', dialogs_with_add_charge)
+def test_add_charge_works_all_dialogs(main_window, dialog_button):
     """Tests the Add Charge button opens the Add Charge Dialog and adds a charge.
 
     Test is run for all Main Entry Dialogs that have an Add Charge button.
@@ -32,8 +32,7 @@ def test_add_charge_works_all_dialogs(main_window, test_input):
     """
     mouse_click(main_window.hemmeter_radioButton)
     mouse_click(main_window.arraignments_radioButton)
-    dialog_button = getattr(main_window, test_input)
-    mouse_click(dialog_button)
+    mouse_click(getattr(main_window, dialog_button))
 
     def close_popup_dialog():
         mouse_click(main_window.dialog.popup_dialog.add_charge_Button)

@@ -227,4 +227,20 @@ def check_barkschat(charges, plea):
     assert charges[2].plea == plea
 
 
+@pytest.fixture
+def amend_charge_dialog(qtbot, main_window):
+    """Amend Charge Dialog is amend_charge_dialog. Uses the Jail dialog as that
+    is the most common."""
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.final_pretrial_radioButton)
+    enter_data(main_window.final_pretrial_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(main_window.JailCCPleaButton)
 
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.amend_charge_Button)
+
+    QTimer.singleShot(100, close_popup_dialog)
+    amend_button = main_window.dialog.charges_gridLayout.itemAtPosition(11, 2).widget()
+    mouse_click(amend_button)
+    return main_window.dialog.popup_dialog
