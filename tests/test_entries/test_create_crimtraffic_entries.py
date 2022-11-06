@@ -1,28 +1,24 @@
+"""Test module for creating crimtraffic entries.
+
+Module Level Parameters - fixtures setup and imported automatically from the conftest file.
+    main_window
+
+WARNING: All tests likely pass even if entry doesn't open because test only asserts a check
+of case_information data. Need to manually confirm the correct number of entries were created.
+
+TODO: Setup a folder for saving entries and clear folder prior to tests then count files after
+tests are complete.
+"""
 import pytest
 from PyQt6.QtCore import QTimer
-from tests.conftest import mouse_click, enter_data, check_barkschat
+
+from tests.conftest import CLOSE_TIMER, mouse_click, enter_data, check_barkschat
 
 
-def entry_dialog(qtbot, main_window):
+def entry_dialog(main_window):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
-
-
-@pytest.fixture
-def fop_dialog(qtbot, main_window):
-    """Fine Only Plea Dialog."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.FineOnlyPleaButton)
-    return main_window.dialog
-
-
-@pytest.fixture
-def jcp_dialog(qtbot, main_window):
-    """Jail and Comm. Control Plea."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.JailCCPleaButton)
-    return main_window.dialog
 
 
 @pytest.fixture
@@ -42,34 +38,10 @@ def div_dialog(qtbot, main_window):
 
 
 @pytest.fixture
-def bhd_dialog(qtbot, main_window):
-    """Bond Hearing Dialog."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.BondHearingButton)
-    return main_window.dialog
-
-
-@pytest.fixture
-def ngb_dialog(qtbot, main_window):
-    """Not Guilty Bond Dialog."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.NotGuiltyBondButton)
-    return main_window.dialog
-
-
-@pytest.fixture
 def fta_dialog(qtbot, main_window):
     """Failure to Appear / Issue Warrant Dialog."""
     entry_dialog(qtbot, main_window)
     mouse_click(main_window.FailureToAppearButton)
-    return main_window.dialog
-
-
-@pytest.fixture
-def npb_dialog(qtbot, main_window):
-    """No Plea Bond Dialog."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.NoPleaBondButton)
     return main_window.dialog
 
 
@@ -106,14 +78,6 @@ def pve_dialog(qtbot, main_window):
 
 
 @pytest.fixture
-def leap_sentence_dialog(qtbot, main_window):
-    """Leap Sentencing Entry."""
-    entry_dialog(qtbot, main_window)
-    mouse_click(main_window.LeapSentencingButton)
-    return main_window.dialog
-
-
-@pytest.fixture
 def freeform_dialog(qtbot, main_window):
     """Freeform Entry."""
     entry_dialog(qtbot, main_window)
@@ -129,10 +93,12 @@ def sentencing_only_dialog(qtbot, main_window):
     return main_window.dialog
 
 
-def test_create_no_plea_bond_entry(qtbot, npb_dialog):
+def test_create_no_plea_bond_entry(main_window):
+    """Tests the creation of an Appear on Warrant (No Plea) / Bond entry."""
+    entry_dialog(main_window)
+    mouse_click(main_window.NoPleaBondButton)
+    npb_dialog = main_window.dialog
     enter_data(npb_dialog.case_number_lineEdit, 'npb_test')
-
-    # Bond Conditions
     mouse_click(npb_dialog.no_alcohol_drugs_checkBox)
     mouse_click(npb_dialog.alcohol_drugs_assessment_checkBox)
     mouse_click(npb_dialog.monitoring_checkBox)
@@ -143,15 +109,16 @@ def test_create_no_plea_bond_entry(qtbot, npb_dialog):
     mouse_click(npb_dialog.public_safety_suspension_checkBox)
     npb_dialog.appearance_reason_box.setCurrentText('was arrested on a warrant for failure to appear')
 
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(npb_dialog.create_entry_Button)
     assert npb_dialog.entry_case_information.case_number == '21TRC05611npb_test'
 
 
-def test_create_bond_modification_entry(qtbot, bhd_dialog):
+def test_create_bond_modification_entry(main_window):
+    """Tests the creation of a Bond Modification / Revocation entry."""
+    entry_dialog(main_window)
+    mouse_click(main_window.BondHearingButton)
+    bhd_dialog = main_window.dialog
     enter_data(bhd_dialog.case_number_lineEdit, 'bhd_test')
-
-    # Bond Conditions
     mouse_click(bhd_dialog.no_alcohol_drugs_checkBox)
     mouse_click(bhd_dialog.alcohol_drugs_assessment_checkBox)
     mouse_click(bhd_dialog.monitoring_checkBox)
@@ -162,20 +129,21 @@ def test_create_bond_modification_entry(qtbot, bhd_dialog):
     mouse_click(bhd_dialog.public_safety_suspension_checkBox)
     bhd_dialog.bond_modification_decision_box.setCurrentText('request to modify bond is granted')
 
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(bhd_dialog.create_entry_Button)
     assert bhd_dialog.entry_case_information.case_number == '21TRC05611bhd_test'
 
 
-def test_create_leap_sentencing_entry(qtbot, leap_sentence_dialog):
-    enter_data(leap_sentence_dialog.case_number_lineEdit, 'leap_sentencing_test')
-
+def test_create_leap_sentencing_entry(qtbot, main_window):
+    """Tests the creation of a LEAP Sentencing entry."""
+    entry_dialog(main_window)
+    mouse_click(main_window.LeapSentencingButton)
+    leap_sentence_dialog = main_window.dialog
+    enter_data(leap_sentence_dialog.case_number_lineEdit, 'leap_sentence_test')
     enter_data(leap_sentence_dialog.leap_plea_date, '5/1/2021')
     mouse_click(leap_sentence_dialog.no_contest_all_Button)
     mouse_click(leap_sentence_dialog.credit_for_jail_checkBox)
     enter_data(leap_sentence_dialog.jail_time_credit_box, '2')
     enter_data(leap_sentence_dialog.fra_in_court_box, 'Yes')
-
     mouse_click(leap_sentence_dialog.license_suspension_checkBox)
     mouse_click(leap_sentence_dialog.community_service_checkBox)
     mouse_click(leap_sentence_dialog.other_conditions_checkBox)
@@ -185,25 +153,27 @@ def test_create_leap_sentencing_entry(qtbot, leap_sentence_dialog):
         enter_data(leap_sentence_dialog.popup_dialog.term_of_suspension_box, '12 months')
         enter_data(leap_sentence_dialog.popup_dialog.community_service_hours_ordered_box, '50')
         enter_data(leap_sentence_dialog.popup_dialog.community_service_days_to_complete_box, '60')
-        enter_data(leap_sentence_dialog.popup_dialog.other_conditions_textEdit, 'Stay away from Big Bird!')
+        enter_data(
+            leap_sentence_dialog.popup_dialog.other_conditions_textEdit, 'Stay away from Big Bird!'
+        )
         mouse_click(leap_sentence_dialog.popup_dialog.add_conditions_Button)
 
-    QTimer.singleShot(50, add_conditions)
+    QTimer.singleShot(CLOSE_TIMER, add_conditions)
     mouse_click(leap_sentence_dialog.add_conditions_Button)
-
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(leap_sentence_dialog.create_entry_Button)
-    assert leap_sentence_dialog.entry_case_information.case_number == '21TRC05611leap_sentencing_test'
+    assert leap_sentence_dialog.entry_case_information.case_number == '21TRC05611leap_sentence_test'
 
 
-def test_create_fine_only_entry(qtbot, fop_dialog):
+def test_create_fine_only_entry(qtbot, main_window):
+    """Tests the creation of a Fine Only Plea entry."""
+    entry_dialog(main_window)
+    mouse_click(main_window.FineOnlyPleaButton)
+    fop_dialog = main_window.dialog
     enter_data(fop_dialog.case_number_lineEdit, 'fop_test')
-
     mouse_click(fop_dialog.no_contest_all_Button)
     mouse_click(fop_dialog.credit_for_jail_checkBox)
     enter_data(fop_dialog.jail_time_credit_box, '2')
     enter_data(fop_dialog.fra_in_court_box, 'Yes')
-
     mouse_click(fop_dialog.license_suspension_checkBox)
     mouse_click(fop_dialog.community_service_checkBox)
     mouse_click(fop_dialog.other_conditions_checkBox)
@@ -216,21 +186,24 @@ def test_create_fine_only_entry(qtbot, fop_dialog):
         enter_data(fop_dialog.popup_dialog.other_conditions_textEdit, 'Stay away from Big Bird!')
         mouse_click(fop_dialog.popup_dialog.add_conditions_Button)
 
-    QTimer.singleShot(50, add_conditions)
+    QTimer.singleShot(CLOSE_TIMER, add_conditions)
     mouse_click(fop_dialog.add_conditions_Button)
-
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(fop_dialog.create_entry_Button)
     assert fop_dialog.entry_case_information.case_number == '21TRC05611fop_test'
 
 
-def test_create_not_guilty_bond_entry(qtbot, ngb_dialog):
-    enter_data(ngb_dialog.case_number_lineEdit, 'ngb_test')
+def test_create_not_guilty_bond_entry(qtbot, main_window):
+    """Tests the creation of a Not Guilty Plea / Bond entry.
 
+    TODO: Add Special Bond Conditions to entry.
+    """
+    entry_dialog(main_window)
+    mouse_click(main_window.NotGuiltyBondButton)
+    ngb_dialog = main_window.dialog
+    enter_data(ngb_dialog.case_number_lineEdit, 'ngb_test')
     mouse_click(ngb_dialog.not_guilty_all_Button)
     enter_data(ngb_dialog.bond_type_box, 'Cash or Surety Bond')
     enter_data(ngb_dialog.bond_amount_box, '$5,000')
-
     mouse_click(ngb_dialog.no_alcohol_drugs_checkBox)
     mouse_click(ngb_dialog.alcohol_drugs_assessment_checkBox)
     mouse_click(ngb_dialog.monitoring_checkBox)
@@ -240,18 +213,21 @@ def test_create_not_guilty_bond_entry(qtbot, ngb_dialog):
     mouse_click(ngb_dialog.specialized_docket_checkBox)
     mouse_click(ngb_dialog.public_safety_suspension_checkBox)
 
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
+    # Add Special Bond Conditions here
+
     mouse_click(ngb_dialog.create_entry_Button)
     assert ngb_dialog.entry_case_information.case_number == '21TRC05611ngb_test'
 
 
-def test_jail_cc_plea_entry(qtbot, jcp_dialog):
+def test_create_jail_cc_plea_entry(qtbot, main_window):
+    """Tests the creation of a Jail CC Plea entry."""
+    entry_dialog(main_window)
+    mouse_click(main_window.JailCCPleaButton)
+    jcp_dialog =  main_window.dialog
     enter_data(jcp_dialog.case_number_lineEdit, 'jcp_test')
-
     mouse_click(jcp_dialog.offense_of_violence_checkBox)
     mouse_click(jcp_dialog.no_contest_all_Button)
     enter_data(jcp_dialog.fra_in_court_box, 'Yes')
-
     mouse_click(jcp_dialog.license_suspension_checkBox)
     mouse_click(jcp_dialog.community_service_checkBox)
     mouse_click(jcp_dialog.other_conditions_checkBox)
@@ -306,10 +282,8 @@ def test_jail_cc_plea_entry(qtbot, jcp_dialog):
         mouse_click(jcp_dialog.popup_dialog.victim_reparation_checkBox)
         mouse_click(jcp_dialog.popup_dialog.add_conditions_Button)
 
-    QTimer.singleShot(50, add_conditions)
+    QTimer.singleShot(CLOSE_TIMER, add_conditions)
     mouse_click(jcp_dialog.add_conditions_Button)
-
-    # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(jcp_dialog.create_entry_Button)
     assert jcp_dialog.entry_case_information.case_number == '21TRC05611jcp_test'
 
