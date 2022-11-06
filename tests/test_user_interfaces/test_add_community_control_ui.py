@@ -56,4 +56,4 @@ def test_conditions_frames_work_when_checked(jcp_dialog, checkbox, frame):
     """
     mouse_click(getattr(jcp_dialog, checkbox))
     mouse_click(jcp_dialog.add_conditions_Button)
-    assert getattr(jcp_dialog.popup_dialog, frame).isEnabled() is True
+    assert getattr(jcp_dialog.popup_dialog, frame).isEnabled()

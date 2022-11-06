@@ -30,12 +30,12 @@ all_conditions_checkbox_test_list = [
 
 
 @pytest.mark.parametrize('checkbox, frame', all_conditions_checkbox_test_list)
-def test_conditions_hold_when_checked(fop_dialog, checkbox, frame):
+def test_conditions_frames_work_when_checked(fop_dialog, checkbox, frame):
     """Tests if a condition frame is enabled on the Community Control Dialog.
 
-    The test checks the condition box on the main dialog (Jail CC Plea is used) and then opens
-    the secondary Community Control Dialog to see if the appropriate frame is shown.
+    The test checks the condition box on the main dialog (Fine Only Plea is used) and then opens
+    the secondary Conditions Dialog to see if the appropriate frame is shown.
     """
     mouse_click(getattr(fop_dialog, checkbox))
     mouse_click(fop_dialog.add_conditions_Button)
-    assert getattr(fop_dialog.popup_dialog, frame).isEnabled() is True
+    assert getattr(fop_dialog.popup_dialog, frame).isEnabled()

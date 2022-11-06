@@ -33,8 +33,8 @@ def test_if_checking_freeform_makes_editable(amend_charge_dialog):
     Degree choice box is not editable because only specific degrees permitted.
     """
     mouse_click(amend_charge_dialog.freeform_entry_checkBox)
-    assert amend_charge_dialog.statute_choice_box.isEditable() is True
-    assert amend_charge_dialog.offense_choice_box.isEditable() is True
+    assert amend_charge_dialog.statute_choice_box.isEditable()
+    assert amend_charge_dialog.offense_choice_box.isEditable()
 
 
 def test_if_unchecking_freeform_uneditable(amend_charge_dialog):
