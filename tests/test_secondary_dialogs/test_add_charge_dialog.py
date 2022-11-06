@@ -2,7 +2,6 @@
 
 Module Level Parameters - fixtures setup and imported automatically from the conftest file.
     main_window
-    add_charge_dialog
 """
 import pytest
 from PyQt6.QtCore import QTimer
