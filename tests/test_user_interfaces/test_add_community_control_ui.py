@@ -1,4 +1,10 @@
-"""Module for testing Add Community Control Dialog user interface."""
+"""Module for testing Add Community Control Dialog user interface.
+
+Module Level Parameters - fixtures setup and imported automatically from the conftest file.
+    jcp_dialog
+    comm_control_dialog_com_control_conditions = community control dialog with the community
+    control frame enabled
+"""
 import pytest
 
 from tests.conftest import mouse_click

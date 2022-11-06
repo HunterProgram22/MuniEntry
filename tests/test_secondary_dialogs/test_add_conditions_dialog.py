@@ -1,20 +1,30 @@
+"""Test module for Conditions Dialog functionality.
+
+Module Level Parameters - fixtures setup and imported automatically from the conftest file.
+    main_window
+"""
 import pytest
 from PyQt6.QtCore import QTimer
-from tests.conftest import mouse_click, enter_data
 
+from tests.conftest import CLOSE_TIMER, enter_data, mouse_click
 
-def test_dialog_opens(conditions_dialog):
-    assert conditions_dialog.windowTitle() == "Additional Conditions"
-
-
-all_conditions_checkbox_test_list = [
-    ("license_suspension_checkBox", "license_suspension_frame"),
-    ("community_service_checkBox", "community_service_frame"),
-    ("other_conditions_checkBox", "other_conditions_frame"),
+dialogs_with_conditions = [
+    'FineOnlyPleaButton',
+    'LeapSentencingButton',
 ]
 
-@pytest.mark.parametrize("checkBox, frame", all_conditions_checkbox_test_list)
-def test_conditions_frames_work_when_condition_checked(qtbot, fop_dialog, checkBox, frame):
-    mouse_click(getattr(fop_dialog, checkBox))
-    mouse_click(fop_dialog.add_conditions_Button)
-    assert getattr(fop_dialog.popup_dialog, frame).isEnabled() == True
+
+@pytest.mark.parametrize('dialog_button', dialogs_with_conditions)
+def test_dialog_opens(main_window, dialog_button):
+    """Tests Add Conditions Dialog opens from all main Dialogs for which it is used."""
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(getattr(main_window, dialog_button))
+
+    def close_popup_dialog():
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(CLOSE_TIMER, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    assert main_window.dialog.popup_dialog.windowTitle() == 'Additional Conditions'

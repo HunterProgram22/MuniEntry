@@ -114,6 +114,9 @@ def conditions_dialog(qtbot, main_window):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.dialog.license_suspension_checkBox)
+    mouse_click(main_window.dialog.other_conditions_checkBox)
+    mouse_click(main_window.dialog.community_service_checkBox)
 
     def close_popup_dialog():
         qtbot.addWidget(main_window.dialog.popup_dialog)
