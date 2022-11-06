@@ -44,9 +44,15 @@ main_window_scheduling_button_test_list = [
 
 ]
 
-main_window_admin_button_test_list = [
+main_window_admin_case_button_test_list = [
     # Admin Entries
     ('limited_driving_privilegesButton', 'Driving Privileges Entry Case Information'),
+    ('juror_paymentButton', 'Juror Payment'),
+]
+
+main_window_admin_noncase_button_test_list = [
+    # Admin Non Case Entries
+    ('fiscal_entriesButton', 'Admin Fiscal Entry Information'),
 ]
 
 def test_window_opens(qtbot, main_window_noclose):
@@ -75,7 +81,7 @@ def test_all_scheduling_entry_buttons_with_no_case(qtbot, main_window, test_inpu
     assert main_window.dialog.case_number_lineEdit.text() == ""
 
 
-@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_button_test_list)
+@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_case_button_test_list)
 def test_all_admin_entry_buttons_with_no_case(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.assn_comm_patterson_radioButton)
     mouse_click(main_window.arraignments_radioButton)
@@ -102,13 +108,20 @@ def test_all_scheduling_entry_buttons_with_case_from_daily_case_list(qtbot, main
     assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
 
 
-@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_button_test_list)
-def test_all_scheduling_entry_buttons_with_case_from_daily_case_list(qtbot, main_window, test_input, dialog_title):
+@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_case_button_test_list)
+def test_all_admin_entry_buttons_with_case_from_daily_case_list(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.assn_comm_dattilo_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
     assert main_window.dialog.case_number_lineEdit.text() == "21TRC05611"
+
+
+@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_noncase_button_test_list)
+def test_all_admin_entry_buttons_with_case_from_daily_case_list(qtbot, main_window, test_input, dialog_title):
+    mouse_click(main_window.court_admin_kudela_radioButton)
+    mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.account_number_box.currentText() == "Indigent Alcohol Monitoring - 24115000"
 
 
 @pytest.mark.parametrize("test_input, dialog_title", main_window_all_button_test_list)
@@ -133,7 +146,7 @@ def test_all_scheduling_entry_buttons_with_case_from_case_search(qtbot, main_win
     assert main_window.dialog.defendant_last_name_lineEdit.text() == 'Mahan'
 
 
-@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_button_test_list)
+@pytest.mark.parametrize("test_input, dialog_title", main_window_admin_case_button_test_list)
 def test_all_scheduling_entry_buttons_with_case_from_case_search(qtbot, main_window, test_input, dialog_title):
     mouse_click(main_window.assn_comm_patterson_radioButton)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
