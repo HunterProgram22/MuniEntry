@@ -47,6 +47,7 @@ def test_dialogs_open_with_case_from_caselist(main_window, test_input, dialog_ti
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == '21TRC05611'
 
 
@@ -56,6 +57,7 @@ def test_dialogs_open_nocase_from_casesearch(main_window, test_input, dialog_tit
     mouse_click(main_window.bunner_radioButton)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == ''
 
 
@@ -67,5 +69,6 @@ def test_dialogs_open_with_case_from_casesearch(main_window, test_input, dialog_
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
     mouse_click(getattr(main_window, test_input))
+    assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == '22TRD01955'
     assert main_window.dialog.defendant_last_name_lineEdit.text() == 'Mahan'
