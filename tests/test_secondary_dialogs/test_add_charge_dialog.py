@@ -1,4 +1,4 @@
-"""Test module for Add Charge Dialog UI Functionality.
+"""Test module for Add Charge Dialog functionality.
 
 Module Level Parameters - fixtures setup and imported automatically from the conftest file.
     main_window

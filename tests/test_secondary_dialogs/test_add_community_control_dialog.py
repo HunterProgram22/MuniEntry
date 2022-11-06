@@ -1,4 +1,4 @@
-"""Test module for creating admin entries.
+"""Test module for Community Control Dialog functionality.
 
 Module Level Parameters - fixtures setup and imported automatically from the conftest file.
     main_window
@@ -35,12 +35,6 @@ all_community_control_checkbox_conditions = [
 ]
 
 
-@pytest.mark.parametrize('checkbox', all_community_control_checkbox_conditions)
-def test_all_checkbox_conditions(com_control_dialog_com_control_conditions, checkbox):
-    mouse_click(getattr(com_control_dialog_com_control_conditions, checkbox))
-    assert getattr(com_control_dialog_com_control_conditions, checkbox).isChecked()
-
-
 @pytest.mark.skip('Requires manual interaction - comment out to run if needed')
 @pytest.mark.parametrize('checkbox', all_community_control_checkbox_conditions)
 def test_conditions_hold_if_dialog_closed_opened(qtbot, main_window, checkbox):
@@ -59,20 +53,3 @@ def test_conditions_hold_if_dialog_closed_opened(qtbot, main_window, checkbox):
     mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
     mouse_click(main_window.dialog.add_conditions_Button)
     assert getattr(main_window.dialog.popup_dialog, checkbox).isChecked()
-
-
-all_conditions_checkbox_test_list = [
-    ('community_control_checkBox', 'community_control_frame'),
-    ('community_service_checkBox', 'community_service_frame'),
-    ('license_suspension_checkBox', 'license_suspension_frame'),
-    ('victim_notification_checkBox', 'victim_notification_frame'),
-    ('impoundment_checkBox', 'impoundment_frame'),
-    ('other_conditions_checkBox', 'other_conditions_frame'),
-]
-
-
-@pytest.mark.parametrize('checkbox, frame', all_conditions_checkbox_test_list)
-def test_conditions_frames_work_when_checked(jcp_dialog, checkbox, frame):
-    mouse_click(getattr(jcp_dialog, checkbox))
-    mouse_click(jcp_dialog.add_conditions_Button)
-    assert getattr(jcp_dialog.popup_dialog, frame).isEnabled() is True
