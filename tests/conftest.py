@@ -114,6 +114,9 @@ def conditions_dialog(qtbot, main_window):
     mouse_click(main_window.rohrer_radioButton)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
+    mouse_click(main_window.dialog.license_suspension_checkBox)
+    mouse_click(main_window.dialog.other_conditions_checkBox)
+    mouse_click(main_window.dialog.community_service_checkBox)
 
     def close_popup_dialog():
         qtbot.addWidget(main_window.dialog.popup_dialog)
@@ -122,6 +125,43 @@ def conditions_dialog(qtbot, main_window):
     QTimer.singleShot(50, close_popup_dialog)
     mouse_click(main_window.dialog.add_conditions_Button)
     return main_window.dialog.popup_dialog
+
+
+@pytest.fixture
+def special_conditions_dialog(qtbot, main_window):
+    """Fixture for the Add Special Bond Conditions dialog on the Not Guilty Bond main dialog."""
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.NotGuiltyBondButton)
+    mouse_click(main_window.dialog.domestic_violence_checkBox)
+    mouse_click(main_window.dialog.admin_license_suspension_checkBox)
+    mouse_click(main_window.dialog.custodial_supervision_checkBox)
+    mouse_click(main_window.dialog.vehicle_seizure_checkBox)
+    mouse_click(main_window.dialog.no_contact_checkBox)
+    mouse_click(main_window.dialog.other_conditions_checkBox)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    mouse_click(main_window.dialog.add_special_conditions_Button)
+    return main_window.dialog.popup_dialog
+
+
+@pytest.fixture
+def ngb_dialog(qtbot, main_window):
+    mouse_click(main_window.pelanda_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
+    mouse_click(main_window.NotGuiltyBondButton)
+
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(50, close_popup_dialog)
+    return main_window.dialog
 
 
 @pytest.fixture
@@ -224,4 +264,20 @@ def check_barkschat(charges, plea):
     assert charges[2].plea == plea
 
 
+@pytest.fixture
+def amend_charge_dialog(qtbot, main_window):
+    """Amend Charge Dialog is amend_charge_dialog. Uses the Jail dialog as that
+    is the most common."""
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.final_pretrial_radioButton)
+    enter_data(main_window.final_pretrial_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(main_window.JailCCPleaButton)
 
+    def close_popup_dialog():
+        qtbot.addWidget(main_window.dialog.popup_dialog)
+        mouse_click(main_window.dialog.popup_dialog.amend_charge_Button)
+
+    QTimer.singleShot(100, close_popup_dialog)
+    amend_button = main_window.dialog.charges_gridLayout.itemAtPosition(11, 2).widget()
+    mouse_click(amend_button)
+    return main_window.dialog.popup_dialog

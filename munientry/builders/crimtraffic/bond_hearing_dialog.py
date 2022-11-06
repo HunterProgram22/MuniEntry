@@ -29,7 +29,8 @@ class BondHearingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
 
     def start_add_special_bond_conditions_dialog(self):
         self.dialog.update_entry_case_information()
-        AddSpecialBondConditionsDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AddSpecialBondConditionsDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
 
     def show_hide_bond_conditions(self):
         if self.dialog.bond_type_box.currentText() == 'Continue Existing Bond':
