@@ -7,11 +7,28 @@ Module Level Parameters - fixtures setup and imported automatically from the con
 import pytest
 from PyQt6.QtCore import QTimer
 
-from tests.conftest import mouse_click, CLOSE_TIMER
+from tests.conftest import enter_data, mouse_click, CLOSE_TIMER
+
+dialogs_with_community_control = [
+    'JailCCPleaButton',
+    'TrialSentencingButton',
+    'SentencingOnlyButton',
+]
 
 
-def test_dialog_opens(com_control_dialog):
-    assert com_control_dialog.windowTitle() == 'Community Control Terms'
+@pytest.mark.parametrize('dialog_button', dialogs_with_community_control)
+def test_community_control_opens_all_dialogs(main_window, dialog_button):
+    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.pleas_radioButton)
+    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(getattr(main_window, dialog_button))
+
+    def close_popup_dialog():
+        mouse_click(main_window.dialog.popup_dialog.add_conditions_Button)
+
+    QTimer.singleShot(CLOSE_TIMER, close_popup_dialog)
+    mouse_click(main_window.dialog.add_conditions_Button)
+    assert main_window.dialog.popup_dialog.windowTitle() == 'Community Control Terms'
 
 
 all_community_control_checkbox_conditions = [
