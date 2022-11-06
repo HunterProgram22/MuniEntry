@@ -30,7 +30,8 @@ class NoPleaBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
 
     def start_add_special_bond_conditions_dialog(self):
         self.dialog.update_entry_case_information()
-        AddSpecialBondConditionsDialog(self.dialog).exec()
+        self.dialog.popup_dialog = AddSpecialBondConditionsDialog(self.dialog)
+        self.dialog.popup_dialog.exec()
 
     def hide_boxes(self):
         """This method is called on load to hide all optional boxes."""
