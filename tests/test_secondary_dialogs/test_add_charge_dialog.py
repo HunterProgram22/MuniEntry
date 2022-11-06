@@ -7,9 +7,9 @@ Module Level Parameters - fixtures setup and imported automatically from the con
 import pytest
 from PyQt6.QtCore import QTimer
 
-from tests.conftest import CLOSE_TIMER, enter_data, mouse_click
+from tests.conftest import CLOSE_TIMER, mouse_click
 
-all_add_charge_dialogs_test_list = [
+dialogs_with_add_charge = [
     'FineOnlyPleaButton',
     'JailCCPleaButton',
     'NotGuiltyBondButton',
@@ -23,7 +23,7 @@ all_add_charge_dialogs_test_list = [
 ]
 
 
-@pytest.mark.parametrize('test_input', all_add_charge_dialogs_test_list)
+@pytest.mark.parametrize('test_input', dialogs_with_add_charge)
 def test_add_charge_works_all_dialogs(main_window, test_input):
     """Tests the Add Charge button opens the Add Charge Dialog and adds a charge.
 
@@ -45,42 +45,3 @@ def test_add_charge_works_all_dialogs(main_window, test_input):
     assert main_window.dialog.charges_gridLayout.columnCount() == 3
     mouse_click(main_window.dialog.popup_dialog.add_charge_Button)
     assert main_window.dialog.charges_gridLayout.columnCount() == 5
-
-
-def test_add_charge_dialog_opens(add_charge_dialog):
-    assert add_charge_dialog.windowTitle() == 'Add Charge'
-
-
-def test_add_charge_dialog_loads_empty(add_charge_dialog):
-    assert add_charge_dialog.statute_choice_box.currentText() == ''
-    assert add_charge_dialog.offense_choice_box.currentText() == ''
-    assert add_charge_dialog.degree_choice_box.currentText() == ''
-
-
-def test_if_checking_freeform_clears_fields(add_charge_dialog):
-    enter_data(add_charge_dialog.offense_choice_box, 'A')
-    mouse_click(add_charge_dialog.freeform_entry_checkBox)
-    assert add_charge_dialog.statute_choice_box.currentText() == ''
-    assert add_charge_dialog.offense_choice_box.currentText() == ''
-    assert add_charge_dialog.degree_choice_box.currentText() == ''
-
-
-def test_if_clear_field_button_clears(add_charge_dialog):
-    enter_data(add_charge_dialog.offense_choice_box, 'A')
-    mouse_click(add_charge_dialog.clear_fields_Button)
-    assert add_charge_dialog.statute_choice_box.currentText() == ''
-    assert add_charge_dialog.offense_choice_box.currentText() == ''
-    assert add_charge_dialog.degree_choice_box.currentText() == ''
-
-
-def test_if_checking_freeform_makes_editable(add_charge_dialog):
-    mouse_click(add_charge_dialog.freeform_entry_checkBox)
-    assert add_charge_dialog.statute_choice_box.isEditable()
-    assert add_charge_dialog.offense_choice_box.isEditable()
-
-
-def test_if_unchecking_freeform_makes_uneditable(add_charge_dialog):
-    mouse_click(add_charge_dialog.freeform_entry_checkBox)
-    mouse_click(add_charge_dialog.freeform_entry_checkBox)
-    assert add_charge_dialog.statute_choice_box.isEditable() is False
-    assert add_charge_dialog.offense_choice_box.isEditable() is False
