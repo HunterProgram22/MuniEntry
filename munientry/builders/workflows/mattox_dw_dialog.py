@@ -6,7 +6,7 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.views.mattox_workflow_dialog_ui import Ui_MattoxWorkflowDialog
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
-from munientry.settings import DW_MATTOX
+from munientry.paths import DW_MATTOX
 
 
 class MattoxWorkflowDialogViewModifier(base.BaseDialogViewModifier):

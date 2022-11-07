@@ -6,9 +6,9 @@ when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui
 module will be imported as part of the python_view_file.py.
 """
 from PyQt6 import QtGui, QtPrintSupport
-from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout, QDialog
+from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout
 from loguru import logger
-from munientry.settings import ICON_PATH
+from munientry.paths import ICON_PATH
 
 
 class ReportWindow(QWidget):

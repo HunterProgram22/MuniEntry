@@ -11,7 +11,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
 )
-from munientry.settings import MAX_JAIL_TIME_VALIDATOR
+from munientry.appsettings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import JailCCDialogUpdater
 from munientry.views.jail_cc_plea_dialog_ui import Ui_JailCCPleaDialog
 
@@ -112,4 +112,4 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

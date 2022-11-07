@@ -86,7 +86,5 @@ class FreeformDialogUpdater(BaseDialogUpdater):
         self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
 
 
-if __name__ == "__main__":
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+if __name__ == '__main__':
+    logger.info(f'{__name__} run directly.')

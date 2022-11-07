@@ -1,7 +1,6 @@
 """Module for checking entries and moving into workflow."""
-from loguru import logger
 
-from munientry.settings import DW_MATTOX
+from munientry.paths import DW_MATTOX
 
 SCRAM_PATH = f'{DW_MATTOX}/Scram_Gps//'
 COMM_CONTROL_PATH = f'{DW_MATTOX}/Comm_Control//'

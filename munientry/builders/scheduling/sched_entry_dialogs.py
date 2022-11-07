@@ -11,9 +11,9 @@ from munientry.settings import (
     EVENT_DICT,
     PRETRIAL_TIME_DICT,
     SPEEDY_TRIAL_TIME_DICT,
-    TODAY,
     TYPE_CHECKING,
 )
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
 )
@@ -275,4 +275,4 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

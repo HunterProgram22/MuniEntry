@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import LeapAdmissionPleaGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 
 
 class Ui_LeapPleaValidDialog(object):
@@ -314,5 +316,3 @@ class Ui_LeapPleaValidDialog(object):
         self.appearance_reason_box.setItemText(4, _translate("LeapPleaValidDialog", "LEAP sentencing"))
         self.create_entry_Button.setText(_translate("LeapPleaValidDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("LeapPleaValidDialog", "Close Dialog"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

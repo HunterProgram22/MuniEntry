@@ -1,15 +1,15 @@
 """Module containing the Main Window of the application."""
-
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
 
+from munientry.appsettings.user_settings import load_user_settings
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.mainwindow.menu import MainWindowMenu
+from munientry.mainwindow.shortcuts import Shortcuts
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
-from munientry.settings import SOCKET_NAME
 
 
 class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
@@ -26,13 +26,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.judicial_officer = None
         self.dialog = None
         self.daily_case_list = None
-        self.load_user_settings()
-        self.set_shortcuts()
-
-    def set_shortcuts(self):
-        """This should be moved to own class, adding here for quick access during testing."""
-        self.tabWidget.setCurrentIndex(3)
-        self.hemmeter_workflowButton.setShortcut('Ctrl+D')
+        self.user_settings = load_user_settings(self)
+        self.shorcuts = Shortcuts(self)
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
@@ -61,27 +56,3 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.judicial_officer = self.judicial_officer_buttons_dict.get(self.sender())
         judicial_officer = self.judicial_officer.last_name
         logger.action(f'Judicial Officer set to: {judicial_officer}')
-
-    def load_user_settings(self) -> None:
-        if SOCKET_NAME in ['Justin_Home_PC', 'Justin_Work_Laptop_PC']:
-            return AdminUserSettings(self)
-        return GeneralUserSettings(self)
-
-
-class AdminUserSettings(object):
-    def __init__(self, mainwindow):
-        self.mainwindow = mainwindow
-        logger.info('Setting Admin User Settings')
-        self.mainwindow.tabWidget.setTabVisible(3, True)
-        self.mainwindow.search_tabWidget.setTabVisible(2, True)
-
-
-class GeneralUserSettings(object):
-    def __init__(self, mainwindow):
-        self.mainwindow = mainwindow
-        logger.info('Setting General User Settings')
-        self.mainwindow.tabWidget.setTabVisible(3, False)
-        self.mainwindow.search_tabWidget.setTabVisible(2, False)
-        self.mainwindow.workflows_person_tab.setTabVisible(1, False)
-        self.mainwindow.workflows_person_tab.setTabVisible(2, False)
-        self.mainwindow.workflows_person_tab.setTabVisible(3, False)

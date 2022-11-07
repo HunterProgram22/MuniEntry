@@ -8,7 +8,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     DiversionEntryCaseInformation,
 )
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.grid_case_updaters import DiversionDialogUpdater
 from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
 
@@ -122,4 +122,4 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

@@ -1,7 +1,7 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
 
-from munientry.settings import NO_BUTTON_RESPONSE, TODAY, YES_BUTTON_RESPONSE
+from munientry.appsettings.pyqt_constants import TODAY, YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
 
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
@@ -272,6 +272,4 @@ class FreeformDialogInfoChecker(DefenseCounselChecker):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+    logger.info(f'{__name__} run directly.')

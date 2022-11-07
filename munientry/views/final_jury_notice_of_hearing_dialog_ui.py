@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_FinalJuryNoticeOfHearingDialog(object):
     def setupUi(self, FinalJuryNoticeOfHearingDialog):
@@ -346,5 +349,3 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.clear_fields_case_Button.setText(_translate("FinalJuryNoticeOfHearingDialog", "Clear Fields"))
         self.label_24.setText(_translate("FinalJuryNoticeOfHearingDialog", "Def. Counsel:"))
         self.label_6.setText(_translate("FinalJuryNoticeOfHearingDialog", "CASE INFORMATION"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

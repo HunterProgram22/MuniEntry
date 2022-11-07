@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
+
 
 class Ui_AddSpecialBondConditionsDialog(object):
     def setupUi(self, AddSpecialBondConditionsDialog):
@@ -467,5 +470,3 @@ class Ui_AddSpecialBondConditionsDialog(object):
         self.label_2.setText(_translate("AddSpecialBondConditionsDialog", "Exclusive possesion to:"))
         self.domestic_violence_surrender_weapons_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Surrender deadly weapons no later than:"))
         self.domestic_violence_vacate_checkBox.setText(_translate("AddSpecialBondConditionsDialog", "Vacate Residence located at:"))
-from munientry.widgets.combo_boxes import NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

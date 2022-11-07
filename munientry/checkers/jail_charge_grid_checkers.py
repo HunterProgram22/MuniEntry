@@ -9,11 +9,8 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.settings import (
-    CANCEL_BUTTON_RESPONSE,
-    NO_BUTTON_RESPONSE,
-    YES_BUTTON_RESPONSE,
-)
+from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
+    CANCEL_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import (
     JailWarningBox,
     RequiredBox,
@@ -297,6 +294,4 @@ class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+    logger.info(f'{__name__} run directly.')

@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import NotGuiltyPleaGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit
 
 
 class Ui_NotGuiltyBondDialog(object):
@@ -561,5 +563,3 @@ class Ui_NotGuiltyBondDialog(object):
         self.alcohol_test_kiosk_checkBox.setText(_translate("NotGuiltyBondDialog", " Alcohol Kiosk testing                                         "))
         self.comply_protection_order_checkBox.setText(_translate("NotGuiltyBondDialog", " Comply with Terms of Protection Order"))
         self.public_safety_suspension_checkBox.setText(_translate("NotGuiltyBondDialog", "Public Safety Suspension imposed pursuant to R.C. 4511.196(B)"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import ConditionCheckbox, NoScrollDateEdit

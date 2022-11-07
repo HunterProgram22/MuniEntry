@@ -10,7 +10,8 @@ from munientry.data.excel_functions import (
     load_active_worksheet,
 )
 from munientry.models.excel_models import BatchCaseInformation
-from munientry.settings import DB_PATH, BATCH_SAVE_PATH, TEMPLATE_PATH, TYPE_CHECKING
+from munientry.settings import TYPE_CHECKING
+from munientry.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
 
 if TYPE_CHECKING:
     from openpyxl import Workbook

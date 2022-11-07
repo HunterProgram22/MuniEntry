@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_TrialToCourtHearingDialog(object):
     def setupUi(self, TrialToCourtHearingDialog):
@@ -302,5 +305,3 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_6.setText(_translate("TrialToCourtHearingDialog", "CASE INFORMATION"))
         self.create_entry_Button.setText(_translate("TrialToCourtHearingDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("TrialToCourtHearingDialog", "Close Dialog"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -1,22 +1,8 @@
 """A module containing common variables used throughout the application."""
 import configparser
-import pathlib
 import socket
-from datetime import datetime
-from typing import (
-    TYPE_CHECKING,  # Import used so TYPE_CHECKING can be imported with other settings
-)
+from typing import TYPE_CHECKING
 
-from PyQt6.QtWidgets import QMessageBox
-from PyQt6.QtCore import QDate, QDateTime
-from PyQt6.QtGui import QIntValidator
-
-MAX_JAIL_TIME_VALIDATOR = QIntValidator(0, 1000)
-TODAY = QDate.currentDate()
-TIMENOW = QDateTime.currentDateTime()
-YES_BUTTON_RESPONSE = QMessageBox.StandardButton.Yes
-NO_BUTTON_RESPONSE = QMessageBox.StandardButton.No
-CANCEL_BUTTON_RESPONSE = QMessageBox.StandardButton.Cancel
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -33,65 +19,6 @@ CRIMINAL_COURT_COSTS = int(costs['criminal'])
 NONMOVING_COURT_COSTS = int(costs['non_moving'])
 
 
-# Save Path Information
-paths = config['paths']
-
-LOG_PATH = paths['logs_save_path']
-BATCH_SAVE_PATH = paths['batch_save_path']
-DEFAULT_SAVE_PATH = paths['default_entries_save_path']
-CRIMTRAFFIC_SAVE_PATH = paths['crimtraffic_save_path']
-FISCAL_SAVE_PATH = paths['fiscal_save_path']
-DRIVE_SAVE_PATH = paths['drive_save_path']
-SCHEDULING_SAVE_PATH = paths['scheduling_save_path']
-
-
-# Digital Workflow Path Information
-DW_PATH = paths['digital_workflow_base_path']
-DW_HEMMETER = paths['digital_workflow_hemmeter_path']
-DW_ROHRER = paths['digital_workflow_rohrer_path']
-DW_BUNNER = paths['digital_workflow_bunner_path']
-DW_MATTOX = paths['digital_workflow_mattox_path']
-DW_APPROVED_DIR = paths['digital_workflow_approved_path']
-DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
-
-
-# Resources Path Information
-# Path strings require double backslash even with raw f-strings (fr)
-# otherwise the string is not properly terminated.
-PATH = str(pathlib.Path().absolute())
-CASE_LISTS_PATH = fr'{PATH}\db\\'
-TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
-ICON_PATH = fr'{PATH}\resources\icons\\'
-GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
-
-LOG_PATH = paths['logs_save_path']
-BATCH_SAVE_PATH = paths['batch_save_path']
-DEFAULT_SAVE_PATH = paths['default_entries_save_path']
-CRIMTRAFFIC_SAVE_PATH = paths['crimtraffic_save_path']
-FISCAL_SAVE_PATH = paths['fiscal_save_path']
-DRIVE_SAVE_PATH = paths['drive_save_path']
-SCHEDULING_SAVE_PATH = paths['scheduling_save_path']
-
-# Database Path Information for MuniEntryDB.Sqlite Internal Database
-DB_PATH = paths['munientry_sqlite_db']
-
-# Digital Workflow Path Information
-DW_PATH = paths['digital_workflow_base_path']
-DW_HEMMETER = paths['digital_workflow_hemmeter_path']
-DW_ROHRER = paths['digital_workflow_rohrer_path']
-DW_BUNNER = paths['digital_workflow_bunner_path']
-DW_MATTOX = paths['digital_workflow_mattox_path']
-DW_APPROVED_DIR = paths['digital_workflow_approved_path']
-DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
-
-# Database Path Information for MuniEntryDB.Sqlite Internal Database
-DB_PATH = paths['munientry_sqlite_db']
-
-
-# Logging Settings
-now = datetime.now()
-now_string = now.strftime('%m_%d_%Y__%H_%M_%S')
-LOG_TIME = f'{now_string}'
 
 
 def get_host() -> str:
@@ -106,8 +33,6 @@ def get_host() -> str:
 
 
 SOCKET_NAME = get_host()
-FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
-USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
 
 
 # Costs Settings

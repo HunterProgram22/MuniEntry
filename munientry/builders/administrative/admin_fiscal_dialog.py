@@ -7,7 +7,7 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.creators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 
@@ -110,4 +110,4 @@ class AdminFiscalDialog(base.BaseDialogBuilder, Ui_AdminFiscalDialog):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

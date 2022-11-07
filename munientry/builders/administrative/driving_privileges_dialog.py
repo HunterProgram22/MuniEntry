@@ -9,7 +9,7 @@ from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
     EmployerSchoolInformation,
 )
-from munientry.settings import TODAY
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.general_updaters import CaseInformationUpdater
 from munientry.views.driving_privileges_dialog_ui import Ui_DrivingPrivilegesDialog
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox
@@ -35,6 +35,12 @@ class DrivingPrivilegesSignalConnector(admin.AdminSignalConnector):
         self.connect_other_dialog_signals()
 
     def connect_other_dialog_signals(self):
+        self.dialog.bmv_suspension_radioButton.toggled.connect(
+            self.dialog.functions.show_hide_bmv_cases_fields,
+        )
+        self.dialog.add_information_checkBox.toggled.connect(
+            self.dialog.functions.enable_additional_information,
+        )
         self.dialog.other_conditions_checkBox.toggled.connect(
             self.dialog.functions.enable_other_conditions,
         )
@@ -96,6 +102,15 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
         end_date = suspension_start_date.addDays(term_days)
         self.dialog.suspension_end_date.setDate(end_date)
 
+    def enable_additional_information(self):
+        if self.dialog.add_information_checkBox.isChecked():
+            self.dialog.add_information_textEdit.setEnabled(True)
+            self.dialog.add_information_textEdit.setHidden(False)
+            self.dialog.add_information_textEdit.setFocus()
+        else:
+            self.dialog.add_information_textEdit.setEnabled(False)
+            self.dialog.add_information_textEdit.setHidden(True)
+
     def enable_other_conditions(self):
         if self.dialog.other_conditions_checkBox.isChecked():
             self.dialog.other_conditions_lineEdit.setEnabled(True)
@@ -104,6 +119,14 @@ class DrivingPrivilegesSlotFunctions(admin.AdminSlotFunctions):
         else:
             self.dialog.other_conditions_lineEdit.setEnabled(False)
             self.dialog.other_conditions_lineEdit.setHidden(True)
+
+    def show_hide_bmv_cases_fields(self):
+        if self.dialog.bmv_suspension_radioButton.isChecked():
+            self.dialog.bmv_cases_label.setHidden(False)
+            self.dialog.bmv_cases_textEdit.setHidden(False)
+        else:
+            self.dialog.bmv_cases_label.setHidden(True)
+            self.dialog.bmv_cases_textEdit.setHidden(True)
 
     def add_employer_school(self):
         employer_school = EmployerSchoolInformation()
@@ -205,14 +228,20 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
 
     def set_privileges_info(self):
         radio_buttons = [
-            self.dialog.court_suspension_radioButton, self.dialog.als_suspension_radioButton,
+            self.dialog.court_suspension_radioButton,
+            self.dialog.als_suspension_radioButton,
+            self.dialog.bmv_suspension_radioButton,
         ]
         suspension_type = [button for button in radio_buttons if button.isChecked()]
         self.model.suspension_type = suspension_type[0].text()
+        self.model.bmv_suspension = self.dialog.bmv_suspension_radioButton.isChecked()
+        self.model.bmv_cases = self.dialog.bmv_cases_textEdit.toPlainText()
         self.model.suspension_start_date = self.dialog.suspension_start_date.get_date_as_string()
         self.model.suspension_end_date = self.dialog.suspension_end_date.get_date_as_string()
         self.model.ignition_interlock = self.dialog.ignition_interlock_checkBox.isChecked()
         self.model.restricted_tags = self.dialog.restricted_tags_checkBox.isChecked()
+        self.model.additional_information_ordered = self.dialog.add_information_checkBox.isChecked()
+        self.model.additional_information_text = self.dialog.add_information_textEdit.toPlainText()
 
 
 class DrivingPrivilegesDialogInfoChecker(BaseChecker):
@@ -256,7 +285,9 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
     def additional_setup(self):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.enable_other_conditions()
+        self.functions.enable_additional_information()
+        self.functions.show_hide_bmv_cases_fields()
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

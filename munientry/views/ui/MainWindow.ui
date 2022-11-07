@@ -1013,6 +1013,16 @@ font-weight: bold;</string>
                 </property>
                </widget>
               </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="juror_paymentButton">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(85, 170, 255);</string>
+                </property>
+                <property name="text">
+                 <string>Juror Payment Entry</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </widget>
@@ -1279,7 +1289,7 @@ font-weight: bold;</string>
            <attribute name="title">
             <string>Probation</string>
            </attribute>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>10</x>
@@ -1559,6 +1569,7 @@ font-weight: bold;</string>
     </property>
     <addaction name="actionCrimTraffic_Folder"/>
     <addaction name="actionDriving_Privileges_Folder"/>
+    <addaction name="actionJury_Pay_Entries_Folder"/>
     <addaction name="actionScheduling_Entries_Folder"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
@@ -1617,6 +1628,11 @@ font-weight: bold;</string>
   <action name="actionWorkflow">
    <property name="text">
     <string>Workflow</string>
+   </property>
+  </action>
+  <action name="actionJury_Pay_Entries_Folder">
+   <property name="text">
+    <string>Jury Pay Entries Folder</string>
    </property>
   </action>
  </widget>

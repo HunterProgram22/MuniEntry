@@ -424,7 +424,5 @@ class CommunityControlViolationBondConditions:
     ]
 
 
-if __name__ == "__main__":
-    logger.log('IMPORT', f'{__name__} run directly.')
-else:
-    logger.log('IMPORT', f'{__name__} imported.')
+if __name__ == '__main__':
+    logger.info(f'{__name__} run directly.')

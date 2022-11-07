@@ -7,7 +7,8 @@ from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuil
 from munientry.creators.entry_creator import CrimTrafficEntryCreator
 from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import SPECIAL_DOCKETS_COSTS, TODAY
+from munientry.settings import SPECIAL_DOCKETS_COSTS
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.widgets.message_boxes import InfoBox
 
 ORDERED = 'ordered'
@@ -31,7 +32,7 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.workflow_status = workflow_status
-        logger.debug(self.workflow_status)
+        logger.info(f'Digital Workflow is {self.workflow_status} for dialog.')
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()
@@ -252,4 +253,4 @@ class CrimTrafficSignalConnector(base.BaseDialogSignalConnector):
 
 
 if __name__ == '__main__':
-    logger.log('IMPORT', f'{__name__} run directly.')
+    logger.info(f'{__name__} run directly.')

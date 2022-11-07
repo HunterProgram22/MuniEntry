@@ -8,6 +8,9 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
+
 
 class Ui_SchedulingEntryDialog(object):
     def setupUi(self, SchedulingEntryDialog):
@@ -432,5 +435,3 @@ class Ui_SchedulingEntryDialog(object):
         self.final_pretrial_time_box.setItemText(13, _translate("SchedulingEntryDialog", "4:15 PM"))
         self.close_dialog_Button.setText(_translate("SchedulingEntryDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("SchedulingEntryDialog", "Open Entry"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 from munientry.widgets.charges_grids import JailChargesGrid
 
 
@@ -536,5 +538,3 @@ class Ui_DiversionPleaDialog(object):
         self.fra_in_court_box.setItemText(2, _translate("DiversionPleaDialog", "No"))
         self.create_entry_Button.setText(_translate("DiversionPleaDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("DiversionPleaDialog", "Close Dialog"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

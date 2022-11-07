@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import FineOnlyChargeGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 
 
 class Ui_LeapSentencingDialog(object):
@@ -557,5 +559,3 @@ class Ui_LeapSentencingDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("LeapSentencingDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("LeapSentencingDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("LeapSentencingDialog", "No"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.widgets.custom_widgets import ConditionCheckbox
+
 
 class Ui_AddChargeDialog(object):
     def setupUi(self, AddChargeDialog):
@@ -205,4 +207,3 @@ class Ui_AddChargeDialog(object):
         self.degree_choice_box.setItemText(5, _translate("AddChargeDialog", "UCM"))
         self.clear_fields_Button.setText(_translate("AddChargeDialog", "Clear Fields"))
         self.freeform_entry_checkBox.setText(_translate("AddChargeDialog", "Enable freeform entry for offense/statute"))
-from munientry.widgets.custom_widgets import ConditionCheckbox

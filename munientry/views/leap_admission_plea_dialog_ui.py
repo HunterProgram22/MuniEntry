@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 from munientry.widgets.charges_grids import LeapAdmissionPleaGrid
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 
 
 class Ui_LeapAdmissionPleaDialog(object):
@@ -359,5 +361,3 @@ class Ui_LeapAdmissionPleaDialog(object):
         self.label_7.setText(_translate("LeapAdmissionPleaDialog", "Appearance Reason:"))
         self.label_24.setText(_translate("LeapAdmissionPleaDialog", "Def. Counsel:"))
         self.defense_counsel_waived_checkBox.setText(_translate("LeapAdmissionPleaDialog", "Defendant waived right to counsel"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit

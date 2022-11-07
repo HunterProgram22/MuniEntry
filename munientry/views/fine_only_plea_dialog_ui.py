@@ -7,7 +7,11 @@
 
 
 from PyQt6 import QtCore, QtGui, QtWidgets
+
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit
 from munientry.widgets.charges_grids import FineOnlyChargeGrid
+
 
 class Ui_FineOnlyPleaDialog(object):
     def setupUi(self, FineOnlyPleaDialog):
@@ -549,5 +553,3 @@ class Ui_FineOnlyPleaDialog(object):
         self.fra_in_file_box.setItemText(0, _translate("FineOnlyPleaDialog", "N/A"))
         self.fra_in_file_box.setItemText(1, _translate("FineOnlyPleaDialog", "Yes"))
         self.fra_in_file_box.setItemText(2, _translate("FineOnlyPleaDialog", "No"))
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit
