@@ -5,6 +5,7 @@ from num2words import num2words
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
+from munientry.creators.entry_creator import JuryPaymentEntryCreator
 from munientry.models.jury_models import JuryPaymentInformation
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.updaters.base_updaters import BaseDialogUpdater
@@ -26,6 +27,9 @@ class JuryPaymentViewModifier(admin.AdminViewModifier):
 
 class JuryPaymentSlotFunctions(admin.AdminSlotFunctions):
     """Additional functions for the Jury Payment Dialog"""
+
+    def create_entry_process(self) -> None:
+        JuryPaymentEntryCreator(self.dialog).create_entry_process()
 
     def calculate_juror_pay(self):
         jurors_reported = int(self.dialog.jurors_reported_lineEdit.text())
@@ -113,7 +117,6 @@ class JuryPaymentCaseInformationUpdater(BaseDialogUpdater):
         self.model.jurors_pay_seated_word = num2words(int(self.model.jurors_pay_seated))
         self.model.jury_panel_total_pay = self.dialog.jurors_total_pay_lineEdit.text()
         self.model.jury_panel_total_pay_word = num2words(int(self.model.jury_panel_total_pay))
-
 
 
 class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):

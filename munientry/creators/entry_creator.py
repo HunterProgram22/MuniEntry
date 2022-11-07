@@ -8,7 +8,7 @@ from loguru import logger
 
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
 from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
-    DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH
+    DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH, JURY_PAY_SAVE_PATH
 from munientry.widgets.message_boxes import RequiredBox
 
 WORD_PDF_FORMAT_NUMBER = 17
@@ -180,5 +180,16 @@ class AdminFiscalEntryCreator(BaseEntryCreator):
         return f'{account_number}_{vendor_name}_{invoice}.docx'
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+class JuryPaymentEntryCreator(BaseEntryCreator):
+
+    save_path = JURY_PAY_SAVE_PATH
+
+    def _set_document_name(self) -> str:
+        """Overrides BaseEntryCreator set_document_name.
+
+        Sets the document name based on defendant name and case number.
+        """
+        case_number = self.dialog.entry_case_information.case_number
+        last_name = self.dialog.entry_case_information.defendant.last_name
+        template_name = self.dialog.template.template_name
+        return f'{case_number}_{last_name}_{template_name}.docx'
