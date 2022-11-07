@@ -32,7 +32,7 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.workflow_status = workflow_status
-        logger.debug(self.workflow_status)
+        logger.info(f'Digital Workflow is {self.workflow_status} for dialog.')
         loaded_case = cms_case.case_number
         logger.info(f'Loaded Case {loaded_case}')
         self.load_entry_case_information_model()

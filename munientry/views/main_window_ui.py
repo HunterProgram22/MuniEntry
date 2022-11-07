@@ -766,6 +766,8 @@ class Ui_MainWindow(object):
         self.actionScheduling_Entries_Folder.setObjectName("actionScheduling_Entries_Folder")
         self.actionWorkflow = QtGui.QAction(MainWindow)
         self.actionWorkflow.setObjectName("actionWorkflow")
+        self.actionJury_Pay_Entries_Folder = QtGui.QAction(MainWindow)
+        self.actionJury_Pay_Entries_Folder.setObjectName("actionJury_Pay_Entries_Folder")
         self.menuLogs.addAction(self.actionOpen_Current_Log)
         self.menuBatch.addAction(self.actionRun_batch_FTA_Entries)
         self.menuBatch.addSeparator()
@@ -774,6 +776,7 @@ class Ui_MainWindow(object):
         self.menuReports.addAction(self.actionFinal_Pretrials)
         self.menuOpen.addAction(self.actionCrimTraffic_Folder)
         self.menuOpen.addAction(self.actionDriving_Privileges_Folder)
+        self.menuOpen.addAction(self.actionJury_Pay_Entries_Folder)
         self.menuOpen.addAction(self.actionScheduling_Entries_Folder)
         self.menuSettings.addAction(self.actionWorkflow)
         self.menubar.addAction(self.menuOpen.menuAction())
@@ -948,4 +951,5 @@ class Ui_MainWindow(object):
         self.actionCrimTraffic_Folder.setText(_translate("MainWindow", "CrimTraffic Entries Folder"))
         self.actionScheduling_Entries_Folder.setText(_translate("MainWindow", "Scheduling Entries Folder"))
         self.actionWorkflow.setText(_translate("MainWindow", "Workflow"))
+        self.actionJury_Pay_Entries_Folder.setText(_translate("MainWindow", "Jury Pay Entries Folder"))
 from munientry.widgets.combo_boxes import DailyCaseListComboBox

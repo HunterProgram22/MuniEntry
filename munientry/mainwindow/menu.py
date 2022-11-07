@@ -13,7 +13,7 @@ from munientry.data.sql_server_queries import event_type_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.logging_module import USER_LOG_NAME
 from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DRIVE_SAVE_PATH, \
-    SCHEDULING_SAVE_PATH, ICON_PATH
+    SCHEDULING_SAVE_PATH, ICON_PATH, JURY_PAY_SAVE_PATH
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
@@ -101,6 +101,12 @@ def open_scheduling_entries_folder(_signal=None) -> None:
     logger.info('Scheduling entries folder opened.')
 
 
+def open_jury_pay_entries_folder(_signal=None) -> None:
+    """Menu function that opens the folder where Jury Pay entries are saved."""
+    os.startfile(f'{JURY_PAY_SAVE_PATH}')
+    logger.info('Jury Pay entries folder opened.')
+
+
 def run_batch_fta_process(_signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
     entries_created = run_batch_fta_arraignments()
@@ -150,6 +156,9 @@ class MainWindowMenu(object):
         )
         self.mainwindow.actionScheduling_Entries_Folder.triggered.connect(
             open_scheduling_entries_folder,
+        )
+        self.mainwindow.actionJury_Pay_Entries_Folder.triggered.connect(
+            open_jury_pay_entries_folder,
         )
         self.mainwindow.actionWorkflow.triggered.connect(self.open_workflow_settings)
 
