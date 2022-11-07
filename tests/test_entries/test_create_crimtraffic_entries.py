@@ -25,41 +25,41 @@ def test_create_no_plea_bond_entry(main_window):
     """Tests the creation of an Appear on Warrant (No Plea) / Bond entry."""
     entry_dialog(main_window)
     mouse_click(main_window.NoPleaBondButton)
-    npb_dialog = main_window.dialog
-    enter_data(npb_dialog.case_number_lineEdit, 'npb_test')
-    mouse_click(npb_dialog.no_alcohol_drugs_checkBox)
-    mouse_click(npb_dialog.alcohol_drugs_assessment_checkBox)
-    mouse_click(npb_dialog.monitoring_checkBox)
-    mouse_click(npb_dialog.comply_protection_order_checkBox)
-    mouse_click(npb_dialog.alcohol_test_kiosk_checkBox)
-    mouse_click(npb_dialog.mental_health_assessment_checkBox)
-    mouse_click(npb_dialog.specialized_docket_checkBox)
-    mouse_click(npb_dialog.public_safety_suspension_checkBox)
-    npb_dialog.appearance_reason_box.setCurrentText(
+    dialog = main_window.dialog
+    enter_data(dialog.case_number_lineEdit, 'npb_test')
+    mouse_click(dialog.no_alcohol_drugs_checkBox)
+    mouse_click(dialog.alcohol_drugs_assessment_checkBox)
+    mouse_click(dialog.monitoring_checkBox)
+    mouse_click(dialog.comply_protection_order_checkBox)
+    mouse_click(dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(dialog.mental_health_assessment_checkBox)
+    mouse_click(dialog.specialized_docket_checkBox)
+    mouse_click(dialog.public_safety_suspension_checkBox)
+    dialog.appearance_reason_box.setCurrentText(
         'was arrested on a warrant for failure to appear'
     )
-    mouse_click(npb_dialog.create_entry_Button)
-    assert npb_dialog.entry_case_information.case_number == '21TRC05611npb_test'
+    mouse_click(dialog.create_entry_Button)
+    assert dialog.entry_case_information.case_number == '21TRC05611npb_test'
 
 
 def test_create_bond_modification_entry(main_window):
     """Tests the creation of a Bond Modification / Revocation entry."""
     entry_dialog(main_window)
     mouse_click(main_window.BondHearingButton)
-    bhd_dialog = main_window.dialog
-    enter_data(bhd_dialog.case_number_lineEdit, 'bhd_test')
-    mouse_click(bhd_dialog.no_alcohol_drugs_checkBox)
-    mouse_click(bhd_dialog.alcohol_drugs_assessment_checkBox)
-    mouse_click(bhd_dialog.monitoring_checkBox)
-    mouse_click(bhd_dialog.comply_protection_order_checkBox)
-    mouse_click(bhd_dialog.alcohol_test_kiosk_checkBox)
-    mouse_click(bhd_dialog.mental_health_assessment_checkBox)
-    mouse_click(bhd_dialog.specialized_docket_checkBox)
-    mouse_click(bhd_dialog.public_safety_suspension_checkBox)
-    bhd_dialog.bond_modification_decision_box.setCurrentText('request to modify bond is granted')
+    dialog = main_window.dialog
+    enter_data(dialog.case_number_lineEdit, 'bhd_test')
+    mouse_click(dialog.no_alcohol_drugs_checkBox)
+    mouse_click(dialog.alcohol_drugs_assessment_checkBox)
+    mouse_click(dialog.monitoring_checkBox)
+    mouse_click(dialog.comply_protection_order_checkBox)
+    mouse_click(dialog.alcohol_test_kiosk_checkBox)
+    mouse_click(dialog.mental_health_assessment_checkBox)
+    mouse_click(dialog.specialized_docket_checkBox)
+    mouse_click(dialog.public_safety_suspension_checkBox)
+    dialog.bond_modification_decision_box.setCurrentText('request to modify bond is granted')
 
-    mouse_click(bhd_dialog.create_entry_Button)
-    assert bhd_dialog.entry_case_information.case_number == '21TRC05611bhd_test'
+    mouse_click(dialog.create_entry_Button)
+    assert dialog.entry_case_information.case_number == '21TRC05611bhd_test'
 
 
 def test_create_leap_sentencing_entry(qtbot, main_window):
