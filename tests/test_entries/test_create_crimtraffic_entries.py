@@ -141,9 +141,32 @@ def test_create_not_guilty_bond_entry(qtbot, main_window):
     mouse_click(dialog.mental_health_assessment_checkBox)
     mouse_click(dialog.specialized_docket_checkBox)
     mouse_click(dialog.public_safety_suspension_checkBox)
+    mouse_click(dialog.domestic_violence_checkBox)
+    mouse_click(dialog.admin_license_suspension_checkBox)
+    mouse_click(dialog.custodial_supervision_checkBox)
+    mouse_click(dialog.vehicle_seizure_checkBox)
+    mouse_click(dialog.no_contact_checkBox)
+    mouse_click(dialog.other_conditions_checkBox)
 
     # Add Special Bond Conditions here
+    def add_conditions():
+        qtbot.addWidget(dialog.popup_dialog)
+        enter_data(dialog.popup_dialog.admin_license_suspension_explanation_box, 'Do Right!')
+        mouse_click(dialog.popup_dialog.domestic_violence_vacate_checkBox)
+        enter_data(dialog.popup_dialog.domestic_violence_residence_box, '1773 Little Bear Loop')
+        enter_data(dialog.popup_dialog.domestic_violence_exclusive_possession_to_box, 'Justin')
+        mouse_click(dialog.popup_dialog.domestic_violence_surrender_weapons_checkBox)
+        enter_data(dialog.popup_dialog.no_contact_name_box, 'Justin')
+        enter_data(dialog.popup_dialog.vehicle_make_model_box, '2012 Kia')
+        enter_data(dialog.popup_dialog.vehicle_license_plate_box, 'EAF 4253')
+        mouse_click(dialog.popup_dialog.tow_to_residence_checkBox)
+        mouse_click(dialog.popup_dialog.motion_to_return_vehicle_checkBox)
+        enter_data(dialog.popup_dialog.custodial_supervision_supervisor_box, 'Judge Dredd')
+        enter_data(dialog.popup_dialog.other_conditions_textEdit, 'Do not run away.')
+        mouse_click(dialog.popup_dialog.add_conditions_Button)
 
+    QTimer.singleShot(CLOSE_TIMER, add_conditions)
+    mouse_click(dialog.add_special_conditions_Button)
     mouse_click(dialog.create_entry_Button)
     assert dialog.entry_case_information.case_number == '21TRC05611ngb_test'
 
