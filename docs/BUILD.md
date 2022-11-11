@@ -78,7 +78,7 @@ The MuniEntry_app directory can then be placed on any computer for a user to acc
 directly without having Python installed. Within the MuniEntry_app directory there is a MuniEntryapp.exe file 
 that loads the application. A shortcut can be created to that file that will allow a user to launch the application.
 
-**The application has a config.ini file that contains path settings. The user must have access to the paths 
+**IMPORTANT: The application has a config.ini file that contains path settings. The user must have access to the paths 
 in the config file for the application to work properly.**
 
 ***SEE THE DEPLOYMENT PROCESS FOR CURRENT DEPLOYMENT REQUIREMENTS.***
