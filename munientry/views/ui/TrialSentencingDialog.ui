@@ -454,6 +454,11 @@ background-color: rgb(255, 255, 255);</string>
               <string>No</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>No Costs or Fines</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item row="1" column="0">

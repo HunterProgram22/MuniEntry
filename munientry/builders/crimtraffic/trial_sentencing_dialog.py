@@ -32,6 +32,11 @@ class TrialSentencingDialogSlotFunctions(crim.CrimTrafficSlotFunctions, crim.Fin
     def set_all_findings_process(self):
         self.dialog.charges_gridLayout.set_all_trial_findings()
 
+    def set_court_costs(self):
+        self.dialog.court_costs_box.setCurrentText('No Costs or Fines')
+        self.dialog.ability_to_pay_box.setHidden(True)
+        self.dialog.balance_due_date.setHidden(True)
+
     def show_companion_case_fields(self):
         if self.dialog.add_companion_cases_checkBox.isChecked():
             self.dialog.companion_cases_box.setHidden(False)
@@ -73,6 +78,9 @@ class TrialSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
         self.dialog.not_guilty_all_Button.pressed.connect(
             self.dialog.charges_gridLayout.set_all_trial_findings,
+        )
+        self.dialog.not_guilty_all_Button.pressed.connect(
+            self.dialog.functions.set_court_costs,
         )
         self.dialog.jail_checkBox.toggled.connect(
             self.dialog.functions.conditions_checkbox_toggle,
