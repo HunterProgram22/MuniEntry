@@ -46,6 +46,7 @@ class BaseDialogBuilder(QDialog, BuildMixin):
         self._modify_view()
         self._connect_signals_to_slots()
         self.dialog_name = self.build_attrs.get('dialog_name', None)
+        logger.dialog(f'{self.dialog_name} Opened')
 
     def load_entry_case_information_model(self):
         self.entry_case_information = self.build_attrs.get('case_information_model')()
@@ -61,7 +62,7 @@ class BaseDialogBuilder(QDialog, BuildMixin):
 
     def close(self):
         """Closes window by calling closeEvent in BaseDialog."""
-        logger.dialog(f'{self.objectName()} Closed')
+        logger.dialog(f'{self.dialog_name} Closed')
         super().close()
 
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
