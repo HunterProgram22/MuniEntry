@@ -12,6 +12,7 @@ Welcome to MuniEntry's documentation!
 
    README
    BUILD
+   DEPLOYMENT
 
 
 Indices and tables
