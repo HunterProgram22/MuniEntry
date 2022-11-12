@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import (
@@ -254,7 +254,7 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
         'slots': SchedulingEntryDialogSlotFunctions,
         'signals': SchedulingEntryDialogSignalConnector,
         'case_information_model': SchedulingCaseInformation,
-        'loader': CmsNoChargeLoader,
+        'loader': SchedulingCmsLoader,
         'updater': SchedulingEntryDialogCaseInformationUpdater,
         'info_checker': SchedulingEntryDialogInfoChecker,
     }

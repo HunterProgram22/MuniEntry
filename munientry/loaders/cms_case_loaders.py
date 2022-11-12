@@ -4,11 +4,8 @@ from loguru import logger
 from munientry.models.criminal_charge_models import CriminalCharge
 
 
-class CmsNoChargeLoader(object):
-    """Class for Loading CMS data when the charges do not need to be loaded.
-
-    This is for dialogs with no ChargeGrid.
-    """
+class CmsLoader(object):
+    """Base loader class for loading data from an external case management system."""
 
     def __init__(self, dialog) -> None:
         self.dialog = dialog
@@ -20,14 +17,6 @@ class CmsNoChargeLoader(object):
         """Loads the case management system data to the dialog."""
         self.set_case_number()
         self.set_defendant_name()
-        try:
-            self.set_defense_counsel_name()
-        except AttributeError as err:
-            logger.warning(err)
-        try:
-            self.set_defense_counsel_type()
-        except AttributeError as error:
-            logger.warning(error)
 
     def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
@@ -40,6 +29,26 @@ class CmsNoChargeLoader(object):
         if self.cms_case.defense_counsel is not None:
             self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
             self.dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
+
+
+class SchedulingCmsLoader(CmsLoader):
+    """Loader for Scheduling dialogs."""
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_defense_counsel_name()
+
+
+class CmsNoChargeLoader(CmsLoader):
+    """Class for Loading CMS data when the charges do not need to be loaded.
+
+    This is for dialogs with no ChargeGrid.
+    """
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_defense_counsel_name()
+        self.set_defense_counsel_type()
 
     def set_defense_counsel_type(self) -> None:
         """Sets the type for defense counsel to public defender or private counsel.
@@ -59,9 +68,6 @@ class CmsNoChargeLoader(object):
 class CmsDrivingInfoLoader(CmsNoChargeLoader):
     """Loader for CMS data for Driving Privileges."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-
     def load_cms_data(self) -> None:
         self.set_case_number()
         self.set_defendant_name()
@@ -75,7 +81,9 @@ class CmsDrivingInfoLoader(CmsNoChargeLoader):
         self.dialog.defendant_city_lineEdit.setText(self.cms_case.defendant.city)
         self.dialog.defendant_state_lineEdit.setText(self.cms_case.defendant.state)
         self.dialog.defendant_zipcode_lineEdit.setText(self.cms_case.defendant.zipcode)
-        self.dialog.defendant_driver_license_lineEdit.setText(self.cms_case.defendant.license_number)
+        self.dialog.defendant_driver_license_lineEdit.setText(
+            self.cms_case.defendant.license_number,
+        )
         self.dialog.defendant_dob_lineEdit.setText(self.cms_case.defendant.birth_date)
 
 

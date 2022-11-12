@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.settings import DAY_DICT, EVENT_DICT
 from munientry.appsettings.pyqt_constants import TODAY
@@ -130,7 +130,7 @@ class FinalJuryNoticeHearingDialog(
         'slots': FinalJuryNoticeHearingSlotFunctions,
         'signals': FinalJuryNoticeHearingSignalConnector,
         'case_information_model': SchedulingCaseInformation,
-        'loader': CmsNoChargeLoader,
+        'loader': SchedulingCmsLoader,
         'updater': FinalJuryNoticeHearingCaseInformationUpdater,
         'info_checker': FinalJuryNoticeHearingInfoChecker,
     }

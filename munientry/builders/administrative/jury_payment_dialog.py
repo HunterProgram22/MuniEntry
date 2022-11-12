@@ -7,7 +7,7 @@ from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.creators.entry_creator import JuryPaymentEntryCreator
 from munientry.models.jury_models import JuryPaymentInformation
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CmsLoader
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.juror_payment_dialog_ui import Ui_JurorPaymentDialog
 from munientry.appsettings.pyqt_constants import TODAY
@@ -128,7 +128,7 @@ class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
         'slots': JuryPaymentSlotFunctions,
         'signals': JuryPaymentSignalConnector,
         'case_information_model': JuryPaymentInformation,
-        'loader': CmsNoChargeLoader,
+        'loader': CmsLoader,
         'updater': JuryPaymentCaseInformationUpdater,
         'info_checker': JuryPaymentInfoChecker,
     }
