@@ -160,9 +160,10 @@ __________
 The deployment process is for distribution of a new version of the application that has been properly built 
 as described in the Build documentation.
 
-**Note: Until the Daily Case Lists (SSRS Files from AuthorityCourtDB) are set to populate in the MuniEntry_Files/DB 
-directory, then deployment should be done prior to 8:00 a.m. each day to insure a working instance of the 
-application is in place for the Daily Cases Lists to populate.**
+..  note::
+    Until the Daily Case Lists (SSRS Files from AuthorityCourtDB) are set to populate in the MuniEntry_Files/DB
+    directory, then deployment should be done prior to 8:00 a.m. each day to insure a working instance of the
+    application is in place for the Daily Cases Lists to populate.**
 
 Prior to starting the deployment process, make sure that no computer has an instance of the application open
 and running. 
