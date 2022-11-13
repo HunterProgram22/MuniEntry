@@ -10,8 +10,8 @@ from munientry.loaders.driving_caseload_functions import (
     load_single_driving_info_case,
 )
 from munientry.loaders.general_caseload_functions import (
+    load_case_information,
     load_single_case,
-    set_case_to_load,
 )
 
 
@@ -32,7 +32,7 @@ class DialogLoader(object):
 
     def _get_cms_case_data(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
-            return set_case_to_load(self.mainwindow.daily_case_list)
+            return load_case_information(self.mainwindow.daily_case_list)
         case_number = self.mainwindow.case_search_box.text()
         return load_single_case(case_number)
 

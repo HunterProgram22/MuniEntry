@@ -1,0 +1,271 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="" lang="" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>Build Overview &mdash; MuniEntry 0.42.0 documentation</title>
+  
+
+  
+
+  
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+
+  
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
+        <link rel="next" title="Deployment Overview" href="DEPLOYMENT.html"/>
+        <link rel="prev" title="MuniEntry" href="README.html"/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="public" />
+    <meta name="robots" content="follow, all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  </head>
+
+  <body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> MuniEntry </a>
+        <div role="search">
+	  <form id ="rtd-search-form" class="wy-form"
+		action="search.html" method="get">
+	    <input type="text" name="q" placeholder="Search docs" />
+	    <input type="hidden" name="check_keywords" value="yes" />
+	    <input type="hidden" name="area" value="default" />
+	  </form>
+	</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	
+          
+          
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">MuniEntry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#overview">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-requirements">Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-process">Build Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="DEPLOYMENT.html">Deployment Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="DEPLOYMENT.html#deployment-directories">Deployment Directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEPLOYMENT.html#deployment">Deployment</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+
+      </div>
+      &nbsp;
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      <nav class="wy-nav-top" id="barra-mobile" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Porão do Juca</a>
+      </nav>
+
+      <div class="wy-nav-content">
+	<div class="fundo-claro">
+	</div>
+	<div class="fundo-escuro">
+	</div>
+
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+	    
+	    <!-- <ul class="wy-breadcrumbs"> -->
+	    <!--   <li><a href="#">Docs</a> &raquo;</li> -->
+
+	    <!--   <li>Features</li> -->
+	    <!--   <li class="wy-breadcrumbs-aside"> -->
+
+	    <!-- 	<a href="_sources/index.txt" rel="nofollow"> View page source</a> -->
+
+	    <!--   </li> -->
+	    <!-- </ul> -->
+	    <!-- <hr/> -->
+	  </div>
+
+          <div role="main" class="">
+
+	    <div id="content" class="hfeed entry-container hentry">
+  <section id="build-overview">
+<h1>Build Overview<a class="headerlink" href="#build-overview" title="Permalink to this heading">¶</a></h1>
+<p>The MuniEntry application is written primarily in Python. In order to make the application
+accessible to a user without Python on their system, the application is complied to an
+executable (.exe file) using PyInstaller.</p>
+<section id="build-requirements">
+<h2>Build Requirements<a class="headerlink" href="#build-requirements" title="Permalink to this heading">¶</a></h2>
+<p>Python 3.11</p>
+<p>Pyinstaller 5.6.1</p>
+</section>
+<section id="build-process">
+<h2>Build Process<a class="headerlink" href="#build-process" title="Permalink to this heading">¶</a></h2>
+<p>The application should be built from the Main branch of the Git repository.</p>
+<section id="run-test-suite">
+<h3>Run Test Suite<a class="headerlink" href="#run-test-suite" title="Permalink to this heading">¶</a></h3>
+<p>Prior to any build, all tests in the test suite should be run and a build should
+only be performed if tests pass 100%.</p>
+</section>
+<section id="build-location">
+<h3>Build Location<a class="headerlink" href="#build-location" title="Permalink to this heading">¶</a></h3>
+<p>The build process must be performed in the virtual environment that has all of the
+proper packages listed in the requirements.txt file already installed. Generally, the
+test suite should not pass unless all requirements are up-to-date in the virtual
+environment.</p>
+</section>
+<section id="build-commands">
+<h3>Build Commands<a class="headerlink" href="#build-commands" title="Permalink to this heading">¶</a></h3>
+<p>In the root directory of the application run the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pyinstaller --hidden-imports lxml._elementpath --splash ./resources/icons/gavel_splash.png MuniEntry_app.py
+</pre></div>
+</div>
+<p>The –hidden-imports parameter requires pyinstaller to specifically install the lxml module, which is necessary,
+but not automatically included if not explictly added to the install without calling for it as a hidden-import
+paramater.</p>
+<p>The –splash parameter provides the location of the icon that is used during the bootloader process that is
+run whenever the MuniEntry application is opened. The bootloader process is the precompiling of the python
+application that is run each time the MuniEntry_app.exe file is run. It pacakages the python interpreter and
+all required source code to allow the application to run on computers without Python installed.</p>
+</section>
+<section id="spec-file">
+<h3>Spec File<a class="headerlink" href="#spec-file" title="Permalink to this heading">¶</a></h3>
+<p>If the pyinstaller build process completes sucessfully, it will create a file called
+MuniEntry_app.spec.</p>
+<p>The initial MuniEntry_app.spec file will be populated with a skeleton of data variables that the pyinstaller
+process determined are necessary to run the application. The initial version of the .spec file must be
+updated with the current version of the MasterSPEC_MuniEntry_app.spec file that is located in the
+resources directory of the application.</p>
+<p>The MasterSPEC_MuniEntry_app.spec file contains all current data variables that are required for the application
+to run properly. The MasterSPEC_MuniEntry_app.spec file includes references to all templates, internal data sources,
+icons and other non-code internal items. It also includes executable settings (i.e. turning off the console window)
+and file directories that should be excluded from the build (i.e. the test suite).</p>
+<p>The contents of the MasterSPEC_MuniEntry_app.spec file should be copied and used to replace the contents
+of the MuniEntry_app.spec file.</p>
+<p>After the contents of the MasterSPEC_MuniEntry_app.spec file pasted into the MuniEntry_app.spec file, then run the
+following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pyinstaller MuniEntry_app.spec
+</pre></div>
+</div>
+<p>The build process will ask if you want to repalce the contents of the dist directory. Choose yes.</p>
+</section>
+<section id="the-compiled-executable">
+<h3>The Compiled Executable<a class="headerlink" href="#the-compiled-executable" title="Permalink to this heading">¶</a></h3>
+<p>After the build process is complete, the compiled application will be located in the dist directory within
+the root directory. In the dist directory there will be a single directory labeled MuniEntry_app. That directory
+contains the entire application and required files necessary for the application to run.</p>
+<p>The MuniEntry_app directory can then be placed on any computer for a user to access and run the application
+directly without having Python installed. Within the MuniEntry_app directory there is a MuniEntryapp.exe file
+that loads the application. A shortcut can be created to that file that will allow a user to launch the application.</p>
+<p><strong>IMPORTANT: The application has a config.ini file that contains path settings. The user must have access to the paths
+in the config file for the application to work properly.</strong></p>
+<p><em><strong>SEE THE DEPLOYMENT PROCESS FOR CURRENT DEPLOYMENT REQUIREMENTS.</strong></em></p>
+</section>
+</section>
+</section>
+
+
+	    </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="DEPLOYMENT.html" class="btn btn-neutral float-right" title="Deployment Overview">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="README.html" class="btn btn-neutral" title="MuniEntry"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Delaware Municipal Court.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/jucacrispim/sphinx_pdj_theme">theme</a> provided by <a href="http://poraodojuca.net">Porão do Juca</a>.
+
+</footer>
+	</div>
+	</div>
+	  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.42.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js">
+
+    </script>
+    <script type="text/javascript" src="_static/jquery.js">
+
+    </script>
+    <script type="text/javascript" src="_static/underscore.js">
+
+    </script>
+    <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js">
+
+    </script>
+    <script type="text/javascript" src="_static/doctools.js">
+
+    </script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js">
+
+    </script>
+
+  
+
+   <script type="text/javascript"
+           src="_static/js/theme.js"></script>
+
+   <script type="text/javascript"
+           src="_static/js/pdj.js"></script>
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>
