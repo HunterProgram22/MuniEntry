@@ -5,7 +5,7 @@ The MuniEntry application as used at the Delaware Municipal Court is deployed to
 M: drive (MunicipalCourt) of the City Network. 
 
 ________________________
-##Deployment Directories
+Deployment Directories
 ________________________
 
 
@@ -16,6 +16,7 @@ application.**
 
 *************************
 **Application Directory**
+*************************
 
 In addition to subdirectories for deployment and testing of the application, the MuniEntry_Files directory 
 also contains a copy of the shortcut for the production version of the application. This shortcut points to the 
@@ -25,6 +26,7 @@ to any new user's Desktop to allow them to access the application.
 
 *******************
 *MuniEntry_Files*
+*******************
 
 The main directory for deployment of the application is:
 
@@ -35,6 +37,7 @@ Within this directory there are a number of subdirectories used for the deployed
 
 *****************
 *MuniEntry_app*
+*****************
 
 The MuniEntry_app directory is the deployed application. It is the current production version 
 of the application that is in use. 
@@ -42,6 +45,7 @@ of the application that is in use.
 
 ********************
 *Hot_Swap_Version*
+********************
 
 The Hot_Swap_Version directory contains the prior stable version build of the application. Generally,
 this will be the prior 0.X-1.0 version of the application. For example if the current version 
@@ -61,18 +65,21 @@ Swap version in the Hot_Swap_Version directory.
 
 *****************
 *TEST_Versions*
+*****************
 
 The TEST_Versions directory is used for deploying a compiled build for live testing. 
 
 
 ******************
 *MuniEntry_Logs*
+******************
 
 The MuniEntry_Logs directory is the location where the MuniEntry application logs are saved.
 
 
 **********************
 *Prior_Version_Data*
+**********************
 
 The Prior_Version_Data directory was used until Version 0.40.0 for storing prior version data such as 
 saved entries and logs. Starting with Version 0.40.0 the saving of data was moved to external directories 
@@ -84,8 +91,9 @@ and moving prior version data to this directory prior to deployment of a new bui
 
 ****
 *DB*
+****
 
-The DB directory contains internal application database (MuniEntryDB.sqlite) for MuniEntry. 
+The DB directory contains internal application database (MuniEntryDB.sqlite) for MuniEntry.
 
 ..  note::
     In a future version, this directory will also contain the Daily Case List reports (SSRS Files generated
@@ -94,6 +102,7 @@ The DB directory contains internal application database (MuniEntryDB.sqlite) for
 
 ********
 *Config*
+********
 
 The Config directory will be used in the future for storing application specific config files.
 
@@ -103,7 +112,9 @@ The Config directory will be used in the future for storing application specific
 
 ___
 
-## Entries Directory
+_________________
+Entries Directory
+_________________
 
 The Entries directory is located at:
 
@@ -142,9 +153,9 @@ A directory for saving Jury Payment entries created by the application.
 
 A directory for saving entries created from the Scheduling Tab of the application.
 
-____
-
-## Deployment
+__________
+Deployment
+__________
 
 The deployment process is for distribution of a new version of the application that has been properly built 
 as described in the Build documentation.
@@ -156,7 +167,9 @@ application is in place for the Daily Cases Lists to populate.**
 Prior to starting the deployment process, make sure that no computer has an instance of the application open
 and running. 
 
-### Create Hot Swap Version
+***************************
+**Create Hot Swap Version**
+***************************
 
 If the version being deployed is a new minor release (i.e. 0.X+1.0) then the current version in production
 (0.X.0) must be copied over to the Hot Swap Version that is currently in the Hot_Swap_Version directory.
@@ -166,7 +179,9 @@ If the version being deployed is a new minor release (i.e. 0.X+1.0) then the cur
 Make sure to copy and paste the production version over to the Hot_Swap_Version directory, do not cut and paste. 
 Cutting and pasting may not work properly if the current version of the application is open on a user's computer. 
 
-### Delete Current Production Version
+*************************************
+**Delete Current Production Version**
+*************************************
 
 Delete the current production version of the application - the MuniEntry_app directory.
 
@@ -174,7 +189,9 @@ If the current production version of the application cannot be completely delete
 instance of the application is still open on a user's desktop. Determine where the application is open and close it.
 Then try to delete the current production version again.
 
-### Move New Version Into Production
+************************************
+**Move New Version Into Production**
+************************************
 
 Copy and paste the current build of that application that is on the developer's computer. The entire MuniEntry_app 
 directory must be moved from the developer's computer to the MuniEntry_Files directory. 
