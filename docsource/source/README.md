@@ -2,7 +2,7 @@
 
 An application for creating entries in MS Word.
 
-# Overview 
+## Overview 
 
 The basic workflow for the application allows a user to select a case from which 
 the data will be loaded. The data is generally accessed through a conneection to 

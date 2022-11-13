@@ -2,6 +2,8 @@
 
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
 """
+from functools import partialmethod
+
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
@@ -141,5 +143,7 @@ def main():
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
 else:
+    logger.level('DATABASE', no=21, color='<green>')
+    logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
     main()
     logger.info(f'{__name__} imported.')
