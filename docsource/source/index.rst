@@ -1,15 +1,14 @@
 Welcome to MuniEntry's documentation!
 =====================================
-.. automodule:: munientry.loaders.driving_caseload_functions
-   :members:
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+..  toctree::
+    :maxdepth: 2
+    :caption: Contents:
 
-   README
-   BUILD
-   DEPLOYMENT
+    README
+    BUILD
+    DEPLOYMENT
+    LOADERS
 
 
 Indices and tables
@@ -18,3 +17,5 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+

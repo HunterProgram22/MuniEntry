@@ -1,4 +1,7 @@
-"""Contains functions for loading driving privileges case information prior to loading."""
+"""**munientry.loaders.driving_caseload_functions**
+
+Contains functions for loading driving privileges case information prior to loading.
+"""
 from loguru import logger
 
 from munientry.data import sql_server_getters as sql_server
@@ -25,7 +28,8 @@ def load_single_driving_info_case(case_number: str):
     ----------
     case_number: str
         The case number to load in the format: [2 digits][3 chars][5 digits].
-        Example: 22TRD12345, 21CRB00001, 20TRD01010
+
+        Examples: 22TRD12345, 21CRB00001, 20TRD01010
 
     Returns
     -------

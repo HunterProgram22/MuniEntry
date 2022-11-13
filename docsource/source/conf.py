@@ -26,6 +26,7 @@ extensions = ['myst_parser', 'sphinx.ext.autodoc', 'sphinx.ext.githubpages', 'sp
 
 templates_path = ['_templates']
 exclude_patterns = []
+add_module_names = False
 
 
 

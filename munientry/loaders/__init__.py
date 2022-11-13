@@ -1,1 +1,4 @@
-"""Package containing modules for loading data."""
+"""**munientry/loaders**
+
+Package containing modules for loading data.
+"""
