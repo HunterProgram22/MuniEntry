@@ -8,12 +8,6 @@ Welcome to MuniEntry's documentation!
     README
     BUILD
     DEPLOYMENT
-
-
-
-Packages
-========
-
     LOADERS
 
 

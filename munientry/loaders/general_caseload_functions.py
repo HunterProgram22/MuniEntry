@@ -29,12 +29,10 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
     """Asks user if they want to combine matched cases or just load single selected case.
 
     Args:
-        last_name (str) The last name from the case current selected in the case list.
+        last_name (str): The last name from the case current selected in the case list.
 
-        Example: 22TRD01944 - Conkey -> the last name is 'Conkey'
-
-    matched_cases_list (list): A list of all cases where the last name provided matches the last
-    name of a case in the selected daily case list.
+        matched_cases_list (list): All cases where the last name provided matches the last name \
+        of a case in the selected daily case list.
 
     Returns:
         WarningBox: A custom widget message box asking for user input.
