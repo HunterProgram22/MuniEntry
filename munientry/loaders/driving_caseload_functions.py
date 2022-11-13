@@ -4,6 +4,7 @@
 
 Functions:
     load_no_case_driving() -> DrivingPrivilegesInformation
+
     load_single_driving_info_case(case_number) -> DrivingPrivilegesInformation
 """
 from loguru import logger
