@@ -108,7 +108,7 @@ query_list = [
 @pytest.mark.parametrize("query, connection_name", query_list)
 def test_query_offense_statute_data(query, connection_name):
     db_connection = open_db_connection(connection_name)
-    assert len(query_offense_statute_data(db_connection, query)) == 45
+    assert len(query_offense_statute_data(db_connection, query)) == 46
 
 
 daily_case_lists = [

@@ -1,7 +1,11 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
 
-from munientry.appsettings.pyqt_constants import TODAY, YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE
+from munientry.appsettings.pyqt_constants import (
+    NO_BUTTON_RESPONSE,
+    TODAY,
+    YES_BUTTON_RESPONSE,
+)
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
 
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
@@ -10,10 +14,11 @@ NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No 
 class BaseChecker(object):
     """Class for initializing InfoChecker objects."""
 
+    conditions_list = []
+
     def __init__(self, dialog) -> None:
         self.view = dialog
         self.dialog_check_list: list = []
-        self.conditions_list: list = []
 
     def perform_check_list(self) -> str:
         for item_to_check in self.dialog_check_list:
