@@ -7,14 +7,14 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'MuniEntry'
-copyright = '2022, Justin Kudela'
+copyright = '2022, Delaware Municipal Court'
 author = 'Justin Kudela'
-release = '0.41.0'
+release = '0.42.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['myst_parser']
+extensions = ['myst_parser', 'sphinx.ext.autodoc', 'sphinx.ext.githubpages']
 
 templates_path = ['_templates']
 exclude_patterns = []
