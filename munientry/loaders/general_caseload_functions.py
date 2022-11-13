@@ -11,6 +11,7 @@ Functions:
     load_single_case(case_number) -> CmsCaseInformation
     load_multiple_cases(matched_case_numbers) -> CmsCaseInformation
 """
+from loguru import logger
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.data import sql_server_getters as sql_server
@@ -153,3 +154,7 @@ def load_multiple_cases(matched_case_numbers: list) -> CmsCaseInformation:
             An instance of a CmsCaseInformation object with data from a single case.
     """
     return sql_server.MultipleCriminalCaseSQLServer(matched_case_numbers).load_case()
+
+
+if __name__ == '__main__':
+    logger.info(f'{__name__} run directly.')
