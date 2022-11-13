@@ -53,8 +53,8 @@ FMT = '{time:YYYY-MM-DD HH:mm:ss:SSS} | {level: <10} | {message: <75} | {functio
 
 logger.add(f'{LOG_PATH}{USER_LOG_NAME}', format=FMT, level=APP_LOGGING_LEVEL)
 
-logger.level('DATABASE', no=DATABASE_LOGLEVEL, color='<green>')
-logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
+# logger.level('DATABASE', no=DATABASE_LOGLEVEL, color='<green>')
+# logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
 
 logger.level('DIALOG', no=DIALOG_LOGLEVEL, color='<green>')
 logger.__class__.dialog = partialmethod(logger.__class__.log, 'DIALOG')

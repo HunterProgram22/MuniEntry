@@ -1,8 +1,16 @@
-"""**munientry/loaders/general_caseload_functions**
+"""Functions used for working with a daily case list or case search prior to loading.
 
-Contains functions used for working with a daily case list or case search prior to loading.
+**munientry/loaders/general_caseload_functions**
+
+Functions:
+    check_for_last_name_match(daily_case_list, last_name) -> tuple
+    ask_if_cases_combined(last_name, matched_cases_list) -> object
+    set_case_loader(daily_case_list) -> CmsCaseInformation
+    load_case_information(daily_case_list) -> CmsCaseInformation
+    load_no_case() -> CmsCaseInformation
+    load_single_case(case_number) -> CmsCaseInformation
+    load_multiple_cases(matched_case_numbers) -> CmsCaseInformation
 """
-from __future__ import annotations
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.data import sql_server_getters as sql_server
@@ -10,29 +18,27 @@ from munientry.models.cms_models import CmsCaseInformation
 from munientry.widgets.message_boxes import WarningBox
 
 
-def check_for_last_name_match(daily_case_list, last_name: str) -> tuple:
+def check_for_last_name_match(daily_case_list: object, last_name: str) -> tuple:
     """Loops through all cases in selected daily case list to find any matching last names.
 
-    Parameters
-    __________
-    daily_case_list: DailyCaseListCombobox
-        The selected daily case list.
+    Args:
+        daily_case_list: DailyCaseListCombobox
+            The selected daily case list.
 
-    last_name: str
-        The last name from the case current selected in the case list.
+        last_name: str
+            The last name from the case current selected in the case list.
 
-        Example: 22TRD01944 - Conkey -> the last name is 'Conkey'
+            Example: 22TRD01944 - Conkey -> the last name is 'Conkey'
 
-    Returns
-    _______
-    tuple
-        (case_match_count, matched_cases_list)
+    Returns:
+        tuple
+            (case_match_count, matched_cases_list)
 
-        case_match_count: int
+            case_match_count: int
 
-        matched_cases_list: list
-            A list of all cases where the last name provided matches the last name of a
-            case in the selected daily case list.
+            matched_cases_list: list
+                A list of all cases where the last name provided matches the last name of a
+                case in the selected daily case list.
     """
     case_match_count = 0
     matched_cases_list = []
@@ -49,21 +55,19 @@ def check_for_last_name_match(daily_case_list, last_name: str) -> tuple:
 def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
     """Asks user if they want to combine matched cases or just load single selected case.
 
-    Parameters
-    __________
-    last_name: str
-        The last name from the case current selected in the case list.
+    Args:
+        last_name: str
+            The last name from the case current selected in the case list.
 
-        Example: 22TRD01944 - Conkey -> the last name is 'Conkey'
+            Example: 22TRD01944 - Conkey -> the last name is 'Conkey'
 
     matched_cases_list: list
         A list of all cases where the last name provided matches the last name of a
         case in the selected daily case list.
 
-    Returns
-    _______
-    WarningBox
-        A custom widget message box asking for user input.
+    Returns:
+        WarningBox
+            A custom widget message box asking for user input.
     """
     case_numbers = '\n'.join(matched_cases_list)
     case_count = len(matched_cases_list)
@@ -74,19 +78,17 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
     return WarningBox(message, 'Companion Cases').exec()
 
 
-def set_case_loader(daily_case_list) -> CmsCaseInformation:
+def set_case_loader(daily_case_list: object) -> CmsCaseInformation:
     """Loads either a single case or multiple cases depending on user input.
 
-    Parameters
-    __________
-    daily_case_list: DailyCaseListCombobox
-        The selected daily case list.
+    Args:
+        daily_case_list: DailyCaseListCombobox
+            The selected daily case list.
 
-    Returns
-    _______
-    CmsCaseInformation
-        An instance of a CmsCaseInformation object with case data for a single case or mulitiple
-        cases.
+    Returns:
+        CmsCaseInformation
+            An instance of a CmsCaseInformation object with case data for a single case or mulitiple
+            cases.
     """
     last_name, case_number = daily_case_list.currentText().split(' - ')
     case_match_count, matched_cases_list = check_for_last_name_match(daily_case_list, last_name)
@@ -97,18 +99,16 @@ def set_case_loader(daily_case_list) -> CmsCaseInformation:
     return load_single_case(case_number)
 
 
-def load_case_information(daily_case_list) -> CmsCaseInformation:
+def load_case_information(daily_case_list: object) -> CmsCaseInformation:
     """Loads the CmsCaseInformation object model for loading to the template.
 
-    Parameters
-    __________
-    daily_case_list: DailyCaseListCombobox
-        The selected daily case list.
+    Args:
+        daily_case_list: DailyCaseListCombobox
+            The selected daily case list.
 
-    Returns
-    _______
-    CmsCaseInformation
-        An instance of a CmsCaseInformation object with or without data.
+    Returns:
+        CmsCaseInformation
+            An instance of a CmsCaseInformation object with or without data.
     """
     if daily_case_list.currentText() == '':
         return load_no_case()
@@ -120,10 +120,9 @@ def load_no_case() -> CmsCaseInformation:
 
     Avoids unnecessary call to the database when there is no data to load.
 
-    Returns
-    _______
-    CmsCaseInformation
-        An instance of a CmsCaseInformation object without data.
+    Returns:
+        CmsCaseInformation
+            An instance of a CmsCaseInformation object without data.
     """
     return CmsCaseInformation()
 
@@ -131,15 +130,13 @@ def load_no_case() -> CmsCaseInformation:
 def load_single_case(case_number: str) -> CmsCaseInformation:
     """Loads a single case into the CmsCaseInformation model.
 
-    Parameters
-    __________
-    case_number: str
-        A string of the case number to be loaded.
+    Args:
+        case_number: str
+            A string of the case number to be loaded.
 
-    Returns
-    _______
-    CmsCaseInformation
-        An instance of a CmsCaseInformation object with data from a single case.
+    Returns:
+        CmsCaseInformation
+            An instance of a CmsCaseInformation object with data from a single case.
     """
     return sql_server.CriminalCaseSQLServer(case_number).load_case()
 
@@ -147,14 +144,12 @@ def load_single_case(case_number: str) -> CmsCaseInformation:
 def load_multiple_cases(matched_case_numbers: list) -> CmsCaseInformation:
     """Loads multiple cases into the CmsCaseInformation model.
 
-    Parameters
-    __________
-    matched_case_numbers: list
-        A list containing strings of all the case numbers to be loaded.
+    Args:
+        matched_case_numbers: list
+            A list containing strings of all the case numbers to be loaded.
 
-    Returns
-    _______
-    CmsCaseInformation
-        An instance of a CmsCaseInformation object with data from a single case.
+    Returns:
+        CmsCaseInformation
+            An instance of a CmsCaseInformation object with data from a single case.
     """
     return sql_server.MultipleCriminalCaseSQLServer(matched_case_numbers).load_case()

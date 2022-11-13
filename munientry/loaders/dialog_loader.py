@@ -10,8 +10,8 @@ from munientry.loaders.driving_caseload_functions import (
     load_single_driving_info_case,
 )
 from munientry.loaders.general_caseload_functions import (
-    load_single_case,
     load_case_information,
+    load_single_case,
 )
 
 
