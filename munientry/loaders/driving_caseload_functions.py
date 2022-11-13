@@ -1,4 +1,5 @@
 """Contains functions for loading driving privileges case information prior to loading."""
+from loguru import logger
 
 from munientry.data import sql_server_getters as sql_server
 from munientry.models.privileges_models import DrivingPrivilegesInformation
@@ -25,3 +26,7 @@ def load_single_driving_info_case(case_number: str):
     :rtype: DrivingPrivilegesInformation
     """
     return sql_server.DrivingInfoSQLServer(case_number).load_case()
+
+
+if __name__ == '__main__':
+    logger.info(f'{__name__} run directly.')
