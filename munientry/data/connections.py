@@ -165,13 +165,7 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     """
     if not db_connection.isOpen():
         logger.warning(f'Unable to connect to {connection_name} database')
-        message = None
-        if connection_name == 'con_authority_court':
-            message = 'A connection to the Authority Court database could not be made.'
-        if connection_name == 'con_authority_civil':
-            message = 'A connection to the Authority Civil database could not be made.'
-        if connection_name == 'con_munientry_db':
-            message = 'A connection to the MuniEntry Sqlite database could not be made.'
+        message = f'A connection to the {connection_name} database could not be made.'
         InfoBox(message).exec()
         return False
     return True
@@ -190,10 +184,12 @@ def main():
     open_db_connection('con_authority_court')
     authority_court_is_open = check_if_db_open(authority_court_db, 'con_authority_court')
     logger.database(f'Connection to Authority Court is: {authority_court_is_open}')
+
     authority_civil_db = create_odbc_db_connection('con_authority_civil')
     open_db_connection('con_authority_civil')
     authority_civil_is_open = check_if_db_open(authority_civil_db, 'con_authority_civil')
     logger.database(f'Connection to Authority Civil is: {authority_civil_is_open}')
+
     create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
 
     conn = open_db_connection('con_munientry_db')
