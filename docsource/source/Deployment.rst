@@ -1,22 +1,20 @@
+===================
 Deployment Overview
 ===================
 
 The MuniEntry application as used at the Delaware Municipal Court is deployed to the 
 M: drive (MunicipalCourt) of the City Network. 
 
-________________________
-Deployment Directories
-________________________
+The application uses two directories for deployment and use of the application. The Application Directory
+(M:\Admin\Information_Technology\MuniEntry_Files) contains subdirectories that contain data used or created by the
+application. The Entries Directory contains subdirectories for saving entries created by the application.
 
+..  caution::
+    Users must have access to both directories in order to access and use all features of the
+    application.
 
-The application uses two directories for deployment and use of the application.
-
-**Users must have access to both directories in order to access and use all features of the
-application.**
-
-*************************
-**Application Directory**
-*************************
+Application Directory
+_____________________
 
 In addition to subdirectories for deployment and testing of the application, the MuniEntry_Files directory 
 also contains a copy of the shortcut for the production version of the application. This shortcut points to the 
@@ -110,9 +108,7 @@ The Config directory will be used in the future for storing application specific
     As of Version 0.42.0, the config file stored in this directory is not used by the application and the
     config file (config.ini) is stored internally within the application MuniEntry_app directory.**
 
-___
 
-_________________
 Entries Directory
 _________________
 
@@ -153,7 +149,6 @@ A directory for saving Jury Payment entries created by the application.
 
 A directory for saving entries created from the Scheduling Tab of the application.
 
-__________
 Deployment
 __________
 
