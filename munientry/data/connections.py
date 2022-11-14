@@ -1,18 +1,48 @@
-"""Module that contains all functions for connecting to databases - internal and external.
+"""Functions for connecting to databases - internal and external.
+
+**munientry.data.connections**
 
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+
+Functions:
+    create_sqlite_db_connection(database_path, connection_name) -> QSqlDatabase
+
+    create_odbc_db_connection(connection_name) -> QSqlDatabase
+
+    open_db_connection(connection_name) -> QSqlDatabase
+
+    close_db_connection(db_connection) -> None
+
+    remove_db_connection(connection_name) -> None
+
+    check_if_db_open(db_connection, connection_name) -> bool
 """
+import socket
 from functools import partialmethod
 
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
-from munientry.settings import set_server_and_database
 from munientry.paths import DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
+
+
+def set_server_and_database() -> tuple:
+    """Sets the server and database name for the SQL Server connection.
+
+    This function is used to set a local instance of the database for Justin to test at home
+    without being connected to the delcity network.
+    """
+    if socket.gethostname() == 'RooberryPrime':
+        server = r'ROOBERRYPRIME\SQLEXPRESS'
+        database = 'AuthorityCourt'
+    else:
+        server = r'CLERKCRTR\CMI'
+        database = 'AuthorityCourt'
+    return (server, database)
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:

@@ -1,8 +1,6 @@
 """A module containing common variables used throughout the application."""
 import configparser
 import socket
-from typing import TYPE_CHECKING
-
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -17,8 +15,6 @@ costs = config['costs']
 MOVING_COURT_COSTS = int(costs['moving'])
 CRIMINAL_COURT_COSTS = int(costs['criminal'])
 NONMOVING_COURT_COSTS = int(costs['non_moving'])
-
-
 
 
 def get_host() -> str:
@@ -88,11 +84,13 @@ DAY_DICT = {
     'Friday': 5,
 }
 
+
 EVENT_DICT = {
     'Trial': 2,
     'Final Pretrial': 2,
     'Pretrial': 28,
 }
+
 
 SPEEDY_TRIAL_TIME_DICT = {
     'M1': 90,
@@ -103,24 +101,10 @@ SPEEDY_TRIAL_TIME_DICT = {
     'UCM': 30,
 }
 
+
 PRETRIAL_TIME_DICT = {
     'Pretrial 4 weeks before trial': 28,
     'Pretrial 3 weeks before trial': 21,
     'Pretrial 2 weeks before trial': 14,
     'No Pretrial': 0,
 }
-
-
-def set_server_and_database() -> tuple:
-    """Sets the server and database name for the SQL Server connection.
-
-    This function is used to set a local instance of the database for Justin to test at home
-    without being connected to the delcity network.
-    """
-    if socket.gethostname() == 'RooberryPrime':
-        server = r'ROOBERRYPRIME\SQLEXPRESS'
-        database = 'AuthorityCourt'
-    else:
-        server = r'CLERKCRTR\CMI'
-        database = 'AuthorityCourt'
-    return (server, database)
