@@ -22,11 +22,8 @@ from loguru import logger
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.data import sql_server_getters as sql_server
 from munientry.models.cms_models import CmsCaseInformation
-from munientry.settings import TYPE_CHECKING
+from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox
-
-if TYPE_CHECKING:
-    from munientry.widgets.combo_boxes import DailyCaseListComboBox
 
 
 def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> WarningBox:
