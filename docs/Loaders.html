@@ -163,7 +163,7 @@
 </dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.ask_if_cases_combined">
-<span class="sig-name descname"><span class="pre">ask_if_cases_combined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matched_cases_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">object</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.ask_if_cases_combined" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ask_if_cases_combined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matched_cases_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">WarningBox</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.ask_if_cases_combined" title="Permalink to this definition">¶</a></dt>
 <dd><p>Asks user if they want to combine matched cases or just load single selected case.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -183,12 +183,12 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.check_for_last_name_match">
-<span class="sig-name descname"><span class="pre">check_for_last_name_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.check_for_last_name_match" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_for_last_name_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.check_for_last_name_match" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loops through all cases in selected daily case list to find any matching last names.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>daily_case_list</strong> (<em>DailyCaseListCombobox</em>) – The selected daily case list.</p></li>
+<li><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p></li>
 <li><p><strong>last_name</strong> (<em>str</em>) – <p>The last name from the case current selected in the case list.</p>
 <p>Example: For a selection of ‘22TRD01944 - Conkey’ the last name is ‘Conkey.’</p>
 </p></li>
@@ -211,11 +211,11 @@ the last name of a case in the selected daily case list.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.load_case_information">
-<span class="sig-name descname"><span class="pre">load_case_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_case_information" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_case_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_case_information" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads the CmsCaseInformation object model for loading to the template.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListCombobox</em>) – The selected daily case list.</p>
+<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An instance of a CmsCaseInformation object with or without data.</p>
@@ -277,11 +277,11 @@ the last name of a case in the selected daily case list.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.set_case_loader">
-<span class="sig-name descname"><span class="pre">set_case_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">object</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.set_case_loader" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">set_case_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.set_case_loader" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads either a single case or multiple cases depending on user input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListCombobox</em>) – The selected daily case list.</p>
+<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>An instance of a CmsCaseInformation object with case data for a

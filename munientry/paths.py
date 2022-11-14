@@ -21,7 +21,8 @@ JURY_PAY_SAVE_PATH = paths['jury_pay_save_path']
 
 # Database Path Information for MuniEntryDB.Sqlite Internal Database
 DB_PATH = paths['munientry_sqlite_db']
-# CASE_LISTS_PATH = paths['daily_case_lists']
+# CASE_LISTS_PATH = paths['daily_case_lists']  - This is for future user when case lists are moved
+# to external location outside application.
 
 
 # Digital Workflow Path Information
