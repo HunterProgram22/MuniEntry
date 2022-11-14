@@ -1,0 +1,418 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="" lang="" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>Loaders &mdash; MuniEntry 0.42.0 documentation</title>
+  
+
+  
+
+  
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+
+  
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
+        <link rel="prev" title="Databases Overview" href="Databases.html"/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="public" />
+    <meta name="robots" content="follow, all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  </head>
+
+  <body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> MuniEntry </a>
+        <div role="search">
+	  <form id ="rtd-search-form" class="wy-form"
+		action="search.html" method="get">
+	    <input type="text" name="q" placeholder="Search docs" />
+	    <input type="hidden" name="check_keywords" value="yes" />
+	    <input type="hidden" name="area" value="default" />
+	  </form>
+	</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	
+          
+          
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Readme.html">MuniEntry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Readme.html#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Application</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Build.html">Build Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-requirements">Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-process">Build Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Deployment.html">Deployment Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#application-directory">Application Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#entries-directory">Entries Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Databases.html">Databases Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-munientry.loaders.general_caseload_functions">General Caseload Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+
+      </div>
+      &nbsp;
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      <nav class="wy-nav-top" id="barra-mobile" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Porão do Juca</a>
+      </nav>
+
+      <div class="wy-nav-content">
+	<div class="fundo-claro">
+	</div>
+	<div class="fundo-escuro">
+	</div>
+
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+	    
+	    <!-- <ul class="wy-breadcrumbs"> -->
+	    <!--   <li><a href="#">Docs</a> &raquo;</li> -->
+
+	    <!--   <li>Features</li> -->
+	    <!--   <li class="wy-breadcrumbs-aside"> -->
+
+	    <!-- 	<a href="_sources/index.txt" rel="nofollow"> View page source</a> -->
+
+	    <!--   </li> -->
+	    <!-- </ul> -->
+	    <!-- <hr/> -->
+	  </div>
+
+          <div role="main" class="">
+
+	    <div id="content" class="hfeed entry-container hentry">
+  <section id="module-munientry.loaders">
+<span id="loaders"></span><h1>Loaders<a class="headerlink" href="#module-munientry.loaders" title="Permalink to this heading">¶</a></h1>
+<p>Package containing modules for loading data.</p>
+<p><strong>munientry/loaders</strong></p>
+<dl>
+<dt>Modules:</dt><dd><p>cms_case_loaders</p>
+<p>dialog_loader</p>
+<p>driving_caseload_functions</p>
+<p>general_caseload_functions</p>
+</dd>
+</dl>
+<section id="module-munientry.loaders.general_caseload_functions">
+<span id="general-caseload-functions"></span><h2>General Caseload Functions<a class="headerlink" href="#module-munientry.loaders.general_caseload_functions" title="Permalink to this heading">¶</a></h2>
+<p>Functions used for working with a daily case list or case search prior to loading.</p>
+<p><strong>munientry/loaders/general_caseload_functions</strong></p>
+<dl>
+<dt>Functions:</dt><dd><p>ask_if_cases_combined(last_name, matched_cases_list) -&gt; object</p>
+<p>check_for_last_name_match(daily_case_list, last_name) -&gt; tuple</p>
+<p>load_case_information(daily_case_list) -&gt; CmsCaseInformation</p>
+<p>load_multiple_cases(matched_case_numbers) -&gt; CmsCaseInformation</p>
+<p>load_no_case() -&gt; CmsCaseInformation</p>
+<p>load_single_case(case_number) -&gt; CmsCaseInformation</p>
+<p>set_case_loader(daily_case_list) -&gt; CmsCaseInformation</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.ask_if_cases_combined">
+<span class="sig-name descname"><span class="pre">ask_if_cases_combined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matched_cases_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">WarningBox</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.ask_if_cases_combined" title="Permalink to this definition">¶</a></dt>
+<dd><p>Asks user if they want to combine matched cases or just load single selected case.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>last_name</strong> (<em>str</em>) – The last name from the case current selected in the case list.</p></li>
+<li><p><strong>matched_cases_list</strong> (<em>list</em>) – All cases where the last name provided matches the last name         of a case in the selected daily case list.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A custom widget message box asking for user input.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>WarningBox</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.check_for_last_name_match">
+<span class="sig-name descname"><span class="pre">check_for_last_name_match</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.check_for_last_name_match" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loops through all cases in selected daily case list to find any matching last names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p></li>
+<li><p><strong>last_name</strong> (<em>str</em>) – <p>The last name from the case current selected in the case list.</p>
+<p>Example: For a selection of ‘22TRD01944 - Conkey’ the last name is ‘Conkey.’</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>(case_match_count, matched_cases_list)</p>
+<blockquote>
+<div><p>case_match_count (int):</p>
+<p>matched_cases_list (list): A list of all cases where the last name provided matches
+the last name of a case in the selected daily case list.</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.load_case_information">
+<span class="sig-name descname"><span class="pre">load_case_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_case_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the CmsCaseInformation object model for loading to the template.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of a CmsCaseInformation object with or without data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CmsCaseInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.load_multiple_cases">
+<span class="sig-name descname"><span class="pre">load_multiple_cases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matched_case_numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_multiple_cases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads multiple cases into the CmsCaseInformation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>matched_case_numbers</strong> (<em>list</em>) – A list containing strings of all the case numbers to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of a CmsCaseInformation object with data from a single case.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CmsCaseInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.load_no_case">
+<span class="sig-name descname"><span class="pre">load_no_case</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_no_case" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the CmsCaseInformation model with no data.</p>
+<p>Avoids unnecessary call to the database when there is no data to load.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>An instance of a CmsCaseInformation object without data.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>CmsCaseInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.load_single_case">
+<span class="sig-name descname"><span class="pre">load_single_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.load_single_case" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a single case into the CmsCaseInformation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>case_number</strong> (<em>str</em>) – A string of the case number to be loaded.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of a CmsCaseInformation object with data from a single case.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CmsCaseInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.general_caseload_functions.set_case_loader">
+<span class="sig-name descname"><span class="pre">set_case_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">daily_case_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DailyCaseListComboBox</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">CmsCaseInformation</span></span></span><a class="headerlink" href="#munientry.loaders.general_caseload_functions.set_case_loader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads either a single case or multiple cases depending on user input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>daily_case_list</strong> (<em>DailyCaseListComboBox</em>) – The selected daily case list.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of a CmsCaseInformation object with case data for a
+single case or mulitiple cases.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>CmsCaseInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-munientry.loaders.driving_caseload_functions">
+<span id="driving-caseload-functions"></span><h2>Driving Caseload Functions<a class="headerlink" href="#module-munientry.loaders.driving_caseload_functions" title="Permalink to this heading">¶</a></h2>
+<p>Functions for loading driving privileges case information prior to loading.</p>
+<p><strong>munientry.loaders.driving_caseload_functions</strong></p>
+<dl>
+<dt>Functions:</dt><dd><p>load_no_case_driving() -&gt; DrivingPrivilegesInformation</p>
+<p>load_single_driving_info_case(case_number) -&gt; DrivingPrivilegesInformation</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.driving_caseload_functions.load_no_case_driving">
+<span class="sig-name descname"><span class="pre">load_no_case_driving</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DrivingPrivilegesInformation</span></span></span><a class="headerlink" href="#munientry.loaders.driving_caseload_functions.load_no_case_driving" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads the DrivingPrivilegesInformation model with no data.</p>
+<p>Avoids unnecessary call to the database when there is no data to load.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The DrivingPrivilegesInformation model with no data loaded.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>DrivingPrivilegesInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.loaders.driving_caseload_functions.load_single_driving_info_case">
+<span class="sig-name descname"><span class="pre">load_single_driving_info_case</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">case_number</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DrivingPrivilegesInformation</span></span></span><a class="headerlink" href="#munientry.loaders.driving_caseload_functions.load_single_driving_info_case" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a single case with Driving Info query into the CmsCaseInformation model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>case_number</strong> (<em>str</em>) – The case number to load in the format: [2 digits][3 chars][5 digits].</p></li>
+<li><p><strong>Examples</strong> – 22TRD12345, 21CRB00001, 20TRD01010</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A DrivingPrivilegesInformation object with case data from
+the database.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>DrivingPrivilegesInformation</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+	    </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Databases.html" class="btn btn-neutral" title="Databases Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Delaware Municipal Court.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/jucacrispim/sphinx_pdj_theme">theme</a> provided by <a href="http://poraodojuca.net">Porão do Juca</a>.
+
+</footer>
+	</div>
+	</div>
+	  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.42.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js">
+
+    </script>
+    <script type="text/javascript" src="_static/jquery.js">
+
+    </script>
+    <script type="text/javascript" src="_static/underscore.js">
+
+    </script>
+    <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js">
+
+    </script>
+    <script type="text/javascript" src="_static/doctools.js">
+
+    </script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js">
+
+    </script>
+
+  
+
+   <script type="text/javascript"
+           src="_static/js/theme.js"></script>
+
+   <script type="text/javascript"
+           src="_static/js/pdj.js"></script>
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

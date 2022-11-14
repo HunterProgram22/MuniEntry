@@ -22,10 +22,11 @@ from loguru import logger
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.data import sql_server_getters as sql_server
 from munientry.models.cms_models import CmsCaseInformation
+from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox
 
 
-def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
+def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> WarningBox:
     """Asks user if they want to combine matched cases or just load single selected case.
 
     Args:
@@ -46,11 +47,11 @@ def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> object:
     return WarningBox(message, 'Companion Cases').exec()
 
 
-def check_for_last_name_match(daily_case_list: object, last_name: str) -> tuple:
+def check_for_last_name_match(daily_case_list: DailyCaseListComboBox, last_name: str) -> tuple:
     """Loops through all cases in selected daily case list to find any matching last names.
 
     Args:
-        daily_case_list (DailyCaseListCombobox): The selected daily case list.
+        daily_case_list (DailyCaseListComboBox): The selected daily case list.
 
         last_name (str): The last name from the case current selected in the case list.
 
@@ -76,11 +77,11 @@ def check_for_last_name_match(daily_case_list: object, last_name: str) -> tuple:
     return case_match_count, matched_cases_list
 
 
-def load_case_information(daily_case_list: object) -> CmsCaseInformation:
+def load_case_information(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformation:
     """Loads the CmsCaseInformation object model for loading to the template.
 
     Args:
-        daily_case_list (DailyCaseListCombobox): The selected daily case list.
+        daily_case_list (DailyCaseListComboBox): The selected daily case list.
 
     Returns:
         CmsCaseInformation: An instance of a CmsCaseInformation object with or without data.
@@ -125,11 +126,11 @@ def load_single_case(case_number: str) -> CmsCaseInformation:
     return sql_server.CriminalCaseSQLServer(case_number).load_case()
 
 
-def set_case_loader(daily_case_list: object) -> CmsCaseInformation:
+def set_case_loader(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformation:
     """Loads either a single case or multiple cases depending on user input.
 
     Args:
-        daily_case_list (DailyCaseListCombobox): The selected daily case list.
+        daily_case_list (DailyCaseListComboBox): The selected daily case list.
 
     Returns:
         CmsCaseInformation: An instance of a CmsCaseInformation object with case data for a

@@ -31,7 +31,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
-        <link rel="prev" title="Build Overview" href="BUILD.html"/>
+        <link rel="next" title="Databases Overview" href="Databases.html"/>
+        <link rel="prev" title="Build Overview" href="Build.html"/>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="cache-control" content="public" />
@@ -63,18 +64,37 @@
 	
           
           
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Readme.html">MuniEntry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Readme.html#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Application</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="README.html">MuniEntry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="README.html#overview">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BUILD.html">Build Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="BUILD.html#build-requirements">Build Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="BUILD.html#build-process">Build Process</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Build.html">Build Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-requirements">Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-process">Build Process</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Deployment Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#deployment-directories">Deployment Directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-directory">Application Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entries-directory">Entries Directory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Databases.html">Databases Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loaders.html">Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.general_caseload_functions">General Caseload Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -121,67 +141,92 @@
 <h1>Deployment Overview<a class="headerlink" href="#deployment-overview" title="Permalink to this heading">¶</a></h1>
 <p>The MuniEntry application as used at the Delaware Municipal Court is deployed to the
 M: drive (MunicipalCourt) of the City Network.</p>
-<section id="deployment-directories">
-<h2>Deployment Directories<a class="headerlink" href="#deployment-directories" title="Permalink to this heading">¶</a></h2>
-<p>The application uses two directories for deployment and use of the application. <strong>Users
-must have access to both directories in order to access and use all features of the
-application.</strong></p>
+<p>The application uses two directories for deployment and use of the application. The Application Directory
+(M:AdminInformation_TechnologyMuniEntry_Files) contains subdirectories that contain data used or created by the
+application. The Entries Directory contains subdirectories for saving entries created by the application.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Users must have access to both directories in order to access and use all features of the
+application.</p>
+</div>
 <section id="application-directory">
-<h3>Application Directory<a class="headerlink" href="#application-directory" title="Permalink to this heading">¶</a></h3>
+<h2>Application Directory<a class="headerlink" href="#application-directory" title="Permalink to this heading">¶</a></h2>
 <p>In addition to subdirectories for deployment and testing of the application, the MuniEntry_Files directory
 also contains a copy of the shortcut for the production version of the application. This shortcut points to the
 MuniEntry_app.exe file that is in the MuniEntry_app subdirectory. This shortcut should be copied and pasted
 to any new user’s Desktop to allow them to access the application.</p>
-<hr class="docutils" />
-<p><strong>MuniEntry_Files</strong></p>
+<section id="munientry-files">
+<h3><em>MuniEntry_Files</em><a class="headerlink" href="#munientry-files" title="Permalink to this heading">¶</a></h3>
 <p>The main directory for deployment of the application is:</p>
-<p>M:\Admin\Information_Technology\MuniEntry_Files</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">M:\Admin\Information_Technology\MuniEntry_Files</span></code></p>
+</div></blockquote>
 <p>Within this directory there are a number of subdirectories used for the deployed application.</p>
-<hr class="docutils" />
-<p><strong>MuniEntry_app</strong></p>
+</section>
+<section id="munientry-app">
+<h3><em>MuniEntry_app</em><a class="headerlink" href="#munientry-app" title="Permalink to this heading">¶</a></h3>
 <p>The MuniEntry_app directory is the deployed application. It is the current production version
 of the application that is in use.</p>
-<hr class="docutils" />
-<p><strong>Hot_Swap_Version</strong></p>
+</section>
+<section id="hot-swap-version">
+<h3><em>Hot_Swap_Version</em><a class="headerlink" href="#hot-swap-version" title="Permalink to this heading">¶</a></h3>
 <p>The Hot_Swap_Version directory contains the prior stable version build of the application. Generally,
 this will be the prior 0.X-1.0 version of the application. For example if the current version
 of the application is 0.42.0, then the Hot Swap version should be 0.41.0.</p>
 <p>The Hot Swap version should be the latest stable prior verision that includes any bug fix
 releases. Thus, if the last release of Version 0.41 was 0.41.2, that should be the Hot
 Swap version in the Hot_Swap_Version directory.</p>
-<p><strong>NOTE:</strong> As of Version 0.42.0, the application when deployed contains a db directory in which the Daily Case
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of Version 0.42.0, the application when deployed contains a db directory in which the Daily Case
 List reports (SSRS Files generated from the AuthorityCourtDB) are populated each morning at 8:00 a.m. If
 the Hot Swap Version is deployed after 8 a.m., the Daily Case List Reports must be moved from the production
 verion into the Hot_Swap_Version prior to switching over. In a future release, the SSRS Files will be
 saved into the DB directory in the MuniEntry_Files directory to avoid the need to copy the files over.</p>
-<hr class="docutils" />
-<p><strong>TEST_Versions</strong></p>
+</div>
+</section>
+<section id="test-versions">
+<h3><em>TEST_Versions</em><a class="headerlink" href="#test-versions" title="Permalink to this heading">¶</a></h3>
 <p>The TEST_Versions directory is used for deploying a compiled build for live testing.</p>
-<hr class="docutils" />
-<p><strong>MuniEntry_Logs</strong></p>
+</section>
+<section id="munientry-logs">
+<h3><em>MuniEntry_Logs</em><a class="headerlink" href="#munientry-logs" title="Permalink to this heading">¶</a></h3>
 <p>The MuniEntry_Logs directory is the location where the MuniEntry application logs are saved.</p>
-<hr class="docutils" />
-<p><strong>Prior_Version_Data</strong></p>
+</section>
+<section id="prior-version-data">
+<h3><em>Prior_Version_Data</em><a class="headerlink" href="#prior-version-data" title="Permalink to this heading">¶</a></h3>
 <p>The Prior_Version_Data directory was used until Version 0.40.0 for storing prior version data such as
 saved entries and logs. Starting with Version 0.40.0 the saving of data was moved to external directories
 and moving prior version data to this directory prior to deployment of a new build was eliminated.</p>
-<p><strong>Note:</strong> This directory will eventually be deleted once all prior version data is moved to the appropriate
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This directory will eventually be deleted once all prior version data is moved to the appropriate
 directory.</p>
-<p><strong>DB</strong></p>
-<p>The DB directory contains internal application database (MuniEntryDB.sqlite) for MuniEntry.</p>
-<p><strong>NOTE:</strong> In a future version, this directory will also contain the Daily Case List reports (SSRS Files generated
-from the AuthorityCourtDB).</p>
-<hr class="docutils" />
-<p><strong>Config</strong></p>
-<p>The Config directory will be used in the future for storing application specific config files.</p>
-<p><strong>As of Version 0.42.0, the config file stored in this directory is not used by the application and the
-config file (config.ini) is stored internally within the application MuniEntry_app directory.</strong></p>
+</div>
 </section>
-<hr class="docutils" />
+<section id="db">
+<h3><em>DB</em><a class="headerlink" href="#db" title="Permalink to this heading">¶</a></h3>
+<p>The DB directory contains internal application database (MuniEntryDB.sqlite) for MuniEntry.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In a future version, this directory will also contain the Daily Case List reports (SSRS Files generated
+from the AuthorityCourtDB).</p>
+</div>
+</section>
+<section id="config">
+<h3><em>Config</em><a class="headerlink" href="#config" title="Permalink to this heading">¶</a></h3>
+<p>The Config directory will be used in the future for storing application specific config files.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>As of Version 0.42.0, the config file stored in this directory is not used by the application and the
+config file (config.ini) is stored internally within the application MuniEntry_app directory.**</p>
+</div>
+</section>
+</section>
 <section id="entries-directory">
-<h3>Entries Directory<a class="headerlink" href="#entries-directory" title="Permalink to this heading">¶</a></h3>
+<h2>Entries Directory<a class="headerlink" href="#entries-directory" title="Permalink to this heading">¶</a></h2>
 <p>The Entries directory is located at:</p>
-<p>M:\Entries</p>
+<p><code class="docutils literal notranslate"><span class="pre">M:\Entries</span></code></p>
 <p>The Entries directory contains subdirectories where the application saves documents that are created by
 the user with the application.</p>
 <p><em>Batch</em></p>
@@ -201,19 +246,20 @@ are created by the application.</p>
 <p><em>Scheduling</em></p>
 <p>A directory for saving entries created from the Scheduling Tab of the application.</p>
 </section>
-</section>
-<hr class="docutils" />
 <section id="deployment">
 <h2>Deployment<a class="headerlink" href="#deployment" title="Permalink to this heading">¶</a></h2>
 <p>The deployment process is for distribution of a new version of the application that has been properly built
 as described in the Build documentation.</p>
-<p><strong>Note: Until the Daily Case Lists (SSRS Files from AuthorityCourtDB) are set to populate in the MuniEntry_Files/DB
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Until the Daily Case Lists (SSRS Files from AuthorityCourtDB) are set to populate in the MuniEntry_Files/DB
 directory, then deployment should be done prior to 8:00 a.m. each day to insure a working instance of the
-application is in place for the Daily Cases Lists to populate.</strong></p>
+application is in place for the Daily Cases Lists to populate.**</p>
+</div>
 <p>Prior to starting the deployment process, make sure that no computer has an instance of the application open
 and running.</p>
 <section id="create-hot-swap-version">
-<h3>Create Hot Swap Version<a class="headerlink" href="#create-hot-swap-version" title="Permalink to this heading">¶</a></h3>
+<h3><strong>Create Hot Swap Version</strong><a class="headerlink" href="#create-hot-swap-version" title="Permalink to this heading">¶</a></h3>
 <p>If the version being deployed is a new minor release (i.e. 0.X+1.0) then the current version in production
 (0.X.0) must be copied over to the Hot Swap Version that is currently in the Hot_Swap_Version directory.</p>
 <p><strong>Reminder:</strong> The entire MuniEntry_app directory must be copied and moved.</p>
@@ -221,14 +267,14 @@ and running.</p>
 Cutting and pasting may not work properly if the current version of the application is open on a user’s computer.</p>
 </section>
 <section id="delete-current-production-version">
-<h3>Delete Current Production Version<a class="headerlink" href="#delete-current-production-version" title="Permalink to this heading">¶</a></h3>
+<h3><strong>Delete Current Production Version</strong><a class="headerlink" href="#delete-current-production-version" title="Permalink to this heading">¶</a></h3>
 <p>Delete the current production version of the application - the MuniEntry_app directory.</p>
 <p>If the current production version of the application cannot be completely deleted, this is an indication that an
 instance of the application is still open on a user’s desktop. Determine where the application is open and close it.
 Then try to delete the current production version again.</p>
 </section>
 <section id="move-new-version-into-production">
-<h3>Move New Version Into Production<a class="headerlink" href="#move-new-version-into-production" title="Permalink to this heading">¶</a></h3>
+<h3><strong>Move New Version Into Production</strong><a class="headerlink" href="#move-new-version-into-production" title="Permalink to this heading">¶</a></h3>
 <p>Copy and paste the current build of that application that is on the developer’s computer. The entire MuniEntry_app
 directory must be moved from the developer’s computer to the MuniEntry_Files directory.</p>
 <p>Test that the application opens properly from the shortcut.</p>
@@ -246,8 +292,10 @@ to see what is causing the application to fail to load.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="Databases.html" class="btn btn-neutral float-right" title="Databases Overview">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="BUILD.html" class="btn btn-neutral" title="Build Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="Build.html" class="btn btn-neutral" title="Build Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
