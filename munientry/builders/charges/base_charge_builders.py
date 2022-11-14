@@ -144,7 +144,7 @@ class ChargeDialogBuilder(base.BaseDialogBuilder):
 
     def __init__(self, main_dialog, parent=None) -> None:
         self.main_dialog = main_dialog
-        self.db_connection_string = 'con_charges'
+        self.db_connection_string = 'con_munientry_db'
         self.db_connection = open_db_connection(self.db_connection_string)
         super().__init__(parent)
         self.additional_setup()

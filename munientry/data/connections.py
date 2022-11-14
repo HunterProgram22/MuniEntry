@@ -172,14 +172,7 @@ def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
 
 
 def main():
-    """The main function called when the module is imported.
-
-    Creates one connection to the SQL Server external database.
-
-    Creates three connections to the MuniEntryDB Sqlite internal database. Creating multiple
-    connections is likely unnecessary but helps when referencing the connection to determine what
-    table in the database the connection is supposed to reference.
-    """
+    """Establishes database connections for the application."""
     authority_court_db = create_odbc_db_connection('con_authority_court')
     open_db_connection('con_authority_court')
     authority_court_is_open = check_if_db_open(authority_court_db, 'con_authority_court')
@@ -191,14 +184,9 @@ def main():
     logger.database(f'Connection to Authority Civil is: {authority_civil_is_open}')
 
     create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
-
     conn = open_db_connection('con_munientry_db')
     load_daily_case_list_data(conn)
     close_db_connection(conn)
-
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_daily_case_lists')
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_charges')
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_attorneys')
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ class MainWindowSlotFunctionsMixin(object):
         top of the case list. The case count becomes actual number of cases loaded.
         """
         if db_connection is None:
-            db_connection = open_db_connection('con_daily_case_lists')
+            db_connection = open_db_connection('con_munientry_db')
         for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
@@ -55,7 +55,7 @@ class MainWindowSlotFunctionsMixin(object):
         application already loads the databases.
         """
         logger.info('Reload cases button pressed.')
-        conn = open_db_connection('con_daily_case_lists')
+        conn = open_db_connection('con_munientry_db')
         sql_lite.load_daily_case_list_data(conn)
         self.load_case_lists(conn)
         conn.close()
