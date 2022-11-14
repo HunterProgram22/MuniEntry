@@ -1,6 +1,7 @@
 """A module containing common variables used throughout the application."""
 import configparser
 import socket
+from typing import TYPE_CHECKING
 
 config = configparser.ConfigParser()
 config.read('config.ini')

@@ -5,6 +5,8 @@
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
 
 Functions:
+    set_server_and_database() -> tuple
+
     create_sqlite_db_connection(database_path, connection_name) -> QSqlDatabase
 
     create_odbc_db_connection(connection_name) -> QSqlDatabase
@@ -31,18 +33,30 @@ MUNIENTRY_DB = 'MuniEntryDB.sqlite'
 
 
 def set_server_and_database() -> tuple:
-    """Sets the server and database name for the SQL Server connection.
+    """Sets the server and database name for the SQL Server connections.
 
     This function is used to set a local instance of the database for Justin to test at home
     without being connected to the delcity network.
+
+    Returns:
+        tuple: (crim_server, crim_database, civil_server, civil_database)
+
+            crim_server & civil_server (str): The names of the server for the database connection.
+
+            crim_database & civil_database (str): The names of the database object.
+
     """
     if socket.gethostname() == 'RooberryPrime':
-        server = r'ROOBERRYPRIME\SQLEXPRESS'
-        database = 'AuthorityCourt'
+        crim_server = r'ROOBERRYPRIME\SQLEXPRESS'
+        crim_database = 'AuthorityCourt'
+        civil_server = r'ROOBERRYPRIME\SQLEXPRESS'
+        civil_database = 'AuthorityCivil'
     else:
-        server = r'CLERKCRTR\CMI'
-        database = 'AuthorityCourt'
-    return (server, database)
+        crim_server = r'CLERKCRTR\CMI'
+        crim_database = 'AuthorityCourt'
+        civil_server = r'CLERKSQL\CMI'
+        civil_database = 'AuthorityCivil'
+    return (crim_server, crim_database, civil_server, civil_database)
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -52,14 +66,13 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     See https://doc.qt.io/qt-5/sql-driver.html#qsqlite
     See https://realpython.com/python-pyqt-database/
 
-    :database_path: The absolute path to the location of the database. The absolute path should
-        be set using a sys.path object so that it references the actual location of the database,
-        which will be dependent on the location of the application. Uses DB_PATH constant
-        from settings which sets the absolute path based on the location of the application.
+    Args:
+        database_path (str): The absolute path to the location of the database.
 
-    :connection_name: A string that is assigned for future reference to the connection.
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
     db_connection.setDatabaseName(database_path)
@@ -71,16 +84,22 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
     The QODBC3 driver is used to create the connection.
     See https://doc.qt.io/qt-5/sql-driver.html#qodbc
-    This also helped establishing the connection even though it references the pyodbc module.
-    See 'https://stackoverflow.com/questions/16515420/
-    connecting-to-ms-sql-server-with-windows-authentication-using-python/'
+    See https://stackoverflow.com/questions/16515420/connecting-to-ms-sql-server-with-windows-authentication-using-python/
 
-    :connection_name: A string that is assigned for future reference to the connection.
+    Args:
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.addDatabase('QODBC', connection_name)
-    server, database = set_server_and_database()
+    crim_server, crim_database, civil_server, civil_database = set_server_and_database()
+    if connection_name == 'con_authority_court':
+        server = crim_server
+        database = crim_database
+    elif connection_name == 'con_authority_civil':
+        server = civil_server
+        database = civil_database
     connection_string = (
         'DRIVER=SQL Server;'
         + f'SERVER={server};'
@@ -92,36 +111,42 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
-    """Opens a connection to a database and checks if it is open.
+    """Attempts to open a database and returns connection if open.
 
-    :connection_name: A string provided when the function is called. The string is assigned to the
-        database object to allow reference to the database by the connection name.
+    Args:
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object with an open connection.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.database(connection_name, open=True)
-    check_if_db_open(db_connection, connection_name)
-    logger.database(f'{db_connection.connectionName()} database connection open.')
-    return db_connection
+    if check_if_db_open(db_connection, connection_name):
+        logger.database(f'{db_connection.connectionName()} database connection open.')
+        return db_connection
+    logger.database(f'{db_connection.connectionName()} database connection failed.')
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
-    """Closes a connection to a database, but does not remove the connection from the system.
+    """Closes database connection, but does not remove the connection from the system.
 
-    :db_connection: The QSqlDatabase object that is the API driver connection to the database.
+    Args:
+        db_connection (QSqlDatabase): The connection to the database as a QSqlDatabase object.
 
-    TODO: This should be refactored to accept a string of the connection name to mirror the
-    open_db_connection function.
+    Todo:
+        Refactor to accept a string of connection name to mirror open_db_connection function.
     """
     db_connection.close()
     logger.database(f'{db_connection.connectionName()} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
-    """Removes a connection to a database.
+    """Removes database connection from application.
 
     If a connection is removed it would need to be created again to be used again. This should
     only be used upon close of the application to clean up connections.
+
+    Args:
+        connection_name (str): A string set to identify the database connection.
     """
     QSqlDatabase.removeDatabase(connection_name)
     logger.database(f'{connection_name} database connection removed.')
@@ -130,22 +155,25 @@ def remove_db_connection(connection_name: str) -> None:
 def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
     """Checks if a database connection is open.
 
-    :db_connection: The QSqlDatabase object that is the API driver connection to the database.
+    Args:
+        db_connection (QSqlDatabase): The connection to the database as a QSqlDatabase object.
 
-    :connection_name: The string assigned to the connection for reference.
+        connection_name (str): A string set to identify the database connection.
+
+    Returns:
+        bool: True if open, False if not open.
     """
     if not db_connection.isOpen():
         logger.warning(f'Unable to connect to {connection_name} database')
+        message = None
         if connection_name == 'con_authority_court':
-            InfoBox(
-                'The Case Search feature is not available because a connection to the '
-                + 'AuthorityCourt database could not be made.',
-            ).exec()
+            message = 'A connection to the Authority Court database could not be made.'
+        if connection_name == 'con_authority_civil':
+            message = 'A connection to the Authority Civil database could not be made.'
         if connection_name == 'con_munientry_db':
-            InfoBox(
-                'A connection to the MuniEntryDB could not be made. Contact Justin '
-                + 'immediately.',
-            ).exec()
+            message = 'A connection to the MuniEntry Sqlite database could not be made.'
+        InfoBox(message).exec()
+        return False
     return True
 
 
@@ -158,7 +186,14 @@ def main():
     connections is likely unnecessary but helps when referencing the connection to determine what
     table in the database the connection is supposed to reference.
     """
-    create_odbc_db_connection('con_authority_court')
+    authority_court_db = create_odbc_db_connection('con_authority_court')
+    open_db_connection('con_authority_court')
+    authority_court_is_open = check_if_db_open(authority_court_db, 'con_authority_court')
+    logger.database(f'Connection to Authority Court is: {authority_court_is_open}')
+    authority_civil_db = create_odbc_db_connection('con_authority_civil')
+    open_db_connection('con_authority_civil')
+    authority_civil_is_open = check_if_db_open(authority_civil_db, 'con_authority_civil')
+    logger.database(f'Connection to Authority Civil is: {authority_civil_is_open}')
     create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
 
     conn = open_db_connection('con_munientry_db')
