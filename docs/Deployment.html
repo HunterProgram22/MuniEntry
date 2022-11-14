@@ -31,8 +31,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
-        <link rel="next" title="Loaders" href="LOADERS.html"/>
-        <link rel="prev" title="Build Overview" href="BUILD.html"/>
+        <link rel="next" title="Databases Overview" href="Databases.html"/>
+        <link rel="prev" title="Build Overview" href="Build.html"/>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="cache-control" content="public" />
@@ -64,26 +64,37 @@
 	
           
           
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="README.html">MuniEntry</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="README.html#overview">Overview</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Readme.html">MuniEntry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Readme.html#overview">Overview</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="BUILD.html">Build Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="BUILD.html#build-requirements">Build Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="BUILD.html#build-process">Build Process</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Application</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Build.html">Build Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-requirements">Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-process">Build Process</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Deployment Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#deployment-directories">Deployment Directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-directory">Application Directory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#entries-directory">Entries Directory</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#deployment">Deployment</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="LOADERS.html">Loaders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="LOADERS.html#module-munientry.loaders.general_caseload_functions">General Caseload Functions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="LOADERS.html#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Databases.html">Databases Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source Code</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loaders.html">Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.general_caseload_functions">General Caseload Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -130,18 +141,20 @@
 <h1>Deployment Overview<a class="headerlink" href="#deployment-overview" title="Permalink to this heading">¶</a></h1>
 <p>The MuniEntry application as used at the Delaware Municipal Court is deployed to the
 M: drive (MunicipalCourt) of the City Network.</p>
-<section id="deployment-directories">
-<h2>Deployment Directories<a class="headerlink" href="#deployment-directories" title="Permalink to this heading">¶</a></h2>
-<p>The application uses two directories for deployment and use of the application.</p>
-<p><strong>Users must have access to both directories in order to access and use all features of the
-application.</strong></p>
+<p>The application uses two directories for deployment and use of the application. The Application Directory
+(M:AdminInformation_TechnologyMuniEntry_Files) contains subdirectories that contain data used or created by the
+application. The Entries Directory contains subdirectories for saving entries created by the application.</p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>Users must have access to both directories in order to access and use all features of the
+application.</p>
+</div>
 <section id="application-directory">
-<h3><strong>Application Directory</strong><a class="headerlink" href="#application-directory" title="Permalink to this heading">¶</a></h3>
+<h2>Application Directory<a class="headerlink" href="#application-directory" title="Permalink to this heading">¶</a></h2>
 <p>In addition to subdirectories for deployment and testing of the application, the MuniEntry_Files directory
 also contains a copy of the shortcut for the production version of the application. This shortcut points to the
 MuniEntry_app.exe file that is in the MuniEntry_app subdirectory. This shortcut should be copied and pasted
 to any new user’s Desktop to allow them to access the application.</p>
-</section>
 <section id="munientry-files">
 <h3><em>MuniEntry_Files</em><a class="headerlink" href="#munientry-files" title="Permalink to this heading">¶</a></h3>
 <p>The main directory for deployment of the application is:</p>
@@ -208,7 +221,6 @@ from the AuthorityCourtDB).</p>
 <p>As of Version 0.42.0, the config file stored in this directory is not used by the application and the
 config file (config.ini) is stored internally within the application MuniEntry_app directory.**</p>
 </div>
-<p>___</p>
 </section>
 </section>
 <section id="entries-directory">
@@ -280,10 +292,10 @@ to see what is causing the application to fail to load.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="LOADERS.html" class="btn btn-neutral float-right" title="Loaders">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Databases.html" class="btn btn-neutral float-right" title="Databases Overview">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="BUILD.html" class="btn btn-neutral" title="Build Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Build.html" class="btn btn-neutral" title="Build Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   
-  <title>Python Module Index &mdash; MuniEntry 0.42.0 documentation</title>
+  <title>Databases Overview &mdash; MuniEntry 0.42.0 documentation</title>
   
 
   
@@ -31,9 +31,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
-
-
-
+        <link rel="next" title="Loaders" href="Loaders.html"/>
+        <link rel="prev" title="Deployment Overview" href="Deployment.html"/>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="cache-control" content="public" />
@@ -73,7 +72,7 @@
 </li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Application</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Build.html">Build Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Build.html#build-requirements">Build Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Build.html#build-process">Build Process</a></li>
@@ -85,9 +84,9 @@
 <li class="toctree-l2"><a class="reference internal" href="Deployment.html#deployment">Deployment</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Databases.html">Databases Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Databases.html#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Databases.html#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Databases Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
 </ul>
 </li>
 </ul>
@@ -138,43 +137,38 @@
           <div role="main" class="">
 
 	    <div id="content" class="hfeed entry-container hentry">
-
-   <h1>Python Module Index</h1>
-
-   <div class="modindex-jumpbox">
-   <a href="#cap-m"><strong>m</strong></a>
-   </div>
-
-   <table class="indextable modindextable">
-     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-m"><td></td><td>
-       <strong>m</strong></td><td></td></tr>
-     <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
-       <td>
-       <code class="xref">munientry</code></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="Loaders.html#module-munientry.loaders"><code class="xref">munientry.loaders</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="Loaders.html#module-munientry.loaders.driving_caseload_functions"><code class="xref">munientry.loaders.driving_caseload_functions</code></a></td><td>
-       <em></em></td></tr>
-     <tr class="cg-1">
-       <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="Loaders.html#module-munientry.loaders.general_caseload_functions"><code class="xref">munientry.loaders.general_caseload_functions</code></a></td><td>
-       <em></em></td></tr>
-   </table>
+  <section id="databases-overview">
+<h1>Databases Overview<a class="headerlink" href="#databases-overview" title="Permalink to this heading">¶</a></h1>
+<p>The MuniEntry application has an internal Sqlite database for storing data. The application also
+accesses external databases for loading data. This section covers how the application acceses the
+various databases.</p>
+<section id="munientrydb-sqlite">
+<h2>MuniEntryDB.sqlite<a class="headerlink" href="#munientrydb-sqlite" title="Permalink to this heading">¶</a></h2>
+<p>The MuniEntryDB.sqlite database is the application’s internal database. It is located at:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;M:\Admin\Information_Technology\MuniEntry_Files\DB&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="authoritycourt-dbo">
+<h2>AuthorityCourt.dbo<a class="headerlink" href="#authoritycourt-dbo" title="Permalink to this heading">¶</a></h2>
+<p>The AuthorityCourt.dbo is the external database used by the Authority Court case managment system. The
+MuniEntry application connects to the database and loads case data from the database for Criminal and Traffic
+cases.</p>
+</section>
+</section>
 
 
 	    </div>
             <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Loaders.html" class="btn btn-neutral float-right" title="Loaders">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Deployment.html" class="btn btn-neutral" title="Deployment Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -3,12 +3,23 @@ Welcome to MuniEntry's documentation!
 
 ..  toctree::
     :maxdepth: 2
-    :caption: Contents:
+    :caption: Overview
 
-    README
-    BUILD
-    DEPLOYMENT
-    LOADERS
+    Readme
+
+..  toctree::
+    :maxdepth: 2
+    :caption: Application
+
+    Build
+    Deployment
+    Databases
+
+..  toctree::
+    :maxdepth: 2
+    :caption: Source Code
+
+    Loaders
 
 
 Indices and tables
