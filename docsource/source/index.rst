@@ -19,6 +19,7 @@ Welcome to MuniEntry's documentation!
     :maxdepth: 2
     :caption: Source Code
 
+    Data
     Loaders
 
 

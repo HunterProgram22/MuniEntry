@@ -1,0 +1,353 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="" lang="" version="-//W3C//DTD XHTML 1.1//EN" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <title>Data &mdash; MuniEntry 0.42.0 documentation</title>
+  
+
+  
+
+  
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+
+  
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="_static/css/pdj.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="genindex.html"/>
+        <link rel="search" title="Search" href="search.html"/>
+    <link rel="top" title="MuniEntry 0.42.0 documentation" href="index.html"/>
+        <link rel="next" title="Loaders" href="Loaders.html"/>
+        <link rel="prev" title="Databases Overview" href="Databases.html"/>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="cache-control" content="public" />
+    <meta name="robots" content="follow, all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Add jQuery library -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+  </head>
+
+  <body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="index.html" class="fa fa-home"> MuniEntry </a>
+        <div role="search">
+	  <form id ="rtd-search-form" class="wy-form"
+		action="search.html" method="get">
+	    <input type="text" name="q" placeholder="Search docs" />
+	    <input type="hidden" name="check_keywords" value="yes" />
+	    <input type="hidden" name="area" value="default" />
+	  </form>
+	</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	
+          
+          
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Readme.html">MuniEntry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Readme.html#overview">Overview</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Application</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Build.html">Build Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-requirements">Build Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Build.html#build-process">Build Process</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Deployment.html">Deployment Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#application-directory">Application Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#entries-directory">Entries Directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Deployment.html#deployment">Deployment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Databases.html">Databases Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#munientrydb-sqlite">MuniEntryDB.sqlite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Databases.html#authoritycourt-dbo">AuthorityCourt.dbo</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Source Code</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-munientry.data.connections">Connections</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Loaders.html">Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.general_caseload_functions">General Caseload Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
+</ul>
+</li>
+</ul>
+
+          
+        
+
+      </div>
+      &nbsp;
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      <nav class="wy-nav-top" id="barra-mobile" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="#">Porão do Juca</a>
+      </nav>
+
+      <div class="wy-nav-content">
+	<div class="fundo-claro">
+	</div>
+	<div class="fundo-escuro">
+	</div>
+
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+	    
+	    <!-- <ul class="wy-breadcrumbs"> -->
+	    <!--   <li><a href="#">Docs</a> &raquo;</li> -->
+
+	    <!--   <li>Features</li> -->
+	    <!--   <li class="wy-breadcrumbs-aside"> -->
+
+	    <!-- 	<a href="_sources/index.txt" rel="nofollow"> View page source</a> -->
+
+	    <!--   </li> -->
+	    <!-- </ul> -->
+	    <!-- <hr/> -->
+	  </div>
+
+          <div role="main" class="">
+
+	    <div id="content" class="hfeed entry-container hentry">
+  <section id="module-munientry.data">
+<span id="data"></span><h1>Data<a class="headerlink" href="#module-munientry.data" title="Permalink to this heading">¶</a></h1>
+<p>Initiliazation module for the data package.</p>
+<section id="module-munientry.data.connections">
+<span id="connections"></span><h2>Connections<a class="headerlink" href="#module-munientry.data.connections" title="Permalink to this heading">¶</a></h2>
+<p>Functions for connecting to databases - internal and external.</p>
+<p><strong>munientry.data.connections</strong></p>
+<p>See <a class="reference external" href="https://doc.qt.io/qtforpython/overviews/sql-connecting.html">https://doc.qt.io/qtforpython/overviews/sql-connecting.html</a></p>
+<dl>
+<dt>Functions:</dt><dd><p>set_server_and_database() -&gt; tuple</p>
+<p>create_sqlite_db_connection(database_path, connection_name) -&gt; QSqlDatabase</p>
+<p>create_odbc_db_connection(connection_name) -&gt; QSqlDatabase</p>
+<p>open_db_connection(connection_name) -&gt; QSqlDatabase</p>
+<p>close_db_connection(db_connection) -&gt; None</p>
+<p>remove_db_connection(connection_name) -&gt; None</p>
+<p>check_if_db_open(db_connection, connection_name) -&gt; bool</p>
+</dd>
+</dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.close_db_connection">
+<span class="sig-name descname"><span class="pre">close_db_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_connection</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QSqlDatabase</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#munientry.data.connections.close_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes database connection, but does not remove the connection from the system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>db_connection</strong> (<em>QSqlDatabase</em>) – The connection to the database as a QSqlDatabase object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.create_odbc_db_connection">
+<span class="sig-name descname"><span class="pre">create_odbc_db_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QSqlDatabase</span></span></span><a class="headerlink" href="#munientry.data.connections.create_odbc_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a SQL Server database connection.</p>
+<p>The QODBC3 driver is used to create the connection.
+See <a class="reference external" href="https://doc.qt.io/qt-5/sql-driver.html#qodbc">https://doc.qt.io/qt-5/sql-driver.html#qodbc</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>connection_name</strong> (<em>str</em>) – A string set to identify the database connection.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The connection to the database as a QSqlDatabase object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>QSqlDatabase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.create_sqlite_db_connection">
+<span class="sig-name descname"><span class="pre">create_sqlite_db_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QSqlDatabase</span></span></span><a class="headerlink" href="#munientry.data.connections.create_sqlite_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a SQLite database connection.</p>
+<p>The QSLITE driver is used to create the connection.
+See <a class="reference external" href="https://doc.qt.io/qt-5/sql-driver.html#qsqlite">https://doc.qt.io/qt-5/sql-driver.html#qsqlite</a>
+See <a class="reference external" href="https://realpython.com/python-pyqt-database/">https://realpython.com/python-pyqt-database/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>database_path</strong> (<em>str</em>) – The absolute path to the location of the database.</p></li>
+<li><p><strong>connection_name</strong> (<em>str</em>) – A string set to identify the database connection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The connection to the database as a QSqlDatabase object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>QSqlDatabase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.establish_database_connections">
+<span class="sig-name descname"><span class="pre">establish_database_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#munientry.data.connections.establish_database_connections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establishes database connections for the application and tests all connections open.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.open_db_connection">
+<span class="sig-name descname"><span class="pre">open_db_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QSqlDatabase</span></span></span><a class="headerlink" href="#munientry.data.connections.open_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attempts to open a database and returns connection if open.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>connection_name</strong> (<em>str</em>) – A string set to identify the database connection.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The connection to the database as a QSqlDatabase object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>QSqlDatabase</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.remove_db_connection">
+<span class="sig-name descname"><span class="pre">remove_db_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#munientry.data.connections.remove_db_connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes database connection from application.</p>
+<p>If a connection is removed it would need to be created again to be used again. This should
+only be used upon close of the application to clean up connections.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>connection_name</strong> (<em>str</em>) – A string set to identify the database connection.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="munientry.data.connections.set_server_and_database">
+<span class="sig-name descname"><span class="pre">set_server_and_database</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#munientry.data.connections.set_server_and_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the server and database name for the SQL Server connections.</p>
+<p>This function is used to set a local instance of the database for Justin to test at home
+without being connected to the delcity network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>connection_name</strong> (<em>str</em>) – The name of the database connection.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>(server, database)</p>
+<blockquote>
+<div><p>server (str): The name of the server for the database connection.</p>
+<p>database (str): The name of the database.</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+	    </div>
+            <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Loaders.html" class="btn btn-neutral float-right" title="Loaders">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Databases.html" class="btn btn-neutral" title="Databases Overview"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2022, Delaware Municipal Court.
+    </p>
+  </div>
+
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/jucacrispim/sphinx_pdj_theme">theme</a> provided by <a href="http://poraodojuca.net">Porão do Juca</a>.
+
+</footer>
+	</div>
+	</div>
+	  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.42.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+    <script type="text/javascript" src="_static/documentation_options.js">
+
+    </script>
+    <script type="text/javascript" src="_static/jquery.js">
+
+    </script>
+    <script type="text/javascript" src="_static/underscore.js">
+
+    </script>
+    <script type="text/javascript" src="_static/_sphinx_javascript_frameworks_compat.js">
+
+    </script>
+    <script type="text/javascript" src="_static/doctools.js">
+
+    </script>
+    <script type="text/javascript" src="_static/sphinx_highlight.js">
+
+    </script>
+
+  
+
+   <script type="text/javascript"
+           src="_static/js/theme.js"></script>
+
+   <script type="text/javascript"
+           src="_static/js/pdj.js"></script>
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+  </body>
+</html>

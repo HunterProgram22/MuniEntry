@@ -22,7 +22,7 @@ release = '0.42.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = ['myst_parser', 'sphinx.ext.autodoc', 'sphinx.ext.githubpages', 'sphinx.ext.coverage',
-              'sphinx.ext.napoleon']
+              'sphinx.ext.napoleon', 'sphinx.ext.todo']
 
 templates_path = ['_templates']
 exclude_patterns = []
