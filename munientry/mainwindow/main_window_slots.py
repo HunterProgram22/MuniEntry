@@ -27,7 +27,7 @@ from munientry.widgets.table_widgets import ReportWindow
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
 
-    def load_case_lists(self, db_connection=None) -> None:
+    def load_case_lists(self) -> None:
         """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
 
         This does not load the cms_case data for each cms_case.
@@ -35,8 +35,8 @@ class MainWindowSlotFunctionsMixin(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
-        if db_connection is None:
-            db_connection = open_db_connection('con_daily_case_lists')
+        db_connection = open_db_connection('con_munientry_db')
+        sql_lite.load_daily_case_list_data(db_connection)
         for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
@@ -49,16 +49,9 @@ class MainWindowSlotFunctionsMixin(object):
         close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
-        """This method is connected to the reload cases button only.
-
-        The databases are only recreated on reload since the initial load of the
-        application already loads the databases.
-        """
+        """This method is connected to the reload cases button and calls load_case_lists."""
         logger.info('Reload cases button pressed.')
-        conn = open_db_connection('con_daily_case_lists')
-        sql_lite.load_daily_case_list_data(conn)
-        self.load_case_lists(conn)
-        conn.close()
+        self.load_case_lists()
 
     def show_hide_daily_case_lists(self) -> None:
         for case_list in self.daily_case_lists:

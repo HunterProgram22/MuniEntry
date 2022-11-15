@@ -98,7 +98,7 @@ class DefenseCounselComboBox(NoScrollComboBox):
         self.setFocusPolicy(STRONG_FOCUS)
 
     def load_attorneys(self):
-        db_connection = open_db_connection('con_attorneys')
+        db_connection = open_db_connection('con_munientry_db')
         attorney_list = query_attorney_list(db_connection)
         attorney_count = len(attorney_list)
         logger.info(f'{attorney_count} attorneys loaded.')
