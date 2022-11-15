@@ -25,38 +25,45 @@ from functools import partialmethod
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
-from munientry.data.sql_lite_functions import load_daily_case_list_data
 from munientry.paths import DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
+DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
 
 
-def set_server_and_database() -> tuple:
+def set_server_and_database(connection_name: str) -> tuple:
     """Sets the server and database name for the SQL Server connections.
 
     This function is used to set a local instance of the database for Justin to test at home
     without being connected to the delcity network.
 
+    Args:
+        connection_name (str): The name of the database connection.
+
     Returns:
-        tuple: (crim_server, crim_database, civil_server, civil_database)
+        tuple: (server, database)
 
-            crim_server & civil_server (str): The names of the server for the database connection.
+            server (str): The name of the server for the database connection.
 
-            crim_database & civil_database (str): The names of the database object.
+            database (str): The name of the database.
 
     """
-    if socket.gethostname() == 'RooberryPrime':
-        crim_server = r'ROOBERRYPRIME\SQLEXPRESS'
-        crim_database = 'AuthorityCourt'
-        civil_server = r'ROOBERRYPRIME\SQLEXPRESS'
-        civil_database = 'AuthorityCivil'
-    else:
-        crim_server = r'CLERKCRTR\CMI'
-        crim_database = 'AuthorityCourt'
-        civil_server = r'CLERKSQL\CMI'
-        civil_database = 'AuthorityCivil'
-    return (crim_server, crim_database, civil_server, civil_database)
+    if connection_name == 'con_authority_court':
+        if socket.gethostname() == 'RooberryPrime':
+            server = r'ROOBERRYPRIME\SQLEXPRESS'
+            database = 'AuthorityCourt'
+        else:
+            server = r'CLERKCRTR\CMI'
+            database = 'AuthorityCourt'
+    elif connection_name == 'con_authority_civil':
+        if socket.gethostname() == 'RooberryPrime':
+            server = r'ROOBERRYPRIME\SQLEXPRESS'
+            database = 'AuthorityCivil'
+        else:
+            server = r'CLERKSQL\CMI'
+            database = 'AuthorityCivil'
+    return (server, database)
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -84,7 +91,6 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
     The QODBC3 driver is used to create the connection.
     See https://doc.qt.io/qt-5/sql-driver.html#qodbc
-    See https://stackoverflow.com/questions/16515420/connecting-to-ms-sql-server-with-windows-authentication-using-python/
 
     Args:
         connection_name (str): A string set to identify the database connection.
@@ -93,13 +99,7 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
         QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.addDatabase('QODBC', connection_name)
-    crim_server, crim_database, civil_server, civil_database = set_server_and_database()
-    if connection_name == 'con_authority_court':
-        server = crim_server
-        database = crim_database
-    elif connection_name == 'con_authority_civil':
-        server = civil_server
-        database = civil_database
+    server, database = set_server_and_database(connection_name)
     connection_string = (
         'DRIVER=SQL Server;'
         + f'SERVER={server};'
@@ -120,10 +120,13 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
         QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.database(connection_name, open=True)
-    if check_if_db_open(db_connection, connection_name):
-        logger.database(f'{db_connection.connectionName()} database connection open.')
-        return db_connection
-    logger.database(f'{db_connection.connectionName()} database connection failed.')
+    if db_connection.isOpen():
+        logger.database(f'{connection_name} database connection open.')
+    else:
+        logger.warning(f'Unable to connect to {connection_name} database')
+        message = f'A connection to the {connection_name} database could not be made.'
+        InfoBox(message).exec()
+    return db_connection
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
@@ -152,47 +155,26 @@ def remove_db_connection(connection_name: str) -> None:
     logger.database(f'{connection_name} database connection removed.')
 
 
-def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
-    """Checks if a database connection is open.
+def establish_database_connections():
+    """Establishes database connections for the application and tests all connections open."""
+    logger.database('Establishing database connections.')
 
-    Args:
-        db_connection (QSqlDatabase): The connection to the database as a QSqlDatabase object.
+    create_odbc_db_connection('con_authority_court')
+    authority_court_db = open_db_connection('con_authority_court')
+    close_db_connection(authority_court_db)
 
-        connection_name (str): A string set to identify the database connection.
-
-    Returns:
-        bool: True if open, False if not open.
-    """
-    if not db_connection.isOpen():
-        logger.warning(f'Unable to connect to {connection_name} database')
-        message = f'A connection to the {connection_name} database could not be made.'
-        InfoBox(message).exec()
-        return False
-    return True
-
-
-def main():
-    """Establishes database connections for the application."""
-    authority_court_db = create_odbc_db_connection('con_authority_court')
-    open_db_connection('con_authority_court')
-    authority_court_is_open = check_if_db_open(authority_court_db, 'con_authority_court')
-    logger.database(f'Connection to Authority Court is: {authority_court_is_open}')
-
-    authority_civil_db = create_odbc_db_connection('con_authority_civil')
-    open_db_connection('con_authority_civil')
-    authority_civil_is_open = check_if_db_open(authority_civil_db, 'con_authority_civil')
-    logger.database(f'Connection to Authority Civil is: {authority_civil_is_open}')
+    create_odbc_db_connection('con_authority_civil')
+    authority_civil_db = open_db_connection('con_authority_civil')
+    close_db_connection(authority_civil_db)
 
     create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
     conn = open_db_connection('con_munientry_db')
-    load_daily_case_list_data(conn)
     close_db_connection(conn)
 
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
 else:
-    logger.level('DATABASE', no=21, color='<green>')
+    logger.level('DATABASE', no=DATABASE_LOG_LEVEL, color='<green>')
     logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
-    main()
-    logger.info(f'{__name__} imported.')
+    establish_database_connections()
