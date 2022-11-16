@@ -12,13 +12,37 @@ def save_scheduling_data(case_data):
     logger.info(f' The case data is: {case_data}')
     conn = open_db_connection('con_munientry_db')
     query = QSqlQuery(conn)
-    query.prepare(insert_scheduling_data_query('sched_final_pretrial'))
-    query.addBindValue(case_data.get('case_number'))
-    date_string = case_data.get('final_pretrial_date')
-    date_string = format_date_string(date_string)
-    query.addBindValue(date_string)
-    query.addBindValue(case_data.get('final_pretrial_time'))
-    query.exec()
+
+    if case_data.get('pretrial_date') is not None:
+        query.prepare(insert_scheduling_data_query('sched_phone_pretrial'))
+        query.addBindValue(case_data.get('case_number'))
+        date_string = case_data.get('pretrial_date')
+        date_string = format_date_string(date_string)
+        query.addBindValue(date_string)
+        query.addBindValue('3:00 PM')
+        query.addBindValue('Courtroom B')
+        query.exec()
+
+    if case_data.get('final_pretrial_date') is not None:
+        query.prepare(insert_scheduling_data_query('sched_final_pretrial'))
+        query.addBindValue(case_data.get('case_number'))
+        date_string = case_data.get('final_pretrial_date')
+        date_string = format_date_string(date_string)
+        query.addBindValue(date_string)
+        query.addBindValue(case_data.get('final_pretrial_time'))
+        query.addBindValue('Courtroom B')
+        query.exec()
+
+    if case_data.get('trial_date') is not None:
+        query.prepare(insert_scheduling_data_query('sched_jury_trial'))
+        query.addBindValue(case_data.get('case_number'))
+        date_string = case_data.get('trial_date')
+        date_string = format_date_string(date_string)
+        query.addBindValue(date_string)
+        query.addBindValue('8:00 AM')
+        query.addBindValue('Courtroom B')
+        query.exec()
+
     close_db_connection(conn)
 
 

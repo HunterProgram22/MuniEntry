@@ -93,9 +93,10 @@ def insert_scheduling_data_query(table: str) -> str:
     INSERT INTO {table} (
     case_number,
     date,
-    time
+    time,
+    courtroom
     )
-    VALUES (?, ?, ?)
+    VALUES (?, ?, ?, ?)
     """
 
 
