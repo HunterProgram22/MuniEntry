@@ -88,5 +88,16 @@ def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
     """
 
 
+def insert_scheduling_data_query(table: str) -> str:
+    return f"""
+    INSERT INTO {table} (
+    case_number,
+    date,
+    time
+    )
+    VALUES (?, ?, ?)
+    """
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
