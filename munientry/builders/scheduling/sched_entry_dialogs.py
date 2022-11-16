@@ -59,6 +59,7 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
         self.connect_main_dialog_common_signals()
         self.connect_speedy_trial_items()
         self.connect_pretrial_radio_buttons()
+        self.connect_scheduling_date_fields()
 
     def connect_speedy_trial_items(self):
         self.dialog.arrest_summons_date_box.dateChanged.connect(
