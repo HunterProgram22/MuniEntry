@@ -6,6 +6,7 @@ from os import startfile
 from docxtpl import DocxTemplate
 from loguru import logger
 
+from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
 from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
     DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH, JURY_PAY_SAVE_PATH
@@ -146,6 +147,26 @@ class SchedulingEntryCreator(BaseEntryCreator):
     """Entry Creator for Scheduling entries."""
 
     save_path = SCHEDULING_SAVE_PATH
+
+    def create_entry(self) -> None:
+        """Overrides BaseEntryCreator and Loads the proper template and creates the entry.
+
+        Saves the scheduling data to the MuniEntry_db.sqlite.
+        """
+        doc = DocxTemplate(self.dialog.template.template_path)
+        doc.render(self.case_data)
+        save_scheduling_data(self.case_data)
+        try:
+            doc.save(f'{self.save_path}{self.docname}')
+        except PermissionError as error:
+            logger.warning(error)
+            self.dialog.message_box = RequiredBox(
+                'An entry for this case is already open in Word.\n'
+                + 'You must close the Word document first.',
+            )
+            self.dialog.message_box.exec()
+        logger.info(f'Entry Created: {self.docname}')
+        startfile(f'{self.save_path}{self.docname}')
 
 
 class DrivingPrivilegesEntryCreator(BaseEntryCreator):
