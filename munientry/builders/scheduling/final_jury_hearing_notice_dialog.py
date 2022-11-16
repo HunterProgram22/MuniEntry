@@ -137,8 +137,8 @@ class FinalJuryNoticeHearingDialog(
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())
-        self.courtroom = set_courtroom(self.sender())
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.courtroom = set_courtroom(self.sender())
         self.hearing_location_box.setCurrentText(self.courtroom)
         self.set_instructions_label()
 
@@ -146,12 +146,12 @@ class FinalJuryNoticeHearingDialog(
         if self.assigned_judge == 'Judge Marianne T. Hemmeter':
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Thursday.',
+                + ' automatically update to the next Thursday.',
             )
         if self.assigned_judge == 'Judge Kyle E. Rohrer':
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Tuesday.',
+                + ' automatically update to the next Tuesday.',
             )
 
 
