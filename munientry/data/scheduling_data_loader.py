@@ -15,22 +15,32 @@ def format_date_string(date_string: str) -> str:
     return str(new_date_object)
 
 
-def save_scheduling_data(case_data):
+def save_scheduling_data(case_data, dialog_name):
     logger.info(f' The case data is: {case_data}')
     conn = open_db_connection('con_munientry_db')
     query = QSqlQuery(conn)
 
-    if case_data.get('trial_date') is not None:
-        event = JuryTrialEvent(case_data)
-        execute_insert_query(query, event)
+    if dialog_name == 'General Notice Of Hearing Entry':
+        if case_data.get('hearing_date') is not None:
+            event = GeneralHearingEvent(case_data)
+            execute_insert_query(query, event)
 
-    if case_data.get('pretrial_date') is not None:
-        event = TelephonePretrialEvent(case_data)
-        execute_insert_query(query, event)
+    else:
+        if case_data.get('trial_date') is not None:
+            if dialog_name == 'Trial To Court Notice Of Hearing Entry':
+                event = TrialToCourtEvent(case_data)
+                execute_insert_query(query, event)
+            else:
+                event = JuryTrialEvent(case_data)
+                execute_insert_query(query, event)
 
-    if case_data.get('final_pretrial_date') is not None:
-        event = FinalPretrialEvent(case_data)
-        execute_insert_query(query, event)
+        if case_data.get('pretrial_date') is not None:
+            event = TelephonePretrialEvent(case_data)
+            execute_insert_query(query, event)
+
+        if case_data.get('final_pretrial_date') is not None:
+            event = FinalPretrialEvent(case_data)
+            execute_insert_query(query, event)
 
     close_db_connection(conn)
 
@@ -54,11 +64,29 @@ class Event(object):
         return event_time
 
 
+class GeneralHearingEvent(Event):
+
+    def __init__(self, case_data_dict):
+        super().__init__(case_data_dict)
+        self.event_name = case_data_dict.get('hearing_type')
+        self.event_date = format_date_string(case_data_dict.get('hearing_date'))
+        self.event_time = self.set_event_time(case_data_dict.get('hearing_time'))
+
+
 class JuryTrialEvent(Event):
 
     def __init__(self, case_data_dict):
         super().__init__(case_data_dict)
         self.event_name = 'Jury Trial'
+        self.event_date = format_date_string(case_data_dict.get('trial_date'))
+        self.event_time = self.set_event_time(case_data_dict.get('trial_time'))
+
+
+class TrialToCourtEvent(Event):
+
+    def __init__(self, case_data_dict):
+        super().__init__(case_data_dict)
+        self.event_name = 'Trial to Court'
         self.event_date = format_date_string(case_data_dict.get('trial_date'))
         self.event_time = self.set_event_time(case_data_dict.get('trial_time'))
 
