@@ -21,7 +21,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.digital_workflow = DigitalWorkflow(self)
         self.connect_signals_to_slots()
         self.menu = MainWindowMenu(self)
-        self.load_case_lists()
+        # self.load_case_lists()
         self.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
