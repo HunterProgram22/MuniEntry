@@ -13,16 +13,20 @@ def save_scheduling_data(case_data):
     conn = open_db_connection('con_munientry_db')
     query = QSqlQuery(conn)
 
-    event = Event()
+    if case_data.get('trial_date') is not None:
+        event = Event(
+            case_data.get('case_number'),
+            'Jury Trial',
+            case_data.get('hearing_location'),
+            case_data.get('trial_date'),
+            case_data.get('trial_time'),
+        )
 
     query.prepare(insert_scheduling_data_query(event))
 
     query_result = query.exec()
-
     logger.debug(f'Query result: {query_result}')
-
     logger.debug(query.lastQuery())
-    logger.debug(query.lastError().databaseText())
 
     close_db_connection(conn)
 
@@ -36,9 +40,13 @@ def format_date_string(date_string: str) -> str:
 
 class Event(object):
 
-    def __init__(self):
-        self.case_number = '22TRD11223'
-        self.event_date = '2022-01-15'
-        self.event_time = '3:30 PM'
-        self.event_name = 'Jury Trial'
-        self.location_name = 'Courtroom C'
+    def __init__(self, case_number, event_name, event_location, event_date, event_time='8:00 AM'):
+        self.case_number = case_number
+        self.event_name = event_name
+        self.location_name = event_location
+        self.event_date = format_date_string(event_date)
+        self.event_time = self.set_event_time(event_time)
+
+    def set_event_time(self, event_time):
+        if event_time is None:
+            return '8:00 AM'
