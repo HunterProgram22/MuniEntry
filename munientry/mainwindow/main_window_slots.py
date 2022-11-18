@@ -36,7 +36,6 @@ class MainWindowSlotFunctionsMixin(object):
         top of the case list. The case count becomes actual number of cases loaded.
         """
         db_connection = open_db_connection('con_munientry_db')
-        sql_lite.load_daily_case_list_data(db_connection)
         for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
