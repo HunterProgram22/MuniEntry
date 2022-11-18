@@ -26,11 +26,12 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
-from munientry.paths import DB_PATH
+from munientry.paths import DB_PATH, TEST_DELCITY_DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
 DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
+TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
 
 def set_server_and_database(connection_name: str) -> tuple:
@@ -82,8 +83,14 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     Returns:
         QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
-    db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
-    db_connection.setDatabaseName(database_path)
+    if socket.gethostname() == 'Muni10':
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
+        logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
+    else:
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(database_path)
+        logger.info(f'Database Set to: {database_path}')
     return db_connection
 
 
