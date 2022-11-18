@@ -88,15 +88,27 @@ def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
     """
 
 
-def insert_scheduling_data_query(table: str) -> str:
+def insert_scheduling_data_query(event: object) -> str:
     return f"""
-    INSERT INTO {table} (
-    case_number,
-    date,
-    time,
-    courtroom
+    INSERT INTO scheduled_events (
+        event_type_id,
+        case_number,
+        scheduled_event_date,
+        scheduled_event_time,
+        scheduled_event_location_id
     )
-    VALUES (?, ?, ?, ?)
+    SELECT
+       et.event_id,
+       '{event.case_number}',
+       '{event.event_date}',
+       '{event.event_time}',
+       loc.location_id
+    FROM
+        event_types as et,
+        locations as loc
+    WHERE 
+        et.event_name = '{event.event_name}'
+        AND loc.location_name = '{event.location_name}';
     """
 
 

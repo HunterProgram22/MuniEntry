@@ -13,35 +13,16 @@ def save_scheduling_data(case_data):
     conn = open_db_connection('con_munientry_db')
     query = QSqlQuery(conn)
 
-    if case_data.get('pretrial_date') is not None:
-        query.prepare(insert_scheduling_data_query('sched_phone_pretrial'))
-        query.addBindValue(case_data.get('case_number'))
-        date_string = case_data.get('pretrial_date')
-        date_string = format_date_string(date_string)
-        query.addBindValue(date_string)
-        query.addBindValue('3:00 PM')
-        query.addBindValue('Courtroom B')
-        query.exec()
+    event = Event()
 
-    if case_data.get('final_pretrial_date') is not None:
-        query.prepare(insert_scheduling_data_query('sched_final_pretrial'))
-        query.addBindValue(case_data.get('case_number'))
-        date_string = case_data.get('final_pretrial_date')
-        date_string = format_date_string(date_string)
-        query.addBindValue(date_string)
-        query.addBindValue(case_data.get('final_pretrial_time'))
-        query.addBindValue('Courtroom B')
-        query.exec()
+    query.prepare(insert_scheduling_data_query(event))
 
-    if case_data.get('trial_date') is not None:
-        query.prepare(insert_scheduling_data_query('sched_jury_trial'))
-        query.addBindValue(case_data.get('case_number'))
-        date_string = case_data.get('trial_date')
-        date_string = format_date_string(date_string)
-        query.addBindValue(date_string)
-        query.addBindValue('8:00 AM')
-        query.addBindValue('Courtroom B')
-        query.exec()
+    query_result = query.exec()
+
+    logger.debug(f'Query result: {query_result}')
+
+    logger.debug(query.lastQuery())
+    logger.debug(query.lastError().databaseText())
 
     close_db_connection(conn)
 
@@ -51,3 +32,13 @@ def format_date_string(date_string: str) -> str:
     new_date_format = date_object.strftime('%Y-%m-%d')
     new_date_object = datetime.strptime(new_date_format, '%Y-%m-%d').date()
     return str(new_date_object)
+
+
+class Event(object):
+
+    def __init__(self):
+        self.case_number = '22TRD11223'
+        self.event_date = '2022-01-15'
+        self.event_time = '3:30 PM'
+        self.event_name = 'Jury Trial'
+        self.location_name = 'Courtroom C'
