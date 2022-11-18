@@ -56,7 +56,7 @@ class Event(object):
 
     def __init__(self, case_data_dict):
         self.case_number = case_data_dict.get('case_number')
-        self.location_name = case_data_dict.get('hearing_location')
+        self.event_location = case_data_dict.get('hearing_location')
 
     def set_event_time(self, event_time):
         if event_time is None:
