@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QInputDialog, QTableWidge
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.data.sql_server_queries import event_type_report_query
+from munientry.data.sql_lite_queries import courtroom_event_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.logging_module import USER_LOG_NAME
 from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DRIVE_SAVE_PATH, \
@@ -146,8 +147,13 @@ class MainWindowMenu(object):
             open_batch_entries_folder,
         )
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
+
         self.mainwindow.actionArraignments.triggered.connect(self.run_arraignments_report)
         self.mainwindow.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
+        self.mainwindow.actionCourtroom_A_Events.triggered.connect(self.run_courtroom_a_report)
+        # self.mainwindow.actionCourtroom_B_Events.triggered.connect(self.run_courtroom_b_report)
+        # self.mainwindow.actionCourtroom_C_Events.triggered.connect(self.run_courtroom_c_report)
+
         self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
             open_driving_privileges_folder,
         )
@@ -178,11 +184,44 @@ class MainWindowMenu(object):
         logger.info(query_string)
         self.show_report_table('Final Pretrials', report_date, query_string)
 
+
+    def run_courtroom_a_report(self) -> None:
+        report_date = self.get_report_date('Courtroom A Event')
+        query_string = courtroom_event_report_query(report_date, 1)
+        logger.info(query_string)
+        self.show_courtroom_events(f'Courtroom A Events {report_date}', report_date, query_string)
+
+
+    def show_courtroom_events(self, report_name: str, report_date: str, query_string: str) -> None:
+        db = open_db_connection('con_munientry_db')
+        data_list = self.get_courtroom_report_data(db, query_string)
+        self.report_window = create_event_report_window(data_list, report_name, report_date)
+        self.report_window.table.setSortingEnabled(True)
+        self.report_window.show()
+        close_db_connection(db)
+
+
     def get_report_date(self, report: str) -> str:
         event_date = QInputDialog.getText(
             self.mainwindow, f'{report} Date', f'Enter {report} Date in format YYYY-MM-DD:',
         )
         return event_date[0]
+
+    def get_courtroom_report_data(self, db, query_string: str) -> list:
+        self.query = QSqlQuery(db)
+        self.query.prepare(query_string)
+        self.query.exec()
+        data_list = []
+        while self.query.next():
+            data_list.append(
+                (
+                    self.query.value('case_number'),
+                    self.query.value('event_type_name'),
+                    self.query.value('case_event_time'),
+                ),
+            )
+        return data_list
+
 
     def get_report_data(self, db, query_string: str) -> list:
         self.query = QSqlQuery(db)

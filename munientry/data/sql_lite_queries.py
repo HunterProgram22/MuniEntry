@@ -112,5 +112,20 @@ def insert_scheduling_data_query(event: object) -> str:
     """
 
 
+def courtroom_event_report_query(report_date: str, courtroom: int) -> str:
+    return f"""
+    select
+        case_number,
+        et.event_type_name,
+        case_event_time
+    from
+        case_events as ce
+    left outer join event_types as et
+        on ce.event_type_id = et.event_type_id
+    where
+        case_event_date = '{report_date}' and event_location_id = {courtroom}
+    """
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
