@@ -87,6 +87,10 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
         db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
         db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
         logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
+    elif socket.gethostname() == 'RooberryPrime':
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
+        logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
     else:
         db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
         db_connection.setDatabaseName(database_path)
