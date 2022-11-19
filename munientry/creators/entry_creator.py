@@ -155,7 +155,7 @@ class SchedulingEntryCreator(BaseEntryCreator):
         """
         doc = DocxTemplate(self.dialog.template.template_path)
         doc.render(self.case_data)
-        save_scheduling_data(self.case_data, self.dialog.dialog_name)
+        save_scheduling_data(self.case_data)
         try:
             doc.save(f'{self.save_path}{self.docname}')
         except PermissionError as error:
