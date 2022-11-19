@@ -14,11 +14,11 @@ class SchedulingCaseInformation:
     defense_counsel: str = None
     defense_counsel_type: str = None
     jury_trial_date: str = None
-    jury_trial_time: str = None
+    jury_trial_time: str = '8:15 AM'
     trial_to_court_date: str = None
     trial_to_court_time: str = None
     pretrial_date: str = None
-    pretrial_time: str = None
+    pretrial_time: str = '3:00 PM'
     final_pretrial_date: str = None
     final_pretrial_time: str = None
     pretrial_scheduled: bool = True

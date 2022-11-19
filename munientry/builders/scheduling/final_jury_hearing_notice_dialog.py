@@ -94,7 +94,7 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformati
 
     def set_scheduling_dates(self) -> None:
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
-        self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
         self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             'MMMM dd, yyyy',
         )

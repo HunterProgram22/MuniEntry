@@ -235,7 +235,7 @@ class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformatio
         self.update_model_with_case_information_frame_data()
 
     def set_scheduling_dates(self):
-        self.model.trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+        self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             ENTRY_DATE_FORMAT,
         )
