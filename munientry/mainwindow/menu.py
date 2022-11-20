@@ -1,5 +1,6 @@
 """Module containing all functions for the mainwindow menu."""
 import os
+from functools import partial
 from collections import namedtuple
 
 from loguru import logger
@@ -18,6 +19,13 @@ from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DR
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
+COURTROOM_REPORT_HEADERS = ('Case Number', 'Event', 'Time')
+COURTROOM_NAME = {
+    1: 'A',
+    2: 'B',
+    3: 'C',
+}
+
 
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
@@ -134,6 +142,23 @@ def create_event_report_window(
     return window
 
 
+def create_courtroom_report_window(
+        data_list: list, report_name: str, report_date: str,
+) -> table_widgets.ReportWindow:
+    """Creates a window to load the event table and print buttons onto."""
+    window = table_widgets.ReportWindow(
+        len(data_list), 3, f'{report_name} Report for {report_date}',
+    )
+    window.table.setHorizontalHeaderLabels(list(COURTROOM_REPORT_HEADERS))
+    Case = namedtuple('Case', 'case_number event time')
+    for row, case in enumerate(data_list):
+        case = Case(case[0], case[1], case[2])
+        window.table.setItem(row, 0, QTableWidgetItem(case.case_number))
+        window.table.setItem(row, 1, QTableWidgetItem(case.event))
+        window.table.setItem(row, 2, QTableWidgetItem(case.time))
+    return window
+
+
 class MainWindowMenu(object):
     """Class for setting up the menu for the Main Window."""
 
@@ -150,10 +175,15 @@ class MainWindowMenu(object):
 
         self.mainwindow.actionArraignments.triggered.connect(self.run_arraignments_report)
         self.mainwindow.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
-        self.mainwindow.actionCourtroom_A_Events.triggered.connect(self.run_courtroom_a_report)
-        # self.mainwindow.actionCourtroom_B_Events.triggered.connect(self.run_courtroom_b_report)
-        # self.mainwindow.actionCourtroom_C_Events.triggered.connect(self.run_courtroom_c_report)
-
+        self.mainwindow.actionCourtroom_A_Events.triggered.connect(
+            partial(self.run_courtroom_report, 1)
+        )
+        self.mainwindow.actionCourtroom_B_Events.triggered.connect(
+            partial(self.run_courtroom_report, 2)
+        )
+        self.mainwindow.actionCourtroom_C_Events.triggered.connect(
+            partial(self.run_courtroom_report, 3)
+        )
         self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
             open_driving_privileges_folder,
         )
@@ -184,22 +214,20 @@ class MainWindowMenu(object):
         logger.info(query_string)
         self.show_report_table('Final Pretrials', report_date, query_string)
 
-
-    def run_courtroom_a_report(self) -> None:
-        report_date = self.get_report_date('Courtroom A Event')
-        query_string = courtroom_event_report_query(report_date, 1)
+    def run_courtroom_report(self, courtroom: int) -> None:
+        courtroom_name = COURTROOM_NAME.get(courtroom)
+        report_date = self.get_report_date(f'Courtroom {courtroom_name} Event')
+        query_string = courtroom_event_report_query(report_date, courtroom)
         logger.info(query_string)
-        self.show_courtroom_events(f'Courtroom A Events {report_date}', report_date, query_string)
-
+        self.show_courtroom_events(f'Courtroom {courtroom_name} Events {report_date}', report_date, query_string)
 
     def show_courtroom_events(self, report_name: str, report_date: str, query_string: str) -> None:
         db = open_db_connection('con_munientry_db')
         data_list = self.get_courtroom_report_data(db, query_string)
-        self.report_window = create_event_report_window(data_list, report_name, report_date)
+        self.report_window = create_courtroom_report_window(data_list, report_name, report_date)
         self.report_window.table.setSortingEnabled(True)
         self.report_window.show()
         close_db_connection(db)
-
 
     def get_report_date(self, report: str) -> str:
         event_date = QInputDialog.getText(
@@ -221,7 +249,6 @@ class MainWindowMenu(object):
                 ),
             )
         return data_list
-
 
     def get_report_data(self, db, query_string: str) -> list:
         self.query = QSqlQuery(db)
