@@ -54,18 +54,19 @@ def open_entries_folder(folder, _singal=None):
 
 
 def run_event_type_report(mainwindow, event) -> None:
-    report_date = get_report_date(mainwindow, event)
-    event_ids = EVENT_IDS.get(event)
-    query_string = event_type_report_query(report_date, event_ids)
-    logger.info(query_string)
-    show_report_table(mainwindow, event, report_date, query_string)
+    report_date, ok_response = get_report_date(mainwindow, event)
+    if ok_response:
+        event_ids = EVENT_IDS.get(event)
+        query_string = event_type_report_query(report_date, event_ids)
+        logger.info(query_string)
+        show_report_table(mainwindow, event, report_date, query_string)
 
 
 def get_report_date(mainwindow, report: str) -> str:
-    event_date = QInputDialog.getText(
+    event_date, ok_response = QInputDialog.getText(
         mainwindow, f'{report} Date', f'Enter {report} Date in format YYYY-MM-DD:',
     )
-    return event_date[0]
+    return event_date, ok_response
 
 
 def show_report_table(mainwindow, report_name: str, report_date: str, query_string: str) -> None:
@@ -112,10 +113,11 @@ def create_event_report_window(
 
 def run_courtroom_report(mainwindow, courtroom: int) -> None:
     courtroom_name = COURTROOM_NAME.get(courtroom)
-    report_date = get_report_date(mainwindow, f'Courtroom {courtroom_name} Event')
-    query_string = courtroom_event_report_query(report_date, courtroom)
-    logger.info(query_string)
-    show_courtroom_events(mainwindow, f'Courtroom {courtroom_name} Events', report_date, query_string)
+    report_date, ok_response = get_report_date(mainwindow, f'Courtroom {courtroom_name} Event')
+    if ok_response:
+        query_string = courtroom_event_report_query(report_date, courtroom)
+        logger.info(query_string)
+        show_courtroom_events(mainwindow, f'Courtroom {courtroom_name} Events', report_date, query_string)
 
 
 def show_courtroom_events(mainwindow, report_name: str, report_date: str, query_string: str) -> None:
