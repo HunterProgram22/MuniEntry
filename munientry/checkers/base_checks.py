@@ -52,8 +52,8 @@ class BaseChecker(object):
         """Scheduling date checker to make sure final pretrial date is not set to today."""
         if self.view.final_pretrial_dateEdit.date() == TODAY:
             message = (
-                    'The Final Prexrial Date is Today, but must be a date in the future. Please enter'
-                    + ' a date in the Final Pretrial Date box after today.'
+                    'The Final Pretrial Date is Today, but must be a date in the future. Please'
+                    + ' enter a date in the Final Pretrial Date box after today.'
             )
             RequiredBox(message).exec()
             return FAIL

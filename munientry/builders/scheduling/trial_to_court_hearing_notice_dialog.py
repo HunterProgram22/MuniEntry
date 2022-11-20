@@ -24,7 +24,7 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 
     def set_view_dates(self) -> None:
         self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
 
 
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):

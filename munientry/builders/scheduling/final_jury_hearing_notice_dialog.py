@@ -24,7 +24,7 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self) -> None:
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 

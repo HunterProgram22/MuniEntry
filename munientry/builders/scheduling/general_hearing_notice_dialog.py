@@ -25,7 +25,7 @@ class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
         self.dialog.hearing_dateEdit.setDate(TODAY)
 
 

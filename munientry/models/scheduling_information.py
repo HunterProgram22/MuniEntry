@@ -9,7 +9,7 @@ class SchedulingCaseInformation:
     judicial_officer: object = None
     assigned_judge: str = None
     courtroom: str = None
-    plea_trial_date: str = None
+    entry_date: str = None
     defendant: object = field(default_factory=Defendant)
     defense_counsel: str = None
     defense_counsel_type: str = None

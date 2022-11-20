@@ -49,7 +49,7 @@ class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
     def set_view_dates(self):
         self.dialog.arrest_summons_date_box.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
 
 
 class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
