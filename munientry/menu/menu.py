@@ -14,9 +14,10 @@ from munientry.data.sql_server_queries import event_type_report_query
 from munientry.data.sql_lite_queries import courtroom_event_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.logging_module import USER_LOG_NAME
-from munientry.menu.menu_folder_actions import open_batch_entries_folder, \
-    open_driving_privileges_folder, open_crimtraffic_entries_folder, open_scheduling_entries_folder, \
-    open_jury_pay_entries_folder
+from munientry.menu.menu_folder_actions import open_entries_folder
+# from munientry.menu.menu_folder_actions import open_batch_entries_folder, \
+#     open_driving_privileges_folder, open_crimtraffic_entries_folder, open_scheduling_entries_folder, \
+#     open_jury_pay_entries_folder
 from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, ICON_PATH
 from munientry.widgets import message_boxes, table_widgets
 
@@ -30,6 +31,11 @@ COURTROOM_NAME = {
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
+
+EVENT_IDS = {
+    'Arraignments': ARRAIGNMENT_EVENT_IDS,
+    'Final Pretrials': FINAL_PRETRIAL_EVENT_IDS,
+}
 
 
 class SettingDialog(QDialog):
@@ -132,16 +138,39 @@ class MainWindowMenu(object):
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
         self.connect_menu_functions()
+        self.connect_open_menu_functions()
+        self.connect_reports_menu_functions()
 
     def connect_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
-        self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
-            open_batch_entries_folder,
-        )
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
+        self.mainwindow.actionWorkflow.triggered.connect(self.open_workflow_settings)
 
-        self.mainwindow.actionArraignments.triggered.connect(self.run_arraignments_report)
-        self.mainwindow.actionFinal_Pretrials.triggered.connect(self.run_final_pretrials_report)
+    def connect_open_menu_functions(self) -> None:
+        self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
+            partial(open_entries_folder, 'driving_privileges'),
+        )
+        self.mainwindow.actionCrimTraffic_Folder.triggered.connect(
+            partial(open_entries_folder, 'crimtraffic_entries'),
+        )
+        self.mainwindow.actionScheduling_Entries_Folder.triggered.connect(
+            partial(open_entries_folder, 'scheduling_entries'),
+        )
+        self.mainwindow.actionJury_Pay_Entries_Folder.triggered.connect(
+            partial(open_entries_folder, 'jury_pay_entries'),
+        )
+        self.mainwindow.actionOpen_batch_FTA_Entries_Folder.triggered.connect(
+            partial(open_entries_folder, 'batch_entries'),
+        )
+
+    def connect_reports_menu_functions(self) -> None:
+        self.mainwindow.actionArraignments.triggered.connect(
+            partial(self.run_event_type_report, 'Arraignments')
+        )
+        self.mainwindow.actionFinal_Pretrials.triggered.connect(
+            partial(self.run_event_type_report, 'Final Pretrials')
+        )
+
         self.mainwindow.actionCourtroom_A_Events.triggered.connect(
             partial(self.run_courtroom_report, 1)
         )
@@ -151,42 +180,36 @@ class MainWindowMenu(object):
         self.mainwindow.actionCourtroom_C_Events.triggered.connect(
             partial(self.run_courtroom_report, 3)
         )
-        self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
-            open_driving_privileges_folder,
-        )
-        self.mainwindow.actionCrimTraffic_Folder.triggered.connect(
-            open_crimtraffic_entries_folder,
-        )
-        self.mainwindow.actionScheduling_Entries_Folder.triggered.connect(
-            open_scheduling_entries_folder,
-        )
-        self.mainwindow.actionJury_Pay_Entries_Folder.triggered.connect(
-            open_jury_pay_entries_folder,
-        )
-        self.mainwindow.actionWorkflow.triggered.connect(self.open_workflow_settings)
 
     def open_workflow_settings(self, _signal=None) -> None:
         self.settings_menu = SettingDialog(self.mainwindow)
         self.settings_menu.exec()
 
-    def run_arraignments_report(self) -> None:
-        report_date = self.get_report_date('Arraignments')
-        query_string = event_type_report_query(report_date, ARRAIGNMENT_EVENT_IDS)
+    def run_event_type_report(self, event) -> None:
+        report_date = self.get_report_date(event)
+        event_ids = EVENT_IDS.get(event)
+        query_string = event_type_report_query(report_date, event_ids)
         logger.info(query_string)
-        self.show_report_table('Arraignments', report_date, query_string)
+        self.show_report_table(event, report_date, query_string)
 
-    def run_final_pretrials_report(self) -> None:
-        report_date = self.get_report_date('Final Pretrials')
-        query_string = event_type_report_query(report_date, FINAL_PRETRIAL_EVENT_IDS)
-        logger.info(query_string)
-        self.show_report_table('Final Pretrials', report_date, query_string)
+    # def run_arraignments_report(self) -> None:
+    #     report_date = self.get_report_date('Arraignments')
+    #     query_string = event_type_report_query(report_date, ARRAIGNMENT_EVENT_IDS)
+    #     logger.info(query_string)
+    #     self.show_report_table('Arraignments', report_date, query_string)
+    #
+    # def run_final_pretrials_report(self) -> None:
+    #     report_date = self.get_report_date('Final Pretrials')
+    #     query_string = event_type_report_query(report_date, FINAL_PRETRIAL_EVENT_IDS)
+    #     logger.info(query_string)
+    #     self.show_report_table('Final Pretrials', report_date, query_string)
 
     def run_courtroom_report(self, courtroom: int) -> None:
         courtroom_name = COURTROOM_NAME.get(courtroom)
         report_date = self.get_report_date(f'Courtroom {courtroom_name} Event')
         query_string = courtroom_event_report_query(report_date, courtroom)
         logger.info(query_string)
-        self.show_courtroom_events(f'Courtroom {courtroom_name} Events {report_date}', report_date, query_string)
+        self.show_courtroom_events(f'Courtroom {courtroom_name} Events', report_date, query_string)
 
     def show_courtroom_events(self, report_name: str, report_date: str, query_string: str) -> None:
         db = open_db_connection('con_munientry_db')
