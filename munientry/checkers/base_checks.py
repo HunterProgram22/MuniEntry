@@ -37,6 +37,28 @@ class BaseChecker(object):
             return FAIL
         return PASS
 
+    def check_if_trial_date_is_today(self) -> str:
+        """Scheduling date checker to make sure trial date is not set to today."""
+        if self.view.trial_dateEdit.date() == TODAY:
+            message = (
+                    'The Trial Date is Today, but must be a date in the future. Please enter'
+                    + ' a date in the Trial Date box after today.'
+            )
+            RequiredBox(message).exec()
+            return FAIL
+        return PASS
+
+    def check_if_final_pretrial_date_is_today(self) -> str:
+        """Scheduling date checker to make sure final pretrial date is not set to today."""
+        if self.view.final_pretrial_dateEdit.date() == TODAY:
+            message = (
+                    'The Final Prexrial Date is Today, but must be a date in the future. Please enter'
+                    + ' a date in the Final Pretrial Date box after today.'
+            )
+            RequiredBox(message).exec()
+            return FAIL
+        return PASS
+
     def check_if_leap_plea_date_is_today(self) -> str:
         if self.view.leap_plea_date.date() == TODAY:
             message = (
