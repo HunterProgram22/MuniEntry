@@ -14,8 +14,10 @@ from munientry.data.sql_server_queries import event_type_report_query
 from munientry.data.sql_lite_queries import courtroom_event_report_query
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.logging_module import USER_LOG_NAME
-from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DRIVE_SAVE_PATH, \
-    SCHEDULING_SAVE_PATH, ICON_PATH, JURY_PAY_SAVE_PATH
+from munientry.menu.menu_folder_actions import open_batch_entries_folder, \
+    open_driving_privileges_folder, open_crimtraffic_entries_folder, open_scheduling_entries_folder, \
+    open_jury_pay_entries_folder
+from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, ICON_PATH
 from munientry.widgets import message_boxes, table_widgets
 
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
@@ -25,14 +27,9 @@ COURTROOM_NAME = {
     2: 'B',
     3: 'C',
 }
-
-
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
-
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
-
-
 
 
 class SettingDialog(QDialog):
@@ -84,36 +81,6 @@ def open_current_log(_signal=None) -> None:
     """Menu function that opens the user logs directly or with keyboard shortcut."""
     os.startfile(f'{LOG_PATH}{USER_LOG_NAME}')
     logger.info(f'Current system log opened.')
-
-
-def open_batch_entries_folder(_signal=None) -> None:
-    """Menu function that opens the folder where batch entries are saved."""
-    os.startfile(f'{BATCH_SAVE_PATH}')
-    logger.info('Batch entries folder opened.')
-
-
-def open_driving_privileges_folder(_signal=None) -> None:
-    """Menu function that opens the folder where Driving Privileges entries are saved."""
-    os.startfile(f'{DRIVE_SAVE_PATH}')
-    logger.info('Driving Privileges entries folder opened.')
-
-
-def open_crimtraffic_entries_folder(_signal=None) -> None:
-    """Menu function that opens the folder where Driving Privileges entries are saved."""
-    os.startfile(f'{CRIMTRAFFIC_SAVE_PATH}')
-    logger.info('Crim Traffic entries folder opened.')
-
-
-def open_scheduling_entries_folder(_signal=None) -> None:
-    """Menu function that opens the folder where Driving Privileges entries are saved."""
-    os.startfile(f'{SCHEDULING_SAVE_PATH}')
-    logger.info('Scheduling entries folder opened.')
-
-
-def open_jury_pay_entries_folder(_signal=None) -> None:
-    """Menu function that opens the folder where Jury Pay entries are saved."""
-    os.startfile(f'{JURY_PAY_SAVE_PATH}')
-    logger.info('Jury Pay entries folder opened.')
 
 
 def run_batch_fta_process(_signal=None) -> None:
