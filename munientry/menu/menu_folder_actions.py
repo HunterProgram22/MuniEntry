@@ -1,5 +1,6 @@
 """Actions that are triggered by a menu function."""
 import os
+import types
 from collections import namedtuple
 
 from loguru import logger
@@ -17,33 +18,37 @@ from munientry.paths import (
     JURY_PAY_SAVE_PATH,
     SCHEDULING_SAVE_PATH,
 )
+from munientry.settings import TYPE_CHECKING
 from munientry.widgets import table_widgets
+
+if TYPE_CHECKING:
+    from PyQt6.QtWidgets import QMainWindow
 
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
 
-EVENT_IDS = {
+COURTROOM_REPORT_HEADERS = ('Case Number', 'Event', 'Time')
+EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
+
+COURTROOM_NAME = types.MappingProxyType({
+    1: 'A',
+    2: 'B',
+    3: 'C',
+})
+
+EVENT_IDS = types.MappingProxyType({
     'Arraignments': ARRAIGNMENT_EVENT_IDS,
     'Final Pretrials': FINAL_PRETRIAL_EVENT_IDS,
-}
+})
 
-FOLDER_PATH = {
+FOLDER_PATH = types.MappingProxyType({
     'batch_entries': BATCH_SAVE_PATH,
     'crimtraffic_entries': CRIMTRAFFIC_SAVE_PATH,
     'driving_privileges': DRIVE_SAVE_PATH,
     'jury_pay_entries': JURY_PAY_SAVE_PATH,
     'scheduling_entries': SCHEDULING_SAVE_PATH,
-}
-
-EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
-
-
-COURTROOM_NAME = {
-    1: 'A',
-    2: 'B',
-    3: 'C',
-}
+})
 
 
 def open_entries_folder(folder: str, _singal=None) -> None:
@@ -57,7 +62,7 @@ def open_entries_folder(folder: str, _singal=None) -> None:
     logger.info(f'The {folder} folder was opened.')
 
 
-def run_event_type_report(mainwindow: object, event: str) -> None:
+def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
     """Menu function that generates a report of specific types of events.
 
     Args:
@@ -70,27 +75,48 @@ def run_event_type_report(mainwindow: object, event: str) -> None:
         event_ids = EVENT_IDS.get(event)
         query_string = event_type_report_query(report_date, event_ids)
         logger.info(query_string)
-        show_report_table(mainwindow, event, report_date, query_string)
+        data_list = get_report_data(query_string)
+        show_report_table(mainwindow, event, report_date, data_list)
 
 
-def get_report_date(mainwindow, report: str) -> tuple(str, bool):
+def get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[str, bool]:
+    """Opens an input dialog to query user for date of report.
 
-    event_date, ok_response = QInputDialog.getText(
-        mainwindow, f'{report} Date', f'Enter {report} Date in format YYYY-MM-DD:',
+    Args:
+        mainwindow (QMainWindow): The main window of the application.
+
+        event (str): A string that identifies the event type for the generated report.
+
+    Returns:
+        tuple: A string with the user entered report data and a bool of True if the user
+        selected 'Ok.'
+    """
+    return QInputDialog.getText(
+        mainwindow, f'{event} Date', f'Enter {event} Date in format YYYY-MM-DD:',
     )
-    return event_date, ok_response
 
 
-def show_report_table(mainwindow, report_name: str, report_date: str, query_string: str) -> None:
-    db = open_db_connection('con_authority_court')
-    data_list = get_report_data(db, query_string)
-    mainwindow.report_window = create_event_report_window(data_list, report_name, report_date)
+def show_report_table(
+    mainwindow: 'QMainWindow', event: str, report_date: str, data_list: list
+) -> None:
+    """Shows a sortable table loaded with the data for the generated report.
+
+    Args:
+        mainwindow (QMainWindow): The main window of the application.
+
+        event (str): A string that identifies the event type for the generated report.
+
+        report_date (str): A string of the date for the report.
+
+        data_list (list): A list of all data queried from the database.
+    """
+    mainwindow.report_window = create_event_report_window(data_list, event, report_date)
     mainwindow.report_window.table.setSortingEnabled(True)
     mainwindow.report_window.show()
-    close_db_connection(db)
 
 
-def get_report_data(db, query_string: str) -> list:
+def get_report_data(query_string: str) -> list:
+    db = open_db_connection('con_authority_court')
     query = QSqlQuery(db)
     query.prepare(query_string)
     query.exec()
@@ -103,6 +129,7 @@ def get_report_data(db, query_string: str) -> list:
                 clean_offense_name(query.value('Charge')),
             ),
         )
+    close_db_connection(db)
     return data_list
 
 
@@ -132,7 +159,9 @@ def run_courtroom_report(mainwindow, courtroom: int) -> None:
         show_courtroom_events(mainwindow, f'Courtroom {courtroom_name} Events', report_date, query_string)
 
 
-def show_courtroom_events(mainwindow, report_name: str, report_date: str, query_string: str) -> None:
+def show_courtroom_events(
+    mainwindow, report_name: str, report_date: str, query_string: str
+) -> None:
     db = open_db_connection('con_munientry_db')
     data_list = get_courtroom_report_data(db, query_string)
     mainwindow.report_window = create_courtroom_report_window(data_list, report_name, report_date)
@@ -157,11 +186,8 @@ def get_courtroom_report_data(db, query_string: str) -> list:
     return data_list
 
 
-COURTROOM_REPORT_HEADERS = ('Case Number', 'Event', 'Time')
-
-
 def create_courtroom_report_window(
-        data_list: list, report_name: str, report_date: str,
+    data_list: list, report_name: str, report_date: str,
 ) -> table_widgets.ReportWindow:
     """Creates a window to load the event table and print buttons onto."""
     window = table_widgets.ReportWindow(
