@@ -17,7 +17,7 @@ Functions:
 
     remove_db_connection(connection_name) -> None
 
-    check_if_db_open(db_connection, connection_name) -> bool
+    establish_database_connections() -> None
 """
 import socket
 from functools import partialmethod
@@ -168,7 +168,10 @@ def remove_db_connection(connection_name: str) -> None:
 
 
 def establish_database_connections():
-    """Establishes database connections for the application and tests all connections open."""
+    """Establishes database connections for the application, tests all connections open.
+
+    Also loads the SSRS reports with the daily case lists into the application database.
+    """
     logger.database('Establishing database connections.')
 
     create_odbc_db_connection('con_authority_court')

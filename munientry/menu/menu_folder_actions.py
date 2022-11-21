@@ -46,14 +46,25 @@ COURTROOM_NAME = {
 }
 
 
-def open_entries_folder(folder, _singal=None):
-    """Menu function that opens the chosen folder where the chosen entries are saved."""
+def open_entries_folder(folder: str, _singal=None) -> None:
+    """Menu function that opens the folder where specific types of entries are saved.
+
+    Args:
+        folder (str): A string that identifies the type entry folder to open.
+    """
     folder_path = FOLDER_PATH.get(folder)
     os.startfile(f'{folder_path}')
     logger.info(f'The {folder} folder was opened.')
 
 
-def run_event_type_report(mainwindow, event) -> None:
+def run_event_type_report(mainwindow: object, event: str) -> None:
+    """Menu function that generates a report of specific types of events.
+
+    Args:
+        mainwindow (QMainWindow): The main window of the application.
+
+        event (str): A string that identifies the event type for the generated report.
+    """
     report_date, ok_response = get_report_date(mainwindow, event)
     if ok_response:
         event_ids = EVENT_IDS.get(event)
@@ -62,7 +73,8 @@ def run_event_type_report(mainwindow, event) -> None:
         show_report_table(mainwindow, event, report_date, query_string)
 
 
-def get_report_date(mainwindow, report: str) -> str:
+def get_report_date(mainwindow, report: str) -> tuple(str, bool):
+
     event_date, ok_response = QInputDialog.getText(
         mainwindow, f'{report} Date', f'Enter {report} Date in format YYYY-MM-DD:',
     )
