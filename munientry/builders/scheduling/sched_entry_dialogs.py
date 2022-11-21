@@ -239,7 +239,10 @@ class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformatio
         self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             ENTRY_DATE_FORMAT,
         )
-        self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+        if self.dialog.no_pretrial_radioButton.isChecked():
+            self.model.pretrial_date = None
+        else:
+            self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
         self.model.hearing_location = self.set_courtroom()
 
