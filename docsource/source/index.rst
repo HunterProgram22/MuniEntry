@@ -21,6 +21,7 @@ Welcome to MuniEntry's documentation!
 
     Data
     Loaders
+    Menu
 
 
 Indices and tables
