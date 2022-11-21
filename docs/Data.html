@@ -101,6 +101,10 @@
 <li class="toctree-l2"><a class="reference internal" href="Loaders.html#module-munientry.loaders.driving_caseload_functions">Driving Caseload Functions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Menu.html">Menu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Menu.html#module-munientry.menu.menu_folder_actions">Menu Folder Actions</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -156,7 +160,7 @@
 <p>open_db_connection(connection_name) -&gt; QSqlDatabase</p>
 <p>close_db_connection(db_connection) -&gt; None</p>
 <p>remove_db_connection(connection_name) -&gt; None</p>
-<p>check_if_db_open(db_connection, connection_name) -&gt; bool</p>
+<p>establish_database_connections() -&gt; None</p>
 </dd>
 </dl>
 <dl class="py function">
@@ -215,7 +219,8 @@ See <a class="reference external" href="https://realpython.com/python-pyqt-datab
 <dl class="py function">
 <dt class="sig sig-object py" id="munientry.data.connections.establish_database_connections">
 <span class="sig-name descname"><span class="pre">establish_database_connections</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#munientry.data.connections.establish_database_connections" title="Permalink to this definition">¶</a></dt>
-<dd><p>Establishes database connections for the application and tests all connections open.</p>
+<dd><p>Establishes database connections for the application, tests all connections open.</p>
+<p>Also loads the SSRS reports with the daily case lists into the application database.</p>
 </dd></dl>
 
 <dl class="py function">
