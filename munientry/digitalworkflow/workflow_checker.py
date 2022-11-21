@@ -25,7 +25,17 @@ class WorkflowCheck(object):
 
     def check_for_probation_workflow(self) -> (bool, str):
         if self.case_information.__class__.__name__ in self.scram_gps_entries:
+            if self.case_information.bond_conditions.no_alcohol_drugs is True:
+                return (True, SCRAM_PATH)
             if self.case_information.bond_conditions.monitoring is True:
+                return (True, SCRAM_PATH)
+            if self.case_information.bond_conditions.alcohol_drugs_assessment is True:
+                return (True, SCRAM_PATH)
+            if self.case_information.bond_conditions.mental_health_assessment is True:
+                return (True, SCRAM_PATH)
+            if self.case_information.bond_conditions.alcohol_test_kiosk is True:
+                return (True, SCRAM_PATH)
+            if self.case_information.bond_conditions.specialized_docket is True:
                 return (True, SCRAM_PATH)
         if self.case_information.__class__.__name__ in self.comm_control_entries:
             if self.case_information.community_control.ordered is True:

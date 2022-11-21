@@ -75,3 +75,19 @@ def set_courtroom(sender: 'QPushButton') -> str:
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
+
+
+def format_date_string(date_string: str) -> str:
+    """Formats a string that is a date into standard ISO extended format YYYY-MM-DD.
+
+    Args:
+        date_string (str): A string date in the format Month Day, Year (i.e. January, 09, 1980).
+
+    Returns:
+        string: A string in the format Year-Month-Day (i.e. 1980-09-01).
+    """
+
+    date_object = datetime.strptime(date_string, '%B %d, %Y')
+    new_date_format = date_object.strftime('%Y-%m-%d')
+    new_date_object = datetime.strptime(new_date_format, '%Y-%m-%d').date()
+    return str(new_date_object)

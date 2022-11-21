@@ -114,7 +114,7 @@ class Ui_MattoxWorkflowDialog(object):
         _translate = QtCore.QCoreApplication.translate
         MattoxWorkflowDialog.setWindowTitle(_translate("MattoxWorkflowDialog", "Mattox Workflow"))
         self.cancel_Button.setText(_translate("MattoxWorkflowDialog", "Cancel"))
-        self.label.setText(_translate("MattoxWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">SCRAM AND GPS BOND ENTRIES</span></p></body></html>"))
+        self.label.setText(_translate("MattoxWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">PRETRIAL ENTRIES</span></p></body></html>"))
         self.label_2.setText(_translate("MattoxWorkflowDialog", "COMMUNITY CONTROL ENTRIES"))
         self.load_new_entries_Button.setText(_translate("MattoxWorkflowDialog", "Check For New Entries"))
         self.open_entry_Button.setText(_translate("MattoxWorkflowDialog", "Open Selected Entry for Review"))

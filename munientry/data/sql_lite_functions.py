@@ -21,7 +21,7 @@ DEGREE = 'degree'
 
 
 def load_daily_case_list_data(database: QSqlDatabase) -> None:
-    """Loads case data from SSRS reports in Excel into the application.
+    """Loads case data from SSRS reports in Excel into the MuniEntryDB.sqlite database.
 
     :database: The SQL Lite database object for MuniEntryDB.sqlite.
 

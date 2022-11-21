@@ -1,18 +1,71 @@
-"""Module that contains all functions for connecting to databases - internal and external.
+"""Functions for connecting to databases - internal and external.
+
+**munientry.data.connections**
 
 See https://doc.qt.io/qtforpython/overviews/sql-connecting.html
+
+Functions:
+    set_server_and_database() -> tuple
+
+    create_sqlite_db_connection(database_path, connection_name) -> QSqlDatabase
+
+    create_odbc_db_connection(connection_name) -> QSqlDatabase
+
+    open_db_connection(connection_name) -> QSqlDatabase
+
+    close_db_connection(db_connection) -> None
+
+    remove_db_connection(connection_name) -> None
+
+    establish_database_connections() -> None
 """
+import socket
 from functools import partialmethod
 
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.data.sql_lite_functions import load_daily_case_list_data
-from munientry.settings import set_server_and_database
-from munientry.paths import DB_PATH
+from munientry.paths import DB_PATH, TEST_DELCITY_DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
+DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
+TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
+
+
+def set_server_and_database(connection_name: str) -> tuple:
+    """Sets the server and database name for the SQL Server connections.
+
+    This function is used to set a local instance of the database for Justin to test at home
+    without being connected to the delcity network.
+
+    Args:
+        connection_name (str): The name of the database connection.
+
+    Returns:
+        tuple: (server, database)
+
+            server (str): The name of the server for the database connection.
+
+            database (str): The name of the database.
+
+    """
+    if connection_name == 'con_authority_court':
+        if socket.gethostname() == 'RooberryPrime':
+            server = r'ROOBERRYPRIME\SQLEXPRESS'
+            database = 'AuthorityCourt'
+        else:
+            server = r'CLERKCRTR\CMI'
+            database = 'AuthorityCourt'
+    elif connection_name == 'con_authority_civil':
+        if socket.gethostname() == 'RooberryPrime':
+            server = r'ROOBERRYPRIME\SQLEXPRESS'
+            database = 'AuthorityCivil'
+        else:
+            server = r'CLERKSQL\CMI'
+            database = 'AuthorityCivil'
+    return (server, database)
 
 
 def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSqlDatabase:
@@ -22,17 +75,26 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     See https://doc.qt.io/qt-5/sql-driver.html#qsqlite
     See https://realpython.com/python-pyqt-database/
 
-    :database_path: The absolute path to the location of the database. The absolute path should
-        be set using a sys.path object so that it references the actual location of the database,
-        which will be dependent on the location of the application. Uses DB_PATH constant
-        from settings which sets the absolute path based on the location of the application.
+    Args:
+        database_path (str): The absolute path to the location of the database.
 
-    :connection_name: A string that is assigned for future reference to the connection.
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
-    db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
-    db_connection.setDatabaseName(database_path)
+    if socket.gethostname() == 'Muni10':
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
+        logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
+    elif socket.gethostname() == 'RooberryPrime':
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
+        logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
+    else:
+        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
+        db_connection.setDatabaseName(database_path)
+        logger.info(f'Database Set to: {database_path}')
     return db_connection
 
 
@@ -41,16 +103,15 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
     The QODBC3 driver is used to create the connection.
     See https://doc.qt.io/qt-5/sql-driver.html#qodbc
-    This also helped establishing the connection even though it references the pyodbc module.
-    See 'https://stackoverflow.com/questions/16515420/
-    connecting-to-ms-sql-server-with-windows-authentication-using-python/'
 
-    :connection_name: A string that is assigned for future reference to the connection.
+    Args:
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.addDatabase('QODBC', connection_name)
-    server, database = set_server_and_database()
+    server, database = set_server_and_database(connection_name)
     connection_string = (
         'DRIVER=SQL Server;'
         + f'SERVER={server};'
@@ -62,88 +123,74 @@ def create_odbc_db_connection(connection_name: str) -> QSqlDatabase:
 
 
 def open_db_connection(connection_name: str) -> QSqlDatabase:
-    """Opens a connection to a database and checks if it is open.
+    """Attempts to open a database and returns connection if open.
 
-    :connection_name: A string provided when the function is called. The string is assigned to the
-        database object to allow reference to the database by the connection name.
+    Args:
+        connection_name (str): A string set to identify the database connection.
 
-    Returns the connection as a QSqlDatabase object with an open connection.
+    Returns:
+        QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
     db_connection = QSqlDatabase.database(connection_name, open=True)
-    check_if_db_open(db_connection, connection_name)
-    logger.database(f'{db_connection.connectionName()} database connection open.')
+    if db_connection.isOpen():
+        logger.database(f'{connection_name} database connection open.')
+    else:
+        logger.warning(f'Unable to connect to {connection_name} database')
+        message = f'A connection to the {connection_name} database could not be made.'
+        InfoBox(message).exec()
     return db_connection
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
-    """Closes a connection to a database, but does not remove the connection from the system.
+    """Closes database connection, but does not remove the connection from the system.
 
-    :db_connection: The QSqlDatabase object that is the API driver connection to the database.
+    Args:
+        db_connection (QSqlDatabase): The connection to the database as a QSqlDatabase object.
 
-    TODO: This should be refactored to accept a string of the connection name to mirror the
-    open_db_connection function.
+    Todo:
+        Refactor to accept a string of connection name to mirror open_db_connection function.
     """
     db_connection.close()
     logger.database(f'{db_connection.connectionName()} database connection closed.')
 
 
 def remove_db_connection(connection_name: str) -> None:
-    """Removes a connection to a database.
+    """Removes database connection from application.
 
     If a connection is removed it would need to be created again to be used again. This should
     only be used upon close of the application to clean up connections.
+
+    Args:
+        connection_name (str): A string set to identify the database connection.
     """
     QSqlDatabase.removeDatabase(connection_name)
     logger.database(f'{connection_name} database connection removed.')
 
 
-def check_if_db_open(db_connection: QSqlDatabase, connection_name: str) -> bool:
-    """Checks if a database connection is open.
+def establish_database_connections():
+    """Establishes database connections for the application, tests all connections open.
 
-    :db_connection: The QSqlDatabase object that is the API driver connection to the database.
-
-    :connection_name: The string assigned to the connection for reference.
+    Also loads the SSRS reports with the daily case lists into the application database.
     """
-    if not db_connection.isOpen():
-        logger.warning(f'Unable to connect to {connection_name} database')
-        if connection_name == 'con_authority_court':
-            InfoBox(
-                'The Case Search feature is not available because a connection to the '
-                + 'AuthorityCourt database could not be made.',
-            ).exec()
-        if connection_name == 'con_munientry_db':
-            InfoBox(
-                'A connection to the MuniEntryDB could not be made. Contact Justin '
-                + 'immediately.',
-            ).exec()
-    return True
+    logger.database('Establishing database connections.')
 
-
-def main():
-    """The main function called when the module is imported.
-
-    Creates one connection to the SQL Server external database.
-
-    Creates three connections to the MuniEntryDB Sqlite internal database. Creating multiple
-    connections is likely unnecessary but helps when referencing the connection to determine what
-    table in the database the connection is supposed to reference.
-    """
     create_odbc_db_connection('con_authority_court')
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
+    authority_court_db = open_db_connection('con_authority_court')
+    close_db_connection(authority_court_db)
 
+    create_odbc_db_connection('con_authority_civil')
+    authority_civil_db = open_db_connection('con_authority_civil')
+    close_db_connection(authority_civil_db)
+
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
     conn = open_db_connection('con_munientry_db')
     load_daily_case_list_data(conn)
     close_db_connection(conn)
-
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_daily_case_lists')
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_charges')
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_attorneys')
 
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
 else:
-    logger.level('DATABASE', no=21, color='<green>')
+    logger.level('DATABASE', no=DATABASE_LOG_LEVEL, color='<green>')
     logger.__class__.database = partialmethod(logger.__class__.log, 'DATABASE')
-    main()
-    logger.info(f'{__name__} imported.')
+    establish_database_connections()

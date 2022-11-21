@@ -24,7 +24,7 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self) -> None:
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
 
@@ -94,15 +94,17 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformati
 
     def set_scheduling_dates(self) -> None:
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
-        self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
-            'MMMM dd, yyyy',
-        )
-        self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
+        self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
         if self.dialog.jury_trial_only_no_radioButton.isChecked():
             self.model.jury_trial_only = 'No'
+            self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
+                'MMMM dd, yyyy',
+            )
+            self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
         elif self.dialog.jury_trial_only_yes_radioButton.isChecked():
             self.model.jury_trial_only = 'Yes'
+            self.model.final_pretrial_date = None
+            self.model.final_pretrial_time = None
 
 
 class FinalJuryNoticeHearingInfoChecker(BaseChecker):
@@ -110,7 +112,10 @@ class FinalJuryNoticeHearingInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list = [
+            'check_if_final_pretrial_date_is_today',
+            'check_if_trial_date_is_today',
+        ]
         self.check_status = self.perform_check_list()
 
 
@@ -137,21 +142,22 @@ class FinalJuryNoticeHearingDialog(
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())
-        self.courtroom = set_courtroom(self.sender())
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
+        self.courtroom = set_courtroom(self.sender())
         self.hearing_location_box.setCurrentText(self.courtroom)
         self.set_instructions_label()
+        self.functions.update_trial_date()
 
     def set_instructions_label(self) -> None:
         if self.assigned_judge == 'Judge Marianne T. Hemmeter':
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Thursday.',
+                + ' automatically update to the next Thursday.',
             )
         if self.assigned_judge == 'Judge Kyle E. Rohrer':
             self.instructions_label.setText(
                 'INSTRUCTIONS: Set the final pretrial date and the jury trial date will'
-                + 'automatically update to the next Tuesday.',
+                + ' automatically update to the next Tuesday.',
             )
 
 

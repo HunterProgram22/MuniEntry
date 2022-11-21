@@ -178,7 +178,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>1114</width>
-           <height>955</height>
+           <height>939</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1">
@@ -862,6 +862,11 @@ background-color: rgb(255, 255, 255);</string>
                <item>
                 <property name="text">
                  <string>90 Days</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>6 Months</string>
                 </property>
                </item>
                <item>

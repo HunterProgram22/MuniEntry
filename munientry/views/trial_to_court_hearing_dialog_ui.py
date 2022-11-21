@@ -8,9 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit
-
 
 class Ui_TrialToCourtHearingDialog(object):
     def setupUi(self, TrialToCourtHearingDialog):
@@ -174,15 +171,15 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_26 = QtWidgets.QLabel(self.case_name_Frame)
         self.label_26.setObjectName("label_26")
         self.gridLayout.addWidget(self.label_26, 1, 2, 1, 1)
-        self.plea_trial_date = NoScrollDateEdit(self.case_name_Frame)
-        self.plea_trial_date.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
-        self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+        self.entry_date = NoScrollDateEdit(self.case_name_Frame)
+        self.entry_date.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
+        self.entry_date.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
-        self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
-        self.plea_trial_date.setCalendarPopup(True)
-        self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))
-        self.plea_trial_date.setObjectName("plea_trial_date")
-        self.gridLayout.addWidget(self.plea_trial_date, 1, 3, 1, 1)
+        self.entry_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
+        self.entry_date.setCalendarPopup(True)
+        self.entry_date.setDate(QtCore.QDate(2021, 1, 1))
+        self.entry_date.setObjectName("entry_date")
+        self.gridLayout.addWidget(self.entry_date, 1, 3, 1, 1)
         self.cancel_Button = QtWidgets.QPushButton(self.case_name_Frame)
         self.cancel_Button.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
         self.cancel_Button.setStyleSheet("background-color: rgb(160, 160, 160);")
@@ -305,3 +302,5 @@ class Ui_TrialToCourtHearingDialog(object):
         self.label_6.setText(_translate("TrialToCourtHearingDialog", "CASE INFORMATION"))
         self.create_entry_Button.setText(_translate("TrialToCourtHearingDialog", "Open Entry"))
         self.close_dialog_Button.setText(_translate("TrialToCourtHearingDialog", "Close Dialog"))
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit

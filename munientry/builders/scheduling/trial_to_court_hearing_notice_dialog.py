@@ -24,7 +24,7 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 
     def set_view_dates(self) -> None:
         self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
 
 
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
@@ -49,8 +49,8 @@ class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUp
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self) -> None:
-        self.model.trial_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
-        self.model.trial_time = self.dialog.trial_time_box.currentText()
+        self.model.trial_to_court_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.trial_to_court_time = self.dialog.trial_time_box.currentText()
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
@@ -59,7 +59,9 @@ class TrialToCourtDialogInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list = [
+            'check_if_trial_date_is_today',
+        ]
         self.check_status = self.perform_check_list()
 
 

@@ -147,11 +147,10 @@ TEMPLATE_DICT = {
     'Leap Admission Plea Dialog': Leap_Admission_Plea_Template,
     'Leap Admission Plea Already Valid Dialog': Leap_Admission_Plea_Already_Valid_Template,
     'Leap Sentencing Dialog': Leap_Sentencing_Template,
-
+    'Freeform Entry Dialog': Freeform_Entry_Template,
 
     'Rohrer Scheduling Entry': Scheduling_Entry_Template_Rohrer,
     'Hemmeter Scheduling Entry': Scheduling_Entry_Template_Hemmeter,
-    'Freeform Entry Dialog': Freeform_Entry_Template,
     'Final And Jury Notice Of Hearing Entry': Final_Jury_Notice_Of_Hearing_Template,
     'General Notice Of Hearing Entry': General_Notice_Of_Hearing_Template,
     'Trial To Court Notice Of Hearing Entry': Trial_To_Court_Hearing_Notice_Template,

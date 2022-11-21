@@ -3,6 +3,7 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
+from munientry.helper_functions import set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
@@ -48,7 +49,7 @@ class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
     def set_view_dates(self):
         self.dialog.arrest_summons_date_box.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.entry_date.setDate(TODAY)
 
 
 class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
@@ -90,7 +91,9 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
     def connect_scheduling_date_fields(self):
         """Only the final_pretrial_dateEdit field is connected.
 
-        In order to update other date fields on data entry another solution is required because
+        NOTE: This may be working as needed so TODO may not be needed.
+
+        TODO: In order to update other date fields on data entry another solution is required because
         adding other connections creates a loop due to the signal sent when a date is changed.
         """
         self.dialog.final_pretrial_dateEdit.dateChanged.connect(
@@ -135,12 +138,15 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
             self.update_final_pretrial_and_pretrial_only()
 
     def update_trial_and_pretrial_only(self):
+        logger.debug('Update trial and pretrial')
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
+            logger.debug('Update Rohrer')
             trial_date = self.set_trial_date('Tuesday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
             pretrial_date = self.set_event_date('Monday', PRETRIAL)
             self.dialog.pretrial_dateEdit.setDate(pretrial_date)
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
+            logger.debug('Update Hemmeter')
             trial_date = self.set_trial_date('Thursday', TRIAL)
             self.dialog.trial_dateEdit.setDate(trial_date)
             pretrial_date = self.set_event_date('Wednesday', PRETRIAL)
@@ -229,12 +235,24 @@ class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformatio
         self.update_model_with_case_information_frame_data()
 
     def set_scheduling_dates(self):
-        self.model.trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+        self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             ENTRY_DATE_FORMAT,
         )
         self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
+        self.model.hearing_location = self.set_courtroom()
+
+    def set_courtroom(self) -> str:
+        """Sets the hearing location for the case data.
+
+        This is used to set the hearing location even though it is not populated in an
+        entry because it is used in saving the scheduling data to the database.
+        """
+        if self.dialog.dialog_name == 'Rohrer Scheduling Entry':
+            return 'Courtroom A'
+        if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
+            return 'Courtroom B'
 
 
 class SchedulingEntryDialogInfoChecker(BaseChecker):
@@ -242,7 +260,10 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list = [
+            'check_if_final_pretrial_date_is_today',
+            'check_if_trial_date_is_today',
+        ]
         self.check_status = self.perform_check_list()
 
 

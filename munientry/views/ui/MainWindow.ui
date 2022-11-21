@@ -1547,6 +1547,9 @@ font-weight: bold;</string>
     </property>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
+    <addaction name="actionCourtroom_A_Events"/>
+    <addaction name="actionCourtroom_B_Events"/>
+    <addaction name="actionCourtroom_C_Events"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1633,6 +1636,21 @@ font-weight: bold;</string>
   <action name="actionJury_Pay_Entries_Folder">
    <property name="text">
     <string>Jury Pay Entries Folder</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_A_Events">
+   <property name="text">
+    <string>Courtroom A Events</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_B_Events">
+   <property name="text">
+    <string>Courtroom B Events</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_C_Events">
+   <property name="text">
+    <string>Courtroom C Events</string>
    </property>
   </action>
  </widget>

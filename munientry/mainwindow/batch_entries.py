@@ -97,5 +97,3 @@ def run_batch_fta_arraignments() -> int:
 if __name__ == '__main__':
     run_batch_fta_arraignments()
     logger.info(f'{__name__} run directly.')
-else:
-    logger.info(f'{__name__} imported.')

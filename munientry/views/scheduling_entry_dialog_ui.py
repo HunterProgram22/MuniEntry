@@ -8,9 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
-from munientry.widgets.custom_widgets import NoScrollDateEdit
-
 
 class Ui_SchedulingEntryDialog(object):
     def setupUi(self, SchedulingEntryDialog):
@@ -127,15 +124,15 @@ class Ui_SchedulingEntryDialog(object):
         self.defendant_first_name_lineEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.defendant_first_name_lineEdit.setObjectName("defendant_first_name_lineEdit")
         self.gridLayout.addWidget(self.defendant_first_name_lineEdit, 1, 1, 1, 1)
-        self.plea_trial_date = NoScrollDateEdit(self.case_name_Frame)
-        self.plea_trial_date.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
-        self.plea_trial_date.setStyleSheet("color: rgb(0, 0, 0);\n"
+        self.entry_date = NoScrollDateEdit(self.case_name_Frame)
+        self.entry_date.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
+        self.entry_date.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb(255, 255, 255);")
-        self.plea_trial_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
-        self.plea_trial_date.setCalendarPopup(True)
-        self.plea_trial_date.setDate(QtCore.QDate(2021, 1, 1))
-        self.plea_trial_date.setObjectName("plea_trial_date")
-        self.gridLayout.addWidget(self.plea_trial_date, 1, 3, 1, 1)
+        self.entry_date.setMinimumDate(QtCore.QDate(2021, 1, 1))
+        self.entry_date.setCalendarPopup(True)
+        self.entry_date.setDate(QtCore.QDate(2021, 1, 1))
+        self.entry_date.setObjectName("entry_date")
+        self.gridLayout.addWidget(self.entry_date, 1, 3, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.case_name_Frame)
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
@@ -435,3 +432,5 @@ class Ui_SchedulingEntryDialog(object):
         self.final_pretrial_time_box.setItemText(13, _translate("SchedulingEntryDialog", "4:15 PM"))
         self.close_dialog_Button.setText(_translate("SchedulingEntryDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("SchedulingEntryDialog", "Open Entry"))
+from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
+from munientry.widgets.custom_widgets import NoScrollDateEdit

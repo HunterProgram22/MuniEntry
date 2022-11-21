@@ -88,5 +88,44 @@ def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
     """
 
 
+def insert_scheduling_data_query(event: object) -> str:
+    return f"""
+    INSERT INTO case_events (
+        case_number,
+        event_type_id,
+        event_location_id,
+        case_event_date,
+        case_event_time
+    )
+    SELECT
+       '{event.case_number}',
+       et.event_type_id,
+       el.location_id,
+       '{event.event_date}',
+       '{event.event_time}'
+    FROM
+        event_types as et,
+        event_locations as el
+    WHERE 
+        et.event_type_name = '{event.event_name}'
+        AND el.location_name = '{event.event_location}';
+    """
+
+
+def courtroom_event_report_query(report_date: str, courtroom: int) -> str:
+    return f"""
+    SELECT
+        case_number,
+        et.event_type_name,
+        case_event_time
+    FROM
+        case_events AS ce
+    LEFT OUTER JOIN event_types AS et
+        ON ce.event_type_id = et.event_type_id
+    WHERE
+        case_event_date = '{report_date}' AND event_location_id = {courtroom}
+    """
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
