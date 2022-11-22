@@ -13,6 +13,8 @@ Classes:
     JuryTrialEvent(Event)
 
     TelephonePretrialEvent(Event)
+
+    TrialToCourtEvent(Event)
 """
 from loguru import logger
 
@@ -49,6 +51,14 @@ class Event(object):
         return self.case_data_dict.get(event_time_field, 'None')
 
 
+class FinalPretrialEvent(Event):
+    """Event object for final pretrial court event."""
+
+    event_name_field = 'Final Pretrial'
+    event_date_field = 'final_pretrial_date'
+    event_time_field = 'final_pretrial_time'
+
+
 class GeneralHearingEvent(Event):
     """Event object for the General Notice of Hearing Entry.
 
@@ -69,14 +79,6 @@ class JuryTrialEvent(Event):
     event_time_field = 'jury_trial_time'
 
 
-class TrialToCourtEvent(Event):
-    """Event object for trial to court event."""
-
-    event_name_field = 'Trial to Court'
-    event_date_field = 'trial_to_court_date'
-    event_time_field = 'trial_to_court_time'
-
-
 class TelephonePretrialEvent(Event):
     """Event object for telephone pretrial court event."""
 
@@ -85,12 +87,12 @@ class TelephonePretrialEvent(Event):
     event_time_field = 'pretrial_time'
 
 
-class FinalPretrialEvent(Event):
-    """Event object for final pretrial court event."""
+class TrialToCourtEvent(Event):
+    """Event object for trial to court event."""
 
-    event_name_field = 'Final Pretrial'
-    event_date_field = 'final_pretrial_date'
-    event_time_field = 'final_pretrial_time'
+    event_name_field = 'Trial to Court'
+    event_date_field = 'trial_to_court_date'
+    event_time_field = 'trial_to_court_time'
 
 
 if __name__ == '__main__':
