@@ -79,6 +79,10 @@ class MainWindowViewModifier(object):
                 JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
             self.main_window.jury_comm_patterson_radioButton:
                 JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
+            self.main_window.none_admin_radioButton:
+                JudicialOfficer('None', 'Assigned', 'Admin Staff Person'),
+            self.main_window.bunner_admin_radioButton:
+                JudicialOfficer('A', 'B', 'Admin Staff Person'),
         }
 
     def connect_dialog_buttons(self):
