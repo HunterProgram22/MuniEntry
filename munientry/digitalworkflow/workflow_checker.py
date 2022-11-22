@@ -24,8 +24,15 @@ class WorkflowCheck(object):
         self.case_information = case_information
 
     def check_for_probation_workflow(self) -> (bool, str):
+        """Checks conditions for sending an entry into probation workflow.
+
+        For bond entries - all TRC cases, and other case types where defendant must report to
+        probation.
+
+        For sentencing entries - all entries that impose community control.
+        """
         if self.case_information.__class__.__name__ in self.scram_gps_entries:
-            if self.case_information.bond_conditions.no_alcohol_drugs is True:
+            if 'TRC' in self.case_information.case_number:
                 return (True, SCRAM_PATH)
             if self.case_information.bond_conditions.monitoring is True:
                 return (True, SCRAM_PATH)
