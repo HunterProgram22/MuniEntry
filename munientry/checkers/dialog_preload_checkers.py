@@ -92,6 +92,8 @@ class AdminPreloadChecker(DialogPreloadChecker):
             self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
             self.mainwindow.court_admin_kudela_radioButton.isChecked(),
             self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
+            self.mainwindow.bunner_admin_radioButton.isChecked(),
+            self.mainwindow.none_admin_radioButton.isChecked(),
         ]
         if any(required_officers):
             return True
