@@ -54,16 +54,14 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialog):
     """Dialog builder class for 'LEAP Sentencing' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Leap Sentencing Dialog',
-        'view': LeapSentencingDialogViewModifier,
-        'slots': LeapSentencingDialogSlotFunctions,
-        'signals': LeapSentencingDialogSignalConnector,
-        'case_information_model': LeapSentencingEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': LeapSentencingDialogUpdater,
-        'info_checker': LeapSentencingDialogInfoChecker,
-    }
+    _case_information_model = LeapSentencingEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = LeapSentencingDialogInfoChecker
+    _model_updater = LeapSentencingDialogUpdater
+    _signal_connector = LeapSentencingDialogSignalConnector
+    _slots = LeapSentencingDialogSlotFunctions
+    _view_modifier = LeapSentencingDialogViewModifier
+    dialog_name = 'Leap Sentencing Dialog'
 
     def additional_setup(self):
         self.additional_conditions_list = [

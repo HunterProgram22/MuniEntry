@@ -96,16 +96,14 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog):
     """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Not Guilty Bond Dialog',
-        'view': NotGuiltyBondDialogViewModifier,
-        'slots': NotGuiltyBondDialogSlotFunctions,
-        'signals': NotGuiltyBondDialogSignalConnector,
-        'case_information_model': NotGuiltyBondEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': NotGuiltyBondDialogUpdater,
-        'info_checker': NotGuiltyBondDialogInfoChecker,
-    }
+    _case_information_model = NotGuiltyBondEntryCaseInformation
+    _case_loader = CmsChargeLoader
+    _info_checker = NotGuiltyBondDialogInfoChecker
+    _model_updater = NotGuiltyBondDialogUpdater
+    _signal_connector = NotGuiltyBondDialogSignalConnector
+    _slots = NotGuiltyBondDialogSlotFunctions
+    _view_modifier = NotGuiltyBondDialogViewModifier
+    dialog_name = 'Not Guilty Bond Dialog'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

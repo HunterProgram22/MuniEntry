@@ -273,16 +273,14 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
 class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
     """The builder class for the Scheduling Entry Dialog."""
 
-    build_dict = {
-        'dialog_name': None,
-        'view': SchedulingEntryDialogViewModifier,
-        'slots': SchedulingEntryDialogSlotFunctions,
-        'signals': SchedulingEntryDialogSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': SchedulingEntryDialogCaseInformationUpdater,
-        'info_checker': SchedulingEntryDialogInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = SchedulingEntryDialogInfoChecker
+    _model_updater = SchedulingEntryDialogCaseInformationUpdater
+    _signal_connector = SchedulingEntryDialogSignalConnector
+    _slots = SchedulingEntryDialogSlotFunctions
+    _view_modifier = SchedulingEntryDialogViewModifier
+    dialog_name = None
 
     def additional_setup(self):
         """The additional setup sets the template here after init.

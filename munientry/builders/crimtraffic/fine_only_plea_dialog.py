@@ -56,16 +56,14 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     """Dialog builder class for 'Fine Only' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Fine Only Plea Dialog',
-        'view': FineOnlyDialogViewModifier,
-        'slots': FineOnlyDialogSlotFunctions,
-        'signals': FineOnlyDialogSignalConnector,
-        'case_information_model': FineOnlyEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': FineOnlyDialogUpdater,
-        'info_checker': FineOnlyDialogInfoChecker,
-    }
+    _case_information_model = FineOnlyEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = FineOnlyDialogInfoChecker
+    _model_updater = FineOnlyDialogUpdater
+    _signal_connector = FineOnlyDialogSignalConnector
+    _slots = FineOnlyDialogSlotFunctions
+    _view_modifier = FineOnlyDialogViewModifier
+    dialog_name = 'Fine Only Plea Dialog'
 
     def additional_setup(self):
         self.additional_conditions_list = [

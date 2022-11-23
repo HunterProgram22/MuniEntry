@@ -73,16 +73,14 @@ class FailureToAppearDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDialog):
     """Dialog builder class for 'Failure To Appear / Issue Warrant' Entry."""
 
-    build_dict = {
-        'dialog_name': 'Failure To Appear Dialog',
-        'view': FailureToAppearDialogViewModifier,
-        'slots': FailureToAppearDialogSlotFunctions,
-        'signals': FailureToAppearDialogSignalConnector,
-        'case_information_model': FailureToAppearEntryCaseInformation,
-        'loader': CmsNoChargeLoader,
-        'updater': FailureToAppearDialogUpdater,
-        'info_checker': FailureToAppearDialogInfoChecker,
-    }
+    _case_information_model = FailureToAppearEntryCaseInformation
+    _case_loader = CmsNoChargeLoader
+    _info_checker = FailureToAppearDialogInfoChecker
+    _model_updater = FailureToAppearDialogUpdater
+    _signal_connector = FailureToAppearDialogSignalConnector
+    _slots = FailureToAppearDialogSlotFunctions
+    _view_modifier = FailureToAppearDialogViewModifier
+    dialog_name = 'Failure To Appear Dialog'
 
     def additional_setup(self):
         self.entry_case_information.fta_conditions = FailureToAppearConditions()

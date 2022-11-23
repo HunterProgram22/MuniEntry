@@ -66,16 +66,14 @@ class LeapAdmissionPleaDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Leap Admission Plea Dialog',
-        'view': LeapAdmissionPleaDialogViewModifier,
-        'slots': LeapAdmissionPleaDialogSlotFunctions,
-        'signals': LeapAdmissionPleaDialogSignalConnector,
-        'case_information_model': LeapAdmissionEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': LeapAdmissionPleaDialogUpdater,
-        'info_checker': LeapAdmissionPleaDialogInfoChecker,
-    }
+    _case_information_model = LeapAdmissionEntryCaseInformation
+    _case_loader = CmsChargeLoader
+    _info_checker = LeapAdmissionPleaDialogInfoChecker
+    _model_updater = LeapAdmissionPleaDialogUpdater
+    _signal_connector = LeapAdmissionPleaDialogSignalConnector
+    _slots = LeapAdmissionPleaDialogSlotFunctions
+    _view_modifier = LeapAdmissionPleaDialogViewModifier
+    dialog_name = 'Leap Admission Plea Dialog'
 
     def additional_setup(self):
         self.functions.set_leap_sentencing_date('120 days')

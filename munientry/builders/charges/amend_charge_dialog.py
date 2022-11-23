@@ -80,13 +80,10 @@ class AmendChargeDialogBuilder(charge.ChargeDialogBuilder, Ui_AmendChargeDialog)
     in the template of the dialog.
     """
 
-    build_dict = {
-        'dialog_name': 'Amend Charge Dialog',
-        'view': charge.ChargeDialogsViewModifier,
-        'slots': AmendChargeDialogSlotFunctions,
-        'signals': charge.ChargeDialogsSignalConnector,
-        'db_connection_string': 'con_charges',
-    }
+    _signal_connector = charge.ChargeDialogsSignalConnector
+    _slots = AmendChargeDialogSlotFunctions
+    _view_modifier = charge.ChargeDialogsViewModifier
+    dialog_name = 'Amend Charge Dialog'
 
     def additional_setup(self):
         self.amend_charge_Button.released.connect(self.functions.amend_offense_process)
