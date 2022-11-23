@@ -129,16 +129,14 @@ class FinalJuryNoticeHearingDialog(
     The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
-    build_dict = {
-        'dialog_name': 'Final And Jury Notice Of Hearing Entry',
-        'view': FinalJuryNoticeHearingViewModifier,
-        'slots': FinalJuryNoticeHearingSlotFunctions,
-        'signals': FinalJuryNoticeHearingSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': FinalJuryNoticeHearingCaseInformationUpdater,
-        'info_checker': FinalJuryNoticeHearingInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = FinalJuryNoticeHearingInfoChecker
+    _model_updater = FinalJuryNoticeHearingCaseInformationUpdater
+    _signal_connector = FinalJuryNoticeHearingSignalConnector
+    _slots = FinalJuryNoticeHearingSlotFunctions
+    _view_modifier = FinalJuryNoticeHearingViewModifier
+    dialog_name = 'Final And Jury Notice Of Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())

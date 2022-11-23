@@ -77,16 +77,14 @@ class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoti
     The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
-    build_dict = {
-        'dialog_name': 'General Notice Of Hearing Entry',
-        'view': GeneralNoticeOfHearingDialogViewModifier,
-        'slots': GeneralNoticeOfHearingDialogSlotFunctions,
-        'signals': GeneralNoticeOfHearingDialogSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': GeneralNoticeOfHearingCaseInformationUpdater,
-        'info_checker': GeneralNoticeOfHearingInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = GeneralNoticeOfHearingInfoChecker
+    _model_updater = GeneralNoticeOfHearingCaseInformationUpdater
+    _signal_connector = GeneralNoticeOfHearingDialogSignalConnector
+    _slots = GeneralNoticeOfHearingDialogSlotFunctions
+    _view_modifier = GeneralNoticeOfHearingDialogViewModifier
+    dialog_name = 'General Notice Of Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())
