@@ -122,13 +122,11 @@ class JuryPaymentCaseInformationUpdater(BaseDialogUpdater):
 class JuryPaymentDialog(admin.AdminDialogBuilder, Ui_JurorPaymentDialog):
     """Builder for the Jury Payment Dialog."""
 
-    build_dict = {
-        'dialog_name': 'Jury Payment Entry',
-        'view': JuryPaymentViewModifier,
-        'slots': JuryPaymentSlotFunctions,
-        'signals': JuryPaymentSignalConnector,
-        'case_information_model': JuryPaymentInformation,
-        'loader': CmsLoader,
-        'updater': JuryPaymentCaseInformationUpdater,
-        'info_checker': JuryPaymentInfoChecker,
-    }
+    _case_information_model = JuryPaymentInformation
+    _case_loader = CmsLoader
+    _info_checker = JuryPaymentInfoChecker
+    _model_updater = JuryPaymentCaseInformationUpdater
+    _signal_connector = JuryPaymentSignalConnector
+    _slots = JuryPaymentSlotFunctions
+    _view_modifier = JuryPaymentViewModifier
+    dialog_name = 'Jury Payment Entry'
