@@ -88,12 +88,10 @@ class AddJailOnlyDialog(second.SecondaryDialogBuilder, Ui_AddJailOnly):
     show_hide_checkbox_connected_fields to hide boxes on load that are optional.
     """
 
-    build_dict = {
-        'dialog_name': 'Add Jail Only Dialog',
-        'view': AddJailOnlyDialogViewModifier,
-        'slots': AddJailOnlyDialogSlotFunctions,
-        'signals': AddJailOnlyDialogSignalConnector,
-    }
+    _signal_connector = AddJailOnlyDialogSignalConnector
+    _slots = AddJailOnlyDialogSlotFunctions
+    _view_modifier = AddJailOnlyDialogViewModifier
+    dialog_name = 'Add Jail Only Dialog'
 
     condition_checkbox_dict = {
         'companion_cases_checkBox': [

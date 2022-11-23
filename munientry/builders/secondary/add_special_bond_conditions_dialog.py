@@ -83,12 +83,10 @@ class AddSpecialBondConditionsDialog(
     Dialogs that use: NotGuiltyBondDialog, BondHearingDialog, NoPleaBondDialog.
     """
 
-    build_dict = {
-        'dialog_name': 'Add Special Bond Conditions Dialog',
-        'view': AddSpecialBondConditionsDialogViewModifier,
-        'slots': AddSpecialBondConditionsDialogSlotFunctions,
-        'signals': AddSpecialBondConditionsDialogSignalConnector,
-    }
+    _signal_connector = AddSpecialBondConditionsDialogSignalConnector
+    _slots = AddSpecialBondConditionsDialogSlotFunctions
+    _view_modifier = AddSpecialBondConditionsDialogViewModifier
+    dialog_name = 'Add Special Bond Conditions Dialog'
 
     conditions_frames = [
         ('other_conditions_checkBox', 'other_conditions_frame'),
