@@ -114,7 +114,11 @@ def create_case_data_list(worksheet: 'Workbook.active', headers_dict: dict) -> l
         case.offense = clean_offense_name(offense)
 
         statute = get_cell_value(worksheet, row, headers_dict[COL_STATUTE])
-        case.statute = clean_statute_name(statute)
+        try:
+            case.statute = clean_statute_name(statute)
+        except AttributeError as err:
+            logger.warning(err)
+            case.statute = statute
 
         case.degree = get_cell_value(worksheet, row, headers_dict[COL_DEGREE])
         case.fra_in_file = get_cell_value(worksheet, row, headers_dict[COL_INSURANCE])

@@ -49,6 +49,9 @@ class MainWindowSlotFunctionsMixin(object):
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button and calls load_case_lists."""
+        db_connection = open_db_connection('con_munientry_db')
+        sql_lite.load_daily_case_list_data(db_connection)
+        close_db_connection(db_connection)
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 
