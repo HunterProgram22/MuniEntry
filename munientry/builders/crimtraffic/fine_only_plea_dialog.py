@@ -56,9 +56,12 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     """Dialog builder class for 'Fine Only' dialog."""
 
+    _load_view = FineOnlyDialogViewModifier
+    dialog_name = 'Fine Only Plea Dialog Test'
+
     build_dict = {
-        'dialog_name': 'Fine Only Plea Dialog',
-        'view': FineOnlyDialogViewModifier,
+        # 'dialog_name': 'Fine Only Plea Dialog',
+        # 'view': FineOnlyDialogViewModifier,
         'slots': FineOnlyDialogSlotFunctions,
         'signals': FineOnlyDialogSignalConnector,
         'case_information_model': FineOnlyEntryCaseInformation,

@@ -43,9 +43,13 @@ class BaseDialogBuilder(QDialog, BuildMixin):
     def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
         self.build_attrs = self._get_dialog_attributes()
-        self._modify_view()
+        try:
+            self._modify_view()
+        except TypeError as err:
+            logger.warning(err)
+        self._load_view(self)
         self._connect_signals_to_slots()
-        self.dialog_name = self.build_attrs.get('dialog_name', None)
+        # self.dialog_name = self.build_attrs.get('dialog_name', None)
         logger.dialog(f'{self.dialog_name} Opened')
 
     def load_entry_case_information_model(self):
