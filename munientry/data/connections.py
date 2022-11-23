@@ -83,7 +83,7 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     Returns:
         QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
-    if socket.gethostname() == 'Muni10':
+    if socket.gethostname() == 'None':  # This needs to be updated to account for production version
         db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
         db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
         logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
