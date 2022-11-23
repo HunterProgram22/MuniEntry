@@ -398,8 +398,8 @@ class Diversion:
 
 
 @dataclass
-class CommunityControlViolationBondConditions:
-    """Conditions specific to a Community Control Violation Bond Dialog. They are an object
+class ProbationViolationBondConditions:
+    """Conditions specific to a Probation Violation Bond Dialog. They are an object
     that is then part of CriminalCaseInformation."""
 
     bond_type: str = None

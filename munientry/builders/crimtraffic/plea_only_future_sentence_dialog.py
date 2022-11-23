@@ -33,16 +33,14 @@ class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     """Dialog builder class for 'Plea Only - Future Sentencing' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Plea Only Dialog',
-        'view': PleaOnlyDialogViewModifier,
-        'slots': PleaOnlyDialogSlotFunctions,
-        'signals': PleaOnlyDialogSignalConnector,
-        'case_information_model': PleaOnlyEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': PleaOnlyDialogUpdater,
-        'info_checker': PleaOnlyDialogInfoChecker,
-    }
+    _case_information_model = PleaOnlyEntryCaseInformation
+    _case_loader = CmsChargeLoader
+    _info_checker = PleaOnlyDialogInfoChecker
+    _model_updater = PleaOnlyDialogUpdater
+    _signal_connector = PleaOnlyDialogSignalConnector
+    _slots = PleaOnlyDialogSlotFunctions
+    _view_modifier = PleaOnlyDialogViewModifier
+    dialog_name = 'Plea Only Dialog'
 
 
 if __name__ == '__main__':

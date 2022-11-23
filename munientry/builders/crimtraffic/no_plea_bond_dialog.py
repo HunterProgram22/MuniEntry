@@ -82,16 +82,14 @@ class NoPleaBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
     """Dialog builder class for 'Appear on Warrant (No Plea) / Bond' Entry."""
 
-    build_dict = {
-        'dialog_name': 'No Plea Bond Dialog',
-        'view': NoPleaBondDialogViewModifier,
-        'slots': NoPleaBondDialogSlotFunctions,
-        'signals': NoPleaBondDialogSignalConnector,
-        'case_information_model': NoPleaBondEntryCaseInformation,
-        'loader': CmsNoChargeLoader,
-        'updater': NoPleaBondDialogUpdater,
-        'info_checker': NoPleaBondDialogInfoChecker,
-    }
+    _case_information_model = NoPleaBondEntryCaseInformation
+    _case_loader = CmsNoChargeLoader
+    _info_checker = NoPleaBondDialogInfoChecker
+    _model_updater = NoPleaBondDialogUpdater
+    _signal_connector = NoPleaBondDialogSignalConnector
+    _slots = NoPleaBondDialogSlotFunctions
+    _view_modifier = NoPleaBondDialogViewModifier
+    dialog_name = 'No Plea Bond Dialog'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

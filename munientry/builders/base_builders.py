@@ -1,6 +1,5 @@
 """Contains common base classes from which other dialogs inherit."""
 from __future__ import annotations
-import time
 
 from typing import Any
 
@@ -43,20 +42,17 @@ class BaseDialogBuilder(QDialog, BuildMixin):
 
     def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
-        start = time.perf_counter()
-        self.build_attrs = self._get_dialog_attributes()
-        try:
-            self._modify_view()
-        except TypeError as err:
-            logger.warning(err)
+        # self.build_attrs = self._get_dialog_attributes()
+        # try:
+        #     self._modify_view()
+        # except TypeError as err:
+        #     logger.warning(err)
         self._view_modifier(self)
         self.functions = self._slots(self)
         self._signal_connector(self)
         # self._connect_signals_to_slots()
         # self.dialog_name = self.build_attrs.get('dialog_name', None)
         logger.dialog(f'{self.dialog_name} Opened')
-        end = time.perf_counter()
-        logger.info(f'Dialog load time: {end - start}')
 
     def load_entry_case_information_model(self):
         self.entry_case_information = self._case_information_model()

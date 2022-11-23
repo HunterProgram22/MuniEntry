@@ -82,16 +82,14 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
     """Dialog builder class for 'Jail and/or Community Control' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Jail CC Plea Dialog',
-        'view': JailCCDialogViewModifier,
-        'slots': JailCCDialogSlotFunctions,
-        'signals': JailCCDialogSignalConnector,
-        'case_information_model': JailCCEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': JailCCDialogUpdater,
-        'info_checker': JailCCPleaDialogInfoChecker,
-    }
+    _case_information_model = JailCCEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = JailCCPleaDialogInfoChecker
+    _model_updater = JailCCDialogUpdater
+    _signal_connector = JailCCDialogSignalConnector
+    _slots = JailCCDialogSlotFunctions
+    _view_modifier = JailCCDialogViewModifier
+    dialog_name = 'Jail CC Plea Dialog'
 
     def additional_setup(self):
         """TODO: same refactor for all additional conditions list should be made."""
