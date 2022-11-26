@@ -55,11 +55,11 @@ class Ui_MattoxWorkflowDialog(object):
         self.community_control_entries_listWidget = QtWidgets.QListWidget(self.frame_3)
         self.community_control_entries_listWidget.setObjectName("community_control_entries_listWidget")
         self.gridLayout_2.addWidget(self.community_control_entries_listWidget, 4, 0, 1, 1)
-        self.cancel_Button = QtWidgets.QPushButton(self.frame_3)
-        self.cancel_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
+        self.close_dialog_Button = QtWidgets.QPushButton(self.frame_3)
+        self.close_dialog_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
 "font-weight: bold;")
-        self.cancel_Button.setObjectName("cancel_Button")
-        self.gridLayout_2.addWidget(self.cancel_Button, 8, 0, 1, 1)
+        self.close_dialog_Button.setObjectName("close_dialog_Button")
+        self.gridLayout_2.addWidget(self.close_dialog_Button, 8, 0, 1, 1)
         self.scram_gps_entries_listWidget = QtWidgets.QListWidget(self.frame_3)
         self.scram_gps_entries_listWidget.setObjectName("scram_gps_entries_listWidget")
         self.gridLayout_2.addWidget(self.scram_gps_entries_listWidget, 4, 1, 1, 1)
@@ -113,7 +113,7 @@ class Ui_MattoxWorkflowDialog(object):
     def retranslateUi(self, MattoxWorkflowDialog):
         _translate = QtCore.QCoreApplication.translate
         MattoxWorkflowDialog.setWindowTitle(_translate("MattoxWorkflowDialog", "Mattox Workflow"))
-        self.cancel_Button.setText(_translate("MattoxWorkflowDialog", "Cancel"))
+        self.close_dialog_Button.setText(_translate("MattoxWorkflowDialog", "Close Workflow"))
         self.label.setText(_translate("MattoxWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">PRETRIAL ENTRIES</span></p></body></html>"))
         self.label_2.setText(_translate("MattoxWorkflowDialog", "COMMUNITY CONTROL ENTRIES"))
         self.load_new_entries_Button.setText(_translate("MattoxWorkflowDialog", "Check For New Entries"))

@@ -46,11 +46,11 @@ class Ui_HemmeterWorkflowDialog(object):
         self.frame.setObjectName("frame")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.frame)
         self.gridLayout_4.setObjectName("gridLayout_4")
-        self.cancel_Button = QtWidgets.QPushButton(self.frame)
-        self.cancel_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
+        self.close_dialog_Button = QtWidgets.QPushButton(self.frame)
+        self.close_dialog_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
 "font-weight: bold;")
-        self.cancel_Button.setObjectName("cancel_Button")
-        self.gridLayout_4.addWidget(self.cancel_Button, 1, 1, 1, 1)
+        self.close_dialog_Button.setObjectName("close_dialog_Button")
+        self.gridLayout_4.addWidget(self.close_dialog_Button, 1, 1, 1, 1)
         self.gridLayout.addWidget(self.frame, 1, 0, 1, 1)
         self.complete_workflow_Button = QtWidgets.QPushButton(HemmeterWorkflowDialog)
         self.complete_workflow_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
@@ -149,7 +149,7 @@ class Ui_HemmeterWorkflowDialog(object):
     def retranslateUi(self, HemmeterWorkflowDialog):
         _translate = QtCore.QCoreApplication.translate
         HemmeterWorkflowDialog.setWindowTitle(_translate("HemmeterWorkflowDialog", "Judge Hemmeter Digital Workflow"))
-        self.cancel_Button.setText(_translate("HemmeterWorkflowDialog", "Cancel"))
+        self.close_dialog_Button.setText(_translate("HemmeterWorkflowDialog", "Close Workflow"))
         self.complete_workflow_Button.setText(_translate("HemmeterWorkflowDialog", "Complete Workflow"))
         self.label.setText(_translate("HemmeterWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">ENTRIES PENDING REVIEW</span></p></body></html>"))
         self.label_2.setText(_translate("HemmeterWorkflowDialog", "APPROVED ENTRIES"))
