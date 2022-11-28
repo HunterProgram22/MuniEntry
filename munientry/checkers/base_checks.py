@@ -50,13 +50,15 @@ class BaseChecker(object):
 
     def check_if_final_pretrial_date_is_today(self) -> str:
         """Scheduling date checker to make sure final pretrial date is not set to today."""
-        if self.view.final_pretrial_dateEdit.date() == TODAY:
-            message = (
-                    'The Final Pretrial Date is Today, but must be a date in the future. Please'
-                    + ' enter a date in the Final Pretrial Date box after today.'
-            )
-            RequiredBox(message).exec()
-            return FAIL
+        if self.view.jury_trial_only_no_radioButton.isChecked():
+            if self.view.final_pretrial_dateEdit.date() == TODAY:
+                message = (
+                        'The Final Pretrial Date is Today, but must be a date in the future. Please'
+                        + ' enter a date in the Final Pretrial Date box after today.'
+                )
+                RequiredBox(message).exec()
+                return FAIL
+            return PASS
         return PASS
 
     def check_if_leap_plea_date_is_today(self) -> str:
