@@ -73,16 +73,14 @@ class TrialToCourtHearingDialog(sched.SchedulingDialogBuilder, Ui_TrialToCourtHe
     The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
-    build_dict = {
-        'dialog_name': 'Trial To Court Notice Of Hearing Entry',
-        'view': TrialToCourtDialogViewModifier,
-        'slots': TrialToCourtDialogSlotFunctions,
-        'signals': TrialToCourtDialogSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': TrialToCourtDialogCaseInformationUpdater,
-        'info_checker': TrialToCourtDialogInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = TrialToCourtDialogInfoChecker
+    _model_updater = TrialToCourtDialogCaseInformationUpdater
+    _signal_connector = TrialToCourtDialogSignalConnector
+    _slots = TrialToCourtDialogSlotFunctions
+    _view_modifier = TrialToCourtDialogViewModifier
+    dialog_name = 'Trial To Court Notice Of Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())

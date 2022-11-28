@@ -32,16 +32,14 @@ class LeapAdmissionPleaValidDialogSignalConnector(crim.CrimTrafficSignalConnecto
 class LeapPleaValidDialog(crim.CrimTrafficDialogBuilder, Ui_LeapPleaValidDialog):
     """Dialog builder class for 'LEAP Admission Plea - Already Valid' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Leap Admission Plea Already Valid Dialog',
-        'view': LeapAdmissionPleaDialogViewModifier,
-        'slots': LeapAdmissionPleaDialogSlotFunctions,
-        'signals': LeapAdmissionPleaValidDialogSignalConnector,
-        'case_information_model': LeapAdmissionEntryCaseInformation,
-        'loader': CmsChargeLoader,
-        'updater': LeapAdmissionPleaDialogUpdater,
-        'info_checker': LeapAdmissionPleaDialogInfoChecker,
-    }
+    _case_information_model = LeapAdmissionEntryCaseInformation
+    _case_loader = CmsChargeLoader
+    _info_checker = LeapAdmissionPleaDialogInfoChecker
+    _model_updater = LeapAdmissionPleaDialogUpdater
+    _signal_connector = LeapAdmissionPleaValidDialogSignalConnector
+    _slots = LeapAdmissionPleaDialogSlotFunctions
+    _view_modifier = LeapAdmissionPleaDialogViewModifier
+    dialog_name = 'Leap Admission Plea Already Valid Dialog'
 
 
 if __name__ == '__main__':

@@ -49,13 +49,10 @@ class AddChargeDialogSlotFunctions(charge.ChargeDialogsSlotFunctions):
 class AddChargeDialogBuilder(charge.ChargeDialogBuilder, Ui_AddChargeDialog):
     """Adds a charge to the ChargeGrid for the dialog."""
 
-    build_dict = {
-        'dialog_name': 'Add Charge Dialog',
-        'view': charge.ChargeDialogsViewModifier,
-        'slots': AddChargeDialogSlotFunctions,
-        'signals': charge.ChargeDialogsSignalConnector,
-        'db_connection_string': 'con_charges',
-    }
+    _signal_connector = charge.ChargeDialogsSignalConnector
+    _slots = AddChargeDialogSlotFunctions
+    _view_modifier = charge.ChargeDialogsViewModifier
+    dialog_name = 'Add Charge Dialog'
 
     def additional_setup(self):
         self.add_charge_Button.released.connect(self.functions.add_charge_process)

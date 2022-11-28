@@ -126,12 +126,10 @@ class AddCommunityControlDialog(second.SecondaryDialogBuilder, Ui_AddCommunityCo
     to hide boxes on load that are optional.
     """
 
-    build_dict = {
-        'dialog_name': 'Add Community Control Dialog',
-        'view': AddCommunityControlDialogViewModifier,
-        'slots': AddCommunityControlDialogSlotFunctions,
-        'signals': AddCommunityControlDialogSignalConnector,
-    }
+    _signal_connector = AddCommunityControlDialogSignalConnector
+    _slots = AddCommunityControlDialogSlotFunctions
+    _view_modifier = AddCommunityControlDialogViewModifier
+    dialog_name = 'Add Community Control Dialog'
 
     conditions_frames = [
         ('other_conditions_checkBox', 'other_conditions_frame'),

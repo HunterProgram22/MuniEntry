@@ -122,10 +122,11 @@ class MattoxWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
     """Signal connector for Mattox Workflow Dialog."""
 
     def __init__(self, dialog):
-        super().__init__(dialog)
+        self.dialog = dialog
         self.connect_workflow_buttons()
 
     def connect_workflow_buttons(self):
+        self.dialog.close_dialog_Button.released.connect(self.dialog.close)
         self.dialog.open_entry_Button.released.connect(self.dialog.functions.open_entry)
         self.dialog.delete_entry_Button.released.connect(self.dialog.functions.delete_entry)
         self.dialog.load_new_entries_Button.released.connect(self.dialog.functions.load_new_entries)
@@ -134,9 +135,7 @@ class MattoxWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
 class MattoxWorkflowDialog(base.BaseDialogBuilder, Ui_MattoxWorkflowDialog):
     """Dialog builder class for Mattox Digital Workflow."""
 
-    build_dict = {
-        'dialog_name': 'Mattox Digital Workflow',
-        'view': MattoxWorkflowDialogViewModifier,
-        'slots': MattoxWorkflowDialogSlotFunctions,
-        'signals': MattoxWorkflowDialogSignalConnector,
-    }
+    _signal_connector = MattoxWorkflowDialogSignalConnector
+    _slots = MattoxWorkflowDialogSlotFunctions
+    _view_modifier = MattoxWorkflowDialogViewModifier
+    dialog_name = 'Mattox Digital Workflow'

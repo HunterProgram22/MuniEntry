@@ -272,16 +272,14 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
     The judicial_officer for this entry is the selected Assignment Commissioner.
     """
 
-    build_dict = {
-        'dialog_name': 'Driving Privileges Entry',
-        'view': DrivingPrivilegesViewModifier,
-        'slots': DrivingPrivilegesSlotFunctions,
-        'signals': DrivingPrivilegesSignalConnector,
-        'case_information_model': DrivingPrivilegesInformation,
-        'loader': CmsDrivingInfoLoader,
-        'updater': DrivingPrivilegesCaseInformationUpdater,
-        'info_checker': DrivingPrivilegesDialogInfoChecker,
-    }
+    _case_information_model = DrivingPrivilegesInformation
+    _case_loader = CmsDrivingInfoLoader
+    _info_checker = DrivingPrivilegesDialogInfoChecker
+    _model_updater = DrivingPrivilegesCaseInformationUpdater
+    _signal_connector = DrivingPrivilegesSignalConnector
+    _slots = DrivingPrivilegesSlotFunctions
+    _view_modifier = DrivingPrivilegesViewModifier
+    dialog_name = 'Driving Privileges Entry'
 
     def additional_setup(self):
         self.setWindowTitle(f'{self.dialog_name} Case Information')

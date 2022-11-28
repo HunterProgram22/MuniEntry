@@ -78,16 +78,14 @@ class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialog):
     """Dialog builder class for 'Sentencing Only - Already Plead' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Sentencing Only Dialog',
-        'view': SentencingOnlyDialogViewModifier,
-        'slots': SentencingOnlyDialogSlotFunctions,
-        'signals': SentencingOnlyDialogSignalConnector,
-        'case_information_model': SentencingOnlyEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': SentencingOnlyDialogUpdater,
-        'info_checker': SentencingOnlyDialogInfoChecker,
-    }
+    _case_information_model = SentencingOnlyEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = SentencingOnlyDialogInfoChecker
+    _model_updater = SentencingOnlyDialogUpdater
+    _signal_connector = SentencingOnlyDialogSignalConnector
+    _slots = SentencingOnlyDialogSlotFunctions
+    _view_modifier = SentencingOnlyDialogViewModifier
+    dialog_name = 'Sentencing Only Dialog'
 
     def additional_setup(self):
         validator = MAX_JAIL_TIME_VALIDATOR
