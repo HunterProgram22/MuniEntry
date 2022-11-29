@@ -95,7 +95,9 @@ def insert_scheduling_data_query(event: object) -> str:
         event_type_id,
         event_location_id,
         case_event_date,
-        case_event_time
+        case_event_time,
+        def_last_name,
+        def_first_name
     )
     SELECT
        '{event.case_number}',
@@ -103,6 +105,8 @@ def insert_scheduling_data_query(event: object) -> str:
        el.location_id,
        '{event.event_date}',
        '{event.event_time}'
+       '{event.def_last_name}',
+       '{event.def_first_name}'
     FROM
         event_types as et,
         event_locations as el
@@ -117,7 +121,8 @@ def courtroom_event_report_query(report_date: str, courtroom: int) -> str:
     SELECT
         case_number,
         et.event_type_name,
-        case_event_time
+        case_event_time,
+        defendant_name AS et.def_last_name, et.def_first_name
     FROM
         case_events AS ce
     LEFT OUTER JOIN event_types AS et
