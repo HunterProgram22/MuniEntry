@@ -11,8 +11,8 @@ from munientry.builders.scheduling.base_scheduling_builders import (
     SchedulingDialogBuilder,
 )
 from munientry.builders.workflows.hemmeter_dw_dialog import HemmeterWorkflowDialog
-from munientry.builders.workflows.pretrial_dw_dialog import PretrialWorkflowDialog
-from munientry.builders.workflows.community_control_dw_dialog import ComControlWorkflowDialog
+from munientry.builders.workflows.probation_dw_dialogs import PretrialWorkflowDialog, \
+    ComControlWorkflowDialog
 from munientry.checkers import dialog_preload_checkers as precheck
 from munientry.loaders import dialog_loader as loader
 

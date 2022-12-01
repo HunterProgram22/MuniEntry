@@ -1,4 +1,5 @@
 """Module for building the view of the MainWindow."""
+import munientry.builders.workflows.probation_dw_dialogs
 from PyQt6.QtGui import QIcon
 
 from munientry.builders.administrative import (
@@ -30,9 +31,8 @@ from munientry.builders.scheduling import (
     trial_to_court_hearing_notice_dialog,
 )
 from munientry.builders.workflows import bunner_dw_dialog as bunner
-from munientry.builders.workflows import community_control_dw_dialog as comcontrol
 from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
-from munientry.builders.workflows import pretrial_dw_dialog as pretrial
+from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.models.party_types import JudicialOfficer
 from munientry.paths import ICON_PATH
@@ -129,8 +129,8 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
             self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.main_window.pretrial_workflowButton: pretrial.PretrialWorkflowDialog,
-            self.main_window.community_control_workflowButton: comcontrol.ComControlWorkflowDialog,
+            self.main_window.pretrial_workflowButton: probation.PretrialWorkflowDialog,
+            self.main_window.community_control_workflowButton: probation.ComControlWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:

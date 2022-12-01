@@ -69,71 +69,12 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2">
       <property name="verticalSpacing">
        <number>24</number>
       </property>
-      <item row="8" column="0">
-       <widget class="QPushButton" name="close_dialog_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Close Workflow</string>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0" colspan="2">
-       <widget class="Line" name="line_2">
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QPushButton" name="load_new_entries_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Check For New Entries</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QPushButton" name="open_entry_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Open Selected Entry for Review</string>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="1">
-       <widget class="QPushButton" name="delete_entry_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 96, 82);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Delete Entry from Workflow</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0" colspan="2">
-       <widget class="QListWidget" name="scram_gps_entries_listWidget"/>
+      <item row="5" column="0" colspan="2">
+       <widget class="QListWidget" name="entries_listWidget"/>
       </item>
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
@@ -148,6 +89,82 @@ font-weight: bold;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="0">
+       <widget class="QPushButton" name="close_dialog_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Close Workflow</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QPushButton" name="open_entry_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Open Selected Entry for Review</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="load_new_entries_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Check For New Entries</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0" colspan="2">
+       <widget class="Line" name="line_2">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QPushButton" name="delete_entry_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(255, 96, 82);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Delete Entry from Workflow</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Palatino Linotype'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The list below contains draft versions of entries for any entry imposing or modifiying a bond that meets any of the following conditions.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;1. All TRC cases (i.e. all OVI cases).&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;2. Other case types (CRB or TRD) where monitoring is imposed - SCRAM, GPS, Alcohol Kiosk.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;3. An assesment is ordered - whether for alcohol, mental health, or specialized docket screening.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
