@@ -21,14 +21,14 @@ scheduling_tab_entries = [
 
 @pytest.mark.parametrize('dialog_button, test_name, date_field', scheduling_tab_entries)
 def test_all_entry_buttons_with_case(main_window, dialog_button, test_name, date_field):
-    """Tests the creation of all scheduling entries, no data modified before creation."""
+    """Tests the creation of all scheduling entries."""
     mouse_click(main_window.dattilo_radioButton)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
     enter_data(main_window.dialog.case_number_lineEdit, test_name)
+    enter_data(getattr(main_window.dialog, date_field), '01/01/2050')  # Set to pass a check
 
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
-    enter_data(getattr(main_window.dialog, date_field), '01/01/2050')
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.case_number == f'21TRC05611{test_name}'
