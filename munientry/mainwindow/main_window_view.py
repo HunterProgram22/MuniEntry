@@ -32,7 +32,7 @@ from munientry.builders.scheduling import (
 from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import community_control_dw_dialog as comcontrol
 from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
-from munientry.builders.workflows import mattox_dw_dialog as mattox
+from munientry.builders.workflows import pretrial_dw_dialog as pretrial
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.models.party_types import JudicialOfficer
 from munientry.paths import ICON_PATH
@@ -129,7 +129,7 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
             self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.main_window.pretrial_workflowButton: mattox.MattoxWorkflowDialog,
+            self.main_window.pretrial_workflowButton: pretrial.PretrialWorkflowDialog,
             self.main_window.community_control_workflowButton: comcontrol.ComControlWorkflowDialog,
         }
 

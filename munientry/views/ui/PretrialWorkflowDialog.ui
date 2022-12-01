@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ComControlWorkflowDialog</class>
- <widget class="QDialog" name="ComControlWorkflowDialog">
+ <class>PretrialWorkflowDialog</class>
+ <widget class="QDialog" name="PretrialWorkflowDialog">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -35,7 +35,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Community Control Workflow</string>
+   <string>Pretrial Workflow</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(25, 49, 91);
@@ -69,10 +69,34 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,1,4,4,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,0,0,0,0,0,0,0,0">
       <property name="verticalSpacing">
        <number>24</number>
       </property>
+      <item row="8" column="0">
+       <widget class="QPushButton" name="close_dialog_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Close Workflow</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0" colspan="2">
+       <widget class="Line" name="line_2">
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
       <item row="7" column="0">
        <widget class="QPushButton" name="load_new_entries_Button">
         <property name="styleSheet">
@@ -96,17 +120,6 @@ font-weight: bold;</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="0">
-       <widget class="QPushButton" name="close_dialog_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Close Workflow</string>
-        </property>
-       </widget>
-      </item>
       <item row="8" column="1">
        <widget class="QPushButton" name="delete_entry_Button">
         <property name="styleSheet">
@@ -119,41 +132,24 @@ font-weight: bold;</string>
         </property>
        </widget>
       </item>
+      <item row="4" column="0" colspan="2">
+       <widget class="QListWidget" name="scram_gps_entries_listWidget"/>
+      </item>
       <item row="0" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <family>Palatino Linotype</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-          <underline>true</underline>
-         </font>
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>40</height>
+         </size>
         </property>
         <property name="text">
-         <string>COMMUNITY CONTROL ENTRIES</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;PRETRIAL ENTRIES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
-      </item>
-      <item row="6" column="0" colspan="2">
-       <widget class="Line" name="line_2">
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0" rowspan="4" colspan="2">
-       <widget class="QListWidget" name="community_control_entries_listWidget"/>
       </item>
      </layout>
     </widget>

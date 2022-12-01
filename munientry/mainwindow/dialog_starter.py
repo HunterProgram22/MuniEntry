@@ -11,7 +11,7 @@ from munientry.builders.scheduling.base_scheduling_builders import (
     SchedulingDialogBuilder,
 )
 from munientry.builders.workflows.hemmeter_dw_dialog import HemmeterWorkflowDialog
-from munientry.builders.workflows.mattox_dw_dialog import MattoxWorkflowDialog
+from munientry.builders.workflows.pretrial_dw_dialog import PretrialWorkflowDialog
 from munientry.builders.workflows.community_control_dw_dialog import ComControlWorkflowDialog
 from munientry.checkers import dialog_preload_checkers as precheck
 from munientry.loaders import dialog_loader as loader
@@ -47,7 +47,7 @@ def start_dialog(sender, mainwindow):
         if precheck.AdminFiscalPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.AdminFiscalDialogLoader(mainwindow).dialog
             mainwindow.dialog.exec()
-    elif issubclass(sender, MattoxWorkflowDialog):
+    elif issubclass(sender, PretrialWorkflowDialog):
         mainwindow.dialog = loader.ProbationWorkflowDialogLoader(mainwindow).dialog
         mainwindow.dialog.exec()
     elif issubclass(sender, ComControlWorkflowDialog):
