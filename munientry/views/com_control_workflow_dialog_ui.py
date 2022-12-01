@@ -56,24 +56,30 @@ class Ui_ComControlWorkflowDialog(object):
         self.load_new_entries_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
 "font-weight: bold;")
         self.load_new_entries_Button.setObjectName("load_new_entries_Button")
-        self.gridLayout_2.addWidget(self.load_new_entries_Button, 7, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.load_new_entries_Button, 8, 0, 1, 1)
         self.open_entry_Button = QtWidgets.QPushButton(self.frame_3)
         self.open_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.open_entry_Button.setObjectName("open_entry_Button")
-        self.gridLayout_2.addWidget(self.open_entry_Button, 7, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.open_entry_Button, 8, 1, 1, 1)
         self.close_dialog_Button = QtWidgets.QPushButton(self.frame_3)
         self.close_dialog_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
 "font-weight: bold;")
         self.close_dialog_Button.setObjectName("close_dialog_Button")
-        self.gridLayout_2.addWidget(self.close_dialog_Button, 8, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.close_dialog_Button, 9, 0, 1, 1)
+        self.line_2 = QtWidgets.QFrame(self.frame_3)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
+        self.line_2.setLineWidth(2)
+        self.line_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_2.setObjectName("line_2")
+        self.gridLayout_2.addWidget(self.line_2, 7, 0, 1, 2)
         self.delete_entry_Button = QtWidgets.QPushButton(self.frame_3)
         self.delete_entry_Button.setStyleSheet("background-color: rgb(255, 96, 82);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.delete_entry_Button.setObjectName("delete_entry_Button")
-        self.gridLayout_2.addWidget(self.delete_entry_Button, 8, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.delete_entry_Button, 9, 1, 1, 1)
         self.label_2 = QtWidgets.QLabel(self.frame_3)
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
@@ -86,15 +92,12 @@ class Ui_ComControlWorkflowDialog(object):
         self.label_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 0, 0, 1, 2)
-        self.line_2 = QtWidgets.QFrame(self.frame_3)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
-        self.line_2.setLineWidth(2)
-        self.line_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_2.setObjectName("line_2")
-        self.gridLayout_2.addWidget(self.line_2, 6, 0, 1, 2)
         self.entries_listWidget = QtWidgets.QListWidget(self.frame_3)
         self.entries_listWidget.setObjectName("entries_listWidget")
-        self.gridLayout_2.addWidget(self.entries_listWidget, 1, 0, 4, 2)
+        self.gridLayout_2.addWidget(self.entries_listWidget, 2, 0, 4, 2)
+        self.textBrowser = QtWidgets.QTextBrowser(self.frame_3)
+        self.textBrowser.setObjectName("textBrowser")
+        self.gridLayout_2.addWidget(self.textBrowser, 1, 0, 1, 2)
         self.gridLayout_2.setRowStretch(0, 1)
         self.gridLayout_2.setRowStretch(1, 1)
         self.gridLayout_2.setRowStretch(2, 4)
@@ -113,3 +116,8 @@ class Ui_ComControlWorkflowDialog(object):
         self.close_dialog_Button.setText(_translate("ComControlWorkflowDialog", "Close Workflow"))
         self.delete_entry_Button.setText(_translate("ComControlWorkflowDialog", "Delete Entry from Workflow"))
         self.label_2.setText(_translate("ComControlWorkflowDialog", "COMMUNITY CONTROL ENTRIES"))
+        self.textBrowser.setHtml(_translate("ComControlWorkflowDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Palatino Linotype\'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The list below contains draft versions of any entry that imposes a term of community control.</p></body></html>"))

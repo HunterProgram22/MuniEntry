@@ -93,21 +93,23 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 self.dialog.entries_listWidget.addItem(file)
 
 
-class ComControlWorkflowDialog(base.BaseDialogBuilder, Ui_ComControlWorkflowDialog):
-    """Dialog builder class for Community Control Digital Workflow."""
+class ProbationWorkflowDialog(base.BaseDialogBuilder):
+    """Based Dialog builder class for Probation Digital Workflows."""
 
     _signal_connector = ProbationWorkflowDialogSignalConnector
     _slots = ProbationWorkflowDialogSlotFunctions
     _view_modifier = ProbationWorkflowDialogViewModifier
+
+
+class ComControlWorkflowDialog(ProbationWorkflowDialog, Ui_ComControlWorkflowDialog):
+    """Dialog builder class for Community Control Digital Workflow."""
+
     _entry_path = COM_CONTROL_PATH
     dialog_name = 'Community Control Digital Workflow'
 
 
-class PretrialWorkflowDialog(base.BaseDialogBuilder, Ui_PretrialWorkflowDialog):
+class PretrialWorkflowDialog(ProbationWorkflowDialog, Ui_PretrialWorkflowDialog):
     """Dialog builder class for Pretrial Digital Workflow."""
 
-    _signal_connector = ProbationWorkflowDialogSignalConnector
-    _slots = ProbationWorkflowDialogSlotFunctions
-    _view_modifier = ProbationWorkflowDialogViewModifier
     _entry_path = SCRAM_PATH
     dialog_name = 'Pretrial Digital Workflow'
