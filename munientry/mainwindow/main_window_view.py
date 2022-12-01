@@ -126,7 +126,8 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
             self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.main_window.probation_workflowButton: mattox.MattoxWorkflowDialog,
+            self.main_window.pretrial_workflowButton: mattox.MattoxWorkflowDialog,
+            self.main_window.community_control_workflowButton: mattox.MattoxWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:
