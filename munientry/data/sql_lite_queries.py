@@ -104,7 +104,7 @@ def insert_scheduling_data_query(event: object) -> str:
        et.event_type_id,
        el.location_id,
        '{event.event_date}',
-       '{event.event_time}'
+       '{event.event_time}',
        '{event.def_last_name}',
        '{event.def_first_name}'
     FROM
