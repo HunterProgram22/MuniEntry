@@ -34,7 +34,7 @@ from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
-from munientry.data.sql_server_queries import event_type_report_query
+from munientry.sqlserver.sql_server_queries import event_type_report_query
 from munientry.paths import (
     BATCH_SAVE_PATH,
     CRIMTRAFFIC_SAVE_PATH,

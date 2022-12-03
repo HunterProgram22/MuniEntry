@@ -20,7 +20,7 @@ Functions:
 from loguru import logger
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
-from munientry.data import sql_server_getters as sql_server
+from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.models.cms_models import CmsCaseInformation
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox

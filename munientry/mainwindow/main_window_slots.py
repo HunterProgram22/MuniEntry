@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
 
 from munientry.sqllite import sql_lite_functions as sql_lite
-from munientry.data import sql_server_getters as sql_server
+from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.helper_functions import set_random_judge
 from munientry.widgets.table_widgets import ReportWindow
