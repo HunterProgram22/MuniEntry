@@ -121,7 +121,7 @@ def courtroom_event_report_query(report_date: str, courtroom: int) -> str:
         case_number,
         et.event_type_name,
         case_event_time,
-        defendant_name AS et.def_last_name, et.def_first_name
+        ce.def_last_name || ', ' || ce.def_first_name AS def_full_name 
     FROM
         case_events AS ce
     LEFT OUTER JOIN event_types AS et
