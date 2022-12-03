@@ -14,7 +14,7 @@ from typing import Any, Dict
 from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 
-from munientry.data import scheduling_events as se
+from munientry.models import scheduling_events as se
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.sqllite.sql_lite_queries import insert_scheduling_data_query
 
