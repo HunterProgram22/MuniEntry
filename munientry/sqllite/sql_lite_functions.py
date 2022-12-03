@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.data.excel_getters import return_cases_data_from_excel
-from munientry.data.sql_lite_queries import (
+from munientry.sqllite.sql_lite_queries import (
     delete_table_sql_query,
     insert_daily_case_list_tables_sql_query,
     select_distinct_attorney_name_sql_query,

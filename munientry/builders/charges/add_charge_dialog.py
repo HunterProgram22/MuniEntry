@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.charges import base_charge_builders as charge
-from munientry.data.sql_lite_functions import query_offense_type
+from munientry.sqllite.sql_lite_functions import query_offense_type
 from munientry.models.criminal_charge_models import CriminalCharge
 from munientry.views.add_charge_dialog_ui import Ui_AddChargeDialog
 

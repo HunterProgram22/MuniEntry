@@ -16,7 +16,7 @@ from PyQt6.QtSql import QSqlQuery
 
 from munientry.data import scheduling_events as se
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_lite_queries import insert_scheduling_data_query
+from munientry.sqllite.sql_lite_queries import insert_scheduling_data_query
 
 EVENT_CLASS_DICT = types.MappingProxyType({
     'hearing_date': se.GeneralHearingEvent,
