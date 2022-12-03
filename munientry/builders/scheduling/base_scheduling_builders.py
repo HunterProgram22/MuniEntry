@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
-from munientry.creators.entry_creator import SchedulingEntryCreator
+from munientry.entrycreators.entry_creator import SchedulingEntryCreator
 from munientry.models.template_types import TEMPLATE_DICT
 
 

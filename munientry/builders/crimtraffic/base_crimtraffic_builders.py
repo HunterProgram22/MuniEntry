@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
 from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuilder
-from munientry.creators.entry_creator import CrimTrafficEntryCreator
+from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings import SPECIAL_DOCKETS_COSTS

@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.creators.entry_creator import AdminFiscalEntryCreator
+from munientry.entrycreators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.appsettings.pyqt_constants import TODAY

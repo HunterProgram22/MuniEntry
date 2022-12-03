@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.creators.entry_creator import DrivingPrivilegesEntryCreator
+from munientry.entrycreators.entry_creator import DrivingPrivilegesEntryCreator
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,

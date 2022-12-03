@@ -5,7 +5,7 @@ from num2words import num2words
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.creators.entry_creator import JuryPaymentEntryCreator
+from munientry.entrycreators.entry_creator import JuryPaymentEntryCreator
 from munientry.models.jury_models import JuryPaymentInformation
 from munientry.loaders.cms_case_loaders import CmsLoader
 from munientry.updaters.base_updaters import BaseDialogUpdater

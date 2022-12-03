@@ -8,11 +8,15 @@ from loguru import logger
 
 from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.paths import DEFAULT_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, FISCAL_SAVE_PATH, \
-    DRIVE_SAVE_PATH, SCHEDULING_SAVE_PATH, JURY_PAY_SAVE_PATH
+from munientry.paths import (
+    CRIMTRAFFIC_SAVE_PATH,
+    DEFAULT_SAVE_PATH,
+    DRIVE_SAVE_PATH,
+    FISCAL_SAVE_PATH,
+    JURY_PAY_SAVE_PATH,
+    SCHEDULING_SAVE_PATH,
+)
 from munientry.widgets.message_boxes import RequiredBox
-
-WORD_PDF_FORMAT_NUMBER = 17
 
 
 class BaseEntryCreator(object):
@@ -202,6 +206,7 @@ class AdminFiscalEntryCreator(BaseEntryCreator):
 
 
 class JuryPaymentEntryCreator(BaseEntryCreator):
+    """Entry Creator for Jury Pay entries."""
 
     save_path = JURY_PAY_SAVE_PATH
 
