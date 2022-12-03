@@ -8,7 +8,6 @@ paths = config['paths']
 
 
 # Save Path Information
-
 LOG_PATH = paths['logs_save_path']
 BATCH_SAVE_PATH = paths['batch_save_path']
 DEFAULT_SAVE_PATH = paths['default_entries_save_path']
@@ -22,8 +21,7 @@ JURY_PAY_SAVE_PATH = paths['jury_pay_save_path']
 # Database Path Information for MuniEntryDB.Sqlite Internal Database
 DB_PATH = paths['munientry_sqlite_db']
 TEST_DELCITY_DB_PATH = paths['test_delcity_munientry_sqlite_db']
-CASE_LISTS_PATH = paths['daily_case_lists']  # This is for future user when case lists are moved
-# to external location outside application.
+CASE_LISTS_PATH = paths['daily_case_lists']
 
 
 # Digital Workflow Path Information
@@ -36,7 +34,7 @@ DW_APPROVED_DIR = paths['digital_workflow_approved_path']
 DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 
 
-# Resources Path Information
+# Internal Resources Path Information
 # Path strings require double backslash even with raw f-strings (fr)
 # otherwise the string is not properly terminated.
 PATH = str(pathlib.Path().absolute())
