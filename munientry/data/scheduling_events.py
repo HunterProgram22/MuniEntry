@@ -31,6 +31,9 @@ class Event(object):
     def __init__(self, case_data_dict: dict):
         self.case_data_dict = case_data_dict
         self.case_number = self.case_data_dict.get('case_number')
+        defendant = self.case_data_dict.get('defendant')
+        self.def_last_name = defendant.last_name
+        self.def_first_name = defendant.first_name
         self.event_location = self.case_data_dict.get('hearing_location')
         self.event_name = self.load_event_name(self.event_name_field)
         self.event_date = format_date_string(self.case_data_dict.get(self.event_date_field))
