@@ -2,6 +2,10 @@
 import configparser
 import socket
 from typing import TYPE_CHECKING
+from loguru import logger
+
+from munientry.appsettings.user_settings import UserSettings, GeneralUserSettings, \
+    AdminUserSettings, ProbationUserSettings, CommissionerUserSettings, CourtroomUserSettings
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -29,8 +33,24 @@ def get_host() -> str:
     return sockets.get(key, key)
 
 
-SOCKET_NAME = get_host()
+HOST_NAME = get_host()
 
+
+def load_user_settings(mainwindow) -> 'UserSettings':
+    """Returns the user settings based on the computer that is loading the application."""
+    user_settings_config = config['user_settings']
+    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
+    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
+    return user_settings(mainwindow)
+
+
+USER_SETTINGS = {
+    'AdminUserSettings': AdminUserSettings,
+    'CommissionerUserSettings': CommissionerUserSettings,
+    'CourtroomUserSettings': CourtroomUserSettings,
+    'GeneralUserSettings': GeneralUserSettings,
+    'ProbationUserSettings': ProbationUserSettings,
+}
 
 # Costs Settings
 SPECIAL_DOCKETS_COSTS = [
@@ -109,3 +129,5 @@ PRETRIAL_TIME_DICT = {
     'Pretrial 2 weeks before trial': 14,
     'No Pretrial': 0,
 }
+
+

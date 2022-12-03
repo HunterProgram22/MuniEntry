@@ -9,7 +9,7 @@ from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
 from munientry.paths import LOG_PATH, ICON_PATH
-from munientry.settings import SOCKET_NAME
+from munientry.settings import HOST_NAME
 
 
 # Logging Settings
@@ -17,8 +17,8 @@ NOW = datetime.now()
 NOW_STRING = NOW.strftime('%m_%d_%Y__%H_%M_%S')
 LOG_TIME = f'{NOW_STRING}'
 
-FULL_LOG_NAME = f'Full_Log_{SOCKET_NAME}_{LOG_TIME}.log'
-USER_LOG_NAME = f'{SOCKET_NAME}_User_Log_{LOG_TIME}.log'
+FULL_LOG_NAME = f'Full_Log_{HOST_NAME}_{LOG_TIME}.log'
+USER_LOG_NAME = f'{HOST_NAME}_User_Log_{LOG_TIME}.log'
 
 APP_LOGGING_LEVEL = 20
 

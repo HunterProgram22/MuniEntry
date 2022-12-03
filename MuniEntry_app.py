@@ -22,7 +22,7 @@ from PyQt6.QtWidgets import QApplication, QSplashScreen
 
 from munientry import logging_module
 from munientry.paths import ICON_PATH
-from munientry.settings import SOCKET_NAME, VERSION_NUMBER
+from munientry.settings import HOST_NAME, VERSION_NUMBER
 
 
 def load_window():
@@ -40,7 +40,7 @@ def load_window():
 @logger.catch
 def main():
     """The main application loop."""
-    logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {SOCKET_NAME}')
+    logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {HOST_NAME}')
     app = QApplication(sys.argv)
     splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel_main_splash.png'))
     splash.show()

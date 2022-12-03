@@ -1,14 +1,6 @@
 """Module for user settings for the application."""
 from loguru import logger
 
-from munientry.settings import SOCKET_NAME
-
-
-def load_user_settings(mainwindow) -> 'UserSettings':
-    """Returns the user settings based on the computer that is loading the application."""
-    user_settings = USER_SETTINGS.get(SOCKET_NAME, GeneralUserSettings)
-    return user_settings(mainwindow)
-
 
 class UserSettings(object):
     """Base UserSettings class."""
@@ -25,8 +17,33 @@ class AdminUserSettings(UserSettings):
     settings_name = 'Admin User'
 
     def load_settings(self):
-        self.mainwindow.tabWidget.setTabVisible(3, True)
-        self.mainwindow.search_tabWidget.setTabVisible(2, True)
+        pass
+
+
+class CommissionerUserSettings(UserSettings):
+    """Commissioner User settings - opens application on scheduling tab."""
+
+    settings_name = 'Commisssioner User'
+
+    def load_settings(self):
+        self.mainwindow.workflows_person_tab.setTabVisible(1, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(3, False)
+        self.mainwindow.tabWidget.setCurrentIndex(1)
+
+
+class CourtroomUserSettings(UserSettings):
+    """Courtroom User settings - shows only CrimTraffic Entries tab for entries."""
+
+    settings_name = 'Courtroom User'
+
+    def load_settings(self):
+        self.mainwindow.main_TabWidget.setTabVisible(1, False)
+        self.mainwindow.tabWidget.setTabVisible(1, False)
+        self.mainwindow.tabWidget.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(1, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(3, False)
 
 
 class GeneralUserSettings(UserSettings):
@@ -35,8 +52,6 @@ class GeneralUserSettings(UserSettings):
     settings_name = 'General User'
 
     def load_settings(self):
-        self.mainwindow.tabWidget.setTabVisible(3, False)
-        self.mainwindow.search_tabWidget.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(1, False)
         self.mainwindow.workflows_person_tab.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
@@ -54,10 +69,3 @@ class ProbationUserSettings(UserSettings):
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
 
 
-USER_SETTINGS = {
-    'Justin_Home_PC': AdminUserSettings,
-    'Justin_Work_Laptop': AdminUserSettings,
-    'Carrie_Mattox_PC': ProbationUserSettings,
-    'Kurt_Olson_PC': ProbationUserSettings,
-    'Lindsey_Blue_PC': ProbationUserSettings,
-}

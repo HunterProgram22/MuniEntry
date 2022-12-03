@@ -2,7 +2,7 @@
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
 
-from munientry.appsettings.user_settings import load_user_settings
+from munientry.settings import load_user_settings
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
