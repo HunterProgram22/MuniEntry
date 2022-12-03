@@ -5,19 +5,21 @@ from loguru import logger
 class UserSettings(object):
     """Base UserSettings class."""
 
+    settings_name = None
+
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
         self.load_settings()
         logger.info(f'Settings set to: {self.settings_name}')
+
+    def load_settings(self):
+        """Loads all user settings."""
 
 
 class AdminUserSettings(UserSettings):
     """Admin User settings - provide full access to all application options and features."""
 
     settings_name = 'Admin User'
-
-    def load_settings(self):
-        pass
 
 
 class CommissionerUserSettings(UserSettings):
@@ -67,5 +69,3 @@ class ProbationUserSettings(UserSettings):
         self.mainwindow.workflows_person_tab.setTabVisible(1, False)
         self.mainwindow.workflows_person_tab.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
-
-
