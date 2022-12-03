@@ -51,7 +51,7 @@ if TYPE_CHECKING:
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
-COURTROOM_REPORT_HEADERS = ('Event','Time', 'Case Number', 'Defendant Name')
+COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
 
 COURTROOM_NAME = types.MappingProxyType({
