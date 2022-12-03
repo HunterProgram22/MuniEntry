@@ -42,7 +42,22 @@ class GeneralUserSettings(UserSettings):
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
 
 
+class ProbationUserSettings(UserSettings):
+    """Probation User settings - for Probation users with access to Probation workflows only."""
+
+    settings_name = 'Probation User'
+
+    def load_settings(self):
+        self.mainwindow.main_TabWidget.setTabVisible(0, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(1, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(2, False)
+        self.mainwindow.workflows_person_tab.setTabVisible(3, False)
+
+
 USER_SETTINGS = {
     'Justin_Home_PC': AdminUserSettings,
     'Justin_Work_Laptop': AdminUserSettings,
+    'Carrie_Mattox_PC': ProbationUserSettings,
+    'Kurt_Olson_PC': ProbationUserSettings,
+    'Lindsey_Blue_PC': ProbationUserSettings,
 }
