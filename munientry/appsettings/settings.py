@@ -1,11 +1,13 @@
 """A module containing common variables used throughout the application."""
 import configparser
 import socket
+import pathlib
 from typing import TYPE_CHECKING
 
 
+PATH = str(pathlib.Path().absolute())
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(f'{PATH}\config.ini')
 
 # Version Information
 version = config['version']

@@ -62,6 +62,7 @@ class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationVi
 
     def additional_setup(self):
         self.entry_case_information.bond_conditions = ProbationViolationBondConditions()
+        self.functions.hide_bond_conditions()
 
 
 if __name__ == '__main__':

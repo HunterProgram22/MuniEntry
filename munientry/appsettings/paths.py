@@ -1,9 +1,21 @@
 """Module containing internal and external paths for the application."""
+from loguru import logger
 import configparser
 import pathlib
 
+
+# Internal Resources Path Information
+# Path strings require double backslash even with raw f-strings (fr)
+# otherwise the string is not properly terminated.
+PATH = str(pathlib.Path().absolute())
+TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
+ICON_PATH = fr'{PATH}\resources\icons\\'
+GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
+
+
 config = configparser.ConfigParser()
-config.read('config.ini')
+config.read(f'{PATH}\config.ini')
+
 paths = config['paths']
 
 
@@ -34,10 +46,3 @@ DW_APPROVED_DIR = paths['digital_workflow_approved_path']
 DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
 
 
-# Internal Resources Path Information
-# Path strings require double backslash even with raw f-strings (fr)
-# otherwise the string is not properly terminated.
-PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
-ICON_PATH = fr'{PATH}\resources\icons\\'
-GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
