@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from loguru import logger
 
-from munientry.paths import TEMPLATE_PATH
+from munientry.appsettings.paths import TEMPLATE_PATH
 
 
 @dataclass

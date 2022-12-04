@@ -7,7 +7,7 @@ from munientry.builders import base_builders as base
 from munientry.views.com_control_workflow_dialog_ui import Ui_ComControlWorkflowDialog
 from munientry.views.pretrial_workflow_dialog_ui import Ui_PretrialWorkflowDialog
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
-from munientry.paths import DW_PROBATION
+from munientry.appsettings.paths import DW_PROBATION
 
 SCRAM_PATH = f'{DW_PROBATION}/Scram_Gps//'
 COM_CONTROL_PATH = f'{DW_PROBATION}/Comm_Control//'

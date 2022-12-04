@@ -7,7 +7,7 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
-from munientry.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
 
 
 class HemmeterWorkflowDialogViewModifier(base.BaseDialogViewModifier):

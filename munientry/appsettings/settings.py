@@ -2,10 +2,7 @@
 import configparser
 import socket
 from typing import TYPE_CHECKING
-from loguru import logger
 
-from munientry.appsettings.user_settings import UserSettings, GeneralUserSettings, \
-    AdminUserSettings, ProbationUserSettings, CommissionerUserSettings, CourtroomUserSettings
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -13,13 +10,6 @@ config.read('config.ini')
 # Version Information
 version = config['version']
 VERSION_NUMBER = version['version_number']
-
-
-# Court Cost Constants
-costs = config['costs']
-MOVING_COURT_COSTS = int(costs['moving'])
-CRIMINAL_COURT_COSTS = int(costs['criminal'])
-NONMOVING_COURT_COSTS = int(costs['non_moving'])
 
 
 def get_host() -> str:
@@ -35,30 +25,6 @@ def get_host() -> str:
 
 HOST_NAME = get_host()
 
-
-def load_user_settings(mainwindow) -> 'UserSettings':
-    """Returns the user settings based on the computer that is loading the application."""
-    user_settings_config = config['user_settings']
-    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
-    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
-    return user_settings(mainwindow)
-
-
-USER_SETTINGS = {
-    'AdminUserSettings': AdminUserSettings,
-    'CommissionerUserSettings': CommissionerUserSettings,
-    'CourtroomUserSettings': CourtroomUserSettings,
-    'GeneralUserSettings': GeneralUserSettings,
-    'ProbationUserSettings': ProbationUserSettings,
-}
-
-# Costs Settings
-SPECIAL_DOCKETS_COSTS = [
-    'while on Community Control',
-    'while on the OVI Docket',
-    'while on Mission Court',
-    'while on the Mental Health Docket',
-]
 
 # Case List Settings
 EXCEL_DAILY_CASE_LISTS = [
@@ -95,39 +61,3 @@ WIDGET_TYPE_SET_DICT = {
     'NoScrollDateEdit': 'set_date_from_string',
     'NoScrollTimeEdit': 'set_time_from_string',
 }
-
-
-DAY_DICT = {
-    'Monday': 1,
-    'Tuesday': 2,
-    'Wednesday': 3,
-    'Thursday': 4,
-    'Friday': 5,
-}
-
-
-EVENT_DICT = {
-    'Trial': 2,
-    'Final Pretrial': 2,
-    'Pretrial': 28,
-}
-
-
-SPEEDY_TRIAL_TIME_DICT = {
-    'M1': 90,
-    'M2': 90,
-    'M3': 45,
-    'M4': 45,
-    'MM': 30,
-    'UCM': 30,
-}
-
-
-PRETRIAL_TIME_DICT = {
-    'Pretrial 4 weeks before trial': 28,
-    'Pretrial 3 weeks before trial': 21,
-    'Pretrial 2 weeks before trial': 14,
-    'No Pretrial': 0,
-}
-
-

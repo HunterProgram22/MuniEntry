@@ -8,7 +8,7 @@ module will be imported as part of the python_view_file.py.
 from PyQt6 import QtGui, QtPrintSupport
 from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout
 from loguru import logger
-from munientry.paths import ICON_PATH
+from munientry.appsettings.paths import ICON_PATH
 
 
 class ReportWindow(QWidget):

@@ -7,7 +7,7 @@ from munientry.builders.charges.amend_charge_dialog import AmendChargeDialogBuil
 from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import SPECIAL_DOCKETS_COSTS
+from munientry.appsettings.business_constants import SPECIAL_DOCKETS_COSTS
 from munientry.appsettings.pyqt_constants import TODAY
 from munientry.widgets.message_boxes import InfoBox
 

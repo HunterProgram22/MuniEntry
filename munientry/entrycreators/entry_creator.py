@@ -8,7 +8,7 @@ from loguru import logger
 
 from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.paths import (
+from munientry.appsettings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
     DEFAULT_SAVE_PATH,
     DRIVE_SAVE_PATH,

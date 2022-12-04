@@ -17,8 +17,8 @@ from munientry.sqllite.sql_lite_functions import (
     query_offense_statute_data,
 )
 from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
-from munientry.paths import DB_PATH
-from munientry.settings import EXCEL_DAILY_CASE_LISTS
+from munientry.appsettings.paths import DB_PATH
+from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
 
 MUNIENTRY_DB = 'con_munientry_db'
 PLEAS = 'pleas'

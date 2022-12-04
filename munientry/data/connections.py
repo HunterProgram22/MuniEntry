@@ -26,7 +26,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.sqllite.sql_lite_functions import load_daily_case_list_data
-from munientry.paths import DB_PATH, TEST_DELCITY_DB_PATH
+from munientry.appsettings.paths import DB_PATH, TEST_DELCITY_DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
 DATABASE_LOG_LEVEL = 21

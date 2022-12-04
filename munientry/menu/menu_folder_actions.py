@@ -35,14 +35,14 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
 from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
 from munientry.sqlserver.sql_server_queries import event_type_report_query
-from munientry.paths import (
+from munientry.appsettings.paths import (
     BATCH_SAVE_PATH,
     CRIMTRAFFIC_SAVE_PATH,
     DRIVE_SAVE_PATH,
     JURY_PAY_SAVE_PATH,
     SCHEDULING_SAVE_PATH,
 )
-from munientry.settings import TYPE_CHECKING
+from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.widgets import table_widgets
 
 if TYPE_CHECKING:

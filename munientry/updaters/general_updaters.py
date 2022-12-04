@@ -3,12 +3,8 @@ from typing import Any
 
 from loguru import logger
 
-from munientry.settings import (
-    CRIMINAL_COURT_COSTS,
-    MOVING_COURT_COSTS,
-    NONMOVING_COURT_COSTS,
-    SPECIAL_DOCKETS_COSTS,
-)
+from munientry.appsettings.business_constants import MOVING_COURT_COSTS, CRIMINAL_COURT_COSTS, \
+    NONMOVING_COURT_COSTS, SPECIAL_DOCKETS_COSTS
 from munientry.updaters.base_updaters import BaseDialogUpdater
 
 

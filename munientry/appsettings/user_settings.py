@@ -1,5 +1,6 @@
 """Module for user settings for the application."""
 from loguru import logger
+from munientry.appsettings.settings import config, HOST_NAME
 
 
 class UserSettings(object):
@@ -69,3 +70,20 @@ class ProbationUserSettings(UserSettings):
         self.mainwindow.workflows_person_tab.setTabVisible(1, False)
         self.mainwindow.workflows_person_tab.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
+
+
+def load_user_settings(mainwindow) -> 'UserSettings':
+    """Returns the user settings based on the computer that is loading the application."""
+    user_settings_config = config['user_settings']
+    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
+    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
+    return user_settings(mainwindow)
+
+
+USER_SETTINGS = {
+    'AdminUserSettings': AdminUserSettings,
+    'CommissionerUserSettings': CommissionerUserSettings,
+    'CourtroomUserSettings': CourtroomUserSettings,
+    'GeneralUserSettings': GeneralUserSettings,
+    'ProbationUserSettings': ProbationUserSettings,
+}

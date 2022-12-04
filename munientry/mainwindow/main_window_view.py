@@ -1,5 +1,4 @@
 """Module for building the view of the MainWindow."""
-import munientry.builders.workflows.probation_dw_dialogs
 from PyQt6.QtGui import QIcon
 
 from munientry.builders.administrative import (
@@ -35,8 +34,8 @@ from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.models.party_types import JudicialOfficer
-from munientry.paths import ICON_PATH
-from munientry.settings import VERSION_NUMBER
+from munientry.appsettings.paths import ICON_PATH
+from munientry.appsettings.settings import VERSION_NUMBER
 
 
 class MainWindowViewModifier(object):
