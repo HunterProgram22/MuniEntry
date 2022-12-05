@@ -14,7 +14,7 @@ sys.path.insert(0, parent_dir)
 
 from munientry import logging_module
 from munientry.mainwindow.main_window import MainWindow
-from munientry.creators.entry_creator import CrimTrafficEntryCreator
+from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 
 CLOSE_TIMER = 50
 

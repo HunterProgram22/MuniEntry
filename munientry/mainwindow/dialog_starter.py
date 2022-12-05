@@ -11,7 +11,7 @@ from munientry.builders.scheduling.base_scheduling_builders import (
     SchedulingDialogBuilder,
 )
 from munientry.builders.workflows.hemmeter_dw_dialog import HemmeterWorkflowDialog
-from munientry.builders.workflows.mattox_dw_dialog import MattoxWorkflowDialog
+from munientry.builders.workflows.probation_dw_dialogs import ProbationWorkflowDialog
 from munientry.checkers import dialog_preload_checkers as precheck
 from munientry.loaders import dialog_loader as loader
 
@@ -24,7 +24,7 @@ def start_dialog(sender, mainwindow):
 
     If a dialog is a subclass of a particular base class, then it attemps to load the dialog, in
     some cases only after precheck conditions are met (i.e. the appropriate judicial officer is
-    selected, and/or a case list is selected.
+    selected, and/or a case list is selected).
     """
     if issubclass(sender, CrimTrafficDialogBuilder):
         if precheck.CrimTrafficPreloadChecker(mainwindow).checks:
@@ -46,7 +46,7 @@ def start_dialog(sender, mainwindow):
         if precheck.AdminFiscalPreloadChecker(mainwindow).checks:
             mainwindow.dialog = loader.AdminFiscalDialogLoader(mainwindow).dialog
             mainwindow.dialog.exec()
-    elif issubclass(sender, MattoxWorkflowDialog):
+    elif issubclass(sender, ProbationWorkflowDialog):
         mainwindow.dialog = loader.ProbationWorkflowDialogLoader(mainwindow).dialog
         mainwindow.dialog.exec()
     elif issubclass(sender, HemmeterWorkflowDialog):

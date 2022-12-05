@@ -1,20 +1,24 @@
-"""Module that contains all the template objects for use in the
-application."""
+"""Contains all the template objects used in the application."""
+import types
+from dataclasses import dataclass
+
 from loguru import logger
-import pathlib
+
+from munientry.appsettings.paths import TEMPLATE_PATH
 
 
-PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = PATH + "\\resources\\templates\\"
+@dataclass
+class Template(object):
+    """Container for a template name and template path.
 
+    Changes to content of template must be made on the template directly.
+    """
+    template_name: str
+    template_path: str
 
-class Template:
-    """Template objects contain all the relevant data for each type of template.
-    Changes to content of template should be made on the template directly."""
+    def __post_init__(self):
+        self.template_path = f'{TEMPLATE_PATH}{self.template_path}'
 
-    def __init__(self, template_name, template_path):
-        self.template_name = template_name
-        self.template_path = TEMPLATE_PATH + template_path
 
 Jury_Payment_Template = Template(
     'Jury Payment Entry',
@@ -132,7 +136,7 @@ Trial_To_Court_Hearing_Notice_Template = Template(
 )
 
 
-TEMPLATE_DICT = {
+TEMPLATE_DICT = types.MappingProxyType({
     'Fine Only Plea Dialog': Fine_Only_Plea_Final_Judgment_Template,
     'Jail CC Plea Dialog': Jail_CC_Plea_Final_Judgment_Template,
     'Trial Sentencing Dialog': Trial_Sentencing_Template,
@@ -159,7 +163,7 @@ TEMPLATE_DICT = {
 
     'Admin Fiscal Entry': Admin_Fiscal_Template,
     'Jury Payment Entry': Jury_Payment_Template,
-}
+})
 
 
 if __name__ == '__main__':

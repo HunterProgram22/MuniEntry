@@ -103,16 +103,14 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog):
     """Dialog builder class for 'Diversion' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Diversion Plea Dialog',
-        'view': DiversionDialogViewModifier,
-        'slots': DiversionDialogSlotFunctions,
-        'signals': DiversionDialogSignalConnector,
-        'case_information_model': DiversionEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': DiversionDialogUpdater,
-        'info_checker': DiversionDialogInfoChecker,
-    }
+    _case_information_model = DiversionEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = DiversionDialogInfoChecker
+    _model_updater = DiversionDialogUpdater
+    _signal_connector = DiversionDialogSignalConnector
+    _slots = DiversionDialogSlotFunctions
+    _view_modifier = DiversionDialogViewModifier
+    dialog_name = 'Diversion Plea Dialog'
 
     def additional_setup(self):
         self.functions.show_restitution_boxes()

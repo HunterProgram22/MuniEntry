@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.creators.entry_creator import AdminFiscalEntryCreator
+from munientry.entrycreators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.appsettings.pyqt_constants import TODAY
@@ -87,16 +87,14 @@ class AdminFiscalDialog(base.BaseDialogBuilder, Ui_AdminFiscalDialog):
     The judicial_officer for this entry is the selected Administrative Staff Person.
     """
 
-    build_dict = {
-        'dialog_name': 'Admin Fiscal Entry',
-        'view': AdminFiscalViewModifier,
-        'slots': AdminFiscalSlotFunctions,
-        'signals': AdminFiscalSignalConnector,
-        'case_information_model': AdminFiscalEntryInformation,
-        'loader': None,
-        'updater': AdminFiscalCaseInformationUpdater,
-        'info_checker': AdminFiscalInfoChecker,
-    }
+    _case_information_model = AdminFiscalEntryInformation
+    _case_loader = None
+    _info_checker = AdminFiscalInfoChecker
+    _model_updater = AdminFiscalCaseInformationUpdater
+    _signal_connector = AdminFiscalSignalConnector
+    _slots = AdminFiscalSlotFunctions
+    _view_modifier = AdminFiscalViewModifier
+    dialog_name = 'Admin Fiscal Entry'
 
     def __init__(self, judicial_officer=None, parent=None):
         super().__init__(parent)

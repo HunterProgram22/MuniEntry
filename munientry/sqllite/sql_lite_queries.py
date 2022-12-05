@@ -32,16 +32,16 @@ def delete_table_sql_query(table: str) -> str:
 def select_case_data_sql_query(table: str, case_number: str) -> str:
     return f"""
         SELECT
-        case_number,
-        defendant_last_name,
-        defendant_first_name,
-        offense,
-        statute,
-        degree,
-        fra_in_file,
-        moving_bool,
-        def_atty_first_name || ' ' || def_atty_last_name AS defense_counsel,
-        def_atty_type
+            case_number,
+            defendant_last_name,
+            defendant_first_name,
+            offense,
+            statute,
+            degree,
+            fra_in_file,
+            moving_bool,
+            def_atty_first_name || ' ' || def_atty_last_name AS defense_counsel,
+            def_atty_type
         FROM {table}
         WHERE case_number = '{case_number}'
         """
@@ -54,8 +54,8 @@ def select_distinct_offense_statute_sql_query() -> str:
 def select_distinct_attorney_name_sql_query() -> str:
     return """
         SELECT DISTINCT
-        id,
-        attorney_first_name || ' ' || attorney_last_name AS attorney_full_name
+            id,
+            attorney_first_name || ' ' || attorney_last_name AS attorney_full_name
         FROM attorneys
         """
 
@@ -63,15 +63,14 @@ def select_distinct_attorney_name_sql_query() -> str:
 def select_distinct_def_last_case_number_query(table: str) -> str:
     return f"""
         SELECT DISTINCT
-        defendant_last_name || ' - ' || case_number AS case_list_name
+            defendant_last_name || ' - ' || case_number AS case_list_name
         FROM {table}
         """
 
 
 def select_type_for_statute_in_charges(statute: str) -> str:
     return f"""
-        SELECT
-        type
+        SELECT type
         FROM charges
         WHERE statute = '{statute}'
         """
@@ -80,9 +79,9 @@ def select_type_for_statute_in_charges(statute: str) -> str:
 def select_off_stat_deg_from_charges_query(key: str, field: str) -> str:
     return f"""
     SELECT
-    offense,
-    statute,
-    degree
+        offense,
+        statute,
+        degree
     FROM charges
     WHERE {field} LIKE '%{key}%'
     """
@@ -104,13 +103,13 @@ def insert_scheduling_data_query(event: object) -> str:
        et.event_type_id,
        el.location_id,
        '{event.event_date}',
-       '{event.event_time}'
+       '{event.event_time}',
        '{event.def_last_name}',
        '{event.def_first_name}'
     FROM
         event_types as et,
         event_locations as el
-    WHERE 
+    WHERE
         et.event_type_name = '{event.event_name}'
         AND el.location_name = '{event.event_location}';
     """
@@ -122,7 +121,7 @@ def courtroom_event_report_query(report_date: str, courtroom: int) -> str:
         case_number,
         et.event_type_name,
         case_event_time,
-        defendant_name AS et.def_last_name, et.def_first_name
+        ce.def_last_name || ', ' || ce.def_first_name AS def_full_name
     FROM
         case_events AS ce
     LEFT OUTER JOIN event_types AS et

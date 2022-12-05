@@ -4,7 +4,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.sql_lite_queries import select_case_data_sql_query
+from munientry.sqllite.sql_lite_queries import select_case_data_sql_query
 from munientry.models.cms_models import CmsCaseInformation
 
 

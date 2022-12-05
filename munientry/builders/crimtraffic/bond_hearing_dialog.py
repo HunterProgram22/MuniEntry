@@ -85,16 +85,14 @@ class BondHearingDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
     """Dialog builder class for 'Bond Modification / Revocation' Entry."""
 
-    build_dict = {
-        'dialog_name': 'Bond Hearing Dialog',
-        'view': BondHearingDialogViewModifier,
-        'slots': BondHearingDialogSlotFunctions,
-        'signals': BondHearingDialogSignalConnector,
-        'case_information_model': BondHearingEntryCaseInformation,
-        'loader': CmsNoChargeLoader,
-        'updater': BondHearingDialogUpdater,
-        'info_checker': BondHearingDialogInfoChecker,
-    }
+    _case_information_model = BondHearingEntryCaseInformation
+    _case_loader = CmsNoChargeLoader
+    _info_checker = BondHearingDialogInfoChecker
+    _model_updater = BondHearingDialogUpdater
+    _signal_connector = BondHearingDialogSignalConnector
+    _slots = BondHearingDialogSlotFunctions
+    _view_modifier = BondHearingDialogViewModifier
+    dialog_name = 'Bond Hearing Dialog'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

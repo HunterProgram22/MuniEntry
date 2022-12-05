@@ -77,13 +77,13 @@ font-weight: bold;</string>
        <widget class="QListWidget" name="community_control_entries_listWidget"/>
       </item>
       <item row="8" column="0">
-       <widget class="QPushButton" name="cancel_Button">
+       <widget class="QPushButton" name="close_dialog_Button">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(160, 160, 160);
 font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Cancel</string>
+         <string>Close Workflow</string>
         </property>
        </widget>
       </item>

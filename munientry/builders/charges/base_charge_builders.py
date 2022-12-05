@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
-from munientry.data import sql_lite_functions as sql_lite
+from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.data.connections import close_db_connection, open_db_connection
 
 OFFENSE = 'offense'

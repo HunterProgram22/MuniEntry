@@ -28,16 +28,14 @@ class FreeformDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
     """Dialog builder class for 'Freeform Entry'."""
 
-    build_dict = {
-        'dialog_name': 'Freeform Entry Dialog',
-        'view': FreeformDialogViewModifier,
-        'slots': FreeformDialogSlotFunctions,
-        'signals': FreeformDialogSignalConnector,
-        'case_information_model': FreeformEntryCaseInformation,
-        'loader': CmsNoChargeLoader,
-        'updater': FreeformDialogUpdater,
-        'info_checker': FreeformDialogInfoChecker,
-    }
+    _case_information_model = FreeformEntryCaseInformation
+    _case_loader = CmsNoChargeLoader
+    _info_checker = FreeformDialogInfoChecker
+    _model_updater = FreeformDialogUpdater
+    _signal_connector = FreeformDialogSignalConnector
+    _slots = FreeformDialogSlotFunctions
+    _view_modifier = FreeformDialogViewModifier
+    dialog_name = 'Freeform Entry Dialog'
 
 
 if __name__ == '__main__':

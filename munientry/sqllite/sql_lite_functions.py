@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.data.excel_getters import return_cases_data_from_excel
-from munientry.data.sql_lite_queries import (
+from munientry.sqllite.sql_lite_queries import (
     delete_table_sql_query,
     insert_daily_case_list_tables_sql_query,
     select_distinct_attorney_name_sql_query,
@@ -12,8 +12,8 @@ from munientry.data.sql_lite_queries import (
     select_type_for_statute_in_charges,
     select_off_stat_deg_from_charges_query,
 )
-from munientry.settings import EXCEL_DAILY_CASE_LISTS
-from munientry.paths import CASE_LISTS_PATH
+from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
+from munientry.appsettings.paths import CASE_LISTS_PATH
 
 OFFENSE = 'offense'
 STATUTE = 'statute'

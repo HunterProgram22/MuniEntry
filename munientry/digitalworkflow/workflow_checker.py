@@ -1,9 +1,9 @@
 """Module for checking entries and moving into workflow."""
 
-from munientry.paths import DW_MATTOX
+from munientry.appsettings.paths import DW_PROBATION
 
-SCRAM_PATH = f'{DW_MATTOX}/Scram_Gps//'
-COMM_CONTROL_PATH = f'{DW_MATTOX}/Comm_Control//'
+SCRAM_PATH = f'{DW_PROBATION}/Scram_Gps//'
+COMM_CONTROL_PATH = f'{DW_PROBATION}/Comm_Control//'
 
 
 class WorkflowCheck(object):

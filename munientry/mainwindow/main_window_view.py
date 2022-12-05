@@ -2,8 +2,8 @@
 from PyQt6.QtGui import QIcon
 
 from munientry.builders.administrative import (
-    driving_privileges_dialog,
     admin_fiscal_dialog,
+    driving_privileges_dialog,
     jury_payment_dialog,
 )
 from munientry.builders.crimtraffic import (
@@ -29,11 +29,13 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
-from munientry.builders.workflows import mattox_dw_dialog as mattox, rohrer_dw_dialog as rohrer, \
-    bunner_dw_dialog as bunner, hemmeter_dw_dialog as hemmeter
+from munientry.builders.workflows import bunner_dw_dialog as bunner
+from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
+from munientry.builders.workflows import probation_dw_dialogs as probation
+from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.models.party_types import JudicialOfficer
-from munientry.settings import VERSION_NUMBER
-from munientry.paths import ICON_PATH
+from munientry.appsettings.paths import ICON_PATH
+from munientry.appsettings.settings import VERSION_NUMBER
 
 
 class MainWindowViewModifier(object):
@@ -126,7 +128,8 @@ class MainWindowViewModifier(object):
             self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
             self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.main_window.probation_workflowButton: mattox.MattoxWorkflowDialog,
+            self.main_window.pretrial_workflowButton: probation.PretrialWorkflowDialog,
+            self.main_window.community_control_workflowButton: probation.ComControlWorkflowDialog,
         }
 
     def create_daily_case_lists(self) -> None:

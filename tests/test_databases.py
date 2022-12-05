@@ -11,14 +11,14 @@ from munientry.data.connections import (
     remove_db_connection,
 )
 from munientry.data.excel_getters import clean_offense_name
-from munientry.data.sql_lite_functions import (
+from munientry.sqllite.sql_lite_functions import (
     load_daily_case_list_data,
     query_daily_case_list_data,
     query_offense_statute_data,
 )
-from munientry.data.sql_lite_getters import CriminalCaseSQLLite
-from munientry.paths import DB_PATH
-from munientry.settings import EXCEL_DAILY_CASE_LISTS
+from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
+from munientry.appsettings.paths import DB_PATH
+from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
 
 MUNIENTRY_DB = 'con_munientry_db'
 PLEAS = 'pleas'

@@ -9,7 +9,7 @@ from munientry.data.excel_functions import (
     load_active_worksheet,
 )
 from munientry.models.excel_models import CaseExcelData
-from munientry.settings import TYPE_CHECKING
+from munientry.appsettings.settings import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from openpyxl import Workbook

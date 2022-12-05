@@ -16,11 +16,11 @@ class PleaOnlyEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
-class CommunityControlViolationEntryCaseInformation(CriminalCaseInformation):
+class ProbationViolationEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables and data for community control violation entry."""
 
     cc_violation_probable_cause: str = None
-    cc_bond_conditions: object = field(default_factory=cm.CommunityControlViolationBondConditions)
+    cc_bond_conditions: object = field(default_factory=cm.ProbationViolationBondConditions)
 
 
 @dataclass

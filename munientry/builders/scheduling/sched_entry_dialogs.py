@@ -3,17 +3,14 @@ from loguru import logger
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.helper_functions import set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings import (
-    DAY_DICT,
-    EVENT_DICT,
-    PRETRIAL_TIME_DICT,
-    SPEEDY_TRIAL_TIME_DICT,
+from munientry.appsettings.settings import (
     TYPE_CHECKING,
 )
+from munientry.appsettings.business_constants import DAY_DICT, EVENT_DICT, SPEEDY_TRIAL_TIME_DICT, \
+    PRETRIAL_TIME_DICT
 from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
@@ -272,16 +269,14 @@ class SchedulingEntryDialogInfoChecker(BaseChecker):
 class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
     """The builder class for the Scheduling Entry Dialog."""
 
-    build_dict = {
-        'dialog_name': None,
-        'view': SchedulingEntryDialogViewModifier,
-        'slots': SchedulingEntryDialogSlotFunctions,
-        'signals': SchedulingEntryDialogSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': SchedulingEntryDialogCaseInformationUpdater,
-        'info_checker': SchedulingEntryDialogInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = SchedulingEntryDialogInfoChecker
+    _model_updater = SchedulingEntryDialogCaseInformationUpdater
+    _signal_connector = SchedulingEntryDialogSignalConnector
+    _slots = SchedulingEntryDialogSlotFunctions
+    _view_modifier = SchedulingEntryDialogViewModifier
+    dialog_name = None
 
     def additional_setup(self):
         """The additional setup sets the template here after init.

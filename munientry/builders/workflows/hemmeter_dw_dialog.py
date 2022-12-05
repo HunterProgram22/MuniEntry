@@ -7,7 +7,7 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
-from munientry.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
 
 
 class HemmeterWorkflowDialogViewModifier(base.BaseDialogViewModifier):
@@ -58,10 +58,11 @@ class HemmeterWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
     """Signal connector for Hemmeter Workflow Dialog."""
 
     def __init__(self, dialog):
-        super().__init__(dialog)
+        self.dialog = dialog
         self.connect_workflow_buttons()
 
     def connect_workflow_buttons(self):
+        self.dialog.close_dialog_Button.released.connect(self.dialog.close)
         self.dialog.open_entry_Button.released.connect(self.dialog.functions.open_entry)
         self.dialog.complete_workflow_Button.released.connect(
             self.dialog.functions.complete_workflow
@@ -71,9 +72,7 @@ class HemmeterWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
 class HemmeterWorkflowDialog(base.BaseDialogBuilder, Ui_HemmeterWorkflowDialog):
     """Dialog builder class for Hemmeter Digital Workflow."""
 
-    build_dict = {
-        'dialog_name': 'Hemmeter Digital Workflow',
-        'view': HemmeterWorkflowDialogViewModifier,
-        'slots': HemmeterWorkflowDialogSlotFunctions,
-        'signals': HemmeterWorkflowDialogSignalConnector,
-    }
+    _signal_connector = HemmeterWorkflowDialogSignalConnector
+    _slots = HemmeterWorkflowDialogSlotFunctions
+    _view_modifier = HemmeterWorkflowDialogViewModifier
+    dialog_name = 'Hemmeter Digital Workflow'

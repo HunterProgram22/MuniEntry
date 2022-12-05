@@ -105,16 +105,14 @@ class TrialSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class TrialSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_TrialSentencingDialog):
     """Dialog builder class for 'Jury Trial / Trial to Court Sentencing' dialog."""
 
-    build_dict = {
-        'dialog_name': 'Trial Sentencing Dialog',
-        'view': TrialSentencingDialogViewModifier,
-        'slots': TrialSentencingDialogSlotFunctions,
-        'signals': TrialSentencingDialogSignalConnector,
-        'case_information_model': TrialSentencingEntryCaseInformation,
-        'loader': CmsFraLoader,
-        'updater': TrialSentencingDialogUpdater,
-        'info_checker': TrialSentencingDialogInfoChecker,
-    }
+    _case_information_model = TrialSentencingEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = TrialSentencingDialogInfoChecker
+    _model_updater = TrialSentencingDialogUpdater
+    _signal_connector = TrialSentencingDialogSignalConnector
+    _slots = TrialSentencingDialogSlotFunctions
+    _view_modifier = TrialSentencingDialogViewModifier
+    dialog_name = 'Trial Sentencing Dialog'
 
     def additional_setup(self):
         validator = MAX_JAIL_TIME_VALIDATOR

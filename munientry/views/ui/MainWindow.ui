@@ -1317,19 +1317,22 @@ font-weight: bold;</string>
               <number>64</number>
              </property>
              <item row="1" column="0">
-              <widget class="QPushButton" name="probation_workflowButton">
+              <widget class="QPushButton" name="pretrial_workflowButton">
                <property name="styleSheet">
-                <string notr="true">background-color: rgb(206, 104, 171);</string>
+                <string notr="true">background-color: rgb(255, 255, 127);</string>
                </property>
                <property name="text">
-                <string>Open Mattox Workflow</string>
+                <string>Open Pretrial Monitoring Entries</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="QPushButton" name="pushButton">
+              <widget class="QPushButton" name="community_control_workflowButton">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(85, 170, 127);</string>
+               </property>
                <property name="text">
-                <string>Disabled</string>
+                <string>Open Community Control Entries</string>
                </property>
               </widget>
              </item>

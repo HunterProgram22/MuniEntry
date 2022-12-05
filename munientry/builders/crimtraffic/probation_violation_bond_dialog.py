@@ -5,9 +5,9 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import ProbationViolationBondDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
-    CommunityControlViolationEntryCaseInformation,
+    ProbationViolationEntryCaseInformation,
 )
-from munientry.models.conditions_models import CommunityControlViolationBondConditions
+from munientry.models.conditions_models import ProbationViolationBondConditions
 from munientry.updaters.no_grid_case_updaters import ProbationViolationBondDialogUpdater
 from munientry.views.probation_violation_bond_dialog_ui import (
     Ui_ProbationViolationBondDialog,
@@ -51,19 +51,18 @@ class ProbationViolationBondDialogSignalConnector(crim.CrimTrafficSignalConnecto
 class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationViolationBondDialog):
     """Dialog builder class for 'Prelim. Probation Violation / Bond' Entry."""
 
-    build_dict = {
-        'dialog_name': 'Probation Violation Bond Dialog',
-        'view': ProbationViolationBondDialogViewModifier,
-        'slots': ProbationViolationBondDialogSlotFunctions,
-        'signals': ProbationViolationBondDialogSignalConnector,
-        'case_information_model': CommunityControlViolationEntryCaseInformation,
-        'loader': CmsNoChargeLoader,
-        'updater': ProbationViolationBondDialogUpdater,
-        'info_checker': ProbationViolationBondDialogInfoChecker,
-    }
+    _case_information_model = ProbationViolationEntryCaseInformation
+    _case_loader = CmsNoChargeLoader
+    _info_checker = ProbationViolationBondDialogInfoChecker
+    _model_updater = ProbationViolationBondDialogUpdater
+    _signal_connector = ProbationViolationBondDialogSignalConnector
+    _slots = ProbationViolationBondDialogSlotFunctions
+    _view_modifier = ProbationViolationBondDialogViewModifier
+    dialog_name = 'Probation Violation Bond Dialog'
 
     def additional_setup(self):
-        self.entry_case_information.bond_conditions = CommunityControlViolationBondConditions()
+        self.entry_case_information.bond_conditions = ProbationViolationBondConditions()
+        self.functions.hide_bond_conditions()
 
 
 if __name__ == '__main__':

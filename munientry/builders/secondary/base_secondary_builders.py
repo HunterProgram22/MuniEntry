@@ -4,7 +4,7 @@ from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
-from munientry.settings import WIDGET_TYPE_SET_DICT
+from munientry.appsettings.settings import WIDGET_TYPE_SET_DICT
 
 
 def enable_condition_frames(conditions_dialog, main_dialog) -> None:

@@ -8,57 +8,32 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
-from munientry.creators.entry_creator import BaseEntryCreator
-from munientry.settings import WIDGET_TYPE_ACCESS_DICT
-from munientry.paths import ICON_PATH
+from munientry.entrycreators.entry_creator import BaseEntryCreator
+from munientry.appsettings.settings import WIDGET_TYPE_ACCESS_DICT
+from munientry.appsettings.paths import ICON_PATH
 
 
-class BuildMixin(object):
-    """Contains private methods used in the build process."""
-
-    def _get_dialog_attributes(self) -> dict:
-        """Returns a dict containing all classes used to build and work with a Dialog."""
-        return self.build_dict
-
-    def _modify_view(self) -> None:
-        """Gets the ViewModifer class for the Dialog.
-
-        Calls setupUI and creates the view.
-        """
-        self.build_attrs.get('view')(self)
-
-    def _connect_signals_to_slots(self) -> None:
-        """Gets the SlotFunctions and SignalConnector classes for the dialog.
-
-        Connects the SlotFunctions to signals on the Dialog. Functions are accessible
-        as self.functions.
-        """
-        self.functions = self.build_attrs.get('slots')(self)
-        self.build_attrs.get('signals')(self)
-
-
-class BaseDialogBuilder(QDialog, BuildMixin):
+class BaseDialogBuilder(QDialog):
     """This class is a base class for all dialog windows."""
 
     def __init__(self, parent: QDialog = None) -> None:
         super().__init__(parent)
-        self.build_attrs = self._get_dialog_attributes()
-        self._modify_view()
-        self._connect_signals_to_slots()
-        self.dialog_name = self.build_attrs.get('dialog_name', None)
+        self._view_modifier(self)
+        self.functions = self._slots(self)
+        self._signal_connector(self)
         logger.dialog(f'{self.dialog_name} Opened')
 
     def load_entry_case_information_model(self):
-        self.entry_case_information = self.build_attrs.get('case_information_model')()
+        self.entry_case_information = self._case_information_model()
 
     def load_cms_data_to_view(self) -> None:
-        self.build_attrs.get('loader')(self)
+        self._case_loader(self)
 
     def update_entry_case_information(self) -> None:
-        self.build_attrs.get('updater')(self)
+        self._model_updater(self)
 
     def perform_info_checks(self) -> None:
-        self.dialog_checks = self.build_attrs.get('info_checker')(self)
+        self.dialog_checks = self._info_checker(self)
 
     def close(self):
         """Closes window by calling closeEvent in BaseDialog."""

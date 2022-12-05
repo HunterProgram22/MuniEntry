@@ -57,12 +57,10 @@ class AddConditionsDialog(second.SecondaryDialogBuilder, Ui_AddConditionsDialog)
     Dialogs that use: FineOnlyPleaDialog, LeapSentencingDialog.
     """
 
-    build_dict = {
-        'dialog_name': 'Additional Conditions Dialog',
-        'view': AddConditionsDialogViewModifier,
-        'slots': AddConditionsDialogSlotFunctions,
-        'signals': AddConditionsDialogSignalConnector,
-    }
+    _signal_connector = AddConditionsDialogSignalConnector
+    _slots = AddConditionsDialogSlotFunctions
+    _view_modifier = AddConditionsDialogViewModifier
+    dialog_name = 'Add Conditions Dialog'
 
     conditions_frames = [
         ('other_conditions_checkBox', 'other_conditions_frame'),

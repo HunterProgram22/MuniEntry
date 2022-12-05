@@ -73,10 +73,6 @@ def set_courtroom(sender: 'QPushButton') -> str:
     return courtroom_dict.get(sender.objectName(), '')
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
-
-
 def format_date_string(date_string: str) -> str:
     """Formats a string that is a date into standard ISO extended format YYYY-MM-DD.
 
@@ -91,3 +87,7 @@ def format_date_string(date_string: str) -> str:
     new_date_format = date_object.strftime('%Y-%m-%d')
     new_date_object = datetime.strptime(new_date_format, '%Y-%m-%d').date()
     return str(new_date_object)
+
+
+if __name__ == '__main__':
+    logger.info(f'{__name__} run directly.')

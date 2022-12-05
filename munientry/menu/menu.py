@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QGroupBox, QVBoxLayout, Q
 from munientry.mainwindow.batch_entries import run_batch_fta_arraignments
 from munientry.logging_module import USER_LOG_NAME
 from munientry.menu.menu_folder_actions import open_entries_folder, run_courtroom_report, run_event_type_report
-from munientry.paths import LOG_PATH, BATCH_SAVE_PATH, ICON_PATH
+from munientry.appsettings.paths import LOG_PATH, BATCH_SAVE_PATH, ICON_PATH
 from munientry.widgets import message_boxes
 
 

@@ -6,7 +6,7 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.settings import DAY_DICT, EVENT_DICT
+from munientry.appsettings.business_constants import DAY_DICT, EVENT_DICT
 from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
@@ -129,16 +129,14 @@ class FinalJuryNoticeHearingDialog(
     The assigned_judge and courtroom is set by the button pressed choosing the dialog and entry.
     """
 
-    build_dict = {
-        'dialog_name': 'Final And Jury Notice Of Hearing Entry',
-        'view': FinalJuryNoticeHearingViewModifier,
-        'slots': FinalJuryNoticeHearingSlotFunctions,
-        'signals': FinalJuryNoticeHearingSignalConnector,
-        'case_information_model': SchedulingCaseInformation,
-        'loader': SchedulingCmsLoader,
-        'updater': FinalJuryNoticeHearingCaseInformationUpdater,
-        'info_checker': FinalJuryNoticeHearingInfoChecker,
-    }
+    _case_information_model = SchedulingCaseInformation
+    _case_loader = SchedulingCmsLoader
+    _info_checker = FinalJuryNoticeHearingInfoChecker
+    _model_updater = FinalJuryNoticeHearingCaseInformationUpdater
+    _signal_connector = FinalJuryNoticeHearingSignalConnector
+    _slots = FinalJuryNoticeHearingSlotFunctions
+    _view_modifier = FinalJuryNoticeHearingViewModifier
+    dialog_name = 'Final And Jury Notice Of Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())

@@ -33,16 +33,16 @@ from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.excel_getters import clean_offense_name
-from munientry.data.sql_lite_queries import courtroom_event_report_query
-from munientry.data.sql_server_queries import event_type_report_query
-from munientry.paths import (
+from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
+from munientry.sqlserver.sql_server_queries import event_type_report_query
+from munientry.appsettings.paths import (
     BATCH_SAVE_PATH,
     CRIMTRAFFIC_SAVE_PATH,
     DRIVE_SAVE_PATH,
     JURY_PAY_SAVE_PATH,
     SCHEDULING_SAVE_PATH,
 )
-from munientry.settings import TYPE_CHECKING
+from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.widgets import table_widgets
 
 if TYPE_CHECKING:
@@ -51,8 +51,7 @@ if TYPE_CHECKING:
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
-
-COURTROOM_REPORT_HEADERS = ('Case Number', 'Event', 'Time')
+COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
 
 COURTROOM_NAME = types.MappingProxyType({
@@ -155,9 +154,10 @@ def get_courtroom_report_data(query_string: str) -> list[tuple[str, str, str]]:
     while query.next():
         data_list.append(
             (
-                query.value('case_number'),
                 query.value('event_type_name'),
                 query.value('case_event_time'),
+                query.value('case_number'),
+                query.value('def_full_name'),
             ),
         )
     close_db_connection(db_conn)
@@ -195,15 +195,16 @@ def create_courtroom_report_window(
 ) -> table_widgets.ReportWindow:
     """Creates a window to load the event table and contains print buttons."""
     window = table_widgets.ReportWindow(
-        len(data_list), 3, f'{report_name} Report for {report_date}',
+        len(data_list), 4, f'{report_name} Report for {report_date}',
     )
     window.table.setHorizontalHeaderLabels(list(COURTROOM_REPORT_HEADERS))
-    Case = namedtuple('Case', 'case_number event time')
+    Case = namedtuple('Case', 'event time case_number def_name')
     for row, case in enumerate(data_list):
-        case = Case(case[0], case[1], case[2])
-        window.table.setItem(row, 0, QTableWidgetItem(case.case_number))
-        window.table.setItem(row, 1, QTableWidgetItem(case.event))
-        window.table.setItem(row, 2, QTableWidgetItem(case.time))
+        case = Case(case[0], case[1], case[2], case[3])
+        window.table.setItem(row, 0, QTableWidgetItem(case.event))
+        window.table.setItem(row, 1, QTableWidgetItem(case.time))
+        window.table.setItem(row, 2, QTableWidgetItem(case.case_number))
+        window.table.setItem(row, 3, QTableWidgetItem(case.def_name))
     return window
 
 

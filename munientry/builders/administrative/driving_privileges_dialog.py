@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
-from munientry.creators.entry_creator import DrivingPrivilegesEntryCreator
+from munientry.entrycreators.entry_creator import DrivingPrivilegesEntryCreator
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
     DrivingPrivilegesInformation,
@@ -272,16 +272,14 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
     The judicial_officer for this entry is the selected Assignment Commissioner.
     """
 
-    build_dict = {
-        'dialog_name': 'Driving Privileges Entry',
-        'view': DrivingPrivilegesViewModifier,
-        'slots': DrivingPrivilegesSlotFunctions,
-        'signals': DrivingPrivilegesSignalConnector,
-        'case_information_model': DrivingPrivilegesInformation,
-        'loader': CmsDrivingInfoLoader,
-        'updater': DrivingPrivilegesCaseInformationUpdater,
-        'info_checker': DrivingPrivilegesDialogInfoChecker,
-    }
+    _case_information_model = DrivingPrivilegesInformation
+    _case_loader = CmsDrivingInfoLoader
+    _info_checker = DrivingPrivilegesDialogInfoChecker
+    _model_updater = DrivingPrivilegesCaseInformationUpdater
+    _signal_connector = DrivingPrivilegesSignalConnector
+    _slots = DrivingPrivilegesSlotFunctions
+    _view_modifier = DrivingPrivilegesViewModifier
+    dialog_name = 'Driving Privileges Entry'
 
     def additional_setup(self):
         self.setWindowTitle(f'{self.dialog_name} Case Information')
