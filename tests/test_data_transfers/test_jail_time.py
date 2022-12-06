@@ -27,6 +27,8 @@ jail_scenarios = [
     # ("Yes", "5", "Costs and Fines"), #  Same as above
     ("No", "5", "Costs and Fines"),
 ]
+
+
 @pytest.mark.parametrize("in_jail, jail_credit, jail_apply", jail_scenarios)
 def test_jail_time_credit_box_transfers_to_model(qtbot, jcp_dialog, mock_entry, in_jail, jail_credit, jail_apply):
     enter_data(jcp_dialog.in_jail_box, in_jail)
