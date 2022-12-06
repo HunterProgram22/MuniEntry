@@ -1,6 +1,7 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
+from PyQt6.QtSql import QSqlQuery
 
 from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.sqlserver import sql_server_getters as sql_server
@@ -20,16 +21,31 @@ class MainWindowSlotFunctionsMixin(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
-        db_connection = open_db_connection('con_munientry_db')
-        for case_list in self.daily_case_lists:
-            old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
-            case_list.clear()
-            case_list.addItems(sql_lite.query_daily_case_list_data(case_list.name, db_connection))
-            case_count = len(case_list) - 1
-            logger.info(
-                f'Table: {case_list.name} - Preload Cases: {old_case_count};'
-                + f' Postload Cases {case_count}',
-            )
+        # db_connection = open_db_connection('con_munientry_db')
+        db_connection = open_db_connection('con_authority_court')
+        query_string = """
+        USE [AuthorityCourt]
+        DECLARE	@return_value int
+        EXEC	@return_value = [reports].[DMCMuniEntryArraignment]
+        SELECT	'Return Value' = @return_value;
+        """
+        logger.debug(query_string)
+        self.query = QSqlQuery(db_connection)
+        self.query.prepare(query_string)
+        self.query.exec()
+        while self.query.next():
+            logger.info(self.query.value('CaseNumber'))
+
+
+        # for case_list in self.daily_case_lists:
+        #     old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
+        #     case_list.clear()
+        #     case_list.addItems(sql_lite.query_daily_case_list_data(case_list.name, db_connection))
+        #     case_count = len(case_list) - 1
+        #     logger.info(
+        #         f'Table: {case_list.name} - Preload Cases: {old_case_count};'
+        #         + f' Postload Cases {case_count}',
+        #     )
         close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
