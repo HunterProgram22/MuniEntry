@@ -5,6 +5,7 @@ from PyQt6.QtSql import QSqlQuery
 
 from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.sqlserver import sql_server_getters as sql_server
+from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.helper_functions import set_random_judge
 from munientry.widgets.table_widgets import ReportWindow
@@ -23,12 +24,7 @@ class MainWindowSlotFunctionsMixin(object):
         """
         # db_connection = open_db_connection('con_munientry_db')
         db_connection = open_db_connection('con_authority_court')
-        query_string = """
-        USE [AuthorityCourt]
-        DECLARE	@return_value int
-        EXEC	@return_value = [reports].[DMCMuniEntryArraignment]
-        SELECT	'Return Value' = @return_value;
-        """
+        query_string = sql_query.daily_case_list_query('[reports].[DMCMuniEntryArraignment]')
         logger.debug(query_string)
         self.query = QSqlQuery(db_connection)
         self.query.prepare(query_string)
@@ -46,6 +42,7 @@ class MainWindowSlotFunctionsMixin(object):
         #         f'Table: {case_list.name} - Preload Cases: {old_case_count};'
         #         + f' Postload Cases {case_count}',
         #     )
+
         close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
