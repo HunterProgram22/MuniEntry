@@ -11,6 +11,11 @@ from munientry.helper_functions import set_random_judge
 from munientry.widgets.table_widgets import ReportWindow
 
 
+def clean_last_name(last_name:str) -> str:
+    """Removes spaces between hyphenated last names which caused a bug."""
+    return last_name.replace(' - ', '-')
+
+
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
 
@@ -25,7 +30,12 @@ class MainWindowSlotFunctionsMixin(object):
         # db_connection = open_db_connection('con_munientry_db')
         db_connection = open_db_connection('con_authority_court')
         STORED_PROC_DICT = {
-           self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
+            self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
+            self.slated_cases_box: '[reports].[DMCMuniEntrySlated]',
+            self.pleas_cases_box: '[reports].[DMCMuniEntryPleas]',
+            self.pcvh_fcvh_cases_box: '[reports].[DMCMuniEntryPrelimCommContViolHearings]',
+            self.final_pretrial_cases_box: '[reports].[DMCMuniEntryFinalPreTrials]',
+            self.trials_to_court_cases_box: '[reports].[DMCMuniEntryBenchTrials]',
         }
 
         for case_list in self.daily_case_lists:
@@ -38,12 +48,15 @@ class MainWindowSlotFunctionsMixin(object):
             while self.query.next():
                 case_number = self.query.value('CaseNumber')
                 last_name = self.query.value('LastName').title()
+                last_name = clean_last_name(last_name)
                 case = f'{last_name} - {case_number}'
                 daily_case_list.append(case)
             logger.info(daily_case_list)
 
+            daily_case_list.insert(0, '')
         # for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
+            daily_case_list = sorted(daily_case_list)
             case_list.clear()
             case_list.addItems(daily_case_list)
             case_count = len(case_list) - 1
