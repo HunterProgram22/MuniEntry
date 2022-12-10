@@ -27,7 +27,6 @@ class MainWindowSlotFunctionsMixin(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
-        # db_connection = open_db_connection('con_munientry_db')
         db_connection = open_db_connection('con_authority_court')
         STORED_PROC_DICT = {
             self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
@@ -51,10 +50,8 @@ class MainWindowSlotFunctionsMixin(object):
                 last_name = clean_last_name(last_name)
                 case = f'{last_name} - {case_number}'
                 daily_case_list.append(case)
-            logger.info(daily_case_list)
 
             daily_case_list.insert(0, '')
-        # for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             daily_case_list = sorted(daily_case_list)
             case_list.clear()
@@ -64,24 +61,10 @@ class MainWindowSlotFunctionsMixin(object):
                 f'Table: {case_list.name} - Preload Cases: {old_case_count};'
                 + f' Postload Cases {case_count}',
             )
-
-        # for case_list in self.daily_case_lists:
-        #     old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
-        #     case_list.clear()
-        #     case_list.addItems(sql_lite.query_daily_case_list_data(case_list.name, db_connection))
-        #     case_count = len(case_list) - 1
-        #     logger.info(
-        #         f'Table: {case_list.name} - Preload Cases: {old_case_count};'
-        #         + f' Postload Cases {case_count}',
-        #     )
-
         close_db_connection(db_connection)
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button and calls load_case_lists."""
-        db_connection = open_db_connection('con_munientry_db')
-        sql_lite.load_daily_case_list_data(db_connection)
-        close_db_connection(db_connection)
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 
