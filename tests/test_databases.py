@@ -12,13 +12,13 @@ from munientry.data.connections import (
 )
 from munientry.data.excel_getters import clean_offense_name
 from munientry.sqllite.sql_lite_functions import (
-    load_daily_case_list_data,
+    # load_daily_case_list_data,
     query_daily_case_list_data,
     query_offense_statute_data,
 )
 from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
 from munientry.appsettings.paths import DB_PATH
-from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
+# from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
 
 MUNIENTRY_DB = 'con_munientry_db'
 PLEAS = 'pleas'
@@ -112,9 +112,9 @@ def test_create_db_connection_returns_db(database_name, connection_name):
     assert isinstance(con, QSqlDatabase)
 
 
-def test_total_daily_case_lists_is_six():
-    """Tests that there are 6 daily case lists to load."""
-    assert len(EXCEL_DAILY_CASE_LISTS) == 6
+# def test_total_daily_case_lists_is_six():
+#     """Tests that there are 6 daily case lists to load."""
+#     assert len(EXCEL_DAILY_CASE_LISTS) == 6
 
 
 query_list = [
@@ -160,8 +160,8 @@ def test_charges_connection_to_db():
     assert isinstance(con_charges, QSqlDatabase)
 
 
-def test_create_daily_case_lists_db():
-    """Tests connection to daily case list tables."""
-    con_daily_case_lists = open_db_connection(MUNIENTRY_DB)
-    load_daily_case_list_data(con_daily_case_lists)
-    assert isinstance(con_daily_case_lists, QSqlDatabase)
+# def test_create_daily_case_lists_db():
+#     """Tests connection to daily case list tables."""
+#     con_daily_case_lists = open_db_connection(MUNIENTRY_DB)
+#     load_daily_case_list_data(con_daily_case_lists)
+#     assert isinstance(con_daily_case_lists, QSqlDatabase)
