@@ -25,7 +25,6 @@ from functools import partialmethod
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
-from munientry.sqllite.sql_lite_functions import load_daily_case_list_data
 from munientry.appsettings.paths import DB_PATH, TEST_DELCITY_DB_PATH
 from munientry.widgets.message_boxes import InfoBox
 
@@ -184,7 +183,6 @@ def establish_database_connections():
 
     create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
     munientry_db = open_db_connection('con_munientry_db')
-    # load_daily_case_list_data(conn)
     close_db_connection(munientry_db)
 
 
