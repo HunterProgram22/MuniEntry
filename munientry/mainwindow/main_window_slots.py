@@ -24,19 +24,25 @@ class MainWindowSlotFunctionsMixin(object):
         """
         # db_connection = open_db_connection('con_munientry_db')
         db_connection = open_db_connection('con_authority_court')
-        query_string = sql_query.daily_case_list_query('[reports].[DMCMuniEntryBenchTrials]')
-        self.query = QSqlQuery(db_connection)
-        self.query.prepare(query_string)
-        self.query.exec()
-        daily_case_list = []
-        while self.query.next():
-            case_number = self.query.value('CaseNumber')
-            last_name = self.query.value('LastName')
-            case = f'{last_name} - {case_number}'
-            daily_case_list.append(case)
-        logger.info(daily_case_list)
+        STORED_PROC_DICT = {
+           self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
+        }
 
         for case_list in self.daily_case_lists:
+            stored_proc = STORED_PROC_DICT.get(case_list)
+            query_string = sql_query.daily_case_list_query(stored_proc)
+            self.query = QSqlQuery(db_connection)
+            self.query.prepare(query_string)
+            self.query.exec()
+            daily_case_list = []
+            while self.query.next():
+                case_number = self.query.value('CaseNumber')
+                last_name = self.query.value('LastName').title()
+                case = f'{last_name} - {case_number}'
+                daily_case_list.append(case)
+            logger.info(daily_case_list)
+
+        # for case_list in self.daily_case_lists:
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
             case_list.clear()
             case_list.addItems(daily_case_list)
