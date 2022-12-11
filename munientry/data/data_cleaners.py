@@ -66,7 +66,8 @@ def clean_offense_name(offense: str) -> str:
     The data in the AuthorityCourt database is inconsistent in its formatting, this function
     provides consistency to capitalization and formatting.
 
-    Sets offense name to title case (except for abbreviations) and removes degree of charge.
+    Sets offense name to title case, except for abbreviations identified in OFFENSE_CLEAN_DICT
+    which need to remain capitalized, and removes degree of charge.
 
     Args:
         offense: The offense name from the external database.
