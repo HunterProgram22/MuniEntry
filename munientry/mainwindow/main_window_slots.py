@@ -3,17 +3,13 @@ from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
 from PyQt6.QtSql import QSqlQuery
 
+from munientry.data.data_cleaners import clean_last_name
 from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.helper_functions import set_random_judge
 from munientry.widgets.table_widgets import ReportWindow
-
-
-def clean_last_name(last_name:str) -> str:
-    """Removes spaces between hyphenated last names which caused a bug."""
-    return last_name.replace(' - ', '-')
 
 
 class MainWindowSlotFunctionsMixin(object):
