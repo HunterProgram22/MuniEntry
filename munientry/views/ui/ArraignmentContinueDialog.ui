@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>988</width>
-    <height>725</height>
+    <width>990</width>
+    <height>732</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>948</width>
-           <height>685</height>
+           <width>950</width>
+           <height>692</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -481,13 +481,78 @@ font-weight: bold;</string>
              <number>2</number>
             </property>
             <layout class="QGridLayout" name="gridLayout_6">
-             <item row="0" column="0">
+             <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_4">
                <property name="text">
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;CONTINUANCE INFORMATION&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="NoScrollComboBox" name="comboBox">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>2 Weeks</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>1 Week</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Continuance Length:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>Continuance Reason:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="NoScrollComboBox" name="comboBox_2">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>allow defendant to obtain counsel</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>arrange for interpreter for defendant</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>New Arraignment Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="NoScrollDateEdit" name="dateEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
