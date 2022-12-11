@@ -115,11 +115,6 @@ def test_create_db_connection_returns_db(database_name, connection_name):
     assert isinstance(con, QSqlDatabase)
 
 
-# def test_total_daily_case_lists_is_six():
-#     """Tests that there are 6 daily case lists to load."""
-#     assert len(EXCEL_DAILY_CASE_LISTS) == 6
-
-
 query_list = [
     ('offense', MUNIENTRY_DB),
     ('statute', MUNIENTRY_DB),
@@ -138,7 +133,7 @@ def test_query_offense_statute_data(query, connection_name):
 
 daily_case_lists = [
     ('[reports].[DMCMuniEntryArraignment]', 8),
-    ('[reports].[DMCMuniEntrySlated]', 12),
+    ('[reports].[DMCMuniEntrySlated]', 11),
     ('[reports].[DMCMuniEntryFinalPreTrials]', 11),
     ('[reports].[DMCMuniEntryPleas]', 11),
     ('[reports].[DMCMuniEntryBenchTrials]', 11),
