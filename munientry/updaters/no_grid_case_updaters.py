@@ -56,9 +56,13 @@ class ArraignmentContinueDialogUpdater(BaseDialogUpdater):
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
+        self.update_continuance_information()
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
+
+    def update_continuance_information(self) -> None:
+        self.dialog.transfer_view_data_to_model(self.model.continuance_conditions)
 
 
 class ProbationViolationBondDialogUpdater(BaseDialogUpdater):

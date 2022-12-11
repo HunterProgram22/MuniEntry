@@ -12,8 +12,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>990</width>
-    <height>732</height>
+    <width>988</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -180,8 +180,8 @@ font-weight: bold;</string>
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>950</width>
-           <height>692</height>
+           <width>948</width>
+           <height>685</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -492,7 +492,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="NoScrollComboBox" name="comboBox">
+              <widget class="NoScrollComboBox" name="continuance_length_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -523,7 +523,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="NoScrollComboBox" name="comboBox_2">
+              <widget class="NoScrollComboBox" name="continuance_reason_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -534,7 +534,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>arrange for interpreter for defendant</string>
+                 <string>to arrange for an interpreter for defendant</string>
                 </property>
                </item>
               </widget>
@@ -547,7 +547,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="NoScrollDateEdit" name="dateEdit">
+              <widget class="NoScrollDateEdit" name="new_arraignment_date_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>

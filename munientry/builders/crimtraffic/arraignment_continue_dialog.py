@@ -1,6 +1,7 @@
 """Builder module for the Arraignment Continuance Dialog."""
 from loguru import logger
 
+from munientry.appsettings.pyqt_constants import TODAY
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import ArraignmentContinueDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
@@ -24,6 +25,15 @@ class ArraignmentContinueDialogViewModifier(crim.CrimTrafficViewModifier):
 class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Arraignment Continuance Dialog."""
 
+    def update_arraignment_date(self):
+        cont_length = self.dialog.continuance_length_box.currentText()
+        ARRAIGNMENT_CONT_DICT = {
+            '1 Week': 7,
+            '2 Weeks': 14,
+        }
+        days_to_add = ARRAIGNMENT_CONT_DICT.get(cont_length)
+        self.dialog.new_arraignment_date_box.setDate(TODAY.addDays(days_to_add))
+
 
 
 class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
@@ -32,6 +42,9 @@ class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.dialog.continuance_length_box.currentTextChanged.connect(
+           self.dialog.functions.update_arraignment_date,
+        )
 
 
 class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentContinueDialog):
@@ -47,8 +60,7 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     dialog_name = 'Arraignment Continuance Dialog'
 
     def additional_setup(self):
-        pass
-        # self.entry_case_information.arraignment_continue_conditions = ArraignmentContinueConditions()
+        self.functions.update_arraignment_date()
 
 
 if __name__ == '__main__':
