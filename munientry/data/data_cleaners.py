@@ -1,34 +1,18 @@
-"""Module for getting case data from Excel files."""
+"""Functions used for sanitizing data transferred into the application from an external source.
+
+**munientry.data.data_cleaners**
+
+Functions:
+    clean_last_name(last_name) -> str
+
+    clean_offense_name(offense) -> str
+
+    clean_statute_name(statute) -> str
+"""
 from types import MappingProxyType
 
 from loguru import logger
 
-# from munientry.data.excel_functions import (
-#     create_headers_dict,
-#     get_excel_file_headers,
-#     load_active_worksheet,
-# )
-# from munientry.models.excel_models import CaseExcelData
-# from munientry.appsettings.settings import TYPE_CHECKING
-#
-# if TYPE_CHECKING:
-#     from openpyxl import Workbook
-
-
-# Column Headers
-COL_CASE = 'CaseNumber'
-COL_DEF_LAST_NAME = 'DefLastName'
-COL_DEF_FIRST_NAME = 'DefFirstName'
-COL_CHARGE = 'ChargeDescription'
-COL_STATUTE = 'SectionCode'
-COL_DEGREE = 'DegreeCode'
-COL_INSURANCE = 'InsuranceStatus'
-COL_MOVING_OFFENSE = 'IsMoving'
-COL_DEF_ATTY_LAST_NAME = 'AttorneyLastName'
-COL_DEF_ATTY_FIRST_NAME = 'AttorneyFirstName'
-COL_DEF_ATTY_TYPE = 'PubDef'
-
-NO_DATA = 'No Data'
 OFFENSE_CLEAN_DICT = MappingProxyType({
     'UCM': '',
     'M1': '',
@@ -58,13 +42,38 @@ OFFENSE_CLEAN_DICT = MappingProxyType({
 })
 
 
-def clean_statute_name(statute: str) -> str:
-    """Removes trailing asteriks that are often part of data from AuthorityCourt."""
-    return statute.rstrip('*')
+def clean_last_name(last_name: str) -> str:
+    """Removes spaces between hyphenated last names.
+
+    This is used when last names are loaded from external databases because certain functions
+    used to check for companion cases compare the last name and the daily case lists in the
+    application identify cases with the format 'last_name - case_number'. Having spaces surrounding
+    a hyphen in a last name would cause the checks to fail, by removing spaces around hyphens in
+    last names checks will work properly.
+
+    Args:
+        last_name (str): The last name of a person.
+
+    Returns:
+        str: The cleaned version of the last name with no spaces between a hyphen.
+    """
+    return last_name.replace(' - ', '-')
 
 
 def clean_offense_name(offense: str) -> str:
-    """Sets offense name to title case (except for abbreviations) and removes degree of charge."""
+    """Sanitizes offense names loaded from external databases.
+
+    The data in the AuthorityCourt database is inconsistent in its formatting, this function
+    provides consistency to capitalization and formatting.
+
+    Sets offense name to title case (except for abbreviations) and removes degree of charge.
+
+    Args:
+        offense: The offense name from the external database.
+
+    Returns:
+        str: The cleaned version of the offense name.
+    """
     offense_word_list = offense.split()
     clean_offense_word_list = []
     for word in offense_word_list:
@@ -76,9 +85,19 @@ def clean_offense_name(offense: str) -> str:
     return clean_offense.rstrip(' ')
 
 
-def clean_last_name(last_name:str) -> str:
-    """Removes spaces between hyphenated last names which caused a bug."""
-    return last_name.replace(' - ', '-')
+def clean_statute_name(statute: str) -> str:
+    """Sanitizes the statute strings loaded from external databases.
+
+    The data in the AuthorityCourt database often uses asteriks to match the same statute
+    to multiple different offense names. This function removes the asteriks.
+
+    Args:
+        statute: The statute name from the external database.
+
+    Returns:
+        str: The cleaned version of the statute name without asteriks.
+    """
+    return statute.rstrip('*')
 
 
 if __name__ == '__main__':
