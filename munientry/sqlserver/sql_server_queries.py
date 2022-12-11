@@ -105,5 +105,14 @@ def get_case_docket_query(case_number: str) -> str:
     """
 
 
+def daily_case_list_query(report: str) -> str:
+    return f"""
+        USE [AuthorityCourt]
+        DECLARE	@return_value int
+        EXEC	@return_value = {report}
+        SELECT	'Return Value' = @return_value;
+    """
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

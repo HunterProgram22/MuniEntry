@@ -3,24 +3,27 @@
 All tests in this module use the charges db in the tests/db folder.
 """
 import pytest
-from PyQt6.QtSql import QSqlDatabase
+from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
 from munientry.data.connections import (
     create_sqlite_db_connection,
     open_db_connection,
+    close_db_connection,
     remove_db_connection,
 )
-from munientry.data.excel_getters import clean_offense_name
+from munientry.data.data_cleaners import clean_offense_name
+from munientry.sqlserver.sql_server_queries import daily_case_list_query
 from munientry.sqllite.sql_lite_functions import (
-    load_daily_case_list_data,
+    # load_daily_case_list_data,
     query_daily_case_list_data,
     query_offense_statute_data,
 )
 from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
 from munientry.appsettings.paths import DB_PATH
-from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
+# from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
 
 MUNIENTRY_DB = 'con_munientry_db'
+AUTHORITY_COURT_DB = 'con_authority_court'
 PLEAS = 'pleas'
 TOTAL_STATUTES = 46
 
@@ -112,9 +115,9 @@ def test_create_db_connection_returns_db(database_name, connection_name):
     assert isinstance(con, QSqlDatabase)
 
 
-def test_total_daily_case_lists_is_six():
-    """Tests that there are 6 daily case lists to load."""
-    assert len(EXCEL_DAILY_CASE_LISTS) == 6
+# def test_total_daily_case_lists_is_six():
+#     """Tests that there are 6 daily case lists to load."""
+#     assert len(EXCEL_DAILY_CASE_LISTS) == 6
 
 
 query_list = [
@@ -134,24 +137,29 @@ def test_query_offense_statute_data(query, connection_name):
 
 
 daily_case_lists = [
-    ('arraignments', 9),
-    ('slated', 12),
-    ('final_pretrials', 12),
-    (PLEAS, 12),
-    ('trials_to_court', 12),
-    ('pcvh_fcvh', 14),
+    ('[reports].[DMCMuniEntryArraignment]', 8),
+    ('[reports].[DMCMuniEntrySlated]', 12),
+    ('[reports].[DMCMuniEntryFinalPreTrials]', 11),
+    ('[reports].[DMCMuniEntryPleas]', 11),
+    ('[reports].[DMCMuniEntryBenchTrials]', 11),
+    ('[reports].[DMCMuniEntryPrelimCommContViolHearings]', 13),
 ]
 
 
-@pytest.mark.parametrize('table, total_cases', daily_case_lists)
-def test_query_daily_case_list_data(table, total_cases):
-    """Tests correct number of cases loaded from daily case lists.
-
-    The assertion for total cases needs to be one more than the total cases. This is because in
-    the test/db cases table a blank is inserted at the top of the list.
-    """
-    db_connection = open_db_connection(MUNIENTRY_DB)
-    assert len(query_daily_case_list_data(table, db_connection)) == total_cases
+@pytest.mark.parametrize('reports, total_cases', daily_case_lists)
+def test_query_daily_case_list_data(reports, total_cases):
+    """Tests correct number of cases loaded test database (AuthorityCourt) Stored Procs."""
+    db_connection = open_db_connection(AUTHORITY_COURT_DB)
+    query = QSqlQuery(db_connection)
+    query_string = daily_case_list_query(reports)
+    query.prepare(query_string)
+    query.exec()
+    count = 0
+    while query.next():
+        count += 1
+    assert count == total_cases
+    query.finish()
+    close_db_connection(db_connection)
 
 
 def test_charges_connection_to_db():
@@ -160,8 +168,8 @@ def test_charges_connection_to_db():
     assert isinstance(con_charges, QSqlDatabase)
 
 
-def test_create_daily_case_lists_db():
-    """Tests connection to daily case list tables."""
-    con_daily_case_lists = open_db_connection(MUNIENTRY_DB)
-    load_daily_case_list_data(con_daily_case_lists)
-    assert isinstance(con_daily_case_lists, QSqlDatabase)
+# def test_create_daily_case_lists_db():
+#     """Tests connection to daily case list tables."""
+#     con_daily_case_lists = open_db_connection(MUNIENTRY_DB)
+#     load_daily_case_list_data(con_daily_case_lists)
+#     assert isinstance(con_daily_case_lists, QSqlDatabase)
