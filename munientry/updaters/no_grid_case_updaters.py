@@ -50,6 +50,17 @@ class FailureToAppearDialogUpdater(BaseDialogUpdater):
         self.dialog.transfer_view_data_to_model(self.model.fta_conditions)
 
 
+class ArraignmentContinueDialogUpdater(BaseDialogUpdater):
+    """Updater for Arraignment Continue Dialog - no charge grid."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)
+
+
 class ProbationViolationBondDialogUpdater(BaseDialogUpdater):
     """Updater for Probation Violation Dialog - no charge grid."""
 

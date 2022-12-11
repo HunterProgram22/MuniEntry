@@ -289,6 +289,17 @@ class FailureToAppearDialogInfoChecker(DefenseCounselChecker):
         self.check_status = self.perform_check_list()
 
 
+class ArraignmentContinueDialogInfoChecker(DefenseCounselChecker):
+    """Class with all checks for Arriagnment Continuance Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = [
+            'check_defense_counsel',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class FreeformDialogInfoChecker(DefenseCounselChecker):
     """Class with all checks for Freeform Entry Dialog."""
 

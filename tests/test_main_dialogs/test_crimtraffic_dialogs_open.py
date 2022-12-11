@@ -27,6 +27,7 @@ crimtraffic_dialog_buttons = [
 
     ('FailureToAppearButton', 'Failure To Appear Case Information'),
     ('FreeformEntryButton', 'Freeform Entry Case Information'),
+    ('ArraignmentContinueButton', 'Arraignment Continuance Entry Case Information'),
 ]
 
 

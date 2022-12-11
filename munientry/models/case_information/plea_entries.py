@@ -31,6 +31,12 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
+class ArraignmentContinueEntryCaseInformation(CriminalCaseInformation):
+    """General case information data variables and data for arraignment continuance entry."""
+
+
+
+@dataclass
 class FreeformEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables for freeform entry."""
 
