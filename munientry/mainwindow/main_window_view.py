@@ -7,6 +7,7 @@ from munientry.builders.administrative import (
     jury_payment_dialog,
 )
 from munientry.builders.crimtraffic import (
+    arraignment_continue_dialog,
     bond_hearing_dialog,
     diversion_dialog,
     failure_to_appear_dialog,
@@ -89,6 +90,8 @@ class MainWindowViewModifier(object):
 
     def connect_dialog_buttons(self):
         return {
+            self.main_window.ArraignmentContinueButton:
+                arraignment_continue_dialog.ArraignmentContinueDialog,
             self.main_window.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
             self.main_window.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
             self.main_window.DiversionButton: diversion_dialog.DiversionPleaDialog,

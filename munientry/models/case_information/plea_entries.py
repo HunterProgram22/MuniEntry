@@ -31,6 +31,13 @@ class FailureToAppearEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
+class ArraignmentContinueEntryCaseInformation(CriminalCaseInformation):
+    """General case information data variables and data for arraignment continuance entry."""
+
+    continuance_conditions: object = field(default_factory=cm.ContinuanceConditions)
+
+
+@dataclass
 class FreeformEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables for freeform entry."""
 
