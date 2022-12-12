@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.excel_getters import clean_offense_name, clean_statute_name
+from munientry.data.data_cleaners import clean_offense_name, clean_statute_name
 from munientry.sqlserver.sql_server_queries import (
     driving_case_search_query,
     general_case_search_query,

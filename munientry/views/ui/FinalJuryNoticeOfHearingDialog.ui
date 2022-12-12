@@ -329,6 +329,81 @@ font-weight: bold;</string>
                    <string>4:15 PM</string>
                   </property>
                  </item>
+                 <item>
+                  <property name="text">
+                   <string>8:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>8:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>9:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:30 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>10:45 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:00 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:15 AM</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>11:30 AM</string>
+                  </property>
+                 </item>
                 </widget>
                </item>
                <item row="6" column="0">

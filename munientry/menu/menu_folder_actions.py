@@ -32,7 +32,7 @@ from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.excel_getters import clean_offense_name
+from munientry.data.data_cleaners import clean_offense_name
 from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
 from munientry.sqlserver.sql_server_queries import event_type_report_query
 from munientry.appsettings.paths import (

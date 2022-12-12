@@ -1,9 +1,12 @@
 """Slot Functions for the MainWindow."""
 from loguru import logger
 from PyQt6.QtWidgets import QTableWidgetItem
+from PyQt6.QtSql import QSqlQuery
 
+from munientry.data.data_cleaners import clean_last_name
 from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.sqlserver import sql_server_getters as sql_server
+from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.helper_functions import set_random_judge
 from munientry.widgets.table_widgets import ReportWindow
@@ -20,11 +23,35 @@ class MainWindowSlotFunctionsMixin(object):
         The case count is one less than length of list because a blank line is inserted at the
         top of the case list. The case count becomes actual number of cases loaded.
         """
-        db_connection = open_db_connection('con_munientry_db')
+        db_connection = open_db_connection('con_authority_court')
+        STORED_PROC_DICT = {
+            self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
+            self.slated_cases_box: '[reports].[DMCMuniEntrySlated]',
+            self.pleas_cases_box: '[reports].[DMCMuniEntryPleas]',
+            self.pcvh_fcvh_cases_box: '[reports].[DMCMuniEntryPrelimCommContViolHearings]',
+            self.final_pretrial_cases_box: '[reports].[DMCMuniEntryFinalPreTrials]',
+            self.trials_to_court_cases_box: '[reports].[DMCMuniEntryBenchTrials]',
+        }
+
         for case_list in self.daily_case_lists:
+            stored_proc = STORED_PROC_DICT.get(case_list)
+            query_string = sql_query.daily_case_list_query(stored_proc)
+            self.query = QSqlQuery(db_connection)
+            self.query.prepare(query_string)
+            self.query.exec()
+            daily_case_list = []
+            while self.query.next():
+                case_number = self.query.value('CaseNumber')
+                last_name = self.query.value('LastName').title()
+                last_name = clean_last_name(last_name)
+                case = f'{last_name} - {case_number}'
+                daily_case_list.append(case)
+
+            daily_case_list.insert(0, '')
             old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
+            daily_case_list = sorted(daily_case_list)
             case_list.clear()
-            case_list.addItems(sql_lite.query_daily_case_list_data(case_list.name, db_connection))
+            case_list.addItems(daily_case_list)
             case_count = len(case_list) - 1
             logger.info(
                 f'Table: {case_list.name} - Preload Cases: {old_case_count};'
@@ -34,9 +61,6 @@ class MainWindowSlotFunctionsMixin(object):
 
     def reload_case_lists(self) -> None:
         """This method is connected to the reload cases button and calls load_case_lists."""
-        db_connection = open_db_connection('con_munientry_db')
-        sql_lite.load_daily_case_list_data(db_connection)
-        close_db_connection(db_connection)
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 

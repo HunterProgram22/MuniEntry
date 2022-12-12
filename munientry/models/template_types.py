@@ -85,6 +85,11 @@ Failure_To_Appear_Template = Template(
     'Failure_To_Appear_Template.docx',
 )
 
+Arraignment_Continue_Template = Template(
+    'Arraignment Continuance Entry',
+    'Arraignment_Continue_Template.docx',
+)
+
 Freeform_Entry_Template = Template(
     'Freeform Entry',
     'Freeform_Entry_Template.docx',
@@ -146,6 +151,7 @@ TEMPLATE_DICT = types.MappingProxyType({
     'No Plea Bond Dialog': No_Plea_Bond_Template,
     'Probation Violation Bond Dialog': Probation_Violation_Bond_Template,
     'Failure To Appear Dialog': Failure_To_Appear_Template,
+    'Arraignment Continuance Dialog': Arraignment_Continue_Template,
     'Bond Hearing Dialog': Bond_Hearing_Template,
     'Plea Only Dialog': Plea_Only_Template,
     'Leap Admission Plea Dialog': Leap_Admission_Plea_Template,

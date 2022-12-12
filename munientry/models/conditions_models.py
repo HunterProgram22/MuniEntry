@@ -331,6 +331,16 @@ class BondModificationConditions(BondConditions):
 
 
 @dataclass
+class ContinuanceConditions:
+    continuance_reason: str = None
+    new_arraignment_date: str = None
+    terms_list = [
+        ('continuance_reason', 'continuance_reason_box'),
+        ('new_arraignment_date', 'new_arraignment_date_box'),
+    ]
+
+
+@dataclass
 class FailureToAppearConditions:
     arrest_warrant: bool = False
     arrest_warrant_radius: str = None
