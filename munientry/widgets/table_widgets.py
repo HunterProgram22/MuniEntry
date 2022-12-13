@@ -22,11 +22,28 @@ class ReportWindow(QWidget):
         self.buttonPrint.clicked.connect(self.handlePrint)
         self.buttonPreview = QPushButton('Preview', self)
         self.buttonPreview.clicked.connect(self.handlePreview)
+        self.buttonCopy = QPushButton('Copy', self)
+        self.buttonCopy.clicked.connect(self.handleCopy)
         layout = QGridLayout(self)
-        layout.addWidget(self.table, 0, 0, 1, 2)
+        layout.addWidget(self.table, 0, 0, 1, 3)
         layout.addWidget(self.buttonPrint, 1, 0)
         layout.addWidget(self.buttonPreview, 1, 1)
+        layout.addWidget(self.buttonCopy, 1, 2)
         self.resize(1000, 800)
+
+    def handleCopy(self):
+        self.clipboard = QtGui.QGuiApplication.clipboard()
+        selected = self.table.selectedRanges()
+        s = ''
+        for r in range(selected[0].topRow(), selected[0].bottomRow() + 1):
+            for c in range(selected[0].leftColumn(), selected[0].rightColumn() + 1):
+                try:
+                    s += str(self.table.item(r, c).text()) + "\t"
+                except AttributeError:
+                    s += "\t"
+            s = s[:-1] + "\n"  # eliminate last '\t'
+        logger.info(s)
+        self.clipboard.setText(s)
 
     def handlePrint(self):
         printer = QtPrintSupport.QPrinter()
