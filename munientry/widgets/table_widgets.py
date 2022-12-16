@@ -53,19 +53,24 @@ class ReportWindow(QWidget):
     """A Window object separate from the MainWindow used for displaying reports.
 
     Args:
-        rows (int)
+        report_name (str): The name of the report shown in the window.
 
+    Attrs:
+        report_name (str): The name of the report shown in the window.
     """
 
     def __init__(self, report_name):
         QWidget.__init__(self)
-        self.report_name = report_name
         self.setWindowTitle(self.tr(self.report_name))
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.report_name = report_name
 
-        # self.table = self.add_table(rows, cols, self.report_name, self)
+
+class TableReportWindow(ReportWindow):
+
+    def __init__(self, report_name):
+        super().__init__(report_name)
         self.table = None
-
         self.buttonPrint = QPushButton('Print', self)
         self.buttonPrint.clicked.connect(self.handlePrint)
         self.buttonPreview = QPushButton('Preview', self)

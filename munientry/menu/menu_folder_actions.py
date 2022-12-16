@@ -43,7 +43,7 @@ from munientry.appsettings.paths import (
     SCHEDULING_SAVE_PATH,
 )
 from munientry.appsettings.settings import TYPE_CHECKING
-from munientry.widgets import table_widgets
+from munientry.widgets.table_widgets import TableReportWindow
 
 if TYPE_CHECKING:
     from PyQt6.QtWidgets import QMainWindow
@@ -190,11 +190,9 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str]]:
     return data_list
 
 
-def create_courtroom_report_window(
-    data_list: list, report_name: str, report_date: str,
-) -> table_widgets.ReportWindow:
+def create_courtroom_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
-    window = table_widgets.ReportWindow(f'{report_name} Report for {report_date}',)
+    window = TableReportWindow(f'{report_name} Report for {report_date}',)
     window.table  = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(COURTROOM_REPORT_HEADERS))
     Case = namedtuple('Case', 'event time case_number def_name')
@@ -207,13 +205,10 @@ def create_courtroom_report_window(
     return window
 
 
-def create_event_report_window(
-    data_list: list, report_name: str, report_date: str,
-) -> table_widgets.ReportWindow:
+def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
-    window = table_widgets.ReportWindow(
-        len(data_list), 3, f'{report_name} Report for {report_date}',
-    )
+    window = TableReportWindow(f'{report_name} Report for {report_date}')
+    window.table = window.add_table(len(data_list), 3, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
     Case = namedtuple('Case', 'case_number defendant_name primary_charge')
     for row, case in enumerate(data_list):
