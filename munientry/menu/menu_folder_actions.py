@@ -194,9 +194,8 @@ def create_courtroom_report_window(
     data_list: list, report_name: str, report_date: str,
 ) -> table_widgets.ReportWindow:
     """Creates a window to load the event table and contains print buttons."""
-    window = table_widgets.ReportWindow(
-        len(data_list), 4, f'{report_name} Report for {report_date}',
-    )
+    window = table_widgets.ReportWindow(f'{report_name} Report for {report_date}',)
+    window.table  = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(COURTROOM_REPORT_HEADERS))
     Case = namedtuple('Case', 'event time case_number def_name')
     for row, case in enumerate(data_list):

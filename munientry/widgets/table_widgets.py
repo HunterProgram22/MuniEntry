@@ -1,35 +1,88 @@
-"""Module containing custom Table Widgets.
+"""Module for custom table widgets used for reports.
+
+**muninetry.widgets.table_widgets**
 
 If using QtDesigner for creation of the Ui file you must promote the widget to one of the custom
 widgets that is used. The header file for this module must then be added in QtDesigner so that
 when the file is converted using 'pyuic6 -o {python_view_file.py} {qt_ui_file.ui}' this
 module will be imported as part of the python_view_file.py.
+
+Classes:
+
+    ReportWindow(QWidget)
+
+    ReportTable(QTableWidget)
+
 """
-from PyQt6 import QtGui, QtPrintSupport
-from PyQt6.QtWidgets import QWidget, QTableWidget, QAbstractScrollArea, QSizePolicy, QHeaderView, QPushButton, QGridLayout
 from loguru import logger
+from PyQt6 import QtGui, QtPrintSupport
+from PyQt6.QtWidgets import (
+    QAbstractScrollArea,
+    QGridLayout,
+    QHeaderView,
+    QPushButton,
+    QSizePolicy,
+    QTableWidget,
+    QWidget,
+)
+
 from munientry.appsettings.paths import ICON_PATH
 
 
+class ReportTable(QTableWidget):
+    def __init__(self, rows, cols, title, parent=None):
+        super(QTableWidget, self).__init__(rows, cols, parent)
+        self.title = title
+        self.set_up_widget()
+        logger.info(self.title)
+
+    def set_up_widget(self):
+        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
+        self.setWindowTitle(self.title)
+        self.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
+        header = self.horizontalHeader()
+        header.setStretchLastSection(True)
+        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
+        self.setSortingEnabled(False)
+        self.setAlternatingRowColors(True)
+        self.resize(1000, 800)
+
+
 class ReportWindow(QWidget):
-    def __init__(self, rows, cols, report_name):
+    """A Window object separate from the MainWindow used for displaying reports.
+
+    Args:
+        rows (int)
+
+    """
+
+    def __init__(self, report_name):
         QWidget.__init__(self)
         self.report_name = report_name
         self.setWindowTitle(self.tr(self.report_name))
         self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.table = ReportTable(rows, cols, self.report_name, self)
+
+        # self.table = self.add_table(rows, cols, self.report_name, self)
+        self.table = None
+
         self.buttonPrint = QPushButton('Print', self)
         self.buttonPrint.clicked.connect(self.handlePrint)
         self.buttonPreview = QPushButton('Preview', self)
         self.buttonPreview.clicked.connect(self.handlePreview)
         self.buttonCopy = QPushButton('Copy', self)
         self.buttonCopy.clicked.connect(self.handleCopy)
-        layout = QGridLayout(self)
-        layout.addWidget(self.table, 0, 0, 1, 3)
-        layout.addWidget(self.buttonPrint, 1, 0)
-        layout.addWidget(self.buttonPreview, 1, 1)
-        layout.addWidget(self.buttonCopy, 1, 2)
+        self.layout = QGridLayout(self)
+        # self.layout.addWidget(self.table, 0, 0, 1, 3)
+        self.layout.addWidget(self.buttonPrint, 1, 0)
+        self.layout.addWidget(self.buttonPreview, 1, 1)
+        self.layout.addWidget(self.buttonCopy, 1, 2)
         self.resize(1000, 800)
+
+    def add_table(self, rows: int, cols: int, report_name: str, parent: object) -> ReportTable:
+        table = ReportTable(rows, cols, report_name, parent)
+        self.layout.addWidget(table, 0, 0, 1, 3)
+        return table
 
     def handleCopy(self):
         self.clipboard = QtGui.QGuiApplication.clipboard()
@@ -78,23 +131,3 @@ class ReportWindow(QWidget):
                     cursor.insertText(self.table.item(row, col).text())
                     cursor.movePosition(QtGui.QTextCursor.MoveOperation.NextCell)
         document.print(printer)
-
-
-class ReportTable(QTableWidget):
-    def __init__(self, rows, cols, title, parent=None):
-        super(QTableWidget, self).__init__(rows, cols, parent)
-        self.title = title
-        self.set_up_widget()
-        logger.info(self.title)
-
-    def set_up_widget(self):
-        self.setWindowIcon(QtGui.QIcon(ICON_PATH + 'gavel.ico'))
-        self.setWindowTitle(self.title)
-        self.setSizeAdjustPolicy(QAbstractScrollArea.SizeAdjustPolicy.AdjustToContents)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
-        header = self.horizontalHeader()
-        header.setStretchLastSection(True)
-        header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
-        self.setSortingEnabled(False)
-        self.setAlternatingRowColors(True)
-        self.resize(1000, 800)
