@@ -195,6 +195,7 @@ def create_courtroom_report_window(data_list: list, report_name: str, report_dat
     window = TableReportWindow(f'{report_name} Report for {report_date}',)
     window.table  = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(COURTROOM_REPORT_HEADERS))
+
     Case = namedtuple('Case', 'event time case_number def_name')
     for row, case in enumerate(data_list):
         case = Case(case[0], case[1], case[2], case[3])
@@ -210,6 +211,7 @@ def create_event_report_window(data_list: list, report_name: str, report_date: s
     window = TableReportWindow(f'{report_name} Report for {report_date}')
     window.table = window.add_table(len(data_list), 3, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
+
     Case = namedtuple('Case', 'case_number defendant_name primary_charge')
     for row, case in enumerate(data_list):
         case = Case(case[0], case[1], case[2])
