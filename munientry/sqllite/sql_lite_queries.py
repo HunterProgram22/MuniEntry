@@ -2,51 +2,6 @@
 from loguru import logger
 
 
-def insert_daily_case_list_tables_sql_query(table: str) -> str:
-    # Do not add comma after last value inserted
-    return f"""
-        INSERT INTO {table} (
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file,
-            moving_bool,
-            def_atty_last_name,
-            def_atty_first_name,
-            def_atty_type
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """
-
-
-def delete_table_sql_query(table: str) -> str:
-    """This clears all data from the table."""
-    return f"""
-        DELETE FROM {table};
-        """
-
-
-def select_case_data_sql_query(table: str, case_number: str) -> str:
-    return f"""
-        SELECT
-            case_number,
-            defendant_last_name,
-            defendant_first_name,
-            offense,
-            statute,
-            degree,
-            fra_in_file,
-            moving_bool,
-            def_atty_first_name || ' ' || def_atty_last_name AS defense_counsel,
-            def_atty_type
-        FROM {table}
-        WHERE case_number = '{case_number}'
-        """
-
-
 def select_distinct_offense_statute_sql_query() -> str:
     return 'SELECT DISTINCT offense, statute FROM charges'
 

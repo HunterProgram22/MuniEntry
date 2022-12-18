@@ -17,7 +17,6 @@ from munientry.sqllite.sql_lite_functions import (
     query_daily_case_list_data,
     query_offense_statute_data,
 )
-from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
 from munientry.sqlserver.sql_server_getters import CriminalCaseSQLServer
 from munientry.appsettings.paths import DB_PATH
 
