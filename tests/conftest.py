@@ -281,3 +281,36 @@ def amend_charge_dialog(qtbot, main_window):
     amend_button = main_window.dialog.charges_gridLayout.itemAtPosition(11, 2).widget()
     mouse_click(amend_button)
     return main_window.dialog.popup_dialog
+
+
+CRIMTRAFFIC_ALL_DIALOG_BUTTONS = [
+    ('JailCCPleaButton'),
+    ('FineOnlyPleaButton'),
+    ('DiversionButton'),
+    ('NotGuiltyBondButton'),
+    ('PleaOnlyButton'),
+    ('NoPleaBondButton'),
+    ('BondHearingButton'),
+    ('ProbationViolationBondButton'),
+    ('LeapAdmissionButton'),
+    ('LeapAdmissionValidButton'),
+    ('LeapSentencingButton'),
+    ('TrialSentencingButton'),
+    ('SentencingOnlyButton'),
+    ('FailureToAppearButton'),
+    ('FreeformEntryButton'),
+    ('ArraignmentContinueButton'),
+]
+
+CRIMTRAFFIC_CHARGE_DIALOG_BUTTONS = [
+    ('JailCCPleaButton'),
+    ('FineOnlyPleaButton'),
+    ('DiversionButton'),
+    ('NotGuiltyBondButton'),
+    ('PleaOnlyButton'),
+    ('LeapAdmissionButton'),
+    ('LeapAdmissionValidButton'),
+    ('LeapSentencingButton'),
+    ('TrialSentencingButton'),
+    ('SentencingOnlyButton'),
+]
