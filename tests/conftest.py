@@ -314,3 +314,24 @@ CRIMTRAFFIC_CHARGE_DIALOG_BUTTONS = [
     ('TrialSentencingButton'),
     ('SentencingOnlyButton'),
 ]
+
+CRIMTRAFFIC_FRA_DIALOG_BUTTONS = [
+    ('JailCCPleaButton'),
+    ('FineOnlyPleaButton'),
+    ('DiversionButton'),
+    ('LeapSentencingButton'),
+    ('TrialSentencingButton'),
+    ('SentencingOnlyButton'),
+]
+
+SCHEDULING_ALL_DIALOG_BUTTONS = [
+    ('hemmeter_final_jury_hearingButton'),
+    ('rohrer_final_jury_hearingButton'),
+    ('hemmeter_general_hearingButton'),
+    ('rohrer_general_hearingButton'),
+    ('hemmeter_trial_court_hearingButton'),
+    ('rohrer_trial_court_hearingButton'),
+    ('rohrer_schedulingEntryButton'),
+    ('hemmeter_schedulingEntryButton'),
+]
+

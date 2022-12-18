@@ -14,13 +14,12 @@ from munientry.data.connections import (
 from munientry.data.data_cleaners import clean_offense_name
 from munientry.sqlserver.sql_server_queries import daily_case_list_query
 from munientry.sqllite.sql_lite_functions import (
-    # load_daily_case_list_data,
     query_daily_case_list_data,
     query_offense_statute_data,
 )
 from munientry.sqllite.sql_lite_getters import CriminalCaseSQLLite
+from munientry.sqlserver.sql_server_getters import CriminalCaseSQLServer
 from munientry.appsettings.paths import DB_PATH
-# from munientry.appsettings.settings import EXCEL_DAILY_CASE_LISTS
 
 MUNIENTRY_DB = 'con_munientry_db'
 AUTHORITY_COURT_DB = 'con_authority_court'
@@ -31,51 +30,49 @@ TOTAL_STATUTES = 46
 @pytest.fixture(name='crim_sql_retriever')
 def crim_sql_retriever_setup():
     """Fixture that returns criminal case loaded from Sqllite."""
-    return CriminalCaseSQLLite('20TRC09471', PLEAS)
+    return CriminalCaseSQLServer('22TRC01734')
 
 
 @pytest.fixture(name='crim_sql_special_character')
 def crim_sql_special_character_setup():
     """Fixture that returns criminal case with special character (') case loaded from Sqllite."""
-    return CriminalCaseSQLLite('21CRB01597', PLEAS)
+    return CriminalCaseSQLServer('22TRD01605')
 
 
 def test_load_criminal_case(crim_sql_retriever):
     """Tests that criminal case loads successfully."""
-    assert crim_sql_retriever.case_number == '20TRC09471'
-    assert crim_sql_retriever.case_table == PLEAS
+    assert crim_sql_retriever.case_number == '22TRC01734'
 
 
 def test_load_criminal_case_with_special_char(crim_sql_special_character):
     """Tests that criminal case with special char in name (') loads succesfully."""
-    assert crim_sql_special_character.case_number == '21CRB01597'
-    assert crim_sql_special_character.case_table == PLEAS
+    assert crim_sql_special_character.case_number == '22TRD01605'
 
 
 def test_get_case_data_works(crim_sql_retriever):
-    """Tests that all data collected with loader class (CriminalCaseSQLLite)."""
+    """Tests that all data collected with loader class (CriminalCaseSQLServer)."""
     case = crim_sql_retriever.case
-    assert case.case_number == '20TRC09471'
-    assert case.defendant.last_name == 'Henderson'
-    assert case.defendant.first_name == 'Chase'
+    assert case.case_number == '22TRC01734'
+    assert case.defendant.last_name == 'Rosero Pacheco'
+    assert case.defendant.first_name == 'Pablo'
     assert case.fra_in_file == 'U'
-    assert case.defense_counsel == 'Chris Junga'
-    assert case.defense_counsel_type == '1'
-    assert len(case.charges_list) == 5
+    assert case.defense_counsel == ' '
+    assert case.defense_counsel_type == 0
+    assert len(case.charges_list) == 4
     assert case.charges_list[0][0] == 'OVI Alcohol / Drugs 1st'
 
 
 def test_get_case_data_special_character(crim_sql_special_character):
-    """Tests all data collected with loader class (CriminalCaseSQLLite) with special char (')."""
+    """Tests all data collected with loader class (CriminalCaseSQLServer) with special char (')."""
     case = crim_sql_special_character.case
-    assert case.case_number == '21CRB01597'
-    assert case.defendant.last_name == "O'Reilly"
-    assert case.defendant.first_name == 'Jacob'
-    assert case.fra_in_file == 'U'
-    assert case.defense_counsel == 'Chase Mallory'
-    assert case.defense_counsel_type == 'No Data'
-    assert len(case.charges_list) == 1
-    assert case.charges_list[0][0] == 'Possession of Marihuana'
+    assert case.case_number == '22TRD01605'
+    assert case.defendant.last_name == "O'Metz"
+    assert case.defendant.first_name == 'Sara'
+    assert case.fra_in_file == 'N'
+    assert case.defense_counsel == ' '
+    assert case.defense_counsel_type == 0
+    assert len(case.charges_list) == 2
+    assert case.charges_list[0][0] == 'Driving Under FRA Suspension / Cancel / Judgment'
 
 
 test_offense_list = [
@@ -161,10 +158,3 @@ def test_charges_connection_to_db():
     """Tests connection to charges table."""
     con_charges = open_db_connection(MUNIENTRY_DB)
     assert isinstance(con_charges, QSqlDatabase)
-
-
-# def test_create_daily_case_lists_db():
-#     """Tests connection to daily case list tables."""
-#     con_daily_case_lists = open_db_connection(MUNIENTRY_DB)
-#     load_daily_case_list_data(con_daily_case_lists)
-#     assert isinstance(con_daily_case_lists, QSqlDatabase)
