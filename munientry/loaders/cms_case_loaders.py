@@ -57,7 +57,7 @@ class CmsNoChargeLoader(CmsLoader):
         attorney then the field is set to Public Defender. If there is an attorney, and CMS does
         not indicate it PD, then it is set to Private Counsel.
         """
-        if self.cms_case.defense_counsel_type == '1':
+        if self.cms_case.defense_counsel_type == 1:
             self.dialog.defense_counsel_type_box.setCurrentText('Public Defender')
         elif self.cms_case.defense_counsel.strip() == '':
             self.dialog.defense_counsel_type_box.setCurrentText('Public Defender')
