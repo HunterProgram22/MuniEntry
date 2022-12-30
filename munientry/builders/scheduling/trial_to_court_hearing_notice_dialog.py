@@ -30,6 +30,10 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
+    def update_all_scheduled_dates(self):
+            trial_date = self.set_event_date('Tuesday', TRIAL)
+            self.dialog.trial_dateEdit.setDate(trial_date)
+
 
 class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
     """Class for connecting signals for Trial to Court Hearing Notice Dialog."""
@@ -37,7 +41,33 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_speedy_trial_items()
 
+    def connect_speedy_trial_items(self):
+        self.dialog.arrest_summons_date_box.dateChanged.connect(
+            self.dialog.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.arrest_summons_date_box.dateChanged.connect(
+            self.dialog.functions.update_all_scheduled_dates,
+        )
+        self.dialog.highest_charge_box.currentIndexChanged.connect(
+            self.dialog.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.days_in_jail_lineEdit.textChanged.connect(
+            self.dialog.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.continuance_days_lineEdit.textChanged.connect(
+            self.dialog.functions.set_speedy_trial_date_label,
+        )
+        self.dialog.highest_charge_box.currentIndexChanged.connect(
+            self.dialog.functions.update_all_scheduled_dates,
+        )
+        self.dialog.days_in_jail_lineEdit.textChanged.connect(
+            self.dialog.functions.update_all_scheduled_dates,
+        )
+        self.dialog.continuance_days_lineEdit.textChanged.connect(
+            self.dialog.functions.update_all_scheduled_dates,
+        )
 
 class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
