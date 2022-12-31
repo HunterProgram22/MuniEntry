@@ -1,19 +1,23 @@
 """Module for creating and operating the Trial To Court Hearing Notice Dialog."""
 from loguru import logger
 
+from munientry.appsettings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
+from munientry.appsettings.pyqt_constants import TODAY
+from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
 )
-from munientry.appsettings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
 from munientry.views.trial_to_court_hearing_dialog_ui import (
     Ui_TrialToCourtHearingDialog,
 )
+
+if TYPE_CHECKING:
+    from PyQt6.QtCore import QDate
 
 TRIAL = 'Trial'
 ENTRY_DATE_FORMAT = 'MMMM dd, yyyy'
@@ -34,7 +38,7 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
-    def set_event_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
+    def set_event_date(self, day_to_set: str) -> 'QDate':
         days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
         event_date = TODAY.addDays(days_until_speedy_trial_date)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
@@ -42,8 +46,8 @@ class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
         return event_date
 
     def update_all_scheduled_dates(self):
-            trial_date = self.set_event_date('Monday', TRIAL)
-            self.dialog.trial_dateEdit.setDate(trial_date)
+        trial_date = self.set_event_date('Monday')
+        self.dialog.trial_dateEdit.setDate(trial_date)
 
     def get_speedy_trial_date(self) -> 'QDate':
         speedy_trial_days = self.get_speedy_trial_days()
@@ -110,6 +114,7 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
         self.dialog.continuance_days_lineEdit.textChanged.connect(
             self.dialog.functions.update_all_scheduled_dates,
         )
+
 
 class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
