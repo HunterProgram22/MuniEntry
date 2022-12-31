@@ -1,4 +1,7 @@
-"""Module for creating and operating the Trial To Court Hearing Notice Dialog."""
+"""Module for creating and operating the Trial To Court Hearing Notice Dialog.
+
+**munientry.builders.scheduling.trial_to_court_hearing_notice_dialog**
+"""
 from loguru import logger
 
 from munientry.appsettings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
