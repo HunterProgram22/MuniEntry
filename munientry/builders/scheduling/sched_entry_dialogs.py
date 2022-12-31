@@ -1,17 +1,22 @@
-"""Module containing all classes for building and using the Scheduling Entry Dialogs."""
+"""Module containing all classes for building and using the Scheduling Entry Dialogs.
+
+**munientry.builders.scheduling.sched_entry_dialogs**
+"""
 from loguru import logger
 
+from munientry.appsettings.business_constants import (
+    DAY_DICT,
+    EVENT_DICT,
+    PRETRIAL_TIME_DICT,
+    SPEEDY_TRIAL_TIME_DICT,
+)
+from munientry.appsettings.pyqt_constants import TODAY
+from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.appsettings.settings import (
-    TYPE_CHECKING,
-)
-from munientry.appsettings.business_constants import DAY_DICT, EVENT_DICT, SPEEDY_TRIAL_TIME_DICT, \
-    PRETRIAL_TIME_DICT
-from munientry.appsettings.pyqt_constants import TODAY
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
 )
@@ -90,7 +95,7 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
 
         NOTE: This may be working as needed so TODO may not be needed.
 
-        TODO: In order to update other date fields on data entry another solution is required because
+        TODO: In order to update other date fields on data entry another solution is required b/c
         adding other connections creates a loop due to the signal sent when a date is changed.
         """
         self.dialog.final_pretrial_dateEdit.dateChanged.connect(
@@ -126,11 +131,11 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     def update_all_scheduled_dates(self):
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
-            trial_date = self.set_event_date('Tuesday', TRIAL)
+            trial_date = self.set_trial_date('Tuesday')
             self.dialog.trial_dateEdit.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            trial_date = self.set_event_date('Thursday', TRIAL)
+            trial_date = self.set_trial_date('Thursday')
             self.dialog.trial_dateEdit.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
 
@@ -138,13 +143,13 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         logger.debug('Update trial and pretrial')
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
             logger.debug('Update Rohrer')
-            trial_date = self.set_trial_date('Tuesday', TRIAL)
+            trial_date = self.set_trial_date('Tuesday')
             self.dialog.trial_dateEdit.setDate(trial_date)
             pretrial_date = self.set_event_date('Monday', PRETRIAL)
             self.dialog.pretrial_dateEdit.setDate(pretrial_date)
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
             logger.debug('Update Hemmeter')
-            trial_date = self.set_trial_date('Thursday', TRIAL)
+            trial_date = self.set_trial_date('Thursday')
             self.dialog.trial_dateEdit.setDate(trial_date)
             pretrial_date = self.set_event_date('Wednesday', PRETRIAL)
             self.dialog.pretrial_dateEdit.setDate(pretrial_date)
@@ -159,19 +164,22 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         self.dialog.final_pretrial_dateEdit.setDate(final_pretrial_date)
         self.dialog.pretrial_dateEdit.setDate(pretrial_date)
 
-    def set_trial_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
-        if event_to_set == TRIAL:
-            days_to_event = EVENT_DICT.get(event_to_set)
-            event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
-            while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
-                event_date = event_date.addDays(1)
-            return event_date
+    def set_trial_date(self, day_to_set: str) -> 'QDate':
+        """Returns a date for trial based on specific Judge.
+
+        The trial date is set 2 days (via TRIAL constant) after the final pretrial.
+        Then if the day 2 days later is not the specific trial date for the Judge,
+        which is Tuesday for Judge Rohrer and Thursday for Judge Hemmeter, it will
+        return a date that is the next Tuesday or Thursday.
+        """
+        days_to_event = EVENT_DICT.get(TRIAL)
+        event_date = self.dialog.final_pretrial_dateEdit.date().addDays(days_to_event)
+        while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
+            event_date = event_date.addDays(1)
+        return event_date
 
     def set_event_date(self, day_to_set: str, event_to_set: str) -> 'QDate':
-        if event_to_set == TRIAL:
-            days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
-            event_date = TODAY.addDays(days_until_speedy_trial_date)
-        elif event_to_set == PRETRIAL:
+        if event_to_set == PRETRIAL:
             pretrial_time = self.get_pretrial_time()
             event_date = self.dialog.trial_dateEdit.date().addDays(-pretrial_time)
         else:
@@ -182,6 +190,7 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         return event_date
 
     def get_pretrial_time(self) -> int:
+        """Returns the number of days the pretrial is to be set before final pretrial."""
         pretrial_buttons = [
             self.dialog.four_week_pretrial_radioButton,
             self.dialog.three_week_pretrial_radioButton,
@@ -191,6 +200,7 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         for button in pretrial_buttons:
             if button.isChecked():
                 return PRETRIAL_TIME_DICT.get(button.text())
+        return 0
 
     def get_speedy_trial_date(self) -> 'QDate':
         speedy_trial_days = self.get_speedy_trial_days()
@@ -239,7 +249,9 @@ class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformatio
         if self.dialog.no_pretrial_radioButton.isChecked():
             self.model.pretrial_date = None
         else:
-            self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
+            self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(
+                ENTRY_DATE_FORMAT,
+            )
         self.model.final_pretrial_time = self.dialog.final_pretrial_time_box.currentText()
         self.model.hearing_location = self.set_courtroom()
 
@@ -253,6 +265,7 @@ class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformatio
             return 'Courtroom A'
         if self.dialog.dialog_name == 'Hemmeter Scheduling Entry':
             return 'Courtroom B'
+        return 'Unknown'
 
 
 class SchedulingEntryDialogInfoChecker(BaseChecker):
@@ -284,7 +297,8 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
         The template is set after init because the dialog name is not set initially from the build
         dict because there are two dialogs and templates built (Rohrer and Hemmeter) in this module.
 
-        TODO: For clarity these should probably just be separated out to separate dialog modules.
+        TODO: For clarity and reduced complexity the Rohrer and Hemmeter dialogs should probably
+        just be separated out to separate modules.
         """
         self.dialog_name = set_scheduling_dialog_name(self.sender())
         self.template = TEMPLATE_DICT.get(self.dialog_name)
