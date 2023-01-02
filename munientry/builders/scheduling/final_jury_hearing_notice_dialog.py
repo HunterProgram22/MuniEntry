@@ -27,6 +27,9 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         self.dialog.entry_date.setDate(TODAY)
         self.dialog.trial_dateEdit.setDate(TODAY)
         self.dialog.final_pretrial_dateEdit.setDate(TODAY)
+        self.dialog.old_speedy_trial_dateEdit.setDate(TODAY)
+        self.dialog.new_hearing_dateEdit.setDate(TODAY)
+        self.dialog.old_hearing_dateEdit.setDate(TODAY)
 
 
 class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):
@@ -36,8 +39,9 @@ class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
         self.connect_other_dialog_signals()
+        self.connect_continuance_calc_signals()
 
-    def connect_other_dialog_signals(self):
+    def connect_other_dialog_signals(self) -> None:
         self.dialog.jury_trial_only_no_radioButton.toggled.connect(
             self.dialog.functions.show_hide_final_pretrial,
         )
@@ -48,9 +52,26 @@ class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):
             self.dialog.functions.update_trial_date,
         )
 
+    def connect_continuance_calc_signals(self) -> None:
+        self.dialog.old_speedy_trial_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
+        self.dialog.old_hearing_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
+        self.dialog.new_hearing_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
+
 
 class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for that contains all signals for the Final Jury Notice of Hearing."""
+
+    def update_speedy_trial_date(self) -> None:
+        days_to_add = self.dialog.old_hearing_dateEdit.date().daysTo(self.dialog.new_hearing_dateEdit.date())
+        new_speedy_trial_date = self.dialog.old_speedy_trial_dateEdit.date().addDays(days_to_add)
+        new_speedy_trial_date = new_speedy_trial_date.toString('MMMM dd, yyyy')
+        self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
 
     def update_trial_date(self) -> None:
         if self.dialog.assigned_judge == 'Judge Kyle E. Rohrer':
