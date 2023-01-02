@@ -74,7 +74,6 @@ class CriminalCaseSQLServer(object):
 
     def load_case_information(self) -> None:
         self.case.case_number = self.query.value('CaseNumber')
-        logger.debug(self.query.value('DefLastName'))
         self.case.defendant.last_name = self.query.value('DefLastName').title()
         self.case.defendant.first_name = self.query.value('DefFirstName').title()
         self.case.fra_in_file = self.query.value('FraInFile')

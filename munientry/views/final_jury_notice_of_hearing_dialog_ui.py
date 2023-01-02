@@ -78,7 +78,7 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1230, 891))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -101, 1230, 856))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_2.setObjectName("gridLayout_2")
@@ -290,19 +290,19 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.frame_8.setObjectName("frame_8")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.frame_8)
         self.gridLayout_10.setObjectName("gridLayout_10")
-        self.close_dialog_Button = QtWidgets.QPushButton(self.frame_8)
-        self.close_dialog_Button.setStyleSheet("background-color: rgb(255, 96, 82);\n"
-"font: 75 11pt \"Palatino Linotype\";\n"
-"font-weight: bold;")
-        self.close_dialog_Button.setObjectName("close_dialog_Button")
-        self.gridLayout_10.addWidget(self.close_dialog_Button, 2, 0, 1, 1)
         self.create_entry_Button = QtWidgets.QPushButton(self.frame_8)
         self.create_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.create_entry_Button.setAutoDefault(False)
         self.create_entry_Button.setObjectName("create_entry_Button")
-        self.gridLayout_10.addWidget(self.create_entry_Button, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.create_entry_Button, 0, 1, 1, 1)
+        self.close_dialog_Button = QtWidgets.QPushButton(self.frame_8)
+        self.close_dialog_Button.setStyleSheet("background-color: rgb(255, 96, 82);\n"
+"font: 75 11pt \"Palatino Linotype\";\n"
+"font-weight: bold;")
+        self.close_dialog_Button.setObjectName("close_dialog_Button")
+        self.gridLayout_10.addWidget(self.close_dialog_Button, 0, 0, 1, 1)
         self.gridLayout_2.addWidget(self.frame_8, 3, 0, 1, 1)
         self.frame_6 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.frame_6.setStyleSheet("background-color: rgb(235, 235, 235);")
@@ -382,7 +382,6 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         FinalJuryNoticeOfHearingDialog.setTabOrder(self.case_number_lineEdit, self.jury_trial_only_no_radioButton)
         FinalJuryNoticeOfHearingDialog.setTabOrder(self.jury_trial_only_no_radioButton, self.jury_trial_only_yes_radioButton)
         FinalJuryNoticeOfHearingDialog.setTabOrder(self.jury_trial_only_yes_radioButton, self.create_entry_Button)
-        FinalJuryNoticeOfHearingDialog.setTabOrder(self.create_entry_Button, self.close_dialog_Button)
 
     def retranslateUi(self, FinalJuryNoticeOfHearingDialog):
         _translate = QtCore.QCoreApplication.translate
@@ -436,8 +435,8 @@ class Ui_FinalJuryNoticeOfHearingDialog(object):
         self.hearing_location_box.setItemText(1, _translate("FinalJuryNoticeOfHearingDialog", "Courtroom A"))
         self.hearing_location_box.setItemText(2, _translate("FinalJuryNoticeOfHearingDialog", "Courtroom B"))
         self.hearing_location_box.setItemText(3, _translate("FinalJuryNoticeOfHearingDialog", "Courtroom C"))
-        self.close_dialog_Button.setText(_translate("FinalJuryNoticeOfHearingDialog", "Close Dialog"))
         self.create_entry_Button.setText(_translate("FinalJuryNoticeOfHearingDialog", "Open Entry"))
+        self.close_dialog_Button.setText(_translate("FinalJuryNoticeOfHearingDialog", "Close Dialog"))
         self.speedy_trial_date_label.setText(_translate("FinalJuryNoticeOfHearingDialog", "Speedy Trial Date"))
         self.label_15.setText(_translate("FinalJuryNoticeOfHearingDialog", "New Hearing Date:"))
         self.label_10.setText(_translate("FinalJuryNoticeOfHearingDialog", "Old Hearing Date:"))
