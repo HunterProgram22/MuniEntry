@@ -56,7 +56,9 @@ class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """
 
     def update_speedy_trial_date(self) -> None:
-        days_to_add = self.dialog.old_hearing_dateEdit.date().daysTo(self.dialog.new_hearing_dateEdit.date())
+        days_to_add = self.dialog.old_hearing_dateEdit.date().daysTo(
+            self.dialog.new_hearing_dateEdit.date(),
+        )
         new_speedy_trial_date = self.dialog.old_speedy_trial_dateEdit.date().addDays(days_to_add)
         new_speedy_trial_date = new_speedy_trial_date.toString('MMMM dd, yyyy')
         self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
@@ -83,7 +85,7 @@ class GeneralNoticeOfHearingInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list: list[str] = []
         self.check_status = self.perform_check_list()
 
 
