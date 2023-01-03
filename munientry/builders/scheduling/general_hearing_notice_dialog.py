@@ -35,6 +35,18 @@ class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnecto
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_continuance_calc_signals()
+
+    def connect_continuance_calc_signals(self) -> None:
+        self.dialog.old_speedy_trial_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
+        self.dialog.old_hearing_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
+        self.dialog.new_hearing_dateEdit.dateChanged.connect(
+            self.dialog.functions.update_speedy_trial_date,
+        )
 
 
 class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
@@ -42,6 +54,14 @@ class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     Currently no additional functions are added so only accesses BaseDialogSlotFunctions.
     """
+
+    def update_speedy_trial_date(self) -> None:
+        days_to_add = self.dialog.old_hearing_dateEdit.date().daysTo(
+            self.dialog.new_hearing_dateEdit.date(),
+        )
+        new_speedy_trial_date = self.dialog.old_speedy_trial_dateEdit.date().addDays(days_to_add)
+        new_speedy_trial_date = new_speedy_trial_date.toString('MMMM dd, yyyy')
+        self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
 
 
 class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
@@ -65,7 +85,7 @@ class GeneralNoticeOfHearingInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = []
+        self.dialog_check_list: list[str] = []
         self.check_status = self.perform_check_list()
 
 
