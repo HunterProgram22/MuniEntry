@@ -314,7 +314,8 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.label_13.setObjectName("label_13")
         self.gridLayout_7.addWidget(self.label_13, 6, 0, 1, 1)
         self.old_hearing_dateEdit = NoScrollDateEdit(self.frame_6)
-        self.old_hearing_dateEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.old_hearing_dateEdit.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.old_hearing_dateEdit.setCalendarPopup(True)
         self.old_hearing_dateEdit.setObjectName("old_hearing_dateEdit")
         self.gridLayout_7.addWidget(self.old_hearing_dateEdit, 3, 1, 1, 1)
@@ -325,7 +326,8 @@ class Ui_GeneralNoticeOfHearingDialog(object):
         self.label_15.setObjectName("label_15")
         self.gridLayout_7.addWidget(self.label_15, 4, 0, 1, 1)
         self.new_hearing_dateEdit = NoScrollDateEdit(self.frame_6)
-        self.new_hearing_dateEdit.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.new_hearing_dateEdit.setStyleSheet("color: rgb(0, 0, 0);\n"
+"background-color: rgb(255, 255, 255);")
         self.new_hearing_dateEdit.setCalendarPopup(True)
         self.new_hearing_dateEdit.setObjectName("new_hearing_dateEdit")
         self.gridLayout_7.addWidget(self.new_hearing_dateEdit, 4, 1, 1, 1)

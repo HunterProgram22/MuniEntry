@@ -83,6 +83,30 @@ def driving_priv_dialog(qtbot, main_window):
 
 
 @pytest.fixture
+def hemmeter_gen_hearing_notice_dialog(qtbot, main_window):
+    """Hemmeter General Notice of Hearing dialog."""
+    mouse_click(main_window.patterson_radioButton)
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, '22TRD01955')
+    mouse_click(main_window.get_case_Button)
+    mouse_click(main_window.hemmeter_general_hearingButton)
+    qtbot.addWidget(main_window.dialog)
+    return main_window.dialog
+
+
+@pytest.fixture
+def rohrer_gen_hearing_notice_dialog(qtbot, main_window):
+    """Rohrer General Notice of Hearing dialog."""
+    mouse_click(main_window.dattilo_radioButton)
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, '22TRD01955')
+    mouse_click(main_window.get_case_Button)
+    mouse_click(main_window.rohrer_general_hearingButton)
+    qtbot.addWidget(main_window.dialog)
+    return main_window.dialog
+
+
+@pytest.fixture
 def diversion_dialog(qtbot, main_window):
     """Diversion Plea Dialog is diversion_dialog"""
     mouse_click(main_window.hemmeter_radioButton)
