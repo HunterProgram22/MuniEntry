@@ -51,6 +51,12 @@ if TYPE_CHECKING:
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
+
+### WORKING ON ADDITIONAL REPORTS ###
+TRIAL_TO_COURT_EVENT_IDS = "('412', '413', '414')"
+"""NEED TO UPDATE HEADERS"""
+####################################
+
 COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
 EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
 
@@ -63,6 +69,7 @@ COURTROOM_NAME = types.MappingProxyType({
 EVENT_IDS = types.MappingProxyType({
     'Arraignments': ARRAIGNMENT_EVENT_IDS,
     'Final Pretrials': FINAL_PRETRIAL_EVENT_IDS,
+    'Trials To Court': TRIAL_TO_COURT_EVENT_IDS,
 })
 
 FOLDER_PATH = types.MappingProxyType({

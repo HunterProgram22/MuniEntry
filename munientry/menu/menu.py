@@ -111,8 +111,9 @@ class MainWindowMenu(object):
         self.mainwindow.actionFinal_Pretrials.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Final Pretrials')
         )
+        ### WORKING AREA FOR FEATURE BRANCH TO UPDATE REPORTS ###
         self.mainwindow.actionCourtroom_A_Events.triggered.connect(
-            partial(run_courtroom_report, self.mainwindow, 1)
+            partial(run_event_type_report, self.mainwindow, 'Trials To Court')
         )
         self.mainwindow.actionCourtroom_B_Events.triggered.connect(
             partial(run_courtroom_report, self.mainwindow, 2)
@@ -120,7 +121,7 @@ class MainWindowMenu(object):
         self.mainwindow.actionCourtroom_C_Events.triggered.connect(
             partial(run_courtroom_report, self.mainwindow, 3)
         )
-
+        ################################################################
     def open_workflow_settings(self, _signal=None) -> None:
         self.settings_menu = SettingDialog(self.mainwindow)
         self.settings_menu.exec()
