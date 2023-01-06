@@ -1574,7 +1574,7 @@ font-weight: bold;</string>
     </property>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
-    <addaction name="actionCourtroom_A_Events"/>
+    <addaction name="actionTrials_To_Court"/>
     <addaction name="actionCourtroom_B_Events"/>
     <addaction name="actionCourtroom_C_Events"/>
    </widget>
@@ -1678,6 +1678,11 @@ font-weight: bold;</string>
   <action name="actionCourtroom_C_Events">
    <property name="text">
     <string>Courtroom C Events</string>
+   </property>
+  </action>
+  <action name="actionTrials_To_Court">
+   <property name="text">
+    <string>Trials To Court</string>
    </property>
   </action>
  </widget>

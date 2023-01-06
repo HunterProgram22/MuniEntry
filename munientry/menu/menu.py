@@ -112,7 +112,7 @@ class MainWindowMenu(object):
             partial(run_event_type_report, self.mainwindow, 'Final Pretrials')
         )
         ### WORKING AREA FOR FEATURE BRANCH TO UPDATE REPORTS ###
-        self.mainwindow.actionCourtroom_A_Events.triggered.connect(
+        self.mainwindow.actionTrials_To_Court.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Trials To Court')
         )
         self.mainwindow.actionCourtroom_B_Events.triggered.connect(
