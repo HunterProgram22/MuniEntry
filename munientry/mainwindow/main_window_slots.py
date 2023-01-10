@@ -9,7 +9,7 @@ from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.helper_functions import set_random_judge
-from munientry.widgets.table_widgets import ReportWindow
+from munientry.widgets.table_widgets import TableReportWindow
 
 
 class MainWindowSlotFunctionsMixin(object):
@@ -127,7 +127,8 @@ class MainWindowSlotFunctionsMixin(object):
             self.case_search_box.setText(case_number)
         data_list = sql_server.CaseDocketSQLServer(case_number).get_docket()
         rows = len(data_list)
-        self.window = ReportWindow(rows, 2, f'Docket Report for {case_number}')
+        self.window = TableReportWindow(f'Docket Report for {case_number}')
+        self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
         header_labels = ['Date', 'Docket Description']
         self.window.table.setHorizontalHeaderLabels(header_labels)
         for row, docket_item in enumerate(data_list):
