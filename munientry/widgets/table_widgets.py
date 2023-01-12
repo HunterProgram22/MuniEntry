@@ -29,6 +29,7 @@ from PyQt6.QtWidgets import (
 )
 
 from munientry.appsettings.paths import GAVEL_PATH
+from munientry.widgets.message_boxes import RequiredBox
 
 TABLE_HEIGHT = 1000
 TABLE_WIDTH = 800
@@ -128,7 +129,11 @@ class TableReportWindow(ReportWindow):
         return table
 
     def handle_copy(self):
-        selected = self.get_selected_text()
+        try:
+            selected = self.get_selected_text()
+        except IndexError as error:
+            RequiredBox('You must select text to be copied before pressing the Copy button.').exec()
+            return None
         copied_text = ''
         for row in range(selected.start_row, selected.end_row):
             for col in range(selected.start_col, selected.end_col):
