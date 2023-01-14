@@ -202,7 +202,7 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
     return data_list
 
 
-def get_comment_field(query) -> string:
+def get_comment_field(query) -> str:
     if query.value('EventID') == 160:
         return 'Courtroom A'
     else:
@@ -233,7 +233,7 @@ def create_event_report_window(data_list: list, report_name: str, report_date: s
 
     Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
     for row, case in enumerate(data_list):
-        case = Case(case[0], case[1], case[2], case[3])
+        case = Case(case[0], case[1], case[2], case[3], case[4])
         window.table.setItem(row, 0, QTableWidgetItem(case.time))
         window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
         window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
