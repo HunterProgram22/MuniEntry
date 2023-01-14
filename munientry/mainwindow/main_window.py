@@ -7,7 +7,7 @@ from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
 from munientry.menu.menu import MainWindowMenu
-from munientry.mainwindow.shortcuts import Shortcuts
+from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
 
@@ -27,7 +27,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
-        self.shorcuts = Shortcuts(self)
+        self.set_shortcuts(self)
 
     def modify_view(self) -> None:
         main_window_view.MainWindowViewModifier(self)
@@ -51,6 +51,9 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
                 }
                 self.judicial_officer_buttons_dict.update(update_dict)
                 self.visiting_judge_radioButton.setText(f'Judge {last_name}')
+
+    def set_shortcuts(self, mainwindow: 'MainWindow') -> None:
+        return set_mainwindow_shortcuts(self)
 
     def update_judicial_officer(self) -> None:
         self.judicial_officer = self.judicial_officer_buttons_dict.get(self.sender())
