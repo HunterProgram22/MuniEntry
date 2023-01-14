@@ -71,7 +71,8 @@ def driving_case_search_query(case_number: str) -> str:
 def event_type_report_query(report_date: str, event_codes: str) -> str:
     return f"""
     SELECT DISTINCT
-    cm.CaseNumber
+    FORMAT(ce.EventTime, 'hh:mm') as Time
+    ,cm.CaseNumber
 	,cp.FirstName + ' ' + cp.LastName as DefFullName
 	,sc.SubCaseNumber
     ,sc.ChargeDescription AS Charge

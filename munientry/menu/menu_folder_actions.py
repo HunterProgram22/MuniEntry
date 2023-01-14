@@ -50,9 +50,17 @@ if TYPE_CHECKING:
 
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
+
+
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
+
+
+# Trial to Court A (TCN) - 412, Trial to Court B (TCNB) - 413, Trial to Court C (TCNC) 414
+TRIAL_TO_COURT_EVENT_IDS = "('412', '413', '414')"
+
+
 COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
-EVENT_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Primary Charge')
+EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge')
 
 COURTROOM_NAME = types.MappingProxyType({
     1: 'A',
@@ -63,6 +71,7 @@ COURTROOM_NAME = types.MappingProxyType({
 EVENT_IDS = types.MappingProxyType({
     'Arraignments': ARRAIGNMENT_EVENT_IDS,
     'Final Pretrials': FINAL_PRETRIAL_EVENT_IDS,
+    'Trials To Court': TRIAL_TO_COURT_EVENT_IDS,
 })
 
 FOLDER_PATH = types.MappingProxyType({
@@ -181,6 +190,7 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str]]:
     while query.next():
         data_list.append(
             (
+                query.value('Time'),
                 query.value('CaseNumber'),
                 query.value('DefFullName').title(),
                 clean_offense_name(query.value('Charge')),
@@ -209,15 +219,16 @@ def create_courtroom_report_window(data_list: list, report_name: str, report_dat
 def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
     window = TableReportWindow(f'{report_name} Report for {report_date}')
-    window.table = window.add_table(len(data_list), 3, f'{report_name} Report for {report_date}', window)
+    window.table = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
 
-    Case = namedtuple('Case', 'case_number defendant_name primary_charge')
+    Case = namedtuple('Case', 'time case_number defendant_name primary_charge')
     for row, case in enumerate(data_list):
-        case = Case(case[0], case[1], case[2])
-        window.table.setItem(row, 0, QTableWidgetItem(case.case_number))
-        window.table.setItem(row, 1, QTableWidgetItem(case.defendant_name))
-        window.table.setItem(row, 2, QTableWidgetItem(case.primary_charge))
+        case = Case(case[0], case[1], case[2], case[3])
+        window.table.setItem(row, 0, QTableWidgetItem(case.time))
+        window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
+        window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
+        window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
     return window
 
 
