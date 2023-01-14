@@ -89,6 +89,7 @@ def event_type_report_query(report_date: str, event_codes: str) -> str:
 	LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
 	ON cp.CaseMasterID = sc.CaseMasterID 
     WHERE EventID in {event_codes} and EventDate = '{report_date}' and SubCaseNumber LIKE '%-A'
+    ORDER BY Time ASC
     """
 
 
