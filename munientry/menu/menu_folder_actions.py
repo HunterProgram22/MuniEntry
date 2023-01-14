@@ -48,19 +48,19 @@ from munientry.widgets.table_widgets import TableReportWindow
 if TYPE_CHECKING:
     from PyQt6.QtWidgets import QMainWindow
 
+# Authority Court Database Event Codes
+
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 
-
 FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
-
 
 # Trial to Court A (TCN) - 412, Trial to Court B (TCNB) - 413, Trial to Court C (TCNC) 414
 TRIAL_TO_COURT_EVENT_IDS = "('412', '413', '414')"
 
 
 COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
-EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge')
+EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Comments')
 
 COURTROOM_NAME = types.MappingProxyType({
     1: 'A',
@@ -83,7 +83,7 @@ FOLDER_PATH = types.MappingProxyType({
 })
 
 
-def open_entries_folder(folder: str, _singal=None) -> None:
+def open_entries_folder(folder: str, _signal=None) -> None:
     """Menu function that opens the folder where specific types of entries are saved.
 
     Args:
@@ -173,7 +173,7 @@ def get_courtroom_report_data(query_string: str) -> list[tuple[str, str, str]]:
     return data_list
 
 
-def get_event_report_data(query_string: str) -> list[tuple[str, str, str]]:
+def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
     """Queries the AuthorityCourtDB and loads case events for a specific date.
 
     Args:
@@ -188,16 +188,25 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str]]:
     query.exec()
     data_list = []
     while query.next():
+        comment_field = get_comment_field(query)
         data_list.append(
             (
                 query.value('Time'),
                 query.value('CaseNumber'),
                 query.value('DefFullName').title(),
                 clean_offense_name(query.value('Charge')),
+                comment_field,
             ),
         )
     close_db_connection(db_conn)
     return data_list
+
+
+def get_comment_field(query) -> string:
+    if query.value('EventID') == 160:
+        return 'Courtroom A'
+    else:
+        return 'Test'
 
 
 def create_courtroom_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
@@ -219,16 +228,17 @@ def create_courtroom_report_window(data_list: list, report_name: str, report_dat
 def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
     window = TableReportWindow(f'{report_name} Report for {report_date}')
-    window.table = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
+    window.table = window.add_table(len(data_list), 5, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
 
-    Case = namedtuple('Case', 'time case_number defendant_name primary_charge')
+    Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
     for row, case in enumerate(data_list):
         case = Case(case[0], case[1], case[2], case[3])
         window.table.setItem(row, 0, QTableWidgetItem(case.time))
         window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
         window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
         window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
+        window.table.setItem(row, 4, QTableWidgetItem(case.comment_field))
     return window
 
 
