@@ -122,6 +122,7 @@ class MainWindowMenu(object):
             partial(run_courtroom_report, self.mainwindow, 3)
         )
         ################################################################
+
     def open_workflow_settings(self, _signal=None) -> None:
         self.settings_menu = SettingDialog(self.mainwindow)
         self.settings_menu.exec()

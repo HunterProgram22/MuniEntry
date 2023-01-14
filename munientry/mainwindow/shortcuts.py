@@ -12,3 +12,4 @@ class Shortcuts(object):
         self.mainwindow.actionOpen_Current_Log.setShortcut(QKeySequence('Ctrl+L'))
         self.mainwindow.actionArraignments.setShortcut(QKeySequence('Ctrl+A'))
         self.mainwindow.actionFinal_Pretrials.setShortcut(QKeySequence('Ctrl+F'))
+        self.mainwindow.actionTrials_To_Court.setShortcut(QKeySequence('Ctrl+T'))
