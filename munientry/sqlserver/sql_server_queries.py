@@ -77,6 +77,7 @@ def event_type_report_query(report_date: str, event_codes: str) -> str:
 	,sc.SubCaseNumber
     ,sc.ChargeDescription AS Charge
     ,EventID
+    ,sc.JudgeID as JudgeID
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[CaseEvent] ce 
     ON cm.Id = ce.CaseMasterID

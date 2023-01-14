@@ -203,8 +203,8 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
 
 
 def get_comment_field(query) -> str:
-    if query.value('EventID') in [160, 412]:
-        return 'Courtroom A'
+    if query.value('EventID') == 160 and query.value('JudgeID') == 41:
+        return 'Courtroom A in CMI - Clerk Error Should be Courtroom B Alert Clerks Office'
     elif query.value('EventID') in [161, 413]:
         return 'Courtroom B'
     elif query.value('EventID') in [414]:
