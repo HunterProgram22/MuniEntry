@@ -4,6 +4,11 @@ from loguru import logger
 from munientry.appsettings.paths import ICON_PATH
 
 
+def open_workflow_settings(mainwindow, _signal=None) -> None:
+    settings_menu = SettingDialog(mainwindow)
+    settings_menu.exec()
+
+
 class SettingDialog(QDialog):
     def __init__(self, mainwindow, parent=None):
         super().__init__(parent)

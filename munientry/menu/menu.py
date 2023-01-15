@@ -1,10 +1,11 @@
-"""Module containing all functions for the mainwindow menu."""
+"""Module connecting all functions for the mainwindow menu."""
 from functools import partial
 
 from munientry.menu.batch.batch import run_batch_fta_process
 from munientry.menu.logs.logs import open_current_log
-from munientry.menu.menu_folder_actions import open_entries_folder, run_event_type_report
-from munientry.menu.settings.settings import SettingDialog
+from munientry.menu.menu_folder_actions import run_event_type_report
+from munientry.menu.open.open import open_entries_folder
+from munientry.menu.settings.settings import open_workflow_settings
 
 
 class MainWindowMenu(object):
@@ -12,14 +13,11 @@ class MainWindowMenu(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
-        self.connect_menu_functions()
         self.connect_open_menu_functions()
+        self.connect_batch_menu_functions()
         self.connect_reports_menu_functions()
-
-    def connect_menu_functions(self) -> None:
-        self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
-        self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
-        self.mainwindow.actionWorkflow.triggered.connect(self.open_workflow_settings)
+        self.connect_logs_menu_functions()
+        self.connect_settings_menu_functions()
 
     def connect_open_menu_functions(self) -> None:
         self.mainwindow.actionDriving_Privileges_Folder.triggered.connect(
@@ -38,6 +36,9 @@ class MainWindowMenu(object):
             partial(open_entries_folder, 'batch_entries'),
         )
 
+    def connect_batch_menu_functions(self) -> None:
+        self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
+
     def connect_reports_menu_functions(self) -> None:
         self.mainwindow.actionArraignments.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Arraignments')
@@ -49,6 +50,10 @@ class MainWindowMenu(object):
             partial(run_event_type_report, self.mainwindow, 'Trials To Court')
         )
 
-    def open_workflow_settings(self, _signal=None) -> None:
-        self.settings_menu = SettingDialog(self.mainwindow)
-        self.settings_menu.exec()
+    def connect_logs_menu_functions(self) -> None:
+        self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
+
+    def connect_settings_menu_functions(self) -> None:
+        self.mainwindow.actionWorkflow.triggered.connect(
+            partial(open_workflow_settings, self.mainwindow)
+        )
