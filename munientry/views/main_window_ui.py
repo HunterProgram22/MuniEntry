@@ -794,8 +794,6 @@ class Ui_MainWindow(object):
         self.menuReports.addAction(self.actionArraignments)
         self.menuReports.addAction(self.actionFinal_Pretrials)
         self.menuReports.addAction(self.actionTrials_To_Court)
-        self.menuReports.addAction(self.actionCourtroom_B_Events)
-        self.menuReports.addAction(self.actionCourtroom_C_Events)
         self.menuOpen.addAction(self.actionCrimTraffic_Folder)
         self.menuOpen.addAction(self.actionDriving_Privileges_Folder)
         self.menuOpen.addAction(self.actionJury_Pay_Entries_Folder)
