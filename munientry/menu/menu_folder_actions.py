@@ -30,6 +30,7 @@ from os import startfile
 from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QTableWidgetItem
+from PyQt6.QtCore import Qt
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_offense_name
@@ -53,7 +54,8 @@ if TYPE_CHECKING:
 # Arraignment - 27, Arraignment - 28, Continuance Arraignment - 77, Reset Case Arraignment - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 
-FINAL_PRETRIAL_EVENT_IDS = "('157', '160', '161')"
+# Final Pretrial A - 160, Final Pretrial B - 161, 335 is Pretrial/ALS for A, 336 is a Pretrial/ALS for B
+FINAL_PRETRIAL_EVENT_IDS = "('160', '161', '335', '336')"
 
 # Trial to Court A (TCN) - 412, Trial to Court B (TCNB) - 413, Trial to Court C (TCNC) 414
 TRIAL_TO_COURT_EVENT_IDS = "('412', '413', '414')"
@@ -203,14 +205,39 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
 
 
 def get_comment_field(query) -> str:
-    if query.value('EventID') == 160 and query.value('JudgeID') == 41:
-        return 'Courtroom A in CMI - Clerk Error Should be Courtroom B Alert Clerks Office'
-    elif query.value('EventID') in [161, 413]:
-        return 'Courtroom B'
-    elif query.value('EventID') in [414]:
-        return 'Courtroom C'
-    else:
-        return 'Test'
+    event = query.value('EventID')
+    judge = query.value('JudgeID')  # Judge Rohrer = 31, Judge Hemmeter = 42
+    match (event, judge):
+        case (160, 42):  # Final pretrial for Judge H listed in Courtroom A
+            return 'Possible Data Issue - Judge Hemmeter assigned, FPT in CMI is set for Courtroom A'
+        case (161, 42):  # Final pretrial for Judge H listed in Courtroom B
+            return 'Courtroom B'
+        case (334, 42) | (335, 42) | (336, 42) | (337, 42):  # Pretrial/ALS code likely should be Final pretrial code
+            return 'Possible Data Issue - Event in CMI is Pretrial/ALS - Should likely be FPTN2B'
+        case (160, 31):  # Final pretrial for Judge R listed in Courtroom A
+            return 'Courtroom A'
+        case (161, 31):  # Final pretrial for Judge R listed in Courtroom B
+            return 'Possible Data Issue - Judge Rohrer assigned, FPT in CMI is set for Courtroom B'
+        case (334, 31) | (335, 31) | (336, 31) | (337 | 31):  # Pretrial/ALS code likely should be Final pretrial code
+            return 'Possible Data Issue - Event in CMI is Pretrial/ALS - Should likely be FPTN2'
+        case (414, 31) | (414, 42):  # Trial to Court in C with Judge Assigned
+            return 'Courtroom C'
+        case (414, 0) | (414, 0):  # Trial to Court in C with No Judge Assigned
+            return 'Trial to Court in C but No Judge Assigned'
+        case (412, 31):  # Trial to Court in A with Judge Rohrer Assigned
+            return 'Courtroom A - Trial to Court with Judge Rohrer'
+        case (413, 42):  # Trial to Court in B with Judge Hemmeter Assigned
+            return 'Courtroom B - Trial to Court with Judge Hemmeter'
+        case (160, 0) | (161, 0):
+            return 'No Judge Assigned to Case'
+        case (27, 0) | (28, 0):
+            return 'Arraignment'
+        case (77, 0):
+            return 'Arraignment - Previously Continued'
+        case (361, 0):
+            return 'Arraignment - Reset due to FTA or Other Reason'
+        case _:
+            return 'Unclassified Possible Data Error in Case'
 
 
 def create_courtroom_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
@@ -281,4 +308,5 @@ def show_event_report(
     """
     mainwindow.report_window = create_event_report_window(data_list, event, report_date)
     mainwindow.report_window.table.setSortingEnabled(True)
+    mainwindow.report_window.table.sortByColumn(0, Qt.SortOrder.AscendingOrder)
     mainwindow.report_window.show()

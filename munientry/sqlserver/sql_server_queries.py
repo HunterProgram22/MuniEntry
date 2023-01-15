@@ -80,7 +80,7 @@ def event_type_report_query(report_date: str, event_codes: str) -> str:
     ,sc.JudgeID as JudgeID
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[CaseEvent] ce 
-    ON cm.Id = ce.CaseMasterID
+    ON cm.Id = ce.CaseMasterID and ce.IsDeleted = '0'
 	LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
     ON cm.Id = sc.CaseMasterID
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[Violation] v
