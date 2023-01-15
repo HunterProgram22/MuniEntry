@@ -1,10 +1,16 @@
+"""Module for open menu processes."""
 import types
 from os import startfile
 
 from loguru import logger
-from munientry.appsettings.paths import BATCH_SAVE_PATH, CRIMTRAFFIC_SAVE_PATH, DRIVE_SAVE_PATH, \
-    JURY_PAY_SAVE_PATH, SCHEDULING_SAVE_PATH
 
+from munientry.appsettings.paths import (
+    BATCH_SAVE_PATH,
+    CRIMTRAFFIC_SAVE_PATH,
+    DRIVE_SAVE_PATH,
+    JURY_PAY_SAVE_PATH,
+    SCHEDULING_SAVE_PATH,
+)
 
 FOLDER_PATH = types.MappingProxyType({
     'batch_entries': BATCH_SAVE_PATH,
