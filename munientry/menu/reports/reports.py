@@ -1,3 +1,4 @@
+"""Module for report menu processes."""
 from collections import namedtuple
 
 from loguru import logger
@@ -11,7 +12,7 @@ from munientry.menu.reports.report_constants import EVENT_IDS
 from munientry.sqlserver.sql_server_queries import event_type_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
-EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Comments')
+EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Attorney', 'Comments')
 
 
 def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
@@ -70,6 +71,7 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
                 query.value('CaseNumber'),
                 query.value('DefFullName').title(),
                 clean_offense_name(query.value('Charge')),
+                query.value('DefenseCounsel').title(),
                 comment_field,
             ),
         )
@@ -100,7 +102,7 @@ def show_event_report(
 def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
     window = TableReportWindow(f'{report_name} Report for {report_date}')
-    window.table = window.add_table(len(data_list), 5, f'{report_name} Report for {report_date}', window)
+    window.table = window.add_table(len(data_list), 6, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
     populate_report_data(window, data_list)
     return window
@@ -108,14 +110,15 @@ def create_event_report_window(data_list: list, report_name: str, report_date: s
 
 def populate_report_data(window, data_list):
     """Loads the data from the query into the table."""
-    Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
+    Case = namedtuple('Case', 'time case_number defendant_name primary_charge attorney_name comment_field')
     for row, case in enumerate(data_list):
-        case = Case(case[0], case[1], case[2], case[3], case[4])
+        case = Case(case[0], case[1], case[2], case[3], case[4], case[5])
         window.table.setItem(row, 0, QTableWidgetItem(case.time))
         window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
         window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
         window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
-        window.table.setItem(row, 4, QTableWidgetItem(case.comment_field))
+        window.table.setItem(row, 4, QTableWidgetItem(case.attorney_name))
+        window.table.setItem(row, 5, QTableWidgetItem(case.comment_field))
 
 
 def get_comment_field(query) -> str:
