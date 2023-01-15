@@ -1,53 +1,17 @@
 from collections import namedtuple
 
+from loguru import logger
 from PyQt6.QtCore import Qt
 from PyQt6.QtSql import QSqlQuery
-from PyQt6.QtWidgets import QTableWidgetItem, QMainWindow, QInputDialog
-from loguru import logger
-from munientry.data.connections import open_db_connection, close_db_connection
+from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
+
+from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_offense_name
 from munientry.menu.reports.report_constants import EVENT_IDS
 from munientry.sqlserver.sql_server_queries import event_type_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
 EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Comments')
-
-
-def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
-    """Creates a window to load the event table and contains print buttons."""
-    window = TableReportWindow(f'{report_name} Report for {report_date}')
-    window.table = window.add_table(len(data_list), 5, f'{report_name} Report for {report_date}', window)
-    window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
-
-    Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
-    for row, case in enumerate(data_list):
-        case = Case(case[0], case[1], case[2], case[3], case[4])
-        window.table.setItem(row, 0, QTableWidgetItem(case.time))
-        window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
-        window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
-        window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
-        window.table.setItem(row, 4, QTableWidgetItem(case.comment_field))
-    return window
-
-
-def show_event_report(
-    mainwindow: 'QMainWindow', event: str, report_date: str, data_list: list,
-) -> None:
-    """Shows a sortable table loaded with the data for the generated report.
-
-    Args:
-        mainwindow (QMainWindow): The main window of the application.
-
-        event (str): A string that identifies the event type for the generated report.
-
-        report_date (str): A string of the date for the report.
-
-        data_list (list): A list of all data queried from the database.
-    """
-    mainwindow.report_window = create_event_report_window(data_list, event, report_date)
-    mainwindow.report_window.table.setSortingEnabled(True)
-    mainwindow.report_window.table.sortByColumn(0, Qt.SortOrder.AscendingOrder)
-    mainwindow.report_window.show()
 
 
 def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
@@ -58,7 +22,7 @@ def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
 
         event (str): A string that identifies the event type for the generated report.
     """
-    report_date, ok_response = get_report_date(mainwindow, event)
+    report_date, ok_response = user_input_get_report_date(mainwindow, event)
     if ok_response:
         event_ids = EVENT_IDS.get(event)
         query_string = event_type_report_query(report_date, event_ids)
@@ -67,7 +31,7 @@ def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
         show_event_report(mainwindow, event, report_date, data_list)
 
 
-def get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[str, bool]:
+def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[str, bool]:
     """Opens an input dialog to query user for date of report.
 
     Args:
@@ -111,6 +75,47 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
         )
     close_db_connection(db_conn)
     return data_list
+
+
+def show_event_report(
+    mainwindow: 'QMainWindow', event: str, report_date: str, data_list: list,
+) -> None:
+    """Shows a sortable table loaded with the data for the generated report.
+
+    Args:
+        mainwindow (QMainWindow): The main window of the application.
+
+        event (str): A string that identifies the event type for the generated report.
+
+        report_date (str): A string of the date for the report.
+
+        data_list (list): A list of all data queried from the database.
+    """
+    mainwindow.report_window = create_event_report_window(data_list, event, report_date)
+    mainwindow.report_window.table.setSortingEnabled(True)
+    mainwindow.report_window.table.sortByColumn(0, Qt.SortOrder.AscendingOrder)
+    mainwindow.report_window.show()
+
+
+def create_event_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
+    """Creates a window to load the event table and contains print buttons."""
+    window = TableReportWindow(f'{report_name} Report for {report_date}')
+    window.table = window.add_table(len(data_list), 5, f'{report_name} Report for {report_date}', window)
+    window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
+    populate_report_data(window)
+    return window
+
+
+def populate_report_data(window):
+    """Loads the data from the query into the table."""
+    Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
+    for row, case in enumerate(data_list):
+        case = Case(case[0], case[1], case[2], case[3], case[4])
+        window.table.setItem(row, 0, QTableWidgetItem(case.time))
+        window.table.setItem(row, 1, QTableWidgetItem(case.case_number))
+        window.table.setItem(row, 2, QTableWidgetItem(case.defendant_name))
+        window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
+        window.table.setItem(row, 4, QTableWidgetItem(case.comment_field))
 
 
 def get_comment_field(query) -> str:
