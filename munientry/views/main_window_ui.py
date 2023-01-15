@@ -787,6 +787,8 @@ class Ui_MainWindow(object):
         self.actionCourtroom_C_Events.setObjectName("actionCourtroom_C_Events")
         self.actionTrials_To_Court = QtGui.QAction(MainWindow)
         self.actionTrials_To_Court.setObjectName("actionTrials_To_Court")
+        self.actionPleas = QtGui.QAction(MainWindow)
+        self.actionPleas.setObjectName("actionPleas")
         self.menuLogs.addAction(self.actionOpen_Current_Log)
         self.menuBatch.addAction(self.actionRun_batch_FTA_Entries)
         self.menuBatch.addSeparator()
@@ -794,6 +796,7 @@ class Ui_MainWindow(object):
         self.menuReports.addAction(self.actionArraignments)
         self.menuReports.addAction(self.actionFinal_Pretrials)
         self.menuReports.addAction(self.actionTrials_To_Court)
+        self.menuReports.addAction(self.actionPleas)
         self.menuOpen.addAction(self.actionCrimTraffic_Folder)
         self.menuOpen.addAction(self.actionDriving_Privileges_Folder)
         self.menuOpen.addAction(self.actionJury_Pay_Entries_Folder)
@@ -979,4 +982,5 @@ class Ui_MainWindow(object):
         self.actionCourtroom_B_Events.setText(_translate("MainWindow", "Courtroom B Events"))
         self.actionCourtroom_C_Events.setText(_translate("MainWindow", "Courtroom C Events"))
         self.actionTrials_To_Court.setText(_translate("MainWindow", "Trials To Court"))
+        self.actionPleas.setText(_translate("MainWindow", "Pleas"))
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
