@@ -149,6 +149,16 @@ def get_comment_field(query) -> str:
             return 'No Judge Assigned to Case'
         case (27, 0) | (28, 0):
             return 'Arraignment'
+        case (292, 31):  # Plea for Judge Rohrer listed in Courtroom A
+            return 'Courtroom A'
+        case (293, 31):  # Plea for Judge Rohrer listed in Courtroom B
+            return 'Possible Data Issue - Judge Rohrer Assigned, Plea in CMI is set for Courtroom B'
+        case (293, 42):  # Plea for Judge Hemmeter listed in Courtroom B
+            return 'Courtroom A'
+        case (292, 42):  # Plea for Judge Hemmeter listed in Courtroom A
+            return 'Possible Data Issue - Judge Hemmeter Assigned, Plea in CMI is set for Courtroom A'
+        case (294, 42) | (294, 31):  # Plea for either judge listed in Courtroom A
+            return 'Possible Data Issue - Plea in CMI is set for Courtroom C'
         case (77, 0):
             return 'Arraignment - Previously Continued'
         case (361, 0):
