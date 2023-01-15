@@ -1,15 +1,26 @@
-from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QDialog, QDialogButtonBox, QGroupBox, QRadioButton, QVBoxLayout
+"""Module for settings menu processes."""
 from loguru import logger
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import (
+    QDialog,
+    QDialogButtonBox,
+    QGroupBox,
+    QRadioButton,
+    QVBoxLayout,
+)
+
 from munientry.appsettings.paths import ICON_PATH
 
 
 def open_workflow_settings(mainwindow, _signal=None) -> None:
+    """Creates instance of SettingDialog class and opens it."""
     settings_menu = SettingDialog(mainwindow)
     settings_menu.exec()
 
 
 class SettingDialog(QDialog):
+    """Class for obtaining user input to change settings."""
+
     def __init__(self, mainwindow, parent=None):
         super().__init__(parent)
         self.mainwindow = mainwindow
