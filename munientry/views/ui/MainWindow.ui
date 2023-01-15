@@ -1575,8 +1575,6 @@ font-weight: bold;</string>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
     <addaction name="actionTrials_To_Court"/>
-    <addaction name="actionCourtroom_B_Events"/>
-    <addaction name="actionCourtroom_C_Events"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
