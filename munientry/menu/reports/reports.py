@@ -102,11 +102,11 @@ def create_event_report_window(data_list: list, report_name: str, report_date: s
     window = TableReportWindow(f'{report_name} Report for {report_date}')
     window.table = window.add_table(len(data_list), 5, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(EVENT_REPORT_HEADERS))
-    populate_report_data(window)
+    populate_report_data(window, data_list)
     return window
 
 
-def populate_report_data(window):
+def populate_report_data(window, data_list):
     """Loads the data from the query into the table."""
     Case = namedtuple('Case', 'time case_number defendant_name primary_charge comment_field')
     for row, case in enumerate(data_list):
