@@ -9,6 +9,8 @@ def get_comment_writer(event):
         return PleaComments()
     elif event == 'Trials To Court':
         return TrialToCourtComments()
+    elif event == 'Jury Trials':
+        return JuryTrialComments()
     else:
         return GeneralComments()
 
@@ -89,6 +91,24 @@ class TrialToCourtComments(object):
                 return 'Courtroom A - Trial to Court with Judge Rohrer'
             case (413, 42):  # Trial to Court in B with Judge Hemmeter Assigned
                 return 'Courtroom B - Trial to Court with Judge Hemmeter'
+            case _:
+                return 'Unclassified Possible Data Error in Case'
+
+
+class JuryTrialComments(object):
+
+    def get_comment(self, query) -> str:
+        event = query.value('EventID')
+        judge = query.value('JudgeID')
+        match (event, judge):
+            case (201, 31):  # Judge Rohrer Assigned and Jury Trial in A
+                return 'Courtroom A'
+            case (201, 42):  # Judge Hemmeter Assigned and Jury Trial in A
+                return 'Possible Data Issue - Judge Hemmeter is Assigned and CMI has Jury Trial set in Courtroom A'
+            case (202, 42):  # Judge Hemmeter Assigned and Jury Trial in B
+                return 'Courtroom B'
+            case (201, 31):  # Judge Rohrer Assigned and Jury Trial in A
+                return 'Possible Data Issue - Judge Rohrer is Assigned and CMI has Jury Trial set in Courtroom B'
             case _:
                 return 'Unclassified Possible Data Error in Case'
 
