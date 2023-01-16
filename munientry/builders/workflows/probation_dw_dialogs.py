@@ -3,13 +3,13 @@ import datetime
 import os
 
 from loguru import logger
-from PyQt6.QtWidgets import QTableWidgetItem, QHeaderView
+from PyQt6.QtWidgets import QHeaderView, QTableWidgetItem
 
+from munientry.appsettings.paths import DW_PROBATION
 from munientry.builders import base_builders as base
 from munientry.views.com_control_workflow_dialog_ui import Ui_ComControlWorkflowDialog
 from munientry.views.pretrial_workflow_dialog_ui import Ui_PretrialWorkflowDialog
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
-from munientry.appsettings.paths import DW_PROBATION
 
 SCRAM_PATH = f'{DW_PROBATION}/Scram_Gps//'
 COM_CONTROL_PATH = f'{DW_PROBATION}/Comm_Control//'
@@ -17,9 +17,6 @@ COM_CONTROL_PATH = f'{DW_PROBATION}/Comm_Control//'
 
 class ProbationWorkflowDialogViewModifier(base.BaseDialogViewModifier):
     """View builder for Probation Workflow Dialogs."""
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
 
 
 class ProbationWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
@@ -45,7 +42,7 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         self.dialog.entries_tableWidget.insertColumn(2)
         header = self.dialog.entries_tableWidget.horizontalHeader()
         self.dialog.entries_tableWidget.setHorizontalHeaderLabels(
-            ['Case Entry', 'Date Created', 'Time Created']
+            ['Case Entry', 'Date Created', 'Time Created'],
         )
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
@@ -53,15 +50,15 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         self.load_pending_entries_list()
 
     def load_pending_entries_list(self):
-        pending_entries = os.listdir(self.dialog._entry_path)
+        pending_entries = os.listdir(self.dialog.entry_path)
         row = 0
-        for file in pending_entries:
-            file_c_time = os.path.getctime(f'{self.dialog._entry_path}{file}')
-            dt_c = datetime.datetime.fromtimestamp(file_c_time)
-            date = dt_c.strftime('%b %d, %Y')
-            time = dt_c.strftime('%I:%M %p')
+        for entry_name in pending_entries:
+            entry_creation_time = os.path.getctime(f'{self.dialog.entry_path}{entry_name}')
+            date_time_conversion = datetime.datetime.fromtimestamp(entry_creation_time)
+            date = date_time_conversion.strftime('%b %d, %Y')
+            time = date_time_conversion.strftime('%I:%M %p')
             self.dialog.entries_tableWidget.insertRow(row)
-            self.dialog.entries_tableWidget.setItem(row, 0, QTableWidgetItem(file))
+            self.dialog.entries_tableWidget.setItem(row, 0, QTableWidgetItem(entry_name))
             self.dialog.entries_tableWidget.setItem(row, 1, QTableWidgetItem(date))
             self.dialog.entries_tableWidget.setItem(row, 2, QTableWidgetItem(time))
             row += 1
@@ -81,7 +78,7 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 return RequiredBox(message).exec()
             selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
-            document = f'{self.dialog._entry_path}/{entry_name}'
+            document = f'{self.dialog.entry_path}/{entry_name}'
             os.startfile(document)
             logger.info(f'{document} opened in workflow.')
         else:
@@ -99,7 +96,7 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
             entries_table = self.dialog.entries_tableWidget
-            document = f'{self.dialog._entry_path}/{entry_name}'
+            document = f'{self.dialog.entry_path}/{entry_name}'
             row = entries_table.row(selected_entry_widget)
             entries_table.removeRow(row)
             try:
@@ -116,7 +113,7 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
 
     def load_new_entries(self):
         """Need to fix as message shows no cases loaded if one loads cases and other list doesnt."""
-        pending_entries = os.listdir(f'{self.dialog._entry_path}')
+        pending_entries = os.listdir(f'{self.dialog.entry_path}')
         if len(pending_entries) == self.dialog.entries_tableWidget.rowCount():
             message = 'There were no new entries availalbe to load.'
             return InfoBox(message, 'No Entries to Load').exec()
@@ -143,18 +140,12 @@ class ProbationWorkflowDialog(base.BaseDialogBuilder):
 class ComControlWorkflowDialog(ProbationWorkflowDialog, Ui_ComControlWorkflowDialog):
     """Dialog builder class for Community Control Digital Workflow."""
 
-    _entry_path = COM_CONTROL_PATH
+    entry_path = COM_CONTROL_PATH
     dialog_name = 'Community Control Digital Workflow'
-
-    # def additional_setup(self):
-    #     self.dialog.functions.load_pending_entries_list()
 
 
 class PretrialWorkflowDialog(ProbationWorkflowDialog, Ui_PretrialWorkflowDialog):
     """Dialog builder class for Pretrial Digital Workflow."""
 
-    _entry_path = SCRAM_PATH
+    entry_path = SCRAM_PATH
     dialog_name = 'Pretrial Digital Workflow'
-
-    # def additional_setup(self):
-    #     self.dialog.functions.load_pending_entries_list()
