@@ -1574,8 +1574,9 @@ font-weight: bold;</string>
     </property>
     <addaction name="actionArraignments"/>
     <addaction name="actionFinal_Pretrials"/>
-    <addaction name="actionTrials_To_Court"/>
+    <addaction name="actionJury_Trials"/>
     <addaction name="actionPleas"/>
+    <addaction name="actionTrials_To_Court"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1687,6 +1688,11 @@ font-weight: bold;</string>
   <action name="actionPleas">
    <property name="text">
     <string>Pleas</string>
+   </property>
+  </action>
+  <action name="actionJury_Trials">
+   <property name="text">
+    <string>Jury Trials</string>
    </property>
   </action>
  </widget>

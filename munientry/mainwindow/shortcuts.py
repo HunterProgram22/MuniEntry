@@ -9,3 +9,4 @@ def set_mainwindow_shortcuts(mainwindow) -> None:
     mainwindow.actionFinal_Pretrials.setShortcut(QKeySequence('Ctrl+F'))
     mainwindow.actionTrials_To_Court.setShortcut(QKeySequence('Ctrl+T'))
     mainwindow.actionPleas.setShortcut(QKeySequence('Ctrl+P'))
+    mainwindow.actionJury_Trials.setShortcut(QKeySequence('Ctrl+J'))

@@ -52,6 +52,9 @@ class MainWindowMenu(object):
         self.mainwindow.actionPleas.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Pleas')
         )
+        self.mainwindow.actionJury_Trials.triggered.connect(
+            partial(run_event_type_report, self.mainwindow, 'Jury Trials')
+        )
 
     def connect_logs_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
