@@ -8,6 +8,7 @@ from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_offense_name
+from munientry.menu.reports.comments import get_comment_writer
 from munientry.menu.reports.report_constants import EVENT_IDS
 from munientry.sqlserver.sql_server_queries import event_type_report_query
 from munientry.widgets.table_widgets import TableReportWindow
@@ -28,7 +29,7 @@ def run_event_type_report(mainwindow: 'QMainWindow', event: str) -> None:
         event_ids = EVENT_IDS.get(event)
         query_string = event_type_report_query(report_date, event_ids)
         logger.info(query_string)
-        data_list = get_event_report_data(query_string)
+        data_list = get_event_report_data(query_string, event)
         show_event_report(mainwindow, event, report_date, data_list)
 
 
@@ -49,11 +50,13 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
     )
 
 
-def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
+def get_event_report_data(query_string: str, event: str) -> list[tuple[str]]:
     """Queries the AuthorityCourtDB and loads case events for a specific date.
 
     Args:
         query_string (str): A SQLServer query string.
+
+        event (str): The name of the event for the report query.
 
     Returns:
         list: A list of tuples containing the data queried from the AuthorityCourtDB.
@@ -63,8 +66,9 @@ def get_event_report_data(query_string: str) -> list[tuple[str, str, str, str]]:
     query.prepare(query_string)
     query.exec()
     data_list = []
+    comment_writer = get_comment_writer(event)
     while query.next():
-        comment_field = get_comment_field(query)
+        comment_field = comment_writer.get_comment(query)
         data_list.append(
             (
                 query.value('Time'),
@@ -119,51 +123,3 @@ def populate_report_data(window, data_list):
         window.table.setItem(row, 3, QTableWidgetItem(case.primary_charge))
         window.table.setItem(row, 4, QTableWidgetItem(case.attorney_name))
         window.table.setItem(row, 5, QTableWidgetItem(case.comment_field))
-
-
-def get_comment_field(query) -> str:
-    event = query.value('EventID')
-    judge = query.value('JudgeID')  # Judge Rohrer = 31, Judge Hemmeter = 42
-    match (event, judge):
-        case (160, 42):  # Final pretrial for Judge H listed in Courtroom A
-            return 'Possible Data Issue - Judge Hemmeter assigned, FPT in CMI is set for Courtroom A'
-        case (161, 42):  # Final pretrial for Judge H listed in Courtroom B
-            return 'Courtroom B'
-        case (334, 42) | (335, 42) | (336, 42) | (337, 42):  # Pretrial/ALS code likely should be Final pretrial code
-            return 'Possible Data Issue - Event in CMI is Pretrial/ALS - Should likely be FPTN2B'
-        case (160, 31):  # Final pretrial for Judge R listed in Courtroom A
-            return 'Courtroom A'
-        case (161, 31):  # Final pretrial for Judge R listed in Courtroom B
-            return 'Possible Data Issue - Judge Rohrer assigned, FPT in CMI is set for Courtroom B'
-        case (334, 31) | (335, 31) | (336, 31) | (337 | 31):  # Pretrial/ALS code likely should be Final pretrial code
-            return 'Possible Data Issue - Event in CMI is Pretrial/ALS - Should likely be FPTN2'
-        case (414, 31) | (414, 42):  # Trial to Court in C with Judge Assigned
-            return 'Courtroom C'
-        case (414, 0) | (414, 0):  # Trial to Court in C with No Judge Assigned
-            return 'Trial to Court in C but No Judge Assigned'
-        case (412, 31):  # Trial to Court in A with Judge Rohrer Assigned
-            return 'Courtroom A - Trial to Court with Judge Rohrer'
-        case (413, 42):  # Trial to Court in B with Judge Hemmeter Assigned
-            return 'Courtroom B - Trial to Court with Judge Hemmeter'
-        case (160, 0) | (161, 0):
-            return 'No Judge Assigned to Case'
-        case (27, 0) | (28, 0):
-            return 'Arraignment'
-        case (292, 31):  # Plea for Judge Rohrer listed in Courtroom A
-            return 'Courtroom A'
-        case (293, 31):  # Plea for Judge Rohrer listed in Courtroom B
-            return 'Possible Data Issue - Judge Rohrer Assigned, Plea in CMI is set for Courtroom B'
-        case (293, 42):  # Plea for Judge Hemmeter listed in Courtroom B
-            return 'Courtroom B'
-        case (292, 42):  # Plea for Judge Hemmeter listed in Courtroom A
-            return 'Possible Data Issue - Judge Hemmeter Assigned, Plea in CMI is set for Courtroom A'
-        case (294, 42) | (294, 31):  # Plea for either judge listed in Courtroom C
-            return 'Possible Data Issue - Plea in CMI is set for Courtroom C and a Judge is Assigned'
-        case (294, 0):  # Plea for no judge listed in Courtroom C
-            return 'Plea in C - No Judge Assigned'
-        case (77, 0):
-            return 'Arraignment - Previously Continued'
-        case (361, 0):
-            return 'Arraignment - Reset due to FTA or Other Reason'
-        case _:
-            return 'Unclassified Possible Data Error in Case'
