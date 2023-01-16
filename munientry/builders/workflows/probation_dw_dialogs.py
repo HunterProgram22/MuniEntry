@@ -2,6 +2,7 @@
 import os
 
 from loguru import logger
+from PyQt6.QtWidgets import QTableWidgetItem, QHeaderView
 
 from munientry.builders import base_builders as base
 from munientry.views.com_control_workflow_dialog_ui import Ui_ComControlWorkflowDialog
@@ -22,8 +23,18 @@ class ProbationWorkflowDialogViewModifier(base.BaseDialogViewModifier):
 
     def load_pending_entries_list(self):
         pending_entries = os.listdir(self.dialog._entry_path)
+        row = 0
+        col = 0
+        self.dialog.entries_tableWidget.insertColumn(0)
+        self.dialog.entries_tableWidget.insertColumn(1)
+        header = self.dialog.entries_tableWidget.horizontalHeader()
+        self.dialog.entries_tableWidget.setHorizontalHeaderLabels(['Case Entry', 'Date Time'])
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
         for file in pending_entries:
-            self.dialog.entries_tableWidget.addItem(file)
+            self.dialog.entries_tableWidget.insertRow(row)
+            self.dialog.entries_tableWidget.setItem(row, col, QTableWidgetItem(file))
+            row += 1
 
 
 class ProbationWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
@@ -90,7 +101,7 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 self.dialog.entries_tableWidget.takeItem(0)
                 entry_count -= 1
             for file in pending_entries:
-                self.dialog.entries_tableWidget.addItem(file)
+                self.dialog.entries_tableWidget.setItem(file)
 
 
 class ProbationWorkflowDialog(base.BaseDialogBuilder):
