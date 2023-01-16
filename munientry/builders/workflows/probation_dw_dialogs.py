@@ -1,4 +1,5 @@
 """Builder for Pretrial Digital Workflow Dialog."""
+import datetime
 import os
 
 from loguru import logger
@@ -24,17 +25,25 @@ class ProbationWorkflowDialogViewModifier(base.BaseDialogViewModifier):
     def load_pending_entries_list(self):
         pending_entries = os.listdir(self.dialog._entry_path)
         row = 0
-        col = 0
         self.dialog.entries_tableWidget.insertColumn(0)
         self.dialog.entries_tableWidget.insertColumn(1)
+        self.dialog.entries_tableWidget.insertColumn(2)
         header = self.dialog.entries_tableWidget.horizontalHeader()
-        self.dialog.entries_tableWidget.setHorizontalHeaderLabels(['Case Entry', 'Date Time'])
+        self.dialog.entries_tableWidget.setHorizontalHeaderLabels(['Case Entry', 'Date', 'Time'])
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
         for file in pending_entries:
+            file_c_time = os.path.getctime(f'{self.dialog._entry_path}{file}')
+            dt_c = datetime.datetime.fromtimestamp(file_c_time)
+            date = dt_c.strftime('%b %d, %Y')
+            time = dt_c.strftime('%I:%M %p')
             self.dialog.entries_tableWidget.insertRow(row)
-            self.dialog.entries_tableWidget.setItem(row, col, QTableWidgetItem(file))
+            self.dialog.entries_tableWidget.setItem(row, 0, QTableWidgetItem(file))
+            self.dialog.entries_tableWidget.setItem(row, 1, QTableWidgetItem(date))
+            self.dialog.entries_tableWidget.setItem(row, 2, QTableWidgetItem(time))
             row += 1
+        self.dialog.entries_tableWidget.setSortingEnabled(True)
 
 
 class ProbationWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
