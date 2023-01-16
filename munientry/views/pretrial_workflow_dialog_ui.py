@@ -52,9 +52,23 @@ class Ui_PretrialWorkflowDialog(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_3)
         self.gridLayout_2.setVerticalSpacing(24)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.entries_listWidget = QtWidgets.QListWidget(self.frame_3)
-        self.entries_listWidget.setObjectName("entries_listWidget")
-        self.gridLayout_2.addWidget(self.entries_listWidget, 5, 0, 1, 2)
+        self.line_2 = QtWidgets.QFrame(self.frame_3)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
+        self.line_2.setLineWidth(2)
+        self.line_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
+        self.line_2.setObjectName("line_2")
+        self.gridLayout_2.addWidget(self.line_2, 6, 0, 1, 2)
+        self.open_entry_Button = QtWidgets.QPushButton(self.frame_3)
+        self.open_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
+"font: 75 11pt \"Palatino Linotype\";\n"
+"font-weight: bold;")
+        self.open_entry_Button.setObjectName("open_entry_Button")
+        self.gridLayout_2.addWidget(self.open_entry_Button, 7, 1, 1, 1)
+        self.load_new_entries_Button = QtWidgets.QPushButton(self.frame_3)
+        self.load_new_entries_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
+"font-weight: bold;")
+        self.load_new_entries_Button.setObjectName("load_new_entries_Button")
+        self.gridLayout_2.addWidget(self.load_new_entries_Button, 7, 0, 1, 1)
         self.label = QtWidgets.QLabel(self.frame_3)
         self.label.setMaximumSize(QtCore.QSize(16777215, 40))
         self.label.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
@@ -64,33 +78,22 @@ class Ui_PretrialWorkflowDialog(object):
         self.close_dialog_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
 "font-weight: bold;")
         self.close_dialog_Button.setObjectName("close_dialog_Button")
-        self.gridLayout_2.addWidget(self.close_dialog_Button, 9, 0, 1, 1)
-        self.open_entry_Button = QtWidgets.QPushButton(self.frame_3)
-        self.open_entry_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
-"font: 75 11pt \"Palatino Linotype\";\n"
-"font-weight: bold;")
-        self.open_entry_Button.setObjectName("open_entry_Button")
-        self.gridLayout_2.addWidget(self.open_entry_Button, 8, 1, 1, 1)
-        self.load_new_entries_Button = QtWidgets.QPushButton(self.frame_3)
-        self.load_new_entries_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
-"font-weight: bold;")
-        self.load_new_entries_Button.setObjectName("load_new_entries_Button")
-        self.gridLayout_2.addWidget(self.load_new_entries_Button, 8, 0, 1, 1)
-        self.line_2 = QtWidgets.QFrame(self.frame_3)
-        self.line_2.setFrameShadow(QtWidgets.QFrame.Shadow.Plain)
-        self.line_2.setLineWidth(2)
-        self.line_2.setFrameShape(QtWidgets.QFrame.Shape.HLine)
-        self.line_2.setObjectName("line_2")
-        self.gridLayout_2.addWidget(self.line_2, 7, 0, 1, 2)
+        self.gridLayout_2.addWidget(self.close_dialog_Button, 8, 0, 1, 1)
         self.delete_entry_Button = QtWidgets.QPushButton(self.frame_3)
         self.delete_entry_Button.setStyleSheet("background-color: rgb(255, 96, 82);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.delete_entry_Button.setObjectName("delete_entry_Button")
-        self.gridLayout_2.addWidget(self.delete_entry_Button, 9, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.delete_entry_Button, 8, 1, 1, 1)
         self.textBrowser = QtWidgets.QTextBrowser(self.frame_3)
         self.textBrowser.setObjectName("textBrowser")
         self.gridLayout_2.addWidget(self.textBrowser, 1, 0, 1, 2)
+        self.entries_tableWidget = QtWidgets.QTableWidget(self.frame_3)
+        self.entries_tableWidget.setObjectName("entries_tableWidget")
+        self.entries_tableWidget.setColumnCount(0)
+        self.entries_tableWidget.setRowCount(0)
+        self.gridLayout_2.addWidget(self.entries_tableWidget, 2, 0, 1, 2)
+        self.gridLayout_2.setRowStretch(2, 5)
         self.gridLayout.addWidget(self.frame_3, 0, 0, 1, 2)
         self.gridLayout.setRowStretch(0, 4)
 
@@ -100,10 +103,10 @@ class Ui_PretrialWorkflowDialog(object):
     def retranslateUi(self, PretrialWorkflowDialog):
         _translate = QtCore.QCoreApplication.translate
         PretrialWorkflowDialog.setWindowTitle(_translate("PretrialWorkflowDialog", "Pretrial Workflow"))
-        self.label.setText(_translate("PretrialWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">PRETRIAL ENTRIES</span></p></body></html>"))
-        self.close_dialog_Button.setText(_translate("PretrialWorkflowDialog", "Close Workflow"))
         self.open_entry_Button.setText(_translate("PretrialWorkflowDialog", "Open Selected Entry for Review"))
         self.load_new_entries_Button.setText(_translate("PretrialWorkflowDialog", "Check For New Entries"))
+        self.label.setText(_translate("PretrialWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">PRETRIAL ENTRIES</span></p></body></html>"))
+        self.close_dialog_Button.setText(_translate("PretrialWorkflowDialog", "Close Workflow"))
         self.delete_entry_Button.setText(_translate("PretrialWorkflowDialog", "Delete Entry from Workflow"))
         self.textBrowser.setHtml(_translate("PretrialWorkflowDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

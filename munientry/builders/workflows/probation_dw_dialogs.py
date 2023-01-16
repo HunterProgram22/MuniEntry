@@ -23,7 +23,7 @@ class ProbationWorkflowDialogViewModifier(base.BaseDialogViewModifier):
     def load_pending_entries_list(self):
         pending_entries = os.listdir(self.dialog._entry_path)
         for file in pending_entries:
-            self.dialog.entries_listWidget.addItem(file)
+            self.dialog.entries_tableWidget.addItem(file)
 
 
 class ProbationWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
@@ -48,24 +48,24 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
 
         Provides instructions if no entry is selected.
         """
-        if len(self.dialog.entries_listWidget.selectedItems()) == 0:
+        if len(self.dialog.entries_tableWidget.selectedItems()) == 0:
             message = 'No entry is selected. You must select an entry to open.'
             return RequiredBox(message).exec()
-        if len(self.dialog.entries_listWidget.selectedItems()) == 1:
-            selected_entry_widget = self.dialog.entries_listWidget.selectedItems()[0]
+        if len(self.dialog.entries_tableWidget.selectedItems()) == 1:
+            selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
             document = f'{self.dialog._entry_path}/{entry_name}'
         os.startfile(document)
         logger.info(f'{document} opened in workflow.')
 
     def delete_entry(self):
-        if len(self.dialog.entries_listWidget.selectedItems()) == 0:
+        if len(self.dialog.entries_tableWidget.selectedItems()) == 0:
             message = 'No entry is selected. You must select an entry to delete.'
             return RequiredBox(message).exec()
-        if len(self.dialog.entries_listWidget.selectedItems()) == 1:
-            selected_entry_widget = self.dialog.entries_listWidget.selectedItems()[0]
+        if len(self.dialog.entries_tableWidget.selectedItems()) == 1:
+            selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
             entry_name = selected_entry_widget.text()
-            widget_list = self.dialog.entries_listWidget
+            widget_list = self.dialog.entries_tableWidget
             document = f'{self.dialog._entry_path}/{entry_name}'
         row = widget_list.row(selected_entry_widget)
         widget_list.takeItem(row)
@@ -81,16 +81,16 @@ class ProbationWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     def load_new_entries(self):
         """Need to fix as message shows no cases loaded if one loads cases and other list doesnt."""
         pending_entries = os.listdir(f'{self.dialog._entry_path}')
-        if len(pending_entries) == self.dialog.entries_listWidget.count():
+        if len(pending_entries) == self.dialog.entries_tableWidget.count():
             message = 'There were no new entries availalbe to load.'
             return InfoBox(message, 'No Entries to Load').exec()
-        if len(pending_entries) != self.dialog.entries_listWidget.count():
-            entry_count = self.dialog.entries_listWidget.count()
+        if len(pending_entries) != self.dialog.entries_tableWidget.count():
+            entry_count = self.dialog.entries_tableWidget.count()
             while entry_count >= 0:
-                self.dialog.entries_listWidget.takeItem(0)
+                self.dialog.entries_tableWidget.takeItem(0)
                 entry_count -= 1
             for file in pending_entries:
-                self.dialog.entries_listWidget.addItem(file)
+                self.dialog.entries_tableWidget.addItem(file)
 
 
 class ProbationWorkflowDialog(base.BaseDialogBuilder):
