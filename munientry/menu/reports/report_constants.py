@@ -4,10 +4,10 @@ import types
 
 # Arraignment (ARR) - 27, Arraignment (ARRV) - 28
 # Continuance Arraignment (CONA) - 77
-# Reset Case Arraignment (RSET( - 361
+# Reset Case Arraignment (RSET) - 361
 ARRAIGNMENT_EVENT_IDS = "('27', '28', '77', '361')"
 
-# Final Pretrial A - 160, Final Pretrial B - 161
+# Final Pretrial A (FPTN2 - 160, Final Pretrial B (FPT2NB - 161
 # 334 and 335 is Pretrial/ALS for A
 # 336 and  is a Pretrial/ALS for B
 FINAL_PRETRIAL_EVENT_IDS = "('160', '161', '334', '335', '336', '337')"
@@ -20,8 +20,8 @@ TRIAL_TO_COURT_EVENT_IDS = "('412', '413', '414')"
 # Plea in A - 292, Plea in B - 293, Plea in C - 294
 PLEA_EVENT_IDS = "('292', '293', '294')"
 
-#
-JURY_TRIAL_EVENT_IDS = "('292', '293', '294')"
+# Jury Trial in A - 201, Jury Trial in B - 202
+JURY_TRIAL_EVENT_IDS = "('201', '202')"
 
 ######
 
