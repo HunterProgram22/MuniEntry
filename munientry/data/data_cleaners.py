@@ -39,7 +39,6 @@ OFFENSE_CLEAN_DICT = MappingProxyType({
     'TO': 'to',
     'SUSP': 'Suspension',
     '-': '',
-    '/': '',
     'OF': 'of',
     'IN': 'in',
     'AND': 'and',
