@@ -71,13 +71,17 @@ def driving_case_search_query(case_number: str) -> str:
 def event_type_report_query(report_date: str, event_codes: str) -> str:
     return f"""
     SELECT DISTINCT
-    cm.CaseNumber
+    FORMAT(ce.EventTime, 'hh:mm') as Time
+    ,cm.CaseNumber
 	,cp.FirstName + ' ' + cp.LastName as DefFullName
 	,sc.SubCaseNumber
     ,sc.ChargeDescription AS Charge
+    ,EventID
+    ,sc.JudgeID as JudgeID
+    ,CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[CaseEvent] ce 
-    ON cm.Id = ce.CaseMasterID
+    ON cm.Id = ce.CaseMasterID and ce.IsDeleted = '0'
 	LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
     ON cm.Id = sc.CaseMasterID
     LEFT OUTER JOIN [AuthorityCourt].[dbo].[Violation] v
@@ -86,6 +90,8 @@ def event_type_report_query(report_date: str, event_codes: str) -> str:
     ON vd.ViolationID = v.Id and vd.EndDate IS NULL and vd.IsActive = '1'
 	LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
 	ON cp.CaseMasterID = sc.CaseMasterID 
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Attorney] att
+    ON sc.AttorneyID = att.Id
     WHERE EventID in {event_codes} and EventDate = '{report_date}' and SubCaseNumber LIKE '%-A'
     """
 
