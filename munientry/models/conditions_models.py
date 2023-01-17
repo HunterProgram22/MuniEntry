@@ -77,6 +77,7 @@ class CommunityControl:
     term_of_control: str = None
     not_within_500_feet_ordered: bool = False
     not_within_500_feet_person: str = None
+    postconviction_no_contact_ordered: bool = False
     no_contact_with_ordered: bool = False
     no_contact_with_person: str = None
     alcohol_monitoring: bool = False
@@ -112,6 +113,7 @@ class CommunityControl:
         ("term_of_control", "community_control_term_of_control_box"),
         ("not_within_500_feet_ordered", "community_control_not_within_500_feet_checkBox"),
         ("not_within_500_feet_person", "community_control_not_within_500_feet_person_box"),
+        ("postconviction_no_contact_ordered", "community_control_postconviction_no_contact_checkBox"),
         ("no_contact_with_ordered", "community_control_no_contact_checkBox"),
         ("no_contact_with_person", "community_control_no_contact_with_box"),
         ("alcohol_monitoring", "alcohol_monitoring_checkBox"),
