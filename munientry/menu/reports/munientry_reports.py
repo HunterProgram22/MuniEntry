@@ -44,7 +44,9 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
     return QInputDialog.getText(
         mainwindow,
         f'{event} Report',
-        f'This report will query the MuniEntry Database for all {event} set for the date provided.\n'
+        f'This report will query the MuniEntry Database for {event} set for the date provided.\n'
+        + 'Please note that an event listed on this report may have been continued to a future\n'
+        + ' date and it will still show up on this report.\n\n'
         + f'Enter {event} Date in format YYYY-MM-DD:',
         )
 
