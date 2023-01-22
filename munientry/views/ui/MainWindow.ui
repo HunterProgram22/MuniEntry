@@ -1572,11 +1572,27 @@ font-weight: bold;</string>
     <property name="title">
      <string>Reports</string>
     </property>
-    <addaction name="actionArraignments"/>
-    <addaction name="actionFinal_Pretrials"/>
-    <addaction name="actionJury_Trials"/>
-    <addaction name="actionPleas"/>
-    <addaction name="actionTrials_To_Court"/>
+    <widget class="QMenu" name="menuAuthorityCourt">
+     <property name="title">
+      <string>AuthorityCourt Reports</string>
+     </property>
+     <addaction name="actionArraignments"/>
+     <addaction name="actionFinal_Pretrials"/>
+     <addaction name="actionJury_Trials"/>
+     <addaction name="actionPleas"/>
+     <addaction name="actionTrials_To_Court"/>
+    </widget>
+    <widget class="QMenu" name="menuMuniEntry_Reports">
+     <property name="title">
+      <string>MuniEntry Reports</string>
+     </property>
+     <addaction name="actionCourtroom_A"/>
+     <addaction name="actionCourtroom_B"/>
+     <addaction name="actionCourtroom_C"/>
+    </widget>
+    <addaction name="menuAuthorityCourt"/>
+    <addaction name="separator"/>
+    <addaction name="menuMuniEntry_Reports"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1693,6 +1709,21 @@ font-weight: bold;</string>
   <action name="actionJury_Trials">
    <property name="text">
     <string>Jury Trials</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_A">
+   <property name="text">
+    <string>Courtroom A</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_B">
+   <property name="text">
+    <string>Courtroom B</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_C">
+   <property name="text">
+    <string>Courtroom C</string>
    </property>
   </action>
  </widget>
