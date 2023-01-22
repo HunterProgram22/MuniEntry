@@ -51,7 +51,7 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
         )
 
 
-def get_courtroom_report_data(query_string: str) -> list[tuple[str, str, str]]:
+def get_courtroom_report_data(query_string: str) -> list[tuple[str]]:
     """Queries the MuniEntryDB and loads courtroom events for a specific date.
 
     Args:
