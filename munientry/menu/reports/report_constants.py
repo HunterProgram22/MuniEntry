@@ -33,3 +33,15 @@ EVENT_IDS = types.MappingProxyType({
     'Pleas': PLEA_EVENT_IDS,
     'Jury Trials': JURY_TRIAL_EVENT_IDS,
 })
+
+
+
+### MuniEntry Sqllite DB Constants ###
+
+COURTROOM_NAME = types.MappingProxyType({
+    1: 'A',
+    2: 'B',
+    3: 'C',
+})
+
+### End MuniEntry Sqllite DB Constants ###

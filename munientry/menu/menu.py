@@ -4,6 +4,7 @@ from functools import partial
 from munientry.menu.batch.batch import run_batch_fta_process
 from munientry.menu.logs.logs import open_current_log
 from munientry.menu.reports.authoritycourt_reports import run_event_type_report
+from munientry.menu.reports.munientry_reports import run_courtroom_report
 from munientry.menu.open.open import open_entries_folder
 from munientry.menu.settings.settings import open_workflow_settings
 

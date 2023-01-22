@@ -1,4 +1,4 @@
-"""Module for report menu processes."""
+"""Module for AuthorityCourt report menu processes."""
 from collections import namedtuple
 
 from loguru import logger
