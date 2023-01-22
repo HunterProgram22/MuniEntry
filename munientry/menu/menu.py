@@ -40,6 +40,10 @@ class MainWindowMenu(object):
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
 
     def connect_reports_menu_functions(self) -> None:
+        self.connect_authority_court_reports()
+        self.connect_munientry_reports()
+
+    def connect_authority_court_reports(self):
         self.mainwindow.actionArraignments.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Arraignments')
         )
@@ -55,6 +59,9 @@ class MainWindowMenu(object):
         self.mainwindow.actionJury_Trials.triggered.connect(
             partial(run_event_type_report, self.mainwindow, 'Jury Trials')
         )
+
+    def connect_munientry_reports(self):
+        pass
 
     def connect_logs_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
