@@ -38,6 +38,8 @@ EVENT_IDS = types.MappingProxyType({
 
 ### MuniEntry Sqllite DB Constants ###
 
+COURTROOM_REPORT_HEADERS = ('Event', 'Time', 'Case Number', 'Defendant Name')
+
 COURTROOM_NAME = types.MappingProxyType({
     1: 'A',
     2: 'B',
