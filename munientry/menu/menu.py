@@ -3,7 +3,7 @@ from functools import partial
 
 from munientry.menu.batch.batch import run_batch_fta_process
 from munientry.menu.logs.logs import open_current_log
-from munientry.menu.reports.reports import run_event_type_report
+from munientry.menu.reports.authoritycourt_reports import run_event_type_report
 from munientry.menu.open.open import open_entries_folder
 from munientry.menu.settings.settings import open_workflow_settings
 
@@ -61,7 +61,15 @@ class MainWindowMenu(object):
         )
 
     def connect_munientry_reports(self):
-        pass
+        self.mainwindow.actionCourtroom_A.triggered.connect(
+            partial(run_courtroom_report, self.mainwindow, 1)
+        )
+        self.mainwindow.actionCourtroom_B.triggered.connect(
+            partial(run_courtroom_report, self.mainwindow, 2)
+        )
+        self.mainwindow.actionCourtroom_C.triggered.connect(
+            partial(run_courtroom_report, self.mainwindow, 3)
+        )
 
     def connect_logs_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
