@@ -46,7 +46,13 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
         selected 'Ok.'
     """
     return QInputDialog.getText(
-        mainwindow, f'{event} Date', f'Enter {event} Date in format YYYY-MM-DD:',
+        mainwindow,
+        f'{event} Report',
+        f'This report will query AuthorityCourt/CMI for all {event} set for the date provided.\n'
+        + 'If a case does not show up on this report, but it is scheduled for the date queried,\n'
+        + 'then the case is likely not set correctly in AuthorityCourt/CMI and you should contact\n'
+        + 'the Clerks office.\n\n'
+        + f'Enter {event} Date in format YYYY-MM-DD:',
     )
 
 
