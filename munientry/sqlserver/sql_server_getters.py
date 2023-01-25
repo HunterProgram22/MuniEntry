@@ -36,7 +36,7 @@ class CaseDocketSQLServer(object):
         return data_list
 
 
-class CriminalCaseSQLServer(object):
+class CriminalCaseSqlServer(object):
     """Packages case data from the SQL Server Authority Court database.
 
     The class accepts the case number to identify the case, then retrieves
@@ -92,7 +92,7 @@ class CriminalCaseSQLServer(object):
         return self.case
 
 
-class MultipleCriminalCaseSQLServer(CriminalCaseSQLServer):
+class MultipleCriminalCaseSQLServer(CriminalCaseSqlServer):
 
     def __init__(self, matched_case_numbers_list: list) -> None:
         self.all_case_numbers = matched_case_numbers_list

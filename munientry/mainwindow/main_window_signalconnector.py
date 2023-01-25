@@ -21,6 +21,9 @@ class MainWindowSignalConnector(object):
         )
         self.main_window.tabWidget.currentChanged.connect(self.main_window.set_person_stack_widget)
         self.main_window.get_case_Button.pressed.connect(self.main_window.query_case_info)
+
+        self.main_window.civil_get_case_Button.pressed.connect(self.main_window.query_case_info)
+
         self.main_window.show_docket_Button.pressed.connect(self.main_window.show_case_docket)
         self.main_window.show_docket_case_list_Button.pressed.connect(
             self.main_window.show_case_docket_case_list,

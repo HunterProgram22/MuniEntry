@@ -17,5 +17,11 @@ class CmsCaseInformation:
     fra_in_file: str = None
 
 
+@dataclass
+class CivilCmsCaseInformation:
+
+    case_number: str = None
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

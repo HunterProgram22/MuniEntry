@@ -68,7 +68,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(218, 218, 218);</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="case_list_tab">
            <attribute name="title">
@@ -429,14 +429,14 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="case_search_box_3">
+             <widget class="QLineEdit" name="civil_case_search_box">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="get_case_Button_3">
+             <widget class="QPushButton" name="civil_get_case_Button">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>
@@ -482,7 +482,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="4" column="1" colspan="2">
-             <widget class="QLabel" name="case_number_label_field_3">
+             <widget class="QLabel" name="civil_case_number_field">
               <property name="text">
                <string>None</string>
               </property>
@@ -496,7 +496,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="5" column="1" colspan="2">
-             <widget class="QLabel" name="case_name_label_field_3">
+             <widget class="QLabel" name="civil_case_name_field">
               <property name="text">
                <string>None</string>
               </property>
@@ -510,7 +510,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="6" column="1" colspan="2">
-             <widget class="QLabel" name="case_charges_label_field_3">
+             <widget class="QLabel" name="civil_cause_of_action">
               <property name="text">
                <string>None</string>
               </property>
