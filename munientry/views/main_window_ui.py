@@ -875,7 +875,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         self.main_TabWidget.setCurrentIndex(0)
-        self.search_tabWidget.setCurrentIndex(2)
+        self.search_tabWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
         self.workflows_person_tab.setCurrentIndex(0)
