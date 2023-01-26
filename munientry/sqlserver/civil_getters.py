@@ -39,20 +39,18 @@ class CivilCaseSqlServer(object):
     def load_case_information(self) -> None:
         if self.case.case_number is None:
             self.case.case_number = self.query.value('CaseNumber')
-        if self.case.primary_plaintiff is None:
-            self.case.primary_plaintiff = self.get_plaintiff(self.query)
-        if self.case.primary_defendant is None:
-            self.case.primary_defendant = self.get_defendant(self.query)
+        if self.case.primary_plaintiff.party_name is None:
+            self.case.primary_plaintiff.party_name = self.get_plaintiff(self.query)
+        if self.case.primary_defendant.party_name is None:
+            self.case.primary_defendant.party_name = self.get_defendant(self.query)
 
     def get_plaintiff(self, query):
         if self.query.value('PartyType') == 'Plaintiff':
             return self.query.value('PartyName')
-        logger.debug(query)
 
     def get_defendant(self, query):
         if self.query.value('PartyType') == 'Defendant':
             return self.query.value('PartyName')
-        logger.debug(query)
 
     def load_case(self) -> CivilCmsCaseInformation:
         return self.case
