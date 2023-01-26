@@ -121,7 +121,7 @@ class MainWindowSlotFunctionsMixin(object):
         self.case_charges_label_field.setText(charge_list_text)
 
     def set_civil_case_info_from_search(self, cms_case_data):
-        self.civil_case_number_label_field.setText(cms_case_data.case_number)
+        self.civil_case_number_field.setText(cms_case_data.case_number)
         logger.debug('civil called')
 
     def show_case_docket_case_list(self):
