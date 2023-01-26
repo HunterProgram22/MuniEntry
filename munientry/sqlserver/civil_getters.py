@@ -7,9 +7,6 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.sqlserver.sql_server_queries import general_civil_case_query
 
 
-def general_civil_case_query(case_number):
-    return
-
 
 class CivilCaseSqlServer(object):
     """..."""
@@ -27,6 +24,7 @@ class CivilCaseSqlServer(object):
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_civil_case_query(self.case_number)
+        logger.debug(query_string)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         logger.info(f'Querying Authority Civil for: {self.case_number}')

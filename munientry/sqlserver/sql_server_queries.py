@@ -138,7 +138,7 @@ def general_civil_case_query(case_number: str) -> str:
 	LEFT OUTER JOIN [AuthorityCivil].[dbo].[Participants] AS p
 	ON [cp_ParticipantFK_int] = [p_ParticipantPK_int]
 
-	WHERE c.c_CaseNumber_str = {case_number} 
+	WHERE c.c_CaseNumber_str = '{case_number}' 
     """
 
 
