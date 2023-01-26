@@ -4,12 +4,12 @@ from PyQt6.QtWidgets import QTableWidgetItem
 from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.data_cleaners import clean_last_name
-from munientry.sqllite import sql_lite_functions as sql_lite
 from munientry.sqlserver import civil_getters as civil
 from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.helper_functions import set_random_judge
+from munientry.helper_functions import set_random_judge, update_crimtraffic_case_number, \
+    update_civil_case_number
 from munientry.widgets.table_widgets import TableReportWindow
 
 
@@ -100,17 +100,19 @@ class MainWindowSlotFunctionsMixin(object):
 
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             case_number = self.case_search_box.text()
-            case_number = update_case_number(case_number)
+            case_number = update_crimtraffic_case_number(case_number)
             self.case_search_box.setText(case_number)
             cms_case_data = sql_server.CriminalCaseSqlServer(case_number).load_case()
-            self.set_case_info_from_search(cms_case_data)
+            self.set_crimtraffic_case_info_from_search(cms_case_data)
 
         elif self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
             case_number = self.civil_case_search_box.text()
+            case_number = update_civil_case_number(case_number)
+            self.civil_case_search_box.setText(case_number)
             cms_case_data = civil.CivilCaseSqlServer(case_number).load_case()
             self.set_civil_case_info_from_search(cms_case_data)
 
-    def set_case_info_from_search(self, cms_case_data) -> None:
+    def set_crimtraffic_case_info_from_search(self, cms_case_data) -> None:
         """Sets the case search fields on the UI with data from the case that is retrieved."""
         self.case_number_label_field.setText(cms_case_data.case_number)
         def_first_name = cms_case_data.defendant.first_name
@@ -137,7 +139,7 @@ class MainWindowSlotFunctionsMixin(object):
     def show_case_docket(self, case_number=None):
         if case_number is None:
             case_number = self.case_search_box.text()
-            case_number = update_case_number(case_number)
+            case_number = update_crimtraffic_case_number(case_number)
             self.case_search_box.setText(case_number)
         data_list = sql_server.CaseDocketSQLServer(case_number).get_docket()
         rows = len(data_list)
@@ -155,56 +157,3 @@ class MainWindowSlotFunctionsMixin(object):
             self.window.table.setItem(row, 0, docket_date)
             self.window.table.setItem(row, 1, docket_descr)
         self.window.show()
-
-
-def update_case_number(case_number: str) -> str:
-    """Updates the case number in case search to add 0's if full case number not provided."""
-    if len(case_number) == 10:
-        return case_number.upper()
-    crim_letter_list = ['B', 'b']
-    if any(letter in case_number for letter in crim_letter_list):
-        try:
-            case_year, case_five_number = case_number.split('b')
-        except ValueError:
-            case_year, case_five_number = case_number.split('B')
-        case_year = case_year[:2]
-        case_code = 'CRB'
-        return reset_case_number(case_year, case_code, case_five_number)
-    ovi_letter_list = ['C', 'c']
-    if any(letter in case_number for letter in ovi_letter_list):
-        try:
-            case_year, case_five_number = case_number.split('c')
-        except ValueError:
-            case_year, case_five_number = case_number.split('C')
-        case_year = case_year[:2]
-        case_code = 'TRC'
-        return reset_case_number(case_year, case_code, case_five_number)
-    traffic_letter_list = ['D', 'd']
-    if any(letter in case_number for letter in traffic_letter_list):
-        try:
-            case_year, case_five_number = case_number.split('d')
-        except ValueError:
-            case_year, case_five_number = case_number.split('D')
-        case_year = case_year[:2]
-        case_code = 'TRD'
-        return reset_case_number(case_year, case_code, case_five_number)
-
-
-def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> str:
-    """Adds 0's to the last 5 digits of a case number to make it 5 digits.
-
-    22TRC1 -> 22TRC00001
-    22CRB12 -> 22CRB00012
-    22TRD205 -> 22TRD00205
-    """
-    match len(case_five_number):
-        case 5:
-            return f'{case_year}{case_code}{case_five_number}'
-        case 4:
-            return f'{case_year}{case_code}0{case_five_number}'
-        case 3:
-            return f'{case_year}{case_code}00{case_five_number}'
-        case 2:
-            return f'{case_year}{case_code}000{case_five_number}'
-        case 1:
-            return f'{case_year}{case_code}0000{case_five_number}'

@@ -1,5 +1,5 @@
 import pytest
-from munientry.mainwindow.main_window_slots import update_case_number
+from munientry.helper_functions import update_crimtraffic_case_number
 
 TEST_CASE_NUMBERS = [
     ('22TRD00001', '22TRD00001'),
@@ -20,4 +20,4 @@ def test_update_case_number(test_input, expected_output):
 
     Proper Case Number Format = DDXXXDDDDD (D = Digit, X = Letter)
     """
-    assert update_case_number(test_input) == expected_output
+    assert update_crimtraffic_case_number(test_input) == expected_output

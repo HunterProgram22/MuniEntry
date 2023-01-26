@@ -89,5 +89,110 @@ def format_date_string(date_string: str) -> str:
     return str(new_date_object)
 
 
+def update_crimtraffic_case_number(case_number: str) -> str:
+    """Updates the case number in case search to add 0's if full case number not provided."""
+    if len(case_number) == 10:
+        return case_number.upper()
+    crim_letter_list = ['B', 'b']
+    if any(letter in case_number for letter in crim_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('b')
+        except ValueError:
+            case_year, case_five_number = case_number.split('B')
+        case_year = case_year[:2]
+        case_code = 'CRB'
+        return reset_case_number(case_year, case_code, case_five_number)
+    ovi_letter_list = ['C', 'c']
+    if any(letter in case_number for letter in ovi_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('c')
+        except ValueError:
+            case_year, case_five_number = case_number.split('C')
+        case_year = case_year[:2]
+        case_code = 'TRC'
+        return reset_case_number(case_year, case_code, case_five_number)
+    traffic_letter_list = ['D', 'd']
+    if any(letter in case_number for letter in traffic_letter_list):
+        try:
+            case_year, case_five_number = case_number.split('d')
+        except ValueError:
+            case_year, case_five_number = case_number.split('D')
+        case_year = case_year[:2]
+        case_code = 'TRD'
+        return reset_case_number(case_year, case_code, case_five_number)
+
+
+def update_civil_case_number(case_number: str) -> str:
+    """Updates the case number in case search to add 0's if full case number not provided."""
+    if len(case_number) == 10:
+        return case_number.upper()
+    personal_injury_list = ['E', 'e']
+    if any(letter in case_number for letter in personal_injury_list):
+        try:
+            case_year, case_five_number = case_number.split('e')
+        except ValueError:
+            case_year, case_five_number = case_number.split('E')
+        case_year = case_year[:2]
+        case_code = 'CVE'
+        return reset_case_number(case_year, case_code, case_five_number)
+    contracts_list = ['F', 'f']
+    if any(letter in case_number for letter in contracts_list):
+        try:
+            case_year, case_five_number = case_number.split('f')
+        except ValueError:
+            case_year, case_five_number = case_number.split('F')
+        case_year = case_year[:2]
+        case_code = 'CVF'
+        return reset_case_number(case_year, case_code, case_five_number)
+    evictions_list = ['G', 'g']
+    if any(letter in case_number for letter in evictions_list):
+        try:
+            case_year, case_five_number = case_number.split('g')
+        except ValueError:
+            case_year, case_five_number = case_number.split('G')
+        case_year = case_year[:2]
+        case_code = 'CVG'
+        return reset_case_number(case_year, case_code, case_five_number)
+    other_civil_list = ['H', 'h']
+    if any(letter in case_number for letter in other_civil_list):
+        try:
+            case_year, case_five_number = case_number.split('h')
+        except ValueError:
+            case_year, case_five_number = case_number.split('H')
+        case_year = case_year[:2]
+        case_code = 'CVH'
+        return reset_case_number(case_year, case_code, case_five_number)
+    small_claims_list = ['I', 'i']
+    if any(letter in case_number for letter in small_claims_list):
+        try:
+            case_year, case_five_number = case_number.split('i')
+        except ValueError:
+            case_year, case_five_number = case_number.split('I')
+        case_year = case_year[:2]
+        case_code = 'CVI'
+        return reset_case_number(case_year, case_code, case_five_number)
+
+
+def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> str:
+    """Adds 0's to the last 5 digits of a case number to make it 5 digits.
+
+    22TRC1 -> 22TRC00001
+    22CRB12 -> 22CRB00012
+    22TRD205 -> 22TRD00205
+    20CVG0210 -> 20CVG00210
+    """
+    match len(case_five_number):
+        case 5:
+            return f'{case_year}{case_code}{case_five_number}'
+        case 4:
+            return f'{case_year}{case_code}0{case_five_number}'
+        case 3:
+            return f'{case_year}{case_code}00{case_five_number}'
+        case 2:
+            return f'{case_year}{case_code}000{case_five_number}'
+        case 1:
+            return f'{case_year}{case_code}0000{case_five_number}'
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
