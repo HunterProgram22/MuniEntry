@@ -117,7 +117,7 @@ def daily_case_list_query(report: str) -> str:
 def general_civil_case_query(case_number: str) -> str:
     return f"""
     SELECT 
-        [c_CaseNumber_str],
+        [c_CaseNumber_str] AS CaseNumber,
 	    [p_IsIndividualFlag_str],
 	    CASE
 			WHEN [p_IsIndividualFlag_str] = 'Y' 

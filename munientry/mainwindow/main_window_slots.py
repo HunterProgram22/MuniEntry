@@ -109,6 +109,7 @@ class MainWindowSlotFunctionsMixin(object):
         elif self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
             case_number = self.civil_case_search_box.text()
             cms_case_data = civil.CivilCaseSqlServer(case_number).load_case()
+            logger.debug(cms_case_data)
             self.set_civil_case_info_from_search(cms_case_data)
 
     def set_case_info_from_search(self, cms_case_data) -> None:
