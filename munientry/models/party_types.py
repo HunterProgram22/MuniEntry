@@ -15,6 +15,15 @@ class Defendant(Person):
     """Class for defendants that inherits from Person class."""
 
 
+class CivilParty(object):
+    """A base class for civil parties."""
+
+    def __init__(self) -> None:
+        self.individual: bool = None
+        self.party_name: str = None
+        self.party_type: str = None
+
+
 class JudicialOfficer(Person):
     """
     A subclass of a person that is for all different types of judicial

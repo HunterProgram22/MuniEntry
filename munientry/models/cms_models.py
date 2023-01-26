@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from loguru import logger
 
-from munientry.models.party_types import Defendant
+from munientry.models.party_types import CivilParty, Defendant
 
 
 @dataclass
@@ -21,6 +21,8 @@ class CmsCaseInformation:
 class CivilCmsCaseInformation:
 
     case_number: str = None
+    primary_plaintiff: object = field(default_factory=CivilParty)
+    primary_defendant: object = field(default_factory=CivilParty)
 
 
 if __name__ == '__main__':
