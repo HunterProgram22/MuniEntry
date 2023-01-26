@@ -123,7 +123,7 @@ def load_single_case(case_number: str) -> CmsCaseInformation:
     Returns:
         CmsCaseInformation: An instance of a CmsCaseInformation object with data from a single case.
     """
-    return sql_server.CriminalCaseSQLServer(case_number).load_case()
+    return sql_server.CriminalCaseSqlServer(case_number).load_case()
 
 
 def set_case_loader(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformation:

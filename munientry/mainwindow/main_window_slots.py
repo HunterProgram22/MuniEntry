@@ -5,6 +5,7 @@ from PyQt6.QtSql import QSqlQuery
 
 from munientry.data.data_cleaners import clean_last_name
 from munientry.sqllite import sql_lite_functions as sql_lite
+from munientry.sqlserver import civil_getters as civil
 from munientry.sqlserver import sql_server_getters as sql_server
 from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.data.connections import close_db_connection, open_db_connection
@@ -95,12 +96,19 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
     def query_case_info(self):
-        """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
-        case_number = self.case_search_box.text()
-        case_number = update_case_number(case_number)
-        self.case_search_box.setText(case_number)
-        cms_case_data = sql_server.CriminalCaseSQLServer(case_number).load_case()
-        self.set_case_info_from_search(cms_case_data)
+        """TODO UPDATE Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
+
+        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
+            case_number = self.case_search_box.text()
+            case_number = update_case_number(case_number)
+            self.case_search_box.setText(case_number)
+            cms_case_data = sql_server.CriminalCaseSqlServer(case_number).load_case()
+            self.set_case_info_from_search(cms_case_data)
+
+        elif self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
+            case_number = self.civil_case_search_box.text()
+            cms_case_data = civil.CivilCaseSqlServer(case_number).load_case()
+            self.set_civil_case_info_from_search(cms_case_data)
 
     def set_case_info_from_search(self, cms_case_data) -> None:
         """Sets the case search fields on the UI with data from the case that is retrieved."""
@@ -110,6 +118,12 @@ class MainWindowSlotFunctionsMixin(object):
         self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
         charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
+
+    def set_civil_case_info_from_search(self, cms_case_data):
+        self.civil_case_number_field.setText(cms_case_data.case_number)
+        self.civil_case_name_field.setText(
+            f'{cms_case_data.primary_plaintiff.party_name} vs. {cms_case_data.primary_defendant.party_name}'
+        )
 
     def show_case_docket_case_list(self):
         """Value Error catch put in to handle if the empty slot of daily case list is selected."""
