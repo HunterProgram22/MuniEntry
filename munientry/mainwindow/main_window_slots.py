@@ -126,6 +126,7 @@ class MainWindowSlotFunctionsMixin(object):
         self.civil_case_name_field.setText(
             f'{cms_case_data.primary_plaintiff.party_name} vs. {cms_case_data.primary_defendant.party_name}'
         )
+        self.civil_case_type_field.setText(cms_case_data.case_type)
 
     def show_case_docket_case_list(self):
         """Value Error catch put in to handle if the empty slot of daily case list is selected."""

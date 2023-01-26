@@ -21,6 +21,7 @@ class CmsCaseInformation:
 class CivilCmsCaseInformation:
 
     case_number: str = None
+    case_type: str = None
     primary_plaintiff: object = field(default_factory=CivilParty)
     primary_defendant: object = field(default_factory=CivilParty)
 

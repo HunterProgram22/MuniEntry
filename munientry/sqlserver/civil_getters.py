@@ -37,10 +37,24 @@ class CivilCaseSqlServer(object):
     def load_case_information(self) -> None:
         if self.case.case_number is None:
             self.case.case_number = self.query.value('CaseNumber')
+        if self.case.case_type is None:
+            self.case.case_type = self.get_case_type()
         if self.case.primary_plaintiff.party_name is None:
             self.case.primary_plaintiff.party_name = self.get_plaintiff(self.query)
         if self.case.primary_defendant.party_name is None:
             self.case.primary_defendant.party_name = self.get_defendant(self.query)
+
+    def get_case_type(self) -> str:
+        case_type_code = self.case.case_number[4]
+        logger.debug(case_type_code)
+        civil_code_dict = {
+            'E': 'Personal Injury and Property Damage',
+            'F': 'Contracts',
+            'G': 'FED (Evictions)',
+            'H': 'Other Civil',
+            'I': 'Small Claims',
+        }
+        return civil_code_dict.get(case_type_code)
 
     def get_plaintiff(self, query):
         if self.query.value('PartyType') == 'Plaintiff':
