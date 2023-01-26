@@ -46,7 +46,6 @@ class CivilCaseSqlServer(object):
 
     def get_case_type(self) -> str:
         case_type_code = self.case.case_number[4]
-        logger.debug(case_type_code)
         civil_code_dict = {
             'E': 'Personal Injury and Property Damage',
             'F': 'Contracts',

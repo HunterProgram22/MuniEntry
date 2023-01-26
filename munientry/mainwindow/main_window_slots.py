@@ -90,6 +90,8 @@ class MainWindowSlotFunctionsMixin(object):
             self.stackedWidget.setCurrentWidget(assignment_commissioners)
         if self.tabWidget.currentWidget().objectName() == 'admin_Tab':
             self.stackedWidget.setCurrentWidget(admin_staff)
+        if self.tabWidget.currentWidget().objectName() == 'civil_Tab':
+            self.stackedWidget.setCurrentWidget(judicial_officers)
         current_stacked_widget = self.stackedWidget.currentWidget().objectName()
         current_tab_widget = self.tabWidget.currentWidget().objectName()
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
