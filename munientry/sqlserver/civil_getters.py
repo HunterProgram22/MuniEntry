@@ -34,12 +34,24 @@ class CivilCaseSqlServer(object):
     def load_query_data_into_case(self) -> None:
         while self.query.next():
             self.load_case_information()
+        logger.debug(self.case)
 
     def load_case_information(self) -> None:
-        self.case.case_number = self.query.value('CaseNumber')
-        self.case.primary_plaintiff = self.get_plaintiff(self.query)
+        if self.case.case_number is None:
+            self.case.case_number = self.query.value('CaseNumber')
+        if self.case.primary_plaintiff is None:
+            self.case.primary_plaintiff = self.get_plaintiff(self.query)
+        if self.case.primary_defendant is None:
+            self.case.primary_defendant = self.get_defendant(self.query)
 
     def get_plaintiff(self, query):
+        if self.query.value('PartyType') == 'Plaintiff':
+            return self.query.value('PartyName')
+        logger.debug(query)
+
+    def get_defendant(self, query):
+        if self.query.value('PartyType') == 'Defendant':
+            return self.query.value('PartyName')
         logger.debug(query)
 
     def load_case(self) -> CivilCmsCaseInformation:
