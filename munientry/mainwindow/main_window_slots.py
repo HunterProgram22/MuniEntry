@@ -96,9 +96,8 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
     def query_case_info(self):
-        """Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
+        """TODO UPDATE Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
 
-        logger.debug(self.tabWidget.currentWidget().objectName())
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             case_number = self.case_search_box.text()
             case_number = update_case_number(case_number)
@@ -109,7 +108,6 @@ class MainWindowSlotFunctionsMixin(object):
         elif self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
             case_number = self.civil_case_search_box.text()
             cms_case_data = civil.CivilCaseSqlServer(case_number).load_case()
-            logger.debug(cms_case_data)
             self.set_civil_case_info_from_search(cms_case_data)
 
     def set_case_info_from_search(self, cms_case_data) -> None:

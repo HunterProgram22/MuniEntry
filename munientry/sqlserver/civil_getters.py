@@ -24,7 +24,6 @@ class CivilCaseSqlServer(object):
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_civil_case_query(self.case_number)
-        logger.debug(query_string)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         logger.info(f'Querying Authority Civil for: {self.case_number}')
@@ -34,7 +33,6 @@ class CivilCaseSqlServer(object):
     def load_query_data_into_case(self) -> None:
         while self.query.next():
             self.load_case_information()
-        logger.debug(self.case)
 
     def load_case_information(self) -> None:
         if self.case.case_number is None:
