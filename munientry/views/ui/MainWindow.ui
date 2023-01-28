@@ -1181,7 +1181,7 @@ font-weight: bold;</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_21">
               <item row="0" column="0">
-               <widget class="QPushButton" name="CivilFreeformEntryButton">
+               <widget class="QPushButton" name="CivFreeformEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
