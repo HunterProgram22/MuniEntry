@@ -6,6 +6,9 @@ from munientry.builders.administrative import (
     driving_privileges_dialog,
     jury_payment_dialog,
 )
+from munientry.builders.civil import (
+    civ_freeform_dialog,
+)
 from munientry.builders.crimtraffic import (
     arraignment_continue_dialog,
     bond_hearing_dialog,
@@ -108,6 +111,9 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: freeform_dialog.FreeformDialog,
+
+            self.main_window.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
+
             self.main_window.hemmeter_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
             self.main_window.rohrer_schedulingEntryButton:
@@ -133,6 +139,7 @@ class MainWindowViewModifier(object):
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
             self.main_window.pretrial_workflowButton: probation.PretrialWorkflowDialog,
             self.main_window.community_control_workflowButton: probation.ComControlWorkflowDialog,
+
         }
 
     def create_daily_case_lists(self) -> None:

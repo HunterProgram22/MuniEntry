@@ -98,7 +98,7 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
     def query_case_info(self):
-        """TODO UPDATE Queries the SQL Server database (AuthorityCourtDBO) and retreives case info."""
+        """Queries a SQL Server database (AuthorityCourtDBO or AuthorityCivilDBO) and retreives case info."""
 
         if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
             case_number = self.case_search_box.text()
