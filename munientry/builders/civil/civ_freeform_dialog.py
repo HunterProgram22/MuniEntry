@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.civil import base_civil_builders as civil
-from munientry.checkers.base_checks import CiviFreeformDialogInfoChecker
+from munientry.checkers.base_checks import CivilFreeformDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CivCmsLoader
 from munientry.models.case_information.civil_case_information import CivFreeformEntryCaseInformation
 from munientry.updaters.civil_updaters import CivFreeformDialogUpdater
@@ -26,7 +26,7 @@ class CivFreeformDialog(civil.CivilDialogBuilder, Ui_CivFreeformDialog):
 
     _case_information_model = CivFreeformEntryCaseInformation
     _case_loader = CivCmsLoader
-    _info_checker = CiviFreeformDialogInfoChecker
+    _info_checker = CivilFreeformDialogInfoChecker
     _model_updater = CivFreeformDialogUpdater
     _signal_connector = CivFreeformDialogSignalConnector
     _slots = CivFreeformDialogSlotFunctions

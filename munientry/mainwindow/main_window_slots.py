@@ -97,6 +97,11 @@ class MainWindowSlotFunctionsMixin(object):
         logger.info(f'Current stackedWidget is {current_stacked_widget}')
         logger.info(f'Current tabWidget is {current_tab_widget}')
 
+    def set_entries_tab(self) -> None:
+        logger.action('Search Tab Changed')
+        if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
+            self.tabWidget.setCurrentWidget(self.civil_Tab)
+
     def query_case_info(self):
         """Queries a SQL Server database (AuthorityCourtDBO or AuthorityCivilDBO) and retreives case info."""
 
