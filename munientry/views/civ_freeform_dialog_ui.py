@@ -157,7 +157,7 @@ class Ui_CivFreeformDialog(object):
         self.appearance_reason_box.addItem("")
         self.appearance_reason_box.addItem("")
         self.gridLayout.addWidget(self.appearance_reason_box, 3, 1, 1, 2)
-        self.gridLayout.setColumnStretch(0, 1)
+        self.gridLayout.setColumnStretch(1, 1)
         self.gridLayout_2.addWidget(self.case_name_Frame, 0, 0, 1, 2)
         self.frame_8 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.frame_8.setStyleSheet("background-color: rgb(220, 244, 255);")

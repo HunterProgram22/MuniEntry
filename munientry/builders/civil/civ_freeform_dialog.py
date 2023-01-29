@@ -45,6 +45,27 @@ class CivFreeformDialog(base.BaseDialogBuilder, Ui_CivFreeformDialog):
     _view_modifier = CivFreeformDialogViewModifier
     dialog_name = 'Civil Freeform Entry Dialog'
 
+    def __init__(self, judicial_officer, cms_case=None, parent=None) -> None:
+        super().__init__(parent)
+        # self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.judicial_officer = judicial_officer
+        self.cms_case = cms_case
+        loaded_case = cms_case.case_number
+        logger.info(f'Loaded Case {loaded_case}')
+        self.load_entry_case_information_model()
+        self.entry_case_information.judicial_officer = self.judicial_officer
+        self.load_cms_data_to_view()
+        try:
+            self.defense_counsel_name_box.load_attorneys()
+        except AttributeError as error:
+            logger.warning(error)
+        # self.popup_dialog = None
+        self.additional_setup()
+
+    def additional_setup(self):
+        """Abstract base method used in subclasses for additional setup after init."""
+
+
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

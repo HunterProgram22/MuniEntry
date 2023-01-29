@@ -19,10 +19,17 @@ class CivCmsLoader(object):
     def load_cms_data(self) -> None:
         """Loads the case management system data to the dialog."""
         self.set_case_number()
+        self.set_plaintiff_name()
         self.set_defendant_name()
 
     def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+
+    def set_plaintiff_name(self) -> None:
+        self.dialog.plaintiff_lineEdit.setText(self.cms_case.primary_plaintiff.party_name)
+
+    def set_defendant_name(self) -> None:
+        self.dialog.defendant_lineEdit.setText(self.cms_case.primary_defendant.party_name)
 
 
 class CmsLoader(object):

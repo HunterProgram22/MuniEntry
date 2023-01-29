@@ -122,18 +122,6 @@ class AdminFiscalDialogLoader(DialogLoader):
         return self.button_dict.get(self.mainwindow.sender())(judicial_officer)
 
 
-class CivilDialogLoader(DialogLoader):
-    """Loader calss for Civil Entry Dialogs."""
-
-    def load_dialog(self):
-        super().load_dialog()
-        return self._load_civil_dialog_process()
-
-    def _load_civil_dialog_process(self):
-        judicial_officer = self.mainwindow.judicial_officer
-        return self.button_dict.get(self.mainwindow.sender())(judicial_officer)
-
-
 class DigitalWorkflowDialogLoader(DialogLoader):
     """Loader class for Judge and Magistrate Digital Workflow Dialogs."""
 

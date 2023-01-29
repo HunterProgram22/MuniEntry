@@ -1,4 +1,5 @@
 """Module for starting dialogs when the dialog button is pressed (released)."""
+import munientry.loaders.civil_dialog_loader
 from munientry.builders.administrative.admin_fiscal_dialog import AdminFiscalDialog
 from munientry.builders.administrative.driving_privileges_dialog import (
     DrivingPrivilegesDialog,
@@ -54,5 +55,5 @@ def start_dialog(sender, mainwindow):
         mainwindow.dialog = loader.DigitalWorkflowDialogLoader(mainwindow).dialog
         mainwindow.dialog.exec()
     elif issubclass(sender, CivFreeformDialog):
-        mainwindow.dialog = loader.DigitalWorkflowDialogLoader(mainwindow).dialog
+        mainwindow.dialog = munientry.loaders.civil_dialog_loader.CivilDialogLoader(mainwindow).dialog
         mainwindow.dialog.exec()
