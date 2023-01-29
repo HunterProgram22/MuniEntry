@@ -19,10 +19,10 @@ class CivCaseInformationUpdater(BaseDialogUpdater):
         self.update_defendant()
 
     def update_plaintiff(self) -> None:
-        self.model.plaintiff = self.dialog.plaintiff_lineEdit.text()
+        self.model.plaintiff.party_name = self.dialog.plaintiff_lineEdit.text()
 
     def update_defendant(self) -> None:
-        self.model.defendant= self.dialog.defendant_lineEdit.text()
+        self.model.defendant.party_name = self.dialog.defendant_lineEdit.text()
 
 
 class CivFreeformDialogUpdater(BaseDialogUpdater):

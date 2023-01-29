@@ -311,5 +311,15 @@ class FreeformDialogInfoChecker(DefenseCounselChecker):
         self.check_status = self.perform_check_list()
 
 
+class CiviFreeformDialogInfoChecker(BaseChecker):
+    """Class with all checks for Civil Freeform Entry Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.dialog_check_list = [
+        ]
+        self.check_status = self.perform_check_list()
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

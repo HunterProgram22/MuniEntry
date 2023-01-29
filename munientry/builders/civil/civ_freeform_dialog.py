@@ -1,7 +1,9 @@
 """Builder module for the Civil Freeform Entry Dialog."""
 from loguru import logger
 
+from munientry.models.template_types import TEMPLATE_DICT
 from munientry.builders import base_builders as base
+from munientry.checkers.base_checks import CiviFreeformDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CivCmsLoader
 from munientry.models.case_information.civil_case_information import CivFreeformEntryCaseInformation
 from munientry.updaters.civil_updaters import CivFreeformDialogUpdater
@@ -39,6 +41,7 @@ class CivFreeformDialog(base.BaseDialogBuilder, Ui_CivFreeformDialog):
 
     _case_information_model = CivFreeformEntryCaseInformation
     _case_loader = CivCmsLoader
+    _info_checker = CiviFreeformDialogInfoChecker
     _model_updater = CivFreeformDialogUpdater
     _signal_connector = CivFreeformDialogSignalConnector
     _slots = CivFreeformDialogSlotFunctions
@@ -47,7 +50,7 @@ class CivFreeformDialog(base.BaseDialogBuilder, Ui_CivFreeformDialog):
 
     def __init__(self, judicial_officer, cms_case=None, parent=None) -> None:
         super().__init__(parent)
-        # self.template = TEMPLATE_DICT.get(self.dialog_name)
+        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         loaded_case = cms_case.case_number
