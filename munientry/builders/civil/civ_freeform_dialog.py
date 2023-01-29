@@ -2,10 +2,9 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
-# from munientry.checkers.base_checks import FreeformDialogInfoChecker
-# from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
-# from munientry.models.case_information.plea_entries import FreeformEntryCaseInformation
-# from munientry.updaters.no_grid_case_updaters import FreeformDialogUpdater
+from munientry.loaders.cms_case_loaders import CivCmsLoader
+from munientry.models.case_information.civil_case_information import CivFreeformEntryCaseInformation
+from munientry.updaters.civil_updaters import CivFreeformDialogUpdater
 from munientry.views.civ_freeform_dialog_ui import Ui_CivFreeformDialog
 
 
@@ -38,10 +37,9 @@ class CivFreeformDialogSignalConnector(base.BaseDialogSignalConnector):
 class CivFreeformDialog(base.BaseDialogBuilder, Ui_CivFreeformDialog):
     """Dialog builder class for Civil Freeform Entry."""
 
-    # _case_information_model = FreeformEntryCaseInformation
-    # _case_loader = CmsNoChargeLoader
-    # _info_checker = FreeformDialogInfoChecker
-    # _model_updater = FreeformDialogUpdater
+    _case_information_model = CivFreeformEntryCaseInformation
+    _case_loader = CivCmsLoader
+    _model_updater = CivFreeformDialogUpdater
     _signal_connector = CivFreeformDialogSignalConnector
     _slots = CivFreeformDialogSlotFunctions
     _view_modifier = CivFreeformDialogViewModifier

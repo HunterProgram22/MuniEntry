@@ -4,6 +4,27 @@ from loguru import logger
 from munientry.models.criminal_charge_models import CriminalCharge
 
 
+class CivCmsLoader(object):
+    """Base loader class for civil cases.
+
+    TODO: Refactor common methods from CmsLoader and create Civil and Criminal subclasses.
+    """
+
+    def __init__(self, dialog) -> None:
+        self.dialog = dialog
+        self.cms_case = dialog.cms_case
+        if self.cms_case.case_number is not None:
+            self.load_cms_data()
+
+    def load_cms_data(self) -> None:
+        """Loads the case management system data to the dialog."""
+        self.set_case_number()
+        self.set_defendant_name()
+
+    def set_case_number(self) -> None:
+        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+
+
 class CmsLoader(object):
     """Base loader class for loading data from an external case management system."""
 
