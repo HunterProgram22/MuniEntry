@@ -81,6 +81,7 @@ class BaseDialogSlotFunctions(object):
         self.dialog = dialog
 
     def clear_case_information_fields(self):
+        """TODO: Refactor to criminal base because label names for defendant specific to criminal"""
         self.dialog.defendant_first_name_lineEdit.clear()
         self.dialog.defendant_last_name_lineEdit.clear()
         self.dialog.case_number_lineEdit.clear()

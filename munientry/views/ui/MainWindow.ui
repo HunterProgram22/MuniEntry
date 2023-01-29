@@ -1181,7 +1181,7 @@ font-weight: bold;</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_21">
               <item row="0" column="0">
-               <widget class="QPushButton" name="CivilFreeFormEntryButton">
+               <widget class="QPushButton" name="CivFreeformEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1908,28 +1908,28 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>case_search_box</tabstop>
-  <tabstop>get_case_Button</tabstop>
-  <tabstop>show_docket_Button</tabstop>
-  <tabstop>FineOnlyPleaButton</tabstop>
-  <tabstop>JailCCPleaButton</tabstop>
-  <tabstop>DiversionButton</tabstop>
-  <tabstop>LeapAdmissionButton</tabstop>
-  <tabstop>LeapAdmissionValidButton</tabstop>
-  <tabstop>LeapSentencingButton</tabstop>
-  <tabstop>NotGuiltyBondButton</tabstop>
-  <tabstop>PleaOnlyButton</tabstop>
-  <tabstop>TrialSentencingButton</tabstop>
-  <tabstop>SentencingOnlyButton</tabstop>
   <tabstop>NoPleaBondButton</tabstop>
+  <tabstop>JailCCPleaButton</tabstop>
+  <tabstop>NotGuiltyBondButton</tabstop>
   <tabstop>BondHearingButton</tabstop>
+  <tabstop>PleaOnlyButton</tabstop>
+  <tabstop>DiversionButton</tabstop>
   <tabstop>ProbationViolationBondButton</tabstop>
   <tabstop>FailureToAppearButton</tabstop>
+  <tabstop>LeapAdmissionButton</tabstop>
+  <tabstop>TrialSentencingButton</tabstop>
+  <tabstop>SentencingOnlyButton</tabstop>
   <tabstop>FreeformEntryButton</tabstop>
-  <tabstop>ArraignmentContinueButton</tabstop>
-  <tabstop>civil_case_search_box</tabstop>
-  <tabstop>civil_get_case_Button</tabstop>
-  <tabstop>show_docket_Button_3</tabstop>
+  <tabstop>LeapSentencingButton</tabstop>
+  <tabstop>LeapAdmissionValidButton</tabstop>
+  <tabstop>rohrer_general_hearingButton</tabstop>
+  <tabstop>hemmeter_schedulingEntryButton</tabstop>
+  <tabstop>rohrer_schedulingEntryButton</tabstop>
+  <tabstop>hemmeter_final_jury_hearingButton</tabstop>
+  <tabstop>rohrer_final_jury_hearingButton</tabstop>
+  <tabstop>random_judge_Button</tabstop>
+  <tabstop>rohrer_trial_court_hearingButton</tabstop>
+  <tabstop>hemmeter_trial_court_hearingButton</tabstop>
   <tabstop>hemmeter_general_hearingButton</tabstop>
   <tabstop>pelanda_radioButton</tabstop>
   <tabstop>hemmeter_radioButton</tabstop>
@@ -1953,35 +1953,8 @@ font-weight: bold;</string>
   <tabstop>arraignments_radioButton</tabstop>
   <tabstop>slated_cases_box</tabstop>
   <tabstop>arraignments_cases_box</tabstop>
-  <tabstop>rohrer_general_hearingButton</tabstop>
+  <tabstop>FineOnlyPleaButton</tabstop>
   <tabstop>tabWidget</tabstop>
-  <tabstop>main_TabWidget</tabstop>
-  <tabstop>search_tabWidget</tabstop>
-  <tabstop>show_docket_case_list_Button</tabstop>
-  <tabstop>hemmeter_schedulingEntryButton</tabstop>
-  <tabstop>rohrer_schedulingEntryButton</tabstop>
-  <tabstop>hemmeter_final_jury_hearingButton</tabstop>
-  <tabstop>random_judge_Button</tabstop>
-  <tabstop>rohrer_trial_court_hearingButton</tabstop>
-  <tabstop>hemmeter_trial_court_hearingButton</tabstop>
-  <tabstop>rohrer_final_jury_hearingButton</tabstop>
-  <tabstop>limited_driving_privilegesButton</tabstop>
-  <tabstop>fiscal_entriesButton</tabstop>
-  <tabstop>juror_paymentButton</tabstop>
-  <tabstop>CivilFreeFormEntryButton</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>jury_comm_patterson_radioButton</tabstop>
-  <tabstop>assn_comm_patterson_radioButton</tabstop>
-  <tabstop>assn_comm_dattilo_radioButton</tabstop>
-  <tabstop>court_admin_kudela_radioButton</tabstop>
-  <tabstop>bunner_admin_radioButton</tabstop>
-  <tabstop>none_admin_radioButton</tabstop>
-  <tabstop>workflows_person_tab</tabstop>
-  <tabstop>pretrial_workflowButton</tabstop>
-  <tabstop>community_control_workflowButton</tabstop>
-  <tabstop>hemmeter_workflowButton</tabstop>
-  <tabstop>rohrer_workflowButton</tabstop>
-  <tabstop>bunner_workflowButton</tabstop>
  </tabstops>
  <resources/>
  <connections>
