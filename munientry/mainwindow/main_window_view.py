@@ -45,138 +45,138 @@ from munientry.appsettings.settings import VERSION_NUMBER
 class MainWindowViewModifier(object):
     """Class that modifies the view file."""
 
-    def __init__(self, main_window: object) -> None:
-        self.main_window = main_window
-        self.main_window.setupUi(self.main_window)
+    def __init__(self, mainwindow: object) -> None:
+        self.mainwindow = mainwindow
+        self.mainwindow.setupUi(self.mainwindow)
         self.create_daily_case_lists()
-        self.main_window.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
-        self.main_window.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
-        self.main_window.judicial_officer_buttons_dict = self.connect_judicial_officers()
-        self.main_window.dialog_buttons_dict = self.connect_dialog_buttons()
-        self.main_window.daily_case_lists = [
-            self.main_window.arraignments_cases_box,
-            self.main_window.slated_cases_box,
-            self.main_window.pleas_cases_box,
-            self.main_window.pcvh_fcvh_cases_box,
-            self.main_window.final_pretrial_cases_box,
-            self.main_window.trials_to_court_cases_box,
+        self.mainwindow.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.mainwindow.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
+        self.mainwindow.judicial_officer_buttons_dict = self.connect_judicial_officers()
+        self.mainwindow.dialog_buttons_dict = self.connect_dialog_buttons()
+        self.mainwindow.daily_case_lists = [
+            self.mainwindow.arraignments_cases_box,
+            self.mainwindow.slated_cases_box,
+            self.mainwindow.pleas_cases_box,
+            self.mainwindow.pcvh_fcvh_cases_box,
+            self.mainwindow.final_pretrial_cases_box,
+            self.mainwindow.trials_to_court_cases_box,
         ]
 
     def connect_judicial_officers(self) -> dict:
         return {
-            self.main_window.bunner_radioButton: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
-            self.main_window.pelanda_radioButton: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
-            self.main_window.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
-            self.main_window.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
-            self.main_window.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
-            self.main_window.visiting_judge_radioButton:
+            self.mainwindow.bunner_radioButton: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
+            self.mainwindow.pelanda_radioButton: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
+            self.mainwindow.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
+            self.mainwindow.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
+            self.mainwindow.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
+            self.mainwindow.visiting_judge_radioButton:
                 JudicialOfficer('None', 'Assigned', 'Judge'),
-            self.main_window.dattilo_radioButton:
+            self.mainwindow.dattilo_radioButton:
                 JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.main_window.patterson_radioButton:
+            self.mainwindow.patterson_radioButton:
                 JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.main_window.none_radioButton:
+            self.mainwindow.none_radioButton:
                 JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
-            self.main_window.assn_comm_dattilo_radioButton:
+            self.mainwindow.assn_comm_dattilo_radioButton:
                 JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.main_window.assn_comm_patterson_radioButton:
+            self.mainwindow.assn_comm_patterson_radioButton:
                 JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.main_window.court_admin_kudela_radioButton:
+            self.mainwindow.court_admin_kudela_radioButton:
                 JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
-            self.main_window.jury_comm_patterson_radioButton:
+            self.mainwindow.jury_comm_patterson_radioButton:
                 JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
-            self.main_window.none_admin_radioButton:
+            self.mainwindow.none_admin_radioButton:
                 JudicialOfficer('None', 'Assigned', 'Admin Staff Person'),
-            self.main_window.bunner_admin_radioButton:
+            self.mainwindow.bunner_admin_radioButton:
                 JudicialOfficer('A', 'B', 'Admin Staff Person'),
         }
 
     def connect_dialog_buttons(self):
         return {
             ###CrimTraffic###
-            self.main_window.ArraignmentContinueButton:
+            self.mainwindow.ArraignmentContinueButton:
                 arraignment_continue_dialog.ArraignmentContinueDialog,
-            self.main_window.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
-            self.main_window.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
-            self.main_window.DiversionButton: diversion_dialog.DiversionPleaDialog,
-            self.main_window.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
-            self.main_window.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,
-            self.main_window.ProbationViolationBondButton:
+            self.mainwindow.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
+            self.mainwindow.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
+            self.mainwindow.DiversionButton: diversion_dialog.DiversionPleaDialog,
+            self.mainwindow.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
+            self.mainwindow.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,
+            self.mainwindow.ProbationViolationBondButton:
                 probation_violation_bond_dialog.ProbationViolationBondDialog,
-            self.main_window.BondHearingButton: bond_hearing_dialog.BondHearingDialog,
-            self.main_window.PleaOnlyButton: plea_only_future_sentence_dialog.PleaOnlyDialog,
-            self.main_window.NoPleaBondButton: no_plea_bond_dialog.NoPleaBondDialog,
-            self.main_window.LeapAdmissionButton: leap_plea_dialog.LeapAdmissionPleaDialog,
-            self.main_window.LeapAdmissionValidButton: leap_plea_valid_dialog.LeapPleaValidDialog,
-            self.main_window.LeapSentencingButton: leap_sentencing_dialog.LeapSentencingDialog,
-            self.main_window.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
-            self.main_window.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
-            self.main_window.FreeformEntryButton: freeform_dialog.FreeformDialog,
+            self.mainwindow.BondHearingButton: bond_hearing_dialog.BondHearingDialog,
+            self.mainwindow.PleaOnlyButton: plea_only_future_sentence_dialog.PleaOnlyDialog,
+            self.mainwindow.NoPleaBondButton: no_plea_bond_dialog.NoPleaBondDialog,
+            self.mainwindow.LeapAdmissionButton: leap_plea_dialog.LeapAdmissionPleaDialog,
+            self.mainwindow.LeapAdmissionValidButton: leap_plea_valid_dialog.LeapPleaValidDialog,
+            self.mainwindow.LeapSentencingButton: leap_sentencing_dialog.LeapSentencingDialog,
+            self.mainwindow.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
+            self.mainwindow.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
+            self.mainwindow.FreeformEntryButton: freeform_dialog.FreeformDialog,
 
             ###Civil###
-            self.main_window.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
+            self.mainwindow.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
 
             ###Scheduling###
-            self.main_window.hemmeter_schedulingEntryButton:
+            self.mainwindow.hemmeter_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
-            self.main_window.rohrer_schedulingEntryButton:
+            self.mainwindow.rohrer_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
-            self.main_window.hemmeter_final_jury_hearingButton:
+            self.mainwindow.hemmeter_final_jury_hearingButton:
                 final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
-            self.main_window.rohrer_final_jury_hearingButton:
+            self.mainwindow.rohrer_final_jury_hearingButton:
                 final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
-            self.main_window.hemmeter_general_hearingButton:
+            self.mainwindow.hemmeter_general_hearingButton:
                 general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
-            self.main_window.rohrer_general_hearingButton:
+            self.mainwindow.rohrer_general_hearingButton:
                 general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
-            self.main_window.hemmeter_trial_court_hearingButton:
+            self.mainwindow.hemmeter_trial_court_hearingButton:
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
-            self.main_window.rohrer_trial_court_hearingButton:
+            self.mainwindow.rohrer_trial_court_hearingButton:
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
 
             ###Admin###
-            self.main_window.limited_driving_privilegesButton:
+            self.mainwindow.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
-            self.main_window.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
-            self.main_window.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
+            self.mainwindow.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
+            self.mainwindow.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
 
             ###Workflow###
-            self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
-            self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
-            self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.main_window.pretrial_workflowButton: probation.PretrialWorkflowDialog,
-            self.main_window.community_control_workflowButton: probation.ComControlWorkflowDialog,
+            self.mainwindow.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
+            self.mainwindow.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
+            self.mainwindow.bunner_workflowButton: bunner.BunnerWorkflowDialog,
+            self.mainwindow.pretrial_workflowButton: probation.PretrialWorkflowDialog,
+            self.mainwindow.community_control_workflowButton: probation.ComControlWorkflowDialog,
 
         }
 
     def create_daily_case_lists(self) -> None:
-        self.main_window.arraignments_cases_box.setup_combo_box(
+        self.mainwindow.arraignments_cases_box.setup_combo_box(
             'arraignments',
-            self.main_window.arraignments_radioButton,
-            self.main_window,
+            self.mainwindow.arraignments_radioButton,
+            self.mainwindow,
         )
-        self.main_window.slated_cases_box.setup_combo_box(
+        self.mainwindow.slated_cases_box.setup_combo_box(
             'slated',
-            self.main_window.slated_radioButton,
-            self.main_window,
+            self.mainwindow.slated_radioButton,
+            self.mainwindow,
         )
-        self.main_window.final_pretrial_cases_box.setup_combo_box(
+        self.mainwindow.final_pretrial_cases_box.setup_combo_box(
             'final_pretrials',
-            self.main_window.final_pretrial_radioButton,
-            self.main_window,
+            self.mainwindow.final_pretrial_radioButton,
+            self.mainwindow,
         )
-        self.main_window.pleas_cases_box.setup_combo_box(
+        self.mainwindow.pleas_cases_box.setup_combo_box(
             'pleas',
-            self.main_window.pleas_radioButton,
-            self.main_window,
+            self.mainwindow.pleas_radioButton,
+            self.mainwindow,
         )
-        self.main_window.trials_to_court_cases_box.setup_combo_box(
+        self.mainwindow.trials_to_court_cases_box.setup_combo_box(
             'trials_to_court',
-            self.main_window.trials_to_court_radioButton,
-            self.main_window,
+            self.mainwindow.trials_to_court_radioButton,
+            self.mainwindow,
         )
-        self.main_window.pcvh_fcvh_cases_box.setup_combo_box(
+        self.mainwindow.pcvh_fcvh_cases_box.setup_combo_box(
             'pcvh_fcvh',
-            self.main_window.pcvh_fcvh_radioButton,
-            self.main_window,
+            self.mainwindow.pcvh_fcvh_radioButton,
+            self.mainwindow,
         )
