@@ -4,6 +4,7 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.widgets.message_boxes import InfoBox
+from munientry.entrycreators.entry_creator import CivilEntryCreator
 
 
 class CivilDialogBuilder(base.BaseDialogBuilder):
@@ -30,6 +31,9 @@ class CivilViewModifier(base.BaseDialogViewModifier):
 
 
 class CivilSlotFunctions(base.BaseDialogSlotFunctions):
+
+    def create_entry_process(self) -> None:
+        CivilEntryCreator(self.dialog).create_entry_process()
 
     def clear_case_information_fields(self):
         """Overrides base method because different label names used.
