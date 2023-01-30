@@ -36,7 +36,7 @@ class BaseEntryCreator(object):
     def create_entry(self) -> None:
         """Loads the proper template and creates the entry.
 
-        Uses the default SAVE_PATH from settings.py.
+        Uses the default SAVE_PATH from settings_menu.py.
 
         This is overridden in the create_entry method in subpackages (Administrative, CrimTraffic,
         etc.) with the specific path for saving those entry types.

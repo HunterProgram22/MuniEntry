@@ -1,4 +1,4 @@
-"""Module for open menu processes."""
+"""Module for open mainmenu processes."""
 import types
 from os import startfile
 
