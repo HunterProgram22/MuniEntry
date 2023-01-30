@@ -9,7 +9,7 @@ from munientry.mainmenu.open_menu import open_entries_folder
 from munientry.mainmenu.settings_menu import open_workflow_settings
 
 
-class MainWindowMenu(object):
+class MainMenu(object):
     """Class for setting up the mainmenu for the Main Window."""
 
     def __init__(self, mainwindow):

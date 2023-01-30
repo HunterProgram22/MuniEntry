@@ -6,7 +6,7 @@ from munientry.appsettings.user_settings import load_user_settings
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.mainwindow import main_window_signalconnector, main_window_view
 from munientry.mainwindow.main_window_slots import MainWindowSlotFunctionsMixin
-from munientry.mainmenu.menu import MainWindowMenu
+from munientry.mainmenu.menu import MainMenu
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.models.party_types import JudicialOfficer
 from munientry.views.main_window_ui import Ui_MainWindow
@@ -20,7 +20,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
         self.connect_signals_to_slots()
-        self.menu = MainWindowMenu(self)
+        self.menu = MainMenu(self)
         self.load_case_lists()
         self.show_hide_daily_case_lists()
         self.judicial_officer = None
