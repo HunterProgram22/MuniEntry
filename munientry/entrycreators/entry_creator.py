@@ -10,6 +10,7 @@ from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
 from munientry.appsettings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
+    CIVIL_SAVE_PATH,
     DEFAULT_SAVE_PATH,
     DRIVE_SAVE_PATH,
     FISCAL_SAVE_PATH,
@@ -187,6 +188,12 @@ class DrivingPrivilegesEntryCreator(BaseEntryCreator):
         last_name = self.dialog.entry_case_information.defendant.last_name
         template_name = self.dialog.template.template_name
         return f'{first_name}_{last_name}_{template_name}.docx'
+
+
+class CivilEntryCreator(BaseEntryCreator):
+    """Entry Creator for Civil entries."""
+
+    save_path = CIVIL_SAVE_PATH
 
 
 class AdminFiscalEntryCreator(BaseEntryCreator):

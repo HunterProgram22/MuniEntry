@@ -249,7 +249,7 @@ font-weight: bold;</string>
             <bool>true</bool>
            </property>
            <attribute name="title">
-            <string>Case Search</string>
+            <string>Crim/Traffic Case Search</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_12" columnstretch="1,3,2">
             <item row="5" column="0" colspan="3">
@@ -290,7 +290,7 @@ font-weight: bold;</string>
                <number>1</number>
               </property>
               <property name="text">
-               <string>CASE SEARCH</string>
+               <string>CRIMINAL AND TRAFFIC CASE SEARCH</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -381,6 +381,133 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="civil_case_search_tab">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(220, 244, 255);</string>
+           </property>
+           <attribute name="title">
+            <string>Civil Case Search</string>
+           </attribute>
+           <layout class="QGridLayout" name="gridLayout_29" columnstretch="1,3,2">
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_28">
+              <property name="text">
+               <string>Case Type:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="1" colspan="2">
+             <widget class="QLabel" name="civil_case_type_field">
+              <property name="text">
+               <string>None</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="3">
+             <widget class="QLabel" name="label_31">
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>120</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+                <underline>true</underline>
+               </font>
+              </property>
+              <property name="lineWidth">
+               <number>2</number>
+              </property>
+              <property name="midLineWidth">
+               <number>1</number>
+              </property>
+              <property name="text">
+               <string>CIVIL CASE SEARCH</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_30">
+              <property name="text">
+               <string>Case Number Search:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLineEdit" name="civil_case_search_box">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QPushButton" name="civil_get_case_Button">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(160, 160, 160);</string>
+              </property>
+              <property name="text">
+               <string>Get Case</string>
+              </property>
+              <property name="autoDefault">
+               <bool>true</bool>
+              </property>
+              <property name="default">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_29">
+              <property name="text">
+               <string>Case Number:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0" colspan="3">
+             <widget class="Line" name="line_5">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1" colspan="2">
+             <widget class="QLabel" name="civil_case_number_field">
+              <property name="text">
+               <string>None</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" colspan="2">
+             <widget class="QLabel" name="civil_case_name_field">
+              <property name="text">
+               <string>None</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_27">
+              <property name="text">
+               <string>Case Name:</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item row="3" column="0">
@@ -414,7 +541,7 @@ font-weight: bold;</string>
           <item row="1" column="0">
            <widget class="QTabWidget" name="tabWidget">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(208, 208, 208);</string>
+             <string notr="true">background-color: rgb(218, 218, 218);</string>
             </property>
             <property name="currentIndex">
              <number>0</number>
@@ -1035,6 +1162,42 @@ font-weight: bold;</string>
               </item>
              </layout>
             </widget>
+            <widget class="QWidget" name="civil_Tab">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(220, 244, 255);</string>
+             </property>
+             <attribute name="title">
+              <string>Civil</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_21">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="CivFreeformEntryButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(160, 160, 160);</string>
+                </property>
+                <property name="text">
+                 <string>Freeform Entry</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="pushButton">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(160, 160, 160);</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
           </item>
          </layout>
@@ -1572,11 +1735,27 @@ font-weight: bold;</string>
     <property name="title">
      <string>Reports</string>
     </property>
-    <addaction name="actionArraignments"/>
-    <addaction name="actionFinal_Pretrials"/>
-    <addaction name="actionJury_Trials"/>
-    <addaction name="actionPleas"/>
-    <addaction name="actionTrials_To_Court"/>
+    <widget class="QMenu" name="menuAuthorityCourt">
+     <property name="title">
+      <string>AuthorityCourt Reports</string>
+     </property>
+     <addaction name="actionArraignments"/>
+     <addaction name="actionFinal_Pretrials"/>
+     <addaction name="actionJury_Trials"/>
+     <addaction name="actionPleas"/>
+     <addaction name="actionTrials_To_Court"/>
+    </widget>
+    <widget class="QMenu" name="menuMuniEntry_Reports">
+     <property name="title">
+      <string>MuniEntry Reports</string>
+     </property>
+     <addaction name="actionCourtroom_A"/>
+     <addaction name="actionCourtroom_B"/>
+     <addaction name="actionCourtroom_C"/>
+    </widget>
+    <addaction name="menuAuthorityCourt"/>
+    <addaction name="separator"/>
+    <addaction name="menuMuniEntry_Reports"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1693,6 +1872,21 @@ font-weight: bold;</string>
   <action name="actionJury_Trials">
    <property name="text">
     <string>Jury Trials</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_A">
+   <property name="text">
+    <string>Courtroom A</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_B">
+   <property name="text">
+    <string>Courtroom B</string>
+   </property>
+  </action>
+  <action name="actionCourtroom_C">
+   <property name="text">
+    <string>Courtroom C</string>
    </property>
   </action>
  </widget>

@@ -140,6 +140,10 @@ Trial_To_Court_Hearing_Notice_Template = Template(
     'Trial_To_Court_Hearing_Notice_Template.docx',
 )
 
+Civil_Freeform_Entry_Template = Template(
+    'Civil Freeform Entry',
+    'Civil_Freeform_Entry_Template.docx',
+)
 
 TEMPLATE_DICT = types.MappingProxyType({
     'Fine Only Plea Dialog': Fine_Only_Plea_Final_Judgment_Template,
@@ -169,6 +173,8 @@ TEMPLATE_DICT = types.MappingProxyType({
 
     'Admin Fiscal Entry': Admin_Fiscal_Template,
     'Jury Payment Entry': Jury_Payment_Template,
+
+    'Civil Freeform Entry Dialog': Civil_Freeform_Entry_Template,
 })
 
 

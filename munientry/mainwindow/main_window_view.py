@@ -6,6 +6,9 @@ from munientry.builders.administrative import (
     driving_privileges_dialog,
     jury_payment_dialog,
 )
+from munientry.builders.civil import (
+    civ_freeform_dialog,
+)
 from munientry.builders.crimtraffic import (
     arraignment_continue_dialog,
     bond_hearing_dialog,
@@ -90,6 +93,7 @@ class MainWindowViewModifier(object):
 
     def connect_dialog_buttons(self):
         return {
+            ###CrimTraffic###
             self.main_window.ArraignmentContinueButton:
                 arraignment_continue_dialog.ArraignmentContinueDialog,
             self.main_window.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
@@ -108,6 +112,11 @@ class MainWindowViewModifier(object):
             self.main_window.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
             self.main_window.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
             self.main_window.FreeformEntryButton: freeform_dialog.FreeformDialog,
+
+            ###Civil###
+            self.main_window.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
+
+            ###Scheduling###
             self.main_window.hemmeter_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
             self.main_window.rohrer_schedulingEntryButton:
@@ -124,15 +133,20 @@ class MainWindowViewModifier(object):
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
             self.main_window.rohrer_trial_court_hearingButton:
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
+
+            ###Admin###
             self.main_window.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
             self.main_window.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
             self.main_window.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
+
+            ###Workflow###
             self.main_window.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
             self.main_window.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.main_window.bunner_workflowButton: bunner.BunnerWorkflowDialog,
             self.main_window.pretrial_workflowButton: probation.PretrialWorkflowDialog,
             self.main_window.community_control_workflowButton: probation.ComControlWorkflowDialog,
+
         }
 
     def create_daily_case_lists(self) -> None:

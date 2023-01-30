@@ -1,4 +1,4 @@
-"""Base module that contains the base dialog updater and base TypeVar for mypy checks."""
+"""Base module that contains the base dialog updater."""
 from loguru import logger
 
 

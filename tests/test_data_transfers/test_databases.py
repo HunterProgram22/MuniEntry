@@ -17,7 +17,7 @@ from munientry.sqllite.sql_lite_functions import (
     query_daily_case_list_data,
     query_offense_statute_data,
 )
-from munientry.sqlserver.sql_server_getters import CriminalCaseSQLServer
+from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
 from munientry.appsettings.paths import DB_PATH
 
 MUNIENTRY_DB = 'con_munientry_db'
@@ -29,13 +29,13 @@ TOTAL_STATUTES = 46
 @pytest.fixture(name='crim_sql_retriever')
 def crim_sql_retriever_setup():
     """Fixture that returns criminal case loaded from Sqllite."""
-    return CriminalCaseSQLServer('22TRC01734')
+    return CriminalCaseSqlServer('22TRC01734')
 
 
 @pytest.fixture(name='crim_sql_special_character')
 def crim_sql_special_character_setup():
     """Fixture that returns criminal case with special character (') case loaded from Sqllite."""
-    return CriminalCaseSQLServer('22TRD01605')
+    return CriminalCaseSqlServer('22TRD01605')
 
 
 def test_load_criminal_case(crim_sql_retriever):
