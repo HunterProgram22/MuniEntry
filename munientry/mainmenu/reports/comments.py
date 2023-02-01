@@ -12,7 +12,7 @@ def get_comment_writer(event):
     elif event == 'Jury Trials':
         return JuryTrialComments()
     else:
-        return GeneralComments()
+        return GeneralComents()
 
 
 class ArraignmentComments(object):
