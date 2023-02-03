@@ -32,10 +32,14 @@ DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
 TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
+CRIM_TRAFFIC_DB_CONN = 'con_authority_court'
+CIVIL_DB_CONN = 'con_authority_civil'
+MUNIENTRY_DB_CONN = 'con_munientry_db'
+
 DATABASE_CONNECTION_WARNINGS = {
-    'con_authority_court': True,
-    'con_authority_civil': True,
-    'con_munientry_db': True,
+    CRIM_TRAFFIC_DB_CONN: True,
+    CIVIL_DB_CONN: True,
+    MUNIENTRY_DB_CONN: True,
 }
 
 def set_server_and_database(connection_name: str) -> tuple:
@@ -55,14 +59,14 @@ def set_server_and_database(connection_name: str) -> tuple:
             database (str): The name of the database.
 
     """
-    if connection_name == 'con_authority_court':
+    if connection_name == CRIM_TRAFFIC_DB_CONN:
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
             database = 'AuthorityCourt'
         else:
             server = r'CLERKCRTR\CMI'
             database = 'AuthorityCourt'
-    elif connection_name == 'con_authority_civil':
+    elif connection_name == CIVIL_DB_CONN:
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
             database = 'AuthorityCivil'
@@ -207,16 +211,16 @@ def establish_database_connections():
     """
     logger.database('Establishing database connections.')
 
-    create_odbc_db_connection('con_authority_court')
-    authority_court_db = open_db_connection('con_authority_court')
+    create_odbc_db_connection(CRIM_TRAFFIC_DB_CONN)
+    authority_court_db = open_db_connection(CRIM_TRAFFIC_DB_CONN)
     close_db_connection(authority_court_db)
 
-    create_odbc_db_connection('con_authority_civil')
-    authority_civil_db = open_db_connection('con_authority_civil')
+    create_odbc_db_connection(CIVIL_DB_CONN)
+    authority_civil_db = open_db_connection(CIVIL_DB_CONN)
     close_db_connection(authority_civil_db)
 
-    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', 'con_munientry_db')
-    munientry_db = open_db_connection('con_munientry_db')
+    create_sqlite_db_connection(f'{DB_PATH}{MUNIENTRY_DB}', MUNIENTRY_DB_CONN)
+    munientry_db = open_db_connection(MUNIENTRY_DB_CONN)
     close_db_connection(munientry_db)
 
 
