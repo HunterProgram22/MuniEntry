@@ -1,16 +1,16 @@
-"""Module connecting all functions for the mainwindow menu."""
+"""Module connecting all functions for the mainwindow mainmenu."""
 from functools import partial
 
-from munientry.menu.batch.batch import run_batch_fta_process
-from munientry.menu.logs.logs import open_current_log
-from munientry.menu.reports.authoritycourt_reports import run_event_type_report
-from munientry.menu.reports.munientry_reports import run_courtroom_report
-from munientry.menu.open.open import open_entries_folder
-from munientry.menu.settings.settings import open_workflow_settings
+from munientry.mainmenu.batch_menu import run_batch_fta_process
+from munientry.mainmenu.logs_menu import open_current_log
+from munientry.mainmenu.reports.authoritycourt_reports import run_event_type_report
+from munientry.mainmenu.reports.munientry_reports import run_courtroom_report
+from munientry.mainmenu.open_menu import open_entries_folder
+from munientry.mainmenu.settings_menu import open_workflow_settings
 
 
-class MainWindowMenu(object):
-    """Class for setting up the menu for the Main Window."""
+class MainMenu(object):
+    """Class for setting up the mainmenu for the Main Window."""
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow

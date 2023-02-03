@@ -1,4 +1,4 @@
-"""Module for settings menu processes."""
+"""Module for settings mainmenu processes."""
 from loguru import logger
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (
