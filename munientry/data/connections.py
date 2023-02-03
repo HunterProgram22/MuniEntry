@@ -58,14 +58,14 @@ def set_server_and_database(connection_name: str) -> tuple:
     if connection_name == 'con_authority_court':
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
-            database = 'AuthorityCourt2'
+            database = 'AuthorityCourt'
         else:
             server = r'CLERKCRTR\CMI'
             database = 'AuthorityCourt'
     elif connection_name == 'con_authority_civil':
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
-            database = 'AuthorityCivil2'
+            database = 'AuthorityCivil'
         else:
             server = r'CLERKSQL\CMI'
             database = 'AuthorityCivil'
