@@ -26,12 +26,17 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.appsettings.paths import DB_PATH, TEST_DELCITY_DB_PATH
-from munientry.widgets.message_boxes import InfoBox
+from munientry.widgets.message_boxes import InfoBox, TwoChoiceQuestionBox
 
 DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
 TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 
+DATABASE_CONNECTION_WARNINGS = {
+    'con_authority_court': True,
+    'con_authority_civil': True,
+    'con_munientry_db': True,
+}
 
 def set_server_and_database(connection_name: str) -> tuple:
     """Sets the server and database name for the SQL Server connections.
@@ -135,10 +140,35 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
         logger.database(f'{connection_name} database connection open.')
         return db_connection
     else:
-        logger.warning(f'Unable to connect to {connection_name} database')
-        message = f'A connection to the {connection_name} database could not be made.'
-        InfoBox(message, 'No Database Connection').exec()
-        return 'NO_Connection'
+        return no_db_connection_alert(connection_name)
+
+
+def no_db_connection_alert(connection_name: str) -> str:
+    """Alers user that a connection to the database could not be made.
+
+    Also asks if the user wants to turn off the warnings for future failed connections.
+
+    If the user responds to the inquiry with 'Yes' to turn off warnings, it updates dict
+    that tracks connection warnings.
+
+    Args:
+        connection_name (str): A string set to identify the database connection.
+    """
+    if DATABASE_CONNECTION_WARNINGS[connection_name] == True:
+        message = (
+            f'A connection to the {connection_name} database could not be made.'
+            + f'\n\nDo you want to turn off the warning for the {connection_name} failed connection?'
+        )
+        response = TwoChoiceQuestionBox(
+            message,
+            'Yes',
+            'No',
+            'Turn Off Database Warning',
+        ).exec()
+        if response == 0:
+            DATABASE_CONNECTION_WARNINGS[connection_name] = False
+    logger.warning(f'Unable to connect to {connection_name} database')
+    return 'NO_Connection'
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
