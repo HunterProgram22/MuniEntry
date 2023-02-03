@@ -137,7 +137,7 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
     else:
         logger.warning(f'Unable to connect to {connection_name} database')
         message = f'A connection to the {connection_name} database could not be made.'
-        InfoBox(message).exec()
+        InfoBox(message, 'No Database Connection').exec()
         return 'NO_Connection'
 
 
