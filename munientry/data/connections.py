@@ -13,6 +13,8 @@ Functions:
 
     open_db_connection(connection_name) -> QSqlDatabase
 
+    no_db_connection_alert(connection_name) -> str
+
     close_db_connection(db_connection) -> None
 
     remove_db_connection(connection_name) -> None
@@ -26,7 +28,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlDatabase
 
 from munientry.appsettings.paths import DB_PATH, TEST_DELCITY_DB_PATH
-from munientry.widgets.message_boxes import InfoBox, TwoChoiceQuestionBox
+from munientry.widgets.message_boxes import TwoChoiceQuestionBox
 
 DATABASE_LOG_LEVEL = 21
 MUNIENTRY_DB = 'MuniEntryDB.sqlite'
@@ -35,12 +37,13 @@ TEST_MUNIENTRY_DB = 'TEST_MuniEntryDB.sqlite'
 CRIM_TRAFFIC_DB_CONN = 'con_authority_court'
 CIVIL_DB_CONN = 'con_authority_civil'
 MUNIENTRY_DB_CONN = 'con_munientry_db'
-
+TEST_COMPUTER_SOCKETS = ('Muni10', 'RooberryPrime')
 DATABASE_CONNECTION_WARNINGS = {
     CRIM_TRAFFIC_DB_CONN: True,
     CIVIL_DB_CONN: True,
     MUNIENTRY_DB_CONN: True,
 }
+
 
 def set_server_and_database(connection_name: str) -> tuple:
     """Sets the server and database name for the SQL Server connections.
@@ -91,11 +94,7 @@ def create_sqlite_db_connection(database_path: str, connection_name: str) -> QSq
     Returns:
         QSqlDatabase: The connection to the database as a QSqlDatabase object.
     """
-    if socket.gethostname() == 'Muni10':  # This needs to be updated to account for production version
-        db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
-        db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
-        logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
-    elif socket.gethostname() == 'RooberryPrime':
+    if socket.gethostname() in TEST_COMPUTER_SOCKETS:
         db_connection = QSqlDatabase.addDatabase('QSQLITE', connection_name)
         db_connection.setDatabaseName(f'{TEST_DELCITY_DB_PATH}{TEST_MUNIENTRY_DB}')
         logger.info(f'TEST Database Set to: {TEST_DELCITY_DB_PATH}')
