@@ -53,14 +53,14 @@ def set_server_and_database(connection_name: str) -> tuple:
     if connection_name == 'con_authority_court':
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
-            database = 'AuthorityCourt'
+            database = 'AuthorityCourt2'
         else:
             server = r'CLERKCRTR\CMI'
             database = 'AuthorityCourt'
     elif connection_name == 'con_authority_civil':
         if socket.gethostname() == 'RooberryPrime':
             server = r'ROOBERRYPRIME\SQLEXPRESS'
-            database = 'AuthorityCivil'
+            database = 'AuthorityCivil2'
         else:
             server = r'CLERKSQL\CMI'
             database = 'AuthorityCivil'
@@ -133,11 +133,12 @@ def open_db_connection(connection_name: str) -> QSqlDatabase:
     db_connection = QSqlDatabase.database(connection_name, open=True)
     if db_connection.isOpen():
         logger.database(f'{connection_name} database connection open.')
+        return db_connection
     else:
         logger.warning(f'Unable to connect to {connection_name} database')
         message = f'A connection to the {connection_name} database could not be made.'
         InfoBox(message).exec()
-    return db_connection
+        return 'NO_Connection'
 
 
 def close_db_connection(db_connection: QSqlDatabase) -> None:
@@ -149,8 +150,11 @@ def close_db_connection(db_connection: QSqlDatabase) -> None:
     Todo:
         Refactor to accept a string of connection name to mirror open_db_connection function.
     """
-    db_connection.close()
-    logger.database(f'{db_connection.connectionName()} database connection closed.')
+    try:
+        db_connection.close()
+        logger.database(f'{db_connection.connectionName()} database connection closed.')
+    except AttributeError as err:
+        logger.warning(err)
 
 
 def remove_db_connection(connection_name: str) -> None:
