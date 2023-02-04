@@ -23,6 +23,7 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         super().__init__(dialog)
         self.set_view_dates()
         self.set_calculator_dates()
+        self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self) -> None:
         self.dialog.entry_date.setDate(TODAY)

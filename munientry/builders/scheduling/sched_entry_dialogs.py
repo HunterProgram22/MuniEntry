@@ -47,6 +47,7 @@ class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.set_view_dates()
+        self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self):
         self.dialog.arrest_summons_date_box.setDate(TODAY)
