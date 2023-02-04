@@ -31,7 +31,7 @@ from PyQt6.QtSql import QSqlDatabase
 from munientry.appsettings.paths import DB_PATH, TEST_DELCITY_DB_PATH
 from munientry.widgets.message_boxes import TwoChoiceQuestionBox
 
-### Database Constants ###
+# Database Constants
 DATABASE_LOG_LEVEL = 21
 
 MUNIENTRY_DB_CONN = 'con_munientry_db'
@@ -55,7 +55,7 @@ DATABASE_WARNINGS_SETTINGS = {
     CIVIL_DB_CONN: True,
     MUNIENTRY_DB_CONN: True,
 }
-### End Database Constants ###
+# End Database Constants
 
 
 def set_server_and_database(connection_name: str) -> tuple:
@@ -81,7 +81,7 @@ def set_server_and_database(connection_name: str) -> tuple:
         server = CIVIL_DB_SERVER
         database = CIVIL_DATABASE
 
-    ### SETS Testing Server for Justin to test at home ###
+    # SETS Testing Server for Justin to test at home
     if socket.gethostname() == HOME_PC_SOCKET:
         server = HOME_DB_SERVER
 
