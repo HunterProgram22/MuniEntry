@@ -147,6 +147,8 @@ class ChargeDialogBuilder(base.BaseDialogBuilder):
         self.db_connection_string = 'con_munientry_db'
         self.db_connection = open_db_connection(self.db_connection_string)
         super().__init__(parent)
+        if self.db_connection == 'NO_Connection':
+            self.freeform_entry_checkBox.setChecked((True))
         self.additional_setup()
         logger.dialog(f'{self.dialog_name} Opened')
 
