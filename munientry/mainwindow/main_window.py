@@ -248,7 +248,6 @@ class MainWindowSignalConnector(object):
         self.connect_judicial_officers_to_set_officer()
         self.connect_dialog_buttons_to_start_dialog()
 
-
     def connect_general_buttons(self):
         self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.reload_case_lists)
         self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
