@@ -1,4 +1,4 @@
-"""Module for MuniEntry report menu processes."""
+"""Module for MuniEntry report mainmenu processes."""
 from collections import namedtuple
 
 from loguru import logger
@@ -6,7 +6,7 @@ from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.menu.reports.report_constants import COURTROOM_REPORT_HEADERS, COURTROOM_NAME
+from munientry.mainmenu.reports.report_constants import COURTROOM_REPORT_HEADERS, COURTROOM_NAME
 from munientry.sqllite.sql_lite_queries import courtroom_event_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 

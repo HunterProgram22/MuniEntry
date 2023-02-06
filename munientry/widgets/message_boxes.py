@@ -95,7 +95,7 @@ class TwoChoiceQuestionBox(QMessageBox):
         self.message = message
         self.title = title
         self.set_up_widget(yes_choice, no_choice)
-        logger.choice(self.title)
+        logger.info(self.title)
 
     def set_up_widget(self, yes_choice, no_choice):
         self.setWindowIcon(QtGui.QIcon(GAVEL_PATH))

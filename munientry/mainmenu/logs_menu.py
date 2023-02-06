@@ -1,4 +1,4 @@
-"""Module for menu log processes."""
+"""Module for mainmenu log processes."""
 from os import startfile
 
 from loguru import logger

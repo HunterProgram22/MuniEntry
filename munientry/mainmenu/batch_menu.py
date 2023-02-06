@@ -1,5 +1,6 @@
 """Module for creating a batch of Failure to Appear entries."""
 from datetime import datetime
+from os import startfile
 
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -12,6 +13,7 @@ from munientry.data.excel_functions import (
 from munientry.models.excel_models import BatchCaseInformation
 from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
+from munientry.widgets import message_boxes
 
 if TYPE_CHECKING:
     from openpyxl import Workbook
@@ -92,6 +94,15 @@ def run_batch_fta_arraignments() -> int:
         create_entry(case)
         entry_count += 1
     return entry_count
+
+
+def run_batch_fta_process(_signal=None) -> None:
+    """Creates batch entries for failure to appear and opens folder where entries are saved."""
+    entries_created = run_batch_fta_arraignments()
+    message = f'The batch process created {entries_created} entries.'
+    message_boxes.InfoBox(message, 'Entries Created').exec()
+    startfile(f'{BATCH_SAVE_PATH}')
+    logger.info(f'{message}')
 
 
 if __name__ == '__main__':

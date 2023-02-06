@@ -8,8 +8,6 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
-from munientry.widgets.custom_widgets import ConditionCheckbox
-
 
 class Ui_AddChargeDialog(object):
     def setupUi(self, AddChargeDialog):
@@ -148,7 +146,7 @@ class Ui_AddChargeDialog(object):
         self.gridLayout_3.addWidget(self.statute_choice_box, 1, 1, 1, 1)
         self.degree_choice_box = QtWidgets.QComboBox(self.frame_3)
         self.degree_choice_box.setEnabled(True)
-        self.degree_choice_box.setFocusPolicy(QtCore.Qt.FocusPolicy.NoFocus)
+        self.degree_choice_box.setFocusPolicy(QtCore.Qt.FocusPolicy.WheelFocus)
         self.degree_choice_box.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.degree_choice_box.setObjectName("degree_choice_box")
         self.degree_choice_box.addItem("")
@@ -186,7 +184,8 @@ class Ui_AddChargeDialog(object):
         self.retranslateUi(AddChargeDialog)
         QtCore.QMetaObject.connectSlotsByName(AddChargeDialog)
         AddChargeDialog.setTabOrder(self.statute_choice_box, self.offense_choice_box)
-        AddChargeDialog.setTabOrder(self.offense_choice_box, self.add_charge_Button)
+        AddChargeDialog.setTabOrder(self.offense_choice_box, self.degree_choice_box)
+        AddChargeDialog.setTabOrder(self.degree_choice_box, self.add_charge_Button)
         AddChargeDialog.setTabOrder(self.add_charge_Button, self.cancel_Button)
 
     def retranslateUi(self, AddChargeDialog):
@@ -207,3 +206,4 @@ class Ui_AddChargeDialog(object):
         self.degree_choice_box.setItemText(5, _translate("AddChargeDialog", "UCM"))
         self.clear_fields_Button.setText(_translate("AddChargeDialog", "Clear Fields"))
         self.freeform_entry_checkBox.setText(_translate("AddChargeDialog", "Enable freeform entry for offense/statute"))
+from munientry.widgets.custom_widgets import ConditionCheckbox
