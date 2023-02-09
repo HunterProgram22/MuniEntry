@@ -14,7 +14,6 @@ ENTRIES_FOLDERS = (
     'jury_pay_entries',
     'batch_entries',
 )
-
 AUTHORITY_CRIMTRAFFIC_EVENT_TYPES = (
     'Arraignments',
     'Final Pretrials',
