@@ -13,7 +13,7 @@
     <x>0</x>
     <y>0</y>
     <width>988</width>
-    <height>725</height>
+    <height>734</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -181,7 +181,7 @@ font-weight: bold;</string>
            <x>0</x>
            <y>0</y>
            <width>948</width>
-           <height>685</height>
+           <height>694</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_2">
@@ -509,7 +509,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="2" column="0">
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="continuance_label">
                <property name="text">
                 <string>Continuance Length:</string>
                </property>
@@ -540,7 +540,7 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QLabel" name="label_7">
+              <widget class="QLabel" name="arraignment_date_label">
                <property name="text">
                 <string>New Arraignment Date:</string>
                </property>
