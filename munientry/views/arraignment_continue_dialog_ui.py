@@ -288,7 +288,7 @@ class Ui_ArraignmentContinueDialog(object):
         self.continuance_label.setText(_translate("ArraignmentContinueDialog", "Continuance Length:"))
         self.label_6.setText(_translate("ArraignmentContinueDialog", "Continuance Reason:"))
         self.continuance_reason_box.setItemText(0, _translate("ArraignmentContinueDialog", "to arrange for an interpreter for defendant"))
-        self.continuance_reason_box.setItemText(1, _translate("ArraignmentContinueDialog", "allow defendant to obtain counsel"))
+        self.continuance_reason_box.setItemText(1, _translate("ArraignmentContinueDialog", "to allow defendant to obtain counsel"))
         self.arraignment_date_label.setText(_translate("ArraignmentContinueDialog", "New Arraignment Date:"))
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit

@@ -534,7 +534,7 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>allow defendant to obtain counsel</string>
+                 <string>to allow defendant to obtain counsel</string>
                 </property>
                </item>
               </widget>
