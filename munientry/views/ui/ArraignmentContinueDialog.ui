@@ -529,12 +529,12 @@ font-weight: bold;</string>
                </property>
                <item>
                 <property name="text">
-                 <string>allow defendant to obtain counsel</string>
+                 <string>to arrange for an interpreter for defendant</string>
                 </property>
                </item>
                <item>
                 <property name="text">
-                 <string>to arrange for an interpreter for defendant</string>
+                 <string>allow defendant to obtain counsel</string>
                 </property>
                </item>
               </widget>
