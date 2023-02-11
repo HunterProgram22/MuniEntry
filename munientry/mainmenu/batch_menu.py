@@ -2,35 +2,26 @@
 import datetime
 from os import startfile
 
+from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog
 from docxtpl import DocxTemplate
 from loguru import logger
 
-from munientry.data.excel_functions import (
-    create_headers_dict,
-    get_excel_file_headers,
-    load_active_worksheet,
-)
-from munientry.models.excel_models import BatchCaseInformation
-from munientry.appsettings.settings import TYPE_CHECKING
+from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
-from munientry.sqlserver.sql_server_queries import batch_fta_query
+from munientry.sqlserver.sql_server_queries import batch_fta_query, general_case_search_query
+from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
 from munientry.widgets import message_boxes
-
-if TYPE_CHECKING:
-    from openpyxl import Workbook
-
-COL_CASE_NUMBER = 'CaseNumber'
-COL_CASE_TYPE = 'CaseTypeCode'
-COL_EVENT_DATE = 'CaseEventDate'
-COL_DEF_LAST_NAME = 'DefLastName'
-COL_DEF_FIRST_NAME = 'DefFirstName'
 
 
 def create_entry(case_data):
     """General create entry function that populates a template with data."""
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
-    doc.render(case_data.get_case_information())
+    logger.debug(case_data.case_number)
+    data_dict = {
+        'case_number':case_data.case_number,
+    }
+    doc.render(data_dict)
     docname = set_document_name(case_data.case_number)
     doc.save(f'{BATCH_SAVE_PATH}{docname}')
 
@@ -70,15 +61,16 @@ def set_warrant_rule(case_type_code: str) -> str:
     return 'Traffic Rule 7'
 
 
-def run_batch_fta_arraignments() -> int:
-    """The main function for the batch_fta_entries process."""
-    batch_case_list = get_case_list_from_excel(fr'{DB_PATH}\Batch_FTA_Arraignments.xlsx')
-    entry_count = 0
-    for case in batch_case_list:
-        logger.info(f'Creating Batch FTA entry for: {case.case_number}')
-        create_entry(case)
-        entry_count += 1
-    return entry_count
+def get_fta_arraignment_cases(query_string) -> int:
+    db_conn = open_db_connection('con_authority_court')
+    query = QSqlQuery(db_conn)
+    query.prepare(query_string)
+    query.exec()
+    data_list = []
+    while query.next():
+        data_list.append(query.value('CaseNumber'))
+    close_db_connection(db_conn)
+    return data_list
 
 
 def add_one_day_to_date_string(date_string, date_format='%Y-%m-%d'):
@@ -87,15 +79,27 @@ def add_one_day_to_date_string(date_string, date_format='%Y-%m-%d'):
     return date.strftime(date_format)
 
 
+def create_fta_entries(batch_case_list):
+    entry_count = 0
+    for case in batch_case_list:
+        logger.info(f'Creating Batch FTA entry for: {case}')
+        case_data = CriminalCaseSqlServer(case)
+        logger.debug(case_data)
+        create_entry(case_data)
+        entry_count += 1
+    return entry_count
+
+
 def run_batch_fta_process(mainwindow, _signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
-    # entries_created = run_batch_fta_arraignments()
     event_date, ok_response = user_input_get_batch_date(mainwindow)
     if ok_response:
         next_day = add_one_day_to_date_string(event_date)
-        logger.debug(next_day)
-        case_numbers = batch_fta_query(event_date, next_day)
-        logger.debug(case_numbers)
+        query_string = batch_fta_query(event_date, next_day)
+        data_list = get_fta_arraignment_cases(query_string)
+        logger.debug(data_list)
+        create_fta_entries(data_list)
+
         # message = f'The batch process created {entries_created} entries.'
         # message_boxes.InfoBox(message, 'Entries Created').exec()
         # startfile(f'{BATCH_SAVE_PATH}')
@@ -103,5 +107,5 @@ def run_batch_fta_process(mainwindow, _signal=None) -> None:
 
 
 if __name__ == '__main__':
-    run_batch_fta_arraignments()
+    get_fta_arraignment_cases()
     logger.info(f'{__name__} run directly.')
