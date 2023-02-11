@@ -14,12 +14,15 @@ from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
 from munientry.widgets import message_boxes
 
 
-def create_entry(case_data):
+def create_entry(case_data, event_date):
     """General create entry function that populates a template with data."""
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
-    logger.debug(case_data.case_number)
     data_dict = {
-        'case_number':case_data.case_number,
+        'case_number':case_data.case.case_number,
+        'def_first_name': case_data.case.defendant.first_name,
+        'def_last_name': case_data.case.defendant.last_name,
+        'case_event_date': event_date,
+        'warrant_rule': set_warrant_rule(case_data.case.case_number[2:5])
     }
     doc.render(data_dict)
     docname = set_document_name(case_data.case_number)
@@ -79,13 +82,12 @@ def add_one_day_to_date_string(date_string, date_format='%Y-%m-%d'):
     return date.strftime(date_format)
 
 
-def create_fta_entries(batch_case_list):
+def create_fta_entries(batch_case_list, event_date):
     entry_count = 0
     for case in batch_case_list:
         logger.info(f'Creating Batch FTA entry for: {case}')
         case_data = CriminalCaseSqlServer(case)
-        logger.debug(case_data)
-        create_entry(case_data)
+        create_entry(case_data, event_date)
         entry_count += 1
     return entry_count
 
@@ -97,13 +99,11 @@ def run_batch_fta_process(mainwindow, _signal=None) -> None:
         next_day = add_one_day_to_date_string(event_date)
         query_string = batch_fta_query(event_date, next_day)
         data_list = get_fta_arraignment_cases(query_string)
-        logger.debug(data_list)
-        create_fta_entries(data_list)
-
-        # message = f'The batch process created {entries_created} entries.'
-        # message_boxes.InfoBox(message, 'Entries Created').exec()
-        # startfile(f'{BATCH_SAVE_PATH}')
-        # logger.info(f'{message}')
+        entries_created = create_fta_entries(data_list, event_date)
+        message = f'The batch process created {entries_created} entries.'
+        message_boxes.InfoBox(message, 'Entries Created').exec()
+        startfile(f'{BATCH_SAVE_PATH}')
+        logger.info(f'{message}')
 
 
 if __name__ == '__main__':
