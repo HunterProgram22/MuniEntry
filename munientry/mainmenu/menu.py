@@ -51,7 +51,12 @@ class MainMenu(object):
             action.triggered.connect(partial(open_entries_folder, folder))
 
     def _connect_batch_menu_functions(self):
-        self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(run_batch_fta_process)
+        self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(
+            partial(
+                run_batch_fta_process,
+                self.mainwindow,
+            )
+        )
 
     def _connect_reports_menu_functions(self):
         self._connect_authority_court_reports()

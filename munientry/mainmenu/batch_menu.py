@@ -1,7 +1,8 @@
 """Module for creating a batch of Failure to Appear entries."""
-from datetime import datetime
+import datetime
 from os import startfile
 
+from PyQt6.QtWidgets import QInputDialog
 from docxtpl import DocxTemplate
 from loguru import logger
 
@@ -13,6 +14,7 @@ from munientry.data.excel_functions import (
 from munientry.models.excel_models import BatchCaseInformation
 from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
+from munientry.sqlserver.sql_server_queries import batch_fta_query
 from munientry.widgets import message_boxes
 
 if TYPE_CHECKING:
@@ -38,44 +40,27 @@ def set_document_name(case_number: str) -> str:
     return f'{case_number}_FTA_Arraignment.docx'
 
 
-def get_case_list_from_excel(excel_file: str) -> list[BatchCaseInformation]:
-    """Loads active worksheet, generates header dict, and list with case data objects."""
-    worksheet = load_active_worksheet(excel_file)
-    header_list = get_excel_file_headers(worksheet)
-    headers_dict = create_headers_dict(header_list)
-    return create_batch_case_list(worksheet, headers_dict)
+def user_input_get_batch_date(mainwindow: 'QMainWindow') -> tuple[str, bool]:
+    """Opens an input dialog to query user for date of report.
 
+    Args:
+        mainwindow (QMainWindow): The main window of the application.
 
-def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> list[
-    BatchCaseInformation
-]:
-    """Reads through an excel file and gets case data."""
-    batch_case_data: list = []
-    for row in range(2, worksheet.max_row + 1):
-        case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
-        case_type_code = get_cell_value(worksheet, row, header_dict[COL_CASE_TYPE])
-        warrant_rule = set_warrant_rule(case_type_code)
-        case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
-        def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME]).title()
-        def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME]).title()
-        batch_case_data.append(BatchCaseInformation(
-            case_number,
-            warrant_rule,
-            case_event_date,
-            def_first_name,
-            def_last_name,
-        ))
-    return batch_case_data
+        event (str): A string that identifies the event type for the generated report.
 
-
-def get_cell_value(worksheet: 'Workbook.active', row: int, col: int) -> str:
-    """Returns the cell value for a cell in the active excel worksheet."""
-    cell_value = worksheet.cell(row=row, column=col).value
-    if cell_value is None:
-        return 'No Data'
-    if isinstance(cell_value, datetime):
-        return cell_value.strftime('%B %d, %Y')
-    return cell_value
+    Returns:
+        tuple: A string with the user entered report data and a bool of True if the user
+        selected 'Ok.'
+    """
+    return QInputDialog.getText(
+        mainwindow,
+        f'Batch FTA Entries',
+        f'This will query AuthorityCourt/CMI for all cases that were set for an arraignment on the'
+        + ' date provided that were mandatory appearence cases.\nIt then generates an FTA warrant'
+        + ' entry for each case.\nDefendants with multiple cases will have an FTA warrant entry'
+        + ' generated for each case.\n\n'
+        + f'Enter the Arraignment Date in format YYYY-MM-DD:',
+        )
 
 
 def set_warrant_rule(case_type_code: str) -> str:
@@ -96,13 +81,25 @@ def run_batch_fta_arraignments() -> int:
     return entry_count
 
 
-def run_batch_fta_process(_signal=None) -> None:
+def add_one_day_to_date_string(date_string, date_format='%Y-%m-%d'):
+    date = datetime.datetime.strptime(date_string, date_format)
+    date = date + datetime.timedelta(days=1)
+    return date.strftime(date_format)
+
+
+def run_batch_fta_process(mainwindow, _signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
-    entries_created = run_batch_fta_arraignments()
-    message = f'The batch process created {entries_created} entries.'
-    message_boxes.InfoBox(message, 'Entries Created').exec()
-    startfile(f'{BATCH_SAVE_PATH}')
-    logger.info(f'{message}')
+    # entries_created = run_batch_fta_arraignments()
+    event_date, ok_response = user_input_get_batch_date(mainwindow)
+    if ok_response:
+        next_day = add_one_day_to_date_string(event_date)
+        logger.debug(next_day)
+        case_numbers = batch_fta_query(event_date, next_day)
+        logger.debug(case_numbers)
+        # message = f'The batch process created {entries_created} entries.'
+        # message_boxes.InfoBox(message, 'Entries Created').exec()
+        # startfile(f'{BATCH_SAVE_PATH}')
+        # logger.info(f'{message}')
 
 
 if __name__ == '__main__':
