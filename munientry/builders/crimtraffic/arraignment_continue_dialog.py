@@ -18,7 +18,6 @@ class ArraignmentContinueDialogViewModifier(crim.CrimTrafficViewModifier):
         self.set_appearance_reason()
 
 
-
 class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Arraignment Continuance Dialog."""
 
