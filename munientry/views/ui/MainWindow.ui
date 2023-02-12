@@ -1728,6 +1728,7 @@ font-weight: bold;</string>
      <string>Batch</string>
     </property>
     <addaction name="actionRun_batch_FTA_Entries"/>
+    <addaction name="actionCreate_single_FTA_Entry"/>
     <addaction name="separator"/>
     <addaction name="actionOpen_batch_FTA_Entries_Folder"/>
    </widget>
@@ -1887,6 +1888,11 @@ font-weight: bold;</string>
   <action name="actionCourtroom_C">
    <property name="text">
     <string>Courtroom C</string>
+   </property>
+  </action>
+  <action name="actionCreate_single_FTA_Entry">
+   <property name="text">
+    <string>Create single FTA Entry</string>
    </property>
   </action>
  </widget>

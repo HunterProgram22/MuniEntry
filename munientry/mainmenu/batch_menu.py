@@ -8,6 +8,7 @@ from loguru import logger
 from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog
 
+from munientry.helper_functions import update_crimtraffic_case_number
 from munientry.appsettings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
@@ -20,7 +21,6 @@ if TYPE_CHECKING:
 
 def create_entry(case_data: object, event_date: str) -> None:
     """General create entry function that populates a template with data."""
-    logger.debug(type(case_data))
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
     data_dict = {
         'case_number': case_data.case.case_number,
@@ -32,6 +32,27 @@ def create_entry(case_data: object, event_date: str) -> None:
     doc.render(data_dict)
     docname = set_document_name(case_data.case_number)
     doc.save(f'{BATCH_SAVE_PATH}{docname}')
+
+
+def create_single_fta_entry(mainwindow: 'QMainWindow') -> None:
+    case_number, ok_response = QInputDialog.getText(
+        mainwindow,
+        'Create Single FTA Entry',
+        'Enter the Case Number:',
+    )
+    case_number = update_crimtraffic_case_number(case_number)
+    if not ok_response:
+        return
+    event_date, ok_response = prompt_user_for_batch_date(mainwindow)
+    if not ok_response:
+        return
+    event_date = datetime.datetime.strptime(event_date, '%Y-%m-%d')
+    event_date = event_date.strftime('%B %d, %Y')
+    case_data = CriminalCaseSqlServer(case_number)
+    create_entry(case_data, event_date)
+    show_entries_created_message(1)
+    open_entry_folder()
+    log_entries_created(1)
 
 
 def set_document_name(case_number: str) -> str:

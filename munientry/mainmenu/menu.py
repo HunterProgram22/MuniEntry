@@ -1,7 +1,7 @@
 """Module connecting all functions for the mainwindow mainmenu."""
 from functools import partial
 
-from munientry.mainmenu.batch_menu import run_batch_fta_process
+from munientry.mainmenu.batch_menu import create_single_fta_entry, run_batch_fta_process
 from munientry.mainmenu.logs_menu import open_current_log
 from munientry.mainmenu.open_menu import open_entries_folder
 from munientry.mainmenu.reports import authoritycourt_reports, munientry_reports
@@ -54,6 +54,12 @@ class MainMenu(object):
         self.mainwindow.actionRun_batch_FTA_Entries.triggered.connect(
             partial(
                 run_batch_fta_process,
+                self.mainwindow,
+            )
+        )
+        self.mainwindow.actionCreate_single_FTA_Entry.triggered.connect(
+            partial(
+                create_single_fta_entry,
                 self.mainwindow,
             )
         )
