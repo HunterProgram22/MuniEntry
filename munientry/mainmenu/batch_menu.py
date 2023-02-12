@@ -18,8 +18,9 @@ if TYPE_CHECKING:
     from PyQt6.QtWidgets import QMainWindow
 
 
-def create_entry(case_data, event_date):
+def create_entry(case_data, event_date: str) -> None:
     """General create entry function that populates a template with data."""
+    logger.debug(type(case_data))
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
     data_dict = {
         'case_number': case_data.case.case_number,
@@ -85,7 +86,7 @@ def create_fta_entries(batch_case_list: List, event_date: str) -> int:
     return entry_count
 
 
-def run_batch_fta_process(mainwindow, _signal=None) -> None:
+def run_batch_fta_process(mainwindow: QMainWindow, _signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
     event_date, ok_response = prompt_user_for_batch_date(mainwindow)
     if not ok_response:
