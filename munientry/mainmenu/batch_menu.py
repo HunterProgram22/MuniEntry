@@ -1,28 +1,33 @@
 """Module for creating a batch of Failure to Appear entries."""
 import datetime
 from os import startfile
+from typing import TYPE_CHECKING, List, Tuple
 
-from PyQt6.QtSql import QSqlQuery
-from PyQt6.QtWidgets import QInputDialog
 from docxtpl import DocxTemplate
 from loguru import logger
+from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtWidgets import QInputDialog
 
+from munientry.appsettings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
-from munientry.sqlserver.sql_server_queries import batch_fta_query, general_case_search_query
 from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
+from munientry.sqlserver.sql_server_queries import batch_fta_query
 from munientry.widgets import message_boxes
 
+if TYPE_CHECKING:
+    from PyQt6.QtWidgets import QMainWindow
 
-def create_entry(case_data, event_date):
+
+def create_entry(case_data, event_date: str) -> None:
     """General create entry function that populates a template with data."""
+    logger.debug(type(case_data))
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
     data_dict = {
-        'case_number':case_data.case.case_number,
+        'case_number': case_data.case.case_number,
         'def_first_name': case_data.case.defendant.first_name,
         'def_last_name': case_data.case.defendant.last_name,
         'case_event_date': event_date,
-        'warrant_rule': set_warrant_rule(case_data.case.case_number[2:5])
+        'warrant_rule': set_warrant_rule(case_data.case.case_number[2:5]),
     }
     doc.render(data_dict)
     docname = set_document_name(case_data.case_number)
@@ -34,27 +39,13 @@ def set_document_name(case_number: str) -> str:
     return f'{case_number}_FTA_Arraignment.docx'
 
 
-def user_input_get_batch_date(mainwindow: 'QMainWindow') -> tuple[str, bool]:
-    """Opens an input dialog to query user for date of report.
-
-    Args:
-        mainwindow (QMainWindow): The main window of the application.
-
-        event (str): A string that identifies the event type for the generated report.
-
-    Returns:
-        tuple: A string with the user entered report data and a bool of True if the user
-        selected 'Ok.'
-    """
+def prompt_user_for_batch_date(mainwindow: QMainWindow) -> Tuple[str, bool]:
+    """Prompts the user for a date and returns the date and a response indicating."""
     return QInputDialog.getText(
         mainwindow,
-        f'Batch FTA Entries',
-        f'This will query AuthorityCourt/CMI for all cases that were set for an arraignment on the'
-        + ' date provided that were mandatory appearence cases.\nIt then generates an FTA warrant'
-        + ' entry for each case.\nDefendants with multiple cases will have an FTA warrant entry'
-        + ' generated for each case.\n\n'
-        + f'Enter the Arraignment Date in format YYYY-MM-DD:',
-        )
+        'Batch FTA Entries',
+        'Enter the Arraignment Date in format YYYY-MM-DD:',
+    )
 
 
 def set_warrant_rule(case_type_code: str) -> str:
@@ -64,7 +55,8 @@ def set_warrant_rule(case_type_code: str) -> str:
     return 'Traffic Rule 7'
 
 
-def get_fta_arraignment_cases(query_string) -> int:
+def get_fta_arraignment_cases(query_string: str) -> List[str]:
+    """Queries AuthorityCourtDB to get all cases that need a FTA warrant."""
     db_conn = open_db_connection('con_authority_court')
     query = QSqlQuery(db_conn)
     query.prepare(query_string)
@@ -76,36 +68,50 @@ def get_fta_arraignment_cases(query_string) -> int:
     return data_list
 
 
-def add_one_day_to_date_string(date_string, date_format='%Y-%m-%d'):
+def add_one_day_to_date_string(date_string: str, date_format='%Y-%m-%d') -> str:
+    """Returns a string date one day later than the date string submitted."""
     date = datetime.datetime.strptime(date_string, date_format)
     date = date + datetime.timedelta(days=1)
     return date.strftime(date_format)
 
 
-def create_fta_entries(batch_case_list, event_date):
+def create_fta_entries(batch_case_list: List, event_date: str) -> int:
+    """Process that creates the entries and returns a count of total entries created."""
     entry_count = 0
-    for case in batch_case_list:
-        logger.info(f'Creating Batch FTA entry for: {case}')
-        case_data = CriminalCaseSqlServer(case)
+    for case_number in batch_case_list:
+        logger.info(f'Creating Batch FTA entry for: {case_number}')
+        case_data = CriminalCaseSqlServer(case_number)
         create_entry(case_data, event_date)
         entry_count += 1
     return entry_count
 
 
-def run_batch_fta_process(mainwindow, _signal=None) -> None:
+def run_batch_fta_process(mainwindow: QMainWindow, _signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
-    event_date, ok_response = user_input_get_batch_date(mainwindow)
-    if ok_response:
-        next_day = add_one_day_to_date_string(event_date)
-        query_string = batch_fta_query(event_date, next_day)
-        data_list = get_fta_arraignment_cases(query_string)
-        entries_created = create_fta_entries(data_list, event_date)
-        message = f'The batch process created {entries_created} entries.'
-        message_boxes.InfoBox(message, 'Entries Created').exec()
-        startfile(f'{BATCH_SAVE_PATH}')
-        logger.info(f'{message}')
+    event_date, ok_response = prompt_user_for_batch_date(mainwindow)
+    if not ok_response:
+        return
+    next_day = add_one_day_to_date_string(event_date)
+    query_string = batch_fta_query(event_date, next_day)
+    case_list = get_fta_arraignment_cases(query_string)
+    entries_created = create_fta_entries(case_list, event_date)
+    show_entries_created_message(entries_created)
+    open_entry_folder()
+    log_entries_created(entries_created)
 
 
-if __name__ == '__main__':
-    get_fta_arraignment_cases()
-    logger.info(f'{__name__} run directly.')
+def open_entry_folder() -> None:
+    """Opens the folder where the entries are saved."""
+    startfile(f'{BATCH_SAVE_PATH}')
+
+
+def show_entries_created_message(entries_created: int) -> None:
+    """Displays a message with the number of entries created."""
+    message = f'The batch process created {entries_created} entries.'
+    message_boxes.InfoBox(message, 'Entries Created').exec()
+
+
+def log_entries_created(entries_created: int) -> None:
+    """Logs information about the number of entries created."""
+    message = f'{entries_created} entries were created.'
+    logger.info(message)
