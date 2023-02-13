@@ -148,6 +148,41 @@ def general_civil_case_query(case_number: str) -> str:
     """
 
 
+def batch_fta_query(event_date: str, next_day: str) -> str:
+    return f"""
+    SELECT DISTINCT cm.CaseNumber
+
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+    LEFT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce
+    ON cm.Id = ce.CaseMasterID
+    LEFT JOIN [AuthorityCourt].[dbo].[SubCase] sc
+    ON cm.Id = sc.CaseMasterID
+    LEFT JOIN [AuthorityCourt].[dbo].[Violation] v
+    ON sc.ViolationId = v.Id
+    LEFT JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
+    ON vd.ViolationID = v.Id and vd.EndDate IS NULL and vd.IsActive = '1'
+    LEFT JOIN [AuthorityCourt].[dbo].[ChargeDetail] cd
+    ON v.ChargeID = cd.ChargeId
+
+    WHERE cm.CaseNumber IN (
+        SELECT cm.CaseNumber
+        FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+        RIGHT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce
+        ON cm.Id = ce.CaseMasterID
+        WHERE 	(ce.EventID in ('27', '28', '77', '263', '361') and ce.EventDate = '{event_date}') and cm.CaseStatusID = '1' and ce.IsDeleted = '0'
+    )
+
+    AND vd.IsMandAppear = '1'
+
+    AND NOT EXISTS (
+        SELECT 1
+        FROM [AuthorityCourt].[dbo].[CaseEvent] ce
+        WHERE ce.CaseMasterID = cm.Id
+        AND ce.EventDate >= '{next_day}'
+    )
+
+ORDER BY cm.CaseNumber
+"""
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

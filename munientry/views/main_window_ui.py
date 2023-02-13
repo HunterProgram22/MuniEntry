@@ -878,8 +878,11 @@ class Ui_MainWindow(object):
         self.actionCourtroom_B.setObjectName("actionCourtroom_B")
         self.actionCourtroom_C = QtGui.QAction(MainWindow)
         self.actionCourtroom_C.setObjectName("actionCourtroom_C")
+        self.actionCreate_single_FTA_Entry = QtGui.QAction(MainWindow)
+        self.actionCreate_single_FTA_Entry.setObjectName("actionCreate_single_FTA_Entry")
         self.menuLogs.addAction(self.actionOpen_Current_Log)
         self.menuBatch.addAction(self.actionRun_batch_FTA_Entries)
+        self.menuBatch.addAction(self.actionCreate_single_FTA_Entry)
         self.menuBatch.addSeparator()
         self.menuBatch.addAction(self.actionOpen_batch_FTA_Entries_Folder)
         self.menuAuthorityCourt.addAction(self.actionArraignments)
@@ -1097,4 +1100,5 @@ class Ui_MainWindow(object):
         self.actionCourtroom_A.setText(_translate("MainWindow", "Courtroom A"))
         self.actionCourtroom_B.setText(_translate("MainWindow", "Courtroom B"))
         self.actionCourtroom_C.setText(_translate("MainWindow", "Courtroom C"))
+        self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
 from munientry.widgets.combo_boxes import DailyCaseListComboBox

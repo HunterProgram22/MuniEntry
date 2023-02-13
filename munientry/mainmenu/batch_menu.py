@@ -1,36 +1,58 @@
 """Module for creating a batch of Failure to Appear entries."""
-from datetime import datetime
+import datetime
 from os import startfile
+from typing import TYPE_CHECKING, List, Tuple
 
 from docxtpl import DocxTemplate
 from loguru import logger
+from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtWidgets import QInputDialog
 
-from munientry.data.excel_functions import (
-    create_headers_dict,
-    get_excel_file_headers,
-    load_active_worksheet,
-)
-from munientry.models.excel_models import BatchCaseInformation
-from munientry.appsettings.settings import TYPE_CHECKING
-from munientry.appsettings.paths import BATCH_SAVE_PATH, DB_PATH, TEMPLATE_PATH
+from munientry.helper_functions import update_crimtraffic_case_number
+from munientry.appsettings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
+from munientry.data.connections import close_db_connection, open_db_connection
+from munientry.sqlserver.sql_server_getters import CriminalCaseSqlServer
+from munientry.sqlserver.sql_server_queries import batch_fta_query
 from munientry.widgets import message_boxes
 
 if TYPE_CHECKING:
-    from openpyxl import Workbook
-
-COL_CASE_NUMBER = 'CaseNumber'
-COL_CASE_TYPE = 'CaseTypeCode'
-COL_EVENT_DATE = 'CaseEventDate'
-COL_DEF_LAST_NAME = 'DefLastName'
-COL_DEF_FIRST_NAME = 'DefFirstName'
+    from PyQt6.QtWidgets import QMainWindow
 
 
-def create_entry(case_data):
+def create_entry(case_data: object, event_date: str) -> None:
     """General create entry function that populates a template with data."""
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
-    doc.render(case_data.get_case_information())
+    data_dict = {
+        'case_number': case_data.case.case_number,
+        'def_first_name': case_data.case.defendant.first_name,
+        'def_last_name': case_data.case.defendant.last_name,
+        'case_event_date': event_date,
+        'warrant_rule': set_warrant_rule(case_data.case.case_number[2:5]),
+    }
+    doc.render(data_dict)
     docname = set_document_name(case_data.case_number)
     doc.save(f'{BATCH_SAVE_PATH}{docname}')
+
+
+def create_single_fta_entry(mainwindow: 'QMainWindow') -> None:
+    case_number, ok_response = QInputDialog.getText(
+        mainwindow,
+        'Create Single FTA Entry',
+        'Enter the Case Number:',
+    )
+    case_number = update_crimtraffic_case_number(case_number)
+    if not ok_response:
+        return
+    event_date, ok_response = prompt_user_for_batch_date(mainwindow)
+    if not ok_response:
+        return
+    event_date = datetime.datetime.strptime(event_date, '%Y-%m-%d')
+    event_date = event_date.strftime('%B %d, %Y')
+    case_data = CriminalCaseSqlServer(case_number)
+    create_entry(case_data, event_date)
+    show_entries_created_message(1)
+    open_entry_folder()
+    log_entries_created(1)
 
 
 def set_document_name(case_number: str) -> str:
@@ -38,44 +60,13 @@ def set_document_name(case_number: str) -> str:
     return f'{case_number}_FTA_Arraignment.docx'
 
 
-def get_case_list_from_excel(excel_file: str) -> list[BatchCaseInformation]:
-    """Loads active worksheet, generates header dict, and list with case data objects."""
-    worksheet = load_active_worksheet(excel_file)
-    header_list = get_excel_file_headers(worksheet)
-    headers_dict = create_headers_dict(header_list)
-    return create_batch_case_list(worksheet, headers_dict)
-
-
-def create_batch_case_list(worksheet: 'Workbook.active', header_dict: dict) -> list[
-    BatchCaseInformation
-]:
-    """Reads through an excel file and gets case data."""
-    batch_case_data: list = []
-    for row in range(2, worksheet.max_row + 1):
-        case_number = get_cell_value(worksheet, row, header_dict[COL_CASE_NUMBER])
-        case_type_code = get_cell_value(worksheet, row, header_dict[COL_CASE_TYPE])
-        warrant_rule = set_warrant_rule(case_type_code)
-        case_event_date = get_cell_value(worksheet, row, header_dict[COL_EVENT_DATE])
-        def_first_name = get_cell_value(worksheet, row, header_dict[COL_DEF_FIRST_NAME]).title()
-        def_last_name = get_cell_value(worksheet, row, header_dict[COL_DEF_LAST_NAME]).title()
-        batch_case_data.append(BatchCaseInformation(
-            case_number,
-            warrant_rule,
-            case_event_date,
-            def_first_name,
-            def_last_name,
-        ))
-    return batch_case_data
-
-
-def get_cell_value(worksheet: 'Workbook.active', row: int, col: int) -> str:
-    """Returns the cell value for a cell in the active excel worksheet."""
-    cell_value = worksheet.cell(row=row, column=col).value
-    if cell_value is None:
-        return 'No Data'
-    if isinstance(cell_value, datetime):
-        return cell_value.strftime('%B %d, %Y')
-    return cell_value
+def prompt_user_for_batch_date(mainwindow: 'QMainWindow') -> Tuple[str, bool]:
+    """Prompts the user for a date and returns the date and a response indicating."""
+    return QInputDialog.getText(
+        mainwindow,
+        'Batch FTA Entries',
+        'Enter the Arraignment Date in format YYYY-MM-DD:',
+    )
 
 
 def set_warrant_rule(case_type_code: str) -> str:
@@ -85,26 +76,63 @@ def set_warrant_rule(case_type_code: str) -> str:
     return 'Traffic Rule 7'
 
 
-def run_batch_fta_arraignments() -> int:
-    """The main function for the batch_fta_entries process."""
-    batch_case_list = get_case_list_from_excel(fr'{DB_PATH}\Batch_FTA_Arraignments.xlsx')
+def get_fta_arraignment_cases(query_string: str) -> List[str]:
+    """Queries AuthorityCourtDB to get all cases that need a FTA warrant."""
+    db_conn = open_db_connection('con_authority_court')
+    query = QSqlQuery(db_conn)
+    query.prepare(query_string)
+    query.exec()
+    data_list = []
+    while query.next():
+        data_list.append(query.value('CaseNumber'))
+    close_db_connection(db_conn)
+    return data_list
+
+
+def add_one_day_to_date_string(date_string: str, date_format='%Y-%m-%d') -> str:
+    """Returns a string date one day later than the date string submitted."""
+    date = datetime.datetime.strptime(date_string, date_format)
+    date = date + datetime.timedelta(days=1)
+    return date.strftime(date_format)
+
+
+def create_fta_entries(batch_case_list: List, event_date: str) -> int:
+    """Process that creates the entries and returns a count of total entries created."""
     entry_count = 0
-    for case in batch_case_list:
-        logger.info(f'Creating Batch FTA entry for: {case.case_number}')
-        create_entry(case)
+    for case_number in batch_case_list:
+        logger.info(f'Creating Batch FTA entry for: {case_number}')
+        case_data = CriminalCaseSqlServer(case_number)
+        create_entry(case_data, event_date)
         entry_count += 1
     return entry_count
 
 
-def run_batch_fta_process(_signal=None) -> None:
+def run_batch_fta_process(mainwindow: 'QMainWindow', _signal=None) -> None:
     """Creates batch entries for failure to appear and opens folder where entries are saved."""
-    entries_created = run_batch_fta_arraignments()
+    event_date, ok_response = prompt_user_for_batch_date(mainwindow)
+    if not ok_response:
+        return
+    next_day = add_one_day_to_date_string(event_date)
+    query_string = batch_fta_query(event_date, next_day)
+    case_list = get_fta_arraignment_cases(query_string)
+    entries_created = create_fta_entries(case_list, event_date)
+    show_entries_created_message(entries_created)
+    open_entry_folder()
+    log_entries_created(entries_created)
+
+
+def open_entry_folder() -> None:
+    """Opens the folder where the entries are saved."""
+    startfile(f'{BATCH_SAVE_PATH}')
+
+
+def show_entries_created_message(entries_created: int) -> None:
+    """Displays a message with the number of entries created."""
     message = f'The batch process created {entries_created} entries.'
     message_boxes.InfoBox(message, 'Entries Created').exec()
-    startfile(f'{BATCH_SAVE_PATH}')
-    logger.info(f'{message}')
 
 
-if __name__ == '__main__':
-    run_batch_fta_arraignments()
-    logger.info(f'{__name__} run directly.')
+def log_entries_created(entries_created: int) -> None:
+    """Logs information about the number of entries created."""
+    message = f'{entries_created} entries were created.'
+    logger.info(message)
