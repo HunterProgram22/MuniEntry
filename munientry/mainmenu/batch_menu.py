@@ -1,5 +1,5 @@
 """Module for creating a batch of Failure to Appear entries."""
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -78,8 +78,8 @@ def set_warrant_rule(case_type_code: str) -> str:
 
 def add_one_day_to_date_string(date_string: str, date_format=INPUT_DATE_FORMAT) -> str:
     """Returns a string date one day later than the date string submitted."""
-    date = datetime.datetime.strptime(date_string, date_format)
-    date = date + datetime.timedelta(days=1)
+    date = datetime.strptime(date_string, date_format)
+    date = date + timedelta(days=1)
     return date.strftime(date_format)
 
 
