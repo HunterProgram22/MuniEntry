@@ -169,10 +169,11 @@ def batch_fta_query(event_date: str, next_day: str) -> str:
         FROM [AuthorityCourt].[dbo].[CaseMaster] cm
         RIGHT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce
         ON cm.Id = ce.CaseMasterID
-        WHERE 	(ce.EventID in ('27', '28', '77', '263', '361') and ce.EventDate = '{event_date}') and cm.CaseStatusID = '1' and ce.IsDeleted = '0'
+        WHERE 	(
+            ce.EventID in ('27', '28', '77', '263', '361', '474') and ce.EventDate = '{event_date}') 
+            and cm.CaseStatusID = '1' and ce.IsDeleted = '0'
+            and (vd.IsMandAppear = '1' or cm.CaseType = '3')
     )
-
-    AND vd.IsMandAppear = '1'
 
     AND NOT EXISTS (
         SELECT 1
@@ -183,6 +184,7 @@ def batch_fta_query(event_date: str, next_day: str) -> str:
 
 ORDER BY cm.CaseNumber
 """
+
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
