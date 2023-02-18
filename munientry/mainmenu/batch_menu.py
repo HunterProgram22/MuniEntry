@@ -1,7 +1,7 @@
 """Module for creating a batch of Failure to Appear entries."""
 from datetime import datetime, timedelta
 
-from docxtpl import DocxTemplate
+from docxtpl import DocxTemplate  # type: ignore # Ignores mypy error for no type hints
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
 
