@@ -14,6 +14,19 @@ from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
 
 
+def get_fta_arraignment_cases(query_string: str) -> list[str]:
+    """Queries AuthorityCourtDB to get all cases that need a FTA warrant."""
+    db_conn = open_db_connection('con_authority_court')
+    query = QSqlQuery(db_conn)
+    query.prepare(query_string)
+    query.exec()
+    data_list = []
+    while query.next():
+        data_list.append(query.value('CaseNumber'))
+    close_db_connection(db_conn)
+    return data_list
+
+
 class CaseDocketSQLServer(object):
     """Packages case docket data from the SQL Server Authority Court database."""
 
