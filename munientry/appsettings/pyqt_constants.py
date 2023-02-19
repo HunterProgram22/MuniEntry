@@ -1,11 +1,10 @@
 """Module containting PyQt6 specific constants used throughout the application."""
 from PyQt6.QtCore import QDate, QDateTime
-from PyQt6.QtGui import QIntValidator, QIcon
+from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QMessageBox
 
 from munientry.appsettings.paths import ICON_PATH
 
-GAVEL_ICON = QIcon(f'{ICON_PATH}gavel.ico')
 MAX_JAIL_TIME_VALIDATOR = QIntValidator(0, 1000)
 TODAY = QDate.currentDate()
 TIMENOW = QDateTime.currentDateTime()

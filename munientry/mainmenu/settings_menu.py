@@ -20,6 +20,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Type
 
 from loguru import logger
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
@@ -28,7 +29,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
 )
 
-from munientry.appsettings.pyqt_constants import GAVEL_ICON
+from munientry.appsettings.paths import ICON_PATH
 
 if TYPE_CHECKING:
     from munientry.mainwindow import MainWindow
@@ -51,7 +52,7 @@ class BaseSettingDialog(QDialog):
     def __init__(self, mainwindow: MainWindow, parent=None) -> None:
         super().__init__(parent)
         self.mainwindow = mainwindow
-        self.setWindowIcon(GAVEL_ICON)
+        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.create_button_box()
         self.create_layout()
 
