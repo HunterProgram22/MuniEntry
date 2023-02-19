@@ -4,35 +4,37 @@ from loguru import logger
 
 def general_case_search_query(case_number: str) -> str:
     return f"""
-    SELECT DISTINCT
-    sc.Id AS SubCaseID,
-    v.Id AS ViolationID,
-    cm.CaseNumber,
-    sc.SubCaseNumber,
-    v.SectionCode AS Statute,
-    sc.ChargeDescription AS Charge,
-    d.DegreeCode,
-	cp.FirstName AS DefFirstName,
-	cp.LastName AS DefLastName,
-	cm.InsuranceStatus AS FraInFile,
-	vd.IsMoving AS MovingBool,
-    CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
-    IIF (sc.AttorneyTypeID = '476', 1,0) AS PubDef
-
+    SELECT
+        sc.Id AS SubCaseID,
+        v.Id AS ViolationID,
+        cm.CaseNumber,
+        sc.SubCaseNumber,
+        v.SectionCode AS Statute,
+        sc.ChargeDescription AS Charge,
+        d.DegreeCode,
+        cp.FirstName AS DefFirstName,
+        cp.LastName AS DefLastName,
+        cm.InsuranceStatus AS FraInFile,
+        vd.IsMoving AS MovingBool,
+        CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
+        IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[SubCase] sc
-    ON cm.Id = sc.CaseMasterID and sc.IsDeleted = '0'
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Violation] v
-    ON sc.ViolationId = v.Id
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
-    ON vd.ViolationID = v.Id and vd.EndDate IS NULL and vd.IsActive = '1'
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Degree] d
-    ON d.Id = vd.DegreeID
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[Attorney] att
-    ON sc.AttorneyID = att.Id
-    LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
-    ON cp.CaseMasterID = sc.CaseMasterID and cp.PersonTypeID = '1'
-    WHERE CaseNumber = '{case_number}'
+    JOIN [AuthorityCourt].[dbo].[SubCase] sc
+        ON cm.Id = sc.CaseMasterID
+    JOIN [AuthorityCourt].[dbo].[Violation] v
+        ON sc.ViolationId = v.Id
+    JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
+        ON v.Id = vd.ViolationID
+    JOIN [AuthorityCourt].[dbo].[Degree] d
+        ON vd.DegreeID = d.Id
+    JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+        ON cm.Id = cp.CaseMasterID
+    LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
+        ON sc.AttorneyID = att.Id
+    WHERE cm.CaseNumber = '{case_number}' 
+        AND sc.IsDeleted = '0' 
+        AND vd.EndDate IS NULL 
+        AND vd.IsActive = '1' 
     """
 
 
@@ -150,39 +152,25 @@ def general_civil_case_query(case_number: str) -> str:
 
 def batch_fta_query(event_date: str, next_day: str) -> str:
     return f"""
-    SELECT DISTINCT cm.CaseNumber
-
+    SELECT DISTINCT cm.CaseNumber 
     FROM [AuthorityCourt].[dbo].[CaseMaster] cm
-    LEFT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce
-    ON cm.Id = ce.CaseMasterID
-    LEFT JOIN [AuthorityCourt].[dbo].[SubCase] sc
-    ON cm.Id = sc.CaseMasterID
-    LEFT JOIN [AuthorityCourt].[dbo].[Violation] v
-    ON sc.ViolationId = v.Id
-    LEFT JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd
-    ON vd.ViolationID = v.Id and vd.EndDate IS NULL and vd.IsActive = '1'
-    LEFT JOIN [AuthorityCourt].[dbo].[ChargeDetail] cd
-    ON v.ChargeID = cd.ChargeId
-
-    WHERE cm.CaseNumber IN (
-        SELECT cm.CaseNumber
-        FROM [AuthorityCourt].[dbo].[CaseMaster] cm
-        RIGHT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce
-        ON cm.Id = ce.CaseMasterID
-        WHERE 	(
-            ce.EventID in ('27', '28', '77', '263', '361', '474') and ce.EventDate = '{event_date}') 
-            and cm.CaseStatusID = '1' and ce.IsDeleted = '0'
-            and (vd.IsMandAppear = '1' or cm.CaseType = '3')
+    LEFT JOIN [AuthorityCourt].[dbo].[SubCase] sc ON cm.Id = sc.CaseMasterID
+    LEFT JOIN [AuthorityCourt].[dbo].[Violation] v ON sc.ViolationId = v.Id
+    LEFT JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd ON vd.ViolationID = v.Id AND vd.EndDate IS NULL AND vd.IsActive = '1'
+    LEFT JOIN [AuthorityCourt].[dbo].[ChargeDetail] cd ON v.ChargeID = cd.ChargeId
+    WHERE EXISTS (
+        SELECT 1
+        FROM [AuthorityCourt].[dbo].[CaseMaster] cm2
+        RIGHT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce ON cm2.Id = ce.CaseMasterID
+        WHERE ce.EventID IN ('27', '28', '77', '263', '361', '474') AND CAST(ce.EventDate AS DATE) = '{event_date}'
+        AND cm.CaseNumber = cm2.CaseNumber AND cm.CaseStatusID = '1' AND ce.IsDeleted = '0' AND (vd.IsMandAppear = '1' OR cm.CaseType = '3')
     )
-
     AND NOT EXISTS (
         SELECT 1
         FROM [AuthorityCourt].[dbo].[CaseEvent] ce
-        WHERE ce.CaseMasterID = cm.Id
-        AND ce.EventDate >= '{next_day}'
+        WHERE ce.CaseMasterID = cm.Id AND CAST(ce.EventDate AS DATE) >= '{next_day}'
     )
-
-ORDER BY cm.CaseNumber
+    ORDER BY cm.CaseNumber
 """
 
 
