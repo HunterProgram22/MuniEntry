@@ -1,6 +1,4 @@
 """Builder module for the Plea Only - Future Sentencing Dialog."""
-from loguru import logger
-
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.plea_only_checkers import PleaOnlyDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
@@ -62,7 +60,3 @@ class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
 
     def additional_setup(self):
         self.functions.show_hide_bond_amount()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
