@@ -20,6 +20,17 @@ class PleaOnlyDialogViewModifier(crim.CrimTrafficViewModifier):
 class PleaOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Plea Only - Future Sentence Dialog."""
 
+    def show_hide_bond_amount(self):
+        if self.dialog.plea_only_bond_type_box.currentText() == 'OR Bond':
+            self.dialog.plea_only_bond_amount_box.setHidden(True)
+            self.dialog.label_8.setHidden(True)
+        elif self.dialog.plea_only_bond_type_box.currentText() == 'Continue Existing Bond':
+            self.dialog.plea_only_bond_amount_box.setHidden(True)
+            self.dialog.label_8.setHidden(True)
+        else:
+            self.dialog.plea_only_bond_amount_box.setVisible(True)
+            self.dialog.label_8.setVisible(True)
+
 
 class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Plea Only - Future Sentence Dialog."""
@@ -28,6 +39,12 @@ class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
         self.connect_plea_all_button_signals()
+        self.connect_bond_signals()
+
+    def connect_bond_signals(self):
+        self.dialog.plea_only_bond_type_box.currentTextChanged.connect(
+            self.dialog.functions.show_hide_bond_amount,
+        )
 
 
 class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
@@ -41,6 +58,10 @@ class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     _slots = PleaOnlyDialogSlotFunctions
     _view_modifier = PleaOnlyDialogViewModifier
     dialog_name = 'Plea Only Dialog'
+
+
+    def additional_setup(self):
+        self.functions.show_hide_bond_amount()
 
 
 if __name__ == '__main__':
