@@ -21,15 +21,16 @@ class PleaOnlyDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Plea Only - Future Sentence Dialog."""
 
     def show_hide_bond_amount(self):
-        if self.dialog.plea_only_bond_type_box.currentText() == 'OR Bond':
-            self.dialog.plea_only_bond_amount_box.setHidden(True)
-            self.dialog.label_8.setHidden(True)
-        elif self.dialog.plea_only_bond_type_box.currentText() == 'Continue Existing Bond':
-            self.dialog.plea_only_bond_amount_box.setHidden(True)
-            self.dialog.label_8.setHidden(True)
-        else:
-            self.dialog.plea_only_bond_amount_box.setVisible(True)
-            self.dialog.label_8.setVisible(True)
+        """
+        Shows or hides the plea-only bond amount box and label based on the selected bond type.
+
+        If the bond type is 'OR Bond' or 'Continue Existing Bond', the plea-only bond amount box
+        and label are hidden. Otherwise, they are shown.
+        """
+        bond_type = self.dialog.plea_only_bond_type_box.currentText()
+        hide_boxes = bond_type in {'OR Bond', 'Continue Existing Bond'}
+        self.dialog.plea_only_bond_amount_box.setHidden(hide_boxes)
+        self.dialog.bond_amount_label.setHidden(hide_boxes)
 
 
 class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
@@ -58,7 +59,6 @@ class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     _slots = PleaOnlyDialogSlotFunctions
     _view_modifier = PleaOnlyDialogViewModifier
     dialog_name = 'Plea Only Dialog'
-
 
     def additional_setup(self):
         self.functions.show_hide_bond_amount()
