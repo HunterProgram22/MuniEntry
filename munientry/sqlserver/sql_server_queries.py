@@ -4,7 +4,7 @@ from loguru import logger
 
 def general_case_search_query(case_number: str) -> str:
     return f"""
-    SELECT
+    SELECT DISTINCT 
         sc.Id AS SubCaseID,
         v.Id AS ViolationID,
         cm.CaseNumber,
@@ -35,6 +35,7 @@ def general_case_search_query(case_number: str) -> str:
         AND sc.IsDeleted = '0' 
         AND vd.EndDate IS NULL 
         AND vd.IsActive = '1' 
+    ORDER BY SubCaseID
     """
 
 
