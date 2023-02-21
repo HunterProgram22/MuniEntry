@@ -1,13 +1,16 @@
-"""Module connecting all functions for the mainwindow mainmenu."""
+"""This module contains the `MainMenu` class.
+
+The MainMenu class sets up the main menu for the Munientry application's main window.
+"""
 from functools import partial
 
 from munientry.mainmenu.batch_menu import create_single_fta_entry, run_batch_fta_process
-from munientry.mainmenu.logs_menu import open_current_log
+from munientry.mainmenu.logs_menu import open_user_log_file
 from munientry.mainmenu.open_menu import open_entries_folder
 from munientry.mainmenu.reports import authoritycourt_reports, munientry_reports
 from munientry.mainmenu.settings_menu import open_workflow_settings
 
-ENTRIES_FOLDERS = (
+ENTRY_FOLDERS = (
     'driving_privileges',
     'crimtraffic_entries',
     'scheduling_entries',
@@ -39,7 +42,7 @@ class MainMenu(object):
         self._connect_settings_menu_functions()
 
     def _connect_open_menu_functions(self):
-        folders = ENTRIES_FOLDERS
+        folders = ENTRY_FOLDERS
         actions = [
             self.mainwindow.actionDriving_Privileges_Folder,
             self.mainwindow.actionCrimTraffic_Folder,
@@ -55,13 +58,13 @@ class MainMenu(object):
             partial(
                 run_batch_fta_process,
                 self.mainwindow,
-            )
+            ),
         )
         self.mainwindow.actionCreate_single_FTA_Entry.triggered.connect(
             partial(
                 create_single_fta_entry,
                 self.mainwindow,
-            )
+            ),
         )
 
     def _connect_reports_menu_functions(self):
@@ -103,7 +106,7 @@ class MainMenu(object):
             )
 
     def _connect_logs_menu_functions(self) -> None:
-        self.mainwindow.actionOpen_Current_Log.triggered.connect(open_current_log)
+        self.mainwindow.actionOpen_Current_Log.triggered.connect(open_user_log_file)
 
     def _connect_settings_menu_functions(self) -> None:
         self.mainwindow.actionWorkflow.triggered.connect(

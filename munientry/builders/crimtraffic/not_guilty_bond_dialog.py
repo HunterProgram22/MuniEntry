@@ -33,12 +33,16 @@ class NotGuiltyBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
         self.dialog.popup_dialog.exec()
 
     def show_hide_bond_conditions(self):
-        if self.dialog.bond_type_box.currentText() == 'Continue Existing Bond':
-            self.dialog.bond_conditions_frame.setHidden(True)
-            self.dialog.special_bond_conditions_frame.setHidden(True)
-        else:
-            self.dialog.bond_conditions_frame.setHidden(False)
-            self.dialog.special_bond_conditions_frame.setHidden(False)
+        """
+        Shows or hides the bond conditions frames based on the selected bond type.
+
+        If the bond type is 'Continue Existing Bond', the bond conditions frames are hidden.
+        Otherwise, they are shown.
+        """
+        bond_type = self.dialog.bond_type_box.currentText()
+        hide_boxes = bond_type in {'Continue Existing Bond'}
+        self.dialog.bond_conditions_frame.setHidden(hide_boxes)
+        self.dialog.special_bond_conditions_frame.setHidden(hide_boxes)
 
 
 class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
@@ -50,6 +54,8 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_not_guilty_all_button()
         self.connect_add_charge_button()
         self.add_special_conditions_signals()
+        self.connect_condition_checkbox_signals()
+        self.connect_hidden_boxes_to_checkboxes()
         self.connect_bond_condition_signals()
 
     def connect_not_guilty_all_button(self):
@@ -58,39 +64,34 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
     def connect_bond_condition_signals(self):
-        """Hides the bond condition boxes if 'Continue Existing Bond' is selected."""
         self.dialog.bond_type_box.currentTextChanged.connect(
             self.dialog.functions.show_hide_bond_conditions,
         )
+
+    def connect_condition_checkbox_signals(self):
+        checkboxes = [
+            self.dialog.admin_license_suspension_checkBox,
+            self.dialog.domestic_violence_checkBox,
+            self.dialog.no_contact_checkBox,
+            self.dialog.custodial_supervision_checkBox,
+            self.dialog.other_conditions_checkBox,
+            self.dialog.vehicle_seizure_checkBox,
+        ]
+        for checkbox in checkboxes:
+            checkbox.toggled.connect(self.dialog.functions.conditions_checkbox_toggle)
 
     def add_special_conditions_signals(self):
         self.dialog.add_special_conditions_Button.pressed.connect(
             self.dialog.functions.start_add_special_bond_conditions_dialog,
         )
-        self.dialog.admin_license_suspension_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.domestic_violence_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.no_contact_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.custodial_supervision_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.other_conditions_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.vehicle_seizure_checkBox.toggled.connect(
-            self.dialog.functions.conditions_checkbox_toggle,
-        )
-        self.dialog.monitoring_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.specialized_docket_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
+
+    def connect_hidden_boxes_to_checkboxes(self):
+        checkboxes = [
+            self.dialog.monitoring_checkBox,
+            self.dialog.specialized_docket_checkBox,
+        ]
+        for checkbox in checkboxes:
+            checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
 class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog):
