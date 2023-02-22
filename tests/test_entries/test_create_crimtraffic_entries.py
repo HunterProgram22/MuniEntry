@@ -11,19 +11,23 @@ tests are complete.
 """
 from PyQt6.QtCore import QTimer
 
-from tests.conftest import CLOSE_TIMER, enter_data, mouse_click
+from tests.conftest import CLOSE_TIMER, enter_data, mouse_click, MUNI10_SAVE_PATH
+from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 
 
-def entry_dialog(main_window):
+def entry_dialog(monkeypatch, main_window):
     """The preliminary setup for creating an entry."""
+    data = CrimTrafficEntryCreator
+    monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
     mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
-    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, '21TRC05611')
+    mouse_click(main_window.get_case_Button)
 
 
-def test_create_no_plea_bond_entry(main_window):
+def test_create_no_plea_bond_entry(monkeypatch, main_window):
     """Tests the creation of an Appear on Warrant (No Plea) / Bond entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.NoPleaBondButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'npb_test')
@@ -42,9 +46,9 @@ def test_create_no_plea_bond_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611npb_test'
 
 
-def test_create_bond_modification_entry(main_window):
+def test_create_bond_modification_entry(monkeypatch, main_window):
     """Tests the creation of a Bond Modification / Revocation entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.BondHearingButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'bhd_test')
@@ -62,9 +66,9 @@ def test_create_bond_modification_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611bhd_test'
 
 
-def test_create_leap_sentencing_entry(qtbot, main_window):
+def test_create_leap_sentencing_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a LEAP Sentencing entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.LeapSentencingButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'leap_sentence_test')
@@ -93,9 +97,9 @@ def test_create_leap_sentencing_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611leap_sentence_test'
 
 
-def test_create_fine_only_entry(qtbot, main_window):
+def test_create_fine_only_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a Fine Only Plea entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.FineOnlyPleaButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'fop_test')
@@ -121,12 +125,12 @@ def test_create_fine_only_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611fop_test'
 
 
-def test_create_not_guilty_bond_entry(qtbot, main_window):
+def test_create_not_guilty_bond_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a Not Guilty Plea / Bond entry.
 
     TODO: Add Special Bond Conditions to entry.
     """
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.NotGuiltyBondButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'ngb_test')
@@ -171,9 +175,9 @@ def test_create_not_guilty_bond_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611ngb_test'
 
 
-def test_create_jail_cc_plea_entry(qtbot, main_window):
+def test_create_jail_cc_plea_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a Jail CC Plea entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.JailCCPleaButton)
     dialog =  main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'jcp_test')
@@ -248,9 +252,9 @@ def test_create_jail_cc_plea_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611jcp_test'
 
 
-def test_create_sentencing_only_entry(qtbot, main_window):
+def test_create_sentencing_only_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a Sentencing Only - Already Plead entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.SentencingOnlyButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'sentencing_only_test')
@@ -319,12 +323,12 @@ def test_create_sentencing_only_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611sentencing_only_test'
 
 
-def test_create_trial_sentencing_entry(qtbot, main_window):
+def test_create_trial_sentencing_entry(monkeypatch, qtbot, main_window):
     """Tests the creation of a Jury Trial / Trial To Court Sentencing entry.
 
     TODO: Bug here - not all conditions populating in test entry.
     """
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.TrialSentencingButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'trial_sentencing')
@@ -392,14 +396,14 @@ def test_create_trial_sentencing_entry(qtbot, main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611trial_sentencing'
 
 
-def test_create_diversion_entry(main_window):
+def test_create_diversion_entry(monkeypatch, main_window):
     """Tests the creation of a Diversion entry.
 
     TODO: Bug here - not all conditions showing up in entry.
     Commented out other_conditions_checkBox and textEdit are conditions that won't
     populate correctly.
     """
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.DiversionButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'div_test')
@@ -416,9 +420,9 @@ def test_create_diversion_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611div_test'
 
 
-def test_create_freeform_entry(main_window):
+def test_create_freeform_entry(monkeypatch, main_window):
     """Tests the creation of a Freeform entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.FreeformEntryButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'freeform_test')
@@ -427,9 +431,9 @@ def test_create_freeform_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611freeform_test'
 
 
-def test_create_failure_to_appear_entry(main_window):
+def test_create_failure_to_appear_entry(monkeypatch, main_window):
     """Tests the creation of a failure to appear entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.FailureToAppearButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'fta_test')
@@ -447,9 +451,9 @@ def test_create_failure_to_appear_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611fta_test'
 
 
-def test_create_leap_admission_plea_entry(main_window):
+def test_create_leap_admission_plea_entry(monkeypatch, main_window):
     """Tests the creation of a LEAP plea entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.LeapAdmissionButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'leap_admission_test')
@@ -458,9 +462,9 @@ def test_create_leap_admission_plea_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611leap_admission_test'
 
 
-def test_create_leap_admission_plea_valid_entry(main_window):
+def test_create_leap_admission_plea_valid_entry(monkeypatch, main_window):
     """Tests the creation of a LEAP Plea Already Valid entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.LeapAdmissionValidButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'leap_admission_valid_test')
@@ -469,9 +473,9 @@ def test_create_leap_admission_plea_valid_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611leap_admission_valid_test'
 
 
-def test_create_plea_future_sentence_entry(main_window):
+def test_create_plea_future_sentence_entry(monkeypatch, main_window):
     """Tests the creation of a Plea Future Sentence entry."""
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.PleaOnlyButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'plea_only_test')
@@ -483,14 +487,14 @@ def test_create_plea_future_sentence_entry(main_window):
     assert dialog.entry_case_information.case_number == '21TRC05611plea_only_test'
 
 
-def test_create_prelim_probation_violation_entry(main_window):
+def test_create_prelim_probation_violation_entry(monkeypatch, main_window):
     """Tests the creation of Prelim Probation Violation entry.
 
     TODO: Bug here - some conditions not populating, but works manually.
     Commented out cc_violation_other_conditions_checkBox and terms_box are the conditions that
     for some reason won't populate.
     """
-    entry_dialog(main_window)
+    entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.ProbationViolationBondButton)
     dialog = main_window.dialog
     # mouse_click(dialog.cc_violation_other_conditions_checkBox)

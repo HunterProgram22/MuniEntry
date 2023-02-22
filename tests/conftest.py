@@ -17,6 +17,8 @@ from munientry.mainwindow.main_window import MainWindow
 from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 
 CLOSE_TIMER = 50
+MUNI10_SAVE_PATH = r'C:\Users\jkudela\AppData\Local\Programs\Python\Python311\Tests\\'
+
 
 """
 INSTRUCTIONS:
