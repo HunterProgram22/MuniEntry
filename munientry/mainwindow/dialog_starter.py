@@ -1,4 +1,5 @@
 """Module for starting dialogs when the dialog button is pressed (released)."""
+from loguru import logger
 import munientry.loaders.civil_dialog_loader
 from munientry.builders.administrative.admin_fiscal_dialog import AdminFiscalDialog
 from munientry.builders.administrative.driving_privileges_dialog import (
@@ -24,36 +25,36 @@ def start_dialog(sender, mainwindow):
     The dialog load process and associated preload checks are governed by the subclass of the
     dialog (in some cases Dialog Builder - TODO: rename all to dialog builder classes).
 
-    If a dialog is a subclass of a particular base class, then it attemps to load the dialog, in
-    some cases only after precheck conditions are met (i.e. the appropriate judicial officer is
-    selected, and/or a case list is selected).
+    If a dialog is a subclass of a particular base class, then it attempts to load the dialog,
+    in some cases only after precheck conditions are met (i.e. the appropriate judicial officer
+    is selected, and/or a case list is selected).
     """
-    if issubclass(sender, CrimTrafficDialogBuilder):
-        if precheck.CrimTrafficPreloadChecker(mainwindow).checks:
-            mainwindow.dialog = loader.CrimTrafficDialogLoader(mainwindow).dialog
-            mainwindow.dialog.exec()
-    elif issubclass(sender, SchedulingDialogBuilder):
-        if precheck.SchedulingPreloadChecker(mainwindow).checks:
-            mainwindow.dialog = loader.SchedulingDialogLoader(mainwindow).dialog
-            mainwindow.dialog.exec()
-    elif issubclass(sender, JuryPaymentDialog):
-        if precheck.AdminPreloadChecker(mainwindow).checks:
-            mainwindow.dialog = loader.AdminJuryDialogLoader(mainwindow).dialog
-            mainwindow.dialog.exec()
-    elif issubclass(sender, DrivingPrivilegesDialog):
-        if precheck.AdminPreloadChecker(mainwindow).checks:
-            mainwindow.dialog = loader.AdminDrivingDialogLoader(mainwindow).dialog
-            mainwindow.dialog.exec()
-    elif issubclass(sender, AdminFiscalDialog):
-        if precheck.AdminFiscalPreloadChecker(mainwindow).checks:
-            mainwindow.dialog = loader.AdminFiscalDialogLoader(mainwindow).dialog
-            mainwindow.dialog.exec()
-    elif issubclass(sender, ProbationWorkflowDialog):
-        mainwindow.dialog = loader.ProbationWorkflowDialogLoader(mainwindow).dialog
-        mainwindow.dialog.exec()
-    elif issubclass(sender, HemmeterWorkflowDialog):
-        mainwindow.dialog = loader.DigitalWorkflowDialogLoader(mainwindow).dialog
-        mainwindow.dialog.exec()
-    elif issubclass(sender, CivFreeformDialog):
-        mainwindow.dialog = munientry.loaders.civil_dialog_loader.CivilDialogLoader(mainwindow).dialog
-        mainwindow.dialog.exec()
+    precheckers = {
+        CrimTrafficDialogBuilder: precheck.CrimTrafficPreloadChecker,
+        SchedulingDialogBuilder: precheck.SchedulingPreloadChecker,
+        JuryPaymentDialog: precheck.AdminPreloadChecker,
+        DrivingPrivilegesDialog: precheck.AdminPreloadChecker,
+        AdminFiscalDialog: precheck.AdminFiscalPreloadChecker,
+    }
+    loaders = {
+        CrimTrafficDialogBuilder: loader.CrimTrafficDialogLoader,
+        SchedulingDialogBuilder: loader.SchedulingDialogLoader,
+        JuryPaymentDialog: loader.AdminJuryDialogLoader,
+        DrivingPrivilegesDialog: loader.AdminDrivingDialogLoader,
+        AdminFiscalDialog: loader.AdminFiscalDialogLoader,
+        ProbationWorkflowDialog: loader.ProbationWorkflowDialogLoader,
+        HemmeterWorkflowDialog: loader.DigitalWorkflowDialogLoader,
+        CivFreeformDialog: munientry.loaders.civil_dialog_loader.CivilDialogLoader,
+    }
+    for dialog_type, precheck_class in precheckers.items():
+        if issubclass(sender, dialog_type):
+            if precheck_class(mainwindow).checks:
+                mainwindow.dialog = loaders[dialog_type](mainwindow).dialog
+                mainwindow.dialog.exec()
+            break
+    else:
+        for dialog_type, loader_class in loaders.items():
+            if issubclass(sender, dialog_type):
+                mainwindow.dialog = loader_class(mainwindow).dialog
+                mainwindow.dialog.exec()
+                break
