@@ -4,7 +4,6 @@ from loguru import logger
 
 def general_case_search_query(case_number: str) -> str:
     return f"""
-    
     SELECT DISTINCT 
     sc.Id AS SubCaseID,
     v.Id AS ViolationID,
@@ -34,7 +33,7 @@ def general_case_search_query(case_number: str) -> str:
 	LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
     ON sc.AttorneyID = att.Id
     
-	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' 
+	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and cp.PersonTypeID = '1' 
 	ORDER BY SubCaseNumber
     """
 
