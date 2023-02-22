@@ -1,6 +1,4 @@
 """Contains classes for loading dialogs from the Main Window."""
-from __future__ import annotations
-
 from typing import Optional
 
 from loguru import logger
@@ -12,8 +10,8 @@ from munientry.loaders.driving_caseload_functions import (
 from munientry.loaders.general_caseload_functions import (
     load_case_information,
     load_single_case,
+    load_single_civil_case,
 )
-from munientry.sqlserver.civil_getters import CivilCaseSqlServer
 
 
 class DialogLoader(object):
@@ -166,18 +164,6 @@ class SchedulingDialogLoader(DialogLoader):
             cms_case=cms_case_data,
             case_table=case_table,
         )
-
-
-def load_single_civil_case(case_number: str) -> CivCmsCaseInformation:
-    """Loads a single case into the CivCmsCaseInformation model.
-
-    Args:
-        case_number (str): A string of the case number to be loaded.
-
-    Returns:
-        CivCmsCaseInformation: An instance of a CivCmsCaseInformation object with data from a single case.
-    """
-    return CivilCaseSqlServer(case_number).load_case()
 
 
 class CivilDialogLoader(object):

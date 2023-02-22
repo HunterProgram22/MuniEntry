@@ -16,12 +16,15 @@ Functions:
     load_single_case(case_number) -> CmsCaseInformation
 
     set_case_loader(daily_case_list) -> CmsCaseInformation
+
+    load_single_civil_case(case_number) -> CivilCmsCaseInformation
 """
 from loguru import logger
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.sqlserver import sql_server_getters as sql_server
-from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.cms_models import CmsCaseInformation, CivilCmsCaseInformation
+from munientry.sqlserver.civil_getters import CivilCaseSqlServer
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox
 
@@ -145,5 +148,13 @@ def set_case_loader(daily_case_list: DailyCaseListComboBox) -> CmsCaseInformatio
     return load_single_case(case_number)
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+def load_single_civil_case(case_number: str) -> CivilCmsCaseInformation:
+    """Loads a single case into the CivCmsCaseInformation model.
+
+    Args:
+        case_number (str): A string of the case number to be loaded.
+
+    Returns:
+        CivCmsCaseInformation: An instance of a CivCmsCaseInformation object with data from a single case.
+    """
+    return CivilCaseSqlServer(case_number).load_case()
