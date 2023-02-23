@@ -33,7 +33,7 @@ def general_case_search_query(case_number: str) -> str:
 	LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
     ON sc.AttorneyID = att.Id
     
-	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and cp.PersonTypeID = '1' 
+	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and cp.PersonTypeID = '1' and vd.EndDate is Null 
 	ORDER BY SubCaseNumber
     """
 
