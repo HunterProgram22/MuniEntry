@@ -160,7 +160,7 @@ class TrialToCourtHearingDialog(sched.SchedulingDialogBuilder, Ui_TrialToCourtHe
     _signal_connector = TrialToCourtDialogSignalConnector
     _slots = TrialToCourtDialogSlotFunctions
     _view_modifier = TrialToCourtDialogViewModifier
-    dialog_name = 'Trial To Court Notice Of Hearing Entry'
+    dialog_name = 'Trial To Court Notice Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())

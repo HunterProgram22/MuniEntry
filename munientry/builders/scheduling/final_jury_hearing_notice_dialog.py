@@ -163,7 +163,7 @@ class FinalJuryNoticeHearingDialog(
     _signal_connector = FinalJuryNoticeHearingSignalConnector
     _slots = FinalJuryNoticeHearingSlotFunctions
     _view_modifier = FinalJuryNoticeHearingViewModifier
-    dialog_name = 'Final And Jury Notice Of Hearing Entry'
+    dialog_name = 'Final And Jury Notice Hearing Entry'
 
     def additional_setup(self):
         self.assigned_judge = set_assigned_judge(self.sender())
