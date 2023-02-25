@@ -58,7 +58,7 @@ class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationVi
     _signal_connector = ProbationViolationBondDialogSignalConnector
     _slots = ProbationViolationBondDialogSlotFunctions
     _view_modifier = ProbationViolationBondDialogViewModifier
-    dialog_name = 'Probation Violation Bond Dialog'
+    dialog_name = 'Probation Violation Bond Entry'
 
     def additional_setup(self):
         self.entry_case_information.bond_conditions = ProbationViolationBondConditions()

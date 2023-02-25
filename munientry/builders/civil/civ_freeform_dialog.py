@@ -31,7 +31,7 @@ class CivFreeformDialog(civil.CivilDialogBuilder, Ui_CivFreeformDialog):
     _signal_connector = CivFreeformDialogSignalConnector
     _slots = CivFreeformDialogSlotFunctions
     _view_modifier = CivFreeformDialogViewModifier
-    dialog_name = 'Civil Freeform Entry Dialog'
+    dialog_name = 'Civil Freeform Entry'
 
 
 if __name__ == '__main__':

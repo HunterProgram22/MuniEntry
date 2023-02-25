@@ -104,7 +104,7 @@ class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog)
     _signal_connector = NotGuiltyBondDialogSignalConnector
     _slots = NotGuiltyBondDialogSlotFunctions
     _view_modifier = NotGuiltyBondDialogViewModifier
-    dialog_name = 'Not Guilty Bond Dialog'
+    dialog_name = 'Not Guilty Bond Entry'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

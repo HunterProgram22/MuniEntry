@@ -89,7 +89,7 @@ class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
     _signal_connector = NoPleaBondDialogSignalConnector
     _slots = NoPleaBondDialogSlotFunctions
     _view_modifier = NoPleaBondDialogViewModifier
-    dialog_name = 'No Plea Bond Dialog'
+    dialog_name = 'No Plea Bond Entry'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

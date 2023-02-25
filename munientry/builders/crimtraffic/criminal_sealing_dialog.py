@@ -33,4 +33,4 @@ class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEnt
     _signal_connector = CriminalSealingDialogSignalConnector
     _slots = CriminalSealingDialogSlotFunctions
     _view_modifier = CriminalSealingDialogViewModifier
-    dialog_name = 'Criminal Sealing Entry Dialog'
+    dialog_name = 'Criminal Sealing Entry'

@@ -85,7 +85,7 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
     _signal_connector = SentencingOnlyDialogSignalConnector
     _slots = SentencingOnlyDialogSlotFunctions
     _view_modifier = SentencingOnlyDialogViewModifier
-    dialog_name = 'Sentencing Only Dialog'
+    dialog_name = 'Sentencing Judgment Entry'
 
     def additional_setup(self):
         validator = MAX_JAIL_TIME_VALIDATOR

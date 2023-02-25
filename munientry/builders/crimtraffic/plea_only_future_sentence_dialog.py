@@ -56,7 +56,7 @@ class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
     _signal_connector = PleaOnlyDialogSignalConnector
     _slots = PleaOnlyDialogSlotFunctions
     _view_modifier = PleaOnlyDialogViewModifier
-    dialog_name = 'Plea Only Dialog'
+    dialog_name = 'Plea Only Entry'
 
     def additional_setup(self):
         self.functions.show_hide_bond_amount()
