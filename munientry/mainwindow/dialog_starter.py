@@ -1,4 +1,4 @@
-"""Module for starting dialogs when the dialog button is pressed (released)."""
+"""Module for starting dialogs if required precheck conditions are satisfied."""
 from types import MappingProxyType
 from typing import Optional
 
