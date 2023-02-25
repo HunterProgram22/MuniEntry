@@ -145,6 +145,11 @@ Civil_Freeform_Entry_Template = Template(
     'Civil_Freeform_Entry_Template.docx',
 )
 
+Criminal_Sealing_Entry_Template = Template(
+    'Criminal Sealing Entry',
+    'Criminal_Sealing_Entry_Template.docx',
+)
+
 TEMPLATE_DICT = types.MappingProxyType({
     'Fine Only Plea Dialog': Fine_Only_Plea_Final_Judgment_Template,
     'Jail CC Plea Dialog': Jail_CC_Plea_Final_Judgment_Template,
@@ -162,6 +167,7 @@ TEMPLATE_DICT = types.MappingProxyType({
     'Leap Admission Plea Already Valid Dialog': Leap_Admission_Plea_Already_Valid_Template,
     'Leap Sentencing Dialog': Leap_Sentencing_Template,
     'Freeform Entry Dialog': Freeform_Entry_Template,
+    'Criminal Sealing Entry Dialog': Criminal_Sealing_Entry_Template,
 
     'Rohrer Scheduling Entry': Scheduling_Entry_Template_Rohrer,
     'Hemmeter Scheduling Entry': Scheduling_Entry_Template_Hemmeter,
