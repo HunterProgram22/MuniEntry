@@ -39,9 +39,6 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         self.entry_case_information.judicial_officer = self.judicial_officer
         try:
             self.defense_counsel_name_box.load_attorneys()
-            # if self.defense_counsel_name_box.currentText() == '':
-            #     logger.info('No Attorney provided.')
-            #     self.defense_counsel_name_box.setCurrentIndex(0)
         except AttributeError as error:
             logger.warning(error)
         self.load_cms_data_to_view()
