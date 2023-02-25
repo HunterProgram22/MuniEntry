@@ -16,7 +16,7 @@ from munientry.builders.crimtraffic import arraignment_continue_dialog, fine_onl
     jail_cc_plea_dialog, diversion_dialog, not_guilty_bond_dialog, failure_to_appear_dialog, \
     probation_violation_bond_dialog, bond_hearing_dialog, plea_only_future_sentence_dialog, \
     no_plea_bond_dialog, leap_plea_dialog, leap_plea_valid_dialog, leap_sentencing_dialog, \
-    trial_sentencing_dialog, sentencing_only_dialog, freeform_dialog
+    trial_sentencing_dialog, sentencing_only_dialog, freeform_dialog, criminal_sealing_dialog
 from munientry.builders.scheduling import sched_entry_dialogs, final_jury_hearing_notice_dialog, \
     general_hearing_notice_dialog, trial_to_court_hearing_notice_dialog
 from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter, rohrer_dw_dialog as rohrer, \
@@ -350,6 +350,7 @@ class MainWindowViewModifier(object):
             self.mainwindow.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
             self.mainwindow.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
             self.mainwindow.FreeformEntryButton: freeform_dialog.FreeformDialog,
+            self.mainwindow.CriminalSealingButton: criminal_sealing_dialog.CriminalSealingDialog,
 
             ###Civil###
             self.mainwindow.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,

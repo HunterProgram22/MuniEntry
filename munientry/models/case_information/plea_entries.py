@@ -45,6 +45,11 @@ class FreeformEntryCaseInformation(CriminalCaseInformation):
 
 
 @dataclass
+class CriminalSealingEntryCaseInformation(CriminalCaseInformation):
+    """General case information data variables for criminal sealing entry."""
+
+
+@dataclass
 class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables and data for Leap Admission entry."""
 

@@ -101,5 +101,16 @@ class FreeformDialogUpdater(BaseDialogUpdater):
         self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
 
 
+class CriminalSealingDialogUpdater(BaseDialogUpdater):
+    """Updater for Criminal Sealing Dialog - no charge grid."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.update_case_information()
+
+    def update_case_information(self) -> CaseInformationUpdater:
+        return CaseInformationUpdater(self.dialog)
+
+
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')

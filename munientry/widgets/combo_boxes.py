@@ -105,6 +105,8 @@ class DefenseCounselComboBox(NoScrollComboBox):
         for attorney in attorney_list:
             self.addItem(attorney)
         close_db_connection(db_connection)
+        # self.insertItem(0, '')
+        # self.setCurrentIndex(0)
 
 
 class DegreeComboBox(NoScrollComboBox):

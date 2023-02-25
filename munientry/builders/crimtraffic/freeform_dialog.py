@@ -1,6 +1,4 @@
 """Builder module for the Freeform Entry Dialog."""
-from loguru import logger
-
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import FreeformDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
@@ -26,7 +24,7 @@ class FreeformDialogSignalConnector(crim.CrimTrafficSignalConnector):
 
 
 class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
-    """Dialog builder class for 'Freeform Entry'."""
+    """Dialog builder class for Freeform Entry."""
 
     _case_information_model = FreeformEntryCaseInformation
     _case_loader = CmsNoChargeLoader
@@ -36,7 +34,3 @@ class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
     _slots = FreeformDialogSlotFunctions
     _view_modifier = FreeformDialogViewModifier
     dialog_name = 'Freeform Entry Dialog'
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
