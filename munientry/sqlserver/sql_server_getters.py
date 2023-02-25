@@ -9,7 +9,7 @@ from munientry.sqlserver.sql_server_queries import (
     general_case_search_query,
     get_case_docket_query,
 )
-from munientry.models.cms_models import CmsCaseInformation
+from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
 
@@ -64,7 +64,7 @@ class CriminalCaseSqlServer(object):
         self.case_number = case_number
         self.database_connection_name = 'con_authority_court'
         self.database = open_db_connection(self.database_connection_name)
-        self.case = CmsCaseInformation()
+        self.case = CriminalCmsCaseInformation()
         self.query_case_data()
         self.load_query_data_into_case()
         self.query.finish()
@@ -101,7 +101,7 @@ class CriminalCaseSqlServer(object):
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 
-    def load_case(self) -> CmsCaseInformation:
+    def load_case(self) -> CriminalCmsCaseInformation:
         return self.case
 
 
@@ -111,7 +111,7 @@ class MultipleCriminalCaseSQLServer(CriminalCaseSqlServer):
         self.all_case_numbers = matched_case_numbers_list
         self.database_connection_name = 'con_authority_court'
         self.database = open_db_connection(self.database_connection_name)
-        self.case = CmsCaseInformation()
+        self.case = CriminalCmsCaseInformation()
         self.query_case_data()
         self.query.finish()
         close_db_connection(self.database)
