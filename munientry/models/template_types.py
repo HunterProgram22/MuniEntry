@@ -19,7 +19,10 @@ def get_template_dict() -> MappingProxyType:
 
 @dataclass
 class Template(object):
-    """Container for a template name and template path."""
+    """Container for a template name and template path.
+
+    TODO: In the Builder Class the attribute of template name becomes dialog_name, need to update.
+    """
 
     template_name: str
     template_path: str
