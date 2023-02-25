@@ -67,7 +67,7 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     _signal_connector = ArraignmentContinueDialogSignalConnector
     _slots = ArraignmentContinueDialogSlotFunctions
     _view_modifier = ArraignmentContinueDialogViewModifier
-    dialog_name = 'Arraignment Continuance Dialog'
+    dialog_name = 'Arraignment Continuance Entry'
 
     def additional_setup(self):
         self.functions.update_arraignment_date()

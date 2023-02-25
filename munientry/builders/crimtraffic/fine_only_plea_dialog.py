@@ -63,7 +63,7 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     _signal_connector = FineOnlyDialogSignalConnector
     _slots = FineOnlyDialogSlotFunctions
     _view_modifier = FineOnlyDialogViewModifier
-    dialog_name = 'Fine Only Plea Dialog'
+    dialog_name = 'Fine Only Judgment Entry'
 
     def additional_setup(self):
         self.additional_conditions_list = [

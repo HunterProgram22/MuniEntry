@@ -39,7 +39,7 @@ class LeapPleaValidDialog(crim.CrimTrafficDialogBuilder, Ui_LeapPleaValidDialog)
     _signal_connector = LeapAdmissionPleaValidDialogSignalConnector
     _slots = LeapAdmissionPleaDialogSlotFunctions
     _view_modifier = LeapAdmissionPleaDialogViewModifier
-    dialog_name = 'Leap Admission Plea Already Valid Dialog'
+    dialog_name = 'Leap Admission Plea Already Valid Entry'
 
 
 if __name__ == '__main__':

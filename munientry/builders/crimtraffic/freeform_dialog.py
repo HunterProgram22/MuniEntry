@@ -33,4 +33,4 @@ class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
     _signal_connector = FreeformDialogSignalConnector
     _slots = FreeformDialogSlotFunctions
     _view_modifier = FreeformDialogViewModifier
-    dialog_name = 'Freeform Entry Dialog'
+    dialog_name = 'Freeform Entry'

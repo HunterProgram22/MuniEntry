@@ -89,7 +89,7 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
     _signal_connector = JailCCDialogSignalConnector
     _slots = JailCCDialogSlotFunctions
     _view_modifier = JailCCDialogViewModifier
-    dialog_name = 'Jail CC Plea Dialog'
+    dialog_name = 'Jail CC Judgment Entry'
 
     def additional_setup(self):
         """TODO: same refactor for all additional conditions list should be made."""
