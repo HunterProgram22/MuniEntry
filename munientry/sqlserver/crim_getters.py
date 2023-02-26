@@ -73,7 +73,6 @@ class CrimCaseData(object):
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
-        logger.debug(query_string)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         logger.info(f'Querying Authority Court for: {self.case_number}')

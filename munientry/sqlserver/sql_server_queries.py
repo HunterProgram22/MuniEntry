@@ -28,7 +28,7 @@ def general_case_search_query(case_number: str) -> str:
     ON v.Id = vd.ViolationID
 	JOIN [AuthorityCourt].[dbo].[Degree] d
     ON vd.DegreeID = d.Id
-	JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+	LEFT JOIN [AuthorityCourt].[dbo].[CasePerson] cp
     ON cm.Id = cp.CaseMasterID
 	LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
     ON sc.AttorneyID = att.Id
