@@ -15,7 +15,6 @@ class NotGuiltyBondViewModifier(crim.CrimTrafficViewModifier):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.set_appearance_reason()
         self.dialog.monitoring_type_box.setHidden(True)
         self.dialog.specialized_docket_type_box.setHidden(True)
 

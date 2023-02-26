@@ -22,19 +22,20 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
     ):
         """Self.case_table must be set before the call to super().__init__.
 
-        The init of BaseDialog, called by super().__init__ calls ModifyView which will use the
-        case table.
+        The init of BaseDialog, called by super().__init__ calls ModifyView for the specific dialog
+        which will use the case table.
         """
         self.case_table = case_table
-        logger.info(f'Loading case from {self.case_table}')
         super().__init__(parent)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.workflow_status = workflow_status
-        logger.info(f'Digital Workflow is {self.workflow_status} for dialog.')
         loaded_case = cms_case.case_number
-        logger.info(f'Loaded Case {loaded_case}')
+        logger.info(
+            f'Loaded Case {loaded_case} from {self.case_table};'
+            + f' Digital Workflow is {self.workflow_status}'
+        )
         self.load_entry_case_information_model()
         self.entry_case_information.judicial_officer = self.judicial_officer
         try:
@@ -54,43 +55,41 @@ class CrimTrafficViewModifier(base.BaseDialogViewModifier):
     """Base View Builder for CrimTraffic Entries."""
 
     def set_appearance_reason(self):
-        if self.dialog.case_table == 'final_pretrials':
-            self.dialog.appearance_reason_box.setCurrentText('a change of plea')
-        elif self.dialog.case_table == 'pleas':
-            self.dialog.appearance_reason_box.setCurrentText('a change of plea')
-        elif self.dialog.case_table == 'trials_to_court':
-            self.dialog.appearance_reason_box.setCurrentText('a change of plea')
+        """Called by some dialog builders to set appearance reason."""
+        appearance_reason = 'a change of plea'
+        if self.dialog.case_table in {'final_pretrials', 'pleas', 'trials_to_court'}:
+            self.dialog.appearance_reason_box.setCurrentText(appearance_reason)
 
 
 class FineCostsMixin(object):
     """Mixin methods for dialogs that calculate fines and costs."""
 
-    def set_fines_costs_pay_date(self, days_to_add_string):
+    def set_fines_costs_pay_date(self, days_to_add: str) -> None:
         """Sets the fines/costs pay date.
 
         Date is set to the Tuesday after the number of days added, unless forthwith or a special
         docket is selected.
         """
-        if days_to_add_string == 'forthwith':
+        if days_to_add == 'forthwith':
             self.dialog.balance_due_date.setHidden(False)
             self.dialog.balance_due_date.setDate(TODAY)
-        elif days_to_add_string in SPECIAL_DOCKETS_COSTS:
+        elif days_to_add in SPECIAL_DOCKETS_COSTS:
             self.dialog.balance_due_date.setHidden(True)
         else:
             self.dialog.balance_due_date.setHidden(False)
-            days_to_add = self.get_days_to_add(days_to_add_string)
+            days_to_add = self.get_days_to_add(days_to_add)
             total_days_to_add = set_future_date(days_to_add, 'Tuesday')
             self.dialog.balance_due_date.setDate(
                 TODAY.addDays(total_days_to_add),
             )
 
-    def get_days_to_add(self, days_to_add_string):
+    def get_days_to_add(self, days_to_add: str) -> int:
         pay_date_dict = {
             'within 30 days': 30,
             'within 60 days': 60,
             'within 90 days': 90,
         }
-        return pay_date_dict.get(days_to_add_string)
+        return pay_date_dict.get(days_to_add)
 
     def show_costs_and_fines(self):
         self.dialog.update_entry_case_information()
