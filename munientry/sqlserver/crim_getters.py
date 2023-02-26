@@ -49,7 +49,7 @@ class CaseDocketSQLServer(object):
         return data_list
 
 
-class CriminalCaseSqlServer(object):
+class CrimCaseData(object):
     """Packages case data from the SQL Server Authority Court database.
 
     The class accepts the case number to identify the case, then retrieves
@@ -73,6 +73,7 @@ class CriminalCaseSqlServer(object):
     def query_case_data(self) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
+        logger.debug(query_string)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         logger.info(f'Querying Authority Court for: {self.case_number}')
@@ -105,7 +106,7 @@ class CriminalCaseSqlServer(object):
         return self.case
 
 
-class MultipleCriminalCaseSQLServer(CriminalCaseSqlServer):
+class MultipleCrimCaseData(CrimCaseData):
 
     def __init__(self, matched_case_numbers_list: list) -> None:
         self.all_case_numbers = matched_case_numbers_list

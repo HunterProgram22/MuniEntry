@@ -24,13 +24,13 @@ from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter, rohrer_
 from munientry.data.connections import open_db_connection, close_db_connection
 from munientry.data.data_cleaners import clean_last_name
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge, update_crimtraffic_case_number, \
+from munientry.helper_functions import set_random_judge, update_crim_case_number, \
     update_civil_case_number
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.models.party_types import JudicialOfficer
-from munientry.sqlserver import sql_server_queries as sql_query, sql_server_getters as sql_server, \
+from munientry.sqlserver import sql_server_queries as sql_query, crim_getters as crim, \
     civil_getters as civil
 from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
@@ -102,23 +102,20 @@ class MainWindowSlotFunctionsMixin(object):
             + f' The assignment was made at {time_now}.',
             )
 
+
     def set_person_stack_widget(self) -> None:
-        logger.action('Entry Tab Changed')
-        judicial_officers = self.judicial_officers_Stack
-        assignment_commissioners = self.assignment_commissioners_Stack
-        admin_staff = self.admin_staff_Stack
-        if self.tabWidget.currentWidget().objectName() == 'crim_traffic_Tab':
-            self.stackedWidget.setCurrentWidget(judicial_officers)
-        if self.tabWidget.currentWidget().objectName() == 'scheduling_Tab':
-            self.stackedWidget.setCurrentWidget(assignment_commissioners)
-        if self.tabWidget.currentWidget().objectName() == 'admin_Tab':
-            self.stackedWidget.setCurrentWidget(admin_staff)
-        if self.tabWidget.currentWidget().objectName() == 'civil_Tab':
-            self.stackedWidget.setCurrentWidget(judicial_officers)
-        current_stacked_widget = self.stackedWidget.currentWidget().objectName()
-        current_tab_widget = self.tabWidget.currentWidget().objectName()
-        logger.info(f'Current stackedWidget is {current_stacked_widget}')
-        logger.info(f'Current tabWidget is {current_tab_widget}')
+        stack_mapping = {
+            'crim_traffic_Tab': self.judicial_officers_Stack,
+            'scheduling_Tab': self.assignment_commissioners_Stack,
+            'admin_Tab': self.admin_staff_Stack,
+            'civil_Tab': self.judicial_officers_Stack,
+        }
+        current_tab_name = self.tabWidget.currentWidget().objectName()
+        current_stack = stack_mapping.get(current_tab_name)
+        if current_stack is not None:
+            self.stackedWidget.setCurrentWidget(current_stack)
+            logger.info(f'Current Staff Tab is {current_stack.objectName()}')
+        logger.info(f'Current Entry Tab is {current_tab_name}')
 
     def set_entries_tab(self) -> None:
         logger.action('Search Tab Changed')
@@ -126,37 +123,35 @@ class MainWindowSlotFunctionsMixin(object):
             self.tabWidget.setCurrentWidget(self.civil_Tab)
 
     def query_case_info(self):
-        """Queries a SQL Server database (AuthorityCourtDBO or AuthorityCivilDBO) and retreives case info."""
+        """Queries SQL Server database (AuthorityCourt/AuthorityCivil) and retrieves case data."""
+        widget_name = self.search_tabWidget.currentWidget().objectName()
+        if widget_name == 'case_search_tab':
+            search_box = self.case_search_box
+            case_data = crim.CrimCaseData(update_crim_case_number(search_box.text())).load_case()
+            self.set_crimtraffic_case_info_from_search(case_data)
+        elif widget_name == 'civil_case_search_tab':
+            search_box = self.civil_case_search_box
+            case_data = civil.CivilCaseData(update_civil_case_number(search_box.text())).load_case()
+            self.set_civil_case_info_from_search(case_data)
+        search_box.setText(case_data.case_number)
 
-        if self.search_tabWidget.currentWidget().objectName() == 'case_search_tab':
-            case_number = self.case_search_box.text()
-            case_number = update_crimtraffic_case_number(case_number)
-            self.case_search_box.setText(case_number)
-            cms_case_data = sql_server.CriminalCaseSqlServer(case_number).load_case()
-            self.set_crimtraffic_case_info_from_search(cms_case_data)
-
-        elif self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
-            case_number = self.civil_case_search_box.text()
-            case_number = update_civil_case_number(case_number)
-            self.civil_case_search_box.setText(case_number)
-            cms_case_data = civil.CivilCaseSqlServer(case_number).load_case()
-            self.set_civil_case_info_from_search(cms_case_data)
-
-    def set_crimtraffic_case_info_from_search(self, cms_case_data) -> None:
+    def set_crimtraffic_case_info_from_search(self, case_data) -> None:
         """Sets the case search fields on the UI with data from the case that is retrieved."""
-        self.case_number_label_field.setText(cms_case_data.case_number)
-        def_first_name = cms_case_data.defendant.first_name
-        def_last_name = cms_case_data.defendant.last_name
+        self.case_number_label_field.setText(case_data.case_number)
+        def_first_name = case_data.defendant.first_name
+        def_last_name = case_data.defendant.last_name
         self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        charge_list_text = ', '.join(str(charge[0]) for charge in cms_case_data.charges_list)
+        charge_list_text = ', '.join(str(charge[0]) for charge in case_data.charges_list)
         self.case_charges_label_field.setText(charge_list_text)
 
-    def set_civil_case_info_from_search(self, cms_case_data):
-        self.civil_case_number_field.setText(cms_case_data.case_number)
+    def set_civil_case_info_from_search(self, case_data):
+        """Sets the case search fields on the UI with data from the case that is retrieved."""
+        self.case_number_label_field.setText(case_data.case_number)
+        self.civil_case_number_field.setText(case_data.case_number)
         self.civil_case_name_field.setText(
-            f'{cms_case_data.primary_plaintiff.party_name} vs. {cms_case_data.primary_defendant.party_name}'
+            f'{case_data.primary_plaintiff.party_name} vs. {case_data.primary_defendant.party_name}'
         )
-        self.civil_case_type_field.setText(cms_case_data.case_type)
+        self.civil_case_type_field.setText(case_data.case_type)
 
     def show_case_docket_case_list(self):
         """Value Error catch put in to handle if the empty slot of daily case list is selected."""
@@ -170,9 +165,9 @@ class MainWindowSlotFunctionsMixin(object):
     def show_case_docket(self, case_number=None):
         if case_number is None:
             case_number = self.case_search_box.text()
-            case_number = update_crimtraffic_case_number(case_number)
+            case_number = update_crim_case_number(case_number)
             self.case_search_box.setText(case_number)
-        data_list = sql_server.CaseDocketSQLServer(case_number).get_docket()
+        data_list = crim.CaseDocketSQLServer(case_number).get_docket()
         rows = len(data_list)
         self.window = TableReportWindow(f'Docket Report for {case_number}')
         self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)

@@ -9,7 +9,7 @@ Functions:
 """
 from loguru import logger
 
-from munientry.sqlserver import sql_server_getters as sql_server
+from munientry.sqlserver import crim_getters as sql_server
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 
 

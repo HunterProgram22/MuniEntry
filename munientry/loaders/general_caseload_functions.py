@@ -22,9 +22,9 @@ Functions:
 from loguru import logger
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
-from munientry.sqlserver import sql_server_getters as sql_server
+from munientry.sqlserver import crim_getters as sql_server
 from munientry.models.cms_models import CriminalCmsCaseInformation, CivilCmsCaseInformation
-from munientry.sqlserver.civil_getters import CivilCaseSqlServer
+from munientry.sqlserver.civil_getters import CivilCaseData
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox
 
@@ -114,7 +114,7 @@ def load_multiple_cases(matched_case_numbers: list) -> CriminalCmsCaseInformatio
     Returns:
         CriminalCmsCaseInformation: An instance of a CmsCaseInformation object with data from a single case.
     """
-    return sql_server.MultipleCriminalCaseSQLServer(matched_case_numbers).load_case()
+    return sql_server.MultipleCrimCaseData(matched_case_numbers).load_case()
 
 
 def load_single_case(case_number: str) -> CriminalCmsCaseInformation:
@@ -126,7 +126,7 @@ def load_single_case(case_number: str) -> CriminalCmsCaseInformation:
     Returns:
         CriminalCmsCaseInformation: An instance of a CmsCaseInformation object with data from a single case.
     """
-    return sql_server.CriminalCaseSqlServer(case_number).load_case()
+    return sql_server.CrimCaseData(case_number).load_case()
 
 
 def set_case_loader(daily_case_list: DailyCaseListComboBox) -> CriminalCmsCaseInformation:
@@ -157,4 +157,4 @@ def load_single_civil_case(case_number: str) -> CivilCmsCaseInformation:
     Returns:
         CivCmsCaseInformation: An instance of a CivCmsCaseInformation object with data from a single case.
     """
-    return CivilCaseSqlServer(case_number).load_case()
+    return CivilCaseData(case_number).load_case()
