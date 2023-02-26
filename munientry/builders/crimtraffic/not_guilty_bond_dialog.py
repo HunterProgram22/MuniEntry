@@ -1,20 +1,16 @@
 """Builder module for the Not Guilty Bond Dialog."""
-from loguru import logger
-
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
 from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
-from munientry.models.case_information.plea_entries import (
-    NotGuiltyBondEntryCaseInformation,
-)
+from munientry.models.case_information.plea_entries import NotGuiltyBondEntryCaseInformation
 from munientry.updaters.grid_case_updaters import NotGuiltyBondDialogUpdater
 from munientry.views.not_guilty_bond_dialog_ui import Ui_NotGuiltyBondDialog
 
 
-class NotGuiltyBondDialogViewModifier(crim.CrimTrafficViewModifier):
+class NotGuiltyBondViewModifier(crim.CrimTrafficViewModifier):
     """View builder for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):
@@ -24,7 +20,7 @@ class NotGuiltyBondDialogViewModifier(crim.CrimTrafficViewModifier):
         self.dialog.specialized_docket_type_box.setHidden(True)
 
 
-class NotGuiltyBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
+class NotGuiltyBondSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Not Guilty Bond Dialog."""
 
     def start_add_special_bond_conditions_dialog(self):
@@ -32,20 +28,8 @@ class NotGuiltyBondDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
         self.dialog.popup_dialog = AddSpecialBondConditionsDialog(self.dialog)
         self.dialog.popup_dialog.exec()
 
-    def show_hide_bond_conditions(self):
-        """
-        Shows or hides the bond conditions frames based on the selected bond type.
 
-        If the bond type is 'Continue Existing Bond', the bond conditions frames are hidden.
-        Otherwise, they are shown.
-        """
-        bond_type = self.dialog.bond_type_box.currentText()
-        hide_boxes = bond_type in {'Continue Existing Bond'}
-        self.dialog.bond_conditions_frame.setHidden(hide_boxes)
-        self.dialog.special_bond_conditions_frame.setHidden(hide_boxes)
-
-
-class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
+class NotGuiltyBondSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Not Guilty Bond Dialog."""
 
     def __init__(self, dialog):
@@ -56,16 +40,10 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.add_special_conditions_signals()
         self.connect_condition_checkbox_signals()
         self.connect_hidden_boxes_to_checkboxes()
-        self.connect_bond_condition_signals()
 
     def connect_not_guilty_all_button(self):
         self.dialog.not_guilty_all_Button.pressed.connect(
             self.dialog.charges_gridLayout.set_pleas_to_not_guilty,
-        )
-
-    def connect_bond_condition_signals(self):
-        self.dialog.bond_type_box.currentTextChanged.connect(
-            self.dialog.functions.show_hide_bond_conditions,
         )
 
     def connect_condition_checkbox_signals(self):
@@ -86,6 +64,7 @@ class NotGuiltyBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
     def connect_hidden_boxes_to_checkboxes(self):
+        """The 'show_hide_checkbox_connected_fields' is a function in BaseDialogSlotFunctions."""
         checkboxes = [
             self.dialog.monitoring_checkBox,
             self.dialog.specialized_docket_checkBox,
@@ -101,9 +80,9 @@ class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog)
     _case_loader = CmsChargeLoader
     _info_checker = NotGuiltyBondDialogInfoChecker
     _model_updater = NotGuiltyBondDialogUpdater
-    _signal_connector = NotGuiltyBondDialogSignalConnector
-    _slots = NotGuiltyBondDialogSlotFunctions
-    _view_modifier = NotGuiltyBondDialogViewModifier
+    _signal_connector = NotGuiltyBondSignalConnector
+    _slots = NotGuiltyBondSlotFunctions
+    _view_modifier = NotGuiltyBondViewModifier
     dialog_name = 'Not Guilty Bond Entry'
 
     condition_checkbox_dict = {
@@ -134,7 +113,3 @@ class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog)
             ('vehicle_seizure_checkBox', self.entry_case_information.vehicle_seizure),
         ]
         self.charges_gridLayout.set_pleas_to_not_guilty()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
