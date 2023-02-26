@@ -1,9 +1,13 @@
 """Module for packaging data from SQL Server database for use in application."""
+from __future__ import annotations
+
 from loguru import logger
-from PyQt6.QtSql import QSqlQuery
+from PyQt6.QtSql import QSqlQuery, QSqlDatabase
+from munientry.appsettings.settings import DAILY_CASE_LIST_STORED_PROCS
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.data_cleaners import clean_offense_name, clean_statute_name
+from munientry.data.data_cleaners import clean_offense_name, clean_statute_name, clean_last_name
+from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.sqlserver.sql_server_queries import (
     driving_case_search_query,
     general_case_search_query,
@@ -12,6 +16,35 @@ from munientry.sqlserver.sql_server_queries import (
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
+
+
+def get_daily_case_list(table_name: str) -> list[str]:
+    db_connection = open_db_connection('con_authority_court')
+    stored_proc = DAILY_CASE_LIST_STORED_PROCS.get(table_name)
+    query_string = sql_query.daily_case_list_query(stored_proc)
+    results = execute_query(query_string, db_connection)
+    daily_case_list = [
+        f"{clean_last_name(result['LastName'].title())} - {result['CaseNumber']}"
+        for result in results
+    ]
+    daily_case_list.insert(0, '')
+    close_db_connection(db_connection)
+    return sorted(daily_case_list)
+
+
+def execute_query(query_string: str, db_connection: QSqlDatabase) -> list:
+    query = QSqlQuery(db_connection)
+    query.prepare(query_string)
+    query.exec()
+    results = []
+    while query.next():
+        result = {}
+        for i in range(query.record().count()):
+            name = query.record().fieldName(i)
+            value = query.value(i)
+            result[name] = value
+        results.append(result)
+    return results
 
 
 def get_fta_arraignment_cases(query_string: str) -> list[str]:
@@ -207,7 +240,3 @@ class DrivingInfoSQLServer(object):
 
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
