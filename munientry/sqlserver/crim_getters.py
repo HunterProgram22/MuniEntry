@@ -1,34 +1,52 @@
 """Module for packaging data from SQL Server database for use in application."""
 from __future__ import annotations
 
-from loguru import logger
-from PyQt6.QtSql import QSqlQuery, QSqlDatabase
-from munientry.appsettings.settings import DAILY_CASE_LIST_STORED_PROCS
+from functools import wraps
 
+from loguru import logger
+from PyQt6.QtSql import QSqlDatabase, QSqlQuery
+
+from munientry.appsettings.settings import DAILY_CASE_LIST_STORED_PROCS
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.data.data_cleaners import clean_offense_name, clean_statute_name, clean_last_name
+from munientry.data.data_cleaners import clean_last_name, clean_offense_name, clean_statute_name
+from munientry.models.cms_models import CriminalCmsCaseInformation
+from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.sqlserver import sql_server_queries as sql_query
 from munientry.sqlserver.sql_server_queries import (
     driving_case_search_query,
     general_case_search_query,
     get_case_docket_query,
 )
-from munientry.models.cms_models import CriminalCmsCaseInformation
-from munientry.models.privileges_models import DrivingPrivilegesInformation
 from munientry.widgets.message_boxes import InfoBox
 
+def log_crim_case_query(case_number: str) -> None:
+    """Logs when a case number query to the Criminal Traffic database is made."""
+    logger.info(f'Querying Authority Court for: {case_number}')
 
-def get_daily_case_list(table_name: str) -> list[str]:
-    db_connection = open_db_connection('con_authority_court')
+
+def db_connection(db_connection_string):
+    """Decorator for opening a db connection, calling the function, then closing db connection."""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            db_connection_obj = open_db_connection(db_connection_string)
+            result = func(*args, db_connection=db_connection_obj, **kwargs)
+            close_db_connection(db_connection_obj)
+            return result
+        return wrapper
+    return decorator
+
+
+@db_connection('con_authority_court')
+def get_daily_case_list(table_name: str, db_connection=None) -> list[str]:
     stored_proc = DAILY_CASE_LIST_STORED_PROCS.get(table_name)
     query_string = sql_query.daily_case_list_query(stored_proc)
-    results = execute_query(query_string, db_connection)
+    cases = execute_query(query_string, db_connection)
     daily_case_list = [
-        f"{clean_last_name(result['LastName'].title())} - {result['CaseNumber']}"
-        for result in results
+        f"{clean_last_name(case['LastName'].title())} - {case['CaseNumber']}"
+        for case in cases
     ]
     daily_case_list.insert(0, '')
-    close_db_connection(db_connection)
     return sorted(daily_case_list)
 
 
@@ -47,20 +65,19 @@ def execute_query(query_string: str, db_connection: QSqlDatabase) -> list:
     return results
 
 
-def get_fta_arraignment_cases(query_string: str) -> list[str]:
+@db_connection('con_authority_court')
+def get_fta_arraignment_cases(query_string: str, db_connection=None) -> list[str]:
     """Queries AuthorityCourtDB to get all cases that need a FTA warrant."""
-    db_conn = open_db_connection('con_authority_court')
-    query = QSqlQuery(db_conn)
+    query = QSqlQuery(db_connection)
     query.prepare(query_string)
     query.exec()
     data_list = []
     while query.next():
         data_list.append(query.value('CaseNumber'))
-    close_db_connection(db_conn)
     return data_list
 
 
-class CaseDocketSQLServer(object):
+class CrimCaseDocket(object):
     """Packages case docket data from the SQL Server Authority Court database."""
 
     def __init__(self, case_number: str) -> None:
@@ -70,7 +87,7 @@ class CaseDocketSQLServer(object):
 
     def get_docket(self) -> list:
         query_string = get_case_docket_query(self.case_number)
-        logger.info(f'Querying Authority Court for: {self.case_number}')
+        log_crim_case_query(self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
         self.query.exec()
@@ -108,7 +125,7 @@ class CrimCaseData(object):
         query_string = general_case_search_query(self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
-        logger.info(f'Querying Authority Court for: {self.case_number}')
+        log_crim_case_query(self.case_number)
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 
@@ -156,7 +173,7 @@ class MultipleCrimCaseData(CrimCaseData):
             query_string = general_case_search_query(self.case_number)
             self.query = QSqlQuery(self.database)
             self.query.prepare(query_string)
-            logger.info(f'Querying Authority Court for: {self.case_number}')
+            log_crim_case_query(self.case_number)
             self.query.bindValue(self.case_number, self.case_number)
             self.query.exec()
             self.load_query_data_into_case()
@@ -193,7 +210,7 @@ class DrivingInfoSQLServer(object):
         query_string = driving_case_search_query(self.case_number)
         self.query = QSqlQuery(self.database)
         self.query.prepare(query_string)
-        logger.info(f'Querying Authority Court for: {self.case_number}')
+        log_crim_case_query(self.case_number)
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
 

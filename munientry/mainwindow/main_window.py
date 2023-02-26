@@ -100,7 +100,7 @@ class MainWindowSlotFunctionsMixin(object):
             case_number = self.case_search_box.text()
             case_number = update_crim_case_number(case_number)
             self.case_search_box.setText(case_number)
-        data_list = crim.CaseDocketSQLServer(case_number).get_docket()
+        data_list = crim.CrimCaseDocket(case_number).get_docket()
         rows = len(data_list)
         self.window = TableReportWindow(f'Docket Report for {case_number}')
         self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
