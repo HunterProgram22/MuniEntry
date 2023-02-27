@@ -1,98 +1,63 @@
 """Module containing the Main Window of the application."""
 from functools import partial
 
-from PyQt6.QtGui import QIcon
-from PyQt6.QtSql import QSqlQuery
 from loguru import logger
+from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
+
 from munientry.appsettings.paths import ICON_PATH
 from munientry.appsettings.settings import VERSION_NUMBER
-
 from munientry.appsettings.user_settings import load_user_settings
-from munientry.builders.administrative import driving_privileges_dialog, jury_payment_dialog, \
-    admin_fiscal_dialog
+from munientry.builders.administrative import (
+    admin_fiscal_dialog,
+    driving_privileges_dialog,
+    jury_payment_dialog,
+)
 from munientry.builders.civil import civ_freeform_dialog
-from munientry.builders.crimtraffic import arraignment_continue_dialog, fine_only_plea_dialog, \
-    jail_cc_plea_dialog, diversion_dialog, not_guilty_bond_dialog, failure_to_appear_dialog, \
-    probation_violation_bond_dialog, bond_hearing_dialog, plea_only_future_sentence_dialog, \
-    no_plea_bond_dialog, leap_plea_dialog, leap_plea_valid_dialog, leap_sentencing_dialog, \
-    trial_sentencing_dialog, sentencing_only_dialog, freeform_dialog, criminal_sealing_dialog
-from munientry.builders.scheduling import sched_entry_dialogs, final_jury_hearing_notice_dialog, \
-    general_hearing_notice_dialog, trial_to_court_hearing_notice_dialog
-from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter, rohrer_dw_dialog as rohrer, \
-    bunner_dw_dialog as bunner, probation_dw_dialogs as probation
-from munientry.data.connections import open_db_connection, close_db_connection
-from munientry.data.data_cleaners import clean_last_name
+from munientry.builders.crimtraffic import (
+    arraignment_continue_dialog,
+    bond_hearing_dialog,
+    criminal_sealing_dialog,
+    diversion_dialog,
+    failure_to_appear_dialog,
+    fine_only_plea_dialog,
+    freeform_dialog,
+    jail_cc_plea_dialog,
+    leap_plea_dialog,
+    leap_plea_valid_dialog,
+    leap_sentencing_dialog,
+    no_plea_bond_dialog,
+    not_guilty_bond_dialog,
+    plea_only_future_sentence_dialog,
+    probation_violation_bond_dialog,
+    sentencing_only_dialog,
+    trial_sentencing_dialog,
+)
+from munientry.builders.scheduling import (
+    final_jury_hearing_notice_dialog,
+    general_hearing_notice_dialog,
+    sched_entry_dialogs,
+    trial_to_court_hearing_notice_dialog,
+)
+from munientry.builders.workflows import bunner_dw_dialog as bunner
+from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
+from munientry.builders.workflows import probation_dw_dialogs as probation
+from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge, update_crim_case_number, \
-    update_civil_case_number
-from munientry.mainwindow.dialog_starter import start_dialog
+from munientry.helper_functions import set_random_judge, update_crim_case_number
 from munientry.mainmenu.menu import MainMenu
+from munientry.mainwindow.case_lists import CaseListHandler
+from munientry.mainwindow.case_search import CaseSearchHandler
+from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.models.party_types import JudicialOfficer
-from munientry.sqlserver import sql_server_queries as sql_query, crim_getters as crim, \
-    civil_getters as civil
+from munientry.sqlserver import crim_getters as crim
 from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
 
 
 class MainWindowSlotFunctionsMixin(object):
     """Class that contains common functions for the main window."""
-
-    def load_case_lists(self) -> None:
-        """Loads the cms_case numbers of all the cases that are in the daily_case_list databases.
-
-        This does not load the cms_case data for each cms_case.
-
-        The case count is one less than length of list because a blank line is inserted at the
-        top of the case list. The case count becomes actual number of cases loaded.
-        """
-        db_connection = open_db_connection('con_authority_court')
-        STORED_PROC_DICT = {
-            self.arraignments_cases_box: '[reports].[DMCMuniEntryArraignment]',
-            self.slated_cases_box: '[reports].[DMCMuniEntrySlated]',
-            self.pleas_cases_box: '[reports].[DMCMuniEntryPleas]',
-            self.pcvh_fcvh_cases_box: '[reports].[DMCMuniEntryPrelimCommContViolHearings]',
-            self.final_pretrial_cases_box: '[reports].[DMCMuniEntryFinalPreTrials]',
-            self.trials_to_court_cases_box: '[reports].[DMCMuniEntryBenchTrials]',
-        }
-
-        for case_list in self.daily_case_lists:
-            stored_proc = STORED_PROC_DICT.get(case_list)
-            query_string = sql_query.daily_case_list_query(stored_proc)
-            self.query = QSqlQuery(db_connection)
-            self.query.prepare(query_string)
-            self.query.exec()
-            daily_case_list = []
-            while self.query.next():
-                case_number = self.query.value('CaseNumber')
-                last_name = self.query.value('LastName').title()
-                last_name = clean_last_name(last_name)
-                case = f'{last_name} - {case_number}'
-                daily_case_list.append(case)
-
-            daily_case_list.insert(0, '')
-            old_case_count = len(case_list) - 1 if len(case_list) > 1 else 0
-            daily_case_list = sorted(daily_case_list)
-            case_list.clear()
-            case_list.addItems(daily_case_list)
-            case_count = len(case_list) - 1
-            logger.info(
-                f'Table: {case_list.name} - Preload Cases: {old_case_count};'
-                + f' Postload Cases {case_count}',
-                )
-        close_db_connection(db_connection)
-
-    def reload_case_lists(self) -> None:
-        """This method is connected to the reload cases button and calls load_case_lists."""
-        logger.info('Reload cases button pressed.')
-        self.load_case_lists()
-
-    def show_hide_daily_case_lists(self) -> None:
-        for case_list in self.daily_case_lists:
-            case_list.setCurrentText('')
-            case_list.setHidden(True)
-            case_list.setEnabled(False)
 
     def assign_judge(self) -> None:
         assigned_judge, time_now = set_random_judge()
@@ -101,7 +66,6 @@ class MainWindowSlotFunctionsMixin(object):
             f'The last judge assigned was {assigned_judge}.\n'
             + f' The assignment was made at {time_now}.',
             )
-
 
     def set_person_stack_widget(self) -> None:
         stack_mapping = {
@@ -122,37 +86,6 @@ class MainWindowSlotFunctionsMixin(object):
         if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
             self.tabWidget.setCurrentWidget(self.civil_Tab)
 
-    def query_case_info(self):
-        """Queries SQL Server database (AuthorityCourt/AuthorityCivil) and retrieves case data."""
-        widget_name = self.search_tabWidget.currentWidget().objectName()
-        if widget_name == 'case_search_tab':
-            search_box = self.case_search_box
-            case_data = crim.CrimCaseData(update_crim_case_number(search_box.text())).load_case()
-            self.set_crimtraffic_case_info_from_search(case_data)
-        elif widget_name == 'civil_case_search_tab':
-            search_box = self.civil_case_search_box
-            case_data = civil.CivilCaseData(update_civil_case_number(search_box.text())).load_case()
-            self.set_civil_case_info_from_search(case_data)
-        search_box.setText(case_data.case_number)
-
-    def set_crimtraffic_case_info_from_search(self, case_data) -> None:
-        """Sets the case search fields on the UI with data from the case that is retrieved."""
-        self.case_number_label_field.setText(case_data.case_number)
-        def_first_name = case_data.defendant.first_name
-        def_last_name = case_data.defendant.last_name
-        self.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        charge_list_text = ', '.join(str(charge[0]) for charge in case_data.charges_list)
-        self.case_charges_label_field.setText(charge_list_text)
-
-    def set_civil_case_info_from_search(self, case_data):
-        """Sets the case search fields on the UI with data from the case that is retrieved."""
-        self.case_number_label_field.setText(case_data.case_number)
-        self.civil_case_number_field.setText(case_data.case_number)
-        self.civil_case_name_field.setText(
-            f'{case_data.primary_plaintiff.party_name} vs. {case_data.primary_defendant.party_name}'
-        )
-        self.civil_case_type_field.setText(case_data.case_type)
-
     def show_case_docket_case_list(self):
         """Value Error catch put in to handle if the empty slot of daily case list is selected."""
         try:
@@ -167,7 +100,7 @@ class MainWindowSlotFunctionsMixin(object):
             case_number = self.case_search_box.text()
             case_number = update_crim_case_number(case_number)
             self.case_search_box.setText(case_number)
-        data_list = crim.CaseDocketSQLServer(case_number).get_docket()
+        data_list = crim.CrimCaseDocket(case_number).get_docket()
         rows = len(data_list)
         self.window = TableReportWindow(f'Docket Report for {case_number}')
         self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
@@ -192,10 +125,12 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
+        self.case_search = CaseSearchHandler(self)
+        self.case_lists = CaseListHandler(self)
         self.connect_signals_to_slots()
         self.menu = MainMenu(self)
-        self.load_case_lists()
-        self.show_hide_daily_case_lists()
+        self.case_lists.load_case_lists()
+        self.case_lists.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
         self.daily_case_list = None
@@ -244,16 +179,16 @@ class MainWindowSignalConnector(object):
         self.connect_dialog_buttons_to_start_dialog()
 
     def connect_general_buttons(self):
-        self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.reload_case_lists)
+        self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.case_lists.reload_case_lists)
         self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
         self.mainwindow.visiting_judge_radioButton.toggled.connect(
             self.mainwindow.set_visiting_judge,
         )
         self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.set_person_stack_widget)
         self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.set_entries_tab)
-        self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.query_case_info)
+        self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
 
-        self.mainwindow.civil_get_case_Button.pressed.connect(self.mainwindow.query_case_info)
+        self.mainwindow.civil_get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
 
         self.mainwindow.show_docket_Button.pressed.connect(self.mainwindow.show_case_docket)
         self.mainwindow.show_docket_case_list_Button.pressed.connect(

@@ -1,4 +1,6 @@
 """A module containing common variables used throughout the application."""
+from __future__ import annotations
+
 import configparser
 import socket
 import pathlib
@@ -28,15 +30,15 @@ def get_host() -> str:
 HOST_NAME = get_host()
 
 
-# Case List Settings
-EXCEL_DAILY_CASE_LISTS = [
-    ('Arraignments.xlsx', 'arraignments'),
-    ('Slated.xlsx', 'slated'),
-    ('Final_Pretrials.xlsx', 'final_pretrials'),
-    ('Pleas.xlsx', 'pleas'),
-    ('Trials_to_Court.xlsx', 'trials_to_court'),
-    ('PCVH_FCVH.xlsx', 'pcvh_fcvh'),
-]
+# Daily Case List Settings
+DAILY_CASE_LIST_STORED_PROCS = {
+    'arraignments_cases_box': '[reports].[DMCMuniEntryArraignment]',
+    'slated_cases_box': '[reports].[DMCMuniEntrySlated]',
+    'pleas_cases_box': '[reports].[DMCMuniEntryPleas]',
+    'pcvh_fcvh_cases_box': '[reports].[DMCMuniEntryPrelimCommContViolHearings]',
+    'final_pretrial_cases_box': '[reports].[DMCMuniEntryFinalPreTrials]',
+    'trials_to_court_cases_box': '[reports].[DMCMuniEntryBenchTrials]',
+}
 
 # Dictionary that provides name of method to access the data in the widget.
 # TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
