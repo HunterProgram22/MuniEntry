@@ -173,11 +173,14 @@ class MultipleCrimCaseData(CrimCaseData):
             log_crim_case_query(self.case_number)
             self.query.bindValue(self.case_number, self.case_number)
             self.query.exec()
-            self.load_query_data_into_case()
+            try:
+                self.load_case_information(self.query)
+            except AttributeError as err:
+                logger.warning(err)
         self.query.finish()
 
-    def load_case_information(self) -> None:
-        super().load_case_information()
+    # def load_case_information(self) -> None:
+    #     super().load_case_information()
         self.case.case_number = ', '.join(self.all_case_numbers)
 
 
