@@ -110,20 +110,12 @@ class CrimCaseData(object):
     The class accepts the case number to identify the case, then retrieves
     the case information from the SQL Server (AuthorityCourtDBO) database and packages it for
     loading into the application.
-
-    :case_number: The entered case number from the on the case search tab of the main window of
-        the application.
     """
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
         self.case = CriminalCmsCaseInformation()
-        # self.database_connection_name = CRIM_DB_CONN
-        # self.database = open_db_connection(self.database_connection_name)
         self.query_case_data()
-        # self.load_query_data_into_case()
-        # self.query.finish()
-        # close_db_connection(self.database)
 
     @database_connection(CRIM_DB_CONN)
     def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
@@ -134,13 +126,11 @@ class CrimCaseData(object):
         log_crim_case_query(self.case_number)
         query.bindValue(self.case_number, self.case_number)
         query.exec()
-
-    # def load_query_data_into_case(self) -> None:
         while query.next():
             if self.case.case_number is None:
                 self.load_case_information(query)
             self.load_charge_information(query)
-        # self.query.finish()
+        query.finish()
 
     def load_case_information(self, query_data) -> None:
         self.case.case_number = query_data.value(CASE_NUMBER)
