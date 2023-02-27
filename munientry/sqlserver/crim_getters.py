@@ -117,42 +117,44 @@ class CrimCaseData(object):
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
-        self.database_connection_name = CRIM_DB_CONN
-        self.database = open_db_connection(self.database_connection_name)
         self.case = CriminalCmsCaseInformation()
+        # self.database_connection_name = CRIM_DB_CONN
+        # self.database = open_db_connection(self.database_connection_name)
         self.query_case_data()
-        self.load_query_data_into_case()
-        self.query.finish()
-        close_db_connection(self.database)
+        # self.load_query_data_into_case()
+        # self.query.finish()
+        # close_db_connection(self.database)
 
-    def query_case_data(self) -> None:
+    @database_connection(CRIM_DB_CONN)
+    def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
-        self.query = QSqlQuery(self.database)
-        self.query.prepare(query_string)
+        query = QSqlQuery(db_connection)
+        query.prepare(query_string)
         log_crim_case_query(self.case_number)
-        self.query.bindValue(self.case_number, self.case_number)
-        self.query.exec()
+        query.bindValue(self.case_number, self.case_number)
+        query.exec()
 
-    def load_query_data_into_case(self) -> None:
-        while self.query.next():
+    # def load_query_data_into_case(self) -> None:
+        while query.next():
             if self.case.case_number is None:
-                self.load_case_information()
-            self.load_charge_information()
+                self.load_case_information(query)
+            self.load_charge_information(query)
+        # self.query.finish()
 
-    def load_case_information(self) -> None:
-        self.case.case_number = self.query.value(CASE_NUMBER)
-        self.case.defendant.last_name = self.query.value('DefLastName').title()
-        self.case.defendant.first_name = self.query.value('DefFirstName').title()
-        self.case.fra_in_file = self.query.value('FraInFile')
-        self.case.defense_counsel = self.query.value('DefenseCounsel').title()
-        self.case.defense_counsel_type = self.query.value('PubDef')
+    def load_case_information(self, query_data) -> None:
+        self.case.case_number = query_data.value(CASE_NUMBER)
+        self.case.defendant.last_name = query_data.value('DefLastName').title()
+        self.case.defendant.first_name = query_data.value('DefFirstName').title()
+        self.case.fra_in_file = query_data.value('FraInFile')
+        self.case.defense_counsel = query_data.value('DefenseCounsel').title()
+        self.case.defense_counsel_type = query_data.value('PubDef')
 
-    def load_charge_information(self) -> None:
-        offense = clean_offense_name(self.query.value('Charge'))
-        statute = clean_statute_name(self.query.value('Statute'))
-        degree = self.query.value('DegreeCode')
-        moving_bool = self.query.value('MovingBool')
+    def load_charge_information(self, query_data) -> None:
+        offense = clean_offense_name(query_data.value('Charge'))
+        statute = clean_statute_name(query_data.value('Statute'))
+        degree = query_data.value('DegreeCode')
+        moving_bool = query_data.value('MovingBool')
         charge = (offense, statute, degree, moving_bool)
         self.case.charges_list.append(charge)
 
