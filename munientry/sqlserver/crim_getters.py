@@ -87,20 +87,21 @@ class CrimCaseDocket(object):
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
-        self.database_connection_name = CRIM_DB_CONN
-        self.database = open_db_connection(self.database_connection_name)
+        # self.database_connection_name = CRIM_DB_CONN
+        # self.database = open_db_connection(self.database_connection_name)
 
-    def get_docket(self) -> list:
+    @database_connection(CRIM_DB_CONN)
+    def get_docket(self, db_connection: QSqlDatabase = None) -> list:
         query_string = get_case_docket_query(self.case_number)
         log_crim_case_query(self.case_number)
-        query = QSqlQuery(self.database)
+        query = QSqlQuery(db_connection)
         query.prepare(query_string)
         query.exec()
         data_list = []
         while query.next():
             docket_item = (query.value('Date'), query.value('Remark'))
             data_list.append(docket_item)
-        close_db_connection(self.database)
+        # close_db_connection(self.database)
         return data_list
 
 
@@ -119,7 +120,7 @@ class CrimCaseData(object):
 
     @database_connection(CRIM_DB_CONN)
     def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
-        """Query database based on single cms_case number to return the data to load for the dialog."""
+        """Query database for single cms_case number to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)
         query.prepare(query_string)
