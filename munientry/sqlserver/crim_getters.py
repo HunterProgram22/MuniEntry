@@ -87,8 +87,6 @@ class CrimCaseDocket(object):
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
-        # self.database_connection_name = CRIM_DB_CONN
-        # self.database = open_db_connection(self.database_connection_name)
 
     @database_connection(CRIM_DB_CONN)
     def get_docket(self, db_connection: QSqlDatabase = None) -> list:
@@ -101,7 +99,6 @@ class CrimCaseDocket(object):
         while query.next():
             docket_item = (query.value('Date'), query.value('Remark'))
             data_list.append(docket_item)
-        # close_db_connection(self.database)
         return data_list
 
 
@@ -180,23 +177,24 @@ class DrivingInfoSQLServer(object):
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
-        self.database_connection_name = CRIM_DB_CONN
-        self.database = open_db_connection(self.database_connection_name)
+        # self.database_connection_name = CRIM_DB_CONN
+        # self.database = open_db_connection(self.database_connection_name)
         self.case = DrivingPrivilegesInformation()
         self.query_case_data()
-        self.check_query_for_conflicts()
-        self.load_query_data_into_case()
-        self.query.finish()
-        close_db_connection(self.database)
+        # close_db_connection(self.database)
 
-    def query_case_data(self) -> None:
+    @database_connection(CRIM_DB_CONN)
+    def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = driving_case_search_query(self.case_number)
-        self.query = QSqlQuery(self.database)
+        self.query = QSqlQuery(db_connection)
         self.query.prepare(query_string)
         log_crim_case_query(self.case_number)
         self.query.bindValue(self.case_number, self.case_number)
         self.query.exec()
+        self.check_query_for_conflicts()
+        self.load_query_data_into_case()
+        self.query.finish()
 
     def check_query_for_conflicts(self):
         count = 0
