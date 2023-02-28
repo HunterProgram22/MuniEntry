@@ -55,7 +55,7 @@ def get_daily_case_list(table_name: str) -> list[str]:
 
 
 @database_connection(CRIM_DB_CONN)
-def execute_query(query_string: str, db_connection: QSqlDatabase = None) -> list:
+def execute_query(query_string: str, db_connection: QSqlDatabase) -> list:
     """Executes a sql query on the Authority Court DBO."""
     query = QSqlQuery(db_connection)
     query.prepare(query_string)
@@ -71,7 +71,7 @@ def execute_query(query_string: str, db_connection: QSqlDatabase = None) -> list
 
 
 @database_connection(CRIM_DB_CONN)
-def get_fta_arraignment_cases(query_string: str, db_connection: QSqlDatabase = None) -> list[str]:
+def get_fta_arraignment_cases(query_string: str, db_connection: QSqlDatabase) -> list[str]:
     """Queries AuthorityCourtDB to get all cases that need a FTA warrant."""
     query = QSqlQuery(db_connection)
     query.prepare(query_string)
@@ -89,7 +89,7 @@ class CrimCaseDocket(object):
         self.case_number = case_number
 
     @database_connection(CRIM_DB_CONN)
-    def get_docket(self, db_connection: QSqlDatabase = None) -> list:
+    def get_docket(self, db_connection: QSqlDatabase) -> list:
         query_string = get_case_docket_query(self.case_number)
         log_crim_case_query(self.case_number)
         query = QSqlQuery(db_connection)
@@ -116,7 +116,7 @@ class CrimCaseData(object):
         self.query_case_data()
 
     @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
+    def query_case_data(self, db_connection: QSqlDatabase) -> None:
         """Query database for single cms_case number to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)
@@ -177,28 +177,25 @@ class DrivingInfoSQLServer(object):
 
     def __init__(self, case_number: str) -> None:
         self.case_number = case_number
-        # self.database_connection_name = CRIM_DB_CONN
-        # self.database = open_db_connection(self.database_connection_name)
         self.case = DrivingPrivilegesInformation()
         self.query_case_data()
-        # close_db_connection(self.database)
 
     @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
+    def query_case_data(self, db_connection: QSqlDatabase) -> None:
         """Query database based on cms_case number to return the data to load for the dialog."""
         query_string = driving_case_search_query(self.case_number)
-        self.query = QSqlQuery(db_connection)
-        self.query.prepare(query_string)
+        query = QSqlQuery(db_connection)
+        query.prepare(query_string)
         log_crim_case_query(self.case_number)
-        self.query.bindValue(self.case_number, self.case_number)
-        self.query.exec()
-        self.check_query_for_conflicts()
-        self.load_query_data_into_case()
-        self.query.finish()
+        query.bindValue(self.case_number, self.case_number)
+        query.exec()
+        self.check_query_for_conflicts(query)
+        self.load_query_data_into_case(query)
+        query.finish()
 
-    def check_query_for_conflicts(self):
+    def check_query_for_conflicts(self, query: QSqlQuery):
         count = 0
-        while self.query.next():
+        while query.next():
             count += 1
         logger.info(f'Conflict check found {count} addresses for Defendant.')
         if count <= 1:
@@ -210,30 +207,30 @@ class DrivingInfoSQLServer(object):
         )
         InfoBox(message, 'Multiple Addreses for Defendant').exec()
 
-    def load_query_data_into_case(self) -> None:
-        self.query.first()
+    def load_query_data_into_case(self, query: QSqlQuery) -> None:
+        query.first()
         self.load_case_information()
 
     def load_case_information(self) -> None:
-        if self.query.value(CASE_NUMBER) is None:
+        if query.value(CASE_NUMBER) is None:
             logger.info('NoneType returned from case search - loading empty case.')
             return
-        self.case.case_number = self.query.value(CASE_NUMBER)
-        self.case.defendant.first_name = self.query.value('DefFirstName').title()
-        self.case.defendant.last_name = self.query.value('DefLastName').title()
-        self.case.defendant.birth_date = self.query.value('DefBirthDate')
-        if self.query.value('DefAddress') == '':
-            self.case.defendant.address = self.query.value('CaseAddress').title()
-            self.case.defendant.city = self.query.value('CaseCity').title()
-            self.case.defendant.state = str(self.query.value('CaseState'))
-            self.case.defendant.zipcode = self.query.value('CaseZipcode')
-            self.case.defendant.license_number = self.query.value('DefLicenseNumber')
+        self.case.case_number = query.value(CASE_NUMBER)
+        self.case.defendant.first_name = query.value('DefFirstName').title()
+        self.case.defendant.last_name = query.value('DefLastName').title()
+        self.case.defendant.birth_date = query.value('DefBirthDate')
+        if query.value('DefAddress') == '':
+            self.case.defendant.address = query.value('CaseAddress').title()
+            self.case.defendant.city = query.value('CaseCity').title()
+            self.case.defendant.state = str(query.value('CaseState'))
+            self.case.defendant.zipcode = query.value('CaseZipcode')
+            self.case.defendant.license_number = query.value('DefLicenseNumber')
         else:
-            self.case.defendant.address = self.query.value('DefAddress').title()
-            self.case.defendant.city = self.query.value('DefCity').title()
-            self.case.defendant.state = self.query.value('DefState')
-            self.case.defendant.zipcode = self.query.value('DefZipcode')
-            self.case.defendant.license_number = self.query.value('DefLicenseNumber')
+            self.case.defendant.address = query.value('DefAddress').title()
+            self.case.defendant.city = query.value('DefCity').title()
+            self.case.defendant.state = query.value('DefState')
+            self.case.defendant.zipcode = query.value('DefZipcode')
+            self.case.defendant.license_number = query.value('DefLicenseNumber')
 
     def load_case(self) -> DrivingPrivilegesInformation:
         return self.case
