@@ -107,10 +107,12 @@ class CriminalSealingDialogUpdater(BaseDialogUpdater):
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
         self.update_case_information()
+        self.update_entry_content()
 
     def update_case_information(self) -> CaseInformationUpdater:
         return CaseInformationUpdater(self.dialog)
 
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+    def update_entry_content(self):
+        self.model.seal_decision = self.dialog.seal_decision_box.currentText()
+        self.model.state_response = self.dialog.state_response_box.currentText()
+        self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()

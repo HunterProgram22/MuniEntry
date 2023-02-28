@@ -25,7 +25,6 @@ class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
 
 class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEntryDialog):
     """Dialog builder class for Criminal Sealing Entry."""
-    pass
     _case_information_model = CriminalSealingEntryCaseInformation
     _case_loader = CmsNoChargeLoader
     _info_checker = CriminalSealingDialogInfoChecker

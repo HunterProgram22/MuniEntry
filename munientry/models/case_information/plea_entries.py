@@ -48,6 +48,10 @@ class FreeformEntryCaseInformation(CriminalCaseInformation):
 class CriminalSealingEntryCaseInformation(CriminalCaseInformation):
     """General case information data variables for criminal sealing entry."""
 
+    seal_decision: str = None
+    state_response: str = None
+    entry_content_text: str = None
+
 
 @dataclass
 class LeapAdmissionEntryCaseInformation(CriminalCaseInformation):
