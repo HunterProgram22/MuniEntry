@@ -119,7 +119,7 @@ class CrimCaseData(object):
 
     @database_connection(CRIM_DB_CONN)
     def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
-        """Query database based on cms_case number to return the data to load for the dialog."""
+        """Query database based on single cms_case number to return the data to load for the dialog."""
         query_string = general_case_search_query(self.case_number)
         query = QSqlQuery(db_connection)
         query.prepare(query_string)
@@ -155,32 +155,14 @@ class MultipleCrimCaseData(CrimCaseData):
 
     def __init__(self, matched_case_numbers_list: list) -> None:
         self.all_case_numbers = matched_case_numbers_list
-        # self.database_connection_name = CRIM_DB_CONN
-        # self.database = open_db_connection(self.database_connection_name)
         self.case = CriminalCmsCaseInformation()
-        self.query_case_data()
-        # self.query.finish()
-        # close_db_connection(self.database)
+        self.query_multiple_cases_data()
 
-    @database_connection(CRIM_DB_CONN)
-    def query_case_data(self, db_connection: QSqlDatabase = None) -> None:
-        """Query database based on cms_case number to return the data to load for the dialog."""
+    def query_multiple_cases_data(self) -> None:
+        """Query database for multiple cms_case numbers to load case data for the dialog."""
         for case_number in self.all_case_numbers:
             self.case_number = case_number
-            query_string = general_case_search_query(self.case_number)
-            self.query = QSqlQuery(db_connection)
-            self.query.prepare(query_string)
-            log_crim_case_query(self.case_number)
-            self.query.bindValue(self.case_number, self.case_number)
-            self.query.exec()
-            try:
-                self.load_case_information(self.query)
-            except AttributeError as err:
-                logger.warning(err)
-        self.query.finish()
-
-    # def load_case_information(self) -> None:
-    #     super().load_case_information()
+            self.query_case_data()
         self.case.case_number = ', '.join(self.all_case_numbers)
 
 
