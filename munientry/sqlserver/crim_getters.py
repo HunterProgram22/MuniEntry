@@ -170,9 +170,6 @@ class DrivingInfoSQLServer(object):
     The class accepts the case number to identify the case, then retrieves
     the case information from the SQL Server (AuthorityCourtDBO) database and packages it for
     loading into the application.
-
-    :case_number: The entered case number from the on the case search tab of the main window of
-        the application.
     """
 
     def __init__(self, case_number: str) -> None:
@@ -202,16 +199,15 @@ class DrivingInfoSQLServer(object):
             return
         message = (
             'There are multiple addresses and/or driver license numbers associated with'
-            + ' this case, please check fields closely and correct address fields if'
-            + ' needed.'
+            + ' this case, please check fields closely and correct address fields if needed.'
         )
         InfoBox(message, 'Multiple Addreses for Defendant').exec()
 
     def load_query_data_into_case(self, query: QSqlQuery) -> None:
         query.first()
-        self.load_case_information()
+        self.load_case_information(query)
 
-    def load_case_information(self) -> None:
+    def load_case_information(self, query) -> None:
         if query.value(CASE_NUMBER) is None:
             logger.info('NoneType returned from case search - loading empty case.')
             return
