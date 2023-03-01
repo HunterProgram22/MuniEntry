@@ -86,8 +86,6 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
     """Entry Creator for CrimTraffic entries.
 
     Contains a check to see if a workflow entry needs to be created.
-
-    TODO: Add setting to turn off workflow.
     """
 
     save_path = CRIMTRAFFIC_SAVE_PATH

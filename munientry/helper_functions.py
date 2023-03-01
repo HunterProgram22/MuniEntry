@@ -89,7 +89,7 @@ def format_date_string(date_string: str) -> str:
     return str(new_date_object)
 
 
-def update_crimtraffic_case_number(case_number: str) -> str:
+def update_crim_case_number(case_number: str) -> str:
     """Updates the case number in case search to add 0's if full case number not provided."""
     if len(case_number) == 10:
         return case_number.upper()

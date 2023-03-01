@@ -112,7 +112,7 @@ class TrialSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_TrialSentencingDia
     _signal_connector = TrialSentencingDialogSignalConnector
     _slots = TrialSentencingDialogSlotFunctions
     _view_modifier = TrialSentencingDialogViewModifier
-    dialog_name = 'Trial Sentencing Dialog'
+    dialog_name = 'Trial Judgment Entry'
 
     def additional_setup(self):
         validator = MAX_JAIL_TIME_VALIDATOR

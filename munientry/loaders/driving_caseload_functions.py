@@ -9,7 +9,7 @@ Functions:
 """
 from loguru import logger
 
-from munientry.sqlserver import sql_server_getters as sql_server
+from munientry.sqlserver import crim_getters as sql_server
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 
 
@@ -25,7 +25,7 @@ def load_no_case_driving() -> DrivingPrivilegesInformation:
 
 
 def load_single_driving_info_case(case_number: str) -> DrivingPrivilegesInformation:
-    """Loads a single case with Driving Info query into the CmsCaseInformation model.
+    """Loads a single case with Driving Info query into the CriminalCmsCaseInformation model.
 
     Args:
         case_number (str): The case number to load in the format: [2 digits][3 chars][5 digits].

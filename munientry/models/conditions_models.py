@@ -436,7 +436,3 @@ class ProbationViolationBondConditions:
         ("cc_violation_other_conditions_ordered", "cc_violation_other_conditions_checkBox"),
         ("cc_violation_other_conditions_terms", "cc_violation_other_conditions_terms_box"),
     ]
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

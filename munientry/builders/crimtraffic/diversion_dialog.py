@@ -110,7 +110,7 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
     _signal_connector = DiversionDialogSignalConnector
     _slots = DiversionDialogSlotFunctions
     _view_modifier = DiversionDialogViewModifier
-    dialog_name = 'Diversion Plea Dialog'
+    dialog_name = 'Diversion Judgment Entry'
 
     def additional_setup(self):
         self.functions.show_restitution_boxes()

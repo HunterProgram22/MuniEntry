@@ -80,7 +80,7 @@ class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDia
     _signal_connector = FailureToAppearDialogSignalConnector
     _slots = FailureToAppearDialogSlotFunctions
     _view_modifier = FailureToAppearDialogViewModifier
-    dialog_name = 'Failure To Appear Dialog'
+    dialog_name = 'Failure To Appear Entry'
 
     def additional_setup(self):
         self.entry_case_information.fta_conditions = FailureToAppearConditions()

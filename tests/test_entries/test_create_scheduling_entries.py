@@ -5,7 +5,8 @@ Module Level Parameters - fixtures setup and imported automatically from the con
 """
 import pytest
 
-from tests.conftest import enter_data, mouse_click
+from tests.conftest import enter_data, mouse_click, MUNI10_SAVE_PATH
+from munientry.entrycreators.entry_creator import SchedulingEntryCreator
 
 scheduling_tab_entries = [
     ('hemmeter_final_jury_hearingButton', 'hemmeter_final_test', 'final_pretrial_dateEdit'),
@@ -20,11 +21,14 @@ scheduling_tab_entries = [
 
 
 @pytest.mark.parametrize('dialog_button, test_name, date_field', scheduling_tab_entries)
-def test_all_entry_buttons_with_case(main_window, dialog_button, test_name, date_field):
+def test_all_entry_buttons_with_case(monkeypatch, main_window, dialog_button, test_name, date_field):
     """Tests the creation of all scheduling entries."""
+    data = SchedulingEntryCreator
+    monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
     mouse_click(main_window.dattilo_radioButton)
-    mouse_click(main_window.pleas_radioButton)
-    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    enter_data(main_window.case_search_box, '21TRC05611')
+    mouse_click(main_window.get_case_Button)
     mouse_click(getattr(main_window, dialog_button))
     enter_data(main_window.dialog.case_number_lineEdit, test_name)
     enter_data(getattr(main_window.dialog, date_field), '01/01/2050')  # Set to pass a check

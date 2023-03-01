@@ -6,10 +6,10 @@ from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
 
 from munientry.appsettings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
-from munientry.helper_functions import update_crimtraffic_case_number
+from munientry.helper_functions import update_crim_case_number
 from munientry.mainmenu.open_menu import open_entries_folder
-from munientry.sqlserver.sql_server_getters import (
-    CriminalCaseSqlServer,
+from munientry.sqlserver.crim_getters import (
+    CrimCaseData,
     get_fta_arraignment_cases,
 )
 from munientry.sqlserver.sql_server_queries import batch_fta_query
@@ -55,7 +55,7 @@ def create_fta_entries(batch_case_list: list, event_date: str) -> int:
     entry_count = 0
     for case_number in batch_case_list:
         logger.info(f'Creating Batch FTA entry for: {case_number}')
-        case_data = CriminalCaseSqlServer(case_number)
+        case_data = CrimCaseData(case_number)
         create_entry(case_data, event_date)
         entry_count += 1
     return entry_count
@@ -69,20 +69,20 @@ def create_single_fta_entry(mainwindow: QMainWindow) -> None:
         'Create Single FTA Entry',
         'Enter the Case Number:',
     )
-    case_number = update_crimtraffic_case_number(case_number)
+    case_number = update_crim_case_number(case_number)
     if not ok_response:
         return
     event_date, ok_response = prompt_user_for_batch_date(mainwindow)
     if not ok_response:
         return
-    case_data = CriminalCaseSqlServer(case_number)
+    case_data = CrimCaseData(case_number)
     create_entry(case_data, event_date)
     show_entries_created_message(1)
     open_entries_folder('batch_entries')
     log_entries_created(1)
 
 
-def create_entry(case_data: CriminalCaseSqlServer, event_date: str) -> None:
+def create_entry(case_data: CrimCaseData, event_date: str) -> None:
     """General create entry function that populates a template with data."""
     doc = DocxTemplate(fr'{TEMPLATE_PATH}\Batch_Failure_To_Appear_Arraignment_Template.docx')
     date_obj = datetime.strptime(event_date, INPUT_DATE_FORMAT)

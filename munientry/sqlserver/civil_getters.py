@@ -8,7 +8,7 @@ from munientry.sqlserver.sql_server_queries import general_civil_case_query
 
 
 
-class CivilCaseSqlServer(object):
+class CivilCaseData(object):
     """..."""
 
     def __init__(self, case_number: str) -> None:

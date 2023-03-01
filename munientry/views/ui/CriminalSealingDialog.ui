@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>FreeformEntryDialog</class>
- <widget class="QDialog" name="FreeformEntryDialog">
+ <class>CriminalSealingEntryDialog</class>
+ <widget class="QDialog" name="CriminalSealingEntryDialog">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -135,7 +135,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Freeform Entry Case Information</string>
+   <string>Criminal Sealing Entry Case Information</string>
   </property>
   <property name="toolTip">
    <string/>
@@ -170,7 +170,7 @@ font-weight: bold;</string>
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 127);</string>
+         <string notr="true">background-color: rgb(160, 160, 160);</string>
         </property>
         <property name="widgetResizable">
          <bool>true</bool>
@@ -205,7 +205,27 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout" columnstretch="1,2,1,2,1">
+            <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0,1,1">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Def. First Name:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLineEdit" name="case_number_lineEdit">
+               <property name="maximumSize">
+                <size>
+                 <width>500</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_2">
                <property name="text">
@@ -227,20 +247,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Date:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_24">
-               <property name="text">
-                <string>Def. Counsel:</string>
-               </property>
-              </widget>
-             </item>
              <item row="2" column="2">
               <widget class="NoScrollComboBox" name="defense_counsel_type_box">
                <property name="styleSheet">
@@ -258,40 +264,24 @@ background-color: rgb(255, 255, 255);</string>
                </item>
               </widget>
              </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Def. Counsel:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Date:</string>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="3">
               <widget class="QCheckBox" name="defense_counsel_waived_checkBox">
                <property name="text">
                 <string>Defendant appeared without counsel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="4">
-              <widget class="QPushButton" name="clear_fields_case_Button">
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(160, 160, 160);</string>
-               </property>
-               <property name="text">
-                <string>Clear Fields</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -302,13 +292,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="text">
-                <string>Appearance Reason:</string>
                </property>
               </widget>
              </item>
@@ -332,97 +315,34 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>Def. First Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="3">
-              <widget class="QLineEdit" name="case_number_lineEdit">
-               <property name="maximumSize">
-                <size>
-                 <width>500</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0" colspan="5">
-              <widget class="Line" name="line">
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <property name="lineWidth">
-                <number>2</number>
-               </property>
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="1" colspan="2">
-              <widget class="NoScrollComboBox" name="appearance_reason_box">
+             <item row="2" column="1">
+              <widget class="DefenseCounselComboBox" name="defense_counsel_name_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="editable">
                 <bool>true</bool>
                </property>
-               <item>
-                <property name="text">
-                 <string>motion hearing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>change of plea</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>arraignment</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>final community control violation hearing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>preliminary community control violation hearing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>final pre-trial</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>LEAP sentencing</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>jury trial</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>trial to court</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>warrant for failure to appear</string>
-                </property>
-               </item>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="4">
+              <widget class="QPushButton" name="clear_fields_case_Button">
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(160, 160, 160);</string>
+               </property>
+               <property name="text">
+                <string>Clear Fields</string>
+               </property>
               </widget>
              </item>
             </layout>
@@ -431,7 +351,7 @@ background-color: rgb(255, 255, 255);</string>
           <item row="2" column="1">
            <widget class="QFrame" name="frame_8">
             <property name="styleSheet">
-             <string notr="true">background-color: rgb(255, 255, 127);</string>
+             <string notr="true">background-color: rgb(160, 160, 160);</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -484,11 +404,21 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6">
-             <item row="0" column="0">
+            <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0">
+             <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_4">
+               <property name="font">
+                <font>
+                 <family>Palatino Linotype</family>
+                 <pointsize>10</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>true</underline>
+                </font>
+               </property>
                <property name="text">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;ENTRY CONTENT&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>DECISION</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
@@ -496,19 +426,69 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="1" column="0">
-              <widget class="QTextEdit" name="entry_content_textEdit">
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Motion to seal is:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="NoScrollComboBox" name="seal_decision_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Granted</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Denied - with reason</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Denied - inelligible</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="3" column="0" colspan="2">
+              <widget class="QPlainTextEdit" name="entry_content_textEdit">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::Box</enum>
                </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
                <property name="lineWidth">
                 <number>2</number>
                </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>State of Ohio response to motion to seal:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="NoScrollComboBox" name="state_response_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>did not oppose</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>opposed</string>
+                </property>
+               </item>
               </widget>
              </item>
             </layout>

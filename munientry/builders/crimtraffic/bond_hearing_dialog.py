@@ -92,7 +92,7 @@ class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
     _signal_connector = BondHearingDialogSignalConnector
     _slots = BondHearingDialogSlotFunctions
     _view_modifier = BondHearingDialogViewModifier
-    dialog_name = 'Bond Hearing Dialog'
+    dialog_name = 'Bond Hearing Entry'
 
     condition_checkbox_dict = {
         'monitoring_checkBox': ['monitoring_type_box'],

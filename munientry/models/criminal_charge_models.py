@@ -26,7 +26,3 @@ class AmendOffenseDetails:
     original_charge: str = None
     amended_charge: str = None
     motion_disposition: str = "granted"
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

@@ -61,7 +61,7 @@ class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialo
     _signal_connector = LeapSentencingDialogSignalConnector
     _slots = LeapSentencingDialogSlotFunctions
     _view_modifier = LeapSentencingDialogViewModifier
-    dialog_name = 'Leap Sentencing Dialog'
+    dialog_name = 'Leap Sentencing Judgment Entry'
 
     def additional_setup(self):
         self.additional_conditions_list = [
