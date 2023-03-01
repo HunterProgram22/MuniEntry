@@ -4,22 +4,24 @@ from loguru import logger
 
 def general_case_search_query(case_number: str) -> str:
     return f"""
-    SELECT DISTINCT 
-    sc.Id AS SubCaseID,
-    v.Id AS ViolationID,
-    cm.CaseNumber,
+    SELECT DISTINCT
     sc.SubCaseNumber,
+    cm.CaseNumber,
+    sc.Id AS SubCaseID,
+	sc.ChargeDescription AS Charge,
+	v.Id AS ViolationID,
     v.SectionCode AS Statute,
-    sc.ChargeDescription AS Charge,
-    d.DegreeCode,
-    cp.FirstName AS DefFirstName,
+	d.DegreeCode,
+	cp.FirstName AS DefFirstName,
     cp.LastName AS DefLastName,
-    cm.InsuranceStatus AS FraInFile,
-    vd.IsMoving AS MovingBool,
+	vd.IsMoving AS MovingBool,
+	sc.ViolationDate,
+	vd.EndDate,
+	cm.InsuranceStatus AS FraInFile,
     CONCAT(att.FirstName, ' ', att.LastName) AS DefenseCounsel,
     IIF (sc.AttorneyTypeID = '476', 1, 0) AS PubDef
 
-	FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
 	JOIN [AuthorityCourt].[dbo].[SubCase] sc
     ON cm.Id = sc.CaseMasterID
 	JOIN [AuthorityCourt].[dbo].[Violation] v
@@ -28,13 +30,13 @@ def general_case_search_query(case_number: str) -> str:
     ON v.Id = vd.ViolationID
 	JOIN [AuthorityCourt].[dbo].[Degree] d
     ON vd.DegreeID = d.Id
-	LEFT JOIN [AuthorityCourt].[dbo].[CasePerson] cp
-    ON cm.Id = cp.CaseMasterID
+	JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+    ON cp.CaseMasterID = cm.Id
 	LEFT JOIN [AuthorityCourt].[dbo].[Attorney] att
     ON sc.AttorneyID = att.Id
-    
-	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and cp.PersonTypeID = '1' and vd.EndDate is Null 
-	ORDER BY SubCaseNumber
+
+	WHERE cm.CaseNumber = '{case_number}' AND sc.IsDeleted = '0' and (vd.EndDate is NULL OR vd.EndDate >= sc.ViolationDate)	 	 
+	ORDER BY SubCaseNumber 
     """
 
 
