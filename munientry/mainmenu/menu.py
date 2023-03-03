@@ -70,6 +70,7 @@ class MainMenu(object):
     def _connect_reports_menu_functions(self):
         self._connect_authority_court_reports()
         self._connect_munientry_reports()
+        self._connect_daily_reports()
 
     def _connect_authority_court_reports(self):
         event_types = AUTHORITY_CRIMTRAFFIC_EVENT_TYPES
@@ -102,6 +103,18 @@ class MainMenu(object):
                     munientry_reports.run_courtroom_report,
                     self.mainwindow,
                     courtroom,
+                ),
+            )
+
+    def _connect_daily_reports(self):
+        actions = [
+            self.mainwindow.actionNot_Guilty_Continuance,
+        ]
+        for courtroom, action in zip(courtrooms, actions):
+            action.triggered.connect(
+                partial(
+                    daily_reports.run_not_guilty_report,
+                    self.mainwindow,
                 ),
             )
 

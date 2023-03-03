@@ -1784,9 +1784,17 @@ font-weight: bold;</string>
      <addaction name="actionCourtroom_B"/>
      <addaction name="actionCourtroom_C"/>
     </widget>
+    <widget class="QMenu" name="menuDaily_Reports">
+     <property name="title">
+      <string>Daily Reports</string>
+     </property>
+     <addaction name="actionNot_Guilty_Continuance"/>
+    </widget>
     <addaction name="menuAuthorityCourt"/>
     <addaction name="separator"/>
     <addaction name="menuMuniEntry_Reports"/>
+    <addaction name="separator"/>
+    <addaction name="menuDaily_Reports"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1923,6 +1931,11 @@ font-weight: bold;</string>
   <action name="actionCreate_single_FTA_Entry">
    <property name="text">
     <string>Create single FTA Entry</string>
+   </property>
+  </action>
+  <action name="actionNot_Guilty_Continuance">
+   <property name="text">
+    <string>Not Guilty / Continuance</string>
    </property>
   </action>
  </widget>
