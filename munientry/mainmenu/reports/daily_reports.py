@@ -15,7 +15,7 @@ def run_not_guilty_report(mainwindow: 'QMainWindow') -> None:
     report_date, ok_response = user_input_get_report_date(mainwindow, 'Not Guilty Report')
     event = f'Not Guilty Events'
     if ok_response:
-        query_string = not_guilty_report_query(report_date, courtroom)
+        query_string = not_guilty_report_query(report_date)
         logger.info(query_string)
         data_list = get_not_guilty_report_data(query_string)
         show_not_guilty_report(mainwindow, event, report_date, data_list)
@@ -26,8 +26,8 @@ def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[s
     return QInputDialog.getText(
         mainwindow,
         f'{event} Report',
-        'This report will query all cases set for arraignment for the date entered and return cases'
-        + ' that have a Journal Entry for that same date that is for a Not Guilty plea or a'
+        'This report will query all cases set for arraignment for the date entered\nand return cases'
+        + ' that have a Journal Entry for that same date that has a\nNot Guilty plea or a'
         + ' Continuance.\n\n'
         + f'Enter {event} Date in format YYYY-MM-DD:',
         )
@@ -58,7 +58,7 @@ DAILY_REPORT_HEADERS = ('Case Number', 'Defendant Name', 'Docket Entry')
 def create_daily_report_window(data_list: list, report_name: str, report_date: str) -> TableReportWindow:
     """Creates a window to load the event table and contains print buttons."""
     window = TableReportWindow(f'{report_name} Report for {report_date}',)
-    window.table  = window.add_table(len(data_list), 4, f'{report_name} Report for {report_date}', window)
+    window.table  = window.add_table(len(data_list), 3, f'{report_name} Report for {report_date}', window)
     window.table.setHorizontalHeaderLabels(list(DAILY_REPORT_HEADERS))
 
     Case = namedtuple('Case', 'case_number def_name remark')
@@ -70,7 +70,7 @@ def create_daily_report_window(data_list: list, report_name: str, report_date: s
     return window
 
 
-def show_courtroom_report(
+def show_not_guilty_report(
         mainwindow: 'QMainWindow', event: str, report_date: str, data_list: list,
 ) -> None:
     """Shows a sortable table loaded with the data for the generated report.

@@ -7,7 +7,7 @@ from functools import partial
 from munientry.mainmenu.batch_menu import create_single_fta_entry, run_batch_fta_process
 from munientry.mainmenu.logs_menu import open_user_log_file
 from munientry.mainmenu.open_menu import open_entries_folder
-from munientry.mainmenu.reports import authoritycourt_reports, munientry_reports
+from munientry.mainmenu.reports import authoritycourt_reports, daily_reports, munientry_reports
 from munientry.mainmenu.settings_menu import open_workflow_settings
 
 ENTRY_FOLDERS = (
@@ -107,16 +107,9 @@ class MainMenu(object):
             )
 
     def _connect_daily_reports(self):
-        actions = [
-            self.mainwindow.actionNot_Guilty_Continuance,
-        ]
-        for courtroom, action in zip(courtrooms, actions):
-            action.triggered.connect(
-                partial(
-                    daily_reports.run_not_guilty_report,
-                    self.mainwindow,
-                ),
-            )
+        self.mainwindow.actionNot_Guilty_Continuance.triggered.connect(
+            partial(daily_reports.run_not_guilty_report, self.mainwindow),
+        )
 
     def _connect_logs_menu_functions(self) -> None:
         self.mainwindow.actionOpen_Current_Log.triggered.connect(open_user_log_file)
