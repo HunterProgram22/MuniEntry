@@ -13,10 +13,12 @@ class DigitalWorkflow(object):
         self.load_digital_workflow_counts()
 
     def load_digital_workflow_counts(self):
-        hemmeter_file_count = self.get_file_count(DW_HEMMETER)
+        admin_count = self.get_file_count(os.path.join(DW_HEMMETER, 'Admin'))
+        md_adopt_count = self.get_file_count(os.path.join(DW_HEMMETER, 'MDAdopt'))
         rohrer_file_count = self.get_file_count(DW_ROHRER)
         bunner_file_count = self.get_file_count(DW_BUNNER)
-        self.mainwindow.jour_count_jh_label.setText(str(hemmeter_file_count))
+        self.mainwindow.admin_count_label.setText(str(admin_count))
+        self.mainwindow.md_adopt_label.setText(str(md_adopt_count))
         self.mainwindow.jour_count_jr_label.setText(str(rohrer_file_count))
         self.mainwindow.jour_count_mb_label.setText(str(bunner_file_count))
 
