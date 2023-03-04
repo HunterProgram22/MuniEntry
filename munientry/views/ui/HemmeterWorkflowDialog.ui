@@ -69,30 +69,40 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,4,7,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,4,7,0,0,0,0">
       <property name="verticalSpacing">
        <number>24</number>
       </property>
-      <item row="4" column="0">
-       <widget class="QPushButton" name="open_entry_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
+      <item row="4" column="0" colspan="2">
+       <widget class="Line" name="line">
+        <property name="font">
+         <font>
+          <family>Palatino Linotype</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
         </property>
-        <property name="text">
-         <string>Open Entry for Review</string>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>2</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QPushButton" name="close_dialog_Button">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(160, 160, 160);
 font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Close Workflow</string>
+         <string>Close Workflow (No Entries Approved or Rejected)</string>
         </property>
        </widget>
       </item>
@@ -130,25 +140,26 @@ p, li { white-space: pre-wrap; }
       <item row="2" column="0" colspan="2">
        <widget class="QTableWidget" name="entries_tableWidget"/>
       </item>
-      <item row="3" column="0" colspan="2">
-       <widget class="Line" name="line">
-        <property name="font">
-         <font>
-          <family>Palatino Linotype</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
+      <item row="3" column="0">
+       <widget class="QPushButton" name="open_entry_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
         </property>
-        <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
+        <property name="text">
+         <string>Open Selected Entry for Review</string>
         </property>
-        <property name="lineWidth">
-         <number>2</number>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QPushButton" name="pushButton">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(0, 255, 0);
+font: 75 11pt &quot;Palatino Linotype&quot;;
+font-weight: bold;</string>
         </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+        <property name="text">
+         <string>Complete Workflow</string>
         </property>
        </widget>
       </item>

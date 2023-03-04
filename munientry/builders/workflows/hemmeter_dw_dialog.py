@@ -63,6 +63,8 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
         self.load_pending_entries_list()
+        for i in range(self.dialog.entries_tableWidget.rowCount()):
+            self.dialog.entries_tableWidget.setRowHeight(i, 50)
 
     def load_pending_entries_list(self):
         pending_entries = os.listdir(self.dialog.entry_path)
