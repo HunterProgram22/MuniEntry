@@ -39,7 +39,7 @@ font-weight: bold;</string>
     <item row="0" column="0">
      <widget class="QTabWidget" name="main_TabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="entries_Tab">
        <attribute name="title">
@@ -1500,7 +1500,7 @@ font-weight: bold;</string>
         <item row="0" column="0">
          <widget class="QTabWidget" name="workflows_person_tab">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="mattox_tab">
            <attribute name="title">
@@ -1566,50 +1566,58 @@ font-weight: bold;</string>
            <attribute name="title">
             <string>Judge Hemmeter</string>
            </attribute>
-           <layout class="QGridLayout" name="gridLayout_26">
-            <item row="0" column="0">
-             <layout class="QGridLayout" name="gridLayout_18">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_17">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Judge Hemmeter Pending Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="jour_count_jh_label">
-                <property name="text">
-                 <string>Jour_Count_JH</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QPushButton" name="hemmeter_workflowButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Judge Hemmeter Digital Workflow</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
+           <layout class="QGridLayout" name="gridLayout_18" rowstretch="1,1,1,0,0,0">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <property name="verticalSpacing">
+             <number>36</number>
+            </property>
+            <item row="5" column="0">
+             <widget class="QPushButton" name="pushButton_2">
+              <property name="text">
+               <string>Magistrate Adoption Entries</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0" colspan="2">
+             <widget class="QLabel" name="label_17">
+              <property name="font">
+               <font>
+                <family>Palatino Linotype</family>
+                <pointsize>11</pointsize>
+                <weight>75</weight>
+                <italic>false</italic>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="text">
+               <string>Judge Hemmeter Digital Workflow</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPushButton" name="hemmeter_workflowButton">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(85, 170, 255);</string>
+              </property>
+              <property name="text">
+               <string>Administrative Entries</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="jour_count_jh_label">
+              <property name="text">
+               <string>Jour_Count_JH</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
