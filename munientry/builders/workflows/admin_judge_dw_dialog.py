@@ -2,13 +2,15 @@
 # pylint: disable = E1101
 import datetime
 import os
+import io
 import shutil
 
-from docxtpl import DocxTemplate
+from docx.shared import Mm
+from docxtpl import DocxTemplate, InlineImage
 from loguru import logger
 from PyQt6.QtWidgets import QHeaderView, QTableWidget, QTableWidgetItem
 
-from munientry.appsettings.paths import DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.appsettings.paths import APPROVED_STAMP_PATH, DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
 from munientry.builders import base_builders as base
 from munientry.views.admin_entries_workflow_dialog_ui import Ui_AdminEntriesWorkflowDialog
 from munientry.widgets.custom_widgets import WorkflowRadioButtonWidget
@@ -144,6 +146,7 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 logger.info(f'{current_file} approved')
                 destination_directory = DW_APPROVED_DIR
                 approved_entry = self.create_entry(current_file_path, current_file)
+                # os.remove(current_file_path)
                 # shutil.move(current_file_path, destination_directory)
 
             elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
@@ -153,12 +156,18 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         self.update_table()
 
     def create_entry(self, current_file_path, filename) -> None:
+        doc = DocxTemplate(current_file_path)
+        # time_stamp = InlineImage(doc, APPROVED_STAMP_PATH)
         data_dict = {
-            'time_stamp': '12:30 p.m.',
+            'time_stamp': InlineImage(doc, APPROVED_STAMP_PATH, height=Mm(25), width=Mm(25)),
             'admin_judge_signature': 'Judge Hemmeter',
         }
-        doc = DocxTemplate(current_file_path)
         doc.render(data_dict)
+        # for paragraph in doc.paragraphs:
+        #     for run in paragraph.runs:
+        #         if run.text == '{{time_stamp}}':
+        #             run.element.wrap_format.type = Wrap.SQUARE
+
         doc.save(f'{DW_APPROVED_DIR}{filename}')
         logger.info(f'Entry Created: {filename}')
         # startfile(f'{self.save_path}{self.docname}')
