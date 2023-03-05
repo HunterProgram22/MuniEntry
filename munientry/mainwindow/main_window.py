@@ -40,7 +40,7 @@ from munientry.builders.scheduling import (
     trial_to_court_hearing_notice_dialog,
 )
 from munientry.builders.workflows import bunner_dw_dialog as bunner
-from munientry.builders.workflows import hemmeter_dw_dialog as hemmeter
+from munientry.builders.workflows import admin_judge_dw_dialog as hemmeter
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow

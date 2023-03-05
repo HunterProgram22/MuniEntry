@@ -28,7 +28,7 @@ DIALOG_LOADERS = MappingProxyType({
     admin.driving_privileges_dialog.DrivingPrivilegesDialog: loader.AdminDrivingDialogLoader,
     admin.admin_fiscal_dialog.AdminFiscalDialog: loader.AdminFiscalDialogLoader,
     work.probation_dw_dialogs.ProbationWorkflowDialog: loader.ProbationWorkflowDialogLoader,
-    work.hemmeter_dw_dialog.AdminWorkflowDialog: loader.DigitalWorkflowDialogLoader,
+    work.admin_judge_dw_dialog.AdminWorkflowDialog: loader.DigitalWorkflowDialogLoader,
 })
 
 

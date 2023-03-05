@@ -7,7 +7,8 @@ module will be imported as part of the python_view_file.py.
 """
 from loguru import logger
 from PyQt6.QtCore import QDate, QTime
-from PyQt6.QtWidgets import QCheckBox, QDateEdit, QPushButton, QTimeEdit
+from PyQt6.QtWidgets import QCheckBox, QDateEdit, QPushButton, QTimeEdit, QWidget, QRadioButton, \
+    QButtonGroup, QHBoxLayout
 
 from munientry.widgets.widget_settings import (
     DATE_FORMAT,
@@ -220,3 +221,21 @@ class DismissedCheckbox(QCheckBox):
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
+
+
+class WorkflowRadioButtonWidget(QWidget):
+    """A Widget with two radio buttons for approving or rejecting a decision."""
+
+    def __init__(self):
+        super().__init__()
+        self.approved = QRadioButton()
+        self.approved.setText('Approved')
+        self.rejected = QRadioButton()
+        self.rejected.setText('Rejected')
+        self.buttonGroup = QButtonGroup()
+        self.buttonGroup.addButton(self.approved)
+        self.buttonGroup.addButton(self.rejected)
+        self.horizontalLayout = QHBoxLayout(self)
+        self.horizontalLayout.setObjectName('horizontalLayout')
+        self.horizontalLayout.addWidget(self.approved)
+        self.horizontalLayout.addWidget(self.rejected)
