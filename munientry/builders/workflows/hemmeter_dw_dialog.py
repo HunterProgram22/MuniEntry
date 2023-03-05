@@ -9,7 +9,7 @@ from PyQt6 import QtCore
 
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
-from munientry.appsettings.paths import DW_HEMMETER
+from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
 
 ADMIN_ENTRY_PATH = f'{DW_HEMMETER}/Admin//'
 
@@ -28,22 +28,25 @@ class HemmeterWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
     def connect_workflow_buttons(self):
         self.dialog.close_dialog_Button.released.connect(self.dialog.close)
         self.dialog.open_entry_Button.released.connect(self.dialog.functions.open_entry)
+        self.dialog.complete_workflow_Button.released.connect(
+            self.dialog.functions.complete_workflow
+        )
 
 
 class RadioButtonWidget(QWidget):
     def __init__(self):
         super().__init__()
-        self.radioButton1 = QRadioButton()
-        self.radioButton1.setText('Approved')
-        self.radioButton2 = QRadioButton()
-        self.radioButton2.setText('Rejected')
+        self.approved = QRadioButton()
+        self.approved.setText('Approved')
+        self.rejected = QRadioButton()
+        self.rejected.setText('Rejected')
         self.buttonGroup = QButtonGroup()
-        self.buttonGroup.addButton(self.radioButton1)
-        self.buttonGroup.addButton(self.radioButton2)
+        self.buttonGroup.addButton(self.approved)
+        self.buttonGroup.addButton(self.rejected)
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.horizontalLayout.addWidget(self.radioButton1)
-        self.horizontalLayout.addWidget(self.radioButton2)
+        self.horizontalLayout.addWidget(self.approved)
+        self.horizontalLayout.addWidget(self.rejected)
 
 
 class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
@@ -79,8 +82,6 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             table.setItem(row, 0, QTableWidgetItem(entry_name))
             radio_button = RadioButtonWidget()
 
-            radio_button.approved = radio_button.radioButton1
-            radio_button.rejected = radio_button.radioButton2
             radio_button.buttonGroup.addButton((radio_button.approved))
             radio_button.buttonGroup.addButton((radio_button.rejected))
             table.setItem(row, 1, table.setCellWidget(row, 1, radio_button))
@@ -95,6 +96,30 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         document = f'{self.dialog.entry_path}/{entry_name}'
         os.startfile(document)
         logger.info(f'{document} opened in workflow.')
+
+    def complete_workflow(self):
+        table = self.dialog.entries_tableWidget
+        for row in range(table.rowCount()):
+            current_file = table.item(row, 0).text()
+            logger.debug(current_file)
+            current_file_path = os.path.join(ADMIN_ENTRY_PATH, current_file)
+            if table.cellWidget(row, 1).approved.isChecked():
+                logger.debug('Entry approved')
+                destination_directory = DW_APPROVED_DIR
+            elif table.cellWidget(row, 1).rejected.isChecked():
+                logger.debug('Entry rejected')
+                destination_directory = DW_REJECTED_DIR
+            shutil.move(current_file_path, destination_directory)
+        self.update_table()
+
+    def update_table(self):
+        table = self.dialog.entries_tableWidget
+        for row in reversed(range(table.rowCount()-1)):
+            if table.cellWidget(row, 1).approved.isChecked():
+                table.removeRow(row)
+            if table.cellWidget(row, 1).rejected.isChecked():
+                table.removeRow(row)
+
 
 
 class HemmeterWorkflowDialog(base.BaseDialogBuilder, Ui_HemmeterWorkflowDialog):

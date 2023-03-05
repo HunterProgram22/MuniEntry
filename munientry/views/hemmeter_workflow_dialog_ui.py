@@ -88,12 +88,12 @@ class Ui_HemmeterWorkflowDialog(object):
 "font-weight: bold;")
         self.open_entry_Button.setObjectName("open_entry_Button")
         self.gridLayout_2.addWidget(self.open_entry_Button, 3, 0, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.frame_3)
-        self.pushButton.setStyleSheet("background-color: rgb(0, 255, 0);\n"
+        self.complete_workflow_Button = QtWidgets.QPushButton(self.frame_3)
+        self.complete_workflow_Button.setStyleSheet("background-color: rgb(0, 255, 0);\n"
 "font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout_2.addWidget(self.pushButton, 6, 1, 1, 1)
+        self.complete_workflow_Button.setObjectName("complete_workflow_Button")
+        self.gridLayout_2.addWidget(self.complete_workflow_Button, 6, 1, 1, 1)
         self.gridLayout_2.setRowStretch(0, 1)
         self.gridLayout_2.setRowStretch(1, 4)
         self.gridLayout_2.setRowStretch(2, 7)
@@ -117,4 +117,4 @@ class Ui_HemmeterWorkflowDialog(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the entry is rejected, the person that created the entry will be notified.</p></body></html>"))
         self.open_entry_Button.setText(_translate("HemmeterWorkflowDialog", "Open Selected Entry for Review"))
-        self.pushButton.setText(_translate("HemmeterWorkflowDialog", "Complete Workflow"))
+        self.complete_workflow_Button.setText(_translate("HemmeterWorkflowDialog", "Complete Workflow"))
