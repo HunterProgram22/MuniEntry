@@ -10,6 +10,7 @@ from PyQt6 import QtCore
 from munientry.builders import base_builders as base
 from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
 from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.widgets.message_boxes import InfoBox, RequiredBox
 
 ADMIN_ENTRY_PATH = f'{DW_HEMMETER}/Admin//'
 
@@ -98,23 +99,29 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         logger.info(f'{document} opened in workflow.')
 
     def complete_workflow(self):
+        logger.debug('complete workflow pressed')
         table = self.dialog.entries_tableWidget
+        logger.debug('pre loop')
+        logger.debug(table.rowCount())
         for row in range(table.rowCount()):
+            logger.debug(table.rowCount())
+            logger.debug(row)
             current_file = table.item(row, 0).text()
             logger.debug(current_file)
             current_file_path = os.path.join(ADMIN_ENTRY_PATH, current_file)
             if table.cellWidget(row, 1).approved.isChecked():
-                logger.debug('Entry approved')
+                logger.info(f'{current_file} approved')
                 destination_directory = DW_APPROVED_DIR
+                shutil.move(current_file_path, destination_directory)
             elif table.cellWidget(row, 1).rejected.isChecked():
-                logger.debug('Entry rejected')
+                logger.info(f'{current_file} rejected')
                 destination_directory = DW_REJECTED_DIR
-            shutil.move(current_file_path, destination_directory)
+                shutil.move(current_file_path, destination_directory)
         self.update_table()
 
     def update_table(self):
         table = self.dialog.entries_tableWidget
-        for row in reversed(range(table.rowCount()-1)):
+        for row in reversed(range(table.rowCount())):
             if table.cellWidget(row, 1).approved.isChecked():
                 table.removeRow(row)
             if table.cellWidget(row, 1).rejected.isChecked():
