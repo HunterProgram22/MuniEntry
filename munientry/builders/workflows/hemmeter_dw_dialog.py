@@ -9,10 +9,10 @@ from PyQt6 import QtCore
 
 from munientry.builders import base_builders as base
 from munientry.views.admin_entries_workflow_dialog_ui import Ui_AdminEntriesWorkflowDialog
-from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.appsettings.paths import DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
 
-ADMIN_ENTRY_PATH = f'{DW_HEMMETER}/Admin//'
+ADMIN_ENTRY_PATH = f'{DW_ADMIN_JUDGE}/Admin//'
 COL_FILENAME = 0
 COL_DECISION = 1
 COL_DATE = 2
@@ -20,6 +20,7 @@ COL_TIME = 3
 ROW_HEIGHT = 50
 DATE_FORMAT = '%b %d, %Y'
 TIME_FORMAT = '%I:%M %p'
+
 
 class DigitalWorkflowRadioButtonWidget(QWidget):
     """A Widget with two radio buttons for approving or rejecting a decision."""
