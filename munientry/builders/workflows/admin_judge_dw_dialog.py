@@ -4,6 +4,7 @@ import datetime
 import os
 import shutil
 
+from docxtpl import DocxTemplate
 from loguru import logger
 from PyQt6.QtWidgets import QHeaderView, QTableWidget, QTableWidgetItem
 
@@ -142,12 +143,25 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
             if table.cellWidget(row, COL_DECISION).approved.isChecked():
                 logger.info(f'{current_file} approved')
                 destination_directory = DW_APPROVED_DIR
-                shutil.move(current_file_path, destination_directory)
+                approved_entry = self.create_entry(current_file_path, current_file)
+                # shutil.move(current_file_path, destination_directory)
+
             elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
                 logger.info(f'{current_file} rejected')
                 destination_directory = DW_REJECTED_DIR
                 shutil.move(current_file_path, destination_directory)
         self.update_table()
+
+    def create_entry(self, current_file_path, filename) -> None:
+        data_dict = {
+            'time_stamp': '12:30 p.m.',
+            'admin_judge_signature': 'Judge Hemmeter',
+        }
+        doc = DocxTemplate(current_file_path)
+        doc.render(data_dict)
+        doc.save(f'{DW_APPROVED_DIR}{filename}')
+        logger.info(f'Entry Created: {filename}')
+        # startfile(f'{self.save_path}{self.docname}')
 
     def update_table(self) -> None:
         """Removes rows where a row was approved or rejected.
