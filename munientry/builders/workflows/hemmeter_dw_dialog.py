@@ -8,11 +8,17 @@ from PyQt6.QtWidgets import QButtonGroup, QHeaderView, QTableWidgetItem, QWidget
 from PyQt6 import QtCore
 
 from munientry.builders import base_builders as base
-from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
+# from munientry.views.hemmeter_workflow_dialog_ui import Ui_HemmeterWorkflowDialog
+from munientry.views.admin_entries_workflow_dialog_ui import Ui_AdminEntriesWorkflowDialog
 from munientry.appsettings.paths import DW_HEMMETER, DW_APPROVED_DIR, DW_REJECTED_DIR
 from munientry.widgets.message_boxes import InfoBox, RequiredBox
 
 ADMIN_ENTRY_PATH = f'{DW_HEMMETER}/Admin//'
+COL_FILENAME = 0
+COL_DECISION = 1
+COL_DATE = 2
+COL_TIME = 3
+ROW_HEIGHT = 50
 
 
 class HemmeterWorkflowDialogViewModifier(base.BaseDialogViewModifier):
@@ -35,6 +41,8 @@ class HemmeterWorkflowDialogSignalConnector(base.BaseDialogSignalConnector):
 
 
 class RadioButtonWidget(QWidget):
+    """A Widget with two radio buttons for approving or rejecting a decision."""
+
     def __init__(self):
         super().__init__()
         self.approved = QRadioButton()
@@ -45,7 +53,7 @@ class RadioButtonWidget(QWidget):
         self.buttonGroup.addButton(self.approved)
         self.buttonGroup.addButton(self.rejected)
         self.horizontalLayout = QHBoxLayout(self)
-        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.horizontalLayout.setObjectName('horizontalLayout')
         self.horizontalLayout.addWidget(self.approved)
         self.horizontalLayout.addWidget(self.rejected)
 
@@ -54,42 +62,49 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
     """Additional Functions for Hemmeter Workflow Dialog."""
 
     def create_table_on_dialog_load(self):
-        self.dialog.entries_tableWidget.insertColumn(0)
-        self.dialog.entries_tableWidget.insertColumn(1)
-        self.dialog.entries_tableWidget.insertColumn(2)
-        self.dialog.entries_tableWidget.insertColumn(3)
-        header = self.dialog.entries_tableWidget.horizontalHeader()
-        self.dialog.entries_tableWidget.setHorizontalHeaderLabels(
-            ['Case Entry', 'Decision', 'Date Created', 'Time Created'],
-        )
+        num_columns = 4
+        for i in range(num_columns):
+            self.dialog.entries_tableWidget.insertColumn(i)
+
+        header_labels = ['Case Entry', 'Decision', 'Date Created', 'Time Created']
+        self.dialog.entries_tableWidget.setHorizontalHeaderLabels(header_labels)
+
+        self._resize_columns(self.dialog.entries_tableWidget)
+
+        self.load_pending_entries_list()
+        for i in range(self.dialog.entries_tableWidget.rowCount()):
+            self.dialog.entries_tableWidget.setRowHeight(i, ROW_HEIGHT)
+
+    def _resize_columns(self, table):
+        header = table.horizontalHeader()
         header.setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
         header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
-        self.load_pending_entries_list()
-        for i in range(self.dialog.entries_tableWidget.rowCount()):
-            self.dialog.entries_tableWidget.setRowHeight(i, 50)
 
     def load_pending_entries_list(self):
-        pending_entries = os.listdir(self.dialog.entry_path)
+        entries = [
+            entry for entry in os.listdir(self.dialog.entry_path) if not entry.startswith('.')
+        ]
         table = self.dialog.entries_tableWidget
-        row = 0
-        for entry_name in pending_entries:
-            entry_creation_time = os.path.getctime(f'{self.dialog.entry_path}{entry_name}')
+        for row, entry in enumerate(entries):
+            entry_path = os.path.join(self.dialog.entry_path, entry)
+            entry_creation_time = os.path.getctime(entry_path)
             date_time_conversion = datetime.datetime.fromtimestamp(entry_creation_time)
             date = date_time_conversion.strftime('%b %d, %Y')
             time = date_time_conversion.strftime('%I:%M %p')
-            table.insertRow(row)
-            table.setItem(row, 0, QTableWidgetItem(entry_name))
-            radio_button = RadioButtonWidget()
-
-            radio_button.buttonGroup.addButton((radio_button.approved))
-            radio_button.buttonGroup.addButton((radio_button.rejected))
-            table.setItem(row, 1, table.setCellWidget(row, 1, radio_button))
-            table.setItem(row, 2, QTableWidgetItem(date))
-            table.setItem(row, 3, QTableWidgetItem(time))
-            row += 1
+            self.create_entry_row(table, row, entry, date, time)
         table.setSortingEnabled(True)
+
+    def create_entry_row(self, table_widget, row, entry_name, date, time):
+        table_widget.insertRow(row)
+        table_widget.setItem(row, COL_FILENAME, QTableWidgetItem(entry_name))
+        radio_button = RadioButtonWidget()
+        radio_button.buttonGroup.addButton((radio_button.approved))
+        radio_button.buttonGroup.addButton((radio_button.rejected))
+        table_widget.setCellWidget(row, COL_DECISION, radio_button)
+        table_widget.setItem(row, COL_DATE, QTableWidgetItem(date))
+        table_widget.setItem(row, COL_TIME, QTableWidgetItem(time))
 
     def open_entry(self):
         selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
@@ -99,44 +114,52 @@ class HemmeterWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         logger.info(f'{document} opened in workflow.')
 
     def complete_workflow(self):
-        logger.debug('complete workflow pressed')
+        """Loops through table rows and moves files if approved or rejected.
+
+        The table rows are not removed until after all files are moved so that the
+        rows of the table will not change during the loop.
+        """
         table = self.dialog.entries_tableWidget
-        logger.debug('pre loop')
-        logger.debug(table.rowCount())
         for row in range(table.rowCount()):
-            logger.debug(table.rowCount())
-            logger.debug(row)
-            current_file = table.item(row, 0).text()
-            logger.debug(current_file)
+            current_file = table.item(row, COL_FILENAME).text()
             current_file_path = os.path.join(ADMIN_ENTRY_PATH, current_file)
-            if table.cellWidget(row, 1).approved.isChecked():
+            if table.cellWidget(row, COL_DECISION) is None:
+                continue
+            elif table.cellWidget(row, COL_DECISION).approved.isChecked():
                 logger.info(f'{current_file} approved')
                 destination_directory = DW_APPROVED_DIR
                 shutil.move(current_file_path, destination_directory)
-            elif table.cellWidget(row, 1).rejected.isChecked():
+            elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
                 logger.info(f'{current_file} rejected')
                 destination_directory = DW_REJECTED_DIR
                 shutil.move(current_file_path, destination_directory)
         self.update_table()
 
     def update_table(self):
+        """Removes rows where a row was approved or rejected.
+
+        Loops in reverse so that removing a row does not affect the row for later
+        loops checking rows above it the current row in the table.
+        """
         table = self.dialog.entries_tableWidget
         for row in reversed(range(table.rowCount())):
-            if table.cellWidget(row, 1).approved.isChecked():
+            if table.cellWidget(row, COL_DECISION) is None:
+                continue
+            elif table.cellWidget(row, COL_DECISION).approved.isChecked():
                 table.removeRow(row)
-            if table.cellWidget(row, 1).rejected.isChecked():
+            elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
                 table.removeRow(row)
 
 
 
-class HemmeterWorkflowDialog(base.BaseDialogBuilder, Ui_HemmeterWorkflowDialog):
-    """Dialog builder class for Hemmeter Digital Workflow."""
+class AdminWorkflowDialog(base.BaseDialogBuilder, Ui_AdminEntriesWorkflowDialog):
+    """Dialog builder class for Admin Entries Digital Workflow."""
 
     entry_path = ADMIN_ENTRY_PATH
     _signal_connector = HemmeterWorkflowDialogSignalConnector
     _slots = HemmeterWorkflowDialogSlotFunctions
     _view_modifier = HemmeterWorkflowDialogViewModifier
-    dialog_name = 'Hemmeter Digital Workflow'
+    dialog_name = 'Admin Entries Digital Workflow'
 
     def __init__(self, parent=None):
         super().__init__(parent)

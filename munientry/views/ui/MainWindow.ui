@@ -39,7 +39,7 @@ font-weight: bold;</string>
     <item row="0" column="0">
      <widget class="QTabWidget" name="main_TabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="entries_Tab">
        <attribute name="title">
@@ -1595,7 +1595,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="probation_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -1605,7 +1605,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QPushButton" name="pushButton_4">
+               <widget class="QPushButton" name="tsp_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -1615,7 +1615,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QPushButton" name="pushButton_2">
+               <widget class="QPushButton" name="md_adopt_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 127);</string>
                 </property>
@@ -1635,7 +1635,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QPushButton" name="hemmeter_workflowButton">
+               <widget class="QPushButton" name="admin_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1712,7 +1712,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QPushButton" name="pushButton_5">
+               <widget class="QPushButton" name="diversion_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>

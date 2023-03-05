@@ -310,7 +310,7 @@ class MainWindowViewModifier(object):
             self.mainwindow.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
 
             ###Workflow###
-            self.mainwindow.hemmeter_workflowButton: hemmeter.HemmeterWorkflowDialog,
+            self.mainwindow.admin_workflowButton: hemmeter.AdminWorkflowDialog,
             self.mainwindow.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.mainwindow.bunner_workflowButton: bunner.BunnerWorkflowDialog,
             self.mainwindow.pretrial_workflowButton: probation.PretrialWorkflowDialog,
