@@ -144,14 +144,11 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 continue
             if table.cellWidget(row, COL_DECISION).approved.isChecked():
                 logger.info(f'{current_file} approved')
-                # destination_directory = DW_APPROVED_DIR
                 approved_entry = self.approve_entry(current_file_path, current_file)
                 # os.remove(current_file_path)
 
             elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
                 logger.info(f'{current_file} rejected')
-                # destination_directory = DW_REJECTED_DIR
-                # shutil.move(current_file_path, destination_directory)
                 rejected_entry = self.reject_entry(current_file_path, current_file)
                 # os.remove(current_file_path)
         self.update_table()
