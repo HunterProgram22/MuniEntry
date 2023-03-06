@@ -196,7 +196,7 @@ def not_guilty_report_query(event_date: str) -> list[tuple]:
 	
     WHERE ce.EventID in ('27', '28', '77', '263', '361', '474') 
     AND ce.EventDate = '{event_date}' 
-    AND de.Remark LIKE 'JOURNAL%' 
+    AND de.Remark LIKE '%JOURNAL%' AND (de.Remark LIKE '%PLED%' or de.Remark LIKE '%CONTINUED%') 
     AND de.Date = '{event_date}' 
     AND cp.PersonTypeID = '1'
     """
