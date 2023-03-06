@@ -11,7 +11,7 @@ PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
 GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
-APPROVED_STAMP_PATH = fr'{ICON_PATH}\approved_stamp.png'
+APPROVED_STAMP_PATH = fr'{ICON_PATH}\Approved_Stamp.docx'
 
 
 config = configparser.ConfigParser()

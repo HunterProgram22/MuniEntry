@@ -156,17 +156,17 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         self.update_table()
 
     def create_entry(self, current_file_path, filename) -> None:
+        # stamp_doc = DocxTemplate(APPROVED_STAMP_PATH)
+        # subdoc = stamp_doc.new_subdoc()
         doc = DocxTemplate(current_file_path)
-        # time_stamp = InlineImage(doc, APPROVED_STAMP_PATH)
+        today = datetime.date.today()
+        date_string = today.strftime(f'{DATE_FORMAT} - {TIME_FORMAT}')
         data_dict = {
-            'time_stamp': InlineImage(doc, APPROVED_STAMP_PATH, height=Mm(25), width=Mm(25)),
+            # 'time_stamp': InlineImage(doc, APPROVED_STAMP_PATH, height=Mm(25), width=Mm(25)),
+            'time_stamp': f'FILED {date_string}',
             'admin_judge_signature': 'Judge Hemmeter',
         }
         doc.render(data_dict)
-        # for paragraph in doc.paragraphs:
-        #     for run in paragraph.runs:
-        #         if run.text == '{{time_stamp}}':
-        #             run.element.wrap_format.type = Wrap.SQUARE
 
         doc.save(f'{DW_APPROVED_DIR}{filename}')
         logger.info(f'Entry Created: {filename}')
