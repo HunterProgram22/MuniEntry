@@ -41,6 +41,7 @@ CASE_LISTS_PATH = paths['daily_case_lists']
 # Digital Workflow Path Information
 DW_PATH = paths['digital_workflow_base_path']
 DW_ADMIN_JUDGE = paths['digital_workflow_admin_judge_path']
+DW_ADMIN_JUDGE_ADMIN = paths['digital_workflow_admin_judge_admin_entry_path']
 
 DW_ROHRER = paths['digital_workflow_rohrer_path']
 DW_BUNNER = paths['digital_workflow_bunner_path']
