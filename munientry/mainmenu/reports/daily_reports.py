@@ -1,5 +1,6 @@
 """Module for MuniEntry daily reports."""
 from collections import namedtuple
+from datetime import date
 
 from loguru import logger
 from PyQt6.QtSql import QSqlQuery
@@ -8,6 +9,7 @@ from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.sqlserver.sql_server_queries import not_guilty_report_query
 from munientry.widgets.table_widgets import TableReportWindow
+
 
 def run_not_guilty_report(mainwindow: 'QMainWindow') -> None:
     """Menu function that generates a report of cases with a potentail not guilty for a given date.
@@ -19,6 +21,18 @@ def run_not_guilty_report(mainwindow: 'QMainWindow') -> None:
         logger.info(query_string)
         data_list = get_not_guilty_report_data(query_string)
         show_not_guilty_report(mainwindow, event, report_date, data_list)
+
+
+def run_not_guilty_report_today(mainwindow: 'QMainWindow') -> None:
+    """Menu function that generates a report of cases with a potentail not guilty for a given date.
+    """
+    today = date.today()
+    report_date = today.strftime('%Y-%m-%d')
+    event = f'Not Guilty Events'
+    query_string = not_guilty_report_query(report_date)
+    logger.info(query_string)
+    data_list = get_not_guilty_report_data(query_string)
+    show_not_guilty_report(mainwindow, event, report_date, data_list)
 
 
 def user_input_get_report_date(mainwindow: 'QMainWindow', event: str) -> tuple[str, bool]:

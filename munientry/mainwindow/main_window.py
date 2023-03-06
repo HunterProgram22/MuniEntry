@@ -46,6 +46,7 @@ from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.helper_functions import set_random_judge, update_crim_case_number
 from munientry.mainmenu.menu import MainMenu
+from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_lists import CaseListHandler
 from munientry.mainwindow.case_search import CaseSearchHandler
 from munientry.mainwindow.dialog_starter import start_dialog
@@ -194,6 +195,7 @@ class MainWindowSignalConnector(object):
         self.mainwindow.show_docket_case_list_Button.pressed.connect(
             self.mainwindow.show_case_docket_case_list,
         )
+        self.mainwindow.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self.mainwindow))
 
     def connect_judicial_officers_to_set_officer(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
