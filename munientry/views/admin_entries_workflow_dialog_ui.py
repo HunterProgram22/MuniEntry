@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'munientry/views/ui/HemmeterWorkflowDialog.ui'
+# Form implementation generated from reading ui file 'munientry/views/ui/AdminEntriesWorkflowDialog.ui'
 #
 # Created by: PyQt6 UI code generator 6.4.0
 #
@@ -9,29 +9,29 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_HemmeterWorkflowDialog(object):
-    def setupUi(self, HemmeterWorkflowDialog):
-        HemmeterWorkflowDialog.setObjectName("HemmeterWorkflowDialog")
-        HemmeterWorkflowDialog.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
-        HemmeterWorkflowDialog.resize(1006, 828)
+class Ui_AdminEntriesWorkflowDialog(object):
+    def setupUi(self, AdminEntriesWorkflowDialog):
+        AdminEntriesWorkflowDialog.setObjectName("AdminEntriesWorkflowDialog")
+        AdminEntriesWorkflowDialog.setWindowModality(QtCore.Qt.WindowModality.WindowModal)
+        AdminEntriesWorkflowDialog.resize(1006, 828)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(HemmeterWorkflowDialog.sizePolicy().hasHeightForWidth())
-        HemmeterWorkflowDialog.setSizePolicy(sizePolicy)
-        HemmeterWorkflowDialog.setMinimumSize(QtCore.QSize(0, 0))
+        sizePolicy.setHeightForWidth(AdminEntriesWorkflowDialog.sizePolicy().hasHeightForWidth())
+        AdminEntriesWorkflowDialog.setSizePolicy(sizePolicy)
+        AdminEntriesWorkflowDialog.setMinimumSize(QtCore.QSize(0, 0))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(9)
-        HemmeterWorkflowDialog.setFont(font)
-        HemmeterWorkflowDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
+        AdminEntriesWorkflowDialog.setFont(font)
+        AdminEntriesWorkflowDialog.setStyleSheet("background-color: rgb(25, 49, 91);\n"
 "font: 75 11pt \"Palatino Linotype\";")
-        self.gridLayout = QtWidgets.QGridLayout(HemmeterWorkflowDialog)
+        self.gridLayout = QtWidgets.QGridLayout(AdminEntriesWorkflowDialog)
         self.gridLayout.setObjectName("gridLayout")
-        self.frame_3 = QtWidgets.QFrame(HemmeterWorkflowDialog)
+        self.frame_3 = QtWidgets.QFrame(AdminEntriesWorkflowDialog)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -66,7 +66,8 @@ class Ui_HemmeterWorkflowDialog(object):
         self.line.setObjectName("line")
         self.gridLayout_2.addWidget(self.line, 4, 0, 1, 2)
         self.close_dialog_Button = QtWidgets.QPushButton(self.frame_3)
-        self.close_dialog_Button.setStyleSheet("background-color: rgb(160, 160, 160);\n"
+        self.close_dialog_Button.setStyleSheet("background-color: rgb(255, 96, 82);\n"
+"font: 75 11pt \"Palatino Linotype\";\n"
 "font-weight: bold;")
         self.close_dialog_Button.setObjectName("close_dialog_Button")
         self.gridLayout_2.addWidget(self.close_dialog_Button, 6, 0, 1, 1)
@@ -99,15 +100,15 @@ class Ui_HemmeterWorkflowDialog(object):
         self.gridLayout_2.setRowStretch(2, 7)
         self.gridLayout.addWidget(self.frame_3, 0, 0, 1, 2)
 
-        self.retranslateUi(HemmeterWorkflowDialog)
-        QtCore.QMetaObject.connectSlotsByName(HemmeterWorkflowDialog)
+        self.retranslateUi(AdminEntriesWorkflowDialog)
+        QtCore.QMetaObject.connectSlotsByName(AdminEntriesWorkflowDialog)
 
-    def retranslateUi(self, HemmeterWorkflowDialog):
+    def retranslateUi(self, AdminEntriesWorkflowDialog):
         _translate = QtCore.QCoreApplication.translate
-        HemmeterWorkflowDialog.setWindowTitle(_translate("HemmeterWorkflowDialog", "Judge Hemmeter Digital Workflow"))
-        self.close_dialog_Button.setText(_translate("HemmeterWorkflowDialog", "Close Workflow (No Entries Approved or Rejected)"))
-        self.label.setText(_translate("HemmeterWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">ADMINISTRATIVE ENTRIES PENDING REVIEW</span></p></body></html>"))
-        self.textBrowser.setHtml(_translate("HemmeterWorkflowDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        AdminEntriesWorkflowDialog.setWindowTitle(_translate("AdminEntriesWorkflowDialog", "Admin Entries Workflow"))
+        self.close_dialog_Button.setText(_translate("AdminEntriesWorkflowDialog", "Close Workflow"))
+        self.label.setText(_translate("AdminEntriesWorkflowDialog", "<html><head/><body><p><span style=\" text-decoration: underline;\">ADMINISTRATIVE ENTRIES PENDING REVIEW</span></p></body></html>"))
+        self.textBrowser.setHtml(_translate("AdminEntriesWorkflowDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Palatino Linotype\'; font-size:11pt; font-weight:600; font-style:normal;\">\n"
@@ -116,5 +117,5 @@ class Ui_HemmeterWorkflowDialog(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the entry is accepted, the Administrative Judge\'s digital signature will be attached along with a file stamp, then the entry will be sent to the Clerk\'s Office to be placed in the Administrative Journal.</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">If the entry is rejected, the person that created the entry will be notified.</p></body></html>"))
-        self.open_entry_Button.setText(_translate("HemmeterWorkflowDialog", "Open Selected Entry for Review"))
-        self.complete_workflow_Button.setText(_translate("HemmeterWorkflowDialog", "Complete Workflow"))
+        self.open_entry_Button.setText(_translate("AdminEntriesWorkflowDialog", "Open Selected Entry for Review"))
+        self.complete_workflow_Button.setText(_translate("AdminEntriesWorkflowDialog", "Complete Workflow"))

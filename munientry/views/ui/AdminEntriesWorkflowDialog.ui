@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HemmeterWorkflowDialog</class>
- <widget class="QDialog" name="HemmeterWorkflowDialog">
+ <class>AdminEntriesWorkflowDialog</class>
+ <widget class="QDialog" name="AdminEntriesWorkflowDialog">
   <property name="windowModality">
    <enum>Qt::WindowModal</enum>
   </property>
@@ -35,7 +35,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Judge Hemmeter Digital Workflow</string>
+   <string>Admin Entries Workflow</string>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(25, 49, 91);
@@ -98,11 +98,12 @@ font-weight: bold;</string>
       <item row="6" column="0">
        <widget class="QPushButton" name="close_dialog_Button">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
+         <string notr="true">background-color: rgb(255, 96, 82);
+font: 75 11pt &quot;Palatino Linotype&quot;;
 font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Close Workflow (No Entries Approved or Rejected)</string>
+         <string>Close Workflow</string>
         </property>
        </widget>
       </item>

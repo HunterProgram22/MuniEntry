@@ -11,6 +11,7 @@ PATH = str(pathlib.Path().absolute())
 TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
 ICON_PATH = fr'{PATH}\resources\icons\\'
 GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
+APPROVED_STAMP_PATH = fr'{ICON_PATH}\Approved_Stamp.docx'
 
 
 config = configparser.ConfigParser()
@@ -39,7 +40,9 @@ CASE_LISTS_PATH = paths['daily_case_lists']
 
 # Digital Workflow Path Information
 DW_PATH = paths['digital_workflow_base_path']
-DW_HEMMETER = paths['digital_workflow_hemmeter_path']
+DW_ADMIN_JUDGE = paths['digital_workflow_admin_judge_path']
+DW_ADMIN_JUDGE_ADMIN = paths['digital_workflow_admin_judge_admin_entry_path']
+
 DW_ROHRER = paths['digital_workflow_rohrer_path']
 DW_BUNNER = paths['digital_workflow_bunner_path']
 DW_PROBATION = paths['digital_workflow_probation_path']
