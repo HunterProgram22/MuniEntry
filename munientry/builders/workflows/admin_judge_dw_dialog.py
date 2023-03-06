@@ -22,7 +22,7 @@ COL_DECISION = 1
 COL_DATE = 2
 COL_TIME = 3
 ROW_HEIGHT = 50
-DATE_FORMAT = '%b %d, %Y'  # noqa: WPS323
+DATE_FORMAT = '%B %d, %Y'  # noqa: WPS323
 TIME_FORMAT = '%I:%M %p'
 
 
@@ -144,33 +144,38 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
                 continue
             if table.cellWidget(row, COL_DECISION).approved.isChecked():
                 logger.info(f'{current_file} approved')
-                destination_directory = DW_APPROVED_DIR
-                approved_entry = self.create_entry(current_file_path, current_file)
+                # destination_directory = DW_APPROVED_DIR
+                approved_entry = self.approve_entry(current_file_path, current_file)
                 # os.remove(current_file_path)
-                # shutil.move(current_file_path, destination_directory)
 
             elif table.cellWidget(row, COL_DECISION).rejected.isChecked():
                 logger.info(f'{current_file} rejected')
-                destination_directory = DW_REJECTED_DIR
-                shutil.move(current_file_path, destination_directory)
+                # destination_directory = DW_REJECTED_DIR
+                # shutil.move(current_file_path, destination_directory)
+                rejected_entry = self.reject_entry(current_file_path, current_file)
+                # os.remove(current_file_path)
         self.update_table()
 
-    def create_entry(self, current_file_path, filename) -> None:
-        # stamp_doc = DocxTemplate(APPROVED_STAMP_PATH)
-        # subdoc = stamp_doc.new_subdoc()
+    def approve_entry(self, current_file_path, filename) -> None:
         doc = DocxTemplate(current_file_path)
-        today = datetime.date.today()
+        today = datetime.datetime.now()
         date_string = today.strftime(f'{DATE_FORMAT} - {TIME_FORMAT}')
         data_dict = {
-            # 'time_stamp': InlineImage(doc, APPROVED_STAMP_PATH, height=Mm(25), width=Mm(25)),
             'time_stamp': f'FILED {date_string}',
             'admin_judge_signature': 'Judge Hemmeter',
         }
         doc.render(data_dict)
-
         doc.save(f'{DW_APPROVED_DIR}{filename}')
         logger.info(f'Entry Created: {filename}')
-        # startfile(f'{self.save_path}{self.docname}')
+
+    def reject_entry(self, current_file_path, filename) -> None:
+        doc = DocxTemplate(current_file_path)
+        data_dict = {
+            'time_stamp': f'REJECTED',
+        }
+        doc.render(data_dict)
+        doc.save(f'{DW_REJECTED_DIR}{filename}')
+        logger.info(f'Entry Rejected: {filename}')
 
     def update_table(self) -> None:
         """Removes rows where a row was approved or rejected.
