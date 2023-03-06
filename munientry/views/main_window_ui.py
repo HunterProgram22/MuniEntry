@@ -986,7 +986,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuSettings.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.main_TabWidget.setCurrentIndex(1)
+        self.main_TabWidget.setCurrentIndex(0)
         self.search_tabWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         self.stackedWidget.setCurrentIndex(0)
