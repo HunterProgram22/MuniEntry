@@ -33,6 +33,9 @@ class DialogPreloadChecker(object):
 class CrimTrafficPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for CrimTraffic Tab Dialog Buttons."""
 
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
+
     def perform_checks(self) -> bool:
         if self.is_crimtraffic_officer_selected():
             if self.is_daily_case_list_selected():
@@ -40,15 +43,7 @@ class CrimTrafficPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_crimtraffic_officer_selected(self) -> bool:
-        required_officers = [
-            self.mainwindow.hemmeter_radioButton.isChecked(),
-            self.mainwindow.rohrer_radioButton.isChecked(),
-            self.mainwindow.bunner_radioButton.isChecked(),
-            self.mainwindow.kudela_radioButton.isChecked(),
-            self.mainwindow.visiting_judge_radioButton.isChecked(),
-            self.mainwindow.pelanda_radioButton.isChecked(),
-        ]
-        if any(required_officers):
+        if any(button.isChecked() for button in self.mainwindow.judicial_officer_buttons):
             return True
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -57,21 +52,16 @@ class CrimTrafficPreloadChecker(DialogPreloadChecker):
 class CivilPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for Civil Tab Dialog Buttons."""
 
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
+
     def perform_checks(self) -> bool:
         if self.is_judicial_officer_selected():
             return True
         return False
 
     def is_judicial_officer_selected(self) -> bool:
-        required_officers = [
-            self.mainwindow.hemmeter_radioButton.isChecked(),
-            self.mainwindow.rohrer_radioButton.isChecked(),
-            self.mainwindow.bunner_radioButton.isChecked(),
-            self.mainwindow.kudela_radioButton.isChecked(),
-            self.mainwindow.visiting_judge_radioButton.isChecked(),
-            self.mainwindow.pelanda_radioButton.isChecked(),
-        ]
-        if any(required_officers):
+        if any(button.isChecked() for button in self.mainwindow.judicial_officer_buttons):
             return True
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -79,6 +69,9 @@ class CivilPreloadChecker(DialogPreloadChecker):
 
 class SchedulingPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for Scheduling Tab Dialog Buttons."""
+
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
 
     def perform_checks(self) -> bool:
         if self.is_scheduling_officer_selected():
@@ -102,6 +95,9 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
 
 class AdminPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for Admin Tab Dialog Buttons that load a case."""
+
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
 
     def perform_checks(self) -> bool:
         if self.is_admin_officer_selected():
@@ -128,6 +124,9 @@ class AdminPreloadChecker(DialogPreloadChecker):
 
 class AdminFiscalPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for Admin Tab Fiscal Dialog Button."""
+
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
 
     def perform_checks(self) -> bool:
         if self.is_admin_officer_selected():

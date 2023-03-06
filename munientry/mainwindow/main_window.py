@@ -74,6 +74,7 @@ class MainWindowSlotFunctionsMixin(object):
             'scheduling_Tab': self.assignment_commissioners_Stack,
             'admin_Tab': self.admin_staff_Stack,
             'civil_Tab': self.judicial_officers_Stack,
+            'probation_tab': self.comm_control_officers_stack,
         }
         current_tab_name = self.tabWidget.currentWidget().objectName()
         current_stack = stack_mapping.get(current_tab_name)
@@ -133,6 +134,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.case_lists.load_case_lists()
         self.case_lists.show_hide_daily_case_lists()
         self.judicial_officer = None
+        self.judicial_officer_buttons = self.set_judicial_officer_buttons()
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
@@ -143,6 +145,16 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
 
     def connect_signals_to_slots(self) -> None:
         MainWindowSignalConnector(self)
+
+    def set_judicial_officer_buttons(self):
+        return [
+            self.judge_1_radio_btn,
+            self.judge_2_radio_btn,
+            self.visiting_judge_radio_btn,
+            self.mag_1_radio_btn,
+            self.mag_2_radio_btn,
+            self.mag_3_radio_btn
+        ]
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
@@ -182,7 +194,7 @@ class MainWindowSignalConnector(object):
     def connect_general_buttons(self):
         self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.case_lists.reload_case_lists)
         self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
-        self.mainwindow.visiting_judge_radioButton.toggled.connect(
+        self.mainwindow.visiting_judge_radio_btn.toggled.connect(
             self.mainwindow.set_visiting_judge,
         )
         self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.set_person_stack_widget)
@@ -233,32 +245,23 @@ class MainWindowViewModifier(object):
         ]
 
     def connect_judicial_officers(self) -> dict:
+        mw = self.mainwindow
         return {
-            self.mainwindow.bunner_radioButton: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
-            self.mainwindow.pelanda_radioButton: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
-            self.mainwindow.kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
-            self.mainwindow.rohrer_radioButton: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
-            self.mainwindow.hemmeter_radioButton: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
-            self.mainwindow.visiting_judge_radioButton:
-                JudicialOfficer('None', 'Assigned', 'Judge'),
-            self.mainwindow.dattilo_radioButton:
-                JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.mainwindow.patterson_radioButton:
-                JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.mainwindow.none_radioButton:
-                JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
-            self.mainwindow.assn_comm_dattilo_radioButton:
-                JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.mainwindow.assn_comm_patterson_radioButton:
-                JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.mainwindow.court_admin_kudela_radioButton:
-                JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
-            self.mainwindow.jury_comm_patterson_radioButton:
-                JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
-            self.mainwindow.none_admin_radioButton:
-                JudicialOfficer('None', 'Assigned', 'Admin Staff Person'),
-            self.mainwindow.bunner_admin_radioButton:
-                JudicialOfficer('A', 'B', 'Admin Staff Person'),
+            mw.judge_1_radio_btn: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
+            mw.judge_2_radio_btn: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
+            mw.visiting_judge_radio_btn: JudicialOfficer('None', 'Assigned', 'Judge'),
+            mw.mag_1_radio_btn: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
+            mw.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
+            mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
+            mw.dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            mw.patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            mw.none_radioButton: JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
+            mw.assn_comm_dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            mw.assn_comm_patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            mw.court_admin_kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
+            mw.jury_comm_patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
+            mw.none_admin_radioButton: JudicialOfficer('None', 'Assigned', 'Admin Staff Person'),
+            mw.bunner_admin_radioButton: JudicialOfficer('A', 'B', 'Admin Staff Person'),
         }
 
     def connect_dialog_buttons(self):
