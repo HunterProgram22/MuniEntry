@@ -957,7 +957,7 @@ font-weight: bold;</string>
              <attribute name="title">
               <string>Scheduling</string>
              </attribute>
-             <layout class="QGridLayout" name="gridLayout_4" columnstretch="1,0,1">
+             <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,2">
               <property name="horizontalSpacing">
                <number>30</number>
               </property>
@@ -1147,6 +1147,16 @@ font-weight: bold;</string>
                 </property>
                 <property name="text">
                  <string>Hemmeter - General Notice of Hearing</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="not_guilty_report_Button">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(160, 160, 160);</string>
+                </property>
+                <property name="text">
+                 <string>Run Not Guilty Report</string>
                 </property>
                </widget>
               </item>
@@ -1784,9 +1794,17 @@ font-weight: bold;</string>
      <addaction name="actionCourtroom_B"/>
      <addaction name="actionCourtroom_C"/>
     </widget>
+    <widget class="QMenu" name="menuDaily_Reports">
+     <property name="title">
+      <string>Daily Reports</string>
+     </property>
+     <addaction name="actionNot_Guilty_Continuance"/>
+    </widget>
     <addaction name="menuAuthorityCourt"/>
     <addaction name="separator"/>
     <addaction name="menuMuniEntry_Reports"/>
+    <addaction name="separator"/>
+    <addaction name="menuDaily_Reports"/>
    </widget>
    <widget class="QMenu" name="menuOpen">
     <property name="minimumSize">
@@ -1923,6 +1941,11 @@ font-weight: bold;</string>
   <action name="actionCreate_single_FTA_Entry">
    <property name="text">
     <string>Create single FTA Entry</string>
+   </property>
+  </action>
+  <action name="actionNot_Guilty_Continuance">
+   <property name="text">
+    <string>Not Guilty / Continuance</string>
    </property>
   </action>
  </widget>

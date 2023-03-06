@@ -176,5 +176,27 @@ def batch_fta_query(event_date: str, next_day: str) -> str:
 """
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+def not_guilty_report_query(event_date: str) -> list[tuple]:
+    return f"""
+    SELECT DISTINCT
+    cm.CaseNumber
+	,cp.FirstName + ' ' + cp.LastName as DefFullName
+	,de.Remark
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+	JOIN [AuthorityCourt].[dbo].[SubCase] sc
+    ON cm.Id = sc.CaseMasterID
+    LEFT OUTER JOIN [AuthorityCourt].[dbo].[CaseEvent] ce 
+    ON cm.Id = ce.CaseMasterID
+	LEFT OUTER JOIN [AuthorityCourt].[dbo].[Docket]d
+	ON cm.Id = d.CaseMasterID
+	LEFT OUTER JOIN [AuthorityCourt].[dbo].[DocketEntry]de
+	ON d.Id = de.DocketID
+	LEFT OUTER JOIN [AuthorityCourt].[dbo].[CasePerson] cp
+	ON cp.CaseMasterID = sc.CaseMasterID 
+	
+    WHERE ce.EventID in ('27', '28', '77', '263', '361', '474') 
+    AND ce.EventDate = '{event_date}' 
+    AND de.Remark LIKE 'JOURNAL%' 
+    AND de.Date = '{event_date}' 
+    AND cp.PersonTypeID = '1'
+    """
