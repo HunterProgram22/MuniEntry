@@ -49,9 +49,9 @@ from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_lists import CaseListHandler
 from munientry.mainwindow.case_search import CaseSearchHandler
+from munientry.mainwindow.court_staff import CourtStaffWidget
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
-from munientry.models.party_types import JudicialOfficer
 from munientry.sqlserver import crim_getters as crim
 from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
@@ -64,18 +64,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
-        self.court_staff_widget = CourtStaffWidget(self)
-        self.court_staff_buttons_dict = self.create_court_staff_buttons_dict()
+
+        self.court_staff_widget = CourtStaffWidget(self, parent)
+
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
+
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self)
+
         MainWindowSignalConnector(self)
         self.menu = MainMenu(self)
         self.case_lists.load_case_lists()
         self.case_lists.show_hide_daily_case_lists()
         self.judicial_officer = None
-        self.judicial_officer_buttons = self.set_judicial_officer_buttons()
-        self.assignment_commissioner_buttons = self.set_assignment_commissioner_buttons()
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
@@ -108,48 +109,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             'trials_to_court', self.trials_to_court_radioButton, self,
         )
         self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radioButton, self)
-
-
-    def set_visiting_judge(self):
-        if self.visiting_judge_radioButton.isChecked():
-            first_name, response_ok = QInputDialog.getText(
-                self, 'Set Visiting Judge', 'Enter Judge First Name:',
-            )
-            last_name, response_ok = QInputDialog.getText(
-                self, 'Set Visiting Judge', 'Enter Judge Last Name:',
-            )
-            if response_ok:
-                update_dict = {
-                    self.visiting_judge_radioButton: JudicialOfficer(
-                        f'{first_name}', f'{last_name}', 'Judge',
-                    ),
-                }
-                self.court_staff_buttons_dict.update(update_dict)
-                self.visiting_judge_radioButton.setText(f'Judge {last_name}')
-
-    def update_court_staff(self) -> None:
-        self.judicial_officer = self.court_staff_buttons_dict.get(self.sender())
-        judicial_officer = self.judicial_officer.last_name
-        logger.action(f'Court Staff set to: {judicial_officer}')
-
-    def create_court_staff_buttons_dict(self) -> dict:
-        return {
-            self.judge_1_radio_btn: JudicialOfficer('Marianne', 'Hemmeter', 'Judge'),
-            self.judge_2_radio_btn: JudicialOfficer('Kyle', 'Rohrer', 'Judge'),
-            self.visiting_judge_radio_btn: JudicialOfficer('None', 'Assigned', 'Judge'),
-            self.mag_1_radio_btn: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
-            self.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
-            self.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
-            self.assn_comm_1_radio_btn: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.assn_comm_2_radio_btn: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.no_assn_comm_radio_btn: JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
-            self.assn_comm_dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            self.assn_comm_patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            self.court_admin_kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
-            self.jury_comm_patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Jury Commissioner'),
-            self.none_admin_radioButton: JudicialOfficer('None', 'Assigned', 'Admin Staff Person'),
-            self.bunner_admin_radioButton: JudicialOfficer('A', 'B', 'Admin Staff Person'),
-        }
 
     def create_entry_buttons_dict(self):
         return {
@@ -215,21 +174,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             + f' The assignment was made at {time_now}.',
             )
 
-    def set_person_stack_widget(self) -> None:
-        stack_mapping = {
-            'crim_traffic_Tab': self.judicial_officers_Stack,
-            'scheduling_Tab': self.assignment_commissioners_Stack,
-            'admin_Tab': self.admin_staff_Stack,
-            'civil_Tab': self.judicial_officers_Stack,
-            'probation_tab': self.comm_control_officers_stack,
-        }
-        current_tab_name = self.tabWidget.currentWidget().objectName()
-        current_stack = stack_mapping.get(current_tab_name)
-        if current_stack is not None:
-            self.stackedWidget.setCurrentWidget(current_stack)
-            logger.info(f'Current Staff Tab is {current_stack.objectName()}')
-        logger.info(f'Current Entry Tab is {current_tab_name}')
-
     def set_entries_tab(self) -> None:
         logger.action('Search Tab Changed')
         if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
@@ -280,9 +224,9 @@ class MainWindowSignalConnector(object):
         self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.case_lists.reload_case_lists)
         self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
         self.mainwindow.visiting_judge_radio_btn.toggled.connect(
-            self.mainwindow.set_visiting_judge,
+            self.mainwindow.court_staff_widget.set_visiting_judge,
         )
-        self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.set_person_stack_widget)
+        self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.court_staff_widget.set_person_stack_widget)
         self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.set_entries_tab)
         self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
 
@@ -296,8 +240,8 @@ class MainWindowSignalConnector(object):
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
-        for key in self.mainwindow.court_staff_buttons_dict:
-            key.clicked.connect(self.mainwindow.update_court_staff)
+        for key in self.mainwindow.court_staff_widget.court_staff_buttons_dict:
+            key.clicked.connect(self.mainwindow.court_staff_widget.update_court_staff)
 
     def connect_dialog_buttons_to_start_dialog(self) -> None:
         """Connects all dialog buttons to the appropriate dialog.

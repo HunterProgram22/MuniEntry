@@ -43,7 +43,7 @@ class CrimTrafficPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_crimtraffic_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.judicial_officer_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.judicial_officer_buttons):
             return True
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -61,7 +61,7 @@ class CivilPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_judicial_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.judicial_officer_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.judicial_officer_buttons):
             return True
         RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -80,7 +80,7 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_scheduling_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.assignment_commissioner_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.assignment_commissioner_buttons):
             return True
         RequiredBox(
             'You must select an assignment commissioner.', 'Assignment Commissioner Required',
@@ -101,15 +101,7 @@ class AdminPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_admin_officer_selected(self) -> bool:
-        required_officers = [
-            self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
-            self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
-            self.mainwindow.court_admin_kudela_radioButton.isChecked(),
-            self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
-            self.mainwindow.bunner_admin_radioButton.isChecked(),
-            self.mainwindow.none_admin_radioButton.isChecked(),
-        ]
-        if any(required_officers):
+        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.administrative_staff_buttons):
             return True
         RequiredBox(
             'You must select an administrative staff person.', 'Administrative Staff Required',
@@ -129,13 +121,7 @@ class AdminFiscalPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_admin_officer_selected(self) -> bool:
-        required_officers = [
-            self.mainwindow.assn_comm_dattilo_radioButton.isChecked(),
-            self.mainwindow.assn_comm_patterson_radioButton.isChecked(),
-            self.mainwindow.court_admin_kudela_radioButton.isChecked(),
-            self.mainwindow.jury_comm_patterson_radioButton.isChecked(),
-        ]
-        if any(required_officers):
+        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.administrative_staff_buttons):
             return True
         RequiredBox(
             'You must select an administrative staff person.', 'Administrative Staff Required',
