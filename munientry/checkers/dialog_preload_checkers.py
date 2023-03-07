@@ -63,7 +63,7 @@ class CivilPreloadChecker(DialogPreloadChecker):
     def is_judicial_officer_selected(self) -> bool:
         if any(button.isChecked() for button in self.mainwindow.judicial_officer_buttons):
             return True
-        RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
+        RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         return False
 
 
@@ -80,12 +80,7 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_scheduling_officer_selected(self) -> bool:
-        required_officers = [
-            self.mainwindow.dattilo_radioButton.isChecked(),
-            self.mainwindow.patterson_radioButton.isChecked(),
-            self.mainwindow.none_radioButton.isChecked(),
-        ]
-        if any(required_officers):
+        if any(button.isChecked() for button in self.mainwindow.assignment_commissioner_buttons):
             return True
         RequiredBox(
             'You must select an assignment commissioner.', 'Assignment Commissioner Required',

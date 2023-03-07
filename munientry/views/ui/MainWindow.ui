@@ -1388,21 +1388,21 @@ font-weight: bold;</string>
                <item row="0" column="0">
                 <layout class="QGridLayout" name="gridLayout_3">
                  <item row="1" column="0">
-                  <widget class="QRadioButton" name="dattilo_radioButton">
+                  <widget class="QRadioButton" name="assn_comm_1_radio_btn">
                    <property name="text">
                     <string>Pat Dattilo</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QRadioButton" name="patterson_radioButton">
+                  <widget class="QRadioButton" name="assn_comm_2_radio_btn">
                    <property name="text">
                     <string>Kathryn Patterson</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="2">
-                  <widget class="QRadioButton" name="none_radioButton">
+                  <widget class="QRadioButton" name="no_assn_comm_radio_btn">
                    <property name="text">
                     <string>None</string>
                    </property>
@@ -2261,9 +2261,9 @@ font-weight: bold;</string>
   <tabstop>mag_1_radio_btn</tabstop>
   <tabstop>judge_2_radio_btn</tabstop>
   <tabstop>visiting_judge_radio_btn</tabstop>
-  <tabstop>patterson_radioButton</tabstop>
-  <tabstop>dattilo_radioButton</tabstop>
-  <tabstop>none_radioButton</tabstop>
+  <tabstop>assn_comm_2_radio_btn</tabstop>
+  <tabstop>assn_comm_1_radio_btn</tabstop>
+  <tabstop>no_assn_comm_radio_btn</tabstop>
   <tabstop>pcvh_fcvh_radioButton</tabstop>
   <tabstop>pleas_radioButton</tabstop>
   <tabstop>trials_to_court_radioButton</tabstop>

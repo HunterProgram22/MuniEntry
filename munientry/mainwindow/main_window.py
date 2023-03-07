@@ -135,6 +135,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.case_lists.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.judicial_officer_buttons = self.set_judicial_officer_buttons()
+        self.assignment_commissioner_buttons = self.set_assignment_commissioner_buttons()
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
@@ -154,6 +155,13 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
             self.mag_1_radio_btn,
             self.mag_2_radio_btn,
             self.mag_3_radio_btn
+        ]
+
+    def set_assignment_commissioner_buttons(self):
+        return [
+            self.assn_comm_1_radio_btn,
+            self.assn_comm_2_radio_btn,
+            self.no_assn_comm_radio_btn,
         ]
 
     def set_visiting_judge(self):
@@ -253,9 +261,9 @@ class MainWindowViewModifier(object):
             mw.mag_1_radio_btn: JudicialOfficer('Amanda', 'Bunner', 'Magistrate'),
             mw.mag_2_radio_btn: JudicialOfficer('Kevin', 'Pelanda', 'Magistrate'),
             mw.mag_3_radio_btn: JudicialOfficer('Justin', 'Kudela', 'Magistrate'),
-            mw.dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
-            mw.patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
-            mw.none_radioButton: JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
+            mw.assn_comm_1_radio_btn: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
+            mw.assn_comm_2_radio_btn: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
+            mw.no_assn_comm_radio_btn: JudicialOfficer('None', 'Assigned', 'Assignment Commissioner'),
             mw.assn_comm_dattilo_radioButton: JudicialOfficer('Pat', 'Dattilo', 'Assignment Commissioner'),
             mw.assn_comm_patterson_radioButton: JudicialOfficer('Kathryn', 'Patterson', 'Assignment Commissioner'),
             mw.court_admin_kudela_radioButton: JudicialOfficer('Justin', 'Kudela', 'Court Administrator'),
