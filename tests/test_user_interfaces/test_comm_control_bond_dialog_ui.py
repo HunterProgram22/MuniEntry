@@ -6,7 +6,7 @@ from tests.conftest import enter_data, mouse_click
 @pytest.fixture
 def pcv_dialog(qtbot, main_window):
     """Prelminary Community Control Violation Dialog is pcv_dialog"""
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.ProbationViolationBondButton)
     return main_window.dialog

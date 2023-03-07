@@ -91,7 +91,7 @@ def driving_priv_dialog(qtbot, main_window):
 @pytest.fixture
 def hemmeter_gen_hearing_notice_dialog(qtbot, main_window):
     """Hemmeter General Notice of Hearing dialog."""
-    mouse_click(main_window.patterson_radioButton)
+    mouse_click(main_window.assn_comm_2_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
@@ -103,7 +103,7 @@ def hemmeter_gen_hearing_notice_dialog(qtbot, main_window):
 @pytest.fixture
 def rohrer_gen_hearing_notice_dialog(qtbot, main_window):
     """Rohrer General Notice of Hearing dialog."""
-    mouse_click(main_window.dattilo_radioButton)
+    mouse_click(main_window.assn_comm_1_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
@@ -115,7 +115,7 @@ def rohrer_gen_hearing_notice_dialog(qtbot, main_window):
 @pytest.fixture
 def diversion_dialog(qtbot, main_window):
     """Diversion Plea Dialog is diversion_dialog"""
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.DiversionButton)
     qtbot.addWidget(main_window.dialog)
@@ -125,7 +125,7 @@ def diversion_dialog(qtbot, main_window):
 @pytest.fixture
 def add_charge_dialog(qtbot, main_window):
     """Add Charge Dialog fixture."""
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.JailCCPleaButton)
 
@@ -141,7 +141,7 @@ def add_charge_dialog(qtbot, main_window):
 @pytest.fixture
 def conditions_dialog(qtbot, main_window):
     """This is the fixture for the add conditions dialog on the the Fine Only main dialog."""
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.FineOnlyPleaButton)
     mouse_click(main_window.dialog.license_suspension_checkBox)
@@ -160,7 +160,7 @@ def conditions_dialog(qtbot, main_window):
 @pytest.fixture
 def special_conditions_dialog(qtbot, main_window):
     """Fixture for the Add Special Bond Conditions dialog on the Not Guilty Bond main dialog."""
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(main_window.NotGuiltyBondButton)
     mouse_click(main_window.dialog.domestic_violence_checkBox)
@@ -181,7 +181,7 @@ def special_conditions_dialog(qtbot, main_window):
 
 @pytest.fixture
 def ngb_dialog(qtbot, main_window):
-    mouse_click(main_window.pelanda_radioButton)
+    mouse_click(main_window.mag_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.NotGuiltyBondButton)
@@ -196,7 +196,7 @@ def ngb_dialog(qtbot, main_window):
 
 @pytest.fixture
 def fop_dialog(qtbot, main_window):
-    mouse_click(main_window.pelanda_radioButton)
+    mouse_click(main_window.mag_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.FineOnlyPleaButton)
@@ -213,7 +213,7 @@ def fop_dialog(qtbot, main_window):
 
 @pytest.fixture
 def jcp_dialog(qtbot, main_window):
-    mouse_click(main_window.bunner_radioButton)
+    mouse_click(main_window.mag_1_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.JailCCPleaButton)
@@ -230,7 +230,7 @@ def jcp_dialog(qtbot, main_window):
 
 @pytest.fixture
 def sentencing_only_dialog(qtbot, main_window):
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.SentencingOnlyButton)
@@ -248,7 +248,7 @@ def sentencing_only_dialog(qtbot, main_window):
 @pytest.fixture
 def com_control_dialog(qtbot, main_window):
     """Add Community Control for Jail CC Plea Dialog."""
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.final_pretrial_radioButton)
     mouse_click(main_window.JailCCPleaButton)
 
@@ -265,7 +265,7 @@ def com_control_dialog(qtbot, main_window):
 def com_control_dialog_com_control_conditions(qtbot, main_window):
     """Add Community Control is comcontrol_dialog. Uses the Jail Dialog
     as the main dialog because that is required."""
-    mouse_click(main_window.hemmeter_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
     mouse_click(main_window.final_pretrial_radioButton)
     mouse_click(main_window.JailCCPleaButton)
     mouse_click(main_window.dialog.community_control_checkBox)
@@ -298,7 +298,7 @@ def check_barkschat(charges, plea):
 def amend_charge_dialog(qtbot, main_window):
     """Amend Charge Dialog is amend_charge_dialog. Uses the Jail dialog as that
     is the most common."""
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.final_pretrial_radioButton)
     enter_data(main_window.final_pretrial_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(main_window.JailCCPleaButton)

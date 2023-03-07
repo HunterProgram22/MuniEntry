@@ -14,7 +14,7 @@ charge_grids_with_dismissed = [
 
 @pytest.mark.parametrize("test_input", charge_grids_with_dismissed)
 def test_dismissed_button_ovverides_plea(qtbot, main_window, test_input):
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
@@ -25,7 +25,7 @@ def test_dismissed_button_ovverides_plea(qtbot, main_window, test_input):
 
 @pytest.mark.parametrize("test_input", charge_grids_with_dismissed)
 def test_dismissed_button_holds_if_plea_all_button_used(qtbot, main_window, test_input):
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
@@ -36,7 +36,7 @@ def test_dismissed_button_holds_if_plea_all_button_used(qtbot, main_window, test
 
 @pytest.mark.parametrize("test_input", charge_grids_with_dismissed)
 def test_allied_box_overrides_plea_all_button(qtbot, main_window, test_input):
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))
@@ -47,7 +47,7 @@ def test_allied_box_overrides_plea_all_button(qtbot, main_window, test_input):
 
 @pytest.mark.parametrize("test_input", charge_grids_with_dismissed)
 def test_allied_box_holds_if_plea_all_button_used(qtbot, main_window, test_input):
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(getattr(main_window, test_input))

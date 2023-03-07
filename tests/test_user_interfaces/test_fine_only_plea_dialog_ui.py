@@ -10,7 +10,7 @@ TODAY = date.today()
 
 @pytest.fixture
 def fop_dialog(qtbot, main_window):
-    mouse_click(main_window.rohrer_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.FineOnlyPleaButton)

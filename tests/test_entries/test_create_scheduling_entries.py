@@ -25,7 +25,7 @@ def test_all_entry_buttons_with_case(monkeypatch, main_window, dialog_button, te
     """Tests the creation of all scheduling entries."""
     data = SchedulingEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
-    mouse_click(main_window.dattilo_radioButton)
+    mouse_click(main_window.assn_comm_1_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '21TRC05611')
     mouse_click(main_window.get_case_Button)

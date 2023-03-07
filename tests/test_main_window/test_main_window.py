@@ -25,7 +25,7 @@ main_window_all_daily_case_lists = [
 
 @pytest.mark.parametrize("case_list_button, case_number, case_list_box", main_window_all_daily_case_lists)
 def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button, case_number, case_list_box):
-    mouse_click(main_window_noclose.kudela_radioButton)
+    mouse_click(main_window_noclose.mag_3_radio_btn)
     mouse_click(getattr(main_window_noclose, case_list_button))
     enter_data(getattr(main_window_noclose, case_list_box), case_number)
     assert getattr(main_window_noclose, case_list_box).currentText() == case_number
@@ -43,7 +43,7 @@ daily_case_list_appearance_reasons = [
 
 @pytest.mark.parametrize("case_list_button, case_number, case_list_box, appearance_reason, entry_button", daily_case_list_appearance_reasons)
 def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, case_number, case_list_box, appearance_reason, entry_button):
-    mouse_click(main_window.bunner_radioButton)
+    mouse_click(main_window.mag_1_radio_btn)
     mouse_click(getattr(main_window, case_list_button))
     enter_data(getattr(main_window, case_list_box), case_number)
     mouse_click(getattr(main_window, entry_button))
@@ -52,7 +52,7 @@ def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, 
 
 def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
     """This test uses the test databases so counts may differ if compared to main databases."""
-    mouse_click(main_window_noclose.bunner_radioButton)
+    mouse_click(main_window_noclose.mag_1_radio_btn)
     mouse_click(main_window_noclose.final_pretrial_radioButton)
     enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
     qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key.Key_Delete)
@@ -71,7 +71,7 @@ daily_case_list_case_counts = [
 @pytest.mark.parametrize("case_list_button, case_number, case_list_box, initial_count, delete_count", daily_case_list_case_counts)
 def test_reload_case_lists(qtbot, main_window_noclose, case_list_button, case_list_box, case_number, initial_count, delete_count):
     """This test uses the test databases so counts may differ if compared to main databases."""
-    mouse_click(main_window_noclose.rohrer_radioButton)
+    mouse_click(main_window_noclose.judge_2_radio_btn)
     mouse_click(getattr(main_window_noclose, case_list_button))
     enter_data(getattr(main_window_noclose, case_list_box), case_number)
     assert len(getattr(main_window_noclose, case_list_box)) == initial_count
