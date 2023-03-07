@@ -57,81 +57,19 @@ from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
 
 
-class MainWindowSlotFunctionsMixin(object):
-    """Class that contains common functions for the main window."""
-
-    def assign_judge(self) -> None:
-        assigned_judge, time_now = set_random_judge()
-        self.assign_judge_label.setText(assigned_judge)
-        self.last_judge_assigned_label.setText(
-            f'The last judge assigned was {assigned_judge}.\n'
-            + f' The assignment was made at {time_now}.',
-            )
-
-    def set_person_stack_widget(self) -> None:
-        stack_mapping = {
-            'crim_traffic_Tab': self.judicial_officers_Stack,
-            'scheduling_Tab': self.assignment_commissioners_Stack,
-            'admin_Tab': self.admin_staff_Stack,
-            'civil_Tab': self.judicial_officers_Stack,
-            'probation_tab': self.comm_control_officers_stack,
-        }
-        current_tab_name = self.tabWidget.currentWidget().objectName()
-        current_stack = stack_mapping.get(current_tab_name)
-        if current_stack is not None:
-            self.stackedWidget.setCurrentWidget(current_stack)
-            logger.info(f'Current Staff Tab is {current_stack.objectName()}')
-        logger.info(f'Current Entry Tab is {current_tab_name}')
-
-    def set_entries_tab(self) -> None:
-        logger.action('Search Tab Changed')
-        if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
-            self.tabWidget.setCurrentWidget(self.civil_Tab)
-
-    def show_case_docket_case_list(self):
-        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
-        try:
-            last_name, case_number = self.daily_case_list.currentText().split(' - ')
-        except ValueError as err:
-            logger.warning(err)
-            case_number = ''
-        self.show_case_docket(case_number)
-
-    def show_case_docket(self, case_number=None):
-        if case_number is None:
-            case_number = self.case_search_box.text()
-            case_number = update_crim_case_number(case_number)
-            self.case_search_box.setText(case_number)
-        data_list = crim.CrimCaseDocket(case_number).get_docket()
-        rows = len(data_list)
-        self.window = TableReportWindow(f'Docket Report for {case_number}')
-        self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
-        header_labels = ['Date', 'Docket Description']
-        self.window.table.setHorizontalHeaderLabels(header_labels)
-        for row, docket_item in enumerate(data_list):
-            docket_item_stripped = ' '.join(docket_item[1].splitlines())
-            docket_item_stripped = docket_item_stripped.title()
-            docket_date = QTableWidgetItem(docket_item[0])
-            docket_descr = QTableWidgetItem()
-            docket_descr.setText(docket_item_stripped)
-            docket_descr.setToolTip(docket_item[1])
-            self.window.table.setItem(row, 0, docket_date)
-            self.window.table.setItem(row, 1, docket_descr)
-        self.window.show()
-
-
-class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
+class MainWindow(QMainWindow, Ui_MainWindow):
     """The main window of the application that is the launching point for all dialogs."""
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
+        self.court_staff_widget = CourtStaffWidget(self)
         self.court_staff_buttons_dict = self.create_court_staff_buttons_dict()
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self)
-        self.connect_signals_to_slots()
+        MainWindowSignalConnector(self)
         self.menu = MainMenu(self)
         self.case_lists.load_case_lists()
         self.case_lists.show_hide_daily_case_lists()
@@ -141,30 +79,36 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
         self.dialog = None
         self.daily_case_list = None
         self.user_settings = load_user_settings(self)
-        self.set_shortcuts(self)
+        set_mainwindow_shortcuts(self)
 
     def modify_view(self) -> None:
-        MainWindowViewModifier(self)
-
-    def connect_signals_to_slots(self) -> None:
-        MainWindowSignalConnector(self)
-
-    def set_judicial_officer_buttons(self):
-        return [
-            self.judge_1_radio_btn,
-            self.judge_2_radio_btn,
-            self.visiting_judge_radio_btn,
-            self.mag_1_radio_btn,
-            self.mag_2_radio_btn,
-            self.mag_3_radio_btn
+        self.setupUi(self)
+        self.create_daily_case_lists()
+        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
+        self.daily_case_lists = [
+            self.arraignments_cases_box,
+            self.slated_cases_box,
+            self.pleas_cases_box,
+            self.pcvh_fcvh_cases_box,
+            self.final_pretrial_cases_box,
+            self.trials_to_court_cases_box,
         ]
 
-    def set_assignment_commissioner_buttons(self):
-        return [
-            self.assn_comm_1_radio_btn,
-            self.assn_comm_2_radio_btn,
-            self.no_assn_comm_radio_btn,
-        ]
+    def create_daily_case_lists(self) -> None:
+        self.arraignments_cases_box.setup_combo_box(
+            'arraignments', self.arraignments_radioButton, self,
+        )
+        self.slated_cases_box.setup_combo_box('slated', self.slated_radioButton, self)
+        self.final_pretrial_cases_box.setup_combo_box(
+            'final_pretrials', self.final_pretrial_radioButton, self,
+        )
+        self.pleas_cases_box.setup_combo_box('pleas', self.pleas_radioButton, self)
+        self.trials_to_court_cases_box.setup_combo_box(
+            'trials_to_court', self.trials_to_court_radioButton, self,
+        )
+        self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radioButton, self)
+
 
     def set_visiting_judge(self):
         if self.visiting_judge_radioButton.isChecked():
@@ -182,9 +126,6 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
                 }
                 self.court_staff_buttons_dict.update(update_dict)
                 self.visiting_judge_radioButton.setText(f'Judge {last_name}')
-
-    def set_shortcuts(self, mainwindow: 'MainWindow') -> None:
-        return set_mainwindow_shortcuts(self)
 
     def update_court_staff(self) -> None:
         self.judicial_officer = self.court_staff_buttons_dict.get(self.sender())
@@ -266,6 +207,65 @@ class MainWindow(QMainWindow, Ui_MainWindow, MainWindowSlotFunctionsMixin):
             self.community_control_workflowButton: probation.ComControlWorkflowDialog,
         }
 
+    def assign_judge(self) -> None:
+        assigned_judge, time_now = set_random_judge()
+        self.assign_judge_label.setText(assigned_judge)
+        self.last_judge_assigned_label.setText(
+            f'The last judge assigned was {assigned_judge}.\n'
+            + f' The assignment was made at {time_now}.',
+            )
+
+    def set_person_stack_widget(self) -> None:
+        stack_mapping = {
+            'crim_traffic_Tab': self.judicial_officers_Stack,
+            'scheduling_Tab': self.assignment_commissioners_Stack,
+            'admin_Tab': self.admin_staff_Stack,
+            'civil_Tab': self.judicial_officers_Stack,
+            'probation_tab': self.comm_control_officers_stack,
+        }
+        current_tab_name = self.tabWidget.currentWidget().objectName()
+        current_stack = stack_mapping.get(current_tab_name)
+        if current_stack is not None:
+            self.stackedWidget.setCurrentWidget(current_stack)
+            logger.info(f'Current Staff Tab is {current_stack.objectName()}')
+        logger.info(f'Current Entry Tab is {current_tab_name}')
+
+    def set_entries_tab(self) -> None:
+        logger.action('Search Tab Changed')
+        if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
+            self.tabWidget.setCurrentWidget(self.civil_Tab)
+
+    def show_case_docket_case_list(self):
+        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
+        try:
+            last_name, case_number = self.daily_case_list.currentText().split(' - ')
+        except (ValueError, AttributeError) as err:
+            logger.warning(err)
+            case_number = ''
+        self.show_case_docket(case_number)
+
+    def show_case_docket(self, case_number=None):
+        if case_number is None:
+            case_number = self.case_search_box.text()
+            case_number = update_crim_case_number(case_number)
+            self.case_search_box.setText(case_number)
+        data_list = crim.CrimCaseDocket(case_number).get_docket()
+        rows = len(data_list)
+        self.window = TableReportWindow(f'Docket Report for {case_number}')
+        self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
+        header_labels = ['Date', 'Docket Description']
+        self.window.table.setHorizontalHeaderLabels(header_labels)
+        for row, docket_item in enumerate(data_list):
+            docket_item_stripped = ' '.join(docket_item[1].splitlines())
+            docket_item_stripped = docket_item_stripped.title()
+            docket_date = QTableWidgetItem(docket_item[0])
+            docket_descr = QTableWidgetItem()
+            docket_descr.setText(docket_item_stripped)
+            docket_descr.setToolTip(docket_item[1])
+            self.window.table.setItem(row, 0, docket_date)
+            self.window.table.setItem(row, 1, docket_descr)
+        self.window.show()
+
 
 class MainWindowSignalConnector(object):
     """Class for connecting signals to slots of the Main Window."""
@@ -307,58 +307,3 @@ class MainWindowSignalConnector(object):
         """
         for button, dialog in self.mainwindow.dialog_buttons_dict.items():
             button.released.connect(partial(start_dialog, dialog, self.mainwindow))
-
-
-class MainWindowViewModifier(object):
-    """Class that modifies the view file."""
-
-    def __init__(self, mainwindow: object) -> None:
-        self.mainwindow = mainwindow
-        self.mainwindow.setupUi(self.mainwindow)
-        self.create_daily_case_lists()
-        self.mainwindow.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
-        self.mainwindow.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
-        self.mainwindow.daily_case_lists = [
-            self.mainwindow.arraignments_cases_box,
-            self.mainwindow.slated_cases_box,
-            self.mainwindow.pleas_cases_box,
-            self.mainwindow.pcvh_fcvh_cases_box,
-            self.mainwindow.final_pretrial_cases_box,
-            self.mainwindow.trials_to_court_cases_box,
-        ]
-
-    def create_daily_case_lists(self) -> None:
-        self.mainwindow.arraignments_cases_box.setup_combo_box(
-            'arraignments',
-            self.mainwindow.arraignments_radioButton,
-            self.mainwindow,
-        )
-        self.mainwindow.slated_cases_box.setup_combo_box(
-            'slated',
-            self.mainwindow.slated_radioButton,
-            self.mainwindow,
-        )
-        self.mainwindow.final_pretrial_cases_box.setup_combo_box(
-            'final_pretrials',
-            self.mainwindow.final_pretrial_radioButton,
-            self.mainwindow,
-        )
-        self.mainwindow.pleas_cases_box.setup_combo_box(
-            'pleas',
-            self.mainwindow.pleas_radioButton,
-            self.mainwindow,
-        )
-        self.mainwindow.trials_to_court_cases_box.setup_combo_box(
-            'trials_to_court',
-            self.mainwindow.trials_to_court_radioButton,
-            self.mainwindow,
-        )
-        self.mainwindow.pcvh_fcvh_cases_box.setup_combo_box(
-            'pcvh_fcvh',
-            self.mainwindow.pcvh_fcvh_radioButton,
-            self.mainwindow,
-        )
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

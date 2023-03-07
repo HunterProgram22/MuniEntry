@@ -1273,7 +1273,7 @@ font-weight: bold;</string>
          </layout>
         </item>
         <item row="0" column="0">
-         <widget class="QStackedWidget" name="stackedWidget">
+         <widget class="QStackedWidget" name="court_staff_widget">
           <property name="currentIndex">
            <number>0</number>
           </property>
