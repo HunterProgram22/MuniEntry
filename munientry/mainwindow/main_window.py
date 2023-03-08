@@ -60,28 +60,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
-
         self.court_staff = CourtStaffManager(self)
-
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
-
-        self.case_search = CaseSearchHandler(self)
-        self.case_lists = CaseListHandler(self)
-
-        MainWindowSignalConnector(self)
-
         self.menu = MainMenu(self)
+        self.user_settings = load_user_settings(self)
+        set_mainwindow_shortcuts(self)
         self.judicial_officer = None
         self.dialog = None
         self.daily_case_list = None
-        self.user_settings = load_user_settings(self)
-        set_mainwindow_shortcuts(self)
-
-    def modify_view(self) -> None:
-        self.setupUi(self)
-        self.create_daily_case_lists()
-        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
-        self.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
         self.daily_case_lists = [
             self.arraignments_cases_box,
             self.slated_cases_box,
@@ -90,20 +76,52 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.final_pretrial_cases_box,
             self.trials_to_court_cases_box,
         ]
+        self.case_search = CaseSearchHandler(self)
+        self.case_lists = CaseListHandler(self)
+        self.connect_signals_to_slots()
 
-    def create_daily_case_lists(self) -> None:
-        self.arraignments_cases_box.setup_combo_box(
-            'arraignments', self.arraignments_radioButton, self,
+    def modify_view(self) -> None:
+        self.setupUi(self)
+        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
+
+    def connect_signals_to_slots(self):
+        self.reload_cases_Button.released.connect(self.case_lists.reload_case_lists)
+        self.random_judge_Button.released.connect(self.assign_judge)
+        self.visiting_judge_radio_btn.toggled.connect(self.court_staff.set_visiting_judge)
+        self.tabWidget.currentChanged.connect(self.court_staff.set_person_stack_widget)
+        self.search_tabWidget.currentChanged.connect(self.case_search.set_entries_tab)
+        self.get_case_Button.pressed.connect(self.case_search.query_case_info)
+        self.civil_get_case_Button.pressed.connect(self.case_search.query_case_info)
+        self.show_docket_Button.pressed.connect(self.case_search.show_case_docket)
+        self.show_docket_case_list_Button.pressed.connect(
+            self.case_lists.show_case_docket_case_list,
         )
-        self.slated_cases_box.setup_combo_box('slated', self.slated_radioButton, self)
-        self.final_pretrial_cases_box.setup_combo_box(
-            'final_pretrials', self.final_pretrial_radioButton, self,
-        )
-        self.pleas_cases_box.setup_combo_box('pleas', self.pleas_radioButton, self)
-        self.trials_to_court_cases_box.setup_combo_box(
-            'trials_to_court', self.trials_to_court_radioButton, self,
-        )
-        self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radioButton, self)
+        self.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self))
+        self.connect_court_staff_to_radio_btns()
+        self.connect_dialog_buttons_to_start_dialog()
+
+    def connect_court_staff_to_radio_btns(self) -> None:
+        """Updates the judicial officer whenever a judicial officer radio button is selected."""
+        for key in self.court_staff.court_staff_buttons_dict:
+            key.clicked.connect(self.court_staff.update_court_staff)
+
+    def connect_dialog_buttons_to_start_dialog(self) -> None:
+        """Connects all dialog buttons to the appropriate dialog.
+
+        Each dialog button is binded to the start_dialog function with the dialog itself. When
+        pressed the start_dialog function starts the dialog load process.
+        """
+        for button, dialog in self.dialog_buttons_dict.items():
+            button.released.connect(partial(start_dialog, dialog, self))
+
+    def assign_judge(self) -> None:
+        assigned_judge, time_now = set_random_judge()
+        self.assign_judge_label.setText(assigned_judge)
+        self.last_judge_assigned_label.setText(
+            f'The last judge assigned was {assigned_judge}.\n'
+            + f' The assignment was made at {time_now}.',
+            )
 
     def create_entry_buttons_dict(self):
         return {
@@ -161,51 +179,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.pretrial_workflowButton: probation.PretrialWorkflowDialog,
             self.community_control_workflowButton: probation.ComControlWorkflowDialog,
         }
-
-    def assign_judge(self) -> None:
-        assigned_judge, time_now = set_random_judge()
-        self.assign_judge_label.setText(assigned_judge)
-        self.last_judge_assigned_label.setText(
-            f'The last judge assigned was {assigned_judge}.\n'
-            + f' The assignment was made at {time_now}.',
-        )
-
-
-class MainWindowSignalConnector(object):
-    """Class for connecting signals to slots of the Main Window."""
-
-    def __init__(self, mainwindow: object) -> None:
-        self.mw = mainwindow
-        self.connect_general_buttons()
-        self.connect_court_staff_to_radio_btns()
-        self.connect_dialog_buttons_to_start_dialog()
-
-    def connect_general_buttons(self):
-        self.mw.reload_cases_Button.released.connect(self.mw.case_lists.reload_case_lists)
-        self.mw.random_judge_Button.released.connect(self.mw.assign_judge)
-        self.mw.visiting_judge_radio_btn.toggled.connect(self.mw.court_staff.set_visiting_judge)
-        self.mw.tabWidget.currentChanged.connect(self.mw.court_staff.set_person_stack_widget)
-        self.mw.search_tabWidget.currentChanged.connect(self.mw.case_search.set_entries_tab)
-        self.mw.get_case_Button.pressed.connect(self.mw.case_search.query_case_info)
-        self.mw.civil_get_case_Button.pressed.connect(self.mw.case_search.query_case_info)
-        self.mw.show_docket_Button.pressed.connect(self.mw.case_search.show_case_docket)
-        self.mw.show_docket_case_list_Button.pressed.connect(
-            self.mw.case_lists.show_case_docket_case_list,
-        )
-        self.mw.not_guilty_report_Button.released.connect(
-            lambda: run_not_guilty_report_today(self.mw),
-        )
-
-    def connect_court_staff_to_radio_btns(self) -> None:
-        """Updates the judicial officer whenever a judicial officer radio button is selected."""
-        for key in self.mw.court_staff.court_staff_buttons_dict:
-            key.clicked.connect(self.mw.court_staff.update_court_staff)
-
-    def connect_dialog_buttons_to_start_dialog(self) -> None:
-        """Connects all dialog buttons to the appropriate dialog.
-
-        Each dialog button is binded to the start_dialog function with the dialog itself. When
-        pressed the start_dialog function starts the dialog load process.
-        """
-        for button, dialog in self.mw.dialog_buttons_dict.items():
-            button.released.connect(partial(start_dialog, dialog, self.mw))

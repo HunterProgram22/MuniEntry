@@ -31,7 +31,7 @@ class CaseHandler(object):
     def __init__(self, mainwindow) -> None:
         self.mw = mainwindow
 
-    def show_case_docket(self, case_number: str) -> None:
+    def show_case_docket(self, case_number: str = '') -> None:
         if case_number == '':
             case_number = self.mw.case_search_box.text()
             case_number = update_crim_case_number(case_number)
@@ -98,7 +98,6 @@ class CaseSearchHandler(CaseHandler):
         """Sets the case search fields on the UI with data from the case that is retrieved."""
         plaintiff = case_data.primary_plaintiff.party_name
         defendant = case_data.primary_defendant.party_name
-        self.mw.case_number_label_field.setText(case_data.case_number)
         self.mw.civil_case_number_field.setText(case_data.case_number)
         self.mw.civil_case_name_field.setText(f'{plaintiff} vs. {defendant}')
         self.mw.civil_case_type_field.setText(case_data.case_type)
@@ -109,8 +108,23 @@ class CaseListHandler(CaseHandler):
 
     def __init__(self, mainwindow):
         super().__init__(mainwindow)
+        self.create_daily_case_lists()
         self.load_case_lists()
         self.show_hide_daily_case_lists()
+
+    def create_daily_case_lists(self) -> None:
+        self.mw.arraignments_cases_box.setup_combo_box(
+            'arraignments', self.mw.arraignments_radioButton, self.mw,
+        )
+        self.mw.slated_cases_box.setup_combo_box('slated', self.mw.slated_radioButton, self.mw)
+        self.mw.final_pretrial_cases_box.setup_combo_box(
+            'final_pretrials', self.mw.final_pretrial_radioButton, self.mw,
+        )
+        self.mw.pleas_cases_box.setup_combo_box('pleas', self.mw.pleas_radioButton, self.mw)
+        self.mw.trials_to_court_cases_box.setup_combo_box(
+            'trials_to_court', self.mw.trials_to_court_radioButton, self.mw,
+        )
+        self.mw.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.mw.pcvh_fcvh_radioButton, self.mw)
 
     def load_case_lists(self) -> None:
         for case_list in self.mw.daily_case_lists:
