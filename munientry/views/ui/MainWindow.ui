@@ -1458,51 +1458,51 @@ font-weight: bold;</string>
                <item row="0" column="0">
                 <layout class="QGridLayout" name="gridLayout_31">
                  <item row="1" column="2">
-                  <widget class="QRadioButton" name="officer_one_button">
+                  <widget class="QRadioButton" name="prob_officer_1_radio_btn">
                    <property name="text">
                     <string>Officer Andrew Conway</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QRadioButton" name="officer_four_button">
+                  <widget class="QRadioButton" name="prob_officer_4_radio_btn">
                    <property name="text">
                     <string>Officer LeAnn Taylor</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="0">
-                  <widget class="QRadioButton" name="officer_three_button">
+                  <widget class="QRadioButton" name="prob_officer_3_radio_btn">
                    <property name="text">
-                    <string>Officer Jennifer Stamolis</string>
+                    <string>Officer Jessica Scholz</string>
                    </property>
                   </widget>
                  </item>
                  <item row="2" column="2">
-                  <widget class="QRadioButton" name="officer_five_button">
+                  <widget class="QRadioButton" name="prob_officer_5_radio_btn">
                    <property name="text">
                     <string>Officer Zachary Slater</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="0">
-                  <widget class="QRadioButton" name="chief_officer_button">
+                  <widget class="QRadioButton" name="chief_prob_officer_radio_btn">
                    <property name="text">
                     <string>Chief Lindsey Blue</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="1">
-                  <widget class="QRadioButton" name="deputy_chief_officer_button">
+                  <widget class="QRadioButton" name="dep_chief_prob_officer_radio_btn">
                    <property name="text">
                     <string>Deputy Chief Kurt Olson</string>
                    </property>
                   </widget>
                  </item>
                  <item row="1" column="3">
-                  <widget class="QRadioButton" name="officer_two_button">
+                  <widget class="QRadioButton" name="prob_officer_2_radio_btn">
                    <property name="text">
-                    <string>Officer Jessica Scholz</string>
+                    <string>Officer Jennifer Stamolis</string>
                    </property>
                   </widget>
                  </item>
@@ -1533,7 +1533,7 @@ font-weight: bold;</string>
                   </widget>
                  </item>
                  <item row="2" column="3">
-                  <widget class="QRadioButton" name="bond_officer_button">
+                  <widget class="QRadioButton" name="bond_intake_officer_radio_btn">
                    <property name="text">
                     <string>Bond Intake Officer Carrie Mattox</string>
                    </property>
