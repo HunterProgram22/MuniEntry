@@ -578,7 +578,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QPushButton" name="FineOnlyPleaButton">
+               <widget class="DialogButton" name="FineOnlyPleaButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -2231,6 +2231,11 @@ font-weight: bold;</string>
    <class>DailyCaseListComboBox</class>
    <extends>QComboBox</extends>
    <header>munientry.widgets.combo_boxes</header>
+  </customwidget>
+  <customwidget>
+   <class>DialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
   </customwidget>
  </customwidgets>
  <tabstops>

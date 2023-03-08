@@ -114,7 +114,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         return {
             ###CrimTraffic###
             self.ArraignmentContinueButton: arraignment_continue_dialog.ArraignmentContinueDialog,
-            self.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
+            # self.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
             self.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
             self.DiversionButton: diversion_dialog.DiversionPleaDialog,
             self.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,

@@ -66,6 +66,27 @@ class CrimTrafficDialogLoader(DialogLoader):
         )
 
 
+class DialogButtonLoader(DialogLoader):
+
+    def load_dialog(self):
+        super().load_dialog()
+        # return self._load_button_process()
+
+    def get_case_data(self):
+        case_table = self._set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self._get_cms_case_data()
+        workflow_status = self.mainwindow.digital_workflow.workflow_status
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return (
+            judicial_officer,
+            cms_case_data,
+            case_table,
+            workflow_status
+        )
+
+
+
 class AdminJuryDialogLoader(DialogLoader):
     """Loader class for Jury Payment Dialog."""
 
