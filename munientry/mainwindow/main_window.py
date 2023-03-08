@@ -3,7 +3,7 @@ from functools import partial
 
 from loguru import logger
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
+from PyQt6.QtWidgets import QMainWindow
 
 from munientry.appsettings.paths import ICON_PATH
 from munientry.appsettings.settings import VERSION_NUMBER
@@ -51,9 +51,7 @@ from munientry.mainwindow.case_search import CaseSearchHandler, CaseListHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
-from munientry.sqlserver import crim_getters as crim
 from munientry.views.main_window_ui import Ui_MainWindow
-from munientry.widgets.table_widgets import TableReportWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -63,16 +61,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
+
         self.court_staff = CourtStaffManager(self)
 
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
 
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self)
+
         MainWindowSignalConnector(self)
+
         self.menu = MainMenu(self)
-        self.case_lists.load_case_lists()
-        self.case_lists.show_hide_daily_case_lists()
         self.judicial_officer = None
         self.dialog = None
         self.daily_case_list = None
@@ -171,69 +170,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             + f' The assignment was made at {time_now}.',
             )
 
-    def show_case_docket_case_list(self):
-        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
-        try:
-            last_name, case_number = self.daily_case_list.currentText().split(' - ')
-        except (ValueError, AttributeError) as err:
-            logger.warning(err)
-            case_number = ''
-        self.show_case_docket(case_number)
-
-    def show_case_docket(self, case_number=None):
-        if case_number is None:
-            case_number = self.case_search_box.text()
-            case_number = update_crim_case_number(case_number)
-            self.case_search_box.setText(case_number)
-        data_list = crim.CrimCaseDocket(case_number).get_docket()
-        rows = len(data_list)
-        self.window = TableReportWindow(f'Docket Report for {case_number}')
-        self.window.table = self.window.add_table(rows, 2, f'Docket Report for {case_number}', self.window)
-        header_labels = ['Date', 'Docket Description']
-        self.window.table.setHorizontalHeaderLabels(header_labels)
-        for row, docket_item in enumerate(data_list):
-            docket_item_stripped = ' '.join(docket_item[1].splitlines())
-            docket_item_stripped = docket_item_stripped.title()
-            docket_date = QTableWidgetItem(docket_item[0])
-            docket_descr = QTableWidgetItem()
-            docket_descr.setText(docket_item_stripped)
-            docket_descr.setToolTip(docket_item[1])
-            self.window.table.setItem(row, 0, docket_date)
-            self.window.table.setItem(row, 1, docket_descr)
-        self.window.show()
-
 
 class MainWindowSignalConnector(object):
     """Class for connecting signals to slots of the Main Window."""
 
     def __init__(self, mainwindow: object) -> None:
-        self.mainwindow = mainwindow
+        self.mw = mainwindow
         self.connect_general_buttons()
         self.connect_court_staff_to_radio_btns()
         self.connect_dialog_buttons_to_start_dialog()
 
     def connect_general_buttons(self):
-        self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.case_lists.reload_case_lists)
-        self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
-        self.mainwindow.visiting_judge_radio_btn.toggled.connect(
-            self.mainwindow.court_staff.set_visiting_judge,
+        self.mw.reload_cases_Button.released.connect(self.mw.case_lists.reload_case_lists)
+        self.mw.random_judge_Button.released.connect(self.mw.assign_judge)
+        self.mw.visiting_judge_radio_btn.toggled.connect(self.mw.court_staff.set_visiting_judge)
+        self.mw.tabWidget.currentChanged.connect(self.mw.court_staff.set_person_stack_widget)
+        self.mw.search_tabWidget.currentChanged.connect(self.mw.case_search.set_entries_tab)
+        self.mw.get_case_Button.pressed.connect(self.mw.case_search.query_case_info)
+        self.mw.civil_get_case_Button.pressed.connect(self.mw.case_search.query_case_info)
+        self.mw.show_docket_Button.pressed.connect(self.mw.case_search.show_case_docket)
+        self.mw.show_docket_case_list_Button.pressed.connect(
+            self.mw.case_lists.show_case_docket_case_list,
         )
-        self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.court_staff.set_person_stack_widget)
-        self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.case_search.set_entries_tab)
-        self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
-
-        self.mainwindow.civil_get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
-
-        self.mainwindow.show_docket_Button.pressed.connect(self.mainwindow.show_case_docket)
-        self.mainwindow.show_docket_case_list_Button.pressed.connect(
-            self.mainwindow.show_case_docket_case_list,
+        self.mw.not_guilty_report_Button.released.connect(
+            lambda: run_not_guilty_report_today(self.mw)
         )
-        self.mainwindow.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self.mainwindow))
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
-        for key in self.mainwindow.court_staff.court_staff_buttons_dict:
-            key.clicked.connect(self.mainwindow.court_staff.update_court_staff)
+        for key in self.mw.court_staff.court_staff_buttons_dict:
+            key.clicked.connect(self.mw.court_staff.update_court_staff)
 
     def connect_dialog_buttons_to_start_dialog(self) -> None:
         """Connects all dialog buttons to the appropriate dialog.
@@ -241,5 +207,5 @@ class MainWindowSignalConnector(object):
         Each dialog button is binded to the start_dialog function with the dialog itself. When
         pressed the start_dialog function starts the dialog load process.
         """
-        for button, dialog in self.mainwindow.dialog_buttons_dict.items():
-            button.released.connect(partial(start_dialog, dialog, self.mainwindow))
+        for button, dialog in self.mw.dialog_buttons_dict.items():
+            button.released.connect(partial(start_dialog, dialog, self.mw))

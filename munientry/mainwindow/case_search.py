@@ -2,10 +2,13 @@
 from __future__ import annotations
 
 from loguru import logger
+from PyQt6.QtWidgets import QTableWidgetItem
+
 from munientry.helper_functions import update_civil_case_number, update_crim_case_number
 from munientry.sqlserver.civil_getters import CivilCaseData
-from munientry.sqlserver.crim_getters import CrimCaseData, get_daily_case_list
+from munientry.sqlserver.crim_getters import CrimCaseData, CrimCaseDocket, get_daily_case_list
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
+from munientry.widgets.table_widgets import TableReportWindow
 
 
 def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListComboBox) -> None:
@@ -14,11 +17,42 @@ def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListCombo
     case_list.addItems(cases)
 
 
-class CaseSearchHandler(object):
-    """Class for querying the SQL Server Databases and retreiving case data."""
+class CaseHandler(object):
+    """Base class for handling the Case section (middle) of the MainWindow of the application."""
 
     def __init__(self, mainwindow):
         self.mw = mainwindow
+
+    def show_case_docket(self, case_number=None):
+        if case_number is None:
+            case_number = self.mw.case_search_box.text()
+            case_number = update_crim_case_number(case_number)
+            self.mw.case_search_box.setText(case_number)
+        data_list = CrimCaseDocket(case_number).get_docket()
+        rows = len(data_list)
+        self.mw.window = TableReportWindow(f'Docket Report for {case_number}')
+        self.mw.window.table = self.mw.window.add_table(
+            rows, 2, f'Docket Report for {case_number}', self.mw.window
+        )
+        header_labels = ['Date', 'Docket Description']
+        self.mw.window.table.setHorizontalHeaderLabels(header_labels)
+        for row, docket_item in enumerate(data_list):
+            docket_item_stripped = ' '.join(docket_item[1].splitlines())
+            docket_item_stripped = docket_item_stripped.title()
+            docket_date = QTableWidgetItem(docket_item[0])
+            docket_descr = QTableWidgetItem()
+            docket_descr.setText(docket_item_stripped)
+            docket_descr.setToolTip(docket_item[1])
+            self.mw.window.table.setItem(row, 0, docket_date)
+            self.mw.window.table.setItem(row, 1, docket_descr)
+        self.mw.window.show()
+
+
+class CaseSearchHandler(CaseHandler):
+    """Class for querying the SQL Server Databases and retreiving case data."""
+
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
 
     def set_entries_tab(self) -> None:
         logger.action('Search Tab Changed')
@@ -57,14 +91,16 @@ class CaseSearchHandler(object):
         self.mw.civil_case_type_field.setText(case_data.case_type)
 
 
-class CaseListHandler(object):
+class CaseListHandler(CaseHandler):
     """Class for loading Criminal Traffic Daily Case Lists."""
 
     def __init__(self, mainwindow):
-        self.mainwindow = mainwindow
+        super().__init__(mainwindow)
+        self.load_case_lists()
+        self.show_hide_daily_case_lists()
 
     def load_case_lists(self) -> None:
-        for case_list in self.mainwindow.daily_case_lists:
+        for case_list in self.mw.daily_case_lists:
             daily_cases = get_daily_case_list(case_list.objectName())
             add_cases_to_daily_case_list(daily_cases, case_list)
             preload_cases = str(len(case_list) - 1)
@@ -79,8 +115,17 @@ class CaseListHandler(object):
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 
+    def show_case_docket_case_list(self):
+        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
+        try:
+            last_name, case_number = self.mw.daily_case_list.currentText().split(' - ')
+        except (ValueError, AttributeError) as err:
+            logger.warning(err)
+            case_number = ''
+        self.show_case_docket(case_number)
+
     def show_hide_daily_case_lists(self) -> None:
-        for case_list in self.mainwindow.daily_case_lists:
+        for case_list in self.mw.daily_case_lists:
             case_list.setCurrentText('')
             case_list.setHidden(True)
             case_list.setEnabled(False)
