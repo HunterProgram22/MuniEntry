@@ -49,7 +49,7 @@ from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_lists import CaseListHandler
 from munientry.mainwindow.case_search import CaseSearchHandler
-from munientry.mainwindow.court_staff import CourtStaffWidget
+from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.sqlserver import crim_getters as crim
@@ -65,7 +65,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
 
-        self.court_staff = CourtStaffWidget(self)
+        self.court_staff = CourtStaffManager(self)
 
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
 

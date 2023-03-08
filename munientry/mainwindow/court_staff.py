@@ -16,10 +16,10 @@ JURY = 'Jury Commissioner'
 MAGISTRATE = 'Magistrate'
 
 
-class CourtStaffWidget(object):
+class CourtStaffManager(object):
     """Container for the court_staff_widget on the MainWindow of the application.
 
-    The CourtStaffWidget is instantiated into the MainWindow attribute court_staff to provide
+    The CourtStaffManager is instantiated into the MainWindow attribute court_staff to provide
     all necessary functions for manipulating the court_staff_widget (QStackedWidget) on the
     MainWindow.
     """
