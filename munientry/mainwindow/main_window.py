@@ -1,7 +1,6 @@
 """Module containing the Main Window of the application."""
 from functools import partial
 
-from loguru import logger
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow
 
@@ -39,15 +38,15 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
-from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import admin_judge_dw_dialog as hemmeter
+from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge, update_crim_case_number
+from munientry.helper_functions import set_random_judge
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
-from munientry.mainwindow.case_search import CaseSearchHandler, CaseListHandler
+from munientry.mainwindow.case_search import CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
@@ -108,14 +107,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def create_entry_buttons_dict(self):
         return {
-            ###CrimTraffic###
+            # CrimTraffic
             self.ArraignmentContinueButton: arraignment_continue_dialog.ArraignmentContinueDialog,
             self.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
             self.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
             self.DiversionButton: diversion_dialog.DiversionPleaDialog,
             self.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
             self.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,
-            self.ProbationViolationBondButton: probation_violation_bond_dialog.ProbationViolationBondDialog,
+            self.ProbationViolationBondButton:
+                probation_violation_bond_dialog.ProbationViolationBondDialog,
             self.BondHearingButton: bond_hearing_dialog.BondHearingDialog,
             self.PleaOnlyButton: plea_only_future_sentence_dialog.PleaOnlyDialog,
             self.NoPleaBondButton: no_plea_bond_dialog.NoPleaBondDialog,
@@ -127,10 +127,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.FreeformEntryButton: freeform_dialog.FreeformDialog,
             self.CriminalSealingButton: criminal_sealing_dialog.CriminalSealingDialog,
 
-            ###Civil###
+            # Civil
             self.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
 
-            ###Scheduling###
+            # Scheduling
             self.hemmeter_schedulingEntryButton:
                 sched_entry_dialogs.SchedulingEntryDialog,
             self.rohrer_schedulingEntryButton:
@@ -148,13 +148,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.rohrer_trial_court_hearingButton:
                 trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
 
-            ###Admin###
+            # Admin
             self.limited_driving_privilegesButton:
                 driving_privileges_dialog.DrivingPrivilegesDialog,
             self.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
             self.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
 
-            ###Workflow###
+            # Workflow
             self.admin_workflowButton: hemmeter.AdminWorkflowDialog,
             self.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
             self.bunner_workflowButton: bunner.BunnerWorkflowDialog,
@@ -168,7 +168,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.last_judge_assigned_label.setText(
             f'The last judge assigned was {assigned_judge}.\n'
             + f' The assignment was made at {time_now}.',
-            )
+        )
 
 
 class MainWindowSignalConnector(object):
@@ -193,7 +193,7 @@ class MainWindowSignalConnector(object):
             self.mw.case_lists.show_case_docket_case_list,
         )
         self.mw.not_guilty_report_Button.released.connect(
-            lambda: run_not_guilty_report_today(self.mw)
+            lambda: run_not_guilty_report_today(self.mw),
         )
 
     def connect_court_staff_to_radio_btns(self) -> None:

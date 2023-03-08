@@ -77,7 +77,7 @@ class CourtStaffManager(object):
     def update_court_staff(self) -> None:
         self.mw.judicial_officer = self.court_staff_buttons_dict.get(self.mw.sender())
         judicial_officer = self.mw.judicial_officer.last_name
-        logger.action(f'Court Staff set to: {judicial_officer}')
+        logger.info(f'Court Staff set to: {judicial_officer}')
 
     def set_visiting_judge(self) -> None:
         title = 'Set Visiting Judge'
