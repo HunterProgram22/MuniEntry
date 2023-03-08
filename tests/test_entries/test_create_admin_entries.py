@@ -15,7 +15,7 @@ def test_create_driving_privileges_entry(monkeypatch, main_window):
     """
     data = DrivingPrivilegesEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
@@ -33,7 +33,7 @@ def test_create_fiscal_entry(monkeypatch, main_window):
     """
     data = AdminFiscalEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
-    mouse_click(main_window.court_admin_kudela_radioButton)
+    mouse_click(main_window.court_admin_admin_radio_btn)
     mouse_click(main_window.fiscal_entriesButton)
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.account_number == '24115000'
@@ -46,7 +46,7 @@ def test_create_jury_pay_entry(monkeypatch, main_window):
     """
     data = JuryPaymentEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
-    mouse_click(main_window.jury_comm_patterson_radioButton)
+    mouse_click(main_window.jury_comm_1_admin_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01944')
     mouse_click(main_window.get_case_Button)

@@ -65,7 +65,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
 
-        self.court_staff_widget = CourtStaffWidget(self, parent)
+        self.court_staff = CourtStaffWidget(self)
 
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
 
@@ -224,9 +224,9 @@ class MainWindowSignalConnector(object):
         self.mainwindow.reload_cases_Button.released.connect(self.mainwindow.case_lists.reload_case_lists)
         self.mainwindow.random_judge_Button.released.connect(self.mainwindow.assign_judge)
         self.mainwindow.visiting_judge_radio_btn.toggled.connect(
-            self.mainwindow.court_staff_widget.set_visiting_judge,
+            self.mainwindow.court_staff.set_visiting_judge,
         )
-        self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.court_staff_widget.set_person_stack_widget)
+        self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.court_staff.set_person_stack_widget)
         self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.set_entries_tab)
         self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
 
@@ -240,8 +240,8 @@ class MainWindowSignalConnector(object):
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
-        for key in self.mainwindow.court_staff_widget.court_staff_buttons_dict:
-            key.clicked.connect(self.mainwindow.court_staff_widget.update_court_staff)
+        for key in self.mainwindow.court_staff.court_staff_buttons_dict:
+            key.clicked.connect(self.mainwindow.court_staff.update_court_staff)
 
     def connect_dialog_buttons_to_start_dialog(self) -> None:
         """Connects all dialog buttons to the appropriate dialog.

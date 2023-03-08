@@ -79,7 +79,7 @@ def main_window_noclose(qtbot):
 @pytest.fixture
 def driving_priv_dialog(qtbot, main_window):
     """Driving Privileges Dialog is driving_priv_dialog."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)

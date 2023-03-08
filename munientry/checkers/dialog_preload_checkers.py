@@ -43,7 +43,7 @@ class CrimTrafficPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_crimtraffic_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.judicial_officer_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff.judicial_officer_buttons):
             return True
         RequiredBox('You must select judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -61,7 +61,7 @@ class CivilPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_judicial_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.judicial_officer_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff.judicial_officer_buttons):
             return True
         RequiredBox('You must select a judicial officer.', 'Judicial Officer Required').exec()
         return False
@@ -80,7 +80,7 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_scheduling_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.assignment_commissioner_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff.assignment_commissioner_buttons):
             return True
         RequiredBox(
             'You must select an assignment commissioner.', 'Assignment Commissioner Required',
@@ -101,7 +101,7 @@ class AdminPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_admin_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.administrative_staff_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff.administrative_staff_buttons):
             return True
         RequiredBox(
             'You must select an administrative staff person.', 'Administrative Staff Required',
@@ -121,7 +121,7 @@ class AdminFiscalPreloadChecker(DialogPreloadChecker):
         return False
 
     def is_admin_officer_selected(self) -> bool:
-        if any(button.isChecked() for button in self.mainwindow.court_staff_widget.administrative_staff_buttons):
+        if any(button.isChecked() for button in self.mainwindow.court_staff.administrative_staff_buttons):
             return True
         RequiredBox(
             'You must select an administrative staff person.', 'Administrative Staff Required',

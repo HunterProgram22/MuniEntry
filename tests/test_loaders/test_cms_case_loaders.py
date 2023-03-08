@@ -142,7 +142,7 @@ def test_cmsfraloader_withcase_yesfra(main_window, dialog_button):
 
 def test_cmsdrivinginfoloader_nocase(main_window):
     """Tests CmsDrivingInfoLoader loads empty with no case."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_2_admin_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(getattr(main_window, 'limited_driving_privilegesButton'))
     assert main_window.dialog.case_number_lineEdit.text() == ''
@@ -152,7 +152,7 @@ def test_cmsdrivinginfoloader_nocase(main_window):
 
 def test_cmsdrivinginfoloader_withcase(main_window):
     """Tests CmsDrivingInfoLoader loads with test case."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     enter_data(main_window.arraignments_cases_box, 'Conkey - 22TRD01944')
     mouse_click(getattr(main_window, 'limited_driving_privilegesButton'))

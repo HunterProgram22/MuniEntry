@@ -1277,7 +1277,7 @@ font-weight: bold;</string>
           <property name="currentIndex">
            <number>0</number>
           </property>
-          <widget class="QWidget" name="judicial_officers_Stack">
+          <widget class="QWidget" name="judicial_officers_stack">
            <layout class="QGridLayout" name="gridLayout_13">
             <item row="0" column="0">
              <widget class="QFrame" name="judicial_officers_frame">
@@ -1368,7 +1368,7 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="assignment_commissioners_Stack">
+          <widget class="QWidget" name="assignment_commissioners_stack">
            <layout class="QGridLayout" name="gridLayout_7">
             <property name="spacing">
              <number>12</number>
@@ -1546,7 +1546,7 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="admin_staff_Stack">
+          <widget class="QWidget" name="admin_staff_stack">
            <layout class="QGridLayout" name="gridLayout_16">
             <item row="0" column="0">
              <widget class="QFrame" name="administrative_person_frame">
@@ -1561,7 +1561,7 @@ font-weight: bold;</string>
               </property>
               <layout class="QGridLayout" name="gridLayout_17">
                <item row="2" column="1">
-                <widget class="QRadioButton" name="jury_comm_patterson_radioButton">
+                <widget class="QRadioButton" name="jury_comm_1_admin_radio_btn">
                  <property name="text">
                   <string>Jury Commissioner Patterson</string>
                  </property>
@@ -1594,35 +1594,35 @@ font-weight: bold;</string>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="QRadioButton" name="assn_comm_patterson_radioButton">
+                <widget class="QRadioButton" name="assn_comm_2_admin_radio_btn">
                  <property name="text">
                   <string>Assignment Commissioner Patterson</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="0">
-                <widget class="QRadioButton" name="assn_comm_dattilo_radioButton">
+                <widget class="QRadioButton" name="assn_comm_1_admin_radio_btn">
                  <property name="text">
                   <string>Assignment Commissioner Dattilo</string>
                  </property>
                 </widget>
                </item>
                <item row="1" column="2">
-                <widget class="QRadioButton" name="court_admin_kudela_radioButton">
+                <widget class="QRadioButton" name="court_admin_admin_radio_btn">
                  <property name="text">
                   <string>Court Administrator Kudela</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="0">
-                <widget class="QRadioButton" name="bunner_admin_radioButton">
+                <widget class="QRadioButton" name="mag_1_admin_radio_btn">
                  <property name="text">
                   <string>Magistrate Bunner</string>
                  </property>
                 </widget>
                </item>
                <item row="2" column="2">
-                <widget class="QRadioButton" name="none_admin_radioButton">
+                <widget class="QRadioButton" name="none_admin_radio_btn">
                  <property name="text">
                   <string>None</string>
                  </property>

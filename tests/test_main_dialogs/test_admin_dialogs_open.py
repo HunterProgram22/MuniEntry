@@ -15,7 +15,7 @@ admin_dialog_buttons = [
 @pytest.mark.parametrize(TEST_LIST, admin_dialog_buttons)
 def tests_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all Admin dialog buttons open from the case list when no case is selected."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
     mouse_click(main_window.arraignments_radioButton)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
@@ -25,7 +25,7 @@ def tests_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_t
 @pytest.mark.parametrize(TEST_LIST, admin_dialog_buttons)
 def test_dialogs_open_with_case_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all Admin dialog buttons open from the case list when a case is selected."""
-    mouse_click(main_window.assn_comm_dattilo_radioButton)
+    mouse_click(main_window.assn_comm_2_admin_radio_btn)
     mouse_click(main_window.pleas_radioButton)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
@@ -36,7 +36,7 @@ def test_dialogs_open_with_case_from_caselist(main_window, dialog_button, dialog
 @pytest.mark.parametrize(TEST_LIST, admin_dialog_buttons)
 def test_dialogs_open_nocase_from_casesearch(main_window, dialog_button, dialog_title):
     """Tests all Admin dialog buttons open from the case search when no case is selected."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
@@ -46,7 +46,7 @@ def test_dialogs_open_nocase_from_casesearch(main_window, dialog_button, dialog_
 @pytest.mark.parametrize(TEST_LIST, admin_dialog_buttons)
 def test_dialogs_open_with_case_from_casesearch(main_window, dialog_button, dialog_title):
     """Tests all Admin dialog buttons open from the case search when a case is selected."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
+    mouse_click(main_window.assn_comm_2_admin_radio_btn)
     main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
     enter_data(main_window.case_search_box, '22TRD01955')
     mouse_click(main_window.get_case_Button)
@@ -64,7 +64,7 @@ admin_noncase_dialog_buttons = [
 @pytest.mark.parametrize(TEST_LIST, admin_noncase_dialog_buttons)
 def test_all_admin_entry_noncase_dialogs(main_window, dialog_button, dialog_title):
     """Tests all Admin Nocase Dialogs open."""
-    mouse_click(main_window.court_admin_kudela_radioButton)
+    mouse_click(main_window.court_admin_admin_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.account_number_box.currentText() == (
