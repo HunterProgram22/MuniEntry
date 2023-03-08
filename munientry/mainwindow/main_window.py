@@ -47,8 +47,7 @@ from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.helper_functions import set_random_judge, update_crim_case_number
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
-from munientry.mainwindow.case_lists import CaseListHandler
-from munientry.mainwindow.case_search import CaseSearchHandler
+from munientry.mainwindow.case_search import CaseSearchHandler, CaseListHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
@@ -64,14 +63,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         super().__init__(parent)
         self.modify_view()
         self.digital_workflow = DigitalWorkflow(self)
-
         self.court_staff = CourtStaffManager(self)
 
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
 
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self)
-
         MainWindowSignalConnector(self)
         self.menu = MainMenu(self)
         self.case_lists.load_case_lists()
@@ -174,11 +171,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             + f' The assignment was made at {time_now}.',
             )
 
-    def set_entries_tab(self) -> None:
-        logger.action('Search Tab Changed')
-        if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
-            self.tabWidget.setCurrentWidget(self.civil_Tab)
-
     def show_case_docket_case_list(self):
         """Value Error catch put in to handle if the empty slot of daily case list is selected."""
         try:
@@ -227,7 +219,7 @@ class MainWindowSignalConnector(object):
             self.mainwindow.court_staff.set_visiting_judge,
         )
         self.mainwindow.tabWidget.currentChanged.connect(self.mainwindow.court_staff.set_person_stack_widget)
-        self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.set_entries_tab)
+        self.mainwindow.search_tabWidget.currentChanged.connect(self.mainwindow.case_search.set_entries_tab)
         self.mainwindow.get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)
 
         self.mainwindow.civil_get_case_Button.pressed.connect(self.mainwindow.case_search.query_case_info)

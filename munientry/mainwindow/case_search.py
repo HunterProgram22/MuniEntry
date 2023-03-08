@@ -1,7 +1,17 @@
-"""This module provides a CaseSearchHandler class that handles querying a SQL Server database."""
+"""This module provides handlers for the search_tab_widget."""
+from __future__ import annotations
+
+from loguru import logger
 from munientry.helper_functions import update_civil_case_number, update_crim_case_number
 from munientry.sqlserver.civil_getters import CivilCaseData
-from munientry.sqlserver.crim_getters import CrimCaseData
+from munientry.sqlserver.crim_getters import CrimCaseData, get_daily_case_list
+from munientry.widgets.combo_boxes import DailyCaseListComboBox
+
+
+def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListComboBox) -> None:
+    """Clears cases from existing case list and adds new cases for the day."""
+    case_list.clear()
+    case_list.addItems(cases)
 
 
 class CaseSearchHandler(object):
@@ -9,6 +19,11 @@ class CaseSearchHandler(object):
 
     def __init__(self, mainwindow):
         self.mw = mainwindow
+
+    def set_entries_tab(self) -> None:
+        logger.action('Search Tab Changed')
+        if self.mw.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
+            self.mw.tabWidget.setCurrentWidget(self.mw.civil_Tab)
 
     def query_case_info(self) -> None:
         """Queries SQL Server database (AuthorityCourt/AuthorityCivil) and retrieves case data."""
@@ -40,3 +55,32 @@ class CaseSearchHandler(object):
         self.mw.civil_case_number_field.setText(case_data.case_number)
         self.mw.civil_case_name_field.setText(f'{plaintiff} vs. {defendant}')
         self.mw.civil_case_type_field.setText(case_data.case_type)
+
+
+class CaseListHandler(object):
+    """Class for loading Criminal Traffic Daily Case Lists."""
+
+    def __init__(self, mainwindow):
+        self.mainwindow = mainwindow
+
+    def load_case_lists(self) -> None:
+        for case_list in self.mainwindow.daily_case_lists:
+            daily_cases = get_daily_case_list(case_list.objectName())
+            add_cases_to_daily_case_list(daily_cases, case_list)
+            preload_cases = str(len(case_list) - 1)
+            postload_cases = str(len(daily_cases) - 1)
+            logger.info(
+                f'{case_list.name}: Preload Cases: {preload_cases};'
+                + f'Postload Cases {postload_cases}',
+            )
+
+    def reload_case_lists(self) -> None:
+        """This method is connected to the reload cases button and calls load_case_lists."""
+        logger.info('Reload cases button pressed.')
+        self.load_case_lists()
+
+    def show_hide_daily_case_lists(self) -> None:
+        for case_list in self.mainwindow.daily_case_lists:
+            case_list.setCurrentText('')
+            case_list.setHidden(True)
+            case_list.setEnabled(False)
