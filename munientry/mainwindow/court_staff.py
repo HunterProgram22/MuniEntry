@@ -61,10 +61,10 @@ class CourtStaffManager(object):
 
     def set_person_stack_widget(self) -> None:
         stack_mapping = {
-            'crim_traffic_Tab': self.mw.judicial_officers_stack,
-            'scheduling_Tab': self.mw.assignment_commissioners_stack,
-            'admin_Tab': self.mw.admin_staff_stack,
-            'civil_Tab': self.mw.judicial_officers_stack,
+            'crim_traffic_tab': self.mw.judicial_officers_stack,
+            'scheduling_tab': self.mw.assignment_commissioners_stack,
+            'administrative_tab': self.mw.admin_staff_stack,
+            'civil_tab': self.mw.judicial_officers_stack,
             'probation_tab': self.mw.comm_control_officers_stack,
         }
         current_tab_name = self.mw.entries_tab_widget.currentWidget().objectName()

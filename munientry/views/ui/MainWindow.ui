@@ -546,7 +546,7 @@ font-weight: bold;</string>
             <property name="currentIndex">
              <number>0</number>
             </property>
-            <widget class="QWidget" name="crim_traffic_Tab">
+            <widget class="QWidget" name="crim_traffic_tab">
              <attribute name="title">
               <string>Crim/Traffic</string>
              </attribute>
@@ -953,7 +953,7 @@ font-weight: bold;</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="scheduling_Tab">
+            <widget class="QWidget" name="scheduling_tab">
              <attribute name="title">
               <string>Scheduling</string>
              </attribute>
@@ -1162,7 +1162,7 @@ font-weight: bold;</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="admin_Tab">
+            <widget class="QWidget" name="administrative_tab">
              <attribute name="title">
               <string>Administrative</string>
              </attribute>
@@ -1202,7 +1202,7 @@ font-weight: bold;</string>
               </item>
              </layout>
             </widget>
-            <widget class="QWidget" name="civil_Tab">
+            <widget class="QWidget" name="civil_tab">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(220, 244, 255);</string>
              </property>

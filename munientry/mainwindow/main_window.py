@@ -72,7 +72,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.digital_workflow = DigitalWorkflow(self)
         self.court_staff = CourtStaffManager(self)
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
-        self.menu = MainMenu(self)
+        self.main_menu = MainMenu(self)
         self.user_settings = load_user_settings(self)
         set_mainwindow_shortcuts(self)
         self.judicial_officer = None
@@ -161,7 +161,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def cases_tab_changed(self) -> None:
         logger.info('Search Tab Changed')
         if self.cases_tab_widget.currentWidget().objectName() == 'civil_case_search_tab':
-            self.entries_tab_widget.setCurrentWidget(self.civil_Tab)
+            self.entries_tab_widget.setCurrentWidget(self.civil_tab)
 
     def get_case_number(self, search_type: str) -> str:
         if search_type == 'criminal':
