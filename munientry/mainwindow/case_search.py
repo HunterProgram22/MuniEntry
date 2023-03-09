@@ -1,56 +1,41 @@
 """This module provides handlers for the search_tab_widget."""
 from __future__ import annotations
 
-from collections import namedtuple
-from typing import TYPE_CHECKING
-
 from loguru import logger
 from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QTableWidgetItem
 
-from munientry.helper_functions import update_civil_case_number, update_crim_case_number
 from munientry.sqlserver.civil_getters import CivilCaseData
-from munientry.sqlserver.crim_getters import (
-    CrimCaseData,
-    CrimCaseDocket,
-    get_daily_case_list,
-)
+from munientry.sqlserver.crim_getters import CrimCaseData, CrimCaseDocket, get_daily_case_list
 from munientry.widgets.table_widgets import TableReportWindow
-
-if TYPE_CHECKING:
-    from munientry.widgets.combo_boxes import DailyCaseListComboBox
-
-
-def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListComboBox) -> None:
-    """Clears cases from existing case list and adds new cases for the day."""
-    case_list.clear()
-    case_list.addItems(cases)
 
 
 class CaseDocketHandler(QObject):
     """Class for handling generation of case dockets."""
+
     docket_report_delivered = pyqtSignal(TableReportWindow)
 
     def __init__(self, mainwindow) -> None:
         super().__init__()
-        self.mw = mainwindow
-        self.mw.crim_case_docket_requested.connect(self.get_crim_case_docket)
+        self.mainwindow = mainwindow
+        self.mainwindow.crim_case_docket_requested.connect(self.generate_crim_case_docket)
+        self.docket_report = None
 
     @pyqtSlot(str)
-    def get_crim_case_docket(self, case_number: str) -> None:
+    def generate_crim_case_docket(self, case_number: str) -> None:
         data_list = CrimCaseDocket(case_number).get_docket()
         self.create_docket_report(case_number, data_list)
 
     def create_docket_report(self, case_number: str, data_list: list[tuple]) -> None:
         rows = len(data_list)
-        window_title = f'Docket Report for {case_number}'
-        self.docket_report = TableReportWindow(window_title)
-        self.create_table(rows, window_title)
+        report_title = f'Docket Report for {case_number}'
+        self.docket_report = TableReportWindow(report_title)
+        self.create_table(rows, report_title)
         self.populate_table(data_list)
         self.docket_report_delivered.emit(self.docket_report)
 
-    def create_table(self, rows: int, window_title: str) -> None:
-        self.docket_report.table = self.docket_report.add_table(rows, 2, window_title, self.docket_report)
+    def create_table(self, rows: int, title: str) -> None:
+        self.docket_report.table = self.docket_report.add_table(rows, 2, title, self.docket_report)
         header_labels = ['Date', 'Docket Description']
         self.docket_report.table.setHorizontalHeaderLabels(header_labels)
 
@@ -68,14 +53,15 @@ class CaseDocketHandler(QObject):
 
 class CaseSearchHandler(QObject):
     """Class for handling a case search for a case and querying the database for case data."""
+
     crim_case_data_delivered = pyqtSignal(tuple)
     civil_case_data_delivered = pyqtSignal(tuple)
 
     def __init__(self, mainwindow) -> None:
         super().__init__()
-        self.mw = mainwindow
-        self.mw.crim_case_data_requested.connect(self.query_crim_case_info)
-        self.mw.civil_case_data_requested.connect(self.query_civil_case_info)
+        self.mainwindow = mainwindow
+        self.mainwindow.crim_case_data_requested.connect(self.query_crim_case_info)
+        self.mainwindow.civil_case_data_requested.connect(self.query_civil_case_info)
 
     @pyqtSlot(str)
     def query_crim_case_info(self, case_number: str) -> None:
@@ -118,7 +104,8 @@ class CaseListHandler(QObject):
     def load_case_lists(self) -> None:
         for case_list in self.daily_case_lists:
             daily_cases = get_daily_case_list(case_list.objectName())
-            add_cases_to_daily_case_list(daily_cases, case_list)
+            case_list.clear()
+            case_list.addItems(daily_cases)
             preload_cases = str(len(case_list) - 1)
             postload_cases = str(len(daily_cases) - 1)
             logger.info(

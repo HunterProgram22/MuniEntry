@@ -45,7 +45,11 @@ from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge, update_civil_case_number, update_crim_case_number
+from munientry.helper_functions import (
+    set_random_judge,
+    update_civil_case_number,
+    update_crim_case_number,
+)
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_search import CaseDocketHandler, CaseListHandler, CaseSearchHandler
