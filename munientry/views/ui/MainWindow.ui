@@ -198,7 +198,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QPushButton" name="crim_show_docket_caselist_btn">
+               <widget class="QPushButton" name="crim_show_docket_case_list_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -305,7 +305,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="7" column="1" colspan="2">
-             <widget class="QLabel" name="case_number_label_field">
+             <widget class="QLabel" name="crim_case_number_label">
               <property name="text">
                <string>None</string>
               </property>
@@ -319,21 +319,21 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="8" column="1" colspan="2">
-             <widget class="QLabel" name="case_name_label_field">
+             <widget class="QLabel" name="crim_case_name_label">
               <property name="text">
                <string>None</string>
               </property>
              </widget>
             </item>
             <item row="9" column="1" colspan="2">
-             <widget class="QLabel" name="case_charges_label_field">
+             <widget class="QLabel" name="crim_case_charges_label">
               <property name="text">
                <string>None</string>
               </property>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="get_case_Button">
+             <widget class="QPushButton" name="crim_get_case_btn">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>
@@ -356,7 +356,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLineEdit" name="case_search_box">
+             <widget class="QLineEdit" name="crim_case_search_box">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
@@ -370,7 +370,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QPushButton" name="crim_show_docket_casesearch_btn">
+             <widget class="QPushButton" name="crim_show_docket_case_search_btn">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>
@@ -397,7 +397,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="5" column="1" colspan="2">
-             <widget class="QLabel" name="civil_case_type_field">
+             <widget class="QLabel" name="civil_case_type_label">
               <property name="text">
                <string>None</string>
               </property>
@@ -450,7 +450,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QPushButton" name="civil_get_case_Button">
+             <widget class="QPushButton" name="civil_get_case_btn">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>
@@ -486,14 +486,14 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="3" column="1" colspan="2">
-             <widget class="QLabel" name="civil_case_number_field">
+             <widget class="QLabel" name="civil_case_number_label">
               <property name="text">
                <string>None</string>
               </property>
              </widget>
             </item>
             <item row="4" column="1" colspan="2">
-             <widget class="QLabel" name="civil_case_name_field">
+             <widget class="QLabel" name="civil_case_name_label">
               <property name="text">
                <string>None</string>
               </property>
@@ -2283,9 +2283,9 @@ font-weight: bold;</string>
  <resources/>
  <connections>
   <connection>
-   <sender>case_search_box</sender>
+   <sender>crim_case_search_box</sender>
    <signal>returnPressed()</signal>
-   <receiver>get_case_Button</receiver>
+   <receiver>crim_get_case_btn</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -26,17 +26,17 @@ def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListCombo
     case_list.addItems(cases)
 
 
-class CaseHandler(QObject):
-    """Base class for handling the Case section (middle) of the MainWindow of the application."""
-    docket_report_requested = pyqtSignal(TableReportWindow)
+class CaseDocketHandler(QObject):
+    """Class for handling generation of case dockets."""
+    docket_report_delivered = pyqtSignal(TableReportWindow)
 
     def __init__(self, mainwindow) -> None:
         super().__init__()
         self.mw = mainwindow
-        self.mw.show_docket_requested.connect(self.show_case_docket)
+        self.mw.crim_case_docket_requested.connect(self.get_crim_case_docket)
 
     @pyqtSlot(str)
-    def show_case_docket(self, case_number: str) -> None:
+    def get_crim_case_docket(self, case_number: str) -> None:
         data_list = CrimCaseDocket(case_number).get_docket()
         self.create_docket_report(case_number, data_list)
 
@@ -46,7 +46,7 @@ class CaseHandler(QObject):
         self.docket_report = TableReportWindow(window_title)
         self.create_table(rows, window_title)
         self.populate_table(data_list)
-        self.docket_report_requested.emit(self.docket_report)
+        self.docket_report_delivered.emit(self.docket_report)
 
     def create_table(self, rows: int, window_title: str) -> None:
         self.docket_report.table = self.docket_report.add_table(rows, 2, window_title, self.docket_report)
@@ -65,45 +65,52 @@ class CaseHandler(QObject):
             self.docket_report.table.setItem(row, 1, docket_text_container)
 
 
-class CaseSearchHandler(CaseHandler):
+class CaseSearchHandler(QObject):
     """Class for querying the SQL Server Databases and retreiving case data."""
+    crim_case_data_delivered = pyqtSignal(tuple)
+    civil_case_data_delivered = pyqtSignal(tuple)
 
-    def query_case_info(self) -> None:
-        """Queries SQL Server database (AuthorityCourt/AuthorityCivil) and retrieves case data."""
-        widget_name = self.mw.search_tabWidget.currentWidget().objectName()
-        if widget_name == 'case_search_tab':
-            search_box = self.mw.case_search_box
-            case_data = CrimCaseData(update_crim_case_number(search_box.text())).load_case()
-            self.set_crimtraffic_case_info_from_search(case_data)
-        elif widget_name == 'civil_case_search_tab':
-            search_box = self.mw.civil_case_search_box
-            case_data = CivilCaseData(update_civil_case_number(search_box.text())).load_case()
-            self.set_civil_case_info_from_search(case_data)
-        search_box.setText(case_data.case_number)
+    def __init__(self, mainwindow) -> None:
+        super().__init__()
+        self.mw = mainwindow
+        self.mw.crim_case_data_requested.connect(self.query_crim_case_info)
+        self.mw.civil_case_data_requested.connect(self.query_civil_case_info)
 
-    def set_crimtraffic_case_info_from_search(self, case_data: CrimCaseData) -> None:
-        """Sets the case search fields on the UI with data from the case that is retrieved."""
-        self.mw.case_number_label_field.setText(case_data.case_number)
+    @pyqtSlot(str)
+    def query_crim_case_info(self, case_number: str) -> None:
+        case_data = CrimCaseData(case_number).load_case()
+        display_data = self.set_crim_display_data(case_data)
+        self.crim_case_data_delivered.emit(display_data)
+
+    @pyqtSlot(str)
+    def query_civil_case_info(self, case_number: str) -> None:
+        case_data = CivilCaseData(case_number).load_case()
+        display_data = self.set_civil_display_data(case_data)
+        self.civil_case_data_delivered.emit(display_data)
+
+    def set_crim_display_data(self, case_data: CrimCaseData) -> tuple(str):
         def_first_name = case_data.defendant.first_name
         def_last_name = case_data.defendant.last_name
-        self.mw.case_name_label_field.setText(f'State of Ohio v. {def_first_name} {def_last_name}')
-        charge_list_text = ', '.join(str(charge[0]) for charge in case_data.charges_list)
-        self.mw.case_charges_label_field.setText(charge_list_text)
+        case_number = case_data.case_number
+        case_name = f'State of Ohio v. {def_first_name} v. {def_last_name}'
+        case_charges = ', '.join(str(charge[0]) for charge in case_data.charges_list)
+        return (case_number, case_name, case_charges)
 
-    def set_civil_case_info_from_search(self, case_data: CivilCaseData) -> None:
-        """Sets the case search fields on the UI with data from the case that is retrieved."""
+    def set_civil_display_data(self, case_data: CivilCaseData) -> tuple(str):
         plaintiff = case_data.primary_plaintiff.party_name
         defendant = case_data.primary_defendant.party_name
-        self.mw.civil_case_number_field.setText(case_data.case_number)
-        self.mw.civil_case_name_field.setText(f'{plaintiff} vs. {defendant}')
-        self.mw.civil_case_type_field.setText(case_data.case_type)
+        case_number = case_data.case_number
+        case_name = f'{plaintff} v. {defendant}'
+        case_type = case_data.case_type
+        return (case_number, case_name, case_type)
 
 
-class CaseListHandler(CaseHandler):
+class CaseListHandler(QObject):
     """Class for loading Criminal Traffic Daily Case Lists."""
 
     def __init__(self, mainwindow):
-        super().__init__(mainwindow)
+        super().__init__()
+        self.mw = mainwindow
         self.create_daily_case_lists()
         self.load_case_lists()
         self.show_hide_daily_case_lists()

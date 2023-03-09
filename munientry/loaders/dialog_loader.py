@@ -32,7 +32,7 @@ class DialogLoader(object):
     def _get_cms_case_data(self):
         if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
             return load_case_information(self.mainwindow.daily_case_list)
-        case_number = self.mainwindow.case_search_box.text()
+        case_number = self.mainwindow.crim_case_search_box.text()
         return load_single_case(case_number)
 
     def _get_case_number(self) -> Optional[str]:

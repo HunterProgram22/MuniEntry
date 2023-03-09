@@ -45,10 +45,10 @@ from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge, update_crim_case_number
+from munientry.helper_functions import set_random_judge, update_civil_case_number, update_crim_case_number
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
-from munientry.mainwindow.case_search import CaseHandler, CaseListHandler, CaseSearchHandler
+from munientry.mainwindow.case_search import CaseDocketHandler, CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
@@ -58,11 +58,13 @@ from munientry.widgets.table_widgets import TableReportWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     """The main window of the application that is the launching point for all dialogs."""
-    show_docket_requested = pyqtSignal(str)
+    crim_case_docket_requested = pyqtSignal(str)
+    crim_case_data_requested = pyqtSignal(str)
+    civil_case_data_requested = pyqtSignal(str)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
-        self.modify_view()
+        self.setup_view()
         self.digital_workflow = DigitalWorkflow(self)
         self.court_staff = CourtStaffManager(self)
         self.dialog_buttons_dict = self.create_entry_buttons_dict()
@@ -80,11 +82,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.final_pretrial_cases_box,
             self.trials_to_court_cases_box,
         ]
+        self.case_docket = CaseDocketHandler(self)
         self.case_search = CaseSearchHandler(self)
         self.case_lists = CaseListHandler(self)
         self.connect_signals_to_slots()
 
-    def modify_view(self) -> None:
+    def setup_view(self) -> None:
         self.setupUi(self)
         self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
         self.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
@@ -93,53 +96,77 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.reload_cases_Button.released.connect(self.case_lists.reload_case_lists)
         self.random_judge_Button.released.connect(self.assign_judge)
         self.visiting_judge_radio_btn.toggled.connect(self.court_staff.set_visiting_judge)
-        self.get_case_Button.pressed.connect(self.case_search.query_case_info)
-        self.civil_get_case_Button.pressed.connect(self.case_search.query_case_info)
         self.tabWidget.currentChanged.connect(self.court_staff.set_person_stack_widget)
 
-
         self.search_tabWidget.currentChanged.connect(self.search_tab_changed)
-        self.crim_show_docket_casesearch_btn.released.connect(self.show_docket_casesearch_clicked)
-        self.crim_show_docket_caselist_btn.released.connect(self.show_docket_caselist_clicked)
 
-        self.case_search.docket_report_requested.connect(self.display_docket_report)
+        self.crim_get_case_btn.released.connect(self.crim_case_search)
+        self.civil_get_case_btn.released.connect(self.civil_case_search)
+        self.crim_show_docket_case_search_btn.released.connect(self.crim_show_docket_case_search)
+        self.crim_show_docket_case_list_btn.released.connect(self.crim_show_docket_case_list)
+
+        self.case_docket.docket_report_delivered.connect(self.display_docket_report)
+        self.case_search.crim_case_data_delivered.connect(self.display_crim_search_data)
+        self.case_search.crim_case_data_delivered.connect(self.display_civil_search_data)
 
         self.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self))
         self.connect_court_staff_to_radio_btns()
         self.connect_dialog_buttons_to_start_dialog()
 
     @pyqtSlot(TableReportWindow)
-    def display_docket_report(self, docket_report: TableReportWindow):
+    def display_docket_report(self, docket_report: TableReportWindow) -> None:
         self.docket_report = docket_report
         self.docket_report.show()
+
+    @pyqtSlot(tuple)
+    def display_crim_search_data(self, display_data: tuple) -> None:
+        case_number, case_name, case_charges = display_data
+        self.crim_case_number_label.setText(case_number)
+        self.crim_case_name_label.setText(case_name)
+        self.crim_case_charges_label.setText(case_charges)
+
+    @pyqtSlot(tuple)
+    def display_civil_search_data(self, display_data: tuple) -> None:
+        case_number, case_name, case_type = display_data
+        self.civil_case_number_label.setText(case_number)
+        self.civil_case_name_label.setText(case_name)
+        self.civil_case_type_label.setText(case_type)
 
     def search_tab_changed(self) -> None:
         logger.info('Search Tab Changed')
         if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
             self.tabWidget.setCurrentWidget(self.civil_Tab)
 
-    def get_case_number(self) -> str:
-        case_number = self.case_search_box.text()
-        case_number = update_crim_case_number(case_number)
-        self.case_search_box.setText(case_number)
+    def get_case_number(self, search_type: str) -> str:
+        if search_type == 'criminal':
+            case_number = self.crim_case_search_box.text()
+            case_number = update_crim_case_number(case_number)
+        elif search_type == 'civil':
+            case_number = self.civil_case_search_box.text()
+            case_number = update_civil_case_number(case_number)
         return case_number
 
-    def show_docket_casesearch_clicked(self) -> None:
-        case_number = self.get_case_number()
-        self.show_docket_requested.emit(case_number)
+    def crim_case_search(self):
+        case_number = self.get_case_number('criminal')
+        self.crim_case_search_box.setText(case_number)
+        self.crim_case_data_requested.emit(case_number)
 
-    def show_docket_caselist_clicked(self) -> None:
+    def crim_show_docket_case_search(self) -> None:
+        case_number = self.get_case_number()
+        self.crim_case_docket_requested.emit(case_number)
+
+    def crim_show_docket_case_list(self) -> None:
         try:
             _last_name, case_number = self.daily_case_list.currentText().split(' - ')
         except (ValueError, AttributeError) as err:
             logger.warning(err)
             case_number = ''
-        self.show_docket_requested.emit(case_number)
+        self.crim_case_docket_requested.emit(case_number)
 
-
-
-
-
+    def civil_case_search(self):
+        case_number = self.get_case_number('civil')
+        self.civil_case_search_box.setText(case_number)
+        self.civil_case_data_requested.emit(case_number)
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
