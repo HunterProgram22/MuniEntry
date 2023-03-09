@@ -67,7 +67,7 @@ class CourtStaffManager(object):
             'civil_Tab': self.mw.judicial_officers_stack,
             'probation_tab': self.mw.comm_control_officers_stack,
         }
-        current_tab_name = self.mw.tabWidget.currentWidget().objectName()
+        current_tab_name = self.mw.entries_tab_widget.currentWidget().objectName()
         current_stack = stack_mapping.get(current_tab_name)
         if current_stack is not None:
             self.mw.court_staff_widget.setCurrentWidget(current_stack)

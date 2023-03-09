@@ -66,7 +66,7 @@ class CaseDocketHandler(QObject):
 
 
 class CaseSearchHandler(QObject):
-    """Class for querying the SQL Server Databases and retreiving case data."""
+    """Class for handling a case search for a case and querying the database for case data."""
     crim_case_data_delivered = pyqtSignal(tuple)
     civil_case_data_delivered = pyqtSignal(tuple)
 
@@ -144,15 +144,6 @@ class CaseListHandler(QObject):
         """This method is connected to the reload cases button and calls load_case_lists."""
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
-
-    # def show_case_docket_case_list(self) -> None:
-    #     """Value Error catch put in to handle if the empty slot of daily case list is selected."""
-    #     try:
-    #         _last_name, case_number = self.mw.daily_case_list.currentText().split(' - ')
-    #     except (ValueError, AttributeError) as err:
-    #         logger.warning(err)
-    #         case_number = ''
-    #     self.show_case_docket(case_number)
 
     def show_hide_daily_case_lists(self) -> None:
         for case_list in self.mw.daily_case_lists:

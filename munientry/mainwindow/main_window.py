@@ -95,15 +95,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def connect_signals_to_slots(self):
         self.reload_cases_Button.released.connect(self.case_lists.reload_case_lists)
         self.random_judge_Button.released.connect(self.assign_judge)
+
         self.visiting_judge_radio_btn.toggled.connect(self.court_staff.set_visiting_judge)
-        self.tabWidget.currentChanged.connect(self.court_staff.set_person_stack_widget)
+
+        self.entries_tab_widget.currentChanged.connect(self.court_staff.set_person_stack_widget)
 
         self.cases_tab_widget.currentChanged.connect(self.cases_tab_changed)
         self.crim_get_case_btn.released.connect(self.crim_case_search)
         self.civil_get_case_btn.released.connect(self.civil_case_search)
         self.crim_show_docket_case_search_btn.released.connect(self.crim_show_docket_case_search)
         self.crim_show_docket_case_list_btn.released.connect(self.crim_show_docket_case_list)
-
         self.case_docket.docket_report_delivered.connect(self.display_docket_report)
         self.case_search.crim_case_data_delivered.connect(self.display_crim_search_data)
         self.case_search.civil_case_data_delivered.connect(self.display_civil_search_data)
@@ -134,7 +135,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def cases_tab_changed(self) -> None:
         logger.info('Search Tab Changed')
         if self.cases_tab_widget.currentWidget().objectName() == 'civil_case_search_tab':
-            self.tabWidget.setCurrentWidget(self.civil_Tab)
+            self.entries_tab_widget.setCurrentWidget(self.civil_Tab)
 
     def get_case_number(self, search_type: str) -> str:
         if search_type == 'criminal':
