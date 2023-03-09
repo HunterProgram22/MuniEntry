@@ -28,6 +28,7 @@ from munientry.widgets.table_widgets import TableReportWindow
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     """The main window of the application that is the launching point for all dialogs."""
+
     crim_case_docket_requested = pyqtSignal(str)
     crim_case_data_requested = pyqtSignal(str)
     civil_case_data_requested = pyqtSignal(str)
@@ -59,11 +60,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.connect_signals_to_slots()
 
     def connect_daily_case_lists(self) -> None:
-        self.arraignments_cases_box.setup_combo_box('arraignments', self.arraignments_radio_btn, self)
+        self.arraignments_cases_box.setup_combo_box(
+            'arraignments', self.arraignments_radio_btn, self,
+        )
         self.slated_cases_box.setup_combo_box('slated', self.slated_radio_btn, self)
-        self.final_pretrial_cases_box.setup_combo_box('final_pretrials', self.final_pretrial_radio_btn, self)
+        self.final_pretrial_cases_box.setup_combo_box(
+            'final_pretrials', self.final_pretrial_radio_btn, self,
+        )
         self.pleas_cases_box.setup_combo_box('pleas', self.pleas_radio_btn, self)
-        self.trials_to_court_cases_box.setup_combo_box('trials_to_court', self.trials_to_court_radio_btn, self)
+        self.trials_to_court_cases_box.setup_combo_box(
+            'trials_to_court', self.trials_to_court_radio_btn, self,
+        )
         self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radio_btn, self)
 
     def setup_view(self) -> None:
@@ -166,4 +173,4 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.last_judge_assigned_label.setText(
             f'The last judge assigned was {assigned_judge}.\n'
             + f' The assignment was made at {time_now}.',
-            )
+        )
