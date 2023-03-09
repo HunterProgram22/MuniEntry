@@ -39,8 +39,8 @@ scheduling_dialog_buttons = [
 @pytest.mark.parametrize(TEST_LIST, scheduling_dialog_buttons)
 def test_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all Scheduling dialog buttons open from the case list when no case is selected."""
-    mouse_click(main_window.patterson_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.assn_comm_2_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == ''
@@ -49,8 +49,8 @@ def test_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_ti
 @pytest.mark.parametrize(TEST_LIST, scheduling_dialog_buttons)
 def test_dialogs_open_with_case_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all Scheduling dialog buttons open from the case list when a case is selected."""
-    mouse_click(main_window.dattilo_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.assn_comm_1_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
@@ -60,8 +60,8 @@ def test_dialogs_open_with_case_from_caselist(main_window, dialog_button, dialog
 @pytest.mark.parametrize(TEST_LIST, scheduling_dialog_buttons)
 def test_dialogs_open_with_case_from_casesearch(main_window, dialog_button, dialog_title):
     """Tests all Scheduling dialog buttons open from the case search when no case is selected."""
-    mouse_click(main_window.patterson_radioButton)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
+    mouse_click(main_window.assn_comm_2_radio_btn)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == ''
@@ -70,10 +70,10 @@ def test_dialogs_open_with_case_from_casesearch(main_window, dialog_button, dial
 @pytest.mark.parametrize(TEST_LIST, scheduling_dialog_buttons)
 def test_dialogs_open_nocase_from_casesearch(main_window, dialog_button, dialog_title):
     """Tests all Scheduling dialog buttons open from the case search when a case is selected."""
-    mouse_click(main_window.patterson_radioButton)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, '22TRD01955')
-    mouse_click(main_window.get_case_Button)
+    mouse_click(main_window.assn_comm_2_radio_btn)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, '22TRD01955')
+    mouse_click(main_window.crim_get_case_btn)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == '22TRD01955'

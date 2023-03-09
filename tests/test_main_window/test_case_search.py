@@ -31,23 +31,23 @@ def main_window_fixture(qtbot) -> MainWindow:
 def test_crim_case_search(main_window, case_number, expected_output):
     """Test for searching by a criminal case number."""
     # Set up the main window for the criminal case search
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, case_number)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, case_number)
 
     # Perform the search and assert the results
-    mouse_click(main_window.get_case_Button)
-    assert main_window.case_search_box.text() == expected_output
-    assert main_window.case_number_label_field.text() == expected_output
+    mouse_click(main_window.crim_get_case_btn)
+    assert main_window.crim_case_search_box.text() == expected_output
+    assert main_window.crim_case_number_label.text() == expected_output
 
 
 @pytest.mark.parametrize('case_number, expected_output', CIVIL_TEST_CASES)
 def test_civil_case_search(main_window, case_number, expected_output):
     """Test for searching by a civil case number."""
     # Set up the main window for civil case search
-    main_window.search_tabWidget.setCurrentWidget(main_window.civil_case_search_tab)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.civil_case_search_tab)
     enter_data(main_window.civil_case_search_box, case_number)
 
     # Perform the search and assert the results
-    mouse_click(main_window.civil_get_case_Button)
+    mouse_click(main_window.civil_get_case_btn)
     assert main_window.civil_case_search_box.text() == expected_output
-    assert main_window.civil_case_number_field.text() == expected_output
+    assert main_window.civil_case_number_label.text() == expected_output

@@ -9,7 +9,7 @@ TEST_LIST = 'dialog_button, dialog_title'
 crimtraffic_dialog_buttons = [
     ('community_control_workflowButton', 'Community Control Workflow'),
     ('pretrial_workflowButton', 'Pretrial Workflow'),
-    ('hemmeter_workflowButton', 'Judge Hemmeter Digital Workflow'),
+    ('admin_workflowButton', 'Admin Entries Workflow'),
 ]
 
 

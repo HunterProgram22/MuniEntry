@@ -15,30 +15,30 @@ DIALOG_BUTTON = 'dialog_button'
 
 def dialog_nocase_setup(main_window, dialog_button):
     """Setup for loading dialog with no case."""
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
 
 
 def scheduling_dialog_nocase_setup(main_window, dialog_button):
     """Setup for loading scheduling dialog with no case."""
-    mouse_click(main_window.dattilo_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.assn_comm_1_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
 
 
 def dialog_withcase_setup(main_window, dialog_button):
     """Setup for loading dialog with a test case."""
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
 
 
 def scheduling_dialog_withcase_setup(main_window, dialog_button):
     """Setup for loading scheduling dialog with a test case."""
-    mouse_click(main_window.dattilo_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.assn_comm_1_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
 
@@ -132,8 +132,8 @@ def test_cmsfraloader_withcase_nofra(main_window, dialog_button):
 @pytest.mark.parametrize(DIALOG_BUTTON, CRIMTRAFFIC_FRA_DIALOG_BUTTONS)
 def test_cmsfraloader_withcase_yesfra(main_window, dialog_button):
     """Tests CrimTraffic dialogs with FRA loads correct FRA information with case."""
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     enter_data(main_window.arraignments_cases_box, 'Creamer - 22TRD01698')
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.fra_in_file_box.currentText() == 'Yes'
@@ -142,8 +142,8 @@ def test_cmsfraloader_withcase_yesfra(main_window, dialog_button):
 
 def test_cmsdrivinginfoloader_nocase(main_window):
     """Tests CmsDrivingInfoLoader loads empty with no case."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.assn_comm_2_admin_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     mouse_click(getattr(main_window, 'limited_driving_privilegesButton'))
     assert main_window.dialog.case_number_lineEdit.text() == ''
     assert main_window.dialog.defendant_first_name_lineEdit.text() == ''
@@ -152,8 +152,8 @@ def test_cmsdrivinginfoloader_nocase(main_window):
 
 def test_cmsdrivinginfoloader_withcase(main_window):
     """Tests CmsDrivingInfoLoader loads with test case."""
-    mouse_click(main_window.assn_comm_patterson_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.assn_comm_1_admin_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     enter_data(main_window.arraignments_cases_box, 'Conkey - 22TRD01944')
     mouse_click(getattr(main_window, 'limited_driving_privilegesButton'))
     assert main_window.dialog.case_number_lineEdit.text() == '22TRD01944'

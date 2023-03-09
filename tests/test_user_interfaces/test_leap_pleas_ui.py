@@ -10,8 +10,8 @@ TODAY = date.today()
 
 @pytest.fixture
 def leap_dialog(qtbot, main_window):
-    mouse_click(main_window.bunner_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.mag_1_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.LeapAdmissionButton)
     mouse_click(main_window.dialog.guilty_all_Button)
@@ -20,8 +20,8 @@ def leap_dialog(qtbot, main_window):
 
 @pytest.fixture
 def leap_valid_dialog(qtbot, main_window):
-    mouse_click(main_window.bunner_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.mag_1_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.LeapAdmissionValidButton)
     mouse_click(main_window.dialog.guilty_all_Button)

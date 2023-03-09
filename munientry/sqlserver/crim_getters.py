@@ -89,7 +89,7 @@ class CrimCaseDocket(object):
         self.case_number = case_number
 
     @database_connection(CRIM_DB_CONN)
-    def get_docket(self, db_connection: QSqlDatabase) -> list:
+    def get_docket(self, db_connection: QSqlDatabase = None) -> list[tuple]:
         query_string = get_case_docket_query(self.case_number)
         log_crim_case_query(self.case_number)
         query = QSqlQuery(db_connection)
