@@ -292,7 +292,7 @@ class Ui_MainWindow(object):
         self.label_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.gridLayout_2.addWidget(self.label_4, 3, 1, 1, 1)
-        self.FineOnlyPleaButton = QtWidgets.QPushButton(self.crim_traffic_tab)
+        self.FineOnlyPleaButton = CrimDialogButton(self.crim_traffic_tab)
         self.FineOnlyPleaButton.setMinimumSize(QtCore.QSize(120, 30))
         self.FineOnlyPleaButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.FineOnlyPleaButton.setObjectName("FineOnlyPleaButton")
@@ -314,7 +314,7 @@ class Ui_MainWindow(object):
         self.label_2.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_2.setObjectName("label_2")
         self.gridLayout_2.addWidget(self.label_2, 3, 0, 1, 1)
-        self.JailCCPleaButton = QtWidgets.QPushButton(self.crim_traffic_tab)
+        self.JailCCPleaButton = CrimDialogButton(self.crim_traffic_tab)
         self.JailCCPleaButton.setMinimumSize(QtCore.QSize(120, 30))
         self.JailCCPleaButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.JailCCPleaButton.setObjectName("JailCCPleaButton")
@@ -1272,3 +1272,4 @@ class Ui_MainWindow(object):
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
+from munientry.widgets.dialog_buttons import CrimDialogButton

@@ -47,8 +47,8 @@ class DialogDict(object):
             # CrimTraffic
             self.mw.ArraignmentContinueButton:
                 arraignment_continue_dialog.ArraignmentContinueDialog,
-            self.mw.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
-            self.mw.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
+            # self.mw.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
+            # self.mw.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
             self.mw.DiversionButton: diversion_dialog.DiversionPleaDialog,
             self.mw.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
             self.mw.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,

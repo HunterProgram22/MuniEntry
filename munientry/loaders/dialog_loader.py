@@ -46,6 +46,21 @@ class DialogLoader(object):
         return self.mainwindow.crim_case_search_box.text()
 
 
+class DialogButtonLoader(DialogLoader):
+
+    def get_case_data(self):
+        case_table = self._set_case_table()
+        judicial_officer = self.mainwindow.judicial_officer
+        cms_case_data = self._get_cms_case_data()
+        workflow_status = self.mainwindow.digital_workflow.workflow_status
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        return (
+            judicial_officer,
+            cms_case_data,
+            case_table,
+            workflow_status
+        )
+
 class CrimTrafficDialogLoader(DialogLoader):
     """Loader class for CrimTraffic Dialogs."""
 
