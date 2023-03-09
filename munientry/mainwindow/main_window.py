@@ -107,12 +107,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def connect_signals_to_slots(self):
         self.reload_cases_Button.released.connect(self.case_lists.reload_case_lists)
-        self.random_judge_Button.released.connect(self.assign_judge)
 
         self.visiting_judge_radio_btn.toggled.connect(self.court_staff.set_visiting_judge)
-
         self.entries_tab_widget.currentChanged.connect(self.court_staff.set_person_stack_widget)
 
+        self.random_judge_Button.released.connect(self.assign_judge)
         self.cases_tab_widget.currentChanged.connect(self.cases_tab_changed)
         self.crim_get_case_btn.released.connect(self.crim_case_search)
         self.civil_get_case_btn.released.connect(self.civil_case_search)
