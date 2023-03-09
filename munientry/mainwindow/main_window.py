@@ -9,41 +9,6 @@ from PyQt6.QtWidgets import QMainWindow
 from munientry.appsettings.paths import ICON_PATH
 from munientry.appsettings.settings import VERSION_NUMBER
 from munientry.appsettings.user_settings import load_user_settings
-from munientry.builders.administrative import (
-    admin_fiscal_dialog,
-    driving_privileges_dialog,
-    jury_payment_dialog,
-)
-from munientry.builders.civil import civ_freeform_dialog
-from munientry.builders.crimtraffic import (
-    arraignment_continue_dialog,
-    bond_hearing_dialog,
-    criminal_sealing_dialog,
-    diversion_dialog,
-    failure_to_appear_dialog,
-    fine_only_plea_dialog,
-    freeform_dialog,
-    jail_cc_plea_dialog,
-    leap_plea_dialog,
-    leap_plea_valid_dialog,
-    leap_sentencing_dialog,
-    no_plea_bond_dialog,
-    not_guilty_bond_dialog,
-    plea_only_future_sentence_dialog,
-    probation_violation_bond_dialog,
-    sentencing_only_dialog,
-    trial_sentencing_dialog,
-)
-from munientry.builders.scheduling import (
-    final_jury_hearing_notice_dialog,
-    general_hearing_notice_dialog,
-    sched_entry_dialogs,
-    trial_to_court_hearing_notice_dialog,
-)
-from munientry.builders.workflows import admin_judge_dw_dialog as hemmeter
-from munientry.builders.workflows import bunner_dw_dialog as bunner
-from munientry.builders.workflows import probation_dw_dialogs as probation
-from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.helper_functions import (
     set_random_judge,
@@ -54,6 +19,7 @@ from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_search import CaseDocketHandler, CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
+from munientry.mainwindow.dialog_dictionary import DialogDict
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.views.main_window_ui import Ui_MainWindow
@@ -71,7 +37,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setup_view()
         self.digital_workflow = DigitalWorkflow(self)
         self.court_staff = CourtStaffManager(self)
-        self.dialog_buttons_dict = self.create_entry_buttons_dict()
+        self.dialog_buttons_dict = DialogDict(self).create_dialog_button_dict()
         self.main_menu = MainMenu(self)
         self.user_settings = load_user_settings(self)
         set_mainwindow_shortcuts(self)
@@ -201,60 +167,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f'The last judge assigned was {assigned_judge}.\n'
             + f' The assignment was made at {time_now}.',
             )
-
-    def create_entry_buttons_dict(self):
-        return {
-            # CrimTraffic
-            self.ArraignmentContinueButton: arraignment_continue_dialog.ArraignmentContinueDialog,
-            self.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
-            self.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
-            self.DiversionButton: diversion_dialog.DiversionPleaDialog,
-            self.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
-            self.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,
-            self.ProbationViolationBondButton:
-                probation_violation_bond_dialog.ProbationViolationBondDialog,
-            self.BondHearingButton: bond_hearing_dialog.BondHearingDialog,
-            self.PleaOnlyButton: plea_only_future_sentence_dialog.PleaOnlyDialog,
-            self.NoPleaBondButton: no_plea_bond_dialog.NoPleaBondDialog,
-            self.LeapAdmissionButton: leap_plea_dialog.LeapAdmissionPleaDialog,
-            self.LeapAdmissionValidButton: leap_plea_valid_dialog.LeapPleaValidDialog,
-            self.LeapSentencingButton: leap_sentencing_dialog.LeapSentencingDialog,
-            self.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
-            self.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
-            self.FreeformEntryButton: freeform_dialog.FreeformDialog,
-            self.CriminalSealingButton: criminal_sealing_dialog.CriminalSealingDialog,
-
-            # Civil
-            self.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
-
-            # Scheduling
-            self.hemmeter_schedulingEntryButton:
-                sched_entry_dialogs.SchedulingEntryDialog,
-            self.rohrer_schedulingEntryButton:
-                sched_entry_dialogs.SchedulingEntryDialog,
-            self.hemmeter_final_jury_hearingButton:
-                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
-            self.rohrer_final_jury_hearingButton:
-                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
-            self.hemmeter_general_hearingButton:
-                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
-            self.rohrer_general_hearingButton:
-                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
-            self.hemmeter_trial_court_hearingButton:
-                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
-            self.rohrer_trial_court_hearingButton:
-                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
-
-            # Admin
-            self.limited_driving_privilegesButton:
-                driving_privileges_dialog.DrivingPrivilegesDialog,
-            self.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
-            self.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
-
-            # Workflow
-            self.admin_workflowButton: hemmeter.AdminWorkflowDialog,
-            self.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
-            self.bunner_workflowButton: bunner.BunnerWorkflowDialog,
-            self.pretrial_workflowButton: probation.PretrialWorkflowDialog,
-            self.community_control_workflowButton: probation.ComControlWorkflowDialog,
-        }
