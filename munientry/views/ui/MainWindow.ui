@@ -198,7 +198,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QPushButton" name="show_docket_case_list_Button">
+               <widget class="QPushButton" name="crim_show_docket_caselist_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -370,7 +370,7 @@ font-weight: bold;</string>
              </widget>
             </item>
             <item row="2" column="2">
-             <widget class="QPushButton" name="show_docket_Button">
+             <widget class="QPushButton" name="crim_show_docket_casesearch_btn">
               <property name="styleSheet">
                <string notr="true">background-color: rgb(160, 160, 160);</string>
               </property>

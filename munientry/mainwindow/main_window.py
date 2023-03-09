@@ -1,6 +1,8 @@
 """Module containing the Main Window of the application."""
 from functools import partial
 
+from loguru import logger
+from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow
 
@@ -43,18 +45,20 @@ from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
-from munientry.helper_functions import set_random_judge
+from munientry.helper_functions import set_random_judge, update_crim_case_number
 from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
-from munientry.mainwindow.case_search import CaseListHandler, CaseSearchHandler
+from munientry.mainwindow.case_search import CaseHandler, CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
 from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.views.main_window_ui import Ui_MainWindow
+from munientry.widgets.table_widgets import TableReportWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     """The main window of the application that is the launching point for all dialogs."""
+    show_docket_requested = pyqtSignal(str)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -89,17 +93,53 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.reload_cases_Button.released.connect(self.case_lists.reload_case_lists)
         self.random_judge_Button.released.connect(self.assign_judge)
         self.visiting_judge_radio_btn.toggled.connect(self.court_staff.set_visiting_judge)
-        self.tabWidget.currentChanged.connect(self.court_staff.set_person_stack_widget)
-        self.search_tabWidget.currentChanged.connect(self.case_search.set_entries_tab)
         self.get_case_Button.pressed.connect(self.case_search.query_case_info)
         self.civil_get_case_Button.pressed.connect(self.case_search.query_case_info)
-        self.show_docket_Button.pressed.connect(self.case_search.show_case_docket)
-        self.show_docket_case_list_Button.pressed.connect(
-            self.case_lists.show_case_docket_case_list,
-        )
+        self.tabWidget.currentChanged.connect(self.court_staff.set_person_stack_widget)
+
+
+        self.search_tabWidget.currentChanged.connect(self.search_tab_changed)
+        self.crim_show_docket_casesearch_btn.released.connect(self.show_docket_casesearch_clicked)
+        self.crim_show_docket_caselist_btn.released.connect(self.show_docket_caselist_clicked)
+
+        self.case_search.docket_report_requested.connect(self.display_docket_report)
+
         self.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self))
         self.connect_court_staff_to_radio_btns()
         self.connect_dialog_buttons_to_start_dialog()
+
+    @pyqtSlot(TableReportWindow)
+    def display_docket_report(self, docket_report: TableReportWindow):
+        self.docket_report = docket_report
+        self.docket_report.show()
+
+    def search_tab_changed(self) -> None:
+        logger.info('Search Tab Changed')
+        if self.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
+            self.tabWidget.setCurrentWidget(self.civil_Tab)
+
+    def get_case_number(self) -> str:
+        case_number = self.case_search_box.text()
+        case_number = update_crim_case_number(case_number)
+        self.case_search_box.setText(case_number)
+        return case_number
+
+    def show_docket_casesearch_clicked(self) -> None:
+        case_number = self.get_case_number()
+        self.show_docket_requested.emit(case_number)
+
+    def show_docket_caselist_clicked(self) -> None:
+        try:
+            _last_name, case_number = self.daily_case_list.currentText().split(' - ')
+        except (ValueError, AttributeError) as err:
+            logger.warning(err)
+            case_number = ''
+        self.show_docket_requested.emit(case_number)
+
+
+
+
+
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""

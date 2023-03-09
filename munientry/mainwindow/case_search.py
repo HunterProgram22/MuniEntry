@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from loguru import logger
+from PyQt6.QtCore import QObject, pyqtSignal, pyqtSlot
 from PyQt6.QtWidgets import QTableWidgetItem
 
 from munientry.helper_functions import update_civil_case_number, update_crim_case_number
@@ -25,32 +26,32 @@ def add_cases_to_daily_case_list(cases: list[str], case_list: DailyCaseListCombo
     case_list.addItems(cases)
 
 
-class CaseHandler(object):
+class CaseHandler(QObject):
     """Base class for handling the Case section (middle) of the MainWindow of the application."""
+    docket_report_requested = pyqtSignal(TableReportWindow)
 
     def __init__(self, mainwindow) -> None:
+        super().__init__()
         self.mw = mainwindow
+        self.mw.show_docket_requested.connect(self.show_case_docket)
 
-    def show_case_docket(self, case_number: str = '') -> None:
-        if case_number == '':
-            case_number = self.mw.case_search_box.text()
-            case_number = update_crim_case_number(case_number)
-            self.mw.case_search_box.setText(case_number)
+    @pyqtSlot(str)
+    def show_case_docket(self, case_number: str) -> None:
         data_list = CrimCaseDocket(case_number).get_docket()
-        self.display_docket_report(case_number, data_list)
+        self.create_docket_report(case_number, data_list)
 
-    def display_docket_report(self, case_number: str, data_list: list[tuple]) -> None:
+    def create_docket_report(self, case_number: str, data_list: list[tuple]) -> None:
         rows = len(data_list)
         window_title = f'Docket Report for {case_number}'
-        self.mw.window = TableReportWindow(window_title)
+        self.docket_report = TableReportWindow(window_title)
         self.create_table(rows, window_title)
         self.populate_table(data_list)
-        self.mw.window.show()
+        self.docket_report_requested.emit(self.docket_report)
 
     def create_table(self, rows: int, window_title: str) -> None:
-        self.mw.window.table = self.mw.window.add_table(rows, 2, window_title, self.mw.window)
+        self.docket_report.table = self.docket_report.add_table(rows, 2, window_title, self.docket_report)
         header_labels = ['Date', 'Docket Description']
-        self.mw.window.table.setHorizontalHeaderLabels(header_labels)
+        self.docket_report.table.setHorizontalHeaderLabels(header_labels)
 
     def populate_table(self, data_list: list[tuple]) -> None:
         for row, docket_item in enumerate(data_list):
@@ -60,17 +61,12 @@ class CaseHandler(object):
             docket_text_container = QTableWidgetItem()
             docket_text_container.setText(docket_text)
             docket_text_container.setToolTip(docket_item[1])
-            self.mw.window.table.setItem(row, 0, docket_date)
-            self.mw.window.table.setItem(row, 1, docket_text_container)
+            self.docket_report.table.setItem(row, 0, docket_date)
+            self.docket_report.table.setItem(row, 1, docket_text_container)
 
 
 class CaseSearchHandler(CaseHandler):
     """Class for querying the SQL Server Databases and retreiving case data."""
-
-    def set_entries_tab(self) -> None:
-        logger.info('Search Tab Changed')
-        if self.mw.search_tabWidget.currentWidget().objectName() == 'civil_case_search_tab':
-            self.mw.tabWidget.setCurrentWidget(self.mw.civil_Tab)
 
     def query_case_info(self) -> None:
         """Queries SQL Server database (AuthorityCourt/AuthorityCivil) and retrieves case data."""
@@ -142,14 +138,14 @@ class CaseListHandler(CaseHandler):
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 
-    def show_case_docket_case_list(self) -> None:
-        """Value Error catch put in to handle if the empty slot of daily case list is selected."""
-        try:
-            _last_name, case_number = self.mw.daily_case_list.currentText().split(' - ')
-        except (ValueError, AttributeError) as err:
-            logger.warning(err)
-            case_number = ''
-        self.show_case_docket(case_number)
+    # def show_case_docket_case_list(self) -> None:
+    #     """Value Error catch put in to handle if the empty slot of daily case list is selected."""
+    #     try:
+    #         _last_name, case_number = self.mw.daily_case_list.currentText().split(' - ')
+    #     except (ValueError, AttributeError) as err:
+    #         logger.warning(err)
+    #         case_number = ''
+    #     self.show_case_docket(case_number)
 
     def show_hide_daily_case_lists(self) -> None:
         for case_list in self.mw.daily_case_lists:
