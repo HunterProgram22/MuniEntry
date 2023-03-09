@@ -82,10 +82,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.final_pretrial_cases_box,
             self.trials_to_court_cases_box,
         ]
+        self.connect_daily_case_lists()
         self.case_docket = CaseDocketHandler(self)
         self.case_search = CaseSearchHandler(self)
-        self.case_lists = CaseListHandler(self)
+        self.case_lists = CaseListHandler(self.daily_case_lists)
         self.connect_signals_to_slots()
+
+    def connect_daily_case_lists(self) -> None:
+        self.arraignments_cases_box.setup_combo_box('arraignments', self.arraignments_radio_btn, self)
+        self.slated_cases_box.setup_combo_box('slated', self.slated_radio_btn, self)
+        self.final_pretrial_cases_box.setup_combo_box('final_pretrials', self.final_pretrial_radio_btn, self)
+        self.pleas_cases_box.setup_combo_box('pleas', self.pleas_radio_btn, self)
+        self.trials_to_court_cases_box.setup_combo_box('trials_to_court', self.trials_to_court_radio_btn, self)
+        self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radio_btn, self)
 
     def setup_view(self) -> None:
         self.setupUi(self)
@@ -112,6 +121,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self))
         self.connect_court_staff_to_radio_btns()
         self.connect_dialog_buttons_to_start_dialog()
+
+    def connect_court_staff_to_radio_btns(self) -> None:
+        """Updates the judicial officer whenever a judicial officer radio button is selected."""
+        for key in self.court_staff.court_staff_buttons_dict:
+            key.clicked.connect(self.court_staff.update_court_staff)
+
+    def connect_dialog_buttons_to_start_dialog(self) -> None:
+        """Connects all dialog buttons to the appropriate dialog.
+
+        Each dialog button is binded to the start_dialog function with the dialog itself. When
+        pressed the start_dialog function starts the dialog load process.
+        """
+        for button, dialog in self.dialog_buttons_dict.items():
+            button.released.connect(partial(start_dialog, dialog, self))
 
     @pyqtSlot(TableReportWindow)
     def display_docket_report(self, docket_report: TableReportWindow) -> None:
@@ -167,20 +190,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         case_number = self.get_case_number('civil')
         self.civil_case_search_box.setText(case_number)
         self.civil_case_data_requested.emit(case_number)
-
-    def connect_court_staff_to_radio_btns(self) -> None:
-        """Updates the judicial officer whenever a judicial officer radio button is selected."""
-        for key in self.court_staff.court_staff_buttons_dict:
-            key.clicked.connect(self.court_staff.update_court_staff)
-
-    def connect_dialog_buttons_to_start_dialog(self) -> None:
-        """Connects all dialog buttons to the appropriate dialog.
-
-        Each dialog button is binded to the start_dialog function with the dialog itself. When
-        pressed the start_dialog function starts the dialog load process.
-        """
-        for button, dialog in self.dialog_buttons_dict.items():
-            button.released.connect(partial(start_dialog, dialog, self))
 
     def assign_judge(self) -> None:
         assigned_judge, time_now = set_random_judge()

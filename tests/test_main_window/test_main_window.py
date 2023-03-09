@@ -14,12 +14,12 @@ def test_window_opens(qtbot, main_window_noclose):
 
 
 main_window_all_daily_case_lists = [
-    ("arraignments_radioButton", "Conkey - 22TRD01944", "arraignments_cases_box"),
-    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box"),
-    ("final_pretrial_radioButton", "Coyan - 21TRC08121", "final_pretrial_cases_box"),
-    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box"),
-    ("trials_to_court_radioButton", "Borham - 17TRD22590", "trials_to_court_cases_box"),
-    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
+    ("arraignments_radio_btn", "Conkey - 22TRD01944", "arraignments_cases_box"),
+    ("slated_radio_btn", "Henderson - 20TRC09471", "slated_cases_box"),
+    ("final_pretrial_radio_btn", "Coyan - 21TRC08121", "final_pretrial_cases_box"),
+    ("pleas_radio_btn", "Barkschat - 21TRC05611", "pleas_cases_box"),
+    ("trials_to_court_radio_btn", "Borham - 17TRD22590", "trials_to_court_cases_box"),
+    ("pcvh_fcvh_radio_btn", "Miller - 21TRD09812", "pcvh_fcvh_cases_box"),
 ]
 
 
@@ -32,12 +32,12 @@ def test_all_daily_cases_lists_load(qtbot, main_window_noclose, case_list_button
 
 
 daily_case_list_appearance_reasons = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", "arraignment", "FineOnlyPleaButton"),
-    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
-    ("final_pretrial_radioButton", "Henderson - 20TRC09471", "final_pretrial_cases_box", "a change of plea", "JailCCPleaButton"),
-    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", "a change of plea", "JailCCPleaButton"),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", "a change of plea", "JailCCPleaButton"),
-    ("pcvh_fcvh_radioButton", "Gregory - 22TRC00568", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
+    ("arraignments_radio_btn", "Borham - 17TRD22590", "arraignments_cases_box", "arraignment", "FineOnlyPleaButton"),
+    ("slated_radio_btn", "Henderson - 20TRC09471", "slated_cases_box", "arraignment", "NotGuiltyBondButton"),
+    ("final_pretrial_radio_btn", "Henderson - 20TRC09471", "final_pretrial_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("pleas_radio_btn", "Barkschat - 21TRC05611", "pleas_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("trials_to_court_radio_btn", "Gregory - 22TRC00568", "trials_to_court_cases_box", "a change of plea", "JailCCPleaButton"),
+    ("pcvh_fcvh_radio_btn", "Gregory - 22TRC00568", "pcvh_fcvh_cases_box", "Preliminary Community Control Violation Hearing", "ProbationViolationBondButton"),
 ]
 
 
@@ -53,19 +53,19 @@ def test_correct_appearance_reason_is_set(qtbot, main_window, case_list_button, 
 def test_delete_case_from_daily_case_list(qtbot, main_window_noclose):
     """This test uses the test databases so counts may differ if compared to main databases."""
     mouse_click(main_window_noclose.mag_1_radio_btn)
-    mouse_click(main_window_noclose.final_pretrial_radioButton)
+    mouse_click(main_window_noclose.final_pretrial_radio_btn)
     enter_data(main_window_noclose.final_pretrial_cases_box, "Barkschat - 21TRC05611")
     qtbot.keyPress(main_window_noclose.final_pretrial_cases_box, QtCore.Qt.Key.Key_Delete)
     assert len(main_window_noclose.final_pretrial_cases_box) == 11
 
 
 daily_case_list_case_counts = [
-    ("arraignments_radioButton", "Borham - 17TRD22590", "arraignments_cases_box", 9, 8),
-    ("slated_radioButton", "Henderson - 20TRC09471", "slated_cases_box", 12, 11),
-    ("final_pretrial_radioButton", "Ansley - 21CRB01597", "final_pretrial_cases_box", 12, 11),
-    ("pleas_radioButton", "Barkschat - 21TRC05611", "pleas_cases_box", 12, 11),
-    ("trials_to_court_radioButton", "Gregory - 22TRC00568", "trials_to_court_cases_box", 12, 11),
-    ("pcvh_fcvh_radioButton", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 14, 13),
+    ("arraignments_radio_btn", "Borham - 17TRD22590", "arraignments_cases_box", 9, 8),
+    ("slated_radio_btn", "Henderson - 20TRC09471", "slated_cases_box", 12, 11),
+    ("final_pretrial_radio_btn", "Ansley - 21CRB01597", "final_pretrial_cases_box", 12, 11),
+    ("pleas_radio_btn", "Barkschat - 21TRC05611", "pleas_cases_box", 12, 11),
+    ("trials_to_court_radio_btn", "Gregory - 22TRC00568", "trials_to_court_cases_box", 12, 11),
+    ("pcvh_fcvh_radio_btn", "Miller - 21TRD09812", "pcvh_fcvh_cases_box", 14, 13),
 ]
 
 @pytest.mark.parametrize("case_list_button, case_number, case_list_box, initial_count, delete_count", daily_case_list_case_counts)

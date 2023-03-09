@@ -1,6 +1,7 @@
 """This module provides handlers for the search_tab_widget."""
 from __future__ import annotations
 
+from collections import namedtuple
 from typing import TYPE_CHECKING
 
 from loguru import logger
@@ -108,36 +109,21 @@ class CaseSearchHandler(QObject):
 class CaseListHandler(QObject):
     """Class for loading Criminal Traffic Daily Case Lists."""
 
-    def __init__(self, mainwindow):
+    def __init__(self, daily_case_lists: list) -> None:
         super().__init__()
-        self.mw = mainwindow
-        self.create_daily_case_lists()
+        self.daily_case_lists = daily_case_lists
         self.load_case_lists()
-        self.show_hide_daily_case_lists()
-
-    def create_daily_case_lists(self) -> None:
-        self.mw.arraignments_cases_box.setup_combo_box(
-            'arraignments', self.mw.arraignments_radioButton, self.mw,
-        )
-        self.mw.slated_cases_box.setup_combo_box('slated', self.mw.slated_radioButton, self.mw)
-        self.mw.final_pretrial_cases_box.setup_combo_box(
-            'final_pretrials', self.mw.final_pretrial_radioButton, self.mw,
-        )
-        self.mw.pleas_cases_box.setup_combo_box('pleas', self.mw.pleas_radioButton, self.mw)
-        self.mw.trials_to_court_cases_box.setup_combo_box(
-            'trials_to_court', self.mw.trials_to_court_radioButton, self.mw,
-        )
-        self.mw.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.mw.pcvh_fcvh_radioButton, self.mw)
+        self.hide_daily_case_lists()
 
     def load_case_lists(self) -> None:
-        for case_list in self.mw.daily_case_lists:
+        for case_list in self.daily_case_lists:
             daily_cases = get_daily_case_list(case_list.objectName())
             add_cases_to_daily_case_list(daily_cases, case_list)
             preload_cases = str(len(case_list) - 1)
             postload_cases = str(len(daily_cases) - 1)
             logger.info(
                 f'{case_list.name}: Preload Cases: {preload_cases};'
-                + f'Postload Cases {postload_cases}',
+                + f' Postload Cases {postload_cases}',
             )
 
     def reload_case_lists(self) -> None:
@@ -145,8 +131,8 @@ class CaseListHandler(QObject):
         logger.info('Reload cases button pressed.')
         self.load_case_lists()
 
-    def show_hide_daily_case_lists(self) -> None:
-        for case_list in self.mw.daily_case_lists:
+    def hide_daily_case_lists(self) -> None:
+        for case_list in self.daily_case_lists:
             case_list.setCurrentText('')
             case_list.setHidden(True)
             case_list.setEnabled(False)

@@ -6,7 +6,7 @@ from tests.conftest import mouse_click, enter_data, check_barkschat
 def sentencing_only_dialog(qtbot, main_window):
     "Jail CC Plea Dialog = sentencing_only_dialog."
     mouse_click(main_window.judge_1_radio_btn)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.JailCCPleaButton)
     mouse_click(main_window.dialog.guilty_all_Button)

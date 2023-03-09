@@ -24,7 +24,7 @@ dialogs_with_amend_charge = [
 def test_amend_charge_works_all_dialogs(main_window, dialog_button):
     """Tests the Amend Charge button opens the Amend Charge Dialog for dialogs that have it."""
     mouse_click(main_window.judge_2_radio_btn)
-    mouse_click(main_window.final_pretrial_radioButton)
+    mouse_click(main_window.final_pretrial_radio_btn)
     enter_data(main_window.final_pretrial_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
 

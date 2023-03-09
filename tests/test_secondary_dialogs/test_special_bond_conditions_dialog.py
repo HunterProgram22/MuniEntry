@@ -19,7 +19,7 @@ dialogs_with_special_bond_conditions = [
 def test_dialog_opens(main_window, dialog_button):
     """Tests Add Conditions Dialog opens from all main Dialogs for which it is used."""
     mouse_click(main_window.judge_1_radio_btn)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
 

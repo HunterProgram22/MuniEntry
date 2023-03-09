@@ -81,7 +81,7 @@ font-weight: bold;</string>
                <number>18</number>
               </property>
               <item row="5" column="1">
-               <widget class="QRadioButton" name="trials_to_court_radioButton">
+               <widget class="QRadioButton" name="trials_to_court_radio_btn">
                 <property name="text">
                  <string>Trials to Court and Jury Trials</string>
                 </property>
@@ -91,7 +91,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="2">
-               <widget class="QRadioButton" name="pcvh_fcvh_radioButton">
+               <widget class="QRadioButton" name="pcvh_fcvh_radio_btn">
                 <property name="text">
                  <string>PCVH/FCVH</string>
                 </property>
@@ -101,7 +101,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QRadioButton" name="pleas_radioButton">
+               <widget class="QRadioButton" name="pleas_radio_btn">
                 <property name="text">
                  <string>Pleas and Motion/Oral Hearings</string>
                 </property>
@@ -155,7 +155,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QRadioButton" name="arraignments_radioButton">
+               <widget class="QRadioButton" name="arraignments_radio_btn">
                 <property name="text">
                  <string>Arraignments</string>
                 </property>
@@ -171,7 +171,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="2">
-               <widget class="QRadioButton" name="final_pretrial_radioButton">
+               <widget class="QRadioButton" name="final_pretrial_radio_btn">
                 <property name="text">
                  <string>Final Pre-trials</string>
                 </property>
@@ -181,7 +181,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="1">
-               <widget class="QRadioButton" name="slated_radioButton">
+               <widget class="QRadioButton" name="slated_radio_btn">
                 <property name="text">
                  <string>Slated                                  </string>
                 </property>
@@ -2264,17 +2264,17 @@ font-weight: bold;</string>
   <tabstop>assn_comm_2_radio_btn</tabstop>
   <tabstop>assn_comm_1_radio_btn</tabstop>
   <tabstop>no_assn_comm_radio_btn</tabstop>
-  <tabstop>pcvh_fcvh_radioButton</tabstop>
-  <tabstop>pleas_radioButton</tabstop>
-  <tabstop>trials_to_court_radioButton</tabstop>
+  <tabstop>pcvh_fcvh_radio_btn</tabstop>
+  <tabstop>pleas_radio_btn</tabstop>
+  <tabstop>trials_to_court_radio_btn</tabstop>
   <tabstop>final_pretrial_cases_box</tabstop>
   <tabstop>pleas_cases_box</tabstop>
   <tabstop>pcvh_fcvh_cases_box</tabstop>
   <tabstop>trials_to_court_cases_box</tabstop>
   <tabstop>reload_cases_Button</tabstop>
-  <tabstop>slated_radioButton</tabstop>
-  <tabstop>final_pretrial_radioButton</tabstop>
-  <tabstop>arraignments_radioButton</tabstop>
+  <tabstop>slated_radio_btn</tabstop>
+  <tabstop>final_pretrial_radio_btn</tabstop>
+  <tabstop>arraignments_radio_btn</tabstop>
   <tabstop>slated_cases_box</tabstop>
   <tabstop>arraignments_cases_box</tabstop>
   <tabstop>FineOnlyPleaButton</tabstop>

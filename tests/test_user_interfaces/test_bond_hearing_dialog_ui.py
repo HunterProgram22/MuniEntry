@@ -8,7 +8,7 @@ from tests.conftest import enter_data, mouse_click
 def bhd_dialog_setup(main_window):
     """Fixture for Bond Hearing Dialog."""
     mouse_click(main_window.judge_1_radio_btn)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(main_window.BondHearingButton)
     return main_window.dialog

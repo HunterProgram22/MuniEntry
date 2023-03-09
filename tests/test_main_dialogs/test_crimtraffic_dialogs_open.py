@@ -35,7 +35,7 @@ crimtraffic_dialog_buttons = [
 def test_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all CrimTraffic dialog buttons open from the case list when no case is selected."""
     mouse_click(main_window.judge_1_radio_btn)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.arraignments_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == ''
@@ -45,7 +45,7 @@ def test_dialogs_open_nocase_from_caselist(main_window, dialog_button, dialog_ti
 def test_dialogs_open_with_case_from_caselist(main_window, dialog_button, dialog_title):
     """Tests all CrimTraffic dialog buttons open from the case list when a case is selected."""
     mouse_click(main_window.judge_2_radio_btn)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
     assert main_window.dialog.windowTitle() == dialog_title
