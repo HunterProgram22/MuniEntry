@@ -9,9 +9,9 @@ def entry_dialog(monkeypatch, main_window):
     data = CivilEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
     mouse_click(main_window.mag_1_radio_btn)
-    main_window.search_tabWidget.setCurrentWidget(main_window.civil_case_search_tab)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.civil_case_search_tab)
     enter_data(main_window.civil_case_search_box, '22CVF00002')
-    mouse_click(main_window.civil_get_case_Button)
+    mouse_click(main_window.civil_get_case_btn)
 
 
 def test_civil_freeform_entry(monkeypatch, main_window):

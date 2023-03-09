@@ -80,9 +80,9 @@ def main_window_noclose(qtbot):
 def driving_priv_dialog(qtbot, main_window):
     """Driving Privileges Dialog is driving_priv_dialog."""
     mouse_click(main_window.assn_comm_1_admin_radio_btn)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, '22TRD01955')
-    mouse_click(main_window.get_case_Button)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, '22TRD01955')
+    mouse_click(main_window.crim_get_case_btn)
     mouse_click(main_window.limited_driving_privilegesButton)
     qtbot.addWidget(main_window.dialog)
     return main_window.dialog
@@ -92,9 +92,9 @@ def driving_priv_dialog(qtbot, main_window):
 def hemmeter_gen_hearing_notice_dialog(qtbot, main_window):
     """Hemmeter General Notice of Hearing dialog."""
     mouse_click(main_window.assn_comm_2_radio_btn)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, '22TRD01955')
-    mouse_click(main_window.get_case_Button)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, '22TRD01955')
+    mouse_click(main_window.crim_get_case_btn)
     mouse_click(main_window.hemmeter_general_hearingButton)
     qtbot.addWidget(main_window.dialog)
     return main_window.dialog
@@ -104,9 +104,9 @@ def hemmeter_gen_hearing_notice_dialog(qtbot, main_window):
 def rohrer_gen_hearing_notice_dialog(qtbot, main_window):
     """Rohrer General Notice of Hearing dialog."""
     mouse_click(main_window.assn_comm_1_radio_btn)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, '22TRD01955')
-    mouse_click(main_window.get_case_Button)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, '22TRD01955')
+    mouse_click(main_window.crim_get_case_btn)
     mouse_click(main_window.rohrer_general_hearingButton)
     qtbot.addWidget(main_window.dialog)
     return main_window.dialog

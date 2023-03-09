@@ -60,7 +60,7 @@ font-weight: bold;</string>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QTabWidget" name="search_tabWidget">
+         <widget class="QTabWidget" name="cases_tab_widget">
           <property name="enabled">
            <bool>true</bool>
           </property>
@@ -244,7 +244,7 @@ font-weight: bold;</string>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="case_search_tab">
+          <widget class="QWidget" name="crim_case_search_tab">
            <property name="enabled">
             <bool>true</bool>
            </property>

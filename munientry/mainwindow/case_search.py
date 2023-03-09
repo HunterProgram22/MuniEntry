@@ -100,7 +100,7 @@ class CaseSearchHandler(QObject):
         plaintiff = case_data.primary_plaintiff.party_name
         defendant = case_data.primary_defendant.party_name
         case_number = case_data.case_number
-        case_name = f'{plaintff} v. {defendant}'
+        case_name = f'{plaintiff} v. {defendant}'
         case_type = case_data.case_type
         return (case_number, case_name, case_type)
 

@@ -18,7 +18,7 @@ class DialogPreloadChecker(object):
 
         Returns True if loading from case_search_tab.
         """
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+        if self.mainwindow.cases_tab_widget.currentWidget().objectName() == 'case_list_tab':
             daily_case_lists = self.mainwindow.daily_case_lists
             if not any(case_list.radio_button.isChecked() for case_list in daily_case_lists):
                 RequiredBox(

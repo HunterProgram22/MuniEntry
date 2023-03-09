@@ -25,25 +25,25 @@ class DialogLoader(object):
         self.button_dict = self.mainwindow.dialog_buttons_dict
 
     def _set_case_table(self):
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+        if self.mainwindow.cases_tab_widget.currentWidget().objectName() == 'case_list_tab':
             return self.mainwindow.daily_case_list.name
         return None
 
     def _get_cms_case_data(self):
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+        if self.mainwindow.cases_tab_widget.currentWidget().objectName() == 'case_list_tab':
             return load_case_information(self.mainwindow.daily_case_list)
         case_number = self.mainwindow.crim_case_search_box.text()
         return load_single_case(case_number)
 
     def _get_case_number(self) -> Optional[str]:
-        if self.mainwindow.search_tabWidget.currentWidget().objectName() == 'case_list_tab':
+        if self.mainwindow.cases_tab_widget.currentWidget().objectName() == 'case_list_tab':
             try:
                 _last_name, case_number = self.mainwindow.daily_case_list.currentText().split(' - ')
             except ValueError as err:
                 logger.warning(err)
                 return None
             return case_number
-        return self.mainwindow.case_search_box.text()
+        return self.mainwindow.crim_case_search_box.text()
 
 
 class CrimTrafficDialogLoader(DialogLoader):
