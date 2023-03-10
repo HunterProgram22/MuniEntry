@@ -1171,7 +1171,7 @@ font-weight: bold;</string>
                <number>128</number>
               </property>
               <item row="0" column="0">
-               <widget class="AdminDialogButton" name="limited_driving_privilegesButton">
+               <widget class="AdminDrivingDialogButton" name="limited_driving_privilegesButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1181,7 +1181,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="AdminDialogButton" name="fiscal_entriesButton">
+               <widget class="AdminFiscalDialogButton" name="fiscal_entriesButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1191,7 +1191,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="AdminDialogButton" name="juror_paymentButton">
+               <widget class="AdminJuryDialogButton" name="juror_paymentButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1211,7 +1211,7 @@ font-weight: bold;</string>
              </attribute>
              <layout class="QGridLayout" name="gridLayout_21">
               <item row="0" column="0">
-               <widget class="QPushButton" name="CivFreeformEntryButton">
+               <widget class="CivilDialogButton" name="CivFreeformEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -2243,12 +2243,27 @@ font-weight: bold;</string>
    <header>munientry.widgets.dialog_buttons</header>
   </customwidget>
   <customwidget>
-   <class>AdminDialogButton</class>
+   <class>WorkDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.widgets.dialog_buttons</header>
   </customwidget>
   <customwidget>
-   <class>WorkDialogButton</class>
+   <class>AdminDrivingDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>AdminJuryDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>AdminFiscalDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>CivilDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.widgets.dialog_buttons</header>
   </customwidget>

@@ -529,15 +529,15 @@ class Ui_MainWindow(object):
         self.gridLayout_15 = QtWidgets.QGridLayout(self.administrative_tab)
         self.gridLayout_15.setHorizontalSpacing(128)
         self.gridLayout_15.setObjectName("gridLayout_15")
-        self.limited_driving_privilegesButton = AdminDialogButton(self.administrative_tab)
+        self.limited_driving_privilegesButton = AdminDrivingDialogButton(self.administrative_tab)
         self.limited_driving_privilegesButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.limited_driving_privilegesButton.setObjectName("limited_driving_privilegesButton")
         self.gridLayout_15.addWidget(self.limited_driving_privilegesButton, 0, 0, 1, 1)
-        self.fiscal_entriesButton = AdminDialogButton(self.administrative_tab)
+        self.fiscal_entriesButton = AdminFiscalDialogButton(self.administrative_tab)
         self.fiscal_entriesButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.fiscal_entriesButton.setObjectName("fiscal_entriesButton")
         self.gridLayout_15.addWidget(self.fiscal_entriesButton, 0, 1, 1, 1)
-        self.juror_paymentButton = AdminDialogButton(self.administrative_tab)
+        self.juror_paymentButton = AdminJuryDialogButton(self.administrative_tab)
         self.juror_paymentButton.setStyleSheet("background-color: rgb(85, 170, 255);")
         self.juror_paymentButton.setObjectName("juror_paymentButton")
         self.gridLayout_15.addWidget(self.juror_paymentButton, 1, 1, 1, 1)
@@ -547,7 +547,7 @@ class Ui_MainWindow(object):
         self.civil_tab.setObjectName("civil_tab")
         self.gridLayout_21 = QtWidgets.QGridLayout(self.civil_tab)
         self.gridLayout_21.setObjectName("gridLayout_21")
-        self.CivFreeformEntryButton = QtWidgets.QPushButton(self.civil_tab)
+        self.CivFreeformEntryButton = CivilDialogButton(self.civil_tab)
         self.CivFreeformEntryButton.setMinimumSize(QtCore.QSize(120, 30))
         self.CivFreeformEntryButton.setStyleSheet("background-color: rgb(160, 160, 160);")
         self.CivFreeformEntryButton.setObjectName("CivFreeformEntryButton")
@@ -1272,4 +1272,4 @@ class Ui_MainWindow(object):
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
-from munientry.widgets.dialog_buttons import AdminDialogButton, CrimDialogButton, SchedDialogButton, WorkDialogButton
+from munientry.widgets.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, SchedDialogButton, WorkDialogButton
