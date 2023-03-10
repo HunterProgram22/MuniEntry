@@ -69,7 +69,9 @@ class CrimDialogButton(DialogButton):
         if CrimTrafficPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer, cms_case_data, case_table, workflow_status = load_data
-            dialog(judicial_officer, cms_case_data, case_table, workflow_status).exec()
+            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table, workflow_status)
+            mainwindow.dialog.exec()
+
 
     def get_case_data(self, mainwindow):
         case_table = self._set_case_table(mainwindow)
@@ -89,7 +91,8 @@ class SchedDialogButton(DialogButton):
         if SchedulingPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer, cms_case_data, case_table = load_data
-            dialog(judicial_officer, cms_case_data, case_table).exec()
+            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
+            mainwindow.dialog.exec()
 
     def get_case_data(self, mainwindow):
         case_table = self._set_case_table(mainwindow)
@@ -109,7 +112,9 @@ class CivilDialogButton(DialogButton):
         if CivilPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer, cms_case_data, case_table = load_data
-            dialog(judicial_officer, cms_case_data, case_table).exec()
+            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
+            mainwindow.dialog.exec()
+
 
     def _get_cms_case_data(self, mainwindow):
         case_number = mainwindow.civil_case_search_box.text()
@@ -131,7 +136,8 @@ class AdminDrivingDialogButton(DialogButton):
         if AdminPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer, cms_case_data, case_table = load_data
-            dialog(judicial_officer, cms_case_data, case_table).exec()
+            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
+            mainwindow.dialog.exec()
 
     def get_case_data(self, mainwindow):
         case_table = None
@@ -154,7 +160,8 @@ class AdminJuryDialogButton(DialogButton):
         if AdminPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer, cms_case_data, case_table = load_data
-            dialog(judicial_officer, cms_case_data, case_table).exec()
+            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
+            mainwindow.dialog.exec()
 
     def get_case_data(self, mainwindow):
         case_table = self._set_case_table(mainwindow)
@@ -173,7 +180,8 @@ class AdminFiscalDialogButton(DialogButton):
         if AdminFiscalPreloadChecker(mainwindow).perform_checks():
             load_data = self.get_case_data(mainwindow)
             judicial_officer = load_data
-            dialog(judicial_officer).exec()
+            mainwindow.dialog = dialog(judicial_officer)
+            mainwindow.dialog.exec()
 
     def get_case_data(self, mainwindow):
         judicial_officer = mainwindow.judicial_officer
@@ -184,5 +192,7 @@ class WorkDialogButton(DialogButton):
 
     def load_dialog(self):
         button = self.sender()
+        mainwindow = self.window()
         dialog = BUTTON_DICT.get(button.objectName())
-        dialog().exec()
+        mainwindow.dialog = dialog()
+        mainwindow.dialog.exec()
