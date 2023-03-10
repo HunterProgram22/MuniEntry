@@ -19,8 +19,8 @@ from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_search import CaseDocketHandler, CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
-from munientry.mainwindow.dialog_dictionary import DialogDict
-from munientry.mainwindow.dialog_starter import start_dialog
+# from munientry.mainwindow.dialog_dictionary import DialogDict
+# from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
@@ -38,7 +38,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setup_view()
         self.digital_workflow = DigitalWorkflow(self)
         self.court_staff = CourtStaffManager(self)
-        self.dialog_buttons_dict = DialogDict(self).create_dialog_button_dict()
+        # self.dialog_buttons_dict = DialogDict(self).create_dialog_button_dict()
         self.main_menu = MainMenu(self)
         self.user_settings = load_user_settings(self)
         set_mainwindow_shortcuts(self)
@@ -96,21 +96,21 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.not_guilty_report_Button.released.connect(lambda: run_not_guilty_report_today(self))
         self.connect_court_staff_to_radio_btns()
-        self.connect_dialog_buttons_to_start_dialog()
+        # self.connect_dialog_buttons_to_start_dialog()
 
     def connect_court_staff_to_radio_btns(self) -> None:
         """Updates the judicial officer whenever a judicial officer radio button is selected."""
         for key in self.court_staff.court_staff_buttons_dict:
             key.clicked.connect(self.court_staff.update_court_staff)
 
-    def connect_dialog_buttons_to_start_dialog(self) -> None:
-        """Connects all dialog buttons to the appropriate dialog.
-
-        Each dialog button is binded to the start_dialog function with the dialog itself. When
-        pressed the start_dialog function starts the dialog load process.
-        """
-        for button, dialog in self.dialog_buttons_dict.items():
-            button.released.connect(partial(start_dialog, dialog, self))
+    # def connect_dialog_buttons_to_start_dialog(self) -> None:
+    #     """Connects all dialog buttons to the appropriate dialog.
+    #
+    #     Each dialog button is binded to the start_dialog function with the dialog itself. When
+    #     pressed the start_dialog function starts the dialog load process.
+    #     """
+    #     for button, dialog in self.dialog_buttons_dict.items():
+    #         button.released.connect(partial(start_dialog, dialog, self))
 
     @pyqtSlot(TableReportWindow)
     def display_docket_report(self, docket_report: TableReportWindow) -> None:

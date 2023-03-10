@@ -594,7 +594,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="2">
-               <widget class="QPushButton" name="NoPleaBondButton">
+               <widget class="CrimDialogButton" name="NoPleaBondButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -646,7 +646,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QPushButton" name="NotGuiltyBondButton">
+               <widget class="CrimDialogButton" name="NotGuiltyBondButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -682,7 +682,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="2">
-               <widget class="QPushButton" name="BondHearingButton">
+               <widget class="CrimDialogButton" name="BondHearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -698,7 +698,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="1">
-               <widget class="QPushButton" name="PleaOnlyButton">
+               <widget class="CrimDialogButton" name="PleaOnlyButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -714,7 +714,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QPushButton" name="DiversionButton">
+               <widget class="CrimDialogButton" name="DiversionButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -730,7 +730,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="6" column="2">
-               <widget class="QPushButton" name="ProbationViolationBondButton">
+               <widget class="CrimDialogButton" name="ProbationViolationBondButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -746,7 +746,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="8" column="2">
-               <widget class="QPushButton" name="FailureToAppearButton">
+               <widget class="CrimDialogButton" name="FailureToAppearButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -762,7 +762,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="8" column="0">
-               <widget class="QPushButton" name="LeapAdmissionButton">
+               <widget class="CrimDialogButton" name="LeapAdmissionButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -798,7 +798,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="9" column="2">
-               <widget class="QPushButton" name="FreeformEntryButton">
+               <widget class="CrimDialogButton" name="FreeformEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -814,7 +814,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="10" column="0">
-               <widget class="QPushButton" name="LeapSentencingButton">
+               <widget class="CrimDialogButton" name="LeapSentencingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -850,7 +850,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="9" column="0">
-               <widget class="QPushButton" name="LeapAdmissionValidButton">
+               <widget class="CrimDialogButton" name="LeapAdmissionValidButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 127);</string>
                 </property>
@@ -860,7 +860,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="10" column="2">
-               <widget class="QPushButton" name="ArraignmentContinueButton">
+               <widget class="CrimDialogButton" name="ArraignmentContinueButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 127);</string>
                 </property>
@@ -890,7 +890,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="7" column="1">
-               <widget class="QPushButton" name="TrialSentencingButton">
+               <widget class="CrimDialogButton" name="TrialSentencingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -906,7 +906,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="8" column="1">
-               <widget class="QPushButton" name="SentencingOnlyButton">
+               <widget class="CrimDialogButton" name="SentencingOnlyButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -942,7 +942,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="10" column="1">
-               <widget class="QPushButton" name="CriminalSealingButton">
+               <widget class="CrimDialogButton" name="CriminalSealingButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -965,7 +965,7 @@ font-weight: bold;</string>
                <number>6</number>
               </property>
               <item row="3" column="2">
-               <widget class="QPushButton" name="rohrer_general_hearingButton">
+               <widget class="SchedDialogButton" name="rohrer_general_hearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -981,7 +981,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="0" column="0">
-               <widget class="QPushButton" name="hemmeter_schedulingEntryButton">
+               <widget class="SchedDialogButton" name="hemmeter_schedulingEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -997,7 +997,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="0" column="2">
-               <widget class="QPushButton" name="rohrer_schedulingEntryButton">
+               <widget class="SchedDialogButton" name="rohrer_schedulingEntryButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1013,7 +1013,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QPushButton" name="hemmeter_final_jury_hearingButton">
+               <widget class="SchedDialogButton" name="hemmeter_final_jury_hearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1029,7 +1029,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="1" column="2">
-               <widget class="QPushButton" name="rohrer_final_jury_hearingButton">
+               <widget class="SchedDialogButton" name="rohrer_final_jury_hearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1109,7 +1109,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="2" column="2">
-               <widget class="QPushButton" name="rohrer_trial_court_hearingButton">
+               <widget class="SchedDialogButton" name="rohrer_trial_court_hearingButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1119,7 +1119,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QPushButton" name="hemmeter_trial_court_hearingButton">
+               <widget class="SchedDialogButton" name="hemmeter_trial_court_hearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1135,7 +1135,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QPushButton" name="hemmeter_general_hearingButton">
+               <widget class="SchedDialogButton" name="hemmeter_general_hearingButton">
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -1171,7 +1171,7 @@ font-weight: bold;</string>
                <number>128</number>
               </property>
               <item row="0" column="0">
-               <widget class="QPushButton" name="limited_driving_privilegesButton">
+               <widget class="AdminDialogButton" name="limited_driving_privilegesButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1181,7 +1181,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QPushButton" name="fiscal_entriesButton">
+               <widget class="AdminDialogButton" name="fiscal_entriesButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1191,7 +1191,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QPushButton" name="juror_paymentButton">
+               <widget class="AdminDialogButton" name="juror_paymentButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1651,7 +1651,7 @@ font-weight: bold;</string>
            <string notr="true">background-color: rgb(208, 225, 255);</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="mattox_tab">
            <attribute name="title">
@@ -1664,7 +1664,7 @@ font-weight: bold;</string>
                <number>64</number>
               </property>
               <item row="1" column="0">
-               <widget class="QPushButton" name="pretrial_workflowButton">
+               <widget class="WorkDialogButton" name="pretrial_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(255, 255, 127);</string>
                 </property>
@@ -1674,7 +1674,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="1" column="1">
-               <widget class="QPushButton" name="community_control_workflowButton">
+               <widget class="WorkDialogButton" name="community_control_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 127);</string>
                 </property>
@@ -1740,7 +1740,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="5" column="0">
-               <widget class="QPushButton" name="probation_workflowButton">
+               <widget class="WorkDialogButton" name="probation_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -1750,7 +1750,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="6" column="0">
-               <widget class="QPushButton" name="tsp_workflowButton">
+               <widget class="WorkDialogButton" name="tsp_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -1760,7 +1760,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="0">
-               <widget class="QPushButton" name="md_adopt_workflowButton">
+               <widget class="WorkDialogButton" name="md_adopt_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 127);</string>
                 </property>
@@ -1780,7 +1780,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="3" column="0">
-               <widget class="QPushButton" name="admin_workflowButton">
+               <widget class="WorkDialogButton" name="admin_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1857,7 +1857,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="7" column="0">
-               <widget class="QPushButton" name="diversion_workflowButton">
+               <widget class="WorkDialogButton" name="diversion_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -1938,7 +1938,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QPushButton" name="rohrer_workflowButton">
+               <widget class="WorkDialogButton" name="rohrer_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(85, 170, 255);</string>
                 </property>
@@ -1989,7 +1989,7 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="2" column="0">
-               <widget class="QPushButton" name="bunner_workflowButton">
+               <widget class="WorkDialogButton" name="bunner_workflowButton">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(206, 104, 171);</string>
                 </property>
@@ -2234,6 +2234,21 @@ font-weight: bold;</string>
   </customwidget>
   <customwidget>
    <class>CrimDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>SchedDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>AdminDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>WorkDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.widgets.dialog_buttons</header>
   </customwidget>
