@@ -1,11 +1,15 @@
-"""Functions used for working with a daily case list or case search prior to loading.
+"""Functions used for working with a criminal case lists or criminal case search prior to loading.
 
-**munientry/loaders/general_caseload_functions**
+**munientry/loaders/criminal_caseload_functions**
 
 Functions:
     ask_if_cases_combined(last_name, matched_cases_list) -> object
 
     check_for_last_name_match(daily_case_list, last_name) -> tuple
+
+    get_crim_case_number(mainwindow) -> Optional[str]
+
+    get_crim_cms_case_data(mainwindow) -> CriminalCmsCaseInformation
 
     load_case_information(daily_case_list) -> CriminalCmsCaseInformation
 
@@ -16,17 +20,18 @@ Functions:
     load_single_case(case_number) -> CriminalCmsCaseInformation
 
     set_case_loader(daily_case_list) -> CriminalCmsCaseInformation
-
-    load_single_civil_case(case_number) -> CivilCmsCaseInformation
 """
+from typing import Optional
+
 from loguru import logger
 
 from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.sqlserver import crim_getters as sql_server
-from munientry.models.cms_models import CriminalCmsCaseInformation, CivilCmsCaseInformation
-from munientry.sqlserver.civil_getters import CivilCaseData
+from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
 from munientry.widgets.message_boxes import WarningBox
+
+CASE_LIST_TAB = 'case_list_tab'
 
 
 def ask_if_cases_combined(last_name: str, matched_cases_list: list) -> WarningBox:
@@ -80,8 +85,28 @@ def check_for_last_name_match(daily_case_list: DailyCaseListComboBox, last_name:
     return case_match_count, matched_cases_list
 
 
-def load_case_information(daily_case_list: DailyCaseListComboBox) -> CriminalCmsCaseInformation:
-    """Loads the CmsCaseInformation object model for loading to the template.
+def get_crim_case_number(mainwindow) -> Optional[str]:
+    """Returns the string case number of a case if selected or entered, otherwise returns None."""
+    if mainwindow.cases_tab_widget.currentWidget().objectName() == CASE_LIST_TAB:
+        try:
+            _last_name, case_number = mainwindow.daily_case_list.currentText().split(' - ')
+        except ValueError as err:
+            logger.warning(err)
+            return None
+        return case_number
+    return mainwindow.crim_case_search_box.text()
+
+
+def get_crim_cms_case_data(mainwindow) -> CriminalCmsCaseInformation:
+    """Returns a CriminalCmsCaseInformation object with case data."""
+    if mainwindow.cases_tab_widget.currentWidget().objectName() == CASE_LIST_TAB:
+        return load_crim_case_information(mainwindow.daily_case_list)
+    case_number = mainwindow.crim_case_search_box.text()
+    return load_single_crim_case(case_number)
+
+
+def load_crim_case_information(daily_case_list: DailyCaseListComboBox) -> CriminalCmsCaseInformation:
+    """Loads the CriminalCmsCaseInformation object model for loading to the template.
 
     Args:
         daily_case_list (DailyCaseListComboBox): The selected daily case list.
@@ -90,12 +115,12 @@ def load_case_information(daily_case_list: DailyCaseListComboBox) -> CriminalCms
         CriminalCmsCaseInformation: An instance of a CmsCaseInformation object with or without data.
     """
     if daily_case_list.currentText() == '':
-        return load_no_case()
+        return load_no_crim_case()
     return set_case_loader(daily_case_list)
 
 
-def load_no_case() -> CriminalCmsCaseInformation:
-    """Loads the CmsCaseInformation model with no data.
+def load_no_crim_case() -> CriminalCmsCaseInformation:
+    """Loads the CriminalCmsCaseInformation model with no data.
 
     Avoids unnecessary call to the database when there is no data to load.
 
@@ -105,8 +130,8 @@ def load_no_case() -> CriminalCmsCaseInformation:
     return CriminalCmsCaseInformation()
 
 
-def load_multiple_cases(matched_case_numbers: list) -> CriminalCmsCaseInformation:
-    """Loads multiple cases into the CmsCaseInformation model.
+def load_multiple_crim_cases(matched_case_numbers: list) -> CriminalCmsCaseInformation:
+    """Loads multiple cases into the CriminalCmsCaseInformation model.
 
     Args:
         matched_case_numbers (list): A list containing strings of all the case numbers to be loaded.
@@ -117,8 +142,8 @@ def load_multiple_cases(matched_case_numbers: list) -> CriminalCmsCaseInformatio
     return sql_server.MultipleCrimCaseData(matched_case_numbers).load_case()
 
 
-def load_single_case(case_number: str) -> CriminalCmsCaseInformation:
-    """Loads a single case into the CmsCaseInformation model.
+def load_single_crim_case(case_number: str) -> CriminalCmsCaseInformation:
+    """Loads a single case into the CriminalCmsCaseInformation model.
 
     Args:
         case_number (str): A string of the case number to be loaded.
@@ -144,17 +169,12 @@ def set_case_loader(daily_case_list: DailyCaseListComboBox) -> CriminalCmsCaseIn
     if case_match_count > 1:
         response = ask_if_cases_combined(last_name, matched_cases_list)
         if response == YES_BUTTON_RESPONSE:
-            return load_multiple_cases(matched_cases_list)
-    return load_single_case(case_number)
+            return load_multiple_crim_cases(matched_cases_list)
+    return load_single_crim_case(case_number)
 
 
-def load_single_civil_case(case_number: str) -> CivilCmsCaseInformation:
-    """Loads a single case into the CivCmsCaseInformation model.
-
-    Args:
-        case_number (str): A string of the case number to be loaded.
-
-    Returns:
-        CivCmsCaseInformation: An instance of a CivCmsCaseInformation object with data from a single case.
-    """
-    return CivilCaseData(case_number).load_case()
+def set_case_table(mainwindow) -> Optional[str]:
+    """Returns the string case table name if case list tab is selected, otherwise returns None."""
+    if mainwindow.cases_tab_widget.currentWidget().objectName() == CASE_LIST_TAB:
+        return mainwindow.daily_case_list.name
+    return None

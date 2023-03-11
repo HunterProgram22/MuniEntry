@@ -35,7 +35,7 @@ from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
 
-BUTTON_DICT = {
+DIALOG_BUTTON_DICT = {
     'FineOnlyPleaButton': fine_only_plea_dialog.FineOnlyPleaDialog,
     'JailCCPleaButton': jail_cc_plea_dialog.JailCCPleaDialog,
     'ArraignmentContinueButton': arraignment_continue_dialog.ArraignmentContinueDialog,
