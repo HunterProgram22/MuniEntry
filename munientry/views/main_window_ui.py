@@ -1271,5 +1271,5 @@ class Ui_MainWindow(object):
         self.actionCourtroom_C.setText(_translate("MainWindow", "Courtroom C"))
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
+from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, SchedDialogButton, WorkDialogButton
 from munientry.widgets.combo_boxes import DailyCaseListComboBox
-from munientry.widgets.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, SchedDialogButton, WorkDialogButton

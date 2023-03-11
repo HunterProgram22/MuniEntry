@@ -2235,37 +2235,37 @@ font-weight: bold;</string>
   <customwidget>
    <class>CrimDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>SchedDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>WorkDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>AdminDrivingDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>AdminJuryDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>AdminFiscalDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
   <customwidget>
    <class>CivilDialogButton</class>
    <extends>QPushButton</extends>
-   <header>munientry.widgets.dialog_buttons</header>
+   <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
  </customwidgets>
  <tabstops>

@@ -1,4 +1,5 @@
 """Module for performing checks prior to a dialog loading."""
+from loguru import logger
 from munientry.widgets.message_boxes import RequiredBox
 
 
@@ -7,7 +8,6 @@ class DialogPreloadChecker(object):
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
-        self.checks = self.perform_checks()
 
     def perform_checks(self):
         """Method used in subclasses to run preload checks."""
