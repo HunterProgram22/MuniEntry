@@ -16,7 +16,7 @@ from munientry.appsettings.paths import ICON_PATH
 class BaseDialogBuilder(QDialog):
     """This class is a base class for all dialog windows."""
 
-    def __init__(self, parent: QDialog = None) -> None:
+    def __init__(self, parent: QDialog = None, *args, **kwargs) -> None:
         super().__init__(parent)
         self._view_modifier(self)
         self.functions = self._slots(self)

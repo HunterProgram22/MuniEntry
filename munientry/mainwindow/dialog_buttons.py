@@ -54,133 +54,95 @@ class DialogButton(QPushButton):
             return case_number
         return mainwindow.crim_case_search_box.text()
 
+    def _create_dialog_instance(self, mainwindow, *args, **kwargs):
+        button = self.sender()
+        dialog = BUTTON_DICT.get(button.objectName())
+        judicial_officer = mainwindow.judicial_officer
+        cms_case_data = kwargs.pop('cms_case_data', None)
+        case_table = kwargs.pop('case_table', None)
+        workflow_status = kwargs.pop('workflow_status', None)
+        mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table, workflow_status, *args, **kwargs)
+        logger.info(f'CMS Case Data: {cms_case_data}')
+        mainwindow.dialog.exec()
+
 
 class CrimDialogButton(DialogButton):
 
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if CrimTrafficPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer, cms_case_data, case_table, workflow_status = load_data
-            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table, workflow_status)
-            mainwindow.dialog.exec()
-
-
-    def get_case_data(self, mainwindow):
-        case_table = self._set_case_table(mainwindow)
-        judicial_officer = mainwindow.judicial_officer
-        cms_case_data = self._get_cms_case_data(mainwindow)
-        workflow_status = mainwindow.digital_workflow.workflow_status
-        logger.info(f'CMS Case Data: {cms_case_data}')
-        return (judicial_officer, cms_case_data, case_table, workflow_status)
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data = self._get_cms_case_data(mainwindow),
+                case_table = self._set_case_table(mainwindow),
+                workflow_status = mainwindow.digital_workflow.workflow_status,
+            )
 
 
 class SchedDialogButton(DialogButton):
 
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if SchedulingPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer, cms_case_data, case_table = load_data
-            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
-            mainwindow.dialog.exec()
-
-    def get_case_data(self, mainwindow):
-        case_table = self._set_case_table(mainwindow)
-        judicial_officer = mainwindow.judicial_officer
-        cms_case_data = self._get_cms_case_data(mainwindow)
-        logger.info(f'CMS Case Data: {cms_case_data}')
-        return (judicial_officer, cms_case_data, case_table)
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data = self._get_cms_case_data(mainwindow),
+                case_table = self._set_case_table(mainwindow),
+            )
 
 
 class CivilDialogButton(DialogButton):
 
-
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if CivilPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer, cms_case_data, case_table = load_data
-            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
-            mainwindow.dialog.exec()
-
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data = self._get_cms_case_data(mainwindow),
+            )
 
     def _get_cms_case_data(self, mainwindow):
         case_number = mainwindow.civil_case_search_box.text()
         return load_single_civil_case(case_number)
 
-    def get_case_data(self, mainwindow):
-        case_table = None
-        judicial_officer = mainwindow.judicial_officer
-        cms_case_data = self._get_cms_case_data(mainwindow)
-        return (judicial_officer, cms_case_data, case_table)
-
 
 class AdminDrivingDialogButton(DialogButton):
 
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if AdminPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer, cms_case_data, case_table = load_data
-            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
-            mainwindow.dialog.exec()
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data = self._get_cms_driving_case_data(mainwindow),
+            )
 
-    def get_case_data(self, mainwindow):
-        case_table = None
-        judicial_officer = mainwindow.judicial_officer
+    def _get_cms_driving_case_data(self, mainwindow):
         case_number = self._get_case_number(mainwindow)
         if case_number is None:
-            cms_case_data = load_no_case_driving()
-        else:
-            cms_case_data = load_single_driving_info_case(case_number)
-        logger.info(f'CMS Case Data: {cms_case_data}')
-        return (judicial_officer, cms_case_data, case_table)
+            return load_no_case_driving()
+        return load_single_driving_info_case(case_number)
 
 
 class AdminJuryDialogButton(DialogButton):
 
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if AdminPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer, cms_case_data, case_table = load_data
-            mainwindow.dialog = dialog(judicial_officer, cms_case_data, case_table)
-            mainwindow.dialog.exec()
-
-    def get_case_data(self, mainwindow):
-        case_table = self._set_case_table(mainwindow)
-        judicial_officer = mainwindow.judicial_officer
-        cms_case_data = self._get_cms_case_data(mainwindow)
-        logger.info(f'CMS Case Data: {cms_case_data}')
-        return (judicial_officer, cms_case_data, case_table)
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data=self._get_cms_case_data(mainwindow),
+                case_table=self._set_case_table(mainwindow),
+            )
 
 
 class AdminFiscalDialogButton(DialogButton):
 
     def load_dialog(self):
-        button = self.sender()
-        dialog = BUTTON_DICT.get(button.objectName())
         mainwindow = self.window()
         if AdminFiscalPreloadChecker(mainwindow).perform_checks():
-            load_data = self.get_case_data(mainwindow)
-            judicial_officer = load_data
-            mainwindow.dialog = dialog(judicial_officer)
-            mainwindow.dialog.exec()
-
-    def get_case_data(self, mainwindow):
-        judicial_officer = mainwindow.judicial_officer
-        return judicial_officer
+            self._create_dialog_instance(
+                mainwindow,
+            )
 
 
 class WorkDialogButton(DialogButton):
