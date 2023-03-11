@@ -11,7 +11,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_last_name, clean_offense_name, clean_statute_name
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.models.privileges_models import DrivingPrivilegesInformation
-from munientry.sqlserver.sql_server_queries import (
+from munientry.sqlserver.crim_sql_server_queries import (
     daily_case_list_query,
     driving_case_search_query,
     general_case_search_query,

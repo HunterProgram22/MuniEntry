@@ -10,7 +10,7 @@ from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_offense_name
 from munientry.mainmenu.reports.comments import get_comment_writer
 from munientry.mainmenu.reports.report_constants import EVENT_IDS
-from munientry.sqlserver.sql_server_queries import event_type_report_query
+from munientry.sqlserver.crim_sql_server_queries import event_type_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
 EVENT_REPORT_HEADERS = ('Time', 'Case Number', 'Defendant Name', 'Primary Charge', 'Attorney', 'Comments')

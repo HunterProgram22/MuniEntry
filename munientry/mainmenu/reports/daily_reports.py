@@ -7,7 +7,7 @@ from PyQt6.QtSql import QSqlQuery
 from PyQt6.QtWidgets import QInputDialog, QMainWindow, QTableWidgetItem
 
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.sqlserver.sql_server_queries import not_guilty_report_query
+from munientry.sqlserver.crim_sql_server_queries import not_guilty_report_query
 from munientry.widgets.table_widgets import TableReportWindow
 
 

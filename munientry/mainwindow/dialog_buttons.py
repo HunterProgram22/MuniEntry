@@ -3,12 +3,9 @@
 from loguru import logger
 from PyQt6.QtWidgets import QPushButton
 
-from munientry.loaders.driving_caseload_functions import get_cms_driving_case_data
-from munientry.loaders.criminal_caseload_functions import (
-    get_crim_cms_case_data,
-    set_case_table,
-)
 from munientry.loaders.civil_caseload_functions import get_civil_cms_case_data
+from munientry.loaders.criminal_caseload_functions import get_crim_cms_case_data, set_case_table
+from munientry.loaders.driving_caseload_functions import get_cms_driving_case_data
 from munientry.mainwindow.dialog_dictionary import DIALOG_BUTTON_DICT
 from munientry.mainwindow.dialog_preload_checkers import (
     AdminFiscalPreloadChecker,
@@ -17,7 +14,6 @@ from munientry.mainwindow.dialog_preload_checkers import (
     CrimTrafficPreloadChecker,
     SchedulingPreloadChecker,
 )
-
 
 
 class DialogButton(QPushButton):
