@@ -1,4 +1,4 @@
-"""Module containing all SQL Server queries used throughout the application."""
+"""Module containing all Criminal SQL Server queries used throughout the application."""
 
 
 def general_case_search_query(case_number: str) -> str:

@@ -1,3 +1,6 @@
+"""Module containing all Civil SQL Server queries used throughout the application."""
+
+
 def general_civil_case_query(case_number: str) -> str:
     return f"""
     SELECT 
