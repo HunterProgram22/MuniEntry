@@ -295,6 +295,19 @@ def check_barkschat(charges, plea):
 
 
 @pytest.fixture
+def jcp_dialog_jail(qtbot, main_window):
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
+    enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
+    mouse_click(main_window.JailCCPleaButton)
+    mouse_click(main_window.dialog.guilty_all_Button)
+    enter_data(main_window.dialog.fra_in_court_box, 'Yes')
+    enter_data(main_window.dialog.charges_gridLayout.itemAtPosition(9, 2).widget(), '40')
+    mouse_click(main_window.dialog.jail_checkBox)
+    yield main_window.dialog
+
+
+@pytest.fixture
 def amend_charge_dialog(qtbot, main_window):
     """Amend Charge Dialog is amend_charge_dialog. Uses the Jail dialog as that
     is the most common."""
