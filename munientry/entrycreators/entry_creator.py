@@ -18,6 +18,7 @@ from munientry.appsettings.paths import (
     FISCAL_SAVE_PATH,
     JURY_PAY_SAVE_PATH,
     SCHEDULING_SAVE_PATH,
+    PROBATION_SAVE_PATH
 )
 from munientry.widgets.message_boxes import RequiredBox
 
@@ -172,6 +173,12 @@ class SchedulingEntryCreator(BaseEntryCreator):
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
+
+
+class ProbationEntryCreator(BaseEntryCreator):
+    """Entry Creator for Probation entries."""
+
+    save_path = PROBATION_SAVE_PATH
 
 
 class DrivingPrivilegesEntryCreator(BaseEntryCreator):

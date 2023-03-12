@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
-# from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
+from munientry.entrycreators.entry_creator import ProbationEntryCreator
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.appsettings.pyqt_constants import TODAY
 from munientry.widgets.message_boxes import InfoBox
@@ -51,20 +51,9 @@ class ProbationSlotFunctions(base.BaseDialogSlotFunctions):
     def create_entry_process(self) -> None:
         ProbationEntryCreator(self.dialog).create_entry_process()
 
-    def set_defense_counsel(self) -> None:
-        if self.dialog.defense_counsel_waived_checkBox.isChecked():
-            self.dialog.defense_counsel_name_box.setEnabled(False)
-            self.dialog.defense_counsel_type_box.setEnabled(False)
-        else:
-            self.dialog.defense_counsel_name_box.setEnabled(True)
-            self.dialog.defense_counsel_type_box.setEnabled(True)
-
 
 class ProbationSignalConnector(base.BaseDialogSignalConnector):
     """Extends Base Dialog Signal Connector for Probation Entries."""
 
     def connect_main_dialog_common_signals(self):
         super().connect_main_dialog_common_signals()
-        self.dialog.defense_counsel_waived_checkBox.toggled.connect(
-            self.dialog.functions.set_defense_counsel,
-        )

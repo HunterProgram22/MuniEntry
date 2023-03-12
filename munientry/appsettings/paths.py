@@ -30,6 +30,7 @@ FISCAL_SAVE_PATH = paths['fiscal_save_path']
 DRIVE_SAVE_PATH = paths['drive_save_path']
 SCHEDULING_SAVE_PATH = paths['scheduling_save_path']
 JURY_PAY_SAVE_PATH = paths['jury_pay_save_path']
+PROBATION_SAVE_PATH = paths['probation_save_path']
 
 
 # Database Path Information for MuniEntryDB.Sqlite Internal Database

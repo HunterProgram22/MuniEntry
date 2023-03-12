@@ -10,13 +10,14 @@ class ProbationDialogCaseInformationUpdater(BaseDialogUpdater):
     def __init__(self, dialog: 'QDialog') -> None:
         super().__init__(dialog)
         self.update_model_with_case_information_frame_data()
+        self.update_terms_of_community_control()
 
     def update_model_with_case_information_frame_data(self) -> None:
-        """The set_scheduling_dates method is called by subclassed dialogs."""
         self.set_case_number_and_date()
         self.set_party_information()
-        self.set_defense_counsel_information()
-        self.set_scheduling_dates()
+
+    def update_terms_of_community_control(self):
+        self.dialog.transfer_view_data_to_model(self.model)
 
     def set_case_number_and_date(self) -> None:
         self.model.case_number = self.dialog.case_number_lineEdit.text()
