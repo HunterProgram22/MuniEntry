@@ -364,7 +364,51 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_3" rowminimumheight="1,2,2,2,2,0,0">
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="2" column="1">
+              <widget class="NoScrollDateEdit" name="violation_hearing_date_box">
+               <property name="styleSheet">
+                <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_5">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Date and Time of Preliminary Violation Hearing:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QCheckBox" name="checkBox_2">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Defendant is at Jail and will appear on Slated on:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="NoScrollDateEdit" name="slated_date_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="0" colspan="2">
               <widget class="QLabel" name="label_4">
                <property name="font">
@@ -382,30 +426,6 @@ font-weight: bold;</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QDateTimeEdit" name="dateTimeEdit">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_5">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Date and Time of Preliminary Violation Hearing:</string>
                </property>
               </widget>
              </item>
@@ -432,29 +452,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>Defendant absconded Clerk shall issue arrest warrant and serve copy of the Notice</string>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="1">
-              <widget class="QDateEdit" name="dateEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <property name="calendarPopup">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Defendant is at Jail and will appear on Slated on:</string>
                </property>
               </widget>
              </item>

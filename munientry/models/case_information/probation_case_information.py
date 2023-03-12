@@ -32,10 +32,14 @@ class NoticeCCViolationCaseInformation(ProbationCaseInformation):
     defendant_absconded: bool = False
     defendant_served: bool = False
     defendant_arrested: bool = False
+    violation_hearing_datetime: str = None
+    slated_date: str = None
     terms_list = [
         ('defendant_absconded', 'defendant_absconded_check_box'),
         ('defendant_served', 'defendant_served_check_box'),
         ('defendant_arrested', 'defendant_arrested_check_box'),
+        ('violation_hearing_date', 'violation_hearing_date_box'),
+        ('slated_date', 'slated_date_box'),
     ]
 
 
