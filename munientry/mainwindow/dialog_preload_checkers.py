@@ -88,6 +88,27 @@ class SchedulingPreloadChecker(DialogPreloadChecker):
         return False
 
 
+class ProbationPreloadChecker(DialogPreloadChecker):
+    """Pre Dialog Load checks for Probation Tab Dialog Buttons."""
+
+    def __init__(self, mainwindow):
+        super().__init__(mainwindow)
+
+    def perform_checks(self) -> bool:
+        if self.is_scheduling_officer_selected():
+            if self.is_daily_case_list_selected():
+                return True
+        return False
+
+    def is_scheduling_officer_selected(self) -> bool:
+        if any(button.isChecked() for button in self.mainwindow.court_staff.probation_staff_buttons):
+            return True
+        RequiredBox(
+            'You must select a community control officer.', 'Community Control Officer Required',
+        ).exec()
+        return False
+
+
 class AdminPreloadChecker(DialogPreloadChecker):
     """Pre Dialog Load checks for Admin Tab Dialog Buttons that load a case."""
 

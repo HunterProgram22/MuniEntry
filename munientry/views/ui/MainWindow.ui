@@ -1247,7 +1247,7 @@ font-weight: bold;</string>
                <number>36</number>
               </property>
               <item row="0" column="0">
-               <widget class="QPushButton" name="terms_comm_control_button">
+               <widget class="ProbationDialogButton" name="terms_comm_control_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -2264,6 +2264,11 @@ font-weight: bold;</string>
   </customwidget>
   <customwidget>
    <class>CivilDialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.mainwindow.dialog_buttons</header>
+  </customwidget>
+  <customwidget>
+   <class>ProbationDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.mainwindow.dialog_buttons</header>
   </customwidget>
