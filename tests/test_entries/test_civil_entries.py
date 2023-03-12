@@ -1,4 +1,4 @@
-"""Test module for creating crimtraffic entries."""
+"""Test module for creating civil entries."""
 from tests.conftest import enter_data, mouse_click, MUNI10_SAVE_PATH
 from munientry.entrycreators.entry_creator import CivilEntryCreator
 
