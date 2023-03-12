@@ -63,4 +63,3 @@ def test_dialogs_open_with_case_from_casesearch(main_window, probation_casesearc
     assert main_window.dialog.windowTitle() == dialog_title
     assert main_window.dialog.case_number_lineEdit.text() == '22TRD01955'
     assert main_window.dialog.defendant_last_name_lineEdit.text() == 'Mahan'
-#
