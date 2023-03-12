@@ -12,6 +12,7 @@ from munientry.mainwindow.dialog_preload_checkers import (
     AdminPreloadChecker,
     CivilPreloadChecker,
     CrimTrafficPreloadChecker,
+    ProbationPreloadChecker,
     SchedulingPreloadChecker,
 )
 
@@ -78,6 +79,19 @@ class CivilDialogButton(DialogButton):
             )
 
 
+class ProbationDialogButton(DialogButton):
+    """Custom Dialog button for Probation dialogs."""
+
+    def load_dialog(self):
+        mainwindow = self.window()
+        if ProbationPreloadChecker(mainwindow).perform_checks():
+            self._create_dialog_instance(
+                mainwindow,
+                cms_case_data=get_crim_cms_case_data(mainwindow),
+                case_table=set_case_table(mainwindow),
+            )
+
+
 class AdminDrivingDialogButton(DialogButton):
     """Custom Dialog button for Limited Driving Privileges dialog only."""
 
@@ -88,6 +102,7 @@ class AdminDrivingDialogButton(DialogButton):
                 mainwindow,
                 cms_case_data=get_cms_driving_case_data(mainwindow),
             )
+
 
 
 class AdminJuryDialogButton(DialogButton):

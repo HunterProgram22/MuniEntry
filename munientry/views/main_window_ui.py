@@ -563,10 +563,10 @@ class Ui_MainWindow(object):
         self.gridLayout_28 = QtWidgets.QGridLayout(self.probation_tab)
         self.gridLayout_28.setHorizontalSpacing(36)
         self.gridLayout_28.setObjectName("gridLayout_28")
-        self.terms_comm_control_button = QtWidgets.QPushButton(self.probation_tab)
-        self.terms_comm_control_button.setStyleSheet("background-color: rgb(160, 160, 160);")
-        self.terms_comm_control_button.setObjectName("terms_comm_control_button")
-        self.gridLayout_28.addWidget(self.terms_comm_control_button, 0, 0, 1, 1)
+        self.terms_comm_control_btn = ProbationDialogButton(self.probation_tab)
+        self.terms_comm_control_btn.setStyleSheet("background-color: rgb(160, 160, 160);")
+        self.terms_comm_control_btn.setObjectName("terms_comm_control_btn")
+        self.gridLayout_28.addWidget(self.terms_comm_control_btn, 0, 0, 1, 1)
         self.pushButton_3 = QtWidgets.QPushButton(self.probation_tab)
         self.pushButton_3.setStyleSheet("background-color: rgb(160, 160, 160);")
         self.pushButton_3.setObjectName("pushButton_3")
@@ -1184,7 +1184,7 @@ class Ui_MainWindow(object):
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.administrative_tab), _translate("MainWindow", "Administrative"))
         self.CivFreeformEntryButton.setText(_translate("MainWindow", "Freeform Entry"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.civil_tab), _translate("MainWindow", "Civil"))
-        self.terms_comm_control_button.setText(_translate("MainWindow", "Terms of Community Control"))
+        self.terms_comm_control_btn.setText(_translate("MainWindow", "Terms of Community Control"))
         self.pushButton_3.setText(_translate("MainWindow", "Not Used"))
         self.entries_tab_widget.setTabText(self.entries_tab_widget.indexOf(self.probation_tab), _translate("MainWindow", "Probation"))
         self.judge_1_radio_btn.setText(_translate("MainWindow", "Judge Hemmeter"))
@@ -1271,5 +1271,5 @@ class Ui_MainWindow(object):
         self.actionCourtroom_C.setText(_translate("MainWindow", "Courtroom C"))
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
-from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, SchedDialogButton, WorkDialogButton
+from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, ProbationDialogButton, SchedDialogButton, WorkDialogButton
 from munientry.widgets.combo_boxes import DailyCaseListComboBox

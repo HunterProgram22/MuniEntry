@@ -59,6 +59,7 @@ TEMPLATE_LIST = (
     Template('Trial To Court Notice Hearing Entry', 'Trial_To_Court_Hearing_Notice_Template.docx'),
     Template('Civil Freeform Entry', 'Civil_Freeform_Entry_Template.docx'),
     Template('Criminal Sealing Entry', 'Criminal_Sealing_Entry_Template.docx'),
+    Template('Terms Of Community Control Entry', 'Terms_Of_Community_Control_Template.docx'),
 )
 
 TEMPLATE_DICT = get_template_dict()
