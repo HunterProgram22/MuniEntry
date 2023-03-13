@@ -66,7 +66,12 @@ class ProbationUserSettings(UserSettings):
     settings_name = 'Probation User'
 
     def load_settings(self):
-        self.mainwindow.main_TabWidget.setTabVisible(0, False)
+        self.mainwindow.entries_tab_widget.setTabVisible(0, False)
+        self.mainwindow.entries_tab_widget.setTabVisible(1, False)
+        self.mainwindow.entries_tab_widget.setTabVisible(2, False)
+        self.mainwindow.entries_tab_widget.setTabVisible(3, False)
+        self.mainwindow.court_staff.set_person_stack_widget()
+        self.mainwindow.cases_tab_widget.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(1, False)
         self.mainwindow.workflows_person_tab.setTabVisible(2, False)
         self.mainwindow.workflows_person_tab.setTabVisible(3, False)
