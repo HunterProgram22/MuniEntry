@@ -30,7 +30,7 @@ from munientry.builders.scheduling import (
     sched_entry_dialogs,
     trial_to_court_hearing_notice_dialog,
 )
-from munientry.builders.probation import terms_comm_control_dialog
+from munientry.builders.probation import terms_comm_control_dialog, notice_cc_violation_dialog
 from munientry.builders.workflows import admin_judge_dw_dialog as hemmeter
 from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
@@ -70,6 +70,7 @@ DIALOG_BUTTON_DICT = {
 
     # Probation
     'terms_comm_control_btn': terms_comm_control_dialog.TermsCommControlDialog,
+    'notice_comm_control_violation_btn': notice_cc_violation_dialog.NoticeCCViolationDialog,
 
     # Admin
     'limited_driving_privilegesButton': driving_privileges_dialog.DrivingPrivilegesDialog,

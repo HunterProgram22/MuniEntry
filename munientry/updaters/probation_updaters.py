@@ -17,7 +17,10 @@ class ProbationDialogCaseInformationUpdater(BaseDialogUpdater):
         self.set_party_information()
 
     def update_terms_of_community_control(self):
-        self.dialog.transfer_view_data_to_model(self.model)
+        try:
+            self.dialog.transfer_view_data_to_model(self.model)
+        except AttributeError as err:
+            logger.warning(err)
 
     def set_case_number_and_date(self) -> None:
         self.model.case_number = self.dialog.case_number_lineEdit.text()

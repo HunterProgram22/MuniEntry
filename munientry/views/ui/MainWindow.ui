@@ -1257,12 +1257,12 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="ProbationDialogButton" name="notice_comm_control_violation_btn">
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
                 <property name="text">
-                 <string>Not Used</string>
+                 <string>Notice of Community Control Violation</string>
                 </property>
                </widget>
               </item>

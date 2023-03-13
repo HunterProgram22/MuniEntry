@@ -26,6 +26,26 @@ class ProbationCaseInformation(object):
 
 
 @dataclass
+class NoticeCCViolationCaseInformation(ProbationCaseInformation):
+    """Case information for a Notice of Community Control Violation Entry."""
+
+    defendant_absconded: bool = False
+    defendant_served: bool = False
+    defendant_arrested: bool = False
+    violation_hearing_date: str = None
+    violation_hearing_time: str = None
+    slated_date: str = None
+    terms_list = [
+        ('defendant_absconded', 'defendant_absconded_check_box'),
+        ('defendant_served', 'defendant_served_check_box'),
+        ('defendant_arrested', 'defendant_arrested_check_box'),
+        ('violation_hearing_date', 'violation_hearing_date_box'),
+        ('violation_hearing_time', 'violation_hearing_time_box'),
+        ('slated_date', 'slated_date_box'),
+    ]
+
+
+@dataclass
 class TermsCommControlEntryCaseInformation(ProbationCaseInformation):
     """General case information data variables and data for community control violation entry."""
 
