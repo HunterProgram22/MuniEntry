@@ -4,7 +4,7 @@ from munientry.loaders.cms_case_loaders import ProbationCmsLoader
 from munientry.checkers.probation_checks import ProbationDialogInfoChecker
 from munientry.models.case_information.probation_case_information import NoticeCCViolationCaseInformation
 from munientry.updaters.probation_updaters import ProbationDialogCaseInformationUpdater
-from munientry.views.notice_comm_control_violation_dialog_ui import Ui_NoticeCommControlViolationDialog
+from munientry.views.notice_cc_violation_dialog_ui import Ui_NoticeCCViolationDialog
 
 
 class NoticeCCViolationViewModifier(prob.ProbationViewModifier):
@@ -23,7 +23,7 @@ class NoticeCCViolationSignalConnector(prob.ProbationSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class NoticeCCViolationDialog(prob.ProbationDialogBuilder, Ui_NoticeCommControlViolationDialog):
+class NoticeCCViolationDialog(prob.ProbationDialogBuilder, Ui_NoticeCCViolationDialog):
     """Dialog builder class for Notice of CC Violation Entry."""
 
     _case_information_model = NoticeCCViolationCaseInformation
