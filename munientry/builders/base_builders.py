@@ -95,15 +95,15 @@ class BaseDialogSlotFunctions(object):
         """Gets list of boxes tied to condition checkbox and sets to show or hidden."""
         checkbox = self.dialog.sender()
         boxes = self.dialog.condition_checkbox_dict.get(checkbox.objectName())
-        for field in boxes:
-            hidden_checkbox = getattr(self.dialog, field)
+        for widget in boxes:
+            field = getattr(self.dialog, widget)
             if checkbox.isChecked():
-                hidden_checkbox.setEnabled(True)
-                hidden_checkbox.setHidden(False)
-                hidden_checkbox.setFocus()
+                field.show()
+                field.setEnabled(True)
+                field.setFocus()
             else:
-                hidden_checkbox.setEnabled(False)
-                hidden_checkbox.setHidden(True)
+                field.hide()
+                field.setEnabled(False)
 
 
 class BaseDialogSignalConnector(object):
