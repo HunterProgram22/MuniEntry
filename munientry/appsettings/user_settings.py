@@ -25,7 +25,7 @@ class EntryTabs(Enum):
     PROBATION = 4
 
 
-class CasesTabs(Enum):
+class CaseTabs(Enum):
     CRIM_CASELISTS = 0
     CRIM_SEARCH = 1
     CIVIL_SEARCH = 2
@@ -109,7 +109,7 @@ class ProbationUserSettings(UserSettings):
     settings_name = 'Probation User'
     hidden_tabs = {
         'cases_tab': [
-            CasesTabs.CIVIL_SEARCH.value,
+            CaseTabs.CIVIL_SEARCH.value,
         ],
         'entries_tab': [
             EntryTabs.SCHEDULING.value,
