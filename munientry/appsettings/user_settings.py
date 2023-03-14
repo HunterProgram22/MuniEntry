@@ -35,6 +35,7 @@ class UserSettings(object):
     """Base UserSettings class."""
 
     settings_name = None
+    hidden_tabs = {}
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow

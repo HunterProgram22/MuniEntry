@@ -21,6 +21,18 @@ class TermsCommControlDialogSignalConnector(prob.ProbationSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_terms_comm_control_signals()
+
+    def connect_terms_comm_control_signals(self):
+        checkboxes = [
+            self.dialog.report_to_jail_check_box,
+            self.dialog.no_contact_check_box,
+            self.dialog.scram_ordered_check_box,
+            self.dialog.specialized_docket_check_box,
+            self.dialog.community_service_check_box,
+        ]
+        for checkbox in checkboxes:
+            checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
 class TermsCommControlDialog(prob.ProbationDialogBuilder, Ui_TermsCommControlDialog):
@@ -34,3 +46,38 @@ class TermsCommControlDialog(prob.ProbationDialogBuilder, Ui_TermsCommControlDia
     _slots = TermsCommControlDialogSlotFunctions
     _view_modifier = TermsCommControlDialogViewModifier
     dialog_name = 'Terms Of Community Control Entry'
+
+    condition_checkbox_dict = {
+        'report_to_jail_check_box': [
+            'jail_report_date_box',
+            'jail_days_serve_label',
+            'jail_report_time_label',
+            'jail_report_time_box',
+            'jail_days_box',
+        ],
+        'no_contact_check_box': [
+            'no_contact_with_box',
+        ],
+        'scram_ordered_check_box': [
+            'scram_days_box',
+        ],
+        'specialized_docket_check_box': [
+            'specialized_docket_box',
+        ],
+        'community_service_check_box': [
+            'community_service_hours_box',
+        ],
+    }
+
+    def additional_setup(self):
+        for key, value in self.condition_checkbox_dict.items():
+            for widget in value:
+                checkbox = getattr(self, key)
+                field = getattr(self, widget)
+                if checkbox.isChecked():
+                    field.setEnabled(True)
+                    field.setHidden(False)
+                    field.setFocus()
+                else:
+                    field.setEnabled(False)
+                    field.setHidden(True)

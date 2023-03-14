@@ -972,14 +972,14 @@ background-color: rgb(255, 255, 255);</string>
                    </widget>
                   </item>
                   <item row="6" column="0">
-                   <widget class="QLabel" name="label_7">
+                   <widget class="QLabel" name="jail_days_serve_label">
                     <property name="text">
                      <string>Jail Days to Serve:</string>
                     </property>
                    </widget>
                   </item>
                   <item row="5" column="0">
-                   <widget class="QLabel" name="label_10">
+                   <widget class="QLabel" name="jail_report_time_label">
                     <property name="text">
                      <string>Report Time:</string>
                     </property>
