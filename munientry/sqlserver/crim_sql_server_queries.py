@@ -168,7 +168,7 @@ def batch_fta_query(event_date: str, next_day: str) -> str:
     LEFT JOIN [AuthorityCourt].[dbo].[CasePerson] cp ON cp.CaseMasterID = sc.CaseMasterID
     WHERE vd.IsMandAppear = '1'
         OR pc.CaseType = '3'
-        OR (pc.CaseType = '9' AND cp.StateIdIssuingStateID in ('19229', '19240','19241', '19247', '19261', '19268'))
+        OR (pc.CaseType = '9' AND cp.StateIdIssuingStateID in ('19229', '19240', '19241', '19247', '19261', '19268'))
         OR (pc.CaseType = '9' and pc.IsCommercialVehicle = '1')
         OR (pc.CaseType = '9' AND v.Id = '12368')
     ORDER BY pc.CaseNumber;
