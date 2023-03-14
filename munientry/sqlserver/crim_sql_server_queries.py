@@ -124,26 +124,54 @@ def daily_case_list_query(report: str) -> str:
 
 
 def batch_fta_query(event_date: str, next_day: str) -> str:
+    """Queries the database for arraignment cases for the event date and filters those cases.
+
+    The Arraignment Cases are filtered by removing any cases that do not have a case event after
+    arraignment, or are not in finished case status.
+
+    Arraignment Codes: (27, 28, 77, 263, 361, 474).
+
+    The query selects from the pending cases those that meet the critera for an FTA warrant, which
+    is the following:
+    1. Mandatory Appearance Cases
+    2. Criminal Cases
+    3. Traffic Cases that are not mandatory appear, but defebdabt has an out-of-state license from a
+    non-compact state (MI, TN, GA, MA, WI, NV), or is a Commercial Vehicle (CDL) or is a No OL
+    offense so license can't be canceled.
+    """
     return f"""
-    SELECT DISTINCT cm.CaseNumber 
-    FROM [AuthorityCourt].[dbo].[CaseMaster] cm
-    LEFT JOIN [AuthorityCourt].[dbo].[SubCase] sc ON cm.Id = sc.CaseMasterID
+    WITH ArraignmentCases AS (
+    SELECT cm2.CaseNumber
+    FROM [AuthorityCourt].[dbo].[CaseMaster] cm2
+    JOIN [AuthorityCourt].[dbo].[CaseEvent] ce ON cm2.Id = ce.CaseMasterID
+    WHERE ce.EventID IN ('27', '28', '77', '263', '361', '474')
+        AND CAST(ce.EventDate AS DATE) = '{event_date}'
+        AND cm2.CaseStatusID = '1'
+        AND ce.IsDeleted = '0'
+    ),
+    PendingCases AS (
+        SELECT cm.*
+        FROM [AuthorityCourt].[dbo].[CaseMaster] cm
+        JOIN ArraignmentCases ac ON cm.CaseNumber = ac.CaseNumber
+        WHERE NOT EXISTS (
+            SELECT 1
+            FROM [AuthorityCourt].[dbo].[CaseEvent] ce
+            WHERE ce.CaseMasterID = cm.Id AND CAST(ce.EventDate AS DATE) >= '{next_day}'
+        )
+    )
+    SELECT DISTINCT
+        pc.CaseNumber
+    FROM PendingCases pc
+    LEFT JOIN [AuthorityCourt].[dbo].[SubCase] sc ON pc.Id = sc.CaseMasterID
     LEFT JOIN [AuthorityCourt].[dbo].[Violation] v ON sc.ViolationId = v.Id
     LEFT JOIN [AuthorityCourt].[dbo].[ViolationDetail] vd ON vd.ViolationID = v.Id AND vd.EndDate IS NULL AND vd.IsActive = '1'
-    LEFT JOIN [AuthorityCourt].[dbo].[ChargeDetail] cd ON v.ChargeID = cd.ChargeId
-    WHERE EXISTS (
-        SELECT 1
-        FROM [AuthorityCourt].[dbo].[CaseMaster] cm2
-        RIGHT JOIN [AuthorityCourt].[dbo].[CaseEvent] ce ON cm2.Id = ce.CaseMasterID
-        WHERE ce.EventID IN ('27', '28', '77', '263', '361', '474') AND CAST(ce.EventDate AS DATE) = '{event_date}'
-        AND cm.CaseNumber = cm2.CaseNumber AND cm.CaseStatusID = '1' AND ce.IsDeleted = '0' AND (vd.IsMandAppear = '1' OR cm.CaseType = '3')
-    )
-    AND NOT EXISTS (
-        SELECT 1
-        FROM [AuthorityCourt].[dbo].[CaseEvent] ce
-        WHERE ce.CaseMasterID = cm.Id AND CAST(ce.EventDate AS DATE) >= '{next_day}'
-    )
-    ORDER BY cm.CaseNumber
+    LEFT JOIN [AuthorityCourt].[dbo].[CasePerson] cp ON cp.CaseMasterID = sc.CaseMasterID
+    WHERE vd.IsMandAppear = '1'
+        OR pc.CaseType = '3'
+        OR (pc.CaseType = '9' AND cp.StateIdIssuingStateID in ('19229', '19240','19241', '19247', '19261', '19268'))
+        OR (pc.CaseType = '9' and pc.IsCommercialVehicle = '1')
+        OR (pc.CaseType = '9' AND v.Id = '12368')
+    ORDER BY pc.CaseNumber;
 """
 
 
