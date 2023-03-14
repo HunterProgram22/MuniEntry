@@ -4,8 +4,7 @@ from PyQt6.QtSql import QSqlQuery
 
 from munientry.models.cms_models import CivilCmsCaseInformation
 from munientry.data.connections import close_db_connection, open_db_connection
-from munientry.sqlserver.sql_server_queries import general_civil_case_query
-
+from munientry.sqlserver.civil_sql_server_queries import general_civil_case_query
 
 
 class CivilCaseData(object):

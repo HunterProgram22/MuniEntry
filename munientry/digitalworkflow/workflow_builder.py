@@ -2,7 +2,7 @@ import os
 
 from loguru import logger
 
-from munientry.appsettings.paths import DW_HEMMETER, DW_ROHRER, DW_BUNNER
+from munientry.appsettings.paths import DW_ADMIN_JUDGE, DW_ROHRER, DW_BUNNER
 
 
 class DigitalWorkflow(object):
@@ -13,10 +13,12 @@ class DigitalWorkflow(object):
         self.load_digital_workflow_counts()
 
     def load_digital_workflow_counts(self):
-        hemmeter_file_count = self.get_file_count(DW_HEMMETER)
+        admin_count = self.get_file_count(os.path.join(DW_ADMIN_JUDGE, 'Admin'))
+        md_adopt_count = self.get_file_count(os.path.join(DW_ADMIN_JUDGE, 'MDAdopt'))
         rohrer_file_count = self.get_file_count(DW_ROHRER)
         bunner_file_count = self.get_file_count(DW_BUNNER)
-        self.mainwindow.jour_count_jh_label.setText(str(hemmeter_file_count))
+        self.mainwindow.admin_count_label.setText(str(admin_count))
+        self.mainwindow.md_adopt_label.setText(str(md_adopt_count))
         self.mainwindow.jour_count_jr_label.setText(str(rohrer_file_count))
         self.mainwindow.jour_count_mb_label.setText(str(bunner_file_count))
 

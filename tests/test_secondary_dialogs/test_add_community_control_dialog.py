@@ -19,8 +19,8 @@ dialogs_with_community_control = [
 @pytest.mark.parametrize('dialog_button', dialogs_with_community_control)
 def test_community_control_opens_all_dialogs(main_window, dialog_button):
     """Tests that the Community Control Dialog opens for all main Dialogs for which it is used."""
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, 'Barkschat - 21TRC05611')
     mouse_click(getattr(main_window, dialog_button))
 
@@ -64,8 +64,8 @@ def test_conditions_hold_if_dialog_closed_opened(qtbot, main_window, checkbox):
     The test is set to skip because it requires manual interaction, but if changes are made that
     affect community control it should be run.
     """
-    mouse_click(main_window.hemmeter_radioButton)
-    mouse_click(main_window.final_pretrial_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
+    mouse_click(main_window.final_pretrial_radio_btn)
     mouse_click(main_window.JailCCPleaButton)
     mouse_click(main_window.dialog.community_control_checkBox)
     mouse_click(main_window.dialog.add_conditions_Button)

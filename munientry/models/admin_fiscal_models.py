@@ -1,4 +1,4 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 
 
 @dataclass
@@ -14,7 +14,8 @@ class AdminFiscalEntryInformation:
     disbursement_vendor: str = None
     invoice_number: str = None
     judicial_officer: object = None
-    plea_trial_date: str = None
+    admin_judge_signature: str = '{{ admin_judge_signature }}'
+    time_stamp: str = '{{ time_stamp }}'
 
     def get_case_information(self) -> dict:
         """Returns a dictionary with all of information required to populate an entry."""

@@ -30,8 +30,8 @@ def test_add_charge_works_all_dialogs(main_window, dialog_button):
 
     The column count on open is 3 and when add charge is pressed it should add 2 columns.
     """
-    mouse_click(main_window.hemmeter_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     mouse_click(getattr(main_window, dialog_button))
 
     def close_popup_dialog():

@@ -12,7 +12,7 @@ from munientry.data.connections import (
     remove_db_connection,
 )
 from munientry.data.data_cleaners import clean_offense_name
-from munientry.sqlserver.sql_server_queries import daily_case_list_query
+from munientry.sqlserver.crim_sql_server_queries import daily_case_list_query
 from munientry.sqllite.sql_lite_functions import (
     query_daily_case_list_data,
     query_offense_statute_data,

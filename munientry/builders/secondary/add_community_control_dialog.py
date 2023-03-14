@@ -88,33 +88,19 @@ class AddCommunityControlDialogSignalConnector(second.SecondarySignalConnector):
         self.connect_community_control_signals()
 
     def connect_community_control_signals(self):
-        self.dialog.gps_exclusion_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.community_control_not_within_500_feet_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.community_control_no_contact_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.house_arrest_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.community_control_community_service_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.other_community_control_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.alcohol_monitoring_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.pay_restitution_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
-        self.dialog.specialized_docket_checkBox.toggled.connect(
-            self.dialog.functions.show_hide_checkbox_connected_fields,
-        )
+        checkboxes = [
+        self.dialog.gps_exclusion_checkBox,
+        self.dialog.community_control_not_within_500_feet_checkBox,
+        self.dialog.community_control_no_contact_checkBox,
+        self.dialog.house_arrest_checkBox,
+        self.dialog.community_control_community_service_checkBox,
+        self.dialog.other_community_control_checkBox,
+        self.dialog.alcohol_monitoring_checkBox,
+        self.dialog.pay_restitution_checkBox,
+        self.dialog.specialized_docket_checkBox,
+    ]
+        for checkbox in checkboxes:
+            checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
 class AddCommunityControlDialog(second.SecondaryDialogBuilder, Ui_AddCommunityControlDialog):

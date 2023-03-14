@@ -25,8 +25,7 @@ from PyQt6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QTableWidget,
-    QWidget,
-)
+    QWidget, )
 
 from munientry.appsettings.paths import GAVEL_PATH
 from munientry.widgets.message_boxes import RequiredBox

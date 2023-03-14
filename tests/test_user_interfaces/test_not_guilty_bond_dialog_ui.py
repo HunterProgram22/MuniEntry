@@ -5,8 +5,8 @@ from tests.conftest import mouse_click, enter_data, check_barkschat
 @pytest.fixture
 def ngb_dialog(qtbot, main_window):
     """Not Guilty Bond Dialog is ngb_dialog"""
-    mouse_click(main_window.rohrer_radioButton)
-    mouse_click(main_window.pleas_radioButton)
+    mouse_click(main_window.judge_2_radio_btn)
+    mouse_click(main_window.pleas_radio_btn)
     enter_data(main_window.pleas_cases_box, "Barkschat - 21TRC05611")
     mouse_click(main_window.NotGuiltyBondButton)
     mouse_click(main_window.dialog.not_guilty_all_Button)

@@ -41,55 +41,7 @@
    <string notr="true">background-color: rgb(25, 49, 91);
 font: 75 11pt &quot;Palatino Linotype&quot;;</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="4,0">
-   <item row="1" column="0">
-    <widget class="QFrame" name="frame">
-     <property name="font">
-      <font>
-       <family>Palatino Linotype</family>
-       <pointsize>11</pointsize>
-       <weight>75</weight>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_4">
-      <item row="1" column="1">
-       <widget class="QPushButton" name="close_dialog_Button">
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(160, 160, 160);
-font-weight: bold;</string>
-        </property>
-        <property name="text">
-         <string>Close Workflow</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="complete_workflow_Button">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(0, 255, 0);
-font: 75 11pt &quot;Palatino Linotype&quot;;
-font-weight: bold;</string>
-     </property>
-     <property name="text">
-      <string>Complete Workflow</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout" rowstretch="0">
    <item row="0" column="0" colspan="2">
     <widget class="QFrame" name="frame_3">
      <property name="sizePolicy">
@@ -117,20 +69,40 @@ font-weight: bold;</string>
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0,0,0,0,0,0">
+     <layout class="QGridLayout" name="gridLayout_2" rowstretch="1,4,7,0,0,0,0">
       <property name="verticalSpacing">
        <number>24</number>
       </property>
       <item row="4" column="0" colspan="2">
        <widget class="Line" name="line">
+        <property name="font">
+         <font>
+          <family>Palatino Linotype</family>
+          <pointsize>11</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Plain</enum>
         </property>
         <property name="lineWidth">
          <number>2</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QPushButton" name="close_dialog_Button">
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(160, 160, 160);
+font-weight: bold;</string>
+        </property>
+        <property name="text">
+         <string>Close Workflow (No Entries Approved or Rejected)</string>
         </property>
        </widget>
       </item>
@@ -143,97 +115,53 @@ font-weight: bold;</string>
          </size>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;ENTRIES PENDING REVIEW&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;ADMINISTRATIVE ENTRIES PENDING REVIEW&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
-      <item row="5" column="0" colspan="2">
-       <widget class="QLabel" name="label_2">
-        <property name="font">
-         <font>
-          <family>Palatino Linotype</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-          <underline>true</underline>
-         </font>
-        </property>
-        <property name="text">
-         <string>APPROVED ENTRIES</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+      <item row="1" column="0" colspan="2">
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Palatino Linotype'; font-size:11pt; font-weight:600; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The entries listed below are Administrative Entries that are not case specific. After selecting the entry and opening it for review, select whether to accept or reject the entry.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the entry is accepted, the Administrative Judge's digital signature will be attached along with a file stamp, then the entry will be sent to the Clerk's Office to be placed in the Administrative Journal.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If the entry is rejected, the person that created the entry will be notified.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="0" colspan="2">
-       <widget class="QListWidget" name="approved_entries_listWidget"/>
-      </item>
-      <item row="7" column="0" colspan="2">
-       <widget class="Line" name="line_2">
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="lineWidth">
-         <number>2</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-       </widget>
-      </item>
-      <item row="8" column="0" colspan="2">
-       <widget class="QLabel" name="label_3">
-        <property name="font">
-         <font>
-          <family>Palatino Linotype</family>
-          <pointsize>11</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-          <underline>true</underline>
-         </font>
-        </property>
-        <property name="text">
-         <string>REJECTED ENTRIES</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0" colspan="2">
-       <widget class="QListWidget" name="rejected_entries_listWidget"/>
+      <item row="2" column="0" colspan="2">
+       <widget class="QTableWidget" name="entries_tableWidget"/>
       </item>
       <item row="3" column="0">
-       <widget class="QPushButton" name="show_docket_Button">
+       <widget class="QPushButton" name="open_entry_Button">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(160, 160, 160);
 font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Show Case Docket</string>
+         <string>Open Selected Entry for Review</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
-       <widget class="QPushButton" name="open_entry_Button">
+      <item row="6" column="1">
+       <widget class="QPushButton" name="complete_workflow_Button">
         <property name="styleSheet">
          <string notr="true">background-color: rgb(0, 255, 0);
 font: 75 11pt &quot;Palatino Linotype&quot;;
 font-weight: bold;</string>
         </property>
         <property name="text">
-         <string>Open Entry for Review</string>
+         <string>Complete Workflow</string>
         </property>
        </widget>
-      </item>
-      <item row="1" column="0" rowspan="2" colspan="2">
-       <widget class="QListWidget" name="pending_entries_listWidget"/>
       </item>
      </layout>
     </widget>

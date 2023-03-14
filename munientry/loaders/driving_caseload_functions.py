@@ -7,8 +7,7 @@ Functions:
 
     load_single_driving_info_case(case_number) -> DrivingPrivilegesInformation
 """
-from loguru import logger
-
+from munientry.loaders.criminal_caseload_functions import get_crim_case_number
 from munientry.sqlserver import crim_getters as sql_server
 from munientry.models.privileges_models import DrivingPrivilegesInformation
 
@@ -39,5 +38,9 @@ def load_single_driving_info_case(case_number: str) -> DrivingPrivilegesInformat
     return sql_server.DrivingInfoSQLServer(case_number).load_case()
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+def get_cms_driving_case_data(mainwindow):
+    """Returns the DrivingPrivilegesInformation with case data."""
+    case_number = get_crim_case_number(mainwindow)
+    if case_number is None:
+        return load_no_case_driving()
+    return load_single_driving_info_case(case_number)

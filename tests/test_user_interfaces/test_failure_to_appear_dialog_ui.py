@@ -5,8 +5,8 @@ from tests.conftest import mouse_click, enter_data, key_click
 @pytest.fixture
 def fta_dialog(qtbot, main_window):
     """Failure To Appear Dialog is fta_dialog"""
-    mouse_click(main_window.hemmeter_radioButton)
-    mouse_click(main_window.arraignments_radioButton)
+    mouse_click(main_window.judge_1_radio_btn)
+    mouse_click(main_window.arraignments_radio_btn)
     mouse_click(main_window.FailureToAppearButton)
     return main_window.dialog
 

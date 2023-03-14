@@ -67,6 +67,13 @@ class SchedulingCmsLoader(CmsLoader):
         self.set_defense_counsel_name()
 
 
+class ProbationCmsLoader(CmsLoader):
+    """Loader for Scheduling dialogs."""
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+
+
 class CmsNoChargeLoader(CmsLoader):
     """Class for Loading CMS data when the charges do not need to be loaded.
 

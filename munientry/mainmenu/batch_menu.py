@@ -12,7 +12,7 @@ from munientry.sqlserver.crim_getters import (
     CrimCaseData,
     get_fta_arraignment_cases,
 )
-from munientry.sqlserver.sql_server_queries import batch_fta_query
+from munientry.sqlserver.crim_sql_server_queries import batch_fta_query
 from munientry.widgets import message_boxes
 
 INPUT_DATE_FORMAT = '%Y-%m-%d'  # noqa: WPS323 - Flake8 check ignores % in string

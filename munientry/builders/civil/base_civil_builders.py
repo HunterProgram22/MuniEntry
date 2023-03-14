@@ -9,7 +9,7 @@ from munientry.entrycreators.entry_creator import CivilEntryCreator
 
 class CivilDialogBuilder(base.BaseDialogBuilder):
 
-    def __init__(self, judicial_officer, cms_case=None, parent=None) -> None:
+    def __init__(self, judicial_officer, cms_case=None, parent=None, *args, **kwargs) -> None:
         super().__init__(parent)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer

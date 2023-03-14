@@ -96,7 +96,7 @@ class AdminFiscalDialog(base.BaseDialogBuilder, Ui_AdminFiscalDialog):
     _view_modifier = AdminFiscalViewModifier
     dialog_name = 'Admin Fiscal Entry'
 
-    def __init__(self, judicial_officer=None, parent=None):
+    def __init__(self, judicial_officer=None, parent=None, *args, **kwargs):
         super().__init__(parent)
         self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer

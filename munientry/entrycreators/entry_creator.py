@@ -1,7 +1,8 @@
 """Module for creating entries."""
 from __future__ import annotations
 
-from os import startfile
+import os.path
+from os import startfile, path
 
 from docxtpl import DocxTemplate
 from loguru import logger
@@ -11,11 +12,13 @@ from munientry.digitalworkflow.workflow_checker import WorkflowCheck
 from munientry.appsettings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
     CIVIL_SAVE_PATH,
+    DW_ADMIN_JUDGE_ADMIN,
     DEFAULT_SAVE_PATH,
     DRIVE_SAVE_PATH,
     FISCAL_SAVE_PATH,
     JURY_PAY_SAVE_PATH,
     SCHEDULING_SAVE_PATH,
+    PROBATION_SAVE_PATH
 )
 from munientry.widgets.message_boxes import RequiredBox
 
@@ -172,6 +175,12 @@ class SchedulingEntryCreator(BaseEntryCreator):
         startfile(f'{self.save_path}{self.docname}')
 
 
+class ProbationEntryCreator(BaseEntryCreator):
+    """Entry Creator for Probation entries."""
+
+    save_path = PROBATION_SAVE_PATH
+
+
 class DrivingPrivilegesEntryCreator(BaseEntryCreator):
     """Entry Creator for Driving Privilege entries."""
 
@@ -197,7 +206,8 @@ class CivilEntryCreator(BaseEntryCreator):
 class AdminFiscalEntryCreator(BaseEntryCreator):
     """Entry Creator for Admin Fiscal entries."""
 
-    save_path = FISCAL_SAVE_PATH
+    # save_path = FISCAL_SAVE_PATH
+    save_path = DW_ADMIN_JUDGE_ADMIN
 
     def _set_document_name(self) -> str:
         """Overrides BaseEntryCreator set_document_name.

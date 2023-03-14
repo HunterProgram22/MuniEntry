@@ -19,10 +19,10 @@ def entry_dialog(monkeypatch, main_window):
     """The preliminary setup for creating an entry."""
     data = CrimTrafficEntryCreator
     monkeypatch.setattr(data, 'save_path', MUNI10_SAVE_PATH)
-    mouse_click(main_window.rohrer_radioButton)
-    main_window.search_tabWidget.setCurrentWidget(main_window.case_search_tab)
-    enter_data(main_window.case_search_box, '21TRC05611')
-    mouse_click(main_window.get_case_Button)
+    mouse_click(main_window.judge_2_radio_btn)
+    main_window.cases_tab_widget.setCurrentWidget(main_window.crim_case_search_tab)
+    enter_data(main_window.crim_case_search_box, '21TRC05611')
+    mouse_click(main_window.crim_get_case_btn)
 
 
 def test_create_no_plea_bond_entry(monkeypatch, main_window):
