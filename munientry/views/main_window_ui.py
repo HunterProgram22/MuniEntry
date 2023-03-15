@@ -8,6 +8,8 @@
 
 from PyQt6 import QtCore, QtGui, QtWidgets
 
+from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, ProbationDialogButton, SchedDialogButton, WorkDialogButton
+from munientry.widgets.combo_boxes import DailyCaseListComboBox
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -292,11 +294,7 @@ class Ui_MainWindow(object):
         self.label_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.gridLayout_2.addWidget(self.label_4, 3, 1, 1, 1)
-<<<<<<< HEAD
         self.FineOnlyPleaButton = CrimDialogButton(self.crim_traffic_tab)
-=======
-        self.FineOnlyPleaButton = DialogButton(self.crim_traffic_Tab)
->>>>>>> custom_dialog_buttons
         self.FineOnlyPleaButton.setMinimumSize(QtCore.QSize(120, 30))
         self.FineOnlyPleaButton.setStyleSheet("background-color: rgb(85, 170, 127);")
         self.FineOnlyPleaButton.setObjectName("FineOnlyPleaButton")
@@ -1275,6 +1273,3 @@ class Ui_MainWindow(object):
         self.actionCourtroom_C.setText(_translate("MainWindow", "Courtroom C"))
         self.actionCreate_single_FTA_Entry.setText(_translate("MainWindow", "Create single FTA Entry"))
         self.actionNot_Guilty_Continuance.setText(_translate("MainWindow", "Not Guilty / Continuance"))
-from munientry.mainwindow.dialog_buttons import AdminDrivingDialogButton, AdminFiscalDialogButton, AdminJuryDialogButton, CivilDialogButton, CrimDialogButton, ProbationDialogButton, SchedDialogButton, WorkDialogButton
-from munientry.widgets.combo_boxes import DailyCaseListComboBox
-from munientry.widgets.dialog_buttons import DialogButton
