@@ -70,7 +70,67 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.trials_to_court_cases_box.setup_combo_box(
             'trials_to_court', self.trials_to_court_radio_btn, self,
         )
+<<<<<<< HEAD
         self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radio_btn, self)
+=======
+        self.pcvh_fcvh_cases_box.setup_combo_box('pcvh_fcvh', self.pcvh_fcvh_radioButton, self)
+
+    def create_entry_buttons_dict(self):
+        return {
+            ###CrimTraffic###
+            self.ArraignmentContinueButton: arraignment_continue_dialog.ArraignmentContinueDialog,
+            # self.FineOnlyPleaButton: fine_only_plea_dialog.FineOnlyPleaDialog,
+            self.JailCCPleaButton: jail_cc_plea_dialog.JailCCPleaDialog,
+            self.DiversionButton: diversion_dialog.DiversionPleaDialog,
+            self.NotGuiltyBondButton: not_guilty_bond_dialog.NotGuiltyBondDialog,
+            self.FailureToAppearButton: failure_to_appear_dialog.FailureToAppearDialog,
+            self.ProbationViolationBondButton: probation_violation_bond_dialog.ProbationViolationBondDialog,
+            self.BondHearingButton: bond_hearing_dialog.BondHearingDialog,
+            self.PleaOnlyButton: plea_only_future_sentence_dialog.PleaOnlyDialog,
+            self.NoPleaBondButton: no_plea_bond_dialog.NoPleaBondDialog,
+            self.LeapAdmissionButton: leap_plea_dialog.LeapAdmissionPleaDialog,
+            self.LeapAdmissionValidButton: leap_plea_valid_dialog.LeapPleaValidDialog,
+            self.LeapSentencingButton: leap_sentencing_dialog.LeapSentencingDialog,
+            self.TrialSentencingButton: trial_sentencing_dialog.TrialSentencingDialog,
+            self.SentencingOnlyButton: sentencing_only_dialog.SentencingOnlyDialog,
+            self.FreeformEntryButton: freeform_dialog.FreeformDialog,
+            self.CriminalSealingButton: criminal_sealing_dialog.CriminalSealingDialog,
+
+            ###Civil###
+            self.CivFreeformEntryButton: civ_freeform_dialog.CivFreeformDialog,
+
+            ###Scheduling###
+            self.hemmeter_schedulingEntryButton:
+                sched_entry_dialogs.SchedulingEntryDialog,
+            self.rohrer_schedulingEntryButton:
+                sched_entry_dialogs.SchedulingEntryDialog,
+            self.hemmeter_final_jury_hearingButton:
+                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
+            self.rohrer_final_jury_hearingButton:
+                final_jury_hearing_notice_dialog.FinalJuryNoticeHearingDialog,
+            self.hemmeter_general_hearingButton:
+                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
+            self.rohrer_general_hearingButton:
+                general_hearing_notice_dialog.GeneralNoticeOfHearingDialog,
+            self.hemmeter_trial_court_hearingButton:
+                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
+            self.rohrer_trial_court_hearingButton:
+                trial_to_court_hearing_notice_dialog.TrialToCourtHearingDialog,
+
+            ###Admin###
+            self.limited_driving_privilegesButton:
+                driving_privileges_dialog.DrivingPrivilegesDialog,
+            self.juror_paymentButton: jury_payment_dialog.JuryPaymentDialog,
+            self.fiscal_entriesButton: admin_fiscal_dialog.AdminFiscalDialog,
+
+            ###Workflow###
+            self.admin_workflowButton: hemmeter.AdminWorkflowDialog,
+            self.rohrer_workflowButton: rohrer.RohrerWorkflowDialog,
+            self.bunner_workflowButton: bunner.BunnerWorkflowDialog,
+            self.pretrial_workflowButton: probation.PretrialWorkflowDialog,
+            self.community_control_workflowButton: probation.ComControlWorkflowDialog,
+        }
+>>>>>>> custom_dialog_buttons
 
     def setup_view(self) -> None:
         self.setupUi(self)

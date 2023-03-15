@@ -578,7 +578,11 @@ font-weight: bold;</string>
                </widget>
               </item>
               <item row="4" column="0">
+<<<<<<< HEAD
                <widget class="CrimDialogButton" name="FineOnlyPleaButton">
+=======
+               <widget class="DialogButton" name="FineOnlyPleaButton">
+>>>>>>> custom_dialog_buttons
                 <property name="minimumSize">
                  <size>
                   <width>120</width>
@@ -2233,6 +2237,7 @@ font-weight: bold;</string>
    <header>munientry.widgets.combo_boxes</header>
   </customwidget>
   <customwidget>
+<<<<<<< HEAD
    <class>CrimDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.mainwindow.dialog_buttons</header>
@@ -2271,6 +2276,11 @@ font-weight: bold;</string>
    <class>ProbationDialogButton</class>
    <extends>QPushButton</extends>
    <header>munientry.mainwindow.dialog_buttons</header>
+=======
+   <class>DialogButton</class>
+   <extends>QPushButton</extends>
+   <header>munientry.widgets.dialog_buttons</header>
+>>>>>>> custom_dialog_buttons
   </customwidget>
  </customwidgets>
  <tabstops>
