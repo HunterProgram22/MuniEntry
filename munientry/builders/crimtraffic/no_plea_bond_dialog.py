@@ -6,7 +6,7 @@ from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
 from munientry.checkers.bond_checkers import NoPleaBondDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     NoPleaBondEntryCaseInformation,
 )
@@ -83,7 +83,7 @@ class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
     """Dialog builder class for 'Appear on Warrant (No Plea) / Bond' Entry."""
 
     _case_information_model = NoPleaBondEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = NoPleaBondDialogInfoChecker
     _model_updater = NoPleaBondDialogUpdater
     _signal_connector = NoPleaBondDialogSignalConnector

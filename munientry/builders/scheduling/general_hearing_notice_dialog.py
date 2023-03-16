@@ -5,7 +5,7 @@ from PyQt6.QtCore import QDate
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
-from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
+from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
     SchedulingDialogCaseInformationUpdater,
@@ -98,7 +98,7 @@ class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoti
     """
 
     _case_information_model = SchedulingCaseInformation
-    _case_loader = SchedulingCmsLoader
+    _case_loader = SchedulingCrimCmsLoader
     _info_checker = GeneralNoticeOfHearingInfoChecker
     _model_updater = GeneralNoticeOfHearingCaseInformationUpdater
     _signal_connector = GeneralNoticeOfHearingDialogSignalConnector

@@ -4,11 +4,8 @@ from loguru import logger
 from munientry.models.criminal_charge_models import CriminalCharge
 
 
-class CivCmsLoader(object):
-    """Base loader class for civil cases.
-
-    TODO: Refactor common methods from CmsLoader and create Civil and Criminal subclasses.
-    """
+class BaseCmsLoader(object):
+    """Base Case Management System Loader from which all others inherit."""
 
     def __init__(self, dialog) -> None:
         self.dialog = dialog
@@ -16,14 +13,18 @@ class CivCmsLoader(object):
         if self.cms_case.case_number is not None:
             self.load_cms_data()
 
+    def set_case_number(self) -> None:
+        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
+
+
+class CivCmsLoader(BaseCmsLoader):
+    """Base loader class for civil cases."""
+
     def load_cms_data(self) -> None:
         """Loads the case management system data to the dialog."""
         self.set_case_number()
         self.set_plaintiff_name()
         self.set_defendant_name()
-
-    def set_case_number(self) -> None:
-        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
 
     def set_plaintiff_name(self) -> None:
         self.dialog.plaintiff_lineEdit.setText(self.cms_case.primary_plaintiff.party_name)
@@ -32,22 +33,13 @@ class CivCmsLoader(object):
         self.dialog.defendant_lineEdit.setText(self.cms_case.primary_defendant.party_name)
 
 
-class CmsLoader(object):
+class CrimCmsLoader(BaseCmsLoader):
     """Base loader class for loading data from an external case management system."""
-
-    def __init__(self, dialog) -> None:
-        self.dialog = dialog
-        self.cms_case = dialog.cms_case
-        if self.cms_case.case_number is not None:
-            self.load_cms_data()
 
     def load_cms_data(self) -> None:
         """Loads the case management system data to the dialog."""
         self.set_case_number()
         self.set_defendant_name()
-
-    def set_case_number(self) -> None:
-        self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
 
     def set_defendant_name(self) -> None:
         self.dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
@@ -57,33 +49,6 @@ class CmsLoader(object):
         if self.cms_case.defense_counsel is not None:
             self.dialog.defense_counsel_name_box.addItem(self.cms_case.defense_counsel)
             self.dialog.defense_counsel_name_box.setCurrentText(self.cms_case.defense_counsel)
-
-
-class SchedulingCmsLoader(CmsLoader):
-    """Loader for Scheduling dialogs."""
-
-    def load_cms_data(self) -> None:
-        super().load_cms_data()
-        self.set_defense_counsel_name()
-
-
-class ProbationCmsLoader(CmsLoader):
-    """Loader for Scheduling dialogs."""
-
-    def load_cms_data(self) -> None:
-        super().load_cms_data()
-
-
-class CmsNoChargeLoader(CmsLoader):
-    """Class for Loading CMS data when the charges do not need to be loaded.
-
-    This is for dialogs with no ChargeGrid.
-    """
-
-    def load_cms_data(self) -> None:
-        super().load_cms_data()
-        self.set_defense_counsel_name()
-        self.set_defense_counsel_type()
 
     def set_defense_counsel_type(self) -> None:
         """Sets the type for defense counsel to public defender or private counsel.
@@ -100,7 +65,34 @@ class CmsNoChargeLoader(CmsLoader):
             self.dialog.defense_counsel_type_box.setCurrentText('Private Counsel')
 
 
-class CmsDrivingInfoLoader(CmsNoChargeLoader):
+class SchedulingCrimCmsLoader(CrimCmsLoader):
+    """Loader for Scheduling dialogs."""
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_defense_counsel_name()
+
+
+class ProbationCrimCmsLoader(CrimCmsLoader):
+    """Loader for Scheduling dialogs."""
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+
+
+class CrimCmsNoChargeLoader(CrimCmsLoader):
+    """Class for Loading CMS data when the charges do not need to be loaded.
+
+    This is for dialogs with no ChargeGrid.
+    """
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_defense_counsel_name()
+        self.set_defense_counsel_type()
+
+
+class CmsDrivingInfoLoader(CrimCmsLoader):
     """Loader for CMS data for Driving Privileges."""
 
     def load_cms_data(self) -> None:
@@ -122,7 +114,7 @@ class CmsDrivingInfoLoader(CmsNoChargeLoader):
         self.dialog.defendant_dob_lineEdit.setText(self.cms_case.defendant.birth_date)
 
 
-class CmsChargeLoader(CmsNoChargeLoader):
+class CmsChargeLoader(CrimCmsNoChargeLoader):
     """Class for Loading CMS data when the charges in a case need to be loaded for the dialog.
 
     This is for dialogs with a Charge Grid, but no FRA (insurance) information.
@@ -199,13 +191,10 @@ class CmsFraLoader(CmsChargeLoader):
     def hide_fra_if_criminal_case(self) -> None:
         """The Insurance (FRA) data is not used in criminal cases so it is hidden."""
         if self.cms_case.case_number is None:
-            return self.dialog.fra_frame.setHidden(False)
-        if 'TRC' in self.cms_case.case_number:
-            return self.dialog.fra_frame.setHidden(False)
-        if 'TRD' in self.cms_case.case_number:
-            return self.dialog.fra_frame.setHidden(False)
-        if self.cms_case.case_number[2:5] == 'CRB':
-            return self.dialog.fra_frame.setHidden(True)
+            self.dialog.fra_frame.setHidden(False)
+        else:
+            is_criminal_case = self.cms_case.case_number[2:5] == 'CRB'
+            self.dialog.fra_frame.setHidden(is_criminal_case)
 
 
 if __name__ == '__main__':

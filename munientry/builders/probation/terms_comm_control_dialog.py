@@ -1,6 +1,6 @@
 """Builder module for the Terms of Community Control Entry Dialog."""
 from munientry.builders.probation import base_probation_builders as prob
-from munientry.loaders.cms_case_loaders import ProbationCmsLoader
+from munientry.loaders.cms_case_loaders import ProbationCrimCmsLoader
 from munientry.checkers.probation_checks import ProbationDialogInfoChecker
 from munientry.models.case_information.probation_case_information import TermsCommControlEntryCaseInformation
 from munientry.updaters.probation_updaters import ProbationDialogCaseInformationUpdater
@@ -39,7 +39,7 @@ class TermsCommControlDialog(prob.ProbationDialogBuilder, Ui_TermsCommControlDia
     """Dialog builder class for TermsCommControl Entry."""
 
     _case_information_model = TermsCommControlEntryCaseInformation
-    _case_loader = ProbationCmsLoader
+    _case_loader = ProbationCrimCmsLoader
     _info_checker = ProbationDialogInfoChecker
     _model_updater = ProbationDialogCaseInformationUpdater
     _signal_connector = TermsCommControlDialogSignalConnector

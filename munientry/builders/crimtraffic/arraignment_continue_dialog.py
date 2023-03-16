@@ -4,7 +4,7 @@ from loguru import logger
 from munientry.appsettings.pyqt_constants import TODAY
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import ArraignmentContinueDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import ArraignmentContinueEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import ArraignmentContinueDialogUpdater
 from munientry.views.arraignment_continue_dialog_ui import Ui_ArraignmentContinueDialog
@@ -61,7 +61,7 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     """Dialog builder class for Arraignment Continuance Entry."""
 
     _case_information_model = ArraignmentContinueEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = ArraignmentContinueDialogInfoChecker
     _model_updater = ArraignmentContinueDialogUpdater
     _signal_connector = ArraignmentContinueDialogSignalConnector

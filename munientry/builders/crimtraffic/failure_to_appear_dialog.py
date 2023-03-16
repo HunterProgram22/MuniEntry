@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import FailureToAppearDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     FailureToAppearEntryCaseInformation,
 )
@@ -74,7 +74,7 @@ class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDia
     """Dialog builder class for 'Failure To Appear / Issue Warrant' Entry."""
 
     _case_information_model = FailureToAppearEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = FailureToAppearDialogInfoChecker
     _model_updater = FailureToAppearDialogUpdater
     _signal_connector = FailureToAppearDialogSignalConnector
