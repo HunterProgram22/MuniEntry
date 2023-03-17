@@ -147,7 +147,7 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
     def add_charge_to_grid(self):
         self.dialog.charges_gridLayout.add_fields_to_charges_grid(self.dialog)
 
-    def set_offense_type(self, cms_type):
+    def set_offense_type(self, cms_type: str) -> str:
         """Sets the offense type for each charge to either Moving, Non-moving, or Criminal.
 
         The offense type is used in calculating court costs.
@@ -159,13 +159,13 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
         possible costs if there is no data. Then defendant will get actual costs that
         could actually be less when they go to clerk's office.
         """
-        if self.cms_case.case_number[2:5] == 'CRB':
+        case_number = self.cms_case.case_number
+        if case_number and case_number[2:5] == 'CRB':
             return 'Criminal'
-        if cms_type == '0':
+        elif cms_type == '0':
             return 'Non-moving'
-        if cms_type == '1':
+        else:
             return 'Moving'
-        return 'Moving'
 
 
 class CmsFraLoader(CmsChargeLoader):
@@ -178,15 +178,13 @@ class CmsFraLoader(CmsChargeLoader):
         self.load_fra_data()
         self.hide_fra_if_criminal_case()
 
+
     def load_fra_data(self) -> None:
-        if self.cms_case.case_number is None:
+        fra_value = self.fra_value.get(self.cms_case.fra_in_file, None)
+        if self.cms_case.case_number is None or fra_value is None:
             self.dialog.fra_in_file_box.setCurrentText('N/A')
-        elif self.cms_case.fra_in_file in self.fra_value:
-            self.dialog.fra_in_file_box.setCurrentText(
-                self.fra_value.get(self.cms_case.fra_in_file),
-            )
         else:
-            self.dialog.fra_in_file_box.setCurrentText('N/A')
+            self.dialog.fra_in_file_box.setCurrentText(fra_value)
 
     def hide_fra_if_criminal_case(self) -> None:
         """The Insurance (FRA) data is not used in criminal cases so it is hidden."""
