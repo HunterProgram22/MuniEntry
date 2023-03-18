@@ -25,6 +25,8 @@ class DialogButton(QPushButton):
         self.set_up_widget()
 
     def set_up_widget(self):
+        self.setMinimumHeight(30)
+        self.setMaximumHeight(30)
         self.released.connect(self.load_dialog)
 
     def _create_dialog_instance(self, mainwindow, *args, **kwargs):

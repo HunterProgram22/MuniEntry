@@ -1,7 +1,7 @@
 """Builder module for the Criminal Sealing Entry Dialog."""
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import CriminalSealingDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import CriminalSealingEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import CriminalSealingDialogUpdater
 from munientry.views.criminal_sealing_dialog_ui import Ui_CriminalSealingEntryDialog
@@ -26,7 +26,7 @@ class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
 class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEntryDialog):
     """Dialog builder class for Criminal Sealing Entry."""
     _case_information_model = CriminalSealingEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = CriminalSealingDialogInfoChecker
     _model_updater = CriminalSealingDialogUpdater
     _signal_connector = CriminalSealingDialogSignalConnector

@@ -14,7 +14,7 @@ from munientry.appsettings.pyqt_constants import TODAY
 from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
+from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.scheduling_updaters import (
@@ -284,7 +284,7 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
     """The builder class for the Scheduling Entry Dialog."""
 
     _case_information_model = SchedulingCaseInformation
-    _case_loader = SchedulingCmsLoader
+    _case_loader = SchedulingCrimCmsLoader
     _info_checker = SchedulingEntryDialogInfoChecker
     _model_updater = SchedulingEntryDialogCaseInformationUpdater
     _signal_connector = SchedulingEntryDialogSignalConnector

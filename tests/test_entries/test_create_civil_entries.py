@@ -3,7 +3,6 @@ from tests.conftest import enter_data, mouse_click, MUNI10_SAVE_PATH
 from munientry.entrycreators.entry_creator import CivilEntryCreator
 
 
-
 def entry_dialog(monkeypatch, main_window):
     """The preliminary setup for creating an entry."""
     data = CivilEntryCreator

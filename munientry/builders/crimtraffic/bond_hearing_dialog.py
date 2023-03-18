@@ -6,7 +6,7 @@ from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
 from munientry.checkers.bond_checkers import BondHearingDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     BondHearingEntryCaseInformation,
 )
@@ -86,7 +86,7 @@ class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
     """Dialog builder class for 'Bond Modification / Revocation' Entry."""
 
     _case_information_model = BondHearingEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = BondHearingDialogInfoChecker
     _model_updater = BondHearingDialogUpdater
     _signal_connector = BondHearingDialogSignalConnector

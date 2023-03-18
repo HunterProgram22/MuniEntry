@@ -1,7 +1,7 @@
 """Builder module for the Freeform Entry Dialog."""
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import FreeformDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import FreeformEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import FreeformDialogUpdater
 from munientry.views.freeform_dialog_ui import Ui_FreeformEntryDialog
@@ -27,7 +27,7 @@ class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
     """Dialog builder class for Freeform Entry."""
 
     _case_information_model = FreeformEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = FreeformDialogInfoChecker
     _model_updater = FreeformDialogUpdater
     _signal_connector = FreeformDialogSignalConnector
