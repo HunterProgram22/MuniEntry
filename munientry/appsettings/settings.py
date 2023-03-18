@@ -4,8 +4,9 @@ from __future__ import annotations
 import configparser
 import socket
 import pathlib
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
+from loguru import logger
 
 PATH = str(pathlib.Path().absolute())
 config = configparser.ConfigParser()
@@ -57,7 +58,6 @@ def get_view_field_data(view: Any, widget_type: str) -> Any:
 
 
 # Dictionary that provides the name of the method to set the data in the widget.
-# TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
 WIDGET_TYPE_SET_DICT = {
     'NoScrollComboBox': 'setCurrentText',
     'QCheckBox': 'setChecked',
@@ -68,3 +68,11 @@ WIDGET_TYPE_SET_DICT = {
     'NoScrollDateEdit': 'set_date_from_string',
     'NoScrollTimeEdit': 'set_time_from_string',
 }
+
+def set_view_field_data(view: Any, widget_type: str, model_data: Any) -> None:
+    getattr(view, WIDGET_TYPE_SET_DICT.get(widget_type))(model_data)
+
+
+def log_transfer(model_class: type[Any], model_attribute: str, view_field_data: Any) -> None:
+    class_name = model_class.__class__.__name__
+    logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')

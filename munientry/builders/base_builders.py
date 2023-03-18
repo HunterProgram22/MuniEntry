@@ -9,13 +9,8 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
 from munientry.entrycreators.entry_creator import BaseEntryCreator
-from munientry.appsettings.settings import get_view_field_data
+from munientry.appsettings.settings import get_view_field_data, log_transfer
 from munientry.appsettings.paths import ICON_PATH
-
-
-def log_transfer(model_class: type[Any], model_attribute: str, view_field_data: Any) -> None:
-    class_name = model_class.__class__.__name__
-    logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
 
 
 class BaseDialogBuilder(QDialog):
