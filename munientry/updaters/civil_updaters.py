@@ -1,6 +1,4 @@
 """Module that contains case updaters for civil dialogs."""
-from loguru import logger
-
 from munientry.updaters.base_updaters import BaseModelUpdater
 
 
@@ -9,10 +7,7 @@ class CivCaseInformationUpdater(BaseModelUpdater):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        try:
-            self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
-        except AttributeError as error:
-            logger.warning(error)
+        self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
         self.update_plaintiff()
         self.update_defendant()
 

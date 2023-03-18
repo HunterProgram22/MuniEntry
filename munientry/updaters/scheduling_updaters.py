@@ -1,6 +1,4 @@
 """Module that contains Scheduling Updater classes."""
-from loguru import logger
-
 from munientry.updaters.base_updaters import BaseModelUpdater
 
 
