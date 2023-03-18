@@ -4,7 +4,7 @@ from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
-from munientry.appsettings.settings import log_transfer, set_view_field_data
+from munientry.appsettings.settings import LogTransfer, set_view_field_data
 
 
 def enable_condition_frames(conditions_dialog, main_dialog) -> None:
@@ -91,7 +91,7 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
             model_data = getattr(model_class, model_attribute)
             set_view_field_data(view, widget_type, model_data)
             if model_data not in {'', False, None}:
-                log_transfer(model_class, model_attribute, model_data)
+                LogTransfer.log_view_update(model_class, model_attribute, model_data)
 
 class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for Secondary Dialogs."""

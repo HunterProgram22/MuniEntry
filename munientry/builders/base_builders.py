@@ -9,7 +9,7 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
 from munientry.entrycreators.entry_creator import BaseEntryCreator
-from munientry.appsettings.settings import get_view_field_data, log_transfer
+from munientry.appsettings.settings import get_view_field_data, LogTransfer
 from munientry.appsettings.paths import ICON_PATH
 
 
@@ -56,7 +56,7 @@ class BaseDialogBuilder(QDialog):
             view_field_data = get_view_field_data(view, widget_type)
             setattr(model_class, model_attribute, view_field_data)
             if view_field_data not in {'', False, None}:
-                log_transfer(model_class, model_attribute, view_field_data)
+                LogTransfer.log_model_update(model_class, model_attribute, view_field_data)
 
 
 class BaseDialogViewModifier(object):
