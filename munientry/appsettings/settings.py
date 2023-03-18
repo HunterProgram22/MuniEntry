@@ -41,7 +41,6 @@ DAILY_CASE_LIST_STORED_PROCS = {
 }
 
 # Dictionary that provides name of method to access the data in the widget.
-# TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
 WIDGET_TYPE_ACCESS_DICT = {
     'NoScrollComboBox': 'currentText',
     'ConditionCheckbox': 'isChecked',
@@ -52,6 +51,10 @@ WIDGET_TYPE_ACCESS_DICT = {
     'NoScrollDateEdit': 'get_date_as_string',
     'NoScrollTimeEdit': 'get_time_as_string',
 }
+
+def get_view_field_data(view: Any, widget_type: str) -> Any:
+    return getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
+
 
 # Dictionary that provides the name of the method to set the data in the widget.
 # TODO: THIS IS DANGEROUS NEED TO FIX CHANGING METHOD NAME REQUIRES UPDATE HERE
