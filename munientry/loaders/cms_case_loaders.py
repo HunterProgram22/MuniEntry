@@ -1,13 +1,18 @@
 """Module for loading the CMS case data into the main_entry_dialog view."""
+from typing import TYPE_CHECKING
+
 from loguru import logger
 
 from munientry.models.criminal_charge_models import CriminalCharge
+
+if TYPE_CHECKING:
+    from munientry.builders.base_builders import BaseDialogBuilder
 
 
 class BaseCmsLoader(object):
     """Base Case Management System Loader from which all others inherit."""
 
-    def __init__(self, dialog) -> None:
+    def __init__(self, dialog: 'BaseDialogBuilder') -> None:
         self.dialog = dialog
         self.cms_case = dialog.cms_case
         if self.cms_case.case_number is not None:
@@ -16,15 +21,12 @@ class BaseCmsLoader(object):
     def set_case_number(self) -> None:
         self.dialog.case_number_lineEdit.setText(self.cms_case.case_number)
 
+    def load_cms_data(self) -> None:
+        self.set_case_number()
+
 
 class CivCmsLoader(BaseCmsLoader):
     """Base loader class for civil cases."""
-
-    def load_cms_data(self) -> None:
-        """Loads the case management system data to the dialog."""
-        self.set_case_number()
-        self.set_plaintiff_name()
-        self.set_defendant_name()
 
     def set_plaintiff_name(self) -> None:
         self.dialog.plaintiff_lineEdit.setText(self.cms_case.primary_plaintiff.party_name)
@@ -32,14 +34,14 @@ class CivCmsLoader(BaseCmsLoader):
     def set_defendant_name(self) -> None:
         self.dialog.defendant_lineEdit.setText(self.cms_case.primary_defendant.party_name)
 
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_plaintiff_name()
+        self.set_defendant_name()
+
 
 class CrimCmsLoader(BaseCmsLoader):
     """Base loader class for loading data from an external case management system."""
-
-    def load_cms_data(self) -> None:
-        """Loads the case management system data to the dialog."""
-        self.set_case_number()
-        self.set_defendant_name()
 
     def set_defendant_name(self) -> None:
         self.dialog.defendant_first_name_lineEdit.setText(self.cms_case.defendant.first_name)
@@ -57,12 +59,15 @@ class CrimCmsLoader(BaseCmsLoader):
         attorney then the field is set to Public Defender. If there is an attorney, and CMS does
         not indicate it PD, then it is set to Private Counsel.
         """
-        if self.cms_case.defense_counsel_type == 1:
-            self.dialog.defense_counsel_type_box.setCurrentText('Public Defender')
-        elif self.cms_case.defense_counsel.strip() == '':
-            self.dialog.defense_counsel_type_box.setCurrentText('Public Defender')
-        else:
-            self.dialog.defense_counsel_type_box.setCurrentText('Private Counsel')
+        is_public_defender = (
+            self.cms_case.defense_counsel_type == 1 or self.cms_case.defense_counsel.strip() == ''
+        )
+        defense_counsel_type = 'Public Defender' if is_public_defender else 'Private Counsel'
+        self.dialog.defense_counsel_type_box.setCurrentText(defense_counsel_type)
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.set_defendant_name()
 
 
 class SchedulingCrimCmsLoader(CrimCmsLoader):
@@ -74,10 +79,7 @@ class SchedulingCrimCmsLoader(CrimCmsLoader):
 
 
 class ProbationCrimCmsLoader(CrimCmsLoader):
-    """Loader for Scheduling dialogs."""
-
-    def load_cms_data(self) -> None:
-        super().load_cms_data()
+    """Loader for Probation dialogs."""
 
 
 class CrimCmsNoChargeLoader(CrimCmsLoader):
@@ -95,23 +97,21 @@ class CrimCmsNoChargeLoader(CrimCmsLoader):
 class CmsDrivingInfoLoader(CrimCmsLoader):
     """Loader for CMS data for Driving Privileges."""
 
+    def set_defendant_driving_info(self) -> None:
+        defendant = self.cms_case.defendant
+        self.dialog.defendant_address_lineEdit.setText(defendant.address)
+        self.dialog.defendant_city_lineEdit.setText(defendant.city)
+        self.dialog.defendant_state_lineEdit.setText(defendant.state)
+        self.dialog.defendant_zipcode_lineEdit.setText(defendant.zipcode)
+        self.dialog.defendant_driver_license_lineEdit.setText(defendant.license_number)
+        self.dialog.defendant_dob_lineEdit.setText(defendant.birth_date)
+
     def load_cms_data(self) -> None:
-        self.set_case_number()
-        self.set_defendant_name()
+        super().load_cms_data()
         try:
             self.set_defendant_driving_info()
         except AttributeError as error:
             logger.warning(error)
-
-    def set_defendant_driving_info(self):
-        self.dialog.defendant_address_lineEdit.setText(self.cms_case.defendant.address)
-        self.dialog.defendant_city_lineEdit.setText(self.cms_case.defendant.city)
-        self.dialog.defendant_state_lineEdit.setText(self.cms_case.defendant.state)
-        self.dialog.defendant_zipcode_lineEdit.setText(self.cms_case.defendant.zipcode)
-        self.dialog.defendant_driver_license_lineEdit.setText(
-            self.cms_case.defendant.license_number,
-        )
-        self.dialog.defendant_dob_lineEdit.setText(self.cms_case.defendant.birth_date)
 
 
 class CmsChargeLoader(CrimCmsNoChargeLoader):
@@ -120,15 +120,11 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
     This is for dialogs with a Charge Grid, but no FRA (insurance) information.
     """
 
-    def __init__(self, dialog) -> None:
-        self.criminal_charge = None
+    def __init__(self, dialog: 'BaseDialogBuilder') -> None:
+        self.criminal_charge: CriminalCharge = None
         super().__init__(dialog)
 
-    def load_cms_data(self):
-        super().load_cms_data()
-        self.add_cms_charges_to_entry_case_information()
-
-    def add_cms_charges_to_entry_case_information(self):
+    def add_cms_charges_to_entry_case_information(self) -> None:
         """Loads charges from the sql database objec (self.cms_case) into the data model.
 
         The charge from self.cms_case.charges_list is a tuple in the format:
@@ -144,7 +140,7 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
             self.add_charge_to_grid()
         self.dialog.setFocus()
 
-    def add_charge_to_grid(self):
+    def add_charge_to_grid(self) -> None:
         self.dialog.charges_gridLayout.add_fields_to_charges_grid(self.dialog)
 
     def set_offense_type(self, cms_type: str) -> str:
@@ -162,10 +158,13 @@ class CmsChargeLoader(CrimCmsNoChargeLoader):
         case_number = self.cms_case.case_number
         if case_number and case_number[2:5] == 'CRB':
             return 'Criminal'
-        elif cms_type == '0':
+        if cms_type == '0':
             return 'Non-moving'
-        else:
-            return 'Moving'
+        return 'Moving'
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.add_cms_charges_to_entry_case_information()
 
 
 class CmsFraLoader(CmsChargeLoader):
@@ -177,7 +176,6 @@ class CmsFraLoader(CmsChargeLoader):
         super().__init__(dialog)
         self.load_fra_data()
         self.hide_fra_if_criminal_case()
-
 
     def load_fra_data(self) -> None:
         fra_value = self.fra_value.get(self.cms_case.fra_in_file, None)
@@ -193,7 +191,3 @@ class CmsFraLoader(CmsChargeLoader):
         else:
             is_criminal_case = self.cms_case.case_number[2:5] == 'CRB'
             self.dialog.fra_frame.setHidden(is_criminal_case)
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
