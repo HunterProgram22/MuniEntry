@@ -1,16 +1,14 @@
 """Module that contains case updaters for civil dialogs."""
 from loguru import logger
 
-from munientry.updaters.base_updaters import BaseDialogUpdater
+from munientry.updaters.base_updaters import BaseModelUpdater
 
 
-class CivCaseInformationUpdater(BaseDialogUpdater):
+class CivCaseInformationUpdater(BaseModelUpdater):
     """Updates the model data with the case information fram (top frame on dialogs)."""
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.model.case_number = self.dialog.case_number_lineEdit.text()
-        self.model.entry_date = self.dialog.entry_date.get_date_as_string()
         try:
             self.model.appearance_reason = self.dialog.appearance_reason_box.currentText()
         except AttributeError as error:
@@ -25,7 +23,7 @@ class CivCaseInformationUpdater(BaseDialogUpdater):
         self.model.defendant.party_name = self.dialog.defendant_lineEdit.text()
 
 
-class CivFreeformDialogUpdater(BaseDialogUpdater):
+class CivFreeformDialogUpdater(BaseModelUpdater):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
@@ -37,7 +35,3 @@ class CivFreeformDialogUpdater(BaseDialogUpdater):
 
     def update_entry_content(self):
         self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
