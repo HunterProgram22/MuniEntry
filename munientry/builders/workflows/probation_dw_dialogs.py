@@ -5,7 +5,7 @@ import os
 from loguru import logger
 from PyQt6.QtWidgets import QHeaderView, QTableWidgetItem
 
-from munientry.appsettings.paths import DW_PROBATION
+from munientry.settings.paths import DW_PROBATION
 from munientry.builders import base_builders as base
 from munientry.views.com_control_workflow_dialog_ui import Ui_ComControlWorkflowDialog
 from munientry.views.pretrial_workflow_dialog_ui import Ui_PretrialWorkflowDialog

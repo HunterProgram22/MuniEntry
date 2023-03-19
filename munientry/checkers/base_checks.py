@@ -1,7 +1,7 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
 
-from munientry.appsettings.pyqt_constants import (
+from munientry.settings.pyqt_constants import (
     NO_BUTTON_RESPONSE,
     TODAY,
     YES_BUTTON_RESPONSE,

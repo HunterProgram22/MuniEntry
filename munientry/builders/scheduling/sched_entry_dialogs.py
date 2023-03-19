@@ -6,20 +6,20 @@ from typing import TYPE_CHECKING
 
 from loguru import logger
 
-from munientry.appsettings.business_constants import (
+from munientry.settings.business_constants import (
     DAY_DICT,
     EVENT_DICT,
     PRETRIAL_TIME_DICT,
     SPEEDY_TRIAL_TIME_DICT,
 )
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
@@ -236,7 +236,7 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         return continuance_days
 
 
-class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class SchedulingEntryModelUpdater(SchedulingModelUpdater):
     """Class for updating Case Information for the Scheduling Entry Dialog."""
 
     def set_scheduling_dates(self):
@@ -283,7 +283,7 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
     _info_checker = SchedulingEntryDialogInfoChecker
-    _model_updater = SchedulingEntryDialogCaseInformationUpdater
+    _model_updater = SchedulingEntryModelUpdater
     _signal_connector = SchedulingEntryDialogSignalConnector
     _slots = SchedulingEntryDialogSlotFunctions
     _view_modifier = SchedulingEntryDialogViewModifier

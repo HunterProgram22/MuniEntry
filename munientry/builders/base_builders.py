@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import QDialog
 from munientry.entrycreators.entry_creator import BaseEntryCreator
 from munientry.helper_functions import get_view_field_data
 from munientry.logging_module import LogTransfer
-from munientry.appsettings.paths import GAVEL_PATH
+from munientry.settings.paths import GAVEL_PATH
 
 
 class BaseDialogBuilder(QDialog):

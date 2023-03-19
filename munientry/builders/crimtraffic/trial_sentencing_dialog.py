@@ -13,7 +13,7 @@ from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     TrialSentencingEntryCaseInformation,
 )
-from munientry.appsettings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
+from munientry.settings.pyqt_constants import MAX_JAIL_TIME_VALIDATOR
 from munientry.updaters.grid_case_updaters import TrialSentencingDialogUpdater
 from munientry.views.trial_sentencing_dialog_ui import Ui_TrialSentencingDialog
 

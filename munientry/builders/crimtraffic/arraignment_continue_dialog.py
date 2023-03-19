@@ -1,7 +1,7 @@
 """Builder module for the Arraignment Continuance Dialog."""
 from loguru import logger
 
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import ArraignmentContinueDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader

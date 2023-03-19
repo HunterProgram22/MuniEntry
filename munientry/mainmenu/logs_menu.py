@@ -3,7 +3,7 @@ from os import path, startfile
 
 from loguru import logger
 
-from munientry.appsettings.paths import LOG_PATH
+from munientry.settings.paths import LOG_PATH
 from munientry.logging_module import USER_LOG_NAME
 
 

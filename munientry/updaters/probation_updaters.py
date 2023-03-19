@@ -2,7 +2,7 @@
 from munientry.updaters.base_updaters import BaseModelUpdater
 
 
-class ProbationCaseInformationUpdater(BaseModelUpdater):
+class ProbationModelUpdater(BaseModelUpdater):
     """Base class for Probation Updater."""
 
     def __init__(self, dialog: 'QDialog') -> None:

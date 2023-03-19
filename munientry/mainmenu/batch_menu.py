@@ -5,7 +5,7 @@ from docxtpl import DocxTemplate  # type: ignore # Ignores mypy error for no typ
 from loguru import logger
 from PyQt6.QtWidgets import QInputDialog, QMainWindow
 
-from munientry.appsettings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
+from munientry.settings.paths import BATCH_SAVE_PATH, TEMPLATE_PATH
 from munientry.helper_functions import update_crim_case_number
 from munientry.mainmenu.open_menu import open_entries_folder
 from munientry.sqlserver.crim_getters import (

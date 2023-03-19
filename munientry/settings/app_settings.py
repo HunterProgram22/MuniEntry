@@ -2,7 +2,7 @@
 import socket
 from types import MappingProxyType
 
-from munientry.appsettings.paths import load_config
+from munientry.settings.config_settings import load_config
 
 config = load_config()
 

@@ -1,4 +1,4 @@
-from munientry.appsettings.settings import config
+from munientry.settings.config_settings import load_config
 
 DAY_DICT = {
     'Monday': 1,
@@ -26,10 +26,12 @@ PRETRIAL_TIME_DICT = {
     'Pretrial 2 weeks before trial': 14,
     'No Pretrial': 0,
 }
-costs = config['costs']
-MOVING_COURT_COSTS = int(costs['moving'])
-CRIMINAL_COURT_COSTS = int(costs['criminal'])
-NONMOVING_COURT_COSTS = int(costs['non_moving'])
+
+config = load_config()
+costs_dict = dict(config.items('costs'))
+MOVING_COURT_COSTS = int(costs_dict['moving'])
+CRIMINAL_COURT_COSTS = int(costs_dict['criminal'])
+NONMOVING_COURT_COSTS = int(costs_dict['non_moving'])
 SPECIAL_DOCKETS_COSTS = [
     'while on Community Control',
     'while on the OVI Docket',

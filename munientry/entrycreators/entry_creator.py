@@ -9,7 +9,7 @@ from loguru import logger
 
 from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
-from munientry.appsettings.paths import (
+from munientry.settings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
     CIVIL_SAVE_PATH,
     DW_ADMIN_JUDGE_ADMIN,

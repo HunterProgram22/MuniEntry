@@ -9,8 +9,8 @@ from loguru import logger
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
-from munientry.appsettings.paths import LOG_PATH, GAVEL_PATH
-from munientry.appsettings.settings import HOST_NAME
+from munientry.settings.paths import LOG_PATH, GAVEL_PATH
+from munientry.settings.app_settings import HOST_NAME
 
 
 # Logging Settings

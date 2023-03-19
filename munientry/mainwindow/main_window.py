@@ -7,9 +7,9 @@ from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow
 
-from munientry.appsettings.paths import GAVEL_PATH
-from munientry.appsettings.settings import VERSION_NUMBER
-from munientry.appsettings.user_settings import load_user_settings
+from munientry.settings.paths import GAVEL_PATH
+from munientry.settings.app_settings import VERSION_NUMBER
+from munientry.settings.user_settings import load_user_settings
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
 from munientry.helper_functions import (
     set_random_judge,

@@ -10,7 +10,7 @@ from munientry.models.jury_models import JuryPaymentInformation
 from munientry.loaders.cms_case_loaders import CrimCmsLoader
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.juror_payment_dialog_ui import Ui_JurorPaymentDialog
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.pyqt_constants import TODAY
 
 
 class JuryPaymentViewModifier(admin.AdminViewModifier):

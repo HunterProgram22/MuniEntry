@@ -2,7 +2,7 @@
 from munientry.updaters.base_updaters import BaseModelUpdater
 
 
-class SchedulingDialogCaseInformationUpdater(BaseModelUpdater):
+class SchedulingModelUpdater(BaseModelUpdater):
     """Base class for Scheduling Updater."""
 
     def __init__(self, dialog: 'QDialog') -> None:

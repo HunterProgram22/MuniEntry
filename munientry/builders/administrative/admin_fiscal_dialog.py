@@ -7,7 +7,7 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.entrycreators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.pyqt_constants import TODAY
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 

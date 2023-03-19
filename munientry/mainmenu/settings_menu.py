@@ -29,7 +29,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
 )
 
-from munientry.appsettings.paths import GAVEL_PATH
+from munientry.settings.paths import GAVEL_PATH
 
 if TYPE_CHECKING:
     from munientry.mainwindow import MainWindow

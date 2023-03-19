@@ -1,15 +1,15 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
 
-from munientry.appsettings.business_constants import DAY_DICT, EVENT_DICT
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
+from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
@@ -110,7 +110,7 @@ class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.final_pretrial_time_box.setHidden(True)
 
 
-class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
     """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog):

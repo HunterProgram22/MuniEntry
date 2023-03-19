@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from types import MappingProxyType
 
-from munientry.appsettings.paths import TEMPLATE_PATH
+from munientry.settings.paths import TEMPLATE_PATH
 
 
 def get_template_dict() -> MappingProxyType:

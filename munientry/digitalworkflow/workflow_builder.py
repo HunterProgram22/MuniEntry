@@ -2,7 +2,7 @@ import os
 
 from loguru import logger
 
-from munientry.appsettings.paths import DW_ADMIN_JUDGE, DW_ROHRER, DW_BUNNER
+from munientry.settings.paths import DW_ADMIN_JUDGE, DW_ROHRER, DW_BUNNER
 
 
 class DigitalWorkflow(object):

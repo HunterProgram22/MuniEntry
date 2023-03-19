@@ -2,7 +2,8 @@
 from enum import Enum
 
 from loguru import logger
-from munientry.appsettings.settings import config, HOST_NAME
+from munientry.settings.config_settings import load_config
+from munientry.settings.app_settings import HOST_NAME
 
 
 class MainTabs(Enum):
@@ -129,14 +130,6 @@ class ProbationUserSettings(UserSettings):
         self.court_staff.set_person_stack_widget()
 
 
-def load_user_settings(mainwindow) -> 'UserSettings':
-    """Returns the user settings based on the computer that is loading the application."""
-    user_settings_config = config['user_settings']
-    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
-    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
-    return user_settings(mainwindow)
-
-
 USER_SETTINGS = {
     'AdminUserSettings': AdminUserSettings,
     'CommissionerUserSettings': CommissionerUserSettings,
@@ -144,3 +137,12 @@ USER_SETTINGS = {
     'GeneralUserSettings': GeneralUserSettings,
     'ProbationUserSettings': ProbationUserSettings,
 }
+
+
+def load_user_settings(mainwindow) -> 'UserSettings':
+    """Returns the user settings based on the computer that is loading the application."""
+    config = load_config()
+    user_settings_dict = dict(config.items('user_settings'))
+    user_settings_key = user_settings_dict.get(HOST_NAME, 'GeneralUserSettings')
+    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
+    return user_settings(mainwindow)

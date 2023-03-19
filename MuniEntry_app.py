@@ -20,8 +20,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QApplication, QSplashScreen
 
-from munientry.appsettings.paths import GAVEL_SPLASH
-from munientry.appsettings.settings import HOST_NAME, VERSION_NUMBER
+from munientry.settings.paths import GAVEL_SPLASH
+from munientry.settings.app_settings import HOST_NAME, VERSION_NUMBER
 
 
 def load_window():
