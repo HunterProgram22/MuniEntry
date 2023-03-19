@@ -1,9 +1,9 @@
 """Module containing common information checks used on multiple dialogs."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.settings.pyqt_constants import (
     NO_BUTTON_RESPONSE,
-    TODAY,
     YES_BUTTON_RESPONSE,
 )
 from munientry.widgets.message_boxes import BLANK, FAIL, PASS, RequiredBox, WarningBox
@@ -19,6 +19,7 @@ class BaseChecker(object):
     def __init__(self, dialog) -> None:
         self.view = dialog
         self.dialog_check_list: list = []
+        self.today = QDate.currentDate()
 
     def perform_check_list(self) -> str:
         for item_to_check in self.dialog_check_list:
@@ -28,7 +29,7 @@ class BaseChecker(object):
         return PASS
 
     def check_if_plea_date_is_today(self) -> str:
-        if self.view.plea_date.date() == TODAY:
+        if self.view.plea_date.date() == self.today:
             message = (
                 'The Plea Date is Today, but must be a date prior to Today. Please enter'
                 + ' a date in the Plea Date box prior to today.'
@@ -39,7 +40,7 @@ class BaseChecker(object):
 
     def check_if_trial_date_is_today(self) -> str:
         """Scheduling date checker to make sure trial date is not set to today."""
-        if self.view.trial_dateEdit.date() == TODAY:
+        if self.view.trial_dateEdit.date() == self.today:
             message = (
                     'The Trial Date is Today, but must be a date in the future. Please enter'
                     + ' a date in the Trial Date box after today.'
@@ -51,7 +52,7 @@ class BaseChecker(object):
     def check_if_final_pretrial_date_is_today(self) -> str:
         """Scheduling date checker to make sure final pretrial date is not set to today."""
         if self.view.jury_trial_only_no_radioButton.isChecked():
-            if self.view.final_pretrial_dateEdit.date() == TODAY:
+            if self.view.final_pretrial_dateEdit.date() == self.today:
                 message = (
                         'The Final Pretrial Date is Today, but must be a date in the future. Please'
                         + ' enter a date in the Final Pretrial Date box after today.'
@@ -62,7 +63,7 @@ class BaseChecker(object):
         return PASS
 
     def check_if_leap_plea_date_is_today(self) -> str:
-        if self.view.leap_plea_date.date() == TODAY:
+        if self.view.leap_plea_date.date() == self.today:
             message = (
                 'The Leap Plea Date is Today, but must be a date prior to Today. Please enter'
                 + ' a date in the Leap Plea Date box prior to today.'

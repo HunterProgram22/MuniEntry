@@ -1,8 +1,8 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
-from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
@@ -26,14 +26,16 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self) -> None:
-        self.dialog.entry_date.setDate(TODAY)
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.final_pretrial_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.entry_date.setDate(today)
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.final_pretrial_dateEdit.setDate(today)
 
     def set_calculator_dates(self) -> None:
-        self.dialog.old_speedy_trial_dateEdit.setDate(TODAY)
-        self.dialog.new_hearing_dateEdit.setDate(TODAY)
-        self.dialog.old_hearing_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.old_speedy_trial_dateEdit.setDate(today)
+        self.dialog.new_hearing_dateEdit.setDate(today)
+        self.dialog.old_hearing_dateEdit.setDate(today)
 
 
 class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):

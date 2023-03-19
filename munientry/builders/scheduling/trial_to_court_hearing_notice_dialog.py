@@ -5,9 +5,9 @@
 from typing import TYPE_CHECKING
 
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
-from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
@@ -35,16 +35,18 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self) -> None:
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.entry_date.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.entry_date.setDate(today)
 
 
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
     def set_event_date(self, day_to_set: str) -> 'QDate':
-        days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
-        event_date = TODAY.addDays(days_until_speedy_trial_date)
+        today = QDate.currentDate()
+        days_until_speedy_trial_date = today.daysTo(self.get_speedy_trial_date())
+        event_date = today.addDays(days_until_speedy_trial_date)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
             event_date = event_date.addDays(-1)
         return event_date

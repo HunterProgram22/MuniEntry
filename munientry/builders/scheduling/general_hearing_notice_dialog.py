@@ -14,8 +14,6 @@ from munientry.views.general_notice_of_hearing_dialog_ui import (
     Ui_GeneralNoticeOfHearingDialog,
 )
 
-TODAY = QDate.currentDate()
-
 
 class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
     """View class that creates and modifies the view for the General Notice of Hearing Dialog."""
@@ -25,8 +23,9 @@ class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.entry_date.setDate(TODAY)
-        self.dialog.hearing_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.entry_date.setDate(today)
+        self.dialog.hearing_dateEdit.setDate(today)
 
 
 class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnector):

@@ -5,6 +5,7 @@
 from typing import TYPE_CHECKING
 
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import (
     DAY_DICT,
@@ -12,7 +13,6 @@ from munientry.settings.business_constants import (
     PRETRIAL_TIME_DICT,
     SPEEDY_TRIAL_TIME_DICT,
 )
-from munientry.settings.pyqt_constants import TODAY
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
@@ -51,9 +51,10 @@ class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
         self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self):
-        self.dialog.arrest_summons_date_box.setDate(TODAY)
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.entry_date.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.arrest_summons_date_box.setDate(today)
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.entry_date.setDate(today)
 
 
 class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):

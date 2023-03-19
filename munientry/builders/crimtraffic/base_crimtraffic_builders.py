@@ -1,5 +1,6 @@
 """Base Classes for CrimTraffic Entries."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.charges.add_charge_dialog import AddChargeDialogBuilder
@@ -8,7 +9,6 @@ from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 from munientry.helper_functions import set_future_date
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings.business_constants import SPECIAL_DOCKETS_COSTS
-from munientry.settings.pyqt_constants import TODAY
 from munientry.widgets.message_boxes import InfoBox
 
 ORDERED = 'ordered'
@@ -70,9 +70,10 @@ class FineCostsMixin(object):
         Date is set to the Tuesday after the number of days added, unless forthwith or a special
         docket is selected.
         """
+        today = QDate.currentDate()
         if days_to_add == 'forthwith':
             self.dialog.balance_due_date.setHidden(False)
-            self.dialog.balance_due_date.setDate(TODAY)
+            self.dialog.balance_due_date.setDate(today)
         elif days_to_add in SPECIAL_DOCKETS_COSTS:
             self.dialog.balance_due_date.setHidden(True)
         else:
@@ -80,7 +81,7 @@ class FineCostsMixin(object):
             days_to_add = self.get_days_to_add(days_to_add)
             total_days_to_add = set_future_date(days_to_add, 'Tuesday')
             self.dialog.balance_due_date.setDate(
-                TODAY.addDays(total_days_to_add),
+                today.addDays(total_days_to_add),
             )
 
     def get_days_to_add(self, days_to_add: str) -> int:

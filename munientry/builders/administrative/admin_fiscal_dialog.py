@@ -1,5 +1,6 @@
 """Contains classes for building the Admin Fiscal Dialog."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
 from munientry.builders import base_builders as base
 from munientry.builders.administrative import base_admin_builders as admin
@@ -7,7 +8,6 @@ from munientry.checkers.base_checks import BaseChecker
 from munientry.entrycreators.entry_creator import AdminFiscalEntryCreator
 from munientry.models.admin_fiscal_models import AdminFiscalEntryInformation
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.settings.pyqt_constants import TODAY
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.admin_fiscal_dialog_ui import Ui_AdminFiscalDialog
 
@@ -20,7 +20,7 @@ class AdminFiscalViewModifier(admin.AdminViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.plea_trial_date.setDate(TODAY)
+        self.dialog.plea_trial_date.setDate(QDate.currentDate())
 
 
 class AdminFiscalSignalConnector(admin.AdminSignalConnector):
