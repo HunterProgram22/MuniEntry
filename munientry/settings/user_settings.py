@@ -10,8 +10,8 @@ from munientry.settings.config_settings import load_config
 class UserSettings(object):
     """Base UserSettings class."""
 
-    settings_name = None
-    hidden_tabs = {}
+    settings_name: str
+    hidden_tabs: dict[str, list] = {}
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
@@ -25,10 +25,12 @@ class UserSettings(object):
         self.set_current_view()
 
     def load_settings(self):
+        """Loops through dictionary of tabs with lists of subtabs to set not visible."""
         for key, tabs in self.hidden_tabs.items():
             for tab_index in tabs:
                 tab = getattr(self, key)
-                tab.setTabVisible(tab_index, visible=False)
+                is_visible = False
+                tab.setTabVisible(tab_index, is_visible)
 
     def set_current_view(self):
         """Called in some subclasses to set the default view for the user."""
