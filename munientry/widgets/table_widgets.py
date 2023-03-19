@@ -27,7 +27,7 @@ from PyQt6.QtWidgets import (
     QTableWidget,
     QWidget, )
 
-from munientry.appsettings.paths import GAVEL_PATH
+from munientry.settings.paths import GAVEL_PATH
 from munientry.widgets.message_boxes import RequiredBox
 
 TABLE_HEIGHT = 1000

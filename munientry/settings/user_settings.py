@@ -1,41 +1,17 @@
 """Module for user settings for the application."""
-from enum import Enum
+from types import MappingProxyType
 
 from loguru import logger
-from munientry.appsettings.settings import config, HOST_NAME
 
-
-class MainTabs(Enum):
-    ENTRIES = 0
-    WORKFLOWS = 1
-
-
-class WorkflowTabs(Enum):
-    PROBATION = 0
-    ADMIN_JUDGE = 1
-    JUDGE_TWO = 2
-    MAGISTRATE_ONE = 3
-
-
-class EntryTabs(Enum):
-    CRIM_TRAFFIC = 0
-    SCHEDULING = 1
-    ADMINISTRATIVE = 2
-    CIVIL = 3
-    PROBATION = 4
-
-
-class CaseTabs(Enum):
-    CRIM_CASELISTS = 0
-    CRIM_SEARCH = 1
-    CIVIL_SEARCH = 2
+from munientry.settings.app_settings import HOST_NAME, CaseTabs, EntryTabs, MainTabs, WorkflowTabs
+from munientry.settings.config_settings import load_config
 
 
 class UserSettings(object):
     """Base UserSettings class."""
 
-    settings_name = None
-    hidden_tabs = {}
+    settings_name: str
+    hidden_tabs: dict[str, list] = {}
 
     def __init__(self, mainwindow):
         self.mainwindow = mainwindow
@@ -49,13 +25,15 @@ class UserSettings(object):
         self.set_current_view()
 
     def load_settings(self):
-        for key, value in self.hidden_tabs.items():
-            for item in value:
+        """Loops through dictionary of tabs with lists of subtabs to set not visible."""
+        for key, tabs in self.hidden_tabs.items():
+            for tab_index in tabs:
                 tab = getattr(self, key)
-                tab.setTabVisible(item, False)
+                is_visible = False
+                tab.setTabVisible(tab_index, is_visible)
 
     def set_current_view(self):
-        pass
+        """Called in some subclasses to set the default view for the user."""
 
 
 class AdminUserSettings(UserSettings):
@@ -69,11 +47,11 @@ class CommissionerUserSettings(UserSettings):
 
     settings_name = 'Commisssioner User'
     hidden_tabs = {
-        'main_tab': [MainTabs.WORKFLOWS.value],
+        'main_tab': [MainTabs.workflows.value],
     }
 
     def set_current_view(self):
-        self.entries_tab.setCurrentIndex(EntryTabs.SCHEDULING.value)
+        self.entries_tab.setCurrentIndex(EntryTabs.scheduling.value)
         self.court_staff.set_person_stack_widget()
 
 
@@ -82,12 +60,12 @@ class CourtroomUserSettings(UserSettings):
 
     settings_name = 'Courtroom User'
     hidden_tabs = {
-        'main_tab': [MainTabs.WORKFLOWS.value],
+        'main_tab': [MainTabs.workflows.value],
         'entries_tab': [
-            EntryTabs.SCHEDULING.value,
-            EntryTabs.ADMINISTRATIVE.value,
-            EntryTabs.PROBATION.value
-        ]
+            EntryTabs.scheduling.value,
+            EntryTabs.administrative.value,
+            EntryTabs.probation.value,
+        ],
     }
 
 
@@ -97,9 +75,9 @@ class GeneralUserSettings(UserSettings):
     settings_name = 'General User'
     hidden_tabs = {
         'workflow_persons_tab': [
-            WorkflowTabs.ADMIN_JUDGE.value,
-            WorkflowTabs.JUDGE_TWO.value,
-            WorkflowTabs.MAGISTRATE_ONE.value,
+            WorkflowTabs.admin_judge.value,
+            WorkflowTabs.judge_two.value,
+            WorkflowTabs.magistrate_one.value,
         ],
     }
 
@@ -110,18 +88,18 @@ class ProbationUserSettings(UserSettings):
     settings_name = 'Probation User'
     hidden_tabs = {
         'cases_tab': [
-            CaseTabs.CIVIL_SEARCH.value,
+            CaseTabs.civil_search.value,
         ],
         'entries_tab': [
-            EntryTabs.SCHEDULING.value,
-            EntryTabs.ADMINISTRATIVE.value,
-            EntryTabs.CRIM_TRAFFIC.value,
-            EntryTabs.CIVIL.value,
+            EntryTabs.scheduling.value,
+            EntryTabs.administrative.value,
+            EntryTabs.crim_traffic.value,
+            EntryTabs.civil.value,
         ],
         'workflow_persons_tab': [
-            WorkflowTabs.ADMIN_JUDGE.value,
-            WorkflowTabs.JUDGE_TWO.value,
-            WorkflowTabs.MAGISTRATE_ONE.value,
+            WorkflowTabs.admin_judge.value,
+            WorkflowTabs.judge_two.value,
+            WorkflowTabs.magistrate_one.value,
         ],
     }
 
@@ -129,18 +107,19 @@ class ProbationUserSettings(UserSettings):
         self.court_staff.set_person_stack_widget()
 
 
-def load_user_settings(mainwindow) -> 'UserSettings':
-    """Returns the user settings based on the computer that is loading the application."""
-    user_settings_config = config['user_settings']
-    user_settings_key = user_settings_config.get(HOST_NAME, 'GeneralUserSettings')
-    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
-    return user_settings(mainwindow)
-
-
-USER_SETTINGS = {
+USER_SETTINGS = MappingProxyType({
     'AdminUserSettings': AdminUserSettings,
     'CommissionerUserSettings': CommissionerUserSettings,
     'CourtroomUserSettings': CourtroomUserSettings,
     'GeneralUserSettings': GeneralUserSettings,
     'ProbationUserSettings': ProbationUserSettings,
-}
+})
+
+
+def load_user_settings(mainwindow) -> 'UserSettings':
+    """Returns the user settings based on the computer that is loading the application."""
+    config = load_config()
+    user_settings_dict = dict(config.items('user_settings'))
+    user_settings_key = user_settings_dict.get(HOST_NAME, 'GeneralUserSettings')
+    user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
+    return user_settings(mainwindow)

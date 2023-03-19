@@ -18,7 +18,7 @@ from munientry.sqllite.sql_lite_functions import (
     query_offense_statute_data,
 )
 from munientry.sqlserver.crim_getters import CrimCaseData
-from munientry.appsettings.paths import DB_PATH
+from munientry.settings.paths import DB_PATH
 
 MUNIENTRY_DB = 'con_munientry_db'
 AUTHORITY_COURT_DB = 'con_authority_court'

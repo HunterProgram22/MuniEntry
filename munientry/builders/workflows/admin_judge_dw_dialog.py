@@ -10,7 +10,7 @@ from docxtpl import DocxTemplate, InlineImage
 from loguru import logger
 from PyQt6.QtWidgets import QHeaderView, QTableWidget, QTableWidgetItem
 
-from munientry.appsettings.paths import APPROVED_STAMP_PATH, DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
+from munientry.settings.paths import APPROVED_STAMP_PATH, DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
 from munientry.builders import base_builders as base
 from munientry.views.admin_entries_workflow_dialog_ui import Ui_AdminEntriesWorkflowDialog
 from munientry.widgets.custom_widgets import WorkflowRadioButtonWidget

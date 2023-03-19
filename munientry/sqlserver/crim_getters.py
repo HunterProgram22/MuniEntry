@@ -6,7 +6,7 @@ from functools import wraps
 from loguru import logger
 from PyQt6.QtSql import QSqlDatabase, QSqlQuery
 
-from munientry.appsettings.settings import DAILY_CASE_LIST_STORED_PROCS
+from munientry.settings.app_settings import DAILY_CASE_LIST_STORED_PROCS
 from munientry.data.connections import close_db_connection, open_db_connection
 from munientry.data.data_cleaners import clean_last_name, clean_offense_name, clean_statute_name
 from munientry.models.cms_models import CriminalCmsCaseInformation

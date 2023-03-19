@@ -20,8 +20,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import QApplication, QSplashScreen
 
-from munientry.appsettings.paths import ICON_PATH
-from munientry.appsettings.settings import HOST_NAME, VERSION_NUMBER
+from munientry.settings.paths import GAVEL_SPLASH
+from munientry.settings.app_settings import HOST_NAME, VERSION_NUMBER
 
 
 def load_window():
@@ -41,7 +41,7 @@ def main():
     """The main application loop."""
     logger.info(f'MuniEntry Version {VERSION_NUMBER} Loading on {HOST_NAME}')
     app = QApplication(sys.argv)
-    splash = QSplashScreen(QPixmap(f'{ICON_PATH}gavel_main_splash.png'))
+    splash = QSplashScreen(QPixmap(GAVEL_SPLASH))
     splash.show()
     splash.showMessage(
         f'<h1>Loading - Version {VERSION_NUMBER}</h1>',

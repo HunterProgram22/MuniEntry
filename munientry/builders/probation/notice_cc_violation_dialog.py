@@ -3,7 +3,7 @@ from munientry.builders.probation import base_probation_builders as prob
 from munientry.loaders.cms_case_loaders import ProbationCrimCmsLoader
 from munientry.checkers.probation_checks import ProbationDialogInfoChecker
 from munientry.models.case_information.probation_case_information import NoticeCCViolationCaseInformation
-from munientry.updaters.probation_updaters import ProbationDialogCaseInformationUpdater
+from munientry.updaters.probation_updaters import ProbationModelUpdater
 from munientry.views.notice_cc_violation_dialog_ui import Ui_NoticeCCViolationDialog
 
 
@@ -29,7 +29,7 @@ class NoticeCCViolationDialog(prob.ProbationDialogBuilder, Ui_NoticeCCViolationD
     _case_information_model = NoticeCCViolationCaseInformation
     _case_loader = ProbationCrimCmsLoader
     _info_checker = ProbationDialogInfoChecker
-    _model_updater = ProbationDialogCaseInformationUpdater
+    _model_updater = ProbationModelUpdater
     _signal_connector = NoticeCCViolationSignalConnector
     _slots = NoticeCCViolationSlotFunctions
     _view_modifier = NoticeCCViolationViewModifier

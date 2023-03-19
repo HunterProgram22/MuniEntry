@@ -9,8 +9,9 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
 from munientry.entrycreators.entry_creator import BaseEntryCreator
-from munientry.appsettings.settings import WIDGET_TYPE_ACCESS_DICT
-from munientry.appsettings.paths import ICON_PATH
+from munientry.helper_functions import get_view_field_data
+from munientry.logging_module import LogTransfer
+from munientry.settings.paths import GAVEL_PATH
 
 
 class BaseDialogBuilder(QDialog):
@@ -40,23 +41,23 @@ class BaseDialogBuilder(QDialog):
         logger.dialog(f'{self.dialog_name} Closed')
         super().close()
 
+    def get_widget_type(self, view_field: str) -> str:
+        return getattr(self, view_field).__class__.__name__
+
     def transfer_view_data_to_model(self, model_class: type[Any]) -> None:
         """Takes data in the view fields and transfers to appropriate model class attribute.
-
-        Method loops through all items in terms list which are maps of a model attribute to
-        a view field. The appropriate transfer method is obtained from the WIDGET_TYPE_ACCESS_DICT
 
         Args:
             model_class: A dataclass object that has a terms_list attribute mapping
                 view fields to model attributes.
         """
         for (model_attribute, view_field) in model_class.terms_list:
-            widget_type = getattr(self, view_field).__class__.__name__
+            widget_type = self.get_widget_type(view_field)
             view = getattr(self, view_field)
-            view_field_data = getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
-            class_name = model_class.__class__.__name__
+            view_field_data = get_view_field_data(view, widget_type)
             setattr(model_class, model_attribute, view_field_data)
-            logger.info(f'{class_name} {model_attribute} set to: {view_field_data}.')
+            if view_field_data not in {'', False, None}:
+                LogTransfer.log_model_update(model_class, model_attribute, view_field_data)
 
 
 class BaseDialogViewModifier(object):
@@ -64,7 +65,7 @@ class BaseDialogViewModifier(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.dialog.setWindowIcon(QIcon(GAVEL_PATH))
         self.dialog.setWindowFlags(
             self.dialog.windowFlags()
             | Qt.WindowType.CustomizeWindowHint

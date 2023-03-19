@@ -1,16 +1,15 @@
 """Contains classes for building the Juror Payment Dialog."""
 from loguru import logger
-
 from num2words import num2words
+from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
 from munientry.checkers.base_checks import BaseChecker
 from munientry.entrycreators.entry_creator import JuryPaymentEntryCreator
-from munientry.models.jury_models import JuryPaymentInformation
 from munientry.loaders.cms_case_loaders import CrimCmsLoader
+from munientry.models.jury_models import JuryPaymentInformation
 from munientry.updaters.base_updaters import BaseDialogUpdater
 from munientry.views.juror_payment_dialog_ui import Ui_JurorPaymentDialog
-from munientry.appsettings.pyqt_constants import TODAY
 
 
 class JuryPaymentViewModifier(admin.AdminViewModifier):
@@ -21,8 +20,9 @@ class JuryPaymentViewModifier(admin.AdminViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.entry_date.setDate(TODAY)
-        self.dialog.trial_date.setDate(TODAY.addDays(-1))
+        today = QDate.currentDate()
+        self.dialog.entry_date.setDate(today)
+        self.dialog.trial_date.setDate(today.addDays(-1))
 
 
 class JuryPaymentSlotFunctions(admin.AdminSlotFunctions):

@@ -8,13 +8,11 @@ from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.general_notice_of_hearing_dialog_ui import (
     Ui_GeneralNoticeOfHearingDialog,
 )
-
-TODAY = QDate.currentDate()
 
 
 class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
@@ -25,8 +23,9 @@ class GeneralNoticeOfHearingDialogViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self):
-        self.dialog.entry_date.setDate(TODAY)
-        self.dialog.hearing_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.entry_date.setDate(today)
+        self.dialog.hearing_dateEdit.setDate(today)
 
 
 class GeneralNoticeOfHearingDialogSignalConnector(sched.SchedulingSignalConnector):
@@ -64,7 +63,7 @@ class GeneralNoticeOfHearingDialogSlotFunctions(sched.SchedulingSlotFunctions):
         self.dialog.speedy_trial_date_label.setText(new_speedy_trial_date)
 
 
-class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingModelUpdater):
     """Class that updates case information for General Notice of Hearing Dialog."""
 
     def __init__(self, dialog):

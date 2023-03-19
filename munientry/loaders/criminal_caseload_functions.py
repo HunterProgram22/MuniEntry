@@ -25,7 +25,7 @@ from typing import Optional
 
 from loguru import logger
 
-from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE
+from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE
 from munientry.sqlserver import crim_getters as sql_server
 from munientry.models.cms_models import CriminalCmsCaseInformation
 from munientry.widgets.combo_boxes import DailyCaseListComboBox

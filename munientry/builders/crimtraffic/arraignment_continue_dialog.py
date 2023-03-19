@@ -1,7 +1,7 @@
 """Builder module for the Arraignment Continuance Dialog."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
-from munientry.appsettings.pyqt_constants import TODAY
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.base_checks import ArraignmentContinueDialogInfoChecker
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
@@ -28,7 +28,8 @@ class ArraignmentContinueDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
             '2 Weeks': 14,
         }
         days_to_add = ARRAIGNMENT_CONT_DICT.get(cont_length)
-        self.dialog.new_arraignment_date_box.setDate(TODAY.addDays(days_to_add))
+        today = QDate.currentDate()
+        self.dialog.new_arraignment_date_box.setDate(today.addDays(days_to_add))
 
     def show_hide_length_date_boxes(self):
         if self.dialog.continuance_reason_box.currentText() == 'to arrange for an interpreter for defendant':

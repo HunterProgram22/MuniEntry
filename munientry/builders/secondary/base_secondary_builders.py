@@ -4,7 +4,8 @@ from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
-from munientry.appsettings.settings import WIDGET_TYPE_SET_DICT
+from munientry.helper_functions import set_view_field_data
+from munientry.logging_module import LogTransfer
 
 
 def enable_condition_frames(conditions_dialog, main_dialog) -> None:
@@ -76,6 +77,9 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
                 model_class = getattr(self.dialog.main_dialog.entry_case_information, model_class)
                 self.transfer_model_data_to_view(model_class)
 
+    def get_widget_type(self, view_field: str) -> str:
+        return getattr(self.dialog, view_field).__class__.__name__
+
     def transfer_model_data_to_view(self, model_class):
         """Loops through the terms_list for a model and loads data into the view of the dialog.
 
@@ -83,10 +87,12 @@ class SecondaryViewModifier(base.BaseDialogViewModifier):
         the dialog after having previously entered data.
         """
         for (model_attribute, view_field) in model_class.terms_list:
-            key = getattr(self.dialog, view_field).__class__.__name__
+            widget_type = self.get_widget_type(view_field)
             view = getattr(self.dialog, view_field)
-            getattr(view, WIDGET_TYPE_SET_DICT.get(key))(getattr(model_class, model_attribute))
-
+            model_data = getattr(model_class, model_attribute)
+            set_view_field_data(view, widget_type, model_data)
+            if model_data not in {'', False, None}:
+                LogTransfer.log_view_update(model_class, model_attribute, model_data)
 
 class SecondarySlotFunctions(base.BaseDialogSlotFunctions):
     """Base set of functions for Secondary Dialogs."""

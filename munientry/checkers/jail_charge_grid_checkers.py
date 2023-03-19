@@ -9,7 +9,7 @@ from munientry.checkers.base_checks import (
     ChargeGridInfoChecker,
     InsuranceInfoChecker,
 )
-from munientry.appsettings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
+from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
     CANCEL_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import (
     JailWarningBox,
