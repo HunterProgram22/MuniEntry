@@ -2,11 +2,12 @@
 
 **munientry.builders.scheduling.trial_to_court_hearing_notice_dialog**
 """
+from typing import TYPE_CHECKING
+
 from loguru import logger
 
 from munientry.appsettings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
 from munientry.appsettings.pyqt_constants import TODAY
-from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom

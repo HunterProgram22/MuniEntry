@@ -2,6 +2,8 @@
 
 **munientry.builders.scheduling.sched_entry_dialogs**
 """
+from typing import TYPE_CHECKING
+
 from loguru import logger
 
 from munientry.appsettings.business_constants import (
@@ -11,7 +13,6 @@ from munientry.appsettings.business_constants import (
     SPEEDY_TRIAL_TIME_DICT,
 )
 from munientry.appsettings.pyqt_constants import TODAY
-from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
@@ -237,10 +238,6 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
 class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
     """Class for updating Case Information for the Scheduling Entry Dialog."""
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.update_model_with_case_information_frame_data()
 
     def set_scheduling_dates(self):
         self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)

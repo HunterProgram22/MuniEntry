@@ -1,12 +1,13 @@
 """Module containing the Main Window of the application."""
 from functools import partial
+import os
 
 from loguru import logger
 from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow
 
-from munientry.appsettings.paths import ICON_PATH
+from munientry.appsettings.paths import GAVEL_PATH
 from munientry.appsettings.settings import VERSION_NUMBER
 from munientry.appsettings.user_settings import load_user_settings
 from munientry.digitalworkflow.workflow_builder import DigitalWorkflow
@@ -19,8 +20,6 @@ from munientry.mainmenu.menu import MainMenu
 from munientry.mainmenu.reports.daily_reports import run_not_guilty_report_today
 from munientry.mainwindow.case_search import CaseDocketHandler, CaseListHandler, CaseSearchHandler
 from munientry.mainwindow.court_staff import CourtStaffManager
-# from munientry.mainwindow.dialog_dictionary import DialogDict
-# from munientry.mainwindow.dialog_starter import start_dialog
 from munientry.mainwindow.shortcuts import set_mainwindow_shortcuts
 from munientry.views.main_window_ui import Ui_MainWindow
 from munientry.widgets.table_widgets import TableReportWindow
@@ -74,7 +73,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def setup_view(self) -> None:
         self.setupUi(self)
-        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.setWindowIcon(QIcon(GAVEL_PATH))
         self.setWindowTitle(f'MuniEntry - Version {VERSION_NUMBER}')
 
     def connect_signals_to_slots(self):

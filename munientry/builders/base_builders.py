@@ -9,8 +9,9 @@ from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QDialog
 
 from munientry.entrycreators.entry_creator import BaseEntryCreator
-from munientry.appsettings.settings import get_view_field_data, LogTransfer
-from munientry.appsettings.paths import ICON_PATH
+from munientry.helper_functions import get_view_field_data
+from munientry.logging_module import LogTransfer
+from munientry.appsettings.paths import GAVEL_PATH
 
 
 class BaseDialogBuilder(QDialog):
@@ -64,7 +65,7 @@ class BaseDialogViewModifier(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        self.dialog.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.dialog.setWindowIcon(QIcon(GAVEL_PATH))
         self.dialog.setWindowFlags(
             self.dialog.windowFlags()
             | Qt.WindowType.CustomizeWindowHint

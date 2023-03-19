@@ -1,4 +1,6 @@
 """Contains all the template objects used in the application."""
+import os
+
 from dataclasses import dataclass
 from types import MappingProxyType
 
@@ -29,7 +31,7 @@ class Template(object):
 
     def __post_init__(self):
         """Set the full path for the template file."""
-        self.template_path = f'{TEMPLATE_PATH}{self.template_path}'
+        self.template_path = os.path.join(TEMPLATE_PATH, self.template_path)
 
 
 TEMPLATE_LIST = (

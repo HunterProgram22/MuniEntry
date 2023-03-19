@@ -1,24 +1,32 @@
 """Module containing internal and external paths for the application."""
-from loguru import logger
 import configparser
 import pathlib
+import os
 
+# Internal Path Information #
 
-# Internal Resources Path Information
-# Path strings require double backslash even with raw f-strings (fr)
-# otherwise the string is not properly terminated.
 PATH = str(pathlib.Path().absolute())
-TEMPLATE_PATH = fr'{PATH}\resources\templates\\'
-ICON_PATH = fr'{PATH}\resources\icons\\'
-GAVEL_PATH = fr'{ICON_PATH}\gavel.ico'
-APPROVED_STAMP_PATH = fr'{ICON_PATH}\Approved_Stamp.docx'
+TEMPLATE_PATH = os.path.join(PATH, 'resources', 'templates')
+ICON_PATH = os.path.join(PATH, 'resources', 'icons')
+GAVEL_PATH = os.path.join(ICON_PATH, 'gavel.ico')
+GAVEL_SPLASH = os.path.join(ICON_PATH, 'gavel_main_splash.png')
+APPROVED_STAMP_PATH = os.path.join(ICON_PATH, 'Approved_Stamp.docx')
+
+# End Internal Path Information #
 
 
-config = configparser.ConfigParser()
-config.read(f'{PATH}\config.ini')
+def load_config() -> configparser.ConfigParser:
+    """Loads the app config file."""
+    path = str(pathlib.Path().absolute())
+    config = configparser.ConfigParser()
+    config.read(f'{path}/config.ini')
+    return config
 
-paths = config['paths']
 
+config_file = load_config()
+paths = dict(config_file.items('paths'))
+
+# External Path Information #
 
 # Save Path Information
 LOG_PATH = paths['logs_save_path']
@@ -43,11 +51,8 @@ CASE_LISTS_PATH = paths['daily_case_lists']
 DW_PATH = paths['digital_workflow_base_path']
 DW_ADMIN_JUDGE = paths['digital_workflow_admin_judge_path']
 DW_ADMIN_JUDGE_ADMIN = paths['digital_workflow_admin_judge_admin_entry_path']
-
 DW_ROHRER = paths['digital_workflow_rohrer_path']
 DW_BUNNER = paths['digital_workflow_bunner_path']
 DW_PROBATION = paths['digital_workflow_probation_path']
 DW_APPROVED_DIR = paths['digital_workflow_approved_path']
 DW_REJECTED_DIR = paths['digital_workflow_rejected_path']
-
-

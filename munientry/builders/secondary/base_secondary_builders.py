@@ -4,7 +4,8 @@ from PyQt6.QtCore import QDate
 from PyQt6.QtWidgets import QLabel
 
 from munientry.builders import base_builders as base
-from munientry.appsettings.settings import LogTransfer, set_view_field_data
+from munientry.helper_functions import set_view_field_data
+from munientry.logging_module import LogTransfer
 
 
 def enable_condition_frames(conditions_dialog, main_dialog) -> None:
