@@ -1,5 +1,4 @@
 """Module containting PyQt6 specific constants used throughout the application."""
-from PyQt6.QtCore import QDate, QDateTime
 from PyQt6.QtGui import QIntValidator
 from PyQt6.QtWidgets import QMessageBox
 

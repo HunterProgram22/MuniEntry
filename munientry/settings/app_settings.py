@@ -1,5 +1,6 @@
 """A module containing common variables used throughout the application."""
 import socket
+from enum import Enum
 from types import MappingProxyType
 
 from munientry.settings.config_settings import load_config
@@ -35,3 +36,37 @@ def get_host() -> str:
 
 
 HOST_NAME: str = get_host()
+
+
+class MainTabs(Enum):
+    """Indexes for the main (top level) tabs of the mainwindow of the application."""
+
+    entries = 0
+    workflows = 1
+
+
+class WorkflowTabs(Enum):
+    """Indexes for the workflows tabs of the mainwindow of the application."""
+
+    probation = 0
+    admin_judge = 1
+    judge_two = 2
+    magistrate_one = 3
+
+
+class EntryTabs(Enum):
+    """Indexes for the entry tabs of the mainwindow of the application."""
+
+    crim_traffic = 0
+    scheduling = 1
+    administrative = 2
+    civil = 3
+    probation = 4
+
+
+class CaseTabs(Enum):
+    """Indexes for the search tabs of the mainwindow of the application."""
+
+    crim_caselists = 0
+    crim_search = 1
+    civil_search = 2
