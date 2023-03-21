@@ -7,6 +7,7 @@ from munientry.settings.app_settings import HOST_NAME, CaseTabs, EntryTabs, Main
 from munientry.settings.config_settings import load_config
 
 
+
 class UserSettings(object):
     """Base UserSettings class."""
 
@@ -119,7 +120,9 @@ USER_SETTINGS = MappingProxyType({
 def load_user_settings(mainwindow) -> 'UserSettings':
     """Returns the user settings based on the computer that is loading the application."""
     config = load_config()
-    user_settings_dict = dict(config.items('user_settings'))
-    user_settings_key = user_settings_dict.get(HOST_NAME, 'GeneralUserSettings')
+    user_settings_config = config['user_settings']
+    computer_config = config['sockets']
+    user_computer = computer_config.get(HOST_NAME, 'None')
+    user_settings_key = user_settings_config.get(user_computer, 'GeneralUserSettings')
     user_settings = USER_SETTINGS.get(user_settings_key, GeneralUserSettings)
     return user_settings(mainwindow)
