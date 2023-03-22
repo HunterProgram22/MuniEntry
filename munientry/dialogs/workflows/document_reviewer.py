@@ -38,7 +38,7 @@ def open_word_document(doc_path):
     return_value = process.start(r"C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE", [doc_path])
     logger.debug(return_value)
 
-    process.waitForFinished()
+    # process.waitForFinished()
     # Create and show the document review dialog
     dialog = DocumentReviewDialog()
     result = dialog.exec()
@@ -46,7 +46,11 @@ def open_word_document(doc_path):
     # Handle the user's selection
     if result == QDialog.DialogCode.Accepted:
         # User accepted the document
+        # Need to call the accept_document first then terminate process.
+        process.waitForFinished()  # Does not finsihed until Word closed, need to close word.
         process.terminate()
     else:
         # User rejected the document
-        process.kill()
+        process.waitForFinished()
+        process.terminate()
+        # process.kill()

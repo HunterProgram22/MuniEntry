@@ -116,27 +116,27 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         table_widget.setItem(row, COL_TIME, QTableWidgetItem(time))
 
     def open_entry(self) -> None:
-        selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
-        entry_name = get_selected_entry_name(selected_entry_widget)
-        document_path = os.path.join(self.dialog.entry_path, entry_name)
-        open_word_document(document_path)
-        # try:
-        #     selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
-        # except (IndexError) as index:
-        #     logger.warning(index)
-        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        # try:
-        #     entry_name = get_selected_entry_name(selected_entry_widget)
-        # except (AttributeError) as att:
-        #     logger.warning(att)
-        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        # try:
-        #     document = os.path.join(self.dialog.entry_path, entry_name)
-        # except (UnboundLocalError) as unbound:
-        #     logger.warning(unbound)
-        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        # logger.info(f'{document} opened in workflow.')
-        # return os.startfile(document)
+        # selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
+        # entry_name = get_selected_entry_name(selected_entry_widget)
+        # document_path = os.path.join(self.dialog.entry_path, entry_name)
+        # open_word_document(document_path)
+        try:
+            selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
+        except (IndexError) as index:
+            logger.warning(index)
+            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        try:
+            entry_name = get_selected_entry_name(selected_entry_widget)
+        except (AttributeError) as att:
+            logger.warning(att)
+            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        try:
+            document = os.path.join(self.dialog.entry_path, entry_name)
+        except (UnboundLocalError) as unbound:
+            logger.warning(unbound)
+            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        logger.info(f'{document} opened in workflow.')
+        return os.startfile(document)
 
     def complete_workflow(self) -> None:
         """Loops through table rows and moves files if approved or rejected.
@@ -212,12 +212,21 @@ class AdminWorkflowDialog(base.BaseDialogBuilder, Ui_AdminEntriesWorkflowDialog)
         self.functions.create_table_on_dialog_load()
 
 
+class MagistrateAdoptionSlotFunctions(AdminJudgeWorkflowDialogSlotFunctions):
+
+    def open_entry(self) -> None:
+        selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
+        entry_name = get_selected_entry_name(selected_entry_widget)
+        document_path = os.path.join(self.dialog.entry_path, entry_name)
+        open_word_document(document_path)
+
+
 class MagistrateAdoptionWorkflowDialog(base.BaseDialogBuilder, Ui_MagistrateAdoptionWorkflowDialog):
     """Dialog builder class for Magistrate Adoption Digital Workflow."""
 
     entry_path = MAGISTRATE_ADOPT_ENTRY_PATH
     _signal_connector = AdminJudgeWorkflowDialogSignalConnector
-    _slots = AdminJudgeWorkflowDialogSlotFunctions
+    _slots = MagistrateAdoptionSlotFunctions
     _view_modifier = AdminJudgeWorkflowDialogViewModifier
     dialog_name = 'Magistrate Adoption Digital Workflow'
 
