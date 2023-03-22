@@ -17,6 +17,8 @@ from munientry.views.magistrate_adoption_workflow_dialog_ui import Ui_Magistrate
 from munientry.widgets.custom_widgets import WorkflowRadioButtonWidget
 from munientry.widgets.message_boxes import InfoBox
 
+from munientry.dialogs.workflows.document_reviewer import open_word_document
+
 ADMIN_ENTRY_PATH = f'{DW_ADMIN_JUDGE}/Admin//'
 MAGISTRATE_ADOPT_ENTRY_PATH = f'{DW_ADMIN_JUDGE}/MDAdopt//'
 COL_FILENAME = 0
@@ -114,23 +116,27 @@ class AdminJudgeWorkflowDialogSlotFunctions(base.BaseDialogSlotFunctions):
         table_widget.setItem(row, COL_TIME, QTableWidgetItem(time))
 
     def open_entry(self) -> None:
-        try:
-            selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
-        except (IndexError) as index:
-            logger.warning(index)
-            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        try:
-            entry_name = get_selected_entry_name(selected_entry_widget)
-        except (AttributeError) as att:
-            logger.warning(att)
-            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        try:
-            document = os.path.join(self.dialog.entry_path, entry_name)
-        except (UnboundLocalError) as unbound:
-            logger.warning(unbound)
-            return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
-        logger.info(f'{document} opened in workflow.')
-        return os.startfile(document)
+        selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
+        entry_name = get_selected_entry_name(selected_entry_widget)
+        document_path = os.path.join(self.dialog.entry_path, entry_name)
+        open_word_document(document_path)
+        # try:
+        #     selected_entry_widget = self.dialog.entries_tableWidget.selectedItems()[0]
+        # except (IndexError) as index:
+        #     logger.warning(index)
+        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        # try:
+        #     entry_name = get_selected_entry_name(selected_entry_widget)
+        # except (AttributeError) as att:
+        #     logger.warning(att)
+        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        # try:
+        #     document = os.path.join(self.dialog.entry_path, entry_name)
+        # except (UnboundLocalError) as unbound:
+        #     logger.warning(unbound)
+        #     return InfoBox('No entry was selected to open.', 'No Entry Selected').exec()
+        # logger.info(f'{document} opened in workflow.')
+        # return os.startfile(document)
 
     def complete_workflow(self) -> None:
         """Loops through table rows and moves files if approved or rejected.

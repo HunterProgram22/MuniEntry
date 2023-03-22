@@ -31,10 +31,8 @@ from munientry.builders.scheduling import (
     trial_to_court_hearing_notice_dialog,
 )
 from munientry.builders.probation import terms_comm_control_dialog, notice_cc_violation_dialog
-from munientry.builders.workflows import admin_judge_dw_dialog as admin
-from munientry.builders.workflows import bunner_dw_dialog as bunner
-from munientry.builders.workflows import probation_dw_dialogs as probation
-from munientry.builders.workflows import rohrer_dw_dialog as rohrer
+from munientry.dialogs.workflows import admin_judge_dw_dialog as admin
+from munientry.dialogs.workflows import probation_dw_dialogs as probation
 
 DIALOG_BUTTON_DICT = {
     'FineOnlyPleaButton': fine_only_plea_dialog.FineOnlyPleaDialog,
