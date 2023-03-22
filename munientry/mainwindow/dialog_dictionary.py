@@ -31,7 +31,7 @@ from munientry.builders.scheduling import (
     trial_to_court_hearing_notice_dialog,
 )
 from munientry.builders.probation import terms_comm_control_dialog, notice_cc_violation_dialog
-from munientry.builders.workflows import admin_judge_dw_dialog as hemmeter
+from munientry.builders.workflows import admin_judge_dw_dialog as admin
 from munientry.builders.workflows import bunner_dw_dialog as bunner
 from munientry.builders.workflows import probation_dw_dialogs as probation
 from munientry.builders.workflows import rohrer_dw_dialog as rohrer
@@ -78,9 +78,10 @@ DIALOG_BUTTON_DICT = {
     'fiscal_entriesButton': admin_fiscal_dialog.AdminFiscalDialog,
 
     # Workflow
-    'admin_workflowButton': hemmeter.AdminWorkflowDialog,
-    'rohrer_workflowButton': rohrer.RohrerWorkflowDialog,
-    'bunner_workflowButton': bunner.BunnerWorkflowDialog,
+    'admin_entries_workflow_btn': admin.AdminWorkflowDialog,
+    'md_adopt_workflow_btn': admin.MagistrateAdoptionWorkflowDialog,
+    # 'rohrer_workflowButton': rohrer.RohrerWorkflowDialog,
+    # 'bunner_workflowButton': bunner.BunnerWorkflowDialog,
     'pretrial_workflowButton': probation.PretrialWorkflowDialog,
     'community_control_workflowButton': probation.ComControlWorkflowDialog,
     }

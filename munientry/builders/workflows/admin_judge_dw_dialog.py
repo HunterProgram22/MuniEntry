@@ -13,10 +13,12 @@ from PyQt6.QtWidgets import QHeaderView, QTableWidget, QTableWidgetItem
 from munientry.settings.paths import APPROVED_STAMP_PATH, DW_ADMIN_JUDGE, DW_APPROVED_DIR, DW_REJECTED_DIR
 from munientry.builders import base_builders as base
 from munientry.views.admin_entries_workflow_dialog_ui import Ui_AdminEntriesWorkflowDialog
+from munientry.views.magistrate_adoption_workflow_dialog_ui import Ui_MagistrateAdoptionWorkflowDialog
 from munientry.widgets.custom_widgets import WorkflowRadioButtonWidget
 from munientry.widgets.message_boxes import InfoBox
 
 ADMIN_ENTRY_PATH = f'{DW_ADMIN_JUDGE}/Admin//'
+MAGISTRATE_ADOPT_ENTRY_PATH = f'{DW_ADMIN_JUDGE}/MDAdopt//'
 COL_FILENAME = 0
 COL_DECISION = 1
 COL_DATE = 2
@@ -198,6 +200,20 @@ class AdminWorkflowDialog(base.BaseDialogBuilder, Ui_AdminEntriesWorkflowDialog)
     _slots = AdminJudgeWorkflowDialogSlotFunctions
     _view_modifier = AdminJudgeWorkflowDialogViewModifier
     dialog_name = 'Admin Entries Digital Workflow'
+
+    def __init__(self, parent=None) -> None:
+        super().__init__(parent)
+        self.functions.create_table_on_dialog_load()
+
+
+class MagistrateAdoptionWorkflowDialog(base.BaseDialogBuilder, Ui_MagistrateAdoptionWorkflowDialog):
+    """Dialog builder class for Magistrate Adoption Digital Workflow."""
+
+    entry_path = MAGISTRATE_ADOPT_ENTRY_PATH
+    _signal_connector = AdminJudgeWorkflowDialogSignalConnector
+    _slots = AdminJudgeWorkflowDialogSlotFunctions
+    _view_modifier = AdminJudgeWorkflowDialogViewModifier
+    dialog_name = 'Magistrate Adoption Digital Workflow'
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
