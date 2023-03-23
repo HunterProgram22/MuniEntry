@@ -296,6 +296,6 @@ class Ui_CriminalSealingEntryDialog(object):
         self.label_5.setText(_translate("CriminalSealingEntryDialog", "Motion to seal is:"))
         self.seal_decision_box.setItemText(0, _translate("CriminalSealingEntryDialog", "Granted"))
         self.seal_decision_box.setItemText(1, _translate("CriminalSealingEntryDialog", "Denied - with reason"))
-        self.seal_decision_box.setItemText(2, _translate("CriminalSealingEntryDialog", "Denied - inelligible"))
+        self.seal_decision_box.setItemText(2, _translate("CriminalSealingEntryDialog", "Denied - ineligible"))
 from munientry.widgets.combo_boxes import DefenseCounselComboBox, NoScrollComboBox
 from munientry.widgets.custom_widgets import NoScrollDateEdit

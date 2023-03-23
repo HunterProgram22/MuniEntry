@@ -546,7 +546,7 @@ color: rgb(0, 0, 0);</string>
                </item>
                <item>
                 <property name="text">
-                 <string>Denied - inelligible</string>
+                 <string>Denied - ineligible</string>
                 </property>
                </item>
               </widget>
