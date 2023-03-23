@@ -40,5 +40,13 @@ class CriminalCaseInformation(object):
         return asdict(self)
 
 
-if __name__ == "__main__":
-    logger.info(f'{__name__} run directly.')
+@dataclass
+class CrimSealingModel(CriminalCaseInformation):
+
+    bci_number: str = None
+    fbi_number: str = None
+    offense_date: str = None
+    offense_seal_list: list = field(default_factory=list)
+    seal_decision: str = None
+    state_response: str = None
+    entry_content_text: str = None
