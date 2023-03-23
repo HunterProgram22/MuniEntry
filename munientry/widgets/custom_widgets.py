@@ -31,10 +31,10 @@ class NoScrollDateEdit(QDateEdit):
     def get_date_as_string(self) -> str:
         return self.date().toString(DATE_FORMAT)
 
-    def set_date_from_string(self, date_str: str) -> QDate:
+    def set_date_from_string(self, date_str: str, format=DATE_FORMAT) -> QDate:
         if date_str is None:
-            date_str = QDate.currentDate().toString(DATE_FORMAT)
-        date_str = QDate.fromString(date_str, DATE_FORMAT)
+            date_str = QDate.currentDate().toString(format)
+        date_str = QDate.fromString(date_str, format)
         return self.setDate(date_str)
 
     def wheelEvent(self, event):

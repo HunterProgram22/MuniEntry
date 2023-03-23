@@ -136,6 +136,7 @@ class CrimCaseData(object):
             self.case.fra_in_file = query_data.value('FraInFile')
             self.case.defense_counsel = query_data.value('DefenseCounsel').title()
             self.case.defense_counsel_type = query_data.value('PubDef')
+            self.case.violation_date = query_data.value('ViolationDate')
 
         offense = clean_offense_name(query_data.value('Charge'))
         statute = clean_statute_name(query_data.value('Statute'))

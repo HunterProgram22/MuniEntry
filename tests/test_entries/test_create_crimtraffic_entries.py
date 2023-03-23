@@ -511,11 +511,10 @@ def test_create_prelim_probation_violation_entry(monkeypatch, main_window):
 
 
 def test_create_criminalsealing_entry(monkeypatch, main_window):
-    """Tests the creation of a Freeform entry."""
+    """Tests the creation of a CrimSealing entry."""
     entry_dialog(monkeypatch, main_window)
     mouse_click(main_window.CriminalSealingButton)
     dialog = main_window.dialog
     enter_data(dialog.case_number_lineEdit, 'crimsealing_test')
-    enter_data(dialog.entry_content_textEdit, 'The Detroit Lions Rock!')
     mouse_click(dialog.create_entry_Button)
     assert dialog.entry_case_information.case_number == '21TRC05611crimsealing_test'

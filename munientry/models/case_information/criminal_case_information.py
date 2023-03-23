@@ -20,6 +20,8 @@ class CriminalCaseInformation(object):
     defense_counsel_type: str = None
     defense_counsel_waived: bool = False
 
+    violation_date: str = None
+
     offense_of_violence: bool = False
 
     charges_list: list = field(default_factory=list)

@@ -94,6 +94,16 @@ class CrimCmsNoChargeLoader(CrimCmsLoader):
         self.set_defense_counsel_type()
 
 
+class CrimSealingLoader(CrimCmsNoChargeLoader):
+    """Loader for the Criminal Sealing Dialog."""
+
+    def load_cms_data(self) -> None:
+        super().load_cms_data()
+        self.dialog.offense_date.set_date_from_string(self.cms_case.violation_date, 'yyyy-MM-dd')
+        offense_list = ', '.join(str(charge[0]) for charge in self.cms_case.charges_list)
+        self.dialog.offense_line_edit.setText(offense_list)
+
+
 class CmsDrivingInfoLoader(CrimCmsLoader):
     """Loader for CMS data for Driving Privileges."""
 
