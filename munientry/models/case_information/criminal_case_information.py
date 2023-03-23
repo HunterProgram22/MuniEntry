@@ -47,6 +47,7 @@ class CrimSealingModel(CriminalCaseInformation):
     fbi_number: str = None
     offense_date: str = None
     offense_seal_list: list = field(default_factory=list)
+    sealing_type: str = None
     seal_decision: str = None
     state_response: str = None
-    entry_content_text: str = None
+    denial_reasons: str = None

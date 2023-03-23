@@ -14,6 +14,14 @@ class CriminalSealingDialogViewModifier(crim.CrimTrafficViewModifier):
 class CriminalSealingDialogSlotFunctions(crim.CrimTrafficSlotFunctions):
     """Additional functions for Criminal Sealing Entry Dialog."""
 
+    def toggle_denial_reasons_box(self):
+        if self.dialog.seal_decision_box.currentText() == 'Denied - with reason':
+            self.dialog.denial_reasons_text_box.show()
+            self.dialog.denial_reasons_label.show()
+        else:
+            self.dialog.denial_reasons_text_box.hide()
+            self.dialog.denial_reasons_label.hide()
+
 
 class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
     """Signal Connector for Criminal Sealing Entry Dialog."""
@@ -21,7 +29,12 @@ class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
+        self.connect_toggle_fields()
 
+    def connect_toggle_fields(self):
+        self.dialog.seal_decision_box.currentTextChanged.connect(
+            self.dialog.functions.toggle_denial_reasons_box
+        )
 
 class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEntryDialog):
     """Dialog builder class for Criminal Sealing Entry."""
@@ -33,3 +46,6 @@ class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEnt
     _slots = CriminalSealingDialogSlotFunctions
     _view_modifier = CriminalSealingDialogViewModifier
     dialog_name = 'Criminal Sealing Entry'
+
+    def additional_setup(self):
+        self.functions.toggle_denial_reasons_box()
