@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.checkers.bond_checkers import ProbationViolationBondDialogInfoChecker
-from munientry.loaders.cms_case_loaders import CmsNoChargeLoader
+from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     ProbationViolationEntryCaseInformation,
 )
@@ -52,7 +52,7 @@ class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationVi
     """Dialog builder class for 'Prelim. Probation Violation / Bond' Entry."""
 
     _case_information_model = ProbationViolationEntryCaseInformation
-    _case_loader = CmsNoChargeLoader
+    _case_loader = CrimCmsNoChargeLoader
     _info_checker = ProbationViolationBondDialogInfoChecker
     _model_updater = ProbationViolationBondDialogUpdater
     _signal_connector = ProbationViolationBondDialogSignalConnector

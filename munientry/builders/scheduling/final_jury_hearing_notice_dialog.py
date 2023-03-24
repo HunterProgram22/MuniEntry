@@ -1,15 +1,15 @@
 """Module containing classes for hearing notices."""
 from loguru import logger
+from PyQt6.QtCore import QDate
 
-from munientry.appsettings.business_constants import DAY_DICT, EVENT_DICT
-from munientry.appsettings.pyqt_constants import TODAY
+from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
-from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
+from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.final_jury_notice_of_hearing_dialog_ui import (
     Ui_FinalJuryNoticeOfHearingDialog,
@@ -26,14 +26,16 @@ class FinalJuryNoticeHearingViewModifier(sched.SchedulingViewModifier):
         self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self) -> None:
-        self.dialog.entry_date.setDate(TODAY)
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.final_pretrial_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.entry_date.setDate(today)
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.final_pretrial_dateEdit.setDate(today)
 
     def set_calculator_dates(self) -> None:
-        self.dialog.old_speedy_trial_dateEdit.setDate(TODAY)
-        self.dialog.new_hearing_dateEdit.setDate(TODAY)
-        self.dialog.old_hearing_dateEdit.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.old_speedy_trial_dateEdit.setDate(today)
+        self.dialog.new_hearing_dateEdit.setDate(today)
+        self.dialog.old_hearing_dateEdit.setDate(today)
 
 
 class FinalJuryNoticeHearingSignalConnector(sched.SchedulingSignalConnector):
@@ -110,7 +112,7 @@ class FinalJuryNoticeHearingSlotFunctions(sched.SchedulingSlotFunctions):
             self.dialog.final_pretrial_time_box.setHidden(True)
 
 
-class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
     """Class for that sets the Case Information model for the Final Jury Notice of Hearing."""
 
     def __init__(self, dialog):
@@ -157,7 +159,7 @@ class FinalJuryNoticeHearingDialog(
     """
 
     _case_information_model = SchedulingCaseInformation
-    _case_loader = SchedulingCmsLoader
+    _case_loader = SchedulingCrimCmsLoader
     _info_checker = FinalJuryNoticeHearingInfoChecker
     _model_updater = FinalJuryNoticeHearingCaseInformationUpdater
     _signal_connector = FinalJuryNoticeHearingSignalConnector

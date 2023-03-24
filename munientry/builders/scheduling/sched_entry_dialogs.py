@@ -2,23 +2,24 @@
 
 **munientry.builders.scheduling.sched_entry_dialogs**
 """
-from loguru import logger
+from typing import TYPE_CHECKING
 
-from munientry.appsettings.business_constants import (
+from loguru import logger
+from PyQt6.QtCore import QDate
+
+from munientry.settings.business_constants import (
     DAY_DICT,
     EVENT_DICT,
     PRETRIAL_TIME_DICT,
     SPEEDY_TRIAL_TIME_DICT,
 )
-from munientry.appsettings.pyqt_constants import TODAY
-from munientry.appsettings.settings import TYPE_CHECKING
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
-from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
+from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.scheduling_entry_dialog_ui import Ui_SchedulingEntryDialog
 
@@ -50,9 +51,10 @@ class SchedulingEntryDialogViewModifier(sched.SchedulingViewModifier):
         self.dialog.final_pretrial_time_box.setCurrentText('1:00 PM')
 
     def set_view_dates(self):
-        self.dialog.arrest_summons_date_box.setDate(TODAY)
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.entry_date.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.arrest_summons_date_box.setDate(today)
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.entry_date.setDate(today)
 
 
 class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
@@ -235,12 +237,8 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
         return continuance_days
 
 
-class SchedulingEntryDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class SchedulingEntryModelUpdater(SchedulingModelUpdater):
     """Class for updating Case Information for the Scheduling Entry Dialog."""
-
-    def __init__(self, dialog):
-        super().__init__(dialog)
-        self.update_model_with_case_information_frame_data()
 
     def set_scheduling_dates(self):
         self.model.jury_trial_date = self.dialog.trial_dateEdit.date().toString(ENTRY_DATE_FORMAT)
@@ -284,9 +282,9 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
     """The builder class for the Scheduling Entry Dialog."""
 
     _case_information_model = SchedulingCaseInformation
-    _case_loader = SchedulingCmsLoader
+    _case_loader = SchedulingCrimCmsLoader
     _info_checker = SchedulingEntryDialogInfoChecker
-    _model_updater = SchedulingEntryDialogCaseInformationUpdater
+    _model_updater = SchedulingEntryModelUpdater
     _signal_connector = SchedulingEntryDialogSignalConnector
     _slots = SchedulingEntryDialogSlotFunctions
     _view_modifier = SchedulingEntryDialogViewModifier

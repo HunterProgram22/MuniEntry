@@ -17,8 +17,6 @@ from munientry.widgets.widget_settings import (
     NO_FOCUS,
     STRONG_FOCUS,
     TIME_FORMAT,
-    TODAY,
-    TODAY_STRING,
 )
 
 
@@ -28,15 +26,15 @@ class NoScrollDateEdit(QDateEdit):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setFocusPolicy(STRONG_FOCUS)
-        self.setDate(TODAY)
+        self.setDate(QDate.currentDate())
 
     def get_date_as_string(self) -> str:
         return self.date().toString(DATE_FORMAT)
 
-    def set_date_from_string(self, date_str: str) -> QDate:
+    def set_date_from_string(self, date_str: str, format=DATE_FORMAT) -> QDate:
         if date_str is None:
-            date_str = TODAY_STRING
-        date_str = QDate.fromString(date_str, DATE_FORMAT)
+            date_str = QDate.currentDate().toString(format)
+        date_str = QDate.fromString(date_str, format)
         return self.setDate(date_str)
 
     def wheelEvent(self, event):

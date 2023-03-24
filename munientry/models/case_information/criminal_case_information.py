@@ -20,6 +20,8 @@ class CriminalCaseInformation(object):
     defense_counsel_type: str = None
     defense_counsel_waived: bool = False
 
+    violation_date: str = None
+
     offense_of_violence: bool = False
 
     charges_list: list = field(default_factory=list)
@@ -40,5 +42,14 @@ class CriminalCaseInformation(object):
         return asdict(self)
 
 
-if __name__ == "__main__":
-    logger.info(f'{__name__} run directly.')
+@dataclass
+class CrimSealingModel(CriminalCaseInformation):
+
+    bci_number: str = None
+    fbi_number: str = None
+    offense_date: str = None
+    offense_seal_list: list = field(default_factory=list)
+    sealing_type: str = None
+    seal_decision: str = None
+    state_response: str = None
+    denial_reasons: str = None

@@ -29,7 +29,7 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
 )
 
-from munientry.appsettings.paths import ICON_PATH
+from munientry.settings.paths import GAVEL_PATH
 
 if TYPE_CHECKING:
     from munientry.mainwindow import MainWindow
@@ -52,7 +52,7 @@ class BaseSettingDialog(QDialog):
     def __init__(self, mainwindow: MainWindow, parent=None) -> None:
         super().__init__(parent)
         self.mainwindow = mainwindow
-        self.setWindowIcon(QIcon(f'{ICON_PATH}gavel.ico'))
+        self.setWindowIcon(QIcon(GAVEL_PATH))
         self.create_button_box()
         self.create_layout()
 

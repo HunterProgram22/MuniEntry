@@ -4,7 +4,6 @@ from loguru import logger
 from munientry.builders import base_builders as base
 from munientry.entrycreators.entry_creator import ProbationEntryCreator
 from munientry.models.template_types import TEMPLATE_DICT
-from munientry.appsettings.pyqt_constants import TODAY
 from munientry.widgets.message_boxes import InfoBox
 
 

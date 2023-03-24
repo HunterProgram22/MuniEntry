@@ -1,5 +1,6 @@
 """Module for MuniEntry report mainmenu processes."""
 from collections import namedtuple
+from datetime import datetime
 
 from loguru import logger
 from PyQt6.QtSql import QSqlQuery
@@ -87,8 +88,10 @@ def create_courtroom_report_window(data_list: list, report_name: str, report_dat
     Case = namedtuple('Case', 'event time case_number def_name')
     for row, case in enumerate(data_list):
         case = Case(case[0], case[1], case[2], case[3])
+        time_obj = datetime.strptime(case.time, '%I:%M %p')
+        time_str = time_obj.strftime('%H:%M')
         window.table.setItem(row, 0, QTableWidgetItem(case.event))
-        window.table.setItem(row, 1, QTableWidgetItem(case.time))
+        window.table.setItem(row, 1, QTableWidgetItem(time_str))
         window.table.setItem(row, 2, QTableWidgetItem(case.case_number))
         window.table.setItem(row, 3, QTableWidgetItem(case.def_name))
     return window

@@ -113,6 +113,11 @@ class CriminalSealingDialogUpdater(BaseDialogUpdater):
         return CaseInformationUpdater(self.dialog)
 
     def update_entry_content(self):
+        self.model.sealing_type = self.dialog.sealing_type_box.currentText()
         self.model.seal_decision = self.dialog.seal_decision_box.currentText()
         self.model.state_response = self.dialog.state_response_box.currentText()
-        self.model.entry_content_text = self.dialog.entry_content_textEdit.toPlainText()
+        self.model.denial_reasons = self.dialog.denial_reasons_text_box.toPlainText()
+        self.model.bci_number = self.dialog.bci_number_line_edit.text()
+        self.model.fbi_number = self.dialog.fbi_number_line_edit.text()
+        self.model.offense_seal_list = self.dialog.offense_line_edit.text()
+        self.model.offense_date = self.dialog.offense_date.get_date_as_string()

@@ -378,3 +378,22 @@ SCHEDULING_ALL_DIALOG_BUTTONS = [
     ('hemmeter_schedulingEntryButton'),
 ]
 
+PROBATION_ALL_DIALOG_BUTTONS = [
+    ('terms_comm_control_btn'),
+    ('notice_comm_control_violation_btn'),
+]
+
+CIVIL_ALL_DIALOG_BUTTONS = [
+    ('CivFreeformEntryButton'),
+]
+
+BLANK = ''
+DIALOG_BUTTON = 'dialog_button'
+
+
+class CaseToTest(object):
+    def __init__(self, case_list_id, first_name):
+        self.case_list_id = case_list_id
+        self.first_name = first_name
+        self.last_name = case_list_id.split(' - ')[0]
+        self.case_number = case_list_id.split(' - ')[1]

@@ -3,13 +3,14 @@ import sys
 import traceback
 from datetime import datetime
 from functools import partialmethod
+from typing import Any
 
 from loguru import logger
 from PyQt6 import QtCore, QtGui
 from PyQt6.QtWidgets import QApplication, QMessageBox
 
-from munientry.appsettings.paths import LOG_PATH, ICON_PATH
-from munientry.appsettings.settings import HOST_NAME
+from munientry.settings.paths import LOG_PATH, GAVEL_PATH
+from munientry.settings.app_settings import HOST_NAME
 
 
 # Logging Settings
@@ -21,7 +22,6 @@ FULL_LOG_NAME = f'Full_Log_{HOST_NAME}_{LOG_TIME}.log'
 USER_LOG_NAME = f'{HOST_NAME}_User_Log_{LOG_TIME}.log'
 
 APP_LOGGING_LEVEL = 20
-
 DATABASE_LOGLEVEL = 21
 DIALOG_LOGLEVEL = 22
 BUTTON_LOGLEVEL = 24
@@ -29,6 +29,22 @@ ACTION_LOGLEVEL = 25
 CHOICE_LOGLEVEL = 26
 CHECKFAIL_LOGLEVEL = 27
 REQUIRED_LOGLEVEL = 28
+
+
+class LogTransfer(object):
+    """Class for logging."""
+
+    @staticmethod
+    def log_model_update(model_class: type[Any], attribute: str, view_field_data: Any) -> None:
+        """Logs a transfer of data from the view to the model."""
+        class_name = model_class.__class__.__name__
+        logger.info(f'{class_name} {attribute} set to: {view_field_data}.')
+
+    @staticmethod
+    def log_view_update(model_class: type[Any], attribute: str, model_data: Any) -> None:
+        """Logs a transfer of data from the model to the view."""
+        class_name = model_class.__class__.__name__
+        logger.info(f'{class_name} {attribute} set to: {model_data}.')
 
 
 class CriticalErrorBox(QMessageBox):
@@ -42,7 +58,7 @@ class CriticalErrorBox(QMessageBox):
         logger.critical(self.title)
 
     def set_up_widget(self):
-        self.setWindowIcon(QtGui.QIcon(f'{ICON_PATH}gavel.ico'))
+        self.setWindowIcon(QtGui.QIcon(GAVEL_PATH))
         self.setIcon(QMessageBox.Icon.Critical)
         self.setWindowTitle(self.title)
         self.setText(self.message)

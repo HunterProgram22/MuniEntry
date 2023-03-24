@@ -1,6 +1,6 @@
 """Module for checking entries and moving into workflow."""
 
-from munientry.appsettings.paths import DW_PROBATION
+from munientry.settings.paths import DW_PROBATION
 
 SCRAM_PATH = f'{DW_PROBATION}/Scram_Gps//'
 COMM_CONTROL_PATH = f'{DW_PROBATION}/Comm_Control//'

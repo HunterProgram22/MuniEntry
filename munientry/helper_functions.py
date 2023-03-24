@@ -2,6 +2,8 @@
 from __future__ import annotations
 import random
 from datetime import date, datetime, timedelta
+from types import MappingProxyType
+from typing import Any
 
 from loguru import logger
 
@@ -194,5 +196,35 @@ def reset_case_number(case_year: str, case_code: str, case_five_number: str) -> 
             return f'{case_year}{case_code}0000{case_five_number}'
 
 
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
+WIDGET_TYPE_ACCESS_DICT = MappingProxyType({
+    'NoScrollComboBox': 'currentText',
+    'ConditionCheckbox': 'isChecked',
+    'QCheckBox': 'isChecked',
+    'QRadioButton': 'isChecked',
+    'QLineEdit': 'text',
+    'QTextEdit': 'toPlainText',
+    'NoScrollDateEdit': 'get_date_as_string',
+    'NoScrollTimeEdit': 'get_time_as_string',
+})
+
+
+def get_view_field_data(view: Any, widget_type: str) -> Any:
+    """Returns the getter access method for a widget."""
+    return getattr(view, WIDGET_TYPE_ACCESS_DICT.get(widget_type, 'None'))()
+
+
+WIDGET_TYPE_SET_DICT = MappingProxyType({
+    'NoScrollComboBox': 'setCurrentText',
+    'QCheckBox': 'setChecked',
+    'ConditionCheckbox': 'setChecked',
+    'QRadioButton': 'setChecked',
+    'QLineEdit': 'setText',
+    'QTextEdit': 'setPlainText',
+    'NoScrollDateEdit': 'set_date_from_string',
+    'NoScrollTimeEdit': 'set_time_from_string',
+})
+
+
+def set_view_field_data(view: Any, widget_type: str, model_data: Any) -> None:
+    """Returns the setter method for a widget."""
+    getattr(view, WIDGET_TYPE_SET_DICT.get(widget_type))(model_data)

@@ -205,7 +205,7 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,0,1,1">
+            <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0,0,0">
              <item row="0" column="0">
               <widget class="QLabel" name="label">
                <property name="text">
@@ -223,13 +223,6 @@ font-weight: bold;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_2">
-               <property name="text">
-                <string>Def. Last Name:</string>
                </property>
               </widget>
              </item>
@@ -264,17 +257,10 @@ background-color: rgb(255, 255, 255);</string>
                </item>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_24">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Def. Counsel:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_26">
-               <property name="text">
-                <string>Date:</string>
+                <string>Def. Last Name:</string>
                </property>
               </widget>
              </item>
@@ -295,6 +281,20 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_26">
+               <property name="text">
+                <string>Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>Case Number:</string>
+               </property>
+              </widget>
+             </item>
              <item row="0" column="4">
               <widget class="QPushButton" name="cancel_Button">
                <property name="focusPolicy">
@@ -308,10 +308,10 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="2">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string>Case Number:</string>
+             <item row="0" column="1">
+              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
@@ -325,13 +325,6 @@ background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="defendant_first_name_lineEdit">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="4">
               <widget class="QPushButton" name="clear_fields_case_Button">
                <property name="focusPolicy">
@@ -342,6 +335,13 @@ background-color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>Clear Fields</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_24">
+               <property name="text">
+                <string>Def. Counsel:</string>
                </property>
               </widget>
              </item>
@@ -404,8 +404,8 @@ font-weight: bold;</string>
             <property name="lineWidth">
              <number>2</number>
             </property>
-            <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0">
-             <item row="0" column="0" colspan="2">
+            <layout class="QGridLayout" name="gridLayout_6" rowstretch="0,0,0,0,0,0,0,0,0,0,0">
+             <item row="0" column="0" colspan="4">
               <widget class="QLabel" name="label_4">
                <property name="font">
                 <font>
@@ -425,14 +425,59 @@ font-weight: bold;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="2" column="1" colspan="3">
+              <widget class="QLineEdit" name="offense_line_edit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QLineEdit" name="fbi_number_line_edit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
               <widget class="QLabel" name="label_5">
                <property name="text">
                 <string>Motion to seal is:</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="1" column="0">
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Offense Date:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLabel" name="label_6">
+               <property name="text">
+                <string>State of Ohio response to motion to seal:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="NoScrollComboBox" name="state_response_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>did not oppose</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>opposed</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="8" column="1">
               <widget class="NoScrollComboBox" name="seal_decision_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
@@ -449,13 +494,106 @@ font-weight: bold;</string>
                </item>
                <item>
                 <property name="text">
-                 <string>Denied - inelligible</string>
+                 <string>Denied - ineligible</string>
                 </property>
                </item>
               </widget>
              </item>
-             <item row="3" column="0" colspan="2">
-              <widget class="QPlainTextEdit" name="entry_content_textEdit">
+             <item row="1" column="1">
+              <widget class="NoScrollDateEdit" name="offense_date">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);</string>
+               </property>
+               <property name="calendarPopup">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>FBI Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>BCI Number:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Offenses:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="bci_number_line_edit">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1" colspan="3">
+              <widget class="NoScrollComboBox" name="sealing_type_box">
+               <property name="styleSheet">
+                <string notr="true">background-color: rgb(255, 255, 255);</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>sealing of a conviction or bail forfeiture record pursuant to R.C. 2953.32</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>sealing after a not guilty finding or dismissal pursuant to R.C. 2953.33</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>expungement of firearms conviction pursuant to R.C. 2953.35</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>expungment of conviction by victim of human trafficking pursuant to R.C. 2935.36</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Motion to seal type:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0" colspan="4">
+              <widget class="Line" name="line">
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <property name="lineWidth">
+                <number>2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLabel" name="denial_reasons_label">
+               <property name="text">
+                <string>Denial reasons:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1" colspan="3">
+              <widget class="QPlainTextEdit" name="denial_reasons_text_box">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -465,30 +603,6 @@ font-weight: bold;</string>
                <property name="lineWidth">
                 <number>2</number>
                </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_6">
-               <property name="text">
-                <string>State of Ohio response to motion to seal:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="NoScrollComboBox" name="state_response_box">
-               <property name="styleSheet">
-                <string notr="true">background-color: rgb(255, 255, 255);</string>
-               </property>
-               <item>
-                <property name="text">
-                 <string>did not oppose</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>opposed</string>
-                </property>
-               </item>
               </widget>
              </item>
             </layout>
@@ -521,8 +635,19 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>bci_number_line_edit</tabstop>
+  <tabstop>fbi_number_line_edit</tabstop>
+  <tabstop>sealing_type_box</tabstop>
+  <tabstop>state_response_box</tabstop>
+  <tabstop>seal_decision_box</tabstop>
+  <tabstop>denial_reasons_text_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
+  <tabstop>defense_counsel_name_box</tabstop>
+  <tabstop>defense_counsel_type_box</tabstop>
+  <tabstop>defense_counsel_waived_checkBox</tabstop>
+  <tabstop>offense_date</tabstop>
+  <tabstop>offense_line_edit</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>

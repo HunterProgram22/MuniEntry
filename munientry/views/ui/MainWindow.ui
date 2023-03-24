@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1329</width>
-    <height>820</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>820</height>
+    <height>900</height>
    </size>
   </property>
   <property name="font">
@@ -45,24 +45,798 @@ font-weight: bold;</string>
        <attribute name="title">
         <string>Entries</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_9">
+       <layout class="QGridLayout" name="gridLayout_9" rowstretch="0,0,3">
         <item row="2" column="0">
-         <widget class="Line" name="line">
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
           </property>
-          <property name="lineWidth">
-           <number>2</number>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1285</width>
+             <height>428</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_33">
+            <item row="0" column="0">
+             <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0">
+              <item row="1" column="0">
+               <widget class="QTabWidget" name="entries_tab_widget">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(218, 218, 218);</string>
+                </property>
+                <property name="currentIndex">
+                 <number>0</number>
+                </property>
+                <widget class="QWidget" name="crim_traffic_tab">
+                 <attribute name="title">
+                  <string>Crim/Traffic</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,1">
+                  <property name="horizontalSpacing">
+                   <number>24</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>12</number>
+                  </property>
+                  <item row="3" column="1">
+                   <widget class="QLabel" name="label_4">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Plea Only Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="CrimDialogButton" name="FineOnlyPleaButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Fine Only</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="2">
+                   <widget class="CrimDialogButton" name="NoPleaBondButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Appear on Warrant (No Plea) / Bond</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_2">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Plea and Sentence Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="CrimDialogButton" name="JailCCPleaButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Jail and/or Community Control</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="CrimDialogButton" name="NotGuiltyBondButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Not Guilty Plea / Bond</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="2">
+                   <widget class="QLabel" name="label_6">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Bond Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="2">
+                   <widget class="CrimDialogButton" name="BondHearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Bond Modification / Revocation</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="CrimDialogButton" name="PleaOnlyButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Plea Only - Future Sentencing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="CrimDialogButton" name="DiversionButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Diversion</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="2">
+                   <widget class="CrimDialogButton" name="ProbationViolationBondButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Prelim. Probation Violation / Bond</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="2">
+                   <widget class="CrimDialogButton" name="FailureToAppearButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Failed to Appear / Issue Warrant</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="CrimDialogButton" name="LeapAdmissionButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>LEAP Admission Plea</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_8">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>LEAP Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="2">
+                   <widget class="CrimDialogButton" name="FreeformEntryButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Freeform Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="0">
+                   <widget class="CrimDialogButton" name="LeapSentencingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>LEAP Sentencing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="2">
+                   <widget class="QLabel" name="label_7">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>General / Warrant Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="0">
+                   <widget class="CrimDialogButton" name="LeapAdmissionValidButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>LEAP Admission - Already Valid</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="2">
+                   <widget class="CrimDialogButton" name="ArraignmentContinueButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 255, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Arraignment Continuance</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="1">
+                   <widget class="QLabel" name="label_5">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Sentencing Only Entries</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <widget class="CrimDialogButton" name="TrialSentencingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Jury Trial / Trial to Court Sentencing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="1">
+                   <widget class="CrimDialogButton" name="SentencingOnlyButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 127);</string>
+                    </property>
+                    <property name="text">
+                     <string>Sentencing Only - Already Plead</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="1">
+                   <widget class="QLabel" name="label_21">
+                    <property name="font">
+                     <font>
+                      <family>Palatino Linotype</family>
+                      <pointsize>11</pointsize>
+                      <weight>75</weight>
+                      <italic>false</italic>
+                      <bold>true</bold>
+                      <underline>true</underline>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>Sealing Entry</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="1">
+                   <widget class="CrimDialogButton" name="CriminalSealingButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string>Criminal Sealing</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="scheduling_tab">
+                 <attribute name="title">
+                  <string>Scheduling</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,2">
+                  <property name="horizontalSpacing">
+                   <number>30</number>
+                  </property>
+                  <property name="verticalSpacing">
+                   <number>6</number>
+                  </property>
+                  <item row="3" column="2">
+                   <widget class="SchedDialogButton" name="rohrer_general_hearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Rohrer - General Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="0">
+                   <widget class="SchedDialogButton" name="hemmeter_schedulingEntryButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Hemmeter - Scheduling Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="SchedDialogButton" name="rohrer_schedulingEntryButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Rohrer - Scheduling Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="SchedDialogButton" name="hemmeter_final_jury_hearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Hemmeter - Final/Jury Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="SchedDialogButton" name="rohrer_final_jury_hearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Rohrer - Final/Jury Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0" colspan="3">
+                   <widget class="Line" name="line_3">
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                    <property name="lineWidth">
+                     <number>2</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QPushButton" name="random_judge_Button">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(255, 170, 0);</string>
+                    </property>
+                    <property name="text">
+                     <string>Assign Random Judge</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <widget class="QLabel" name="assign_judge_label">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>75</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Assigned Judge Name</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="2">
+                   <widget class="QLabel" name="last_judge_assigned_label">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>75</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>The Last Judge Assigned was None.</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                    <property name="margin">
+                     <number>10</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="SchedDialogButton" name="rohrer_trial_court_hearingButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Rohrer - Trial To Court Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="SchedDialogButton" name="hemmeter_trial_court_hearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Hemmeter - Trial To Court Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="SchedDialogButton" name="hemmeter_general_hearingButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Hemmeter - General Notice of Hearing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QPushButton" name="not_guilty_report_Button">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string>Run Not Guilty Report</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="administrative_tab">
+                 <attribute name="title">
+                  <string>Administrative</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_15">
+                  <property name="horizontalSpacing">
+                   <number>128</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="AdminDrivingDialogButton" name="limited_driving_privilegesButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Limited Driving Privileges</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="AdminFiscalDialogButton" name="fiscal_entriesButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Fiscal Journal Entries</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="AdminJuryDialogButton" name="juror_paymentButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(85, 170, 255);</string>
+                    </property>
+                    <property name="text">
+                     <string>Juror Payment Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="civil_tab">
+                 <property name="styleSheet">
+                  <string notr="true">background-color: rgb(220, 244, 255);</string>
+                 </property>
+                 <attribute name="title">
+                  <string>Civil</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_21">
+                  <item row="0" column="0">
+                   <widget class="CivilDialogButton" name="CivFreeformEntryButton">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string>Freeform Entry</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QPushButton" name="pushButton">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+                <widget class="QWidget" name="probation_tab">
+                 <attribute name="title">
+                  <string>Probation</string>
+                 </attribute>
+                 <layout class="QGridLayout" name="gridLayout_28">
+                  <property name="horizontalSpacing">
+                   <number>36</number>
+                  </property>
+                  <item row="0" column="0">
+                   <widget class="ProbationDialogButton" name="terms_comm_control_btn">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string>Terms of Community Control</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="ProbationDialogButton" name="notice_comm_control_violation_btn">
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(160, 160, 160);</string>
+                    </property>
+                    <property name="text">
+                     <string>Notice of Community Control Violation</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>45</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Palatino Linotype</family>
+                  <pointsize>11</pointsize>
+                  <weight>75</weight>
+                  <italic>false</italic>
+                  <bold>true</bold>
+                  <underline>true</underline>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>ENTRIES</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QTabWidget" name="cases_tab_widget">
           <property name="enabled">
            <bool>true</bool>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>210</height>
+           </size>
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(218, 218, 218);</string>
@@ -71,17 +845,29 @@ font-weight: bold;</string>
            <number>0</number>
           </property>
           <widget class="QWidget" name="case_list_tab">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>180</height>
+            </size>
+           </property>
            <attribute name="title">
             <string>Daily Case Lists</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_11">
             <item row="0" column="0">
-             <layout class="QGridLayout" name="gridLayout_8" rowstretch="1,0,0,0,0,0,0,0">
+             <layout class="QGridLayout" name="gridLayout_8">
               <property name="verticalSpacing">
-               <number>18</number>
+               <number>6</number>
               </property>
               <item row="5" column="1">
                <widget class="QRadioButton" name="trials_to_court_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Trials to Court and Jury Trials</string>
                 </property>
@@ -92,6 +878,12 @@ font-weight: bold;</string>
               </item>
               <item row="5" column="2">
                <widget class="QRadioButton" name="pcvh_fcvh_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>PCVH/FCVH</string>
                 </property>
@@ -102,6 +894,12 @@ font-weight: bold;</string>
               </item>
               <item row="5" column="0">
                <widget class="QRadioButton" name="pleas_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Pleas and Motion/Oral Hearings</string>
                 </property>
@@ -132,6 +930,12 @@ font-weight: bold;</string>
                   <height>30</height>
                  </size>
                 </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -156,6 +960,12 @@ font-weight: bold;</string>
               </item>
               <item row="3" column="0">
                <widget class="QRadioButton" name="arraignments_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Arraignments</string>
                 </property>
@@ -172,6 +982,12 @@ font-weight: bold;</string>
               </item>
               <item row="3" column="2">
                <widget class="QRadioButton" name="final_pretrial_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Final Pre-trials</string>
                 </property>
@@ -182,6 +998,12 @@ font-weight: bold;</string>
               </item>
               <item row="3" column="1">
                <widget class="QRadioButton" name="slated_radio_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>25</height>
+                 </size>
+                </property>
                 <property name="text">
                  <string>Slated                                  </string>
                 </property>
@@ -199,6 +1021,12 @@ font-weight: bold;</string>
               </item>
               <item row="7" column="0">
                <widget class="QPushButton" name="crim_show_docket_case_list_btn">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
+                </property>
                 <property name="styleSheet">
                  <string notr="true">background-color: rgb(160, 160, 160);</string>
                 </property>
@@ -219,7 +1047,7 @@ font-weight: bold;</string>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>120</height>
+                  <height>30</height>
                  </size>
                 </property>
                 <property name="font">
@@ -509,768 +1337,6 @@ font-weight: bold;</string>
            </layout>
           </widget>
          </widget>
-        </item>
-        <item row="3" column="0">
-         <layout class="QGridLayout" name="gridLayout_5" rowstretch="1,0">
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>120</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Palatino Linotype</family>
-              <pointsize>11</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>true</underline>
-             </font>
-            </property>
-            <property name="text">
-             <string>ENTRIES</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QTabWidget" name="entries_tab_widget">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(218, 218, 218);</string>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <widget class="QWidget" name="crim_traffic_tab">
-             <attribute name="title">
-              <string>Crim/Traffic</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,1,1">
-              <property name="horizontalSpacing">
-               <number>24</number>
-              </property>
-              <property name="verticalSpacing">
-               <number>12</number>
-              </property>
-              <item row="3" column="1">
-               <widget class="QLabel" name="label_4">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Plea Only Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="0">
-               <widget class="CrimDialogButton" name="FineOnlyPleaButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Fine Only</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="2">
-               <widget class="CrimDialogButton" name="NoPleaBondButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Appear on Warrant (No Plea) / Bond</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Plea and Sentence Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="CrimDialogButton" name="JailCCPleaButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Jail and/or Community Control</string>
-                </property>
-               </widget>
-              </item>
-              <item row="4" column="1">
-               <widget class="CrimDialogButton" name="NotGuiltyBondButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Not Guilty Plea / Bond</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="2">
-               <widget class="QLabel" name="label_6">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Bond Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="CrimDialogButton" name="BondHearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Bond Modification / Revocation</string>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="1">
-               <widget class="CrimDialogButton" name="PleaOnlyButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Plea Only - Future Sentencing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="CrimDialogButton" name="DiversionButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Diversion</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="CrimDialogButton" name="ProbationViolationBondButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Prelim. Probation Violation / Bond</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="2">
-               <widget class="CrimDialogButton" name="FailureToAppearButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Failed to Appear / Issue Warrant</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="CrimDialogButton" name="LeapAdmissionButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>LEAP Admission Plea</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>LEAP Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="2">
-               <widget class="CrimDialogButton" name="FreeformEntryButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Freeform Entry</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="CrimDialogButton" name="LeapSentencingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>LEAP Sentencing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="2">
-               <widget class="QLabel" name="label_7">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>General / Warrant Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="CrimDialogButton" name="LeapAdmissionValidButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>LEAP Admission - Already Valid</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
-               <widget class="CrimDialogButton" name="ArraignmentContinueButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 255, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Arraignment Continuance</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QLabel" name="label_5">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Sentencing Only Entries</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="CrimDialogButton" name="TrialSentencingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Jury Trial / Trial to Court Sentencing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="CrimDialogButton" name="SentencingOnlyButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 127);</string>
-                </property>
-                <property name="text">
-                 <string>Sentencing Only - Already Plead</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1">
-               <widget class="QLabel" name="label_21">
-                <property name="font">
-                 <font>
-                  <family>Palatino Linotype</family>
-                  <pointsize>11</pointsize>
-                  <weight>75</weight>
-                  <italic>false</italic>
-                  <bold>true</bold>
-                  <underline>true</underline>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Sealing Entry</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1">
-               <widget class="CrimDialogButton" name="CriminalSealingButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string>Criminal Sealing</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="scheduling_tab">
-             <attribute name="title">
-              <string>Scheduling</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_4" columnstretch="2,1,2">
-              <property name="horizontalSpacing">
-               <number>30</number>
-              </property>
-              <property name="verticalSpacing">
-               <number>6</number>
-              </property>
-              <item row="3" column="2">
-               <widget class="SchedDialogButton" name="rohrer_general_hearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Rohrer - General Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="SchedDialogButton" name="hemmeter_schedulingEntryButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Hemmeter - Scheduling Entry</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="SchedDialogButton" name="rohrer_schedulingEntryButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Rohrer - Scheduling Entry</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="SchedDialogButton" name="hemmeter_final_jury_hearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Hemmeter - Final/Jury Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="SchedDialogButton" name="rohrer_final_jury_hearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Rohrer - Final/Jury Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0" colspan="3">
-               <widget class="Line" name="line_3">
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-                <property name="lineWidth">
-                 <number>2</number>
-                </property>
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QPushButton" name="random_judge_Button">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(255, 170, 0);</string>
-                </property>
-                <property name="text">
-                 <string>Assign Random Judge</string>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QLabel" name="assign_judge_label">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>75</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Assigned Judge Name</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="2">
-               <widget class="QLabel" name="last_judge_assigned_label">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>75</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>The Last Judge Assigned was None.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-                <property name="margin">
-                 <number>10</number>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="2">
-               <widget class="SchedDialogButton" name="rohrer_trial_court_hearingButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Rohrer - Trial To Court Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="SchedDialogButton" name="hemmeter_trial_court_hearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Hemmeter - Trial To Court Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="SchedDialogButton" name="hemmeter_general_hearingButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Hemmeter - General Notice of Hearing</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="not_guilty_report_Button">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string>Run Not Guilty Report</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="administrative_tab">
-             <attribute name="title">
-              <string>Administrative</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_15">
-              <property name="horizontalSpacing">
-               <number>128</number>
-              </property>
-              <item row="0" column="0">
-               <widget class="AdminDrivingDialogButton" name="limited_driving_privilegesButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Limited Driving Privileges</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="AdminFiscalDialogButton" name="fiscal_entriesButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Fiscal Journal Entries</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="AdminJuryDialogButton" name="juror_paymentButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(85, 170, 255);</string>
-                </property>
-                <property name="text">
-                 <string>Juror Payment Entry</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="civil_tab">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(220, 244, 255);</string>
-             </property>
-             <attribute name="title">
-              <string>Civil</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_21">
-              <item row="0" column="0">
-               <widget class="CivilDialogButton" name="CivFreeformEntryButton">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string>Freeform Entry</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QPushButton" name="pushButton">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-            <widget class="QWidget" name="probation_tab">
-             <attribute name="title">
-              <string>Probation</string>
-             </attribute>
-             <layout class="QGridLayout" name="gridLayout_28">
-              <property name="horizontalSpacing">
-               <number>36</number>
-              </property>
-              <item row="0" column="0">
-               <widget class="ProbationDialogButton" name="terms_comm_control_btn">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string>Terms of Community Control</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="ProbationDialogButton" name="notice_comm_control_violation_btn">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(160, 160, 160);</string>
-                </property>
-                <property name="text">
-                 <string>Notice of Community Control Violation</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-          </item>
-         </layout>
         </item>
         <item row="0" column="0">
          <widget class="QStackedWidget" name="court_staff_widget">

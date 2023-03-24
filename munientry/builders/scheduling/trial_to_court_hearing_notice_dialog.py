@@ -2,18 +2,19 @@
 
 **munientry.builders.scheduling.trial_to_court_hearing_notice_dialog**
 """
-from loguru import logger
+from typing import TYPE_CHECKING
 
-from munientry.appsettings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
-from munientry.appsettings.pyqt_constants import TODAY
-from munientry.appsettings.settings import TYPE_CHECKING
+from loguru import logger
+from PyQt6.QtCore import QDate
+
+from munientry.settings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
 from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
-from munientry.loaders.cms_case_loaders import SchedulingCmsLoader
+from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
-    SchedulingDialogCaseInformationUpdater,
+    SchedulingModelUpdater,
 )
 from munientry.views.trial_to_court_hearing_dialog_ui import (
     Ui_TrialToCourtHearingDialog,
@@ -34,16 +35,18 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
         self.set_view_dates()
 
     def set_view_dates(self) -> None:
-        self.dialog.trial_dateEdit.setDate(TODAY)
-        self.dialog.entry_date.setDate(TODAY)
+        today = QDate.currentDate()
+        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.entry_date.setDate(today)
 
 
 class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class for Trial To Court Hearing Notice Functions - only inherits at present."""
 
     def set_event_date(self, day_to_set: str) -> 'QDate':
-        days_until_speedy_trial_date = TODAY.daysTo(self.get_speedy_trial_date())
-        event_date = TODAY.addDays(days_until_speedy_trial_date)
+        today = QDate.currentDate()
+        days_until_speedy_trial_date = today.daysTo(self.get_speedy_trial_date())
+        event_date = today.addDays(days_until_speedy_trial_date)
         while event_date.dayOfWeek() != DAY_DICT.get(day_to_set):
             event_date = event_date.addDays(-1)
         return event_date
@@ -119,7 +122,7 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
         )
 
 
-class TrialToCourtDialogCaseInformationUpdater(SchedulingDialogCaseInformationUpdater):
+class TrialToCourtDialogCaseInformationUpdater(SchedulingModelUpdater):
     """Class for updating Trial To Court Hearing Notice Dialog information."""
 
     def __init__(self, dialog):
@@ -154,7 +157,7 @@ class TrialToCourtHearingDialog(sched.SchedulingDialogBuilder, Ui_TrialToCourtHe
     """
 
     _case_information_model = SchedulingCaseInformation
-    _case_loader = SchedulingCmsLoader
+    _case_loader = SchedulingCrimCmsLoader
     _info_checker = TrialToCourtDialogInfoChecker
     _model_updater = TrialToCourtDialogCaseInformationUpdater
     _signal_connector = TrialToCourtDialogSignalConnector

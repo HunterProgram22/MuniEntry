@@ -4,7 +4,7 @@ from types import MappingProxyType
 
 from loguru import logger
 
-from munientry.appsettings.paths import (
+from munientry.settings.paths import (
     BATCH_SAVE_PATH,
     CRIMTRAFFIC_SAVE_PATH,
     DRIVE_SAVE_PATH,

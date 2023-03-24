@@ -36,3 +36,4 @@ def test_all_entry_buttons_with_case(monkeypatch, main_window, dialog_button, te
     # Create and Open Word Document - Passes even if no entry is opened b/c it checks data
     mouse_click(main_window.dialog.create_entry_Button)
     assert main_window.dialog.entry_case_information.case_number == f'21TRC05611{test_name}'
+    assert main_window.dialog.entry_case_information.defendant.last_name == 'Barkschat'
