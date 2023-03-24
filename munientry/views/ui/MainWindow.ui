@@ -13,7 +13,7 @@
   <property name="minimumSize">
    <size>
     <width>1000</width>
-    <height>900</height>
+    <height>800</height>
    </size>
   </property>
   <property name="font">
@@ -57,7 +57,7 @@ font-weight: bold;</string>
              <x>0</x>
              <y>0</y>
              <width>1285</width>
-             <height>428</height>
+             <height>430</height>
             </rect>
            </property>
            <layout class="QGridLayout" name="gridLayout_33">
