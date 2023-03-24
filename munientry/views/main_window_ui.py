@@ -13,7 +13,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1329, 900)
-        MainWindow.setMinimumSize(QtCore.QSize(1000, 900))
+        MainWindow.setMinimumSize(QtCore.QSize(1000, 800))
         font = QtGui.QFont()
         font.setFamily("Palatino Linotype")
         font.setPointSize(11)
@@ -39,7 +39,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1285, 428))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 1285, 430))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.gridLayout_33 = QtWidgets.QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout_33.setObjectName("gridLayout_33")
