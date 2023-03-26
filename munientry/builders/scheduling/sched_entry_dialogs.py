@@ -105,24 +105,24 @@ class SchedulingEntryDialogSignalConnector(sched.SchedulingSignalConnector):
         )
 
     def connect_pretrial_radio_buttons(self):
-        """Local functions are only used to shorten line length to < 100 characters."""
         final_and_pretrial_update = self.dialog.functions.update_final_pretrial_and_pretrial_only
         set_pretrial = self.dialog.functions.set_pretrial_scheduled
-        self.dialog.four_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
-        self.dialog.three_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
-        self.dialog.two_week_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
-        self.dialog.no_pretrial_radioButton.clicked.connect(final_and_pretrial_update)
-        self.dialog.four_week_pretrial_radioButton.clicked.connect(set_pretrial)
-        self.dialog.three_week_pretrial_radioButton.clicked.connect(set_pretrial)
-        self.dialog.two_week_pretrial_radioButton.clicked.connect(set_pretrial)
-        self.dialog.no_pretrial_radioButton.clicked.connect(set_pretrial)
+        pretrial_radio_btns = [
+            self.dialog.four_week_pretrial_radio_btn,
+            self.dialog.three_week_pretrial_radio_btn,
+            self.dialog.two_week_pretrial_radio_btn,
+            self.dialog.no_pretrial_radio_btn,
+        ]
+        for button in pretrial_radio_btns:
+            button.clicked.connect(final_and_pretrial_update)
+            button.clicked.connect(set_pretrial)
 
 
 class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
     """Class that contains all signals for the Scheduling Entry Dialogs."""
 
     def set_pretrial_scheduled(self):
-        if self.dialog.no_pretrial_radioButton.isChecked():
+        if self.dialog.no_pretrial_radio_btn.isChecked():
             self.dialog.entry_case_information.pretrial_scheduled = False
             self.dialog.pretrial_dateEdit.setHidden(True)
             self.dialog.pretrial_date_label.setHidden(True)
@@ -193,13 +193,13 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     def get_pretrial_time(self) -> int:
         """Returns the number of days the pretrial is to be set before final pretrial."""
-        pretrial_buttons = [
-            self.dialog.four_week_pretrial_radioButton,
-            self.dialog.three_week_pretrial_radioButton,
-            self.dialog.two_week_pretrial_radioButton,
-            self.dialog.no_pretrial_radioButton,
+        pretrial_radio_btns = [
+            self.dialog.four_week_pretrial_radio_btn,
+            self.dialog.three_week_pretrial_radio_btn,
+            self.dialog.two_week_pretrial_radio_btn,
+            self.dialog.no_pretrial_radio_btn,
         ]
-        for button in pretrial_buttons:
+        for button in pretrial_radio_btns:
             if button.isChecked():
                 return PRETRIAL_TIME_DICT.get(button.text())
         return 0
@@ -244,7 +244,7 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         self.model.final_pretrial_date = self.dialog.final_pretrial_dateEdit.date().toString(
             ENTRY_DATE_FORMAT,
         )
-        if self.dialog.no_pretrial_radioButton.isChecked():
+        if self.dialog.no_pretrial_radio_btn.isChecked():
             self.model.pretrial_date = None
         else:
             self.model.pretrial_date = self.dialog.pretrial_dateEdit.date().toString(
