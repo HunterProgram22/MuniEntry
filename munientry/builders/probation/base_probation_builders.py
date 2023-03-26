@@ -3,7 +3,6 @@ from loguru import logger
 
 from munientry.builders import base_builders as base
 from munientry.entrycreators.entry_creator import ProbationEntryCreator
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.widgets.message_boxes import InfoBox
 
 
@@ -18,7 +17,6 @@ class ProbationDialogBuilder(base.BaseDialogBuilder):
         """
         self.case_table = case_table
         super().__init__(parent)
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         loaded_case = cms_case.case_number

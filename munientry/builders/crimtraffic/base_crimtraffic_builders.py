@@ -27,7 +27,7 @@ class CrimTrafficDialogBuilder(base.BaseDialogBuilder):
         """
         self.case_table = case_table
         super().__init__(parent)
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         self.workflow_status = workflow_status

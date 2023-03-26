@@ -17,7 +17,6 @@ from munientry.builders.scheduling import base_scheduling_builders as sched
 from munientry.checkers.base_checks import BaseChecker
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.updaters.scheduling_updaters import (
     SchedulingModelUpdater,
 )
@@ -291,20 +290,12 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
     dialog_name = None
 
     def additional_setup(self):
-        """The additional setup sets the template here after init.
+        """The additional setup sets the dialog name after init because the Hemmeter and Rohrer
+        scheduling entries use a common base.
 
-        The template is set after init because the dialog name is not set initially from the build
-        dict because there are two dialogs and templates built (Rohrer and Hemmeter) in this module.
-
-        TODO: For clarity and reduced complexity the Rohrer and Hemmeter dialogs should probably
-        just be separated out to separate modules.
+        TODO: Should this be refactored?
         """
         self.dialog_name = set_scheduling_dialog_name(self.sender())
-        # self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.set_speedy_trial_date_label()
         self.functions.update_all_scheduled_dates()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

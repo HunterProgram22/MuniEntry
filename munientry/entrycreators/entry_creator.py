@@ -31,7 +31,7 @@ class BaseEntryCreator(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
-        self.template = TEMPLATE_DICT.get(dialog.dialog_name)
+        self.template = TEMPLATE_DICT.get(self.dialog.dialog_name)
 
     def create_entry_process(self):
         if self.update_info_and_perform_checks() == 'Pass':
@@ -110,7 +110,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         """Overrides BaseEntryCreator and Loads the proper template and creates the entry."""
         if self.dialog.workflow_status == 'ON':
             self.check_if_workflow_entry_needed()
-        doc = DocxTemplate(self.dialog.template.template_path)
+        doc = DocxTemplate(self.template.template_path)
         doc.render(self.case_data)
         try:
             doc.save(f'{self.save_path}{self.docname}')
@@ -134,7 +134,7 @@ class CrimTrafficEntryCreator(BaseEntryCreator):
         """
         case_information = self.dialog.entry_case_information
         if WorkflowCheck(case_information).check_for_probation_workflow()[0] is True:
-            self.workflow_doc = DocxTemplate(self.dialog.template.template_path)
+            self.workflow_doc = DocxTemplate(self.template.template_path)
             self.workflow_path = WorkflowCheck(case_information).check_for_probation_workflow()[1]
 
     def create_workflow_entry_process(self):
@@ -199,7 +199,7 @@ class DrivingPrivilegesEntryCreator(BaseEntryCreator):
         """
         first_name = self.dialog.entry_case_information.defendant.first_name
         last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{first_name}_{last_name}_{template_name}.docx'
 
 
@@ -212,8 +212,8 @@ class CivilEntryCreator(BaseEntryCreator):
 class AdminFiscalEntryCreator(BaseEntryCreator):
     """Entry Creator for Admin Fiscal entries."""
 
-    # save_path = FISCAL_SAVE_PATH
-    save_path = DW_ADMIN_JUDGE_ADMIN
+    save_path = FISCAL_SAVE_PATH
+    # save_path = DW_ADMIN_JUDGE_ADMIN
 
     def _set_document_name(self) -> str:
         """Overrides BaseEntryCreator set_document_name.
@@ -238,5 +238,5 @@ class JuryPaymentEntryCreator(BaseEntryCreator):
         """
         case_number = self.dialog.entry_case_information.case_number
         last_name = self.dialog.entry_case_information.defendant.last_name
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{case_number}_{last_name}_{template_name}.docx'
