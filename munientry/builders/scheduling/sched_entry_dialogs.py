@@ -26,9 +26,16 @@ if TYPE_CHECKING:
     from PyQt6.QtCore import QDate
 
 ROHRER_SCHEDULING_ENTRY = 'Rohrer Scheduling Entry'
+ROHRER_TRIAL_DAY = 'Tuesday'
+ROHRER_FINAL_PRETRIAL_DAY = 'Thursday'
+ROHRER_PRETRIAL_DAY = 'Monday'
 HEMMETER_SCHEDULING_ENTRY = 'Hemmeter Scheduling Entry'
+HEMMETER_TRIAL_DAY = 'Thursday'
+HEMMETER_FINAL_PRETRIAL_DAY = 'Tuesday'
+HEMMETER_PRETRIAL_DAY = 'Wednesday'
 TRIAL = 'Trial'
 PRETRIAL = 'Pretrial'
+FINAL_PRETRIAL = 'Final Pretrial'
 ENTRY_DATE_FORMAT = 'MMMM dd, yyyy'
 
 
@@ -106,42 +113,42 @@ class SchedulingEntryDialogSlotFunctions(sched.SchedulingSlotFunctions):
     def set_pretrial_scheduled(self):
         if self.dialog.no_pretrial_radio_btn.isChecked():
             self.dialog.entry_case_information.pretrial_scheduled = False
-            self.dialog.pretrial_date.setHidden(True)
-            self.dialog.pretrial_date_label.setHidden(True)
+            self.dialog.pretrial_date.hide()
+            self.dialog.pretrial_date_label.hide()
         else:
             self.dialog.entry_case_information.pretrial_scheduled = True
-            self.dialog.pretrial_date.setHidden(False)
-            self.dialog.pretrial_date_label.setHidden(False)
+            self.dialog.pretrial_date.show()
+            self.dialog.pretrial_date_label.show()
 
     def update_all_scheduled_dates(self):
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date('Tuesday')
+            trial_date = self.set_trial_date(ROHRER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date('Thursday')
+            trial_date = self.set_trial_date(HEMMETER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
             self.update_final_pretrial_and_pretrial_only()
 
     def update_trial_and_pretrial_only(self):
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date('Tuesday')
+            trial_date = self.set_trial_date(ROHRER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
-            pretrial_date = self.set_event_date('Monday', PRETRIAL)
+            pretrial_date = self.set_event_date(ROHRER_PRETRIAL_DAY, PRETRIAL)
             self.dialog.pretrial_date.setDate(pretrial_date)
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            trial_date = self.set_trial_date('Thursday')
+            trial_date = self.set_trial_date(HEMMETER_TRIAL_DAY)
             self.dialog.trial_date.setDate(trial_date)
-            pretrial_date = self.set_event_date('Wednesday', PRETRIAL)
+            pretrial_date = self.set_event_date(HEMMETER_PRETRIAL_DAY, PRETRIAL)
             self.dialog.pretrial_date.setDate(pretrial_date)
 
     def update_final_pretrial_and_pretrial_only(self):
         if self.dialog.dialog_name == ROHRER_SCHEDULING_ENTRY:
-            final_pretrial_date = self.set_event_date('Thursday', 'Final Pretrial')
-            pretrial_date = self.set_event_date('Monday', PRETRIAL)
+            final_pretrial_date = self.set_event_date(ROHRER_FINAL_PRETRIAL_DAY, FINAL_PRETRIAL)
+            pretrial_date = self.set_event_date(ROHRER_PRETRIAL_DAY, PRETRIAL)
         elif self.dialog.dialog_name == HEMMETER_SCHEDULING_ENTRY:
-            final_pretrial_date = self.set_event_date('Tuesday', 'Final Pretrial')
-            pretrial_date = self.set_event_date('Wednesday', PRETRIAL)
+            final_pretrial_date = self.set_event_date(HEMMETER_FINAL_PRETRIAL_DAY, FINAL_PRETRIAL)
+            pretrial_date = self.set_event_date(HEMMETER_PRETRIAL_DAY, PRETRIAL)
         self.dialog.final_pretrial_date.setDate(final_pretrial_date)
         self.dialog.pretrial_date.setDate(pretrial_date)
 
