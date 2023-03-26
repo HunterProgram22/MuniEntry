@@ -9,6 +9,7 @@ from loguru import logger
 
 from munientry.data.scheduling_data_loader import save_scheduling_data
 from munientry.digitalworkflow.workflow_checker import WorkflowCheck
+from munientry.models.template_types import TEMPLATE_DICT
 from munientry.settings.paths import (
     CRIMTRAFFIC_SAVE_PATH,
     CIVIL_SAVE_PATH,
@@ -30,6 +31,7 @@ class BaseEntryCreator(object):
 
     def __init__(self, dialog):
         self.dialog = dialog
+        self.template = TEMPLATE_DICT.get(dialog.dialog_name)
 
     def create_entry_process(self):
         if self.update_info_and_perform_checks() == 'Pass':
@@ -45,7 +47,7 @@ class BaseEntryCreator(object):
         This is overridden in the create_entry method in subpackages (Administrative, CrimTraffic,
         etc.) with the specific path for saving those entry types.
         """
-        doc = DocxTemplate(self.dialog.template.template_path)
+        doc = DocxTemplate(self.template.template_path)
         doc.render(self.case_data)
         try:
             doc.save(f'{self.save_path}{self.docname}')
@@ -81,7 +83,7 @@ class BaseEntryCreator(object):
         Example: 21CRB1234_Crim_Traffic Judgment Entry.docx
         """
         case_number = self.dialog.entry_case_information.case_number
-        template_name = self.dialog.template.template_name
+        template_name = self.template.template_name
         return f'{case_number}_{template_name}.docx'
 
 
@@ -159,7 +161,8 @@ class SchedulingEntryCreator(BaseEntryCreator):
 
         Saves the scheduling data to the MuniEntry_db.sqlite.
         """
-        doc = DocxTemplate(self.dialog.template.template_path)
+        template = self.set_template()
+        doc = DocxTemplate(template.template_path)
         doc.render(self.case_data)
         save_scheduling_data(self.case_data)
         try:
@@ -173,6 +176,9 @@ class SchedulingEntryCreator(BaseEntryCreator):
             self.dialog.message_box.exec()
         logger.info(f'Entry Created: {self.docname}')
         startfile(f'{self.save_path}{self.docname}')
+
+    def set_template(self):
+       return TEMPLATE_DICT.get(self.dialog.dialog_name)
 
 
 class ProbationEntryCreator(BaseEntryCreator):

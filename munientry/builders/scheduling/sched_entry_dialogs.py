@@ -300,7 +300,7 @@ class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDia
         just be separated out to separate modules.
         """
         self.dialog_name = set_scheduling_dialog_name(self.sender())
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
+        # self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.setWindowTitle(f'{self.dialog_name} Case Information')
         self.functions.set_speedy_trial_date_label()
         self.functions.update_all_scheduled_dates()
