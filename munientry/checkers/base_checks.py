@@ -40,7 +40,7 @@ class BaseChecker(object):
 
     def check_if_trial_date_is_today(self) -> str:
         """Scheduling date checker to make sure trial date is not set to today."""
-        if self.view.trial_dateEdit.date() == self.today:
+        if self.view.trial_date.date() == self.today:
             message = (
                     'The Trial Date is Today, but must be a date in the future. Please enter'
                     + ' a date in the Trial Date box after today.'
