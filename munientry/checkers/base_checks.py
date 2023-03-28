@@ -60,6 +60,8 @@ class BaseChecker(object):
 
         The conditions_list for each dialog provides a tuple of (condition, the primary condition
         that is checked, the formal name of the Condition).
+
+        In sum, this is not a great check overall, but prevents some user errors.
         """
         for condition_item in self.conditions_list:
             condition = getattr(self.dialog.entry_case_information, condition_item[0])
