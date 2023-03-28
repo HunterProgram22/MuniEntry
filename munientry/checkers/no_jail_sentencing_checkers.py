@@ -74,7 +74,7 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
             'other_diversion',
         ]
         for program in diversion_program_list:
-            if getattr(self.view.entry_case_information.diversion, program) is True:
+            if getattr(self.dialog.entry_case_information.diversion, program) is True:
                 return PASS
         message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
         RequiredBox(message, 'Diversion Program Required').exec()

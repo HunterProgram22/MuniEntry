@@ -60,7 +60,7 @@ class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
         days_in_jail = self.get_days_in_jail()
         continuance_days = self.get_continuance_days()
         speedy_trial_days = (speedy_trial_days + continuance_days) - days_in_jail
-        return self.dialog.arrest_summons_date_box.date().addDays(speedy_trial_days)
+        return self.dialog.arrest_summons_date.date().addDays(speedy_trial_days)
 
     def set_speedy_trial_date_label(self):
         speedy_trial_date = self.get_speedy_trial_date()
@@ -97,8 +97,8 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
 
     def connect_dialog_specific_signals(self):
         func = self.dialog.functions
-        self.dialog.arrest_summons_date_box.dateChanged.connect(func.set_speedy_trial_date_label)
-        self.dialog.arrest_summons_date_box.dateChanged.connect(func.update_all_scheduled_dates)
+        self.dialog.arrest_summons_date.dateChanged.connect(func.set_speedy_trial_date_label)
+        self.dialog.arrest_summons_date.dateChanged.connect(func.update_all_scheduled_dates)
         self.dialog.highest_charge_box.currentIndexChanged.connect(func.set_speedy_trial_date_label)
         self.dialog.days_in_jail_line.textChanged.connect(func.set_speedy_trial_date_label)
         self.dialog.continuance_days_line.textChanged.connect(func.set_speedy_trial_date_label)

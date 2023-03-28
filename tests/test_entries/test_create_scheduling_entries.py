@@ -9,14 +9,14 @@ from tests.conftest import enter_data, mouse_click, MUNI10_SAVE_PATH
 from munientry.entrycreators.entry_creator import SchedulingEntryCreator
 
 scheduling_tab_entries = [
-    ('hemmeter_final_jury_hearingButton', 'hemmeter_final_test', 'final_pretrial_dateEdit'),
-    ('rohrer_final_jury_hearingButton', 'rohrer_final_test', 'final_pretrial_dateEdit'),
-    ('hemmeter_general_hearingButton', 'hemmeter_general_test', 'hearing_dateEdit'),
-    ('rohrer_general_hearingButton', 'rohrer_general_test', 'hearing_dateEdit'),
-    ('hemmeter_trial_court_hearingButton', 'hemmeter_ttc_test', 'trial_dateEdit'),
-    ('rohrer_trial_court_hearingButton', 'rohrer_ttc_test', 'trial_dateEdit'),
-    ('rohrer_schedulingEntryButton', 'rohrer_sched_entry_test', 'trial_dateEdit'),
-    ('hemmeter_schedulingEntryButton', 'hemmeter_sched_entry_test', 'trial_dateEdit'),
+    ('hemmeter_final_jury_hearingButton', 'hemmeter_final_test', 'final_pretrial_date'),
+    ('rohrer_final_jury_hearingButton', 'rohrer_final_test', 'final_pretrial_date'),
+    ('hemmeter_general_hearingButton', 'hemmeter_general_test', 'hearing_date'),
+    ('rohrer_general_hearingButton', 'rohrer_general_test', 'hearing_date'),
+    ('hemmeter_trial_court_hearingButton', 'hemmeter_ttc_test', 'trial_date'),
+    ('rohrer_trial_court_hearingButton', 'rohrer_ttc_test', 'trial_date'),
+    ('rohrer_schedulingEntryButton', 'rohrer_sched_entry_test', 'trial_date'),
+    ('hemmeter_schedulingEntryButton', 'hemmeter_sched_entry_test', 'trial_date'),
 ]
 
 
