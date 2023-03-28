@@ -75,7 +75,7 @@ class GeneralNoticeOfHearingInfoChecker(SchedulingChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list: list[str] = []
+        self.check_list: list[str] = []
         self.check_status = self.perform_check_list()
 
 

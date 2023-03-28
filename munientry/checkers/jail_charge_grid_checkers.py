@@ -26,15 +26,15 @@ class JailTimeCreditChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.model = self.view.entry_case_information
+        self.model = self.dialog.entry_case_information
         self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
         self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
         self.jail_credit = self.model.jail_terms.days_in_jail
 
     def check_if_days_in_jail_blank_but_in_jail(self) -> str:
         """Requires user to enter data in Days in Jail field if Currently in Jail is Yes."""
-        if self.view.in_jail_box.currentText() == YES:
-            if self.view.jail_time_credit_box.text() == BLANK:
+        if self.dialog.in_jail_box.currentText() == YES:
+            if self.dialog.jail_time_credit_box.text() == BLANK:
                 message = (
                     'The Jail Time Credit box indicates Defendant is in Jail, but'
                     + ' the number of Days In Jail is blank. \n\nPlease enter the number of'
@@ -48,8 +48,8 @@ class JailTimeCreditChecker(BaseChecker):
 
     def check_if_in_jail_blank_but_has_jail_days(self) -> str:
         """Asks user to choose if defendant is in jail if days in jail has data."""
-        if self.view.jail_time_credit_box.text() != BLANK:
-            if self.view.in_jail_box.currentText() == BLANK:
+        if self.dialog.jail_time_credit_box.text() != BLANK:
+            if self.dialog.in_jail_box.currentText() == BLANK:
                 message = (
                     'The Days in Jail has been provided, but the Jail Time Credit'
                     + ' does not indicate whether the Defendant is Currently In Jail.'
@@ -60,15 +60,15 @@ class JailTimeCreditChecker(BaseChecker):
 
     def set_in_jail_box(self, message_response) -> str:
         if message_response == NO_BUTTON_RESPONSE:
-            self.view.in_jail_box.setCurrentText('No')
+            self.dialog.in_jail_box.setCurrentText('No')
         elif message_response == YES_BUTTON_RESPONSE:
-            self.view.in_jail_box.setCurrentText(YES)
+            self.dialog.in_jail_box.setCurrentText(YES)
         return PASS
 
     def check_if_apply_jail_credit_blank_but_in_jail(self) -> str:
         """Asks user to choose how to apply jail time credit if jail time credit is entered."""
-        if self.view.jail_time_credit_box.text() != BLANK:
-            if self.view.jail_time_credit_apply_box.currentText() == BLANK:
+        if self.dialog.jail_time_credit_box.text() != BLANK:
+            if self.dialog.jail_time_credit_apply_box.currentText() == BLANK:
                 message = (
                     'The Days in Jail has been provided, but the Apply to JTC field is blank.'
                     + '\n\nPlease choose whether to apply Jail Time Credit to Sentence or Costs'
@@ -83,14 +83,14 @@ class JailTimeCreditChecker(BaseChecker):
 
     def set_jtc_apply_box(self, message_response) -> str:
         if message_response == 0:
-            self.view.jail_time_credit_apply_box.setCurrentText('Sentence')
+            self.dialog.jail_time_credit_apply_box.setCurrentText('Sentence')
         elif message_response == 1:
-            self.view.jail_time_credit_apply_box.setCurrentText('Costs and Fines')
+            self.dialog.jail_time_credit_apply_box.setCurrentText('Costs and Fines')
         return PASS
 
     def check_if_jail_credit_more_than_imposed(self) -> str:
         """Checks to see if more jail time credit is given then jail time imposed."""
-        if self.view.jail_time_credit_apply_box.currentText() == 'Sentence':
+        if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
             if self.jail_credit > self.jail_days_imposed:
                 message = (
                     f'The Defendant is set to have {self.jail_credit} days of'
@@ -120,11 +120,11 @@ class JailCCPleaDialogInfoChecker(
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.model = self.view.entry_case_information
+        self.model = self.dialog.entry_case_information
         self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
         self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
         self.jail_credit = self.model.jail_terms.days_in_jail
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
             'check_if_no_finding_entered',
@@ -185,8 +185,8 @@ class JailCCPleaDialogInfoChecker(
         if message_response == NO_BUTTON_RESPONSE:
             return PASS
         if message_response == YES_BUTTON_RESPONSE:
-            self.view.jail_checkBox.setChecked(True)
-            self.view.functions.start_add_jail_report_dialog()
+            self.dialog.jail_checkBox.setChecked(True)
+            self.dialog.functions.start_add_jail_report_dialog()
             return PASS
         if message_response == CANCEL_BUTTON_RESPONSE:
             return FAIL
@@ -210,7 +210,7 @@ class JailCCPleaDialogInfoChecker(
 
     def unset_jail_reporting(self, message_response) -> str:
         if message_response == NO_BUTTON_RESPONSE:
-            self.view.jail_checkBox.setChecked(False)
+            self.dialog.jail_checkBox.setChecked(False)
             return PASS
         if message_response == YES_BUTTON_RESPONSE:
             return PASS
@@ -243,8 +243,8 @@ class SentencingOnlyDialogInfoChecker(JailCCPleaDialogInfoChecker):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.case_info = self.view.entry_case_information
-        self.dialog_check_list = [
+        self.case_info = self.dialog.entry_case_information
+        self.check_list = [
             'check_defense_counsel',
             'check_if_plea_date_is_today',
             'check_if_no_finding_entered',
@@ -275,8 +275,8 @@ class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):
 
     def __init__(self, dialog):
         super().__init__(dialog)
-        self.case_info = self.view.entry_case_information
-        self.dialog_check_list = [
+        self.case_info = self.dialog.entry_case_information
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_finding_entered',
             'check_insurance',
@@ -291,7 +291,3 @@ class TrialSentencingDialogInfoChecker(JailCCPleaDialogInfoChecker):
             'check_if_in_jail_and_reporting_set',
         ]
         self.check_status = self.perform_check_list()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
