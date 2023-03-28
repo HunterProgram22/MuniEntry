@@ -34,7 +34,7 @@ class BaseChecker(object):
                 'The Plea Date is Today, but must be a date prior to Today. Please enter'
                 + ' a date in the Plea Date box prior to today.'
             )
-            RequiredBox(message).exec()
+            RequiredBox(message, 'Plea Date Before Today Required').exec()
             return FAIL
         return PASS
 
