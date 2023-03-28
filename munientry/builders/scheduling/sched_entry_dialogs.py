@@ -14,7 +14,7 @@ from munientry.settings.business_constants import (
     SPEEDY_TRIAL_TIME_DICT,
 )
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.base_checks import SchedulingChecker
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
@@ -233,9 +233,7 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         if self.dialog.no_pretrial_radio_btn.isChecked():
             self.model.pretrial_date = None
         else:
-            self.model.pretrial_date = self.dialog.pretrial_date.date().toString(
-                ENTRY_DATE_FORMAT,
-            )
+            self.model.pretrial_date = self.dialog.pretrial_date.date().toString(ENTRY_DATE_FORMAT)
         self.model.final_pretrial_time = self.dialog.final_pretrial_time.currentText()
         self.model.hearing_location = self.set_courtroom()
 
@@ -252,7 +250,7 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         return 'Unknown'
 
 
-class SchedulingEntryDialogInfoChecker(BaseChecker):
+class SchedulingEntryDialogInfoChecker(SchedulingChecker):
     """Class with checks for the General Notice Hearing Info Checker."""
 
     def __init__(self, dialog) -> None:
