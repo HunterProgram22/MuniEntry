@@ -9,7 +9,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.base_checks import SchedulingChecker
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
@@ -36,7 +36,7 @@ class TrialToCourtDialogViewModifier(sched.SchedulingViewModifier):
 
     def set_view_dates(self) -> None:
         today = QDate.currentDate()
-        self.dialog.trial_dateEdit.setDate(today)
+        self.dialog.trial_date.setDate(today)
         self.dialog.entry_date.setDate(today)
 
 
@@ -53,14 +53,14 @@ class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     def update_all_scheduled_dates(self):
         trial_date = self.set_event_date('Monday')
-        self.dialog.trial_dateEdit.setDate(trial_date)
+        self.dialog.trial_date.setDate(trial_date)
 
     def get_speedy_trial_date(self) -> 'QDate':
         speedy_trial_days = self.get_speedy_trial_days()
         days_in_jail = self.get_days_in_jail()
         continuance_days = self.get_continuance_days()
         speedy_trial_days = (speedy_trial_days + continuance_days) - days_in_jail
-        return self.dialog.arrest_summons_date_box.date().addDays(speedy_trial_days)
+        return self.dialog.arrest_summons_date.date().addDays(speedy_trial_days)
 
     def set_speedy_trial_date_label(self):
         speedy_trial_date = self.get_speedy_trial_date()
@@ -73,17 +73,17 @@ class TrialToCourtDialogSlotFunctions(sched.SchedulingSlotFunctions):
 
     def get_days_in_jail(self) -> int:
         """Multiply days in jail times 3 for speedy trial calculations."""
-        if self.dialog.days_in_jail_lineEdit.text() == '':
+        if self.dialog.days_in_jail_line.text() == '':
             days_in_jail = 0
         else:
-            days_in_jail = int(self.dialog.days_in_jail_lineEdit.text())
+            days_in_jail = int(self.dialog.days_in_jail_line.text())
         return 3 * days_in_jail
 
     def get_continuance_days(self) -> int:
-        if self.dialog.continuance_days_lineEdit.text() == '':
+        if self.dialog.continuance_days_line.text() == '':
             continuance_days = 0
         else:
-            continuance_days = int(self.dialog.continuance_days_lineEdit.text())
+            continuance_days = int(self.dialog.continuance_days_line.text())
         return continuance_days
 
 
@@ -93,33 +93,18 @@ class TrialToCourtDialogSignalConnector(sched.SchedulingSignalConnector):
     def __init__(self, dialog):
         super().__init__(dialog)
         self.connect_main_dialog_common_signals()
-        self.connect_speedy_trial_items()
+        self.connect_dialog_specific_signals()
 
-    def connect_speedy_trial_items(self):
-        self.dialog.arrest_summons_date_box.dateChanged.connect(
-            self.dialog.functions.set_speedy_trial_date_label,
-        )
-        self.dialog.arrest_summons_date_box.dateChanged.connect(
-            self.dialog.functions.update_all_scheduled_dates,
-        )
-        self.dialog.highest_charge_box.currentIndexChanged.connect(
-            self.dialog.functions.set_speedy_trial_date_label,
-        )
-        self.dialog.days_in_jail_lineEdit.textChanged.connect(
-            self.dialog.functions.set_speedy_trial_date_label,
-        )
-        self.dialog.continuance_days_lineEdit.textChanged.connect(
-            self.dialog.functions.set_speedy_trial_date_label,
-        )
-        self.dialog.highest_charge_box.currentIndexChanged.connect(
-            self.dialog.functions.update_all_scheduled_dates,
-        )
-        self.dialog.days_in_jail_lineEdit.textChanged.connect(
-            self.dialog.functions.update_all_scheduled_dates,
-        )
-        self.dialog.continuance_days_lineEdit.textChanged.connect(
-            self.dialog.functions.update_all_scheduled_dates,
-        )
+    def connect_dialog_specific_signals(self):
+        func = self.dialog.functions
+        self.dialog.arrest_summons_date.dateChanged.connect(func.set_speedy_trial_date_label)
+        self.dialog.arrest_summons_date.dateChanged.connect(func.update_all_scheduled_dates)
+        self.dialog.highest_charge_box.currentIndexChanged.connect(func.set_speedy_trial_date_label)
+        self.dialog.days_in_jail_line.textChanged.connect(func.set_speedy_trial_date_label)
+        self.dialog.continuance_days_line.textChanged.connect(func.set_speedy_trial_date_label)
+        self.dialog.highest_charge_box.currentIndexChanged.connect(func.update_all_scheduled_dates)
+        self.dialog.days_in_jail_line.textChanged.connect(func.update_all_scheduled_dates)
+        self.dialog.continuance_days_line.textChanged.connect(func.update_all_scheduled_dates)
 
 
 class TrialToCourtDialogCaseInformationUpdater(SchedulingModelUpdater):
@@ -132,17 +117,17 @@ class TrialToCourtDialogCaseInformationUpdater(SchedulingModelUpdater):
         self.model.judicial_officer = self.dialog.judicial_officer
 
     def set_scheduling_dates(self) -> None:
-        self.model.trial_to_court_date = self.dialog.trial_dateEdit.date().toString('MMMM dd, yyyy')
+        self.model.trial_to_court_date = self.dialog.trial_date.date().toString('MMMM dd, yyyy')
         self.model.trial_to_court_time = self.dialog.trial_time_box.currentText()
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
-class TrialToCourtDialogInfoChecker(BaseChecker):
+class TrialToCourtDialogInfoChecker(SchedulingChecker):
     """Class with checks for the Trial To Court Info Checker."""
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_if_trial_date_is_today',
         ]
         self.check_status = self.perform_check_list()
@@ -170,7 +155,3 @@ class TrialToCourtHearingDialog(sched.SchedulingDialogBuilder, Ui_TrialToCourtHe
         self.courtroom = set_courtroom(self.sender())
         self.setWindowTitle(f'{self.dialog_name} Case Information - {self.assigned_judge}')
         self.hearing_location_box.setCurrentText(self.courtroom)
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

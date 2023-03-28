@@ -17,7 +17,7 @@ class NoPleaBondDialogInfoChecker(BondInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_bond_amount',
             'check_if_improper_bond_type',
@@ -40,7 +40,7 @@ class BondHearingDialogInfoChecker(BondInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_bond_modification_decision',
             'check_if_no_bond_amount',
@@ -56,13 +56,9 @@ class ProbationViolationBondDialogInfoChecker(BondInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_bond_amount',
             'check_if_improper_bond_type',
         ]
         self.check_status = self.perform_check_list()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

@@ -401,7 +401,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="NoScrollDateEdit" name="arrest_summons_date_box">
+              <widget class="NoScrollDateEdit" name="arrest_summons_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -484,7 +484,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QLineEdit" name="days_in_jail_lineEdit">
+              <widget class="QLineEdit" name="days_in_jail_line">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -498,7 +498,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLineEdit" name="continuance_days_lineEdit">
+              <widget class="QLineEdit" name="continuance_days_line">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -523,7 +523,7 @@ background-color: rgb(255, 255, 255);</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_5">
              <item row="2" column="0">
-              <widget class="QRadioButton" name="four_week_pretrial_radioButton">
+              <widget class="QRadioButton" name="four_week_pretrial_radio_btn">
                <property name="text">
                 <string>Pretrial 4 weeks before trial</string>
                </property>
@@ -536,7 +536,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="9" column="1">
-              <widget class="NoScrollDateEdit" name="trial_dateEdit">
+              <widget class="NoScrollDateEdit" name="trial_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -567,7 +567,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="3" column="0">
-              <widget class="QRadioButton" name="three_week_pretrial_radioButton">
+              <widget class="QRadioButton" name="three_week_pretrial_radio_btn">
                <property name="text">
                 <string>Pretrial 3 weeks before trial</string>
                </property>
@@ -577,7 +577,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="3" column="1">
-              <widget class="QRadioButton" name="no_pretrial_radioButton">
+              <widget class="QRadioButton" name="no_pretrial_radio_btn">
                <property name="text">
                 <string>No Pretrial</string>
                </property>
@@ -587,7 +587,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="2" column="1">
-              <widget class="QRadioButton" name="two_week_pretrial_radioButton">
+              <widget class="QRadioButton" name="two_week_pretrial_radio_btn">
                <property name="text">
                 <string>Pretrial 2 weeks before trial</string>
                </property>
@@ -624,7 +624,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="7" column="1">
-              <widget class="NoScrollDateEdit" name="final_pretrial_dateEdit">
+              <widget class="NoScrollDateEdit" name="final_pretrial_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -649,7 +649,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="6" column="1">
-              <widget class="NoScrollDateEdit" name="pretrial_dateEdit">
+              <widget class="NoScrollDateEdit" name="pretrial_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -667,7 +667,7 @@ background-color: rgb(255, 255, 255);</string>
               </widget>
              </item>
              <item row="8" column="1">
-              <widget class="NoScrollComboBox" name="final_pretrial_time_box">
+              <widget class="NoScrollComboBox" name="final_pretrial_time">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -890,22 +890,22 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>pretrial_dateEdit</tabstop>
-  <tabstop>final_pretrial_dateEdit</tabstop>
-  <tabstop>final_pretrial_time_box</tabstop>
-  <tabstop>trial_dateEdit</tabstop>
+  <tabstop>pretrial_date</tabstop>
+  <tabstop>final_pretrial_date</tabstop>
+  <tabstop>final_pretrial_time</tabstop>
+  <tabstop>trial_date</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>
   <tabstop>defendant_last_name_lineEdit</tabstop>
   <tabstop>defense_counsel_name_box</tabstop>
   <tabstop>case_number_lineEdit</tabstop>
-  <tabstop>arrest_summons_date_box</tabstop>
+  <tabstop>arrest_summons_date</tabstop>
   <tabstop>highest_charge_box</tabstop>
-  <tabstop>days_in_jail_lineEdit</tabstop>
-  <tabstop>continuance_days_lineEdit</tabstop>
-  <tabstop>four_week_pretrial_radioButton</tabstop>
-  <tabstop>three_week_pretrial_radioButton</tabstop>
-  <tabstop>two_week_pretrial_radioButton</tabstop>
-  <tabstop>no_pretrial_radioButton</tabstop>
+  <tabstop>days_in_jail_line</tabstop>
+  <tabstop>continuance_days_line</tabstop>
+  <tabstop>four_week_pretrial_radio_btn</tabstop>
+  <tabstop>three_week_pretrial_radio_btn</tabstop>
+  <tabstop>two_week_pretrial_radio_btn</tabstop>
+  <tabstop>no_pretrial_radio_btn</tabstop>
   <tabstop>create_entry_Button</tabstop>
   <tabstop>close_dialog_Button</tabstop>
  </tabstops>

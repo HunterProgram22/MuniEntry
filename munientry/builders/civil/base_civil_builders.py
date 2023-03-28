@@ -2,7 +2,6 @@
 from loguru import logger
 
 from munientry.builders import base_builders as base
-from munientry.models.template_types import TEMPLATE_DICT
 from munientry.widgets.message_boxes import InfoBox
 from munientry.entrycreators.entry_creator import CivilEntryCreator
 
@@ -11,7 +10,6 @@ class CivilDialogBuilder(base.BaseDialogBuilder):
 
     def __init__(self, judicial_officer, cms_case=None, parent=None, *args, **kwargs) -> None:
         super().__init__(parent)
-        self.template = TEMPLATE_DICT.get(self.dialog_name)
         self.judicial_officer = judicial_officer
         self.cms_case = cms_case
         loaded_case = cms_case.case_number

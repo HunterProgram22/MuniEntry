@@ -9,7 +9,7 @@ class LeapAdmissionPleaDialogInfoChecker(ChargeGridInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
         ]
@@ -24,7 +24,7 @@ class PleaOnlyDialogInfoChecker(ChargeGridInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
             'check_if_no_finding_entered',
@@ -45,7 +45,7 @@ class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
             'check_if_no_bond_amount',
@@ -54,7 +54,3 @@ class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
             'check_domestic_violence_bond_condition',
         ]
         self.check_status = self.perform_check_list()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

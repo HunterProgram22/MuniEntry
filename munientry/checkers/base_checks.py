@@ -17,53 +17,29 @@ class BaseChecker(object):
     conditions_list = []
 
     def __init__(self, dialog) -> None:
-        self.view = dialog
-        self.dialog_check_list: list = []
+        self.dialog = dialog
+        self.check_list: list = []
         self.today = QDate.currentDate()
 
     def perform_check_list(self) -> str:
-        for item_to_check in self.dialog_check_list:
-            if getattr(self, item_to_check)() == FAIL:
-                logger.checkfail(item_to_check)
+        for check_method in self.check_list:
+            if getattr(self, check_method)() == FAIL:
+                logger.checkfail(check_method)
                 return FAIL
         return PASS
 
     def check_if_plea_date_is_today(self) -> str:
-        if self.view.plea_date.date() == self.today:
+        if self.dialog.plea_date.date() == self.today:
             message = (
                 'The Plea Date is Today, but must be a date prior to Today. Please enter'
                 + ' a date in the Plea Date box prior to today.'
             )
-            RequiredBox(message).exec()
+            RequiredBox(message, 'Plea Date Before Today Required').exec()
             return FAIL
-        return PASS
-
-    def check_if_trial_date_is_today(self) -> str:
-        """Scheduling date checker to make sure trial date is not set to today."""
-        if self.view.trial_dateEdit.date() == self.today:
-            message = (
-                    'The Trial Date is Today, but must be a date in the future. Please enter'
-                    + ' a date in the Trial Date box after today.'
-            )
-            RequiredBox(message).exec()
-            return FAIL
-        return PASS
-
-    def check_if_final_pretrial_date_is_today(self) -> str:
-        """Scheduling date checker to make sure final pretrial date is not set to today."""
-        if self.view.jury_trial_only_no_radioButton.isChecked():
-            if self.view.final_pretrial_dateEdit.date() == self.today:
-                message = (
-                        'The Final Pretrial Date is Today, but must be a date in the future. Please'
-                        + ' enter a date in the Final Pretrial Date box after today.'
-                )
-                RequiredBox(message).exec()
-                return FAIL
-            return PASS
         return PASS
 
     def check_if_leap_plea_date_is_today(self) -> str:
-        if self.view.leap_plea_date.date() == self.today:
+        if self.dialog.leap_plea_date.date() == self.today:
             message = (
                 'The Leap Plea Date is Today, but must be a date prior to Today. Please enter'
                 + ' a date in the Leap Plea Date box prior to today.'
@@ -84,9 +60,11 @@ class BaseChecker(object):
 
         The conditions_list for each dialog provides a tuple of (condition, the primary condition
         that is checked, the formal name of the Condition).
+
+        In sum, this is not a great check overall, but prevents some user errors.
         """
         for condition_item in self.conditions_list:
-            condition = getattr(self.view.entry_case_information, condition_item[0])
+            condition = getattr(self.dialog.entry_case_information, condition_item[0])
             main_condition_set = getattr(condition, condition_item[1])
             condition_name = condition_item[2]
             if condition.ordered is True and main_condition_set is None:
@@ -101,13 +79,41 @@ class BaseChecker(object):
         return PASS
 
 
+class SchedulingChecker(BaseChecker):
+
+    def check_if_trial_date_is_today(self) -> str:
+        """Scheduling date checker to make sure trial date is not set to today."""
+        if self.dialog.trial_date.date() == self.today:
+            message = (
+                    'The Trial Date is Today, but must be a date in the future. Please enter'
+                    + ' a date in the Trial Date box after today.'
+            )
+            RequiredBox(message).exec()
+            return FAIL
+        return PASS
+
+
+    def check_if_final_pretrial_date_is_today(self) -> str:
+        """Scheduling date checker to make sure final pretrial date is not set to today."""
+        if self.dialog.jury_trial_only_no_radio_btn.isChecked():
+            if self.dialog.final_pretrial_date.date() == self.today:
+                message = (
+                        'The Final Pretrial Date is Today, but must be a date in the future. Please'
+                        + ' enter a date in the Final Pretrial Date box after today.'
+                )
+                RequiredBox(message).exec()
+                return FAIL
+            return PASS
+        return PASS
+
+
 class DefenseCounselChecker(BaseChecker):
     """Class containing checks for defense counsel."""
 
     def check_defense_counsel(self) -> str:
-        if self.view.defense_counsel_waived_checkBox.isChecked():
+        if self.dialog.defense_counsel_waived_checkBox.isChecked():
             return PASS
-        if self.view.defense_counsel_name_box.currentText().strip() == '':
+        if self.dialog.defense_counsel_name_box.currentText().strip() == '':
             message = (
                 'There is no attorney selected for the Defendant.\n\nDid the Defendant'
                 + ' appear without or waive his right to counsel?\n\nIf you select No you'
@@ -119,7 +125,7 @@ class DefenseCounselChecker(BaseChecker):
 
     def set_defense_counsel_waived_or_fail_check(self, message_response) -> str:
         if message_response == YES_BUTTON_RESPONSE:
-            self.view.defense_counsel_waived_checkBox.setChecked(True)
+            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
             return PASS
         return FAIL
 
@@ -128,16 +134,16 @@ class InsuranceInfoChecker(BaseChecker):
     """Class containing checks for Insurance."""
 
     def check_insurance(self) -> str:
-        if 'TRC' in self.view.case_number_lineEdit.text():
+        if 'TRC' in self.dialog.case_number_lineEdit.text():
             return self.insurance_check_message()
-        if 'TRD' in self.view.case_number_lineEdit.text():
+        if 'TRD' in self.dialog.case_number_lineEdit.text():
             return self.insurance_check_message()
         return PASS
 
     def insurance_check_message(self) -> str:
-        if self.view.fra_in_file_box.currentText() == 'Yes':
+        if self.dialog.fra_in_file_box.currentText() == 'Yes':
             return PASS
-        if self.view.fra_in_court_box.currentText() == 'N/A':
+        if self.dialog.fra_in_court_box.currentText() == 'N/A':
             message = (
                 'The information provided currently indicates insurance was not shown in the'
                 + ' file.\n\nDid the defendant show proof of insurance in court?'
@@ -148,9 +154,9 @@ class InsuranceInfoChecker(BaseChecker):
 
     def set_fra_in_court_box(self, message_response) -> str:
         if message_response == NO_BUTTON_RESPONSE:
-            self.view.fra_in_court_box.setCurrentText('No')
+            self.dialog.fra_in_court_box.setCurrentText('No')
         if message_response == YES_BUTTON_RESPONSE:
-            self.view.fra_in_court_box.setCurrentText('Yes')
+            self.dialog.fra_in_court_box.setCurrentText('Yes')
         return PASS
 
 
@@ -158,10 +164,10 @@ class BondInfoChecker(DefenseCounselChecker):
     """Class that checks dialog to make sure the appropriate bond information is entered."""
 
     def check_if_no_bond_amount(self) -> str:
-        bond_type = self.view.bond_type_box.currentText()
+        bond_type = self.dialog.bond_type_box.currentText()
         if bond_type in NO_BOND_AMOUNT_TYPES:
             return PASS
-        if self.view.bond_amount_box.currentText() == 'None':
+        if self.dialog.bond_amount_box.currentText() == 'None':
             message = (
                 f'The bond type of {bond_type} requires a bond amount. \n\nPlease specify a bond'
                 + ' amount other than None.'
@@ -171,9 +177,9 @@ class BondInfoChecker(DefenseCounselChecker):
         return PASS
 
     def check_if_improper_bond_type(self) -> str:
-        bond_type = self.view.bond_type_box.currentText()
+        bond_type = self.dialog.bond_type_box.currentText()
         if bond_type in NO_BOND_AMOUNT_TYPES:
-            if self.view.bond_amount_box.currentText() != 'None':
+            if self.dialog.bond_amount_box.currentText() != 'None':
                 message = (
                     f'{bond_type} was selected but a bond amount other than None was chosen.'
                     + '\n\nPlease either change the bond type to 10% Deposit Bond,'
@@ -184,7 +190,7 @@ class BondInfoChecker(DefenseCounselChecker):
         return PASS
 
     def check_if_no_bond_modification_decision(self) -> str:
-        if self.view.bond_modification_decision_box.currentText() == BLANK:
+        if self.dialog.bond_modification_decision_box.currentText() == BLANK:
             message = (
                 'A decision on bond modification was not selected.'
                 + '\n\nPlease choose an option from the Decison on Bond box.'
@@ -194,7 +200,7 @@ class BondInfoChecker(DefenseCounselChecker):
         return PASS
 
     def check_domestic_violence_bond_condition(self) -> str:
-        dv_conditions = self.view.entry_case_information.domestic_violence_conditions
+        dv_conditions = self.dialog.entry_case_information.domestic_violence_conditions
         if dv_conditions.ordered is True:
             if dv_conditions.vacate_residence is False:
                 if dv_conditions.surrender_weapons is False:
@@ -259,7 +265,7 @@ class ChargeGridInfoChecker(DefenseCounselChecker):
         which is a low occurrence event.
         """
         col = 2
-        while col < self.view.charges_gridLayout.columnCount():
+        while col < self.dialog.charges_gridLayout.columnCount():
             try:
                 offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
             except AttributeError as error:
@@ -284,7 +290,7 @@ class FailureToAppearDialogInfoChecker(DefenseCounselChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
         ]
         self.check_status = self.perform_check_list()
@@ -295,7 +301,7 @@ class ArraignmentContinueDialogInfoChecker(DefenseCounselChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
         ]
         self.check_status = self.perform_check_list()
@@ -306,7 +312,7 @@ class FreeformDialogInfoChecker(DefenseCounselChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
         ]
         self.check_status = self.perform_check_list()
@@ -317,7 +323,7 @@ class CriminalSealingDialogInfoChecker(DefenseCounselChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
         ]
         self.check_status = self.perform_check_list()
@@ -328,6 +334,5 @@ class CivilFreeformDialogInfoChecker(BaseChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
-        ]
+        self.check_list = []
         self.check_status = self.perform_check_list()

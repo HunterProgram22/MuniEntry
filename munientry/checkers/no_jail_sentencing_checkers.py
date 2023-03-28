@@ -21,7 +21,7 @@ class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
             'check_if_no_finding_entered',
@@ -42,7 +42,7 @@ class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecke
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_leap_plea_date_is_today',
             'check_if_no_plea_entered',
@@ -58,7 +58,7 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
 
     def __init__(self, dialog) -> None:
         super().__init__(dialog)
-        self.dialog_check_list = [
+        self.check_list = [
             'check_defense_counsel',
             'check_if_no_plea_entered',
             'check_if_no_finding_entered',
@@ -74,12 +74,8 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
             'other_diversion',
         ]
         for program in diversion_program_list:
-            if getattr(self.view.entry_case_information.diversion, program) is True:
+            if getattr(self.dialog.entry_case_information.diversion, program) is True:
                 return PASS
         message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
         RequiredBox(message, 'Diversion Program Required').exec()
         return FAIL
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

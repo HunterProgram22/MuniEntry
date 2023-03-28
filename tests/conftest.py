@@ -18,7 +18,7 @@ from munientry.mainwindow.main_window import MainWindow
 from munientry.entrycreators.entry_creator import CrimTrafficEntryCreator
 
 CLOSE_TIMER = 50
-if socket.gethostname() == 'MUNI10':
+if socket.gethostname() == 'Muni10':
     MUNI10_SAVE_PATH = r'C:\Users\jkudela\AppData\Local\Programs\Python\Python311\Tests\\'
 elif socket.gethostname() == 'RooberryPrime':
     MUNI10_SAVE_PATH = r'C:\Users\justi\AppData\Local\Programs\Python\Python311\Tests\\'

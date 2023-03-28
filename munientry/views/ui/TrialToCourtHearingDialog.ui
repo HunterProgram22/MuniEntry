@@ -201,7 +201,7 @@ font-weight: bold;</string>
             </property>
             <layout class="QGridLayout" name="gridLayout_7" columnstretch="1,0">
              <item row="3" column="1">
-              <widget class="QLineEdit" name="days_in_jail_lineEdit">
+              <widget class="QLineEdit" name="days_in_jail_line">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
@@ -215,14 +215,14 @@ font-weight: bold;</string>
               </widget>
              </item>
              <item row="4" column="1">
-              <widget class="QLineEdit" name="continuance_days_lineEdit">
+              <widget class="QLineEdit" name="continuance_days_line">
                <property name="styleSheet">
                 <string notr="true">background-color: rgb(255, 255, 255);</string>
                </property>
               </widget>
              </item>
              <item row="1" column="1">
-              <widget class="NoScrollDateEdit" name="arrest_summons_date_box">
+              <widget class="NoScrollDateEdit" name="arrest_summons_date">
                <property name="styleSheet">
                 <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -525,7 +525,7 @@ background-color: rgb(255, 255, 255);</string>
                 </widget>
                </item>
                <item row="1" column="1">
-                <widget class="NoScrollDateEdit" name="trial_dateEdit">
+                <widget class="NoScrollDateEdit" name="trial_date">
                  <property name="styleSheet">
                   <string notr="true">color: rgb(0, 0, 0);
 background-color: rgb(255, 255, 255);</string>
@@ -722,7 +722,7 @@ font-weight: bold;</string>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>trial_dateEdit</tabstop>
+  <tabstop>trial_date</tabstop>
   <tabstop>trial_time_box</tabstop>
   <tabstop>hearing_location_box</tabstop>
   <tabstop>defendant_first_name_lineEdit</tabstop>

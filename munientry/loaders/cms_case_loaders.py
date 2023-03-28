@@ -55,14 +55,16 @@ class CrimCmsLoader(BaseCmsLoader):
     def set_defense_counsel_type(self) -> None:
         """Sets the type for defense counsel to public defender or private counsel.
 
-        Data from CMS will indicate PD if the attorney is a public defender. If there is no
-        attorney then the field is set to Public Defender. If there is an attorney, and CMS does
-        not indicate it PD, then it is set to Private Counsel.
+        If the case has a public defender, set the defense counsel type to 'Public Defender'. If
+        the case has a private attorney or no attorney, set the defense counsel type to
+        'Private Counsel'.
         """
-        is_public_defender = (
-            self.cms_case.defense_counsel_type == 1 or self.cms_case.defense_counsel.strip() == ''
-        )
-        defense_counsel_type = 'Public Defender' if is_public_defender else 'Private Counsel'
+        if self.cms_case.defense_counsel is not None and (
+            self.cms_case.defense_counsel_type == 1 or not self.cms_case.defense_counsel.strip()
+        ):
+            defense_counsel_type = 'Public Defender'
+        else:
+            defense_counsel_type = 'Private Counsel'
         self.dialog.defense_counsel_type_box.setCurrentText(defense_counsel_type)
 
     def load_cms_data(self) -> None:
