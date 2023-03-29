@@ -6,8 +6,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks, \
-    JailTimeChecks
+from munientry.checkers.crim_checks import InsuranceChecks, ChargeGridChecks, JailTimeChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,

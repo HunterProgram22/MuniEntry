@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import SchedulingChecks
+from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation

@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
-from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks
+from munientry.checkers.crim_checks import InsuranceChecks, ChargeGridChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     FineOnlyEntryCaseInformation,

@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import DefenseCounselChecks
+from munientry.checkers.crim_checks import DefenseCounselChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     FailureToAppearEntryCaseInformation,

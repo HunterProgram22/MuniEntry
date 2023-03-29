@@ -14,7 +14,7 @@ from munientry.settings.business_constants import (
     SPEEDY_TRIAL_TIME_DICT,
 )
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import SchedulingChecks
+from munientry.checkers.scheduling_checks import SchedulingChecks
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
 from munientry.updaters.scheduling_updaters import (
