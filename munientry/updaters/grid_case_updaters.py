@@ -35,7 +35,7 @@ class DiversionDialogUpdater(BaseDialogUpdater):
     def update_diversion_information(self) -> None:
         self.dialog.transfer_view_data_to_model(self.model.diversion)
         self.model.diversion.program_name = self.model.diversion.get_program_name()
-        self.dialog.transfer_view_data_to_model(self.model.other_conditions)
+        # self.dialog.transfer_view_data_to_model(self.model.other_conditions)
 
     def update_model_with_charge_grid_data(self) -> DiversionGridModelUpdater:
         return DiversionGridModelUpdater(self.dialog)

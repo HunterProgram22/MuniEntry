@@ -19,3 +19,8 @@ LEAP_PAST_TITLE = 'Must Set LEAP Plea Date in the Past'
 LEAP_PAST_MSG = """The Leap Plea Date is Today, but must be a date prior to Today.
 
 Please enter a date in the Leap Plea Date box prior to today."""
+
+DIVERSION_SET_TITLE = 'Must Select a Diversion Program'
+DIVERSION_SET_MSG = """No Diversion program was selected.
+
+Please select one of the Diversion programs to proceed."""

@@ -3,6 +3,8 @@ from loguru import logger
 
 from munientry.checkers.base_checks import BaseChecks, RequiredCheck
 from munientry.checkers.check_messages import (
+    DIVERSION_SET_MSG,
+    DIVERSION_SET_TITLE,
     LEAP_PAST_MSG,
     LEAP_PAST_TITLE,
     PLEA_PAST_MSG,
@@ -32,18 +34,14 @@ class CrimBaseChecks(BaseChecks):
         """Returns False (Fails check) if LEAP plea date is not set in the past."""
         return self.dialog.leap_plea_date.date() < self.today
 
-    def check_if_diversion_program_selected(self) -> str:
-        diversion_program_list = [
-            'marijuana_diversion',
-            'theft_diversion',
-            'other_diversion',
+    @RequiredCheck(DIVERSION_SET_TITLE, DIVERSION_SET_MSG)
+    def check_if_diversion_program_selected(self) -> bool:
+        diversion_radio_btns = [
+            self.dialog.marijuana_diversion_radio_btn,
+            self.dialog.theft_diversion_radio_btn,
+            self.dialog.other_diversion_radio_btn,
         ]
-        for program in diversion_program_list:
-            if getattr(self.dialog.entry_case_information.diversion, program) is True:
-                return PASS
-        message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
-        RequiredBox(message, 'Diversion Program Required').exec()
-        return FAIL
+        return any(btn.isChecked() for btn in diversion_radio_btns)
 
     def check_additional_conditions_ordered(self) -> str:
         """Hard stops if an additional condition checkbox is checked, but certain data is None.
