@@ -2,7 +2,7 @@
 from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import FailureToAppearDialogInfoChecker
+from munientry.checkers.base_checks import DefenseCounselChecker
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     FailureToAppearEntryCaseInformation,
@@ -70,6 +70,17 @@ class FailureToAppearDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class FailureToAppearDialogInfoChecker(DefenseCounselChecker):
+    """Class with all checks for Failure to Appear Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDialog):
     """Dialog builder class for 'Failure To Appear / Issue Warrant' Entry."""
 
@@ -86,7 +97,3 @@ class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDia
         self.entry_case_information.fta_conditions = FailureToAppearConditions()
         self.functions.hide_warrant_radius()
         self.functions.hide_bond_boxes()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

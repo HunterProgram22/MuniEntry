@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import ArraignmentContinueDialogInfoChecker
+from munientry.checkers.base_checks import DefenseCounselChecker
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import ArraignmentContinueEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import ArraignmentContinueDialogUpdater
@@ -58,6 +58,17 @@ class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class ArraignmentContinueDialogInfoChecker(DefenseCounselChecker):
+    """Class with all checks for Arriagnment Continuance Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentContinueDialog):
     """Dialog builder class for Arraignment Continuance Entry."""
 
@@ -73,7 +84,3 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
     def additional_setup(self):
         self.functions.update_arraignment_date()
         self.functions.show_hide_length_date_boxes()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
