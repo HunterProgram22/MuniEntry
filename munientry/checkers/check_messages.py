@@ -44,3 +44,8 @@ INSURANCE_MSG = """The information provided currently indicates that insurance w
 not shown at the time of the offense.
 
 Did the defendant show proof of insurance in Court?"""
+
+BOND_REQUIRED_TITLE = 'Bond Amount Required'
+BOND_REQUIRED_MSG = """The bond type that was selected requires that you set an amount of bond.
+
+Please specify a bond amount other than None."""

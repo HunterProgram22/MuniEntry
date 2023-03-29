@@ -2,18 +2,7 @@
 from loguru import logger
 
 from munientry.checkers.base_checks import BaseChecks, RequiredCheck, RequiredConditionCheck, WarningCheck
-from munientry.checkers.check_messages import (
-    DEF_COUNSEL_MSG,
-    DEF_COUNSEL_TITLE,
-    DIVERSION_SET_MSG,
-    DIVERSION_SET_TITLE,
-    INSURANCE_MSG,
-    INSURANCE_TITLE,
-    LEAP_PAST_MSG,
-    LEAP_PAST_TITLE,
-    PLEA_PAST_MSG,
-    PLEA_PAST_TITLE,
-)
+from munientry.checkers import check_messages as cm
 from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
     CANCEL_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox, BLANK, \
@@ -23,6 +12,7 @@ NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No 
 YES = 'Yes'
 NO = 'No'
 BLANK = ''
+NONE = 'None'
 TRAFFIC_CODES = ['TRC', 'TRD']
 
 
@@ -31,17 +21,17 @@ class CrimBaseChecks(BaseChecks):
 
     conditions_list: list = []
 
-    @RequiredCheck(PLEA_PAST_TITLE, PLEA_PAST_MSG)
+    @RequiredCheck(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
     def check_plea_date(self) -> bool:
         """Returns False (Fails check) if plea date is not set in the past."""
         return self.dialog.plea_date.date() < self.today
 
-    @RequiredCheck(LEAP_PAST_TITLE, LEAP_PAST_MSG)
+    @RequiredCheck(cm.LEAP_PAST_TITLE, cm.LEAP_PAST_MSG)
     def check_leap_plea_date(self) -> bool:
         """Returns False (Fails check) if LEAP plea date is not set in the past."""
         return self.dialog.leap_plea_date.date() < self.today
 
-    @RequiredCheck(DIVERSION_SET_TITLE, DIVERSION_SET_MSG)
+    @RequiredCheck(cm.DIVERSION_SET_TITLE, cm.DIVERSION_SET_MSG)
     def check_if_diversion_program_selected(self) -> bool:
         diversion_radio_btns = [
             self.dialog.marijuana_diversion_radio_btn,
@@ -88,7 +78,7 @@ class CrimBaseChecks(BaseChecks):
 class DefenseCounselChecks(CrimBaseChecks):
     """Class containing checks for defense counsel."""
 
-    @WarningCheck(DEF_COUNSEL_TITLE, DEF_COUNSEL_MSG)
+    @WarningCheck(cm.DEF_COUNSEL_TITLE, cm.DEF_COUNSEL_MSG)
     def check_defense_counsel(self, msg_response=None) -> bool:
         """Returns False (Fails) with choice to set defense counsel waived if no counsel set."""
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
@@ -108,7 +98,7 @@ class InsuranceChecks(DefenseCounselChecks):
             return self.insurance_check_message()
         return PASS
 
-    @WarningCheck(INSURANCE_TITLE, INSURANCE_MSG)
+    @WarningCheck(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
     def insurance_check_message(self, msg_response=None) -> str:
         """If insurance is required to be shown prompts user to indicate whether it was shown."""
         if self.dialog.fra_in_file_box.currentText() == YES:
@@ -123,18 +113,11 @@ class InsuranceChecks(DefenseCounselChecks):
 class BondChecks(DefenseCounselChecks):
     """Class that checks dialog to make sure the appropriate bond information is entered."""
 
+    @RequiredCheck(cm.BOND_REQUIRED_TITLE, cm.BOND_REQUIRED_MSG)
     def check_if_no_bond_amount(self) -> str:
-        bond_type = self.dialog.bond_type_box.currentText()
-        if bond_type in NO_BOND_AMOUNT_TYPES:
-            return PASS
-        if self.dialog.bond_amount_box.currentText() == 'None':
-            message = (
-                f'The bond type of {bond_type} requires a bond amount. \n\nPlease specify a bond'
-                + ' amount other than None.'
-            )
-            RequiredBox(message, 'Bond Amount Required').exec()
-            return FAIL
-        return PASS
+        if self.dialog.bond_type_box.currentText() in NO_BOND_AMOUNT_TYPES:
+            return True
+        return self.dialog.bond_amount_box.currentText() != NONE
 
     def check_if_improper_bond_type(self) -> str:
         bond_type = self.dialog.bond_type_box.currentText()
