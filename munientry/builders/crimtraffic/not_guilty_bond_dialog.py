@@ -3,7 +3,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.plea_only_checkers import NotGuiltyBondDialogInfoChecker
+from munientry.checkers.base_checks import ChargeGridInfoChecker, BondInfoChecker
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import NotGuiltyBondEntryCaseInformation
 from munientry.updaters.grid_case_updaters import NotGuiltyBondDialogUpdater
@@ -70,6 +70,30 @@ class NotGuiltyBondSignalConnector(crim.CrimTrafficSignalConnector):
         ]
         for checkbox in checkboxes:
             checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
+
+
+class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
+    """Class with all checks for Not Guilty Bond Dialog."""
+
+    conditions_list = [
+        ('admin_license_suspension', 'disposition', 'Admin License Suspension'),
+        ('vehicle_seizure', 'vehicle_make_model', 'Vehicle Seizure'),
+        ('no_contact', 'name', 'No Contact'),
+        ('custodial_supervision', 'supervisor', 'Custodial Supervision'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+    ]
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+            'check_if_no_plea_entered',
+            'check_if_no_bond_amount',
+            'check_if_improper_bond_type',
+            'check_additional_conditions_ordered',
+            'check_domestic_violence_bond_condition',
+        ]
+        self.check_status = self.perform_check_list()
 
 
 class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog):

@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.plea_only_checkers import LeapAdmissionPleaDialogInfoChecker
+from munientry.checkers.base_checks import ChargeGridInfoChecker
 from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import (
@@ -64,6 +64,18 @@ class LeapAdmissionPleaDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class LeapAdmissionPleaDialogInfoChecker(ChargeGridInfoChecker):
+    """Class with all checks for LEAP Admission Plea Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+            'check_if_no_plea_entered',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPleaDialog):
     """Dialog builder class for 'LEAP Admission Plea' dialog."""
 
@@ -78,7 +90,3 @@ class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPle
 
     def additional_setup(self):
         self.functions.set_leap_sentencing_date('120 days')
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')

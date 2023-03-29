@@ -6,7 +6,8 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.checkers.jail_charge_grid_checkers import JailCCPleaDialogInfoChecker
+from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker, \
+    JailTimeChecker
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
@@ -79,6 +80,38 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class JailCCPleaDialogInfoChecker(JailTimeChecker):
+    """Class with checks for the Jail CC Plea Dialog."""
+
+    conditions_list = [
+        ('license_suspension', 'license_type', 'License Suspension'),
+        ('community_service', 'hours_of_service', 'Community Service'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+        ('community_control', 'term_of_control', 'Community Control'),
+        ('impoundment', 'vehicle_make_model', 'Immobilize/Impound'),
+    ]
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.model = self.dialog.entry_case_information
+        self.check_list = [
+            'check_defense_counsel',
+            'check_if_no_plea_entered',
+            'check_if_no_finding_entered',
+            'check_insurance',
+            'check_additional_conditions_ordered',
+            'check_if_jail_suspended_more_than_imposed',
+            'check_if_days_in_jail_blank_but_in_jail',
+            'check_if_in_jail_blank_but_has_jail_days',
+            'check_if_apply_jail_credit_blank_but_in_jail',
+            'check_if_jail_reporting_required',
+            'check_if_jail_equals_suspended_and_imposed',
+            'check_if_jail_credit_more_than_imposed',
+            'check_if_in_jail_and_reporting_set',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
     """Dialog builder class for 'Jail and/or Community Control' dialog."""
 
@@ -107,7 +140,3 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
         self.functions.show_companion_case_fields()
         if self.case_table == 'slated':
             self.in_jail_box.setCurrentText('Yes')
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
