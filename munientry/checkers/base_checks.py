@@ -1,10 +1,27 @@
 """Base module for all checks."""
-from typing import Any, Generator
+from typing import Any, Generator, Callable
 
 from loguru import logger
 from PyQt6.QtCore import QDate
 
-from munientry.widgets.message_boxes import FAIL, PASS
+from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox
+
+
+class RequiredCheck(object):
+    """Checks that hard stop the user if failed."""
+
+    def __init__(self, message: str, title: str) -> None:
+        self.message = message
+        self.title = title
+
+    def __call__(self, func: Callable) -> Callable:
+        """Returns True if a check fails and hard stops the user with a message about the error."""
+        def wrapper(*args, **kwargs) -> str:
+            func_result = func(*args, **kwargs)
+            if func_result == True:
+                RequiredBox(self.message, self.title).exec()
+            return func_result
+        return wrapper
 
 
 class BaseChecks(object):
@@ -25,7 +42,7 @@ class BaseChecks(object):
         show a message that allows the user to correct the failed check.
         """
         check_results = self.run_checks()
-        if FAIL in check_results:
+        if True in check_results:
             self.log_failed_checks(check_results)
             return FAIL
         return PASS

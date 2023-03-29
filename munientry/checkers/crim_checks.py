@@ -1,7 +1,7 @@
 """Checks for Criminal Traffic Dialogs."""
 from loguru import logger
 
-from munientry.checkers.base_checks import BaseChecks
+from munientry.checkers.base_checks import BaseChecks, RequiredCheck
 from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
     CANCEL_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox, BLANK, \
