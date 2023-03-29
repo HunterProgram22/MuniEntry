@@ -10,19 +10,22 @@ from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox, WarningBox
 
 
 def WarningCheck(title: str, message: str) -> Callable:
+    """Wraps a check and if check fails it presents user with a Warning Box with Yes/No choice"""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs):
             func_result = func(*args, **kwargs)
             if func_result is False:
                 msg_response = WarningBox(message, title).exec()
-                func_result = func(*args, msg_response=msg_response, **kwargs)
+                kwargs['msg_response'] = msg_response
+                return func(*args, **kwargs)
             return func_result
         return wrapper
     return decorator
 
 
 def RequiredCheck(title: str, message: str) -> Callable:
+    """Wraps a check and hard stops the check with message to user with reason for stop."""
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs) -> str:
@@ -35,6 +38,7 @@ def RequiredCheck(title: str, message: str) -> Callable:
 
 
 def RequiredConditionCheck(func):
+    """Wraps a check and hard stops the user with a detailed message for the hard stop."""
     @wraps(func)
     def wrapper(*args, **kwargs) -> bool:
         self, primary_condition, condition_name = args[:3]

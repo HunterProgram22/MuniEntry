@@ -76,6 +76,7 @@ class CrimBaseChecks(BaseChecks):
 
     @RequiredConditionCheck
     def check_primary_condition(self, primary_condition, condition_name) -> bool:
+        """Returns False (Fails) if the primary condition is set to None or Empty."""
         return primary_condition not in (None, '')
 
 
@@ -83,26 +84,14 @@ class DefenseCounselChecks(CrimBaseChecks):
     """Class containing checks for defense counsel."""
 
     @WarningCheck(DEF_COUNSEL_TITLE, DEF_COUNSEL_MSG)
-    def check_defense_counsel(self, msg_response=None) -> str:
-        if self.dialog.defense_counsel_name_box.currentText().strip() != '':
-            if msg_response == YES_BUTTON_RESPONSE:
-                self.dialog.defense_counsel_waived_checkBox.setChecked(True)
-            return False
-        return False
-        # if self.dialog.defense_counsel_name_box.currentText().strip() == '':
-        #     if msg_response == YES_BUTTON_RESPONSE:
-        #         self.dialog.defense_counsel_waived_checkBox.setChecked(True)
-        #         return PASS
-        #     elif msg_response == NO_BUTTON_RESPONSE:
-        #         self.dialog.defense_counsel_waived_checkBox.setChecked(False)
-        #         return FAIL
-        #     else:
-        #         return FAIL
-        # return PASS
-
-    # def set_defense_counsel_waived_or_fail_check(self, message_response) -> str:
-    #     if message_response == YES_BUTTON_RESPONSE:
-    #     return FAIL
+    def check_defense_counsel(self, msg_response=None) -> bool:
+        """Returns False (Fails) with choice to set defense counsel waived if no counsel set."""
+        if self.dialog.defense_counsel_waived_checkBox.isChecked():
+            return True
+        if msg_response == YES_BUTTON_RESPONSE:
+            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+            return True
+        return self.dialog.defense_counsel_name_box.currentText().strip() != ''
 
 
 class InsuranceChecks(DefenseCounselChecks):
