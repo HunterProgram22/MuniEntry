@@ -58,15 +58,12 @@ class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class ArraignmentContinueDialogInfoChecker(DefenseCounselChecks):
-    """Class with all checks for Arriagnment Continuance Dialog."""
+class ArraignmentContinueCheckList(DefenseCounselChecks):
+    """Check list for Arraignment Continuance Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+    ]
 
 
 class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentContinueDialog):
@@ -74,7 +71,7 @@ class ArraignmentContinueDialog(crim.CrimTrafficDialogBuilder, Ui_ArraignmentCon
 
     _case_information_model = ArraignmentContinueEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = ArraignmentContinueDialogInfoChecker
+    _info_checker = ArraignmentContinueCheckList
     _model_updater = ArraignmentContinueDialogUpdater
     _signal_connector = ArraignmentContinueDialogSignalConnector
     _slots = ArraignmentContinueDialogSlotFunctions

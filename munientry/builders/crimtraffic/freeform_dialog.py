@@ -23,15 +23,12 @@ class FreeformDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class FreeformDialogInfoChecker(DefenseCounselChecks):
-    """Class with all checks for Freeform Entry Dialog."""
+class FreeformCheckList(DefenseCounselChecks):
+    """Check list for Freeform Entry Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+    ]
 
 
 class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
@@ -39,7 +36,7 @@ class FreeformDialog(crim.CrimTrafficDialogBuilder, Ui_FreeformEntryDialog):
 
     _case_information_model = FreeformEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = FreeformDialogInfoChecker
+    _info_checker = FreeformCheckList
     _model_updater = FreeformDialogUpdater
     _signal_connector = FreeformDialogSignalConnector
     _slots = FreeformDialogSlotFunctions

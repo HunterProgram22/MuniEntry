@@ -72,9 +72,17 @@ class NotGuiltyBondSignalConnector(crim.CrimTrafficSignalConnector):
             checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
-class NotGuiltyBondDialogChecks(ChargeGridChecks, BondChecks):
-    """Class with all checks for Not Guilty Bond Dialog."""
+class NotGuiltyBondCheckList(ChargeGridChecks, BondChecks):
+    """Check list for Not Guilty Bond Dialog."""
 
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+        'check_additional_conditions_ordered',
+        'check_domestic_violence_bond_condition',
+    ]
     conditions_list = [
         ('admin_license_suspension', 'disposition', 'Admin License Suspension'),
         ('vehicle_seizure', 'vehicle_make_model', 'Vehicle Seizure'),
@@ -83,25 +91,13 @@ class NotGuiltyBondDialogChecks(ChargeGridChecks, BondChecks):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-            'check_if_no_bond_amount',
-            'check_if_improper_bond_type',
-            'check_additional_conditions_ordered',
-            'check_domestic_violence_bond_condition',
-        ]
-        self.check_status = self.perform_check_list()
-
 
 class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog):
     """Dialog builder class for 'Not Guilty Plea / Bond' dialog."""
 
     _case_information_model = NotGuiltyBondEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = NotGuiltyBondDialogChecks
+    _info_checker = NotGuiltyBondCheckList
     _model_updater = NotGuiltyBondDialogUpdater
     _signal_connector = NotGuiltyBondSignalConnector
     _slots = NotGuiltyBondSlotFunctions

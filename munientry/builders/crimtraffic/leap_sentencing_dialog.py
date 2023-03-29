@@ -49,26 +49,22 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapSentencingDialogChecks(ChargeGridChecks, InsuranceChecks):
-    """Class with checks for LEAP Sentencing Dialog."""
+class LeapSentencingCheckList(ChargeGridChecks, InsuranceChecks):
+    """Check list for LEAP Sentencing Dialog."""
 
+    check_list = [
+        'check_defense_counsel',
+        'check_if_leap_plea_date_is_today',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+        'check_insurance',
+        'check_additional_conditions_ordered',
+    ]
     conditions_list = [
         ('license_suspension', 'license_type', 'License Suspension'),
         ('community_service', 'hours_of_service', 'Community Service'),
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_leap_plea_date_is_today',
-            'check_if_no_plea_entered',
-            'check_if_no_finding_entered',
-            'check_insurance',
-            'check_additional_conditions_ordered',
-        ]
-        self.check_status = self.perform_check_list()
 
 
 class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialog):
@@ -76,7 +72,7 @@ class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialo
 
     _case_information_model = LeapSentencingEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = LeapSentencingDialogChecks
+    _info_checker = LeapSentencingCheckList
     _model_updater = LeapSentencingDialogUpdater
     _signal_connector = LeapSentencingDialogSignalConnector
     _slots = LeapSentencingDialogSlotFunctions

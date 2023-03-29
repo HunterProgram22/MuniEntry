@@ -64,16 +64,13 @@ class LeapAdmissionPleaDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapAdmissionPleaDialogInfoChecker(ChargeGridChecks):
-    """Class with all checks for LEAP Admission Plea Dialog."""
+class LeapAdmissionPleaCheckList(ChargeGridChecks):
+    """Check list for LEAP Admission Plea Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+    ]
 
 
 class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPleaDialog):
@@ -81,7 +78,7 @@ class LeapAdmissionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_LeapAdmissionPle
 
     _case_information_model = LeapAdmissionEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = LeapAdmissionPleaDialogInfoChecker
+    _info_checker = LeapAdmissionPleaCheckList
     _model_updater = LeapAdmissionPleaDialogUpdater
     _signal_connector = LeapAdmissionPleaDialogSignalConnector
     _slots = LeapAdmissionPleaDialogSlotFunctions

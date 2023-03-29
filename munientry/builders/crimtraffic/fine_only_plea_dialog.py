@@ -53,25 +53,22 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class FineOnlyDialogChecks(ChargeGridChecks, InsuranceChecks):
-    """Class with checks for the Fine Only Dialog."""
+class FineOnlyCheckList(ChargeGridChecks, InsuranceChecks):
+    """Check list for Fine Only Dialog."""
 
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+        'check_insurance',
+        'check_additional_conditions_ordered',
+    ]
     conditions_list = [
         ('license_suspension', 'license_type', 'License Suspension'),
         ('community_service', 'hours_of_service', 'Community Service'),
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-            'check_if_no_finding_entered',
-            'check_insurance',
-            'check_additional_conditions_ordered',
-        ]
-        self.check_status = self.perform_check_list()
 
 
 class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
@@ -79,7 +76,7 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
 
     _case_information_model = FineOnlyEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = FineOnlyDialogChecks
+    _info_checker = FineOnlyCheckList
     _model_updater = FineOnlyDialogUpdater
     _signal_connector = FineOnlyDialogSignalConnector
     _slots = FineOnlyDialogSlotFunctions

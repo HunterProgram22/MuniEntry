@@ -11,7 +11,6 @@ class BaseChecks(object):
     """Class for initializing Checks for Dialogs."""
 
     check_list: list = []
-    conditions_list: list = []
 
     def __init__(self, dialog) -> None:
         self.dialog = dialog

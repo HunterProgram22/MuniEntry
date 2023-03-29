@@ -14,6 +14,8 @@ YES = 'Yes'
 class CrimBaseChecks(BaseChecks):
     """Base class for all Criminal Traffic checks."""
 
+    conditions_list: list = []
+
     def check_if_plea_date_is_today(self) -> str:
         if self.dialog.plea_date.date() == self.today:
             message = (
@@ -33,6 +35,19 @@ class CrimBaseChecks(BaseChecks):
             RequiredBox(message, 'LEAP Plea Date Before Today Required').exec()
             return FAIL
         return PASS
+
+    def check_if_diversion_program_selected(self) -> str:
+        diversion_program_list = [
+            'marijuana_diversion',
+            'theft_diversion',
+            'other_diversion',
+        ]
+        for program in diversion_program_list:
+            if getattr(self.dialog.entry_case_information.diversion, program) is True:
+                return PASS
+        message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
+        RequiredBox(message, 'Diversion Program Required').exec()
+        return FAIL
 
     def check_additional_conditions_ordered(self) -> str:
         """Hard stops if an additional condition checkbox is checked, but certain data is None.
@@ -178,8 +193,8 @@ class ChargeGridChecks(InsuranceChecks):
     """Class that checks dialog to make sure the appropriate information is entered."""
 
     def __init__(self, dialog):
-        super().__init__(dialog)
         self.grid = dialog.charges_gridLayout
+        super().__init__(dialog)
 
     def check_if_no_plea_entered(self) -> str:
         """Hard stops the create entry process for any charge that does not have a plea.
@@ -335,11 +350,11 @@ class JailTimeChecks(ChargeGridChecks):
     """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
 
     def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.model = self.dialog.entry_case_information
+        self.model = dialog.entry_case_information
         self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
         self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
         self.jail_credit = self.model.jail_terms.days_in_jail
+        super().__init__(dialog)
 
     def check_if_days_in_jail_blank_but_in_jail(self) -> str:
         """Requires user to enter data in Days in Jail field if Currently in Jail is Yes."""

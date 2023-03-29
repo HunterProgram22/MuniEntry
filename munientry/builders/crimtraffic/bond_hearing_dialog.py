@@ -82,9 +82,17 @@ class BondHearingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class BondHearingDialogChecks(BondChecks):
-    """Class with checks for the Bond Hearing Dialog."""
+class BondHearingCheckList(BondChecks):
+    """Check list for Bond Hearing Dialog."""
 
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_bond_modification_decision',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+        'check_additional_conditions_ordered',
+        'check_domestic_violence_bond_condition',
+    ]
     conditions_list = [
         ('admin_license_suspension', 'disposition', 'Admin License Suspension'),
         ('vehicle_seizure', 'vehicle_make_model', 'Vehicle Seizure'),
@@ -93,25 +101,13 @@ class BondHearingDialogChecks(BondChecks):
         ('other_conditions', 'terms', 'Other Conditions'),
     ]
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_bond_modification_decision',
-            'check_if_no_bond_amount',
-            'check_if_improper_bond_type',
-            'check_additional_conditions_ordered',
-            'check_domestic_violence_bond_condition',
-        ]
-        self.check_status = self.perform_check_list()
-
 
 class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
     """Dialog builder class for 'Bond Modification / Revocation' Entry."""
 
     _case_information_model = BondHearingEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = BondHearingDialogChecks
+    _info_checker = BondHearingCheckList
     _model_updater = BondHearingDialogUpdater
     _signal_connector = BondHearingDialogSignalConnector
     _slots = BondHearingDialogSlotFunctions

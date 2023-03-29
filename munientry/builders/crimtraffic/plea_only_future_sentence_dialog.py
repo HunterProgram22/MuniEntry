@@ -46,20 +46,14 @@ class PleaOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class PleaOnlyDialogInfoChecker(ChargeGridChecks):
-    """Class with all checks for Plea Only Dialog.
+class PleaOnlyCheckList(ChargeGridChecks):
+    """Check list for Plea Only Dialog."""
 
-    The Plea Only Dialog includes the finding. Sentencing is set out in the future.
-    """
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-            'check_if_no_finding_entered',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+    ]
 
 
 class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
@@ -67,7 +61,7 @@ class PleaOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_PleaOnlyDialog):
 
     _case_information_model = PleaOnlyEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = PleaOnlyDialogInfoChecker
+    _info_checker = PleaOnlyCheckList
     _model_updater = PleaOnlyDialogUpdater
     _signal_connector = PleaOnlyDialogSignalConnector
     _slots = PleaOnlyDialogSlotFunctions

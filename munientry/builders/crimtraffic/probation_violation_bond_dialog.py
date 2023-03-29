@@ -48,17 +48,14 @@ class ProbationViolationBondDialogSignalConnector(crim.CrimTrafficSignalConnecto
         self.dialog.bond_type_box.currentTextChanged.connect(self.dialog.functions.set_if_no_bond)
 
 
-class ProbationViolationBondDialogChecks(BondChecks):
-    """Class with checks for the Probation Violation Bond Dialog."""
+class ProbationViolationBondCheckList(BondChecks):
+    """Check list for Probation Violation Bond Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_bond_amount',
-            'check_if_improper_bond_type',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_bond_amount',
+        'check_if_improper_bond_type',
+    ]
 
 
 class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationViolationBondDialog):
@@ -66,7 +63,7 @@ class ProbationViolationBondDialog(crim.CrimTrafficDialogBuilder, Ui_ProbationVi
 
     _case_information_model = ProbationViolationEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = ProbationViolationBondDialogChecks
+    _info_checker = ProbationViolationBondCheckList
     _model_updater = ProbationViolationBondDialogUpdater
     _signal_connector = ProbationViolationBondDialogSignalConnector
     _slots = ProbationViolationBondDialogSlotFunctions

@@ -37,22 +37,19 @@ class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class CriminalSealingDialogInfoChecker(DefenseCounselChecks):
-    """Class with all checks for Criminal Sealing Entry Dialog."""
+class CriminalSealingCheckList(DefenseCounselChecks):
+    """Check list for Criminal Sealing Entry Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+    ]
 
 
 class CriminalSealingDialog(crim.CrimTrafficDialogBuilder, Ui_CriminalSealingEntryDialog):
     """Dialog builder class for Criminal Sealing Entry."""
     _case_information_model = CrimSealingModel
     _case_loader = CrimSealingLoader
-    _info_checker = CriminalSealingDialogInfoChecker
+    _info_checker = CriminalSealingCheckList
     _model_updater = CriminalSealingDialogUpdater
     _signal_connector = CriminalSealingDialogSignalConnector
     _slots = CriminalSealingDialogSlotFunctions

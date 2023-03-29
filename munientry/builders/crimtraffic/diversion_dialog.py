@@ -103,32 +103,16 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class DiversionDialogChecks(ChargeGridChecks, InsuranceChecks):
-    """Class with checks for Diversion Dialog."""
+class DiversionCheckList(ChargeGridChecks, InsuranceChecks):
+    """Check list for Diversion Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-            'check_if_no_finding_entered',
-            'check_if_diversion_program_selected',
-            'check_insurance',
-        ]
-        self.check_status = self.perform_check_list()
-
-    def check_if_diversion_program_selected(self) -> str:
-        diversion_program_list = [
-            'marijuana_diversion',
-            'theft_diversion',
-            'other_diversion',
-        ]
-        for program in diversion_program_list:
-            if getattr(self.dialog.entry_case_information.diversion, program) is True:
-                return PASS
-        message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
-        RequiredBox(message, 'Diversion Program Required').exec()
-        return FAIL
+    check_list = [
+        'check_defense_counsel',
+        'check_if_no_plea_entered',
+        'check_if_no_finding_entered',
+        'check_if_diversion_program_selected',
+        'check_insurance',
+    ]
 
 
 class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog):
@@ -136,7 +120,7 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
 
     _case_information_model = DiversionEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = DiversionDialogChecks
+    _info_checker = DiversionCheckList
     _model_updater = DiversionDialogUpdater
     _signal_connector = DiversionDialogSignalConnector
     _slots = DiversionDialogSlotFunctions

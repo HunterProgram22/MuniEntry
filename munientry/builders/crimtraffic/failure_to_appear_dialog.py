@@ -70,15 +70,12 @@ class FailureToAppearDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class FailureToAppearDialogInfoChecker(DefenseCounselChecks):
-    """Class with all checks for Failure to Appear Dialog."""
+class FailureToAppearCheckList(DefenseCounselChecks):
+    """Check list for Failure to Appear Dialog."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_defense_counsel',
+    ]
 
 
 class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDialog):
@@ -86,7 +83,7 @@ class FailureToAppearDialog(crim.CrimTrafficDialogBuilder, Ui_FailureToAppearDia
 
     _case_information_model = FailureToAppearEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = FailureToAppearDialogInfoChecker
+    _info_checker = FailureToAppearCheckList
     _model_updater = FailureToAppearDialogUpdater
     _signal_connector = FailureToAppearDialogSignalConnector
     _slots = FailureToAppearDialogSlotFunctions
