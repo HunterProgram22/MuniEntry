@@ -10,9 +10,9 @@ from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox
 class RequiredCheck(object):
     """Checks that hard stop the user if failed."""
 
-    def __init__(self, message: str, title: str) -> None:
-        self.message = message
+    def __init__(self, title: str, message: str) -> None:
         self.title = title
+        self.message = message
 
     def __call__(self, func: Callable) -> Callable:
         """Returns True if a check fails and hard stops the user with a message about the error."""
@@ -40,25 +40,20 @@ class BaseChecks(object):
         The method is called prior to the entry creation process for a dialog. If any of the checks
         fail it will show a message and either abort the entry creation process by returning FAIL or
         show a message that allows the user to correct the failed check.
+
+        TODO: check result in (True, FAIL) should be temporary for refactor only.
         """
         check_results = self.run_checks()
-        if True in check_results:
-            self.log_failed_checks(check_results)
-            return FAIL
+        for check_name, check_result in check_results:
+            if check_result in (True, FAIL):
+                self.log_failed_checks(check_name)
+                return FAIL
         return PASS
 
-    def run_checks(self) -> Generator[Any, None, None]:
+    def run_checks(self) -> Generator[tuple[str, Any], None, None]:
         """Returns a list of results of PASS or FAIL for each check in the check_list."""
-        return (getattr(self, check_method)() for check_method in self.check_list)
+        return ((check_method, getattr(self, check_method)()) for check_method in self.check_list)
 
-    def log_failed_checks(self, check_results: Generator) -> None:
+    def log_failed_checks(self, check_name: str) -> None:
         """Logs failed checks with warning."""
-        failed_check = next(
-            (
-                check
-                for check, check_result in zip(self.check_list, check_results)
-                if check_result == FAIL
-            ), None,
-        )
-        if failed_check:
-            logger.warning(failed_check)
+        logger.warning(f'{check_name} FAILED')

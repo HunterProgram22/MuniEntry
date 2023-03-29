@@ -2,6 +2,12 @@
 from loguru import logger
 
 from munientry.checkers.base_checks import BaseChecks, RequiredCheck
+from munientry.checkers.check_messages import (
+    LEAP_TODAY_MSG,
+    LEAP_TODAY_TITLE,
+    PLEA_TODAY_MSG,
+    PLEA_TODAY_TITLE,
+)
 from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
     CANCEL_BUTTON_RESPONSE
 from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox, BLANK, \
@@ -16,25 +22,13 @@ class CrimBaseChecks(BaseChecks):
 
     conditions_list: list = []
 
-    def check_if_plea_date_is_today(self) -> str:
-        if self.dialog.plea_date.date() == self.today:
-            message = (
-                'The Plea Date is Today, but must be a date prior to Today. Please enter'
-                + ' a date in the Plea Date box prior to today.'
-            )
-            RequiredBox(message, 'Plea Date Before Today Required').exec()
-            return FAIL
-        return PASS
+    @RequiredCheck(PLEA_TODAY_TITLE, PLEA_TODAY_MSG)
+    def check_if_plea_date_is_today(self) -> bool:
+        return self.dialog.plea_date.date() == self.today
 
-    def check_if_leap_plea_date_is_today(self) -> str:
-        if self.dialog.leap_plea_date.date() == self.today:
-            message = (
-                'The Leap Plea Date is Today, but must be a date prior to Today. Please enter'
-                + ' a date in the Leap Plea Date box prior to today.'
-            )
-            RequiredBox(message, 'LEAP Plea Date Before Today Required').exec()
-            return FAIL
-        return PASS
+    @RequiredCheck(LEAP_TODAY_TITLE, LEAP_TODAY_MSG)
+    def check_if_leap_plea_date_is_today(self) -> bool:
+        return self.dialog.leap_plea_date.date() == self.today
 
     def check_if_diversion_program_selected(self) -> str:
         diversion_program_list = [
