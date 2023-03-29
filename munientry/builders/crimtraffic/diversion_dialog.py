@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.no_jail_sentencing_checkers import DiversionDialogInfoChecker
+from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker
 from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
@@ -11,6 +11,7 @@ from munientry.models.case_information.sentencing_entries import (
 )
 from munientry.updaters.grid_case_updaters import DiversionDialogUpdater
 from munientry.views.diversion_plea_dialog_ui import Ui_DiversionPleaDialog
+from munientry.widgets.message_boxes import PASS, RequiredBox, FAIL
 
 DIVERSION_ADD_DAYS = 97
 
@@ -123,3 +124,31 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
 
 if __name__ == '__main__':
     logger.info(f'{__name__} run directly.')
+
+
+class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
+    """Class with checks for Diversion Dialog."""
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+            'check_if_no_plea_entered',
+            'check_if_no_finding_entered',
+            'check_if_diversion_program_selected',
+            'check_insurance',
+        ]
+        self.check_status = self.perform_check_list()
+
+    def check_if_diversion_program_selected(self) -> str:
+        diversion_program_list = [
+            'marijuana_diversion',
+            'theft_diversion',
+            'other_diversion',
+        ]
+        for program in diversion_program_list:
+            if getattr(self.dialog.entry_case_information.diversion, program) is True:
+                return PASS
+        message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
+        RequiredBox(message, 'Diversion Program Required').exec()
+        return FAIL
