@@ -119,16 +119,13 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
             self.model.final_pretrial_time = None
 
 
-class FinalJuryNoticeHearingInfoChecker(SchedulingChecks):
-    """Class with checks for the Final Jury Notice Dialog."""
+class FinalJuryNoticeCheckList(SchedulingChecks):
+    """Check list for the Final Jury Notice."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_if_final_pretrial_date_is_today',
-            'check_if_trial_date_is_today',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_if_final_pretrial_date_is_today',
+        'check_if_trial_date_is_today',
+    ]
 
 
 class FinalJuryNoticeHearingDialog(
@@ -143,7 +140,7 @@ class FinalJuryNoticeHearingDialog(
 
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
-    _info_checker = FinalJuryNoticeHearingInfoChecker
+    _info_checker = FinalJuryNoticeCheckList
     _model_updater = FinalJuryNoticeHearingCaseInformationUpdater
     _signal_connector = FinalJuryNoticeHearingSignalConnector
     _slots = FinalJuryNoticeHearingSlotFunctions

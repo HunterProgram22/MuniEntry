@@ -250,23 +250,20 @@ class SchedulingEntryModelUpdater(SchedulingModelUpdater):
         return 'Unknown'
 
 
-class SchedulingEntryDialogInfoChecker(SchedulingChecks):
-    """Class with checks for the General Notice Hearing Info Checker."""
+class SchedulingEntryCheckList(SchedulingChecks):
+    """Class with checks for the Scheduling Entry Dialogs."""
 
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_if_trial_date_is_today',
-        ]
-        self.check_status = self.perform_check_list()
+    check_list = [
+        'check_if_trial_date_is_today',
+    ]
 
 
 class SchedulingEntryDialog(sched.SchedulingDialogBuilder, Ui_SchedulingEntryDialog):
-    """The builder class for the Scheduling Entry Dialog."""
+    """The builder class for the Scheduling Entry."""
 
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
-    _info_checker = SchedulingEntryDialogInfoChecker
+    _info_checker = SchedulingEntryCheckList
     _model_updater = SchedulingEntryModelUpdater
     _signal_connector = SchedulingEntryDialogSignalConnector
     _slots = SchedulingEntryDialogSlotFunctions

@@ -23,12 +23,18 @@ class NoticeCCViolationSignalConnector(prob.ProbationSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
+class NoticeCCViolationCheckList(ProbationBaseChecks):
+    """Check list for Notice CC Violation."""
+
+    check_list = []
+
+
 class NoticeCCViolationDialog(prob.ProbationDialogBuilder, Ui_NoticeCCViolationDialog):
     """Dialog builder class for Notice of CC Violation Entry."""
 
     _case_information_model = NoticeCCViolationCaseInformation
     _case_loader = ProbationCrimCmsLoader
-    _info_checker = ProbationBaseChecks
+    _info_checker = NoticeCCViolationCheckList
     _model_updater = ProbationModelUpdater
     _signal_connector = NoticeCCViolationSignalConnector
     _slots = NoticeCCViolationSlotFunctions

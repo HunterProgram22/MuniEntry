@@ -70,13 +70,9 @@ class GeneralNoticeOfHearingCaseInformationUpdater(SchedulingModelUpdater):
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
-class GeneralNoticeOfHearingInfoChecker(SchedulingChecks):
-    """Class with checks for the General Notice Hearing Info Checker."""
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list: list[str] = []
-        self.check_status = self.perform_check_list()
+class GeneralNoticeOfHearingCheckList(SchedulingChecks):
+    """Class with checks for the General Notice Hearing."""
+    check_list = []
 
 
 class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoticeOfHearingDialog):
@@ -89,7 +85,7 @@ class GeneralNoticeOfHearingDialog(sched.SchedulingDialogBuilder, Ui_GeneralNoti
 
     _case_information_model = SchedulingCaseInformation
     _case_loader = SchedulingCrimCmsLoader
-    _info_checker = GeneralNoticeOfHearingInfoChecker
+    _info_checker = GeneralNoticeOfHearingCheckList
     _model_updater = GeneralNoticeOfHearingCaseInformationUpdater
     _signal_connector = GeneralNoticeOfHearingDialogSignalConnector
     _slots = GeneralNoticeOfHearingDialogSlotFunctions

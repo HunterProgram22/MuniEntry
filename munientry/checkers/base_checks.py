@@ -10,12 +10,13 @@ from munientry.widgets.message_boxes import FAIL, PASS
 class BaseChecks(object):
     """Class for initializing Checks for Dialogs."""
 
+    check_list: list = []
     conditions_list: list = []
 
     def __init__(self, dialog) -> None:
         self.dialog = dialog
-        self.check_list: list = []
         self.today = QDate.currentDate()
+        self.check_status = self.perform_check_list()
 
     def perform_check_list(self) -> str:
         """Loops through a list of checks and logs checks that fail.

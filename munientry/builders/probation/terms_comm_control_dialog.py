@@ -35,12 +35,18 @@ class TermsCommControlDialogSignalConnector(prob.ProbationSignalConnector):
             checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
+class TermsCommControlCheckList(ProbationBaseChecks):
+    """Check list for Terms of Community Control."""
+
+    check_list = []
+
+
 class TermsCommControlDialog(prob.ProbationDialogBuilder, Ui_TermsCommControlDialog):
     """Dialog builder class for TermsCommControl Entry."""
 
     _case_information_model = TermsCommControlEntryCaseInformation
     _case_loader = ProbationCrimCmsLoader
-    _info_checker = ProbationBaseChecks
+    _info_checker = TermsCommControlCheckList
     _model_updater = ProbationModelUpdater
     _signal_connector = TermsCommControlDialogSignalConnector
     _slots = TermsCommControlDialogSlotFunctions
