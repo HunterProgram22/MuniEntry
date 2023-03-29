@@ -1,27 +1,50 @@
 """Base module for all checks."""
+from functools import wraps
 from typing import Any, Generator, Callable
 
 from loguru import logger
 from PyQt6.QtCore import QDate
 
-from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox
+from munientry.checkers.check_messages import ADD_CONDITIONS_MSG, ADD_CONDITIONS_TITLE
+from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox, WarningBox
 
 
-class RequiredCheck(object):
-    """Checks that hard stop the user if failed."""
+def WarningCheck(title: str, message: str) -> Callable:
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            func_result = func(*args, **kwargs)
+            if func_result is False:
+                msg_response = WarningBox(message, title).exec()
+                func_result = func(*args, msg_response=msg_response, **kwargs)
+            return func_result
+        return wrapper
+    return decorator
 
-    def __init__(self, title: str, message: str) -> None:
-        self.title = title
-        self.message = message
 
-    def __call__(self, func: Callable) -> Callable:
-        """Returns False if a check fails and hard stops the user with a message about the error."""
+def RequiredCheck(title: str, message: str) -> Callable:
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
         def wrapper(*args, **kwargs) -> str:
             func_result = func(*args, **kwargs)
             if func_result == False:
-                RequiredBox(self.message, self.title).exec()
+                RequiredBox(message, title).exec()
             return func_result
         return wrapper
+    return decorator
+
+
+def RequiredConditionCheck(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs) -> bool:
+        self, primary_condition, condition_name = args[:3]
+        title = ADD_CONDITIONS_TITLE
+        message = ADD_CONDITIONS_MSG.format(condition_name)
+        func_result = func(*args, **kwargs)
+        if func_result == False:
+            RequiredBox(message, title).exec()
+        return func_result
+    return wrapper
 
 
 class BaseChecks(object):

@@ -24,3 +24,17 @@ DIVERSION_SET_TITLE = 'Must Select a Diversion Program'
 DIVERSION_SET_MSG = """No Diversion program was selected.
 
 Please select one of the Diversion programs to proceed."""
+
+ADD_CONDITIONS_TITLE = 'Additional Condition Not Set'
+ADD_CONDITIONS_MSG = """The additional condition {0} is checked, but the details of
+the {0} have not been entered.
+
+Click the Add Conditions button to add details, or uncheck the {0} box if there is no {0} in this
+case."""
+
+DEF_COUNSEL_TITLE = 'Does Defendant Have Counsel?'
+DEF_COUNSEL_MSG = """There is no attorney selected for the Defendant.
+
+Did the Defendant appear without counsel or waive his right to counsel?
+
+If you select No you must enter a name for Defense Counsel."""

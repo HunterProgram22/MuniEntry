@@ -1,8 +1,10 @@
 """Checks for Criminal Traffic Dialogs."""
 from loguru import logger
 
-from munientry.checkers.base_checks import BaseChecks, RequiredCheck
+from munientry.checkers.base_checks import BaseChecks, RequiredCheck, RequiredConditionCheck, WarningCheck
 from munientry.checkers.check_messages import (
+    DEF_COUNSEL_MSG,
+    DEF_COUNSEL_TITLE,
     DIVERSION_SET_MSG,
     DIVERSION_SET_TITLE,
     LEAP_PAST_MSG,
@@ -47,54 +49,60 @@ class CrimBaseChecks(BaseChecks):
         """Hard stops if an additional condition checkbox is checked, but certain data is None.
 
         This checks to see if the primary condition of an additional condition is set to something
-        other than None. If so the check passes. This only prevents checking a condition checkbox
-        on the main dialog without opening the secondary dialog to add the conditions.
-
-        Once the additional conditions dialog is opened, then the field that was being checked
-        would be set to an empty string if no data is entered and this check would pass.
+        other than None or Empty. If so the check passes.
 
         The conditions_list for each dialog provides a tuple of (condition, the primary condition
         that is checked, the formal name of the Condition).
-
-        In sum, this is not a great check overall, but prevents some user errors.
         """
-        for condition_item in self.conditions_list:
-            condition = getattr(self.dialog.entry_case_information, condition_item[0])
-            main_condition_set = getattr(condition, condition_item[1])
-            condition_name = condition_item[2]
-            if condition.ordered is True and main_condition_set is None:
-                message = (
-                    f'The additional condition {condition_name} is checked, but the details of'
-                    + f' the {condition_name} have not been entered.\n\nClick the Add Conditions'
-                    + f' button to add details, or uncheck the {condition_name} box if there is'
-                    + f' no {condition_name} in this case.'
-                )
-                RequiredBox(message, 'Additional Condition Info Required').exec()
-                return FAIL
+        for condition in self.conditions_list:
+            condition_model, primary_condition, condition_name = self._get_condition_info(condition)
+            if condition_model.ordered in (False, None):
+                continue
+            check_status = self.check_primary_condition(primary_condition, condition_name)
+            if check_status == False:
+                return False
         return PASS
+
+    def _get_condition_info(self, condition_item: tuple[str, str, str]) -> tuple[str, str, str]:
+        """The CheckList class for certain classes has conditions_list tuples that are returned.
+
+        The tuple that is returned contains a string model name, the primary condition that is set
+        in a model, and the standard name (i.e. 'License Suspension') for the model.
+        """
+        condition_model = getattr(self.dialog.entry_case_information, condition_item[0])
+        primary_condition = getattr(condition_model, condition_item[1])
+        condition_name = condition_item[2]
+        return condition_model, primary_condition, condition_name
+
+    @RequiredConditionCheck
+    def check_primary_condition(self, primary_condition, condition_name) -> bool:
+        return primary_condition not in (None, '')
 
 
 class DefenseCounselChecks(CrimBaseChecks):
     """Class containing checks for defense counsel."""
 
-    def check_defense_counsel(self) -> str:
-        if self.dialog.defense_counsel_waived_checkBox.isChecked():
-            return PASS
-        if self.dialog.defense_counsel_name_box.currentText().strip() == '':
-            message = (
-                'There is no attorney selected for the Defendant.\n\nDid the Defendant'
-                + ' appear without or waive his right to counsel?\n\nIf you select No you'
-                + ' must enter a name for Defense Counsel.'
-            )
-            msg_response = WarningBox(message, 'Does Defendant Have Counsel').exec()
-            return self.set_defense_counsel_waived_or_fail_check(msg_response)
-        return PASS
+    @WarningCheck(DEF_COUNSEL_TITLE, DEF_COUNSEL_MSG)
+    def check_defense_counsel(self, msg_response=None) -> str:
+        if self.dialog.defense_counsel_name_box.currentText().strip() != '':
+            if msg_response == YES_BUTTON_RESPONSE:
+                self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+            return False
+        return False
+        # if self.dialog.defense_counsel_name_box.currentText().strip() == '':
+        #     if msg_response == YES_BUTTON_RESPONSE:
+        #         self.dialog.defense_counsel_waived_checkBox.setChecked(True)
+        #         return PASS
+        #     elif msg_response == NO_BUTTON_RESPONSE:
+        #         self.dialog.defense_counsel_waived_checkBox.setChecked(False)
+        #         return FAIL
+        #     else:
+        #         return FAIL
+        # return PASS
 
-    def set_defense_counsel_waived_or_fail_check(self, message_response) -> str:
-        if message_response == YES_BUTTON_RESPONSE:
-            self.dialog.defense_counsel_waived_checkBox.setChecked(True)
-            return PASS
-        return FAIL
+    # def set_defense_counsel_waived_or_fail_check(self, message_response) -> str:
+    #     if message_response == YES_BUTTON_RESPONSE:
+    #     return FAIL
 
 
 class InsuranceChecks(DefenseCounselChecks):
