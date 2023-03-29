@@ -4,7 +4,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import DAY_DICT, EVENT_DICT
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import SchedulingChecker
+from munientry.checkers.base_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
@@ -119,7 +119,7 @@ class FinalJuryNoticeHearingCaseInformationUpdater(SchedulingModelUpdater):
             self.model.final_pretrial_time = None
 
 
-class FinalJuryNoticeHearingInfoChecker(SchedulingChecker):
+class FinalJuryNoticeHearingInfoChecker(SchedulingChecks):
     """Class with checks for the Final Jury Notice Dialog."""
 
     def __init__(self, dialog) -> None:

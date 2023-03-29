@@ -5,7 +5,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.base_checks import BondInfoChecker
+from munientry.checkers.base_checks import BondChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     NoPleaBondEntryCaseInformation,
@@ -79,7 +79,7 @@ class NoPleaBondDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class NoPleaBondDialogInfoChecker(BondInfoChecker):
+class NoPleaBondDialogChecks(BondChecks):
     """Class with checks for the No Plea Bond Dialog."""
 
     conditions_list = [
@@ -107,7 +107,7 @@ class NoPleaBondDialog(crim.CrimTrafficDialogBuilder, Ui_NoPleaBondDialog):
 
     _case_information_model = NoPleaBondEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = NoPleaBondDialogInfoChecker
+    _info_checker = NoPleaBondDialogChecks
     _model_updater = NoPleaBondDialogUpdater
     _signal_connector = NoPleaBondDialogSignalConnector
     _slots = NoPleaBondDialogSlotFunctions

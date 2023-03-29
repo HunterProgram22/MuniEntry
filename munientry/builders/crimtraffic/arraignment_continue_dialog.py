@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import DefenseCounselChecker
+from munientry.checkers.base_checks import DefenseCounselChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import ArraignmentContinueEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import ArraignmentContinueDialogUpdater
@@ -58,7 +58,7 @@ class ArraignmentContinueDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class ArraignmentContinueDialogInfoChecker(DefenseCounselChecker):
+class ArraignmentContinueDialogInfoChecker(DefenseCounselChecks):
     """Class with all checks for Arriagnment Continuance Dialog."""
 
     def __init__(self, dialog) -> None:

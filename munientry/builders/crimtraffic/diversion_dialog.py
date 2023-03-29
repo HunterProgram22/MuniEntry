@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker
+from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks
 from munientry.helper_functions import set_future_date
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
@@ -103,7 +103,7 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
+class DiversionDialogChecks(ChargeGridChecks, InsuranceChecks):
     """Class with checks for Diversion Dialog."""
 
     def __init__(self, dialog) -> None:
@@ -136,7 +136,7 @@ class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog)
 
     _case_information_model = DiversionEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = DiversionDialogInfoChecker
+    _info_checker = DiversionDialogChecks
     _model_updater = DiversionDialogUpdater
     _signal_connector = DiversionDialogSignalConnector
     _slots = DiversionDialogSlotFunctions

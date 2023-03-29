@@ -1,6 +1,6 @@
 """Builder module for the Freeform Entry Dialog."""
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import DefenseCounselChecker
+from munientry.checkers.base_checks import DefenseCounselChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import FreeformEntryCaseInformation
 from munientry.updaters.no_grid_case_updaters import FreeformDialogUpdater
@@ -23,7 +23,7 @@ class FreeformDialogSignalConnector(crim.CrimTrafficSignalConnector):
         self.connect_main_dialog_common_signals()
 
 
-class FreeformDialogInfoChecker(DefenseCounselChecker):
+class FreeformDialogInfoChecker(DefenseCounselChecks):
     """Class with all checks for Freeform Entry Dialog."""
 
     def __init__(self, dialog) -> None:

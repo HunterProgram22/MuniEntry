@@ -5,7 +5,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.base_checks import BondInfoChecker
+from munientry.checkers.base_checks import BondChecks
 from munientry.loaders.cms_case_loaders import CrimCmsNoChargeLoader
 from munientry.models.case_information.plea_entries import (
     BondHearingEntryCaseInformation,
@@ -82,7 +82,7 @@ class BondHearingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class BondHearingDialogInfoChecker(BondInfoChecker):
+class BondHearingDialogChecks(BondChecks):
     """Class with checks for the Bond Hearing Dialog."""
 
     conditions_list = [
@@ -111,7 +111,7 @@ class BondHearingDialog(crim.CrimTrafficDialogBuilder, Ui_BondHearingDialog):
 
     _case_information_model = BondHearingEntryCaseInformation
     _case_loader = CrimCmsNoChargeLoader
-    _info_checker = BondHearingDialogInfoChecker
+    _info_checker = BondHearingDialogChecks
     _model_updater = BondHearingDialogUpdater
     _signal_connector = BondHearingDialogSignalConnector
     _slots = BondHearingDialogSlotFunctions

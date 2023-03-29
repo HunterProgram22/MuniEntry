@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
-from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker
+from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     FineOnlyEntryCaseInformation,
@@ -53,7 +53,7 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
+class FineOnlyDialogChecks(ChargeGridChecks, InsuranceChecks):
     """Class with checks for the Fine Only Dialog."""
 
     conditions_list = [
@@ -79,7 +79,7 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
 
     _case_information_model = FineOnlyEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = FineOnlyDialogInfoChecker
+    _info_checker = FineOnlyDialogChecks
     _model_updater = FineOnlyDialogUpdater
     _signal_connector = FineOnlyDialogSignalConnector
     _slots = FineOnlyDialogSlotFunctions

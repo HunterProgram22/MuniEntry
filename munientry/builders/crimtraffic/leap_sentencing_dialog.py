@@ -3,7 +3,7 @@ from loguru import logger
 
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_conditions_dialog import AddConditionsDialog
-from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker
+from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     LeapSentencingEntryCaseInformation,
@@ -49,7 +49,7 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
+class LeapSentencingDialogChecks(ChargeGridChecks, InsuranceChecks):
     """Class with checks for LEAP Sentencing Dialog."""
 
     conditions_list = [
@@ -76,7 +76,7 @@ class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialo
 
     _case_information_model = LeapSentencingEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = LeapSentencingDialogInfoChecker
+    _info_checker = LeapSentencingDialogChecks
     _model_updater = LeapSentencingDialogUpdater
     _signal_connector = LeapSentencingDialogSignalConnector
     _slots = LeapSentencingDialogSlotFunctions

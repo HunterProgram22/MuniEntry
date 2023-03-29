@@ -3,7 +3,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.builders.administrative import base_admin_builders as admin
-from munientry.checkers.base_checks import BaseChecker
+from munientry.checkers.base_checks import BaseChecks
 from munientry.entrycreators.entry_creator import DrivingPrivilegesEntryCreator
 from munientry.loaders.cms_case_loaders import CmsDrivingInfoLoader
 from munientry.models.privileges_models import (
@@ -245,7 +245,7 @@ class DrivingPrivilegesCaseInformationUpdater(CaseInformationUpdater):
         self.model.additional_information_text = self.dialog.add_information_textEdit.toPlainText()
 
 
-class DrivingPrivilegesDialogInfoChecker(BaseChecker):
+class DrivingPrivilegesDialogInfoChecks(BaseChecks):
     """Class with checks for the Driving Privileges Dialog."""
 
     def __init__(self, dialog) -> None:
@@ -274,7 +274,7 @@ class DrivingPrivilegesDialog(admin.AdminDialogBuilder, Ui_DrivingPrivilegesDial
 
     _case_information_model = DrivingPrivilegesInformation
     _case_loader = CmsDrivingInfoLoader
-    _info_checker = DrivingPrivilegesDialogInfoChecker
+    _info_checker = DrivingPrivilegesDialogInfoChecks
     _model_updater = DrivingPrivilegesCaseInformationUpdater
     _signal_connector = DrivingPrivilegesSignalConnector
     _slots = DrivingPrivilegesSlotFunctions

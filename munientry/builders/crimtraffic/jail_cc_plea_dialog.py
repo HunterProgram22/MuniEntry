@@ -6,8 +6,8 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.checkers.base_checks import ChargeGridInfoChecker, InsuranceInfoChecker, \
-    JailTimeChecker
+from munientry.checkers.base_checks import ChargeGridChecks, InsuranceChecks, \
+    JailTimeChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     JailCCEntryCaseInformation,
@@ -80,7 +80,7 @@ class JailCCDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class JailCCPleaDialogInfoChecker(JailTimeChecker):
+class JailCCPleaDialogInfoChecks(JailTimeChecks):
     """Class with checks for the Jail CC Plea Dialog."""
 
     conditions_list = [
@@ -117,7 +117,7 @@ class JailCCPleaDialog(crim.CrimTrafficDialogBuilder, Ui_JailCCPleaDialog):
 
     _case_information_model = JailCCEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = JailCCPleaDialogInfoChecker
+    _info_checker = JailCCPleaDialogInfoChecks
     _model_updater = JailCCDialogUpdater
     _signal_connector = JailCCDialogSignalConnector
     _slots = JailCCDialogSlotFunctions

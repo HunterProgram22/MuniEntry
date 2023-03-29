@@ -13,7 +13,7 @@ NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No 
 YES = 'Yes'
 
 
-class BaseChecker(object):
+class BaseChecks(object):
     """Class for initializing InfoChecker objects."""
 
     conditions_list = []
@@ -81,7 +81,7 @@ class BaseChecker(object):
         return PASS
 
 
-class SchedulingChecker(BaseChecker):
+class SchedulingChecks(BaseChecks):
 
     def check_if_trial_date_is_today(self) -> str:
         """Scheduling date checker to make sure trial date is not set to today."""
@@ -109,7 +109,7 @@ class SchedulingChecker(BaseChecker):
         return PASS
 
 
-class ProbationDialogInfoChecker(BaseChecker):
+class ProbationChecks(BaseChecks):
     """Class with all checks for Probation Dialogs."""
 
     def __init__(self, dialog) -> None:
@@ -118,7 +118,7 @@ class ProbationDialogInfoChecker(BaseChecker):
         self.check_status = self.perform_check_list()
 
 
-class DefenseCounselChecker(BaseChecker):
+class DefenseCounselChecks(BaseChecks):
     """Class containing checks for defense counsel."""
 
     def check_defense_counsel(self) -> str:
@@ -141,7 +141,7 @@ class DefenseCounselChecker(BaseChecker):
         return FAIL
 
 
-class InsuranceInfoChecker(DefenseCounselChecker):
+class InsuranceChecks(DefenseCounselChecks):
     """Class containing checks for Insurance."""
 
     def check_insurance(self) -> str:
@@ -171,7 +171,7 @@ class InsuranceInfoChecker(DefenseCounselChecker):
         return PASS
 
 
-class BondInfoChecker(DefenseCounselChecker):
+class BondChecks(DefenseCounselChecks):
     """Class that checks dialog to make sure the appropriate bond information is entered."""
 
     def check_if_no_bond_amount(self) -> str:
@@ -227,15 +227,12 @@ class BondInfoChecker(DefenseCounselChecker):
         return PASS
 
 
-class ChargeGridInfoChecker(InsuranceInfoChecker):
+class ChargeGridChecks(InsuranceChecks):
     """Class that checks dialog to make sure the appropriate information is entered."""
 
     def __init__(self, dialog):
         super().__init__(dialog)
         self.grid = dialog.charges_gridLayout
-        # self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
-        # self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
-        # self.jail_credit = self.model.jail_terms.days_in_jail
 
     def check_if_no_plea_entered(self) -> str:
         """Hard stops the create entry process for any charge that does not have a plea.
@@ -387,7 +384,7 @@ class ChargeGridInfoChecker(InsuranceInfoChecker):
         return PASS
 
 
-class JailTimeChecker(ChargeGridInfoChecker):
+class JailTimeChecks(ChargeGridChecks):
     """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
 
     def __init__(self, dialog) -> None:

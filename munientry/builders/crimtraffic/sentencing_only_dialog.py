@@ -6,7 +6,7 @@ from munientry.builders.secondary.add_community_control_dialog import (
     AddCommunityControlDialog,
 )
 from munientry.builders.secondary.add_jail_only_dialog import AddJailOnlyDialog
-from munientry.checkers.base_checks import JailTimeChecker
+from munientry.checkers.base_checks import JailTimeChecks
 from munientry.loaders.cms_case_loaders import CmsFraLoader
 from munientry.models.case_information.sentencing_entries import (
     SentencingOnlyEntryCaseInformation,
@@ -75,7 +75,7 @@ class SentencingOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class SentencingOnlyDialogInfoChecker(JailTimeChecker):
+class SentencingOnlyDialogInfoChecks(JailTimeChecks):
     """Class for Sentencing Only Checks, same as JailCCPlea, but plea check is different."""
 
     conditions_list = [
@@ -112,7 +112,7 @@ class SentencingOnlyDialog(crim.CrimTrafficDialogBuilder, Ui_SentencingOnlyDialo
 
     _case_information_model = SentencingOnlyEntryCaseInformation
     _case_loader = CmsFraLoader
-    _info_checker = SentencingOnlyDialogInfoChecker
+    _info_checker = SentencingOnlyDialogInfoChecks
     _model_updater = SentencingOnlyDialogUpdater
     _signal_connector = SentencingOnlyDialogSignalConnector
     _slots = SentencingOnlyDialogSlotFunctions

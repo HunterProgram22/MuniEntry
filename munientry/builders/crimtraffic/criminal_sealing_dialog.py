@@ -1,6 +1,6 @@
 """Builder module for the Criminal Sealing Entry Dialog."""
 from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
-from munientry.checkers.base_checks import DefenseCounselChecker
+from munientry.checkers.base_checks import DefenseCounselChecks
 from munientry.loaders.cms_case_loaders import CrimSealingLoader
 from munientry.models.case_information.criminal_case_information import CrimSealingModel
 from munientry.updaters.no_grid_case_updaters import CriminalSealingDialogUpdater
@@ -37,7 +37,7 @@ class CriminalSealingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class CriminalSealingDialogInfoChecker(DefenseCounselChecker):
+class CriminalSealingDialogInfoChecker(DefenseCounselChecks):
     """Class with all checks for Criminal Sealing Entry Dialog."""
 
     def __init__(self, dialog) -> None:

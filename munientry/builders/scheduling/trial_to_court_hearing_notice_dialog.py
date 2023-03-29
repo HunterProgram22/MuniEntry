@@ -9,7 +9,7 @@ from PyQt6.QtCore import QDate
 
 from munientry.settings.business_constants import DAY_DICT, SPEEDY_TRIAL_TIME_DICT
 from munientry.builders.scheduling import base_scheduling_builders as sched
-from munientry.checkers.base_checks import SchedulingChecker
+from munientry.checkers.base_checks import SchedulingChecks
 from munientry.helper_functions import set_assigned_judge, set_courtroom
 from munientry.loaders.cms_case_loaders import SchedulingCrimCmsLoader
 from munientry.models.scheduling_information import SchedulingCaseInformation
@@ -122,7 +122,7 @@ class TrialToCourtDialogCaseInformationUpdater(SchedulingModelUpdater):
         self.model.hearing_location = self.dialog.hearing_location_box.currentText()
 
 
-class TrialToCourtDialogInfoChecker(SchedulingChecker):
+class TrialToCourtDialogInfoChecker(SchedulingChecks):
     """Class with checks for the Trial To Court Info Checker."""
 
     def __init__(self, dialog) -> None:

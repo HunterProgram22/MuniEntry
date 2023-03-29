@@ -3,7 +3,7 @@ from munientry.builders.crimtraffic import base_crimtraffic_builders as crim
 from munientry.builders.secondary.add_special_bond_conditions_dialog import (
     AddSpecialBondConditionsDialog,
 )
-from munientry.checkers.base_checks import ChargeGridInfoChecker, BondInfoChecker
+from munientry.checkers.base_checks import ChargeGridChecks, BondChecks
 from munientry.loaders.cms_case_loaders import CmsChargeLoader
 from munientry.models.case_information.plea_entries import NotGuiltyBondEntryCaseInformation
 from munientry.updaters.grid_case_updaters import NotGuiltyBondDialogUpdater
@@ -72,7 +72,7 @@ class NotGuiltyBondSignalConnector(crim.CrimTrafficSignalConnector):
             checkbox.toggled.connect(self.dialog.functions.show_hide_checkbox_connected_fields)
 
 
-class NotGuiltyBondDialogInfoChecker(ChargeGridInfoChecker, BondInfoChecker):
+class NotGuiltyBondDialogChecks(ChargeGridChecks, BondChecks):
     """Class with all checks for Not Guilty Bond Dialog."""
 
     conditions_list = [
@@ -101,7 +101,7 @@ class NotGuiltyBondDialog(crim.CrimTrafficDialogBuilder, Ui_NotGuiltyBondDialog)
 
     _case_information_model = NotGuiltyBondEntryCaseInformation
     _case_loader = CmsChargeLoader
-    _info_checker = NotGuiltyBondDialogInfoChecker
+    _info_checker = NotGuiltyBondDialogChecks
     _model_updater = NotGuiltyBondDialogUpdater
     _signal_connector = NotGuiltyBondSignalConnector
     _slots = NotGuiltyBondSlotFunctions
