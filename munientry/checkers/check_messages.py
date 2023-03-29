@@ -38,3 +38,9 @@ DEF_COUNSEL_MSG = """There is no attorney selected for the Defendant.
 Did the Defendant appear without counsel or waive his right to counsel?
 
 If you select No you must enter a name for Defense Counsel."""
+
+INSURANCE_TITLE = 'Was Insurance Shown in Court?'
+INSURANCE_MSG = """The information provided currently indicates that insurance was 
+not shown at the time of the offense.
+
+Did the defendant show proof of insurance in Court?"""

@@ -7,6 +7,8 @@ from munientry.checkers.check_messages import (
     DEF_COUNSEL_TITLE,
     DIVERSION_SET_MSG,
     DIVERSION_SET_TITLE,
+    INSURANCE_MSG,
+    INSURANCE_TITLE,
     LEAP_PAST_MSG,
     LEAP_PAST_TITLE,
     PLEA_PAST_MSG,
@@ -19,6 +21,8 @@ from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox,
 
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 YES = 'Yes'
+NO = 'No'
+BLANK = ''
 
 
 class CrimBaseChecks(BaseChecks):
@@ -76,8 +80,8 @@ class CrimBaseChecks(BaseChecks):
 
     @RequiredConditionCheck
     def check_primary_condition(self, primary_condition, condition_name) -> bool:
-        """Returns False (Fails) if the primary condition is set to None or Empty."""
-        return primary_condition not in (None, '')
+        """Returns False (Fails) if the primary condition is set to None or Empty/Blank."""
+        return primary_condition not in (None, BLANK)
 
 
 class DefenseCounselChecks(CrimBaseChecks):
@@ -91,37 +95,28 @@ class DefenseCounselChecks(CrimBaseChecks):
         if msg_response == YES_BUTTON_RESPONSE:
             self.dialog.defense_counsel_waived_checkBox.setChecked(True)
             return True
-        return self.dialog.defense_counsel_name_box.currentText().strip() != ''
+        return self.dialog.defense_counsel_name_box.currentText().strip() != BLANK
 
 
 class InsuranceChecks(DefenseCounselChecks):
     """Class containing checks for Insurance."""
 
     def check_insurance(self) -> str:
-        if 'TRC' in self.dialog.case_number_lineEdit.text():
-            return self.insurance_check_message()
-        if 'TRD' in self.dialog.case_number_lineEdit.text():
+        """Checks if insurance is required to be shown for Traffic cases only."""
+        if any(code in self.dialog.case_number_lineEdit.text() for code in ['TRC', 'TRD']):
             return self.insurance_check_message()
         return PASS
 
-    def insurance_check_message(self) -> str:
-        if self.dialog.fra_in_file_box.currentText() == 'Yes':
-            return PASS
-        if self.dialog.fra_in_court_box.currentText() == 'N/A':
-            message = (
-                'The information provided currently indicates insurance was not shown in the'
-                + ' file.\n\nDid the defendant show proof of insurance in court?'
-            )
-            msg_response = WarningBox(message, 'Insurance Shown Warning').exec()
-            return self.set_fra_in_court_box(msg_response)
-        return PASS
-
-    def set_fra_in_court_box(self, message_response) -> str:
-        if message_response == NO_BUTTON_RESPONSE:
-            self.dialog.fra_in_court_box.setCurrentText('No')
-        if message_response == YES_BUTTON_RESPONSE:
-            self.dialog.fra_in_court_box.setCurrentText('Yes')
-        return PASS
+    @WarningCheck(INSURANCE_TITLE, INSURANCE_MSG)
+    def insurance_check_message(self, msg_response=None) -> str:
+        """If insurance is required to be shown prompts user to indicate whether it was shown."""
+        if self.dialog.fra_in_file_box.currentText() == YES:
+            return True
+        if msg_response == YES_BUTTON_RESPONSE:
+            self.dialog.fra_in_court_box.setCurrentText(YES)
+        if msg_response == NO_BUTTON_RESPONSE:
+            self.dialog.fra_in_court_box.setCurrentText(NO)
+        return any(code in self.dialog.fra_in_court_box.currentText() for code in [YES, NO])
 
 
 class BondChecks(DefenseCounselChecks):
