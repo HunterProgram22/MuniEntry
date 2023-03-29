@@ -49,3 +49,10 @@ BOND_REQUIRED_TITLE = 'Bond Amount Required'
 BOND_REQUIRED_MSG = """The bond type that was selected requires that you set an amount of bond.
 
 Please specify a bond amount other than None."""
+
+BOND_AMOUNT_TITLE = 'Improper Bond Type Selected'
+BOND_AMOUNT_MSG = """An amount for bond was selected, but the bond type selected does not permit
+a bond amount.
+
+Please either change the bond type to 10% Deposit Bond, or a Cash or Surety Bond, 
+or set the bond amount to None."""

@@ -119,18 +119,11 @@ class BondChecks(DefenseCounselChecks):
             return True
         return self.dialog.bond_amount_box.currentText() != NONE
 
+    @RequiredCheck(cm.BOND_AMOUNT_TITLE, cm.BOND_AMOUNT_MSG)
     def check_if_improper_bond_type(self) -> str:
-        bond_type = self.dialog.bond_type_box.currentText()
-        if bond_type in NO_BOND_AMOUNT_TYPES:
-            if self.dialog.bond_amount_box.currentText() != 'None':
-                message = (
-                    f'{bond_type} was selected but a bond amount other than None was chosen.'
-                    + '\n\nPlease either change the bond type to 10% Deposit Bond,'
-                    + ' or a Cash or Surety Bond, or set the bond amount to None.'
-                )
-                RequiredBox(message, 'Proper Bond Type Required').exec()
-                return FAIL
-        return PASS
+        if self.dialog.bond_type_box.currentText() not in NO_BOND_AMOUNT_TYPES:
+            return True
+        return self.dialog.bond_amount_box.currentText() == NONE
 
     def check_if_no_bond_modification_decision(self) -> str:
         if self.dialog.bond_modification_decision_box.currentText() == BLANK:
