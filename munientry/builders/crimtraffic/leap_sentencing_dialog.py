@@ -54,7 +54,7 @@ class LeapSentencingCheckList(ChargeGridChecks, InsuranceChecks):
 
     check_list = [
         'check_defense_counsel',
-        'check_if_leap_plea_date_is_today',
+        'check_leap_plea_date',
         'check_if_no_plea_entered',
         'check_if_no_finding_entered',
         'check_insurance',

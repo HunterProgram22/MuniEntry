@@ -15,10 +15,10 @@ class RequiredCheck(object):
         self.message = message
 
     def __call__(self, func: Callable) -> Callable:
-        """Returns True if a check fails and hard stops the user with a message about the error."""
+        """Returns False if a check fails and hard stops the user with a message about the error."""
         def wrapper(*args, **kwargs) -> str:
             func_result = func(*args, **kwargs)
-            if func_result == True:
+            if func_result == False:
                 RequiredBox(self.message, self.title).exec()
             return func_result
         return wrapper
@@ -45,7 +45,7 @@ class BaseChecks(object):
         """
         check_results = self.run_checks()
         for check_name, check_result in check_results:
-            if check_result in (True, FAIL):
+            if check_result in (False, FAIL):
                 self.log_failed_checks(check_name)
                 return FAIL
         return PASS

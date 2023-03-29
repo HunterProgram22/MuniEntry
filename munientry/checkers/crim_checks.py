@@ -3,10 +3,10 @@ from loguru import logger
 
 from munientry.checkers.base_checks import BaseChecks, RequiredCheck
 from munientry.checkers.check_messages import (
-    LEAP_TODAY_MSG,
-    LEAP_TODAY_TITLE,
-    PLEA_TODAY_MSG,
-    PLEA_TODAY_TITLE,
+    LEAP_PAST_MSG,
+    LEAP_PAST_TITLE,
+    PLEA_PAST_MSG,
+    PLEA_PAST_TITLE,
 )
 from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
     CANCEL_BUTTON_RESPONSE
@@ -22,13 +22,15 @@ class CrimBaseChecks(BaseChecks):
 
     conditions_list: list = []
 
-    @RequiredCheck(PLEA_TODAY_TITLE, PLEA_TODAY_MSG)
-    def check_if_plea_date_is_today(self) -> bool:
-        return self.dialog.plea_date.date() == self.today
+    @RequiredCheck(PLEA_PAST_TITLE, PLEA_PAST_MSG)
+    def check_plea_date(self) -> bool:
+        """Returns False (Fails check) if plea date is not set in the past."""
+        return self.dialog.plea_date.date() < self.today
 
-    @RequiredCheck(LEAP_TODAY_TITLE, LEAP_TODAY_MSG)
-    def check_if_leap_plea_date_is_today(self) -> bool:
-        return self.dialog.leap_plea_date.date() == self.today
+    @RequiredCheck(LEAP_PAST_TITLE, LEAP_PAST_MSG)
+    def check_leap_plea_date(self) -> bool:
+        """Returns False (Fails check) if LEAP plea date is not set in the past."""
+        return self.dialog.leap_plea_date.date() < self.today
 
     def check_if_diversion_program_selected(self) -> str:
         diversion_program_list = [

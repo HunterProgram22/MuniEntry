@@ -126,7 +126,7 @@ class TrialToCourtCheckList(SchedulingChecks):
     """Class with checks for the Trial To Court Hearing Notice."""
 
     check_list = [
-            'check_if_trial_date_is_today',
+            'check_trial_date',
         ]
 
 

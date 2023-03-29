@@ -123,8 +123,8 @@ class FinalJuryNoticeCheckList(SchedulingChecks):
     """Check list for the Final Jury Notice."""
 
     check_list = [
-        'check_if_final_pretrial_date_is_today',
-        'check_if_trial_date_is_today',
+        'check_final_pretrial_date',
+        'check_trial_date',
     ]
 
 

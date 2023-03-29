@@ -254,7 +254,8 @@ class SchedulingEntryCheckList(SchedulingChecks):
     """Class with checks for the Scheduling Entry Dialogs."""
 
     check_list = [
-        'check_if_trial_date_is_today',
+        'check_final_pretrial_date',
+        'check_trial_date',
     ]
 
 
