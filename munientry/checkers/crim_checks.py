@@ -23,6 +23,7 @@ NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No 
 YES = 'Yes'
 NO = 'No'
 BLANK = ''
+TRAFFIC_CODES = ['TRC', 'TRD']
 
 
 class CrimBaseChecks(BaseChecks):
@@ -103,7 +104,7 @@ class InsuranceChecks(DefenseCounselChecks):
 
     def check_insurance(self) -> str:
         """Checks if insurance is required to be shown for Traffic cases only."""
-        if any(code in self.dialog.case_number_lineEdit.text() for code in ['TRC', 'TRD']):
+        if any(code in self.dialog.case_number_lineEdit.text() for code in TRAFFIC_CODES):
             return self.insurance_check_message()
         return PASS
 
