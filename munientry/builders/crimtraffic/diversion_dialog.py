@@ -103,29 +103,6 @@ class DiversionDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog):
-    """Dialog builder class for 'Diversion' dialog."""
-
-    _case_information_model = DiversionEntryCaseInformation
-    _case_loader = CmsFraLoader
-    _info_checker = DiversionDialogInfoChecker
-    _model_updater = DiversionDialogUpdater
-    _signal_connector = DiversionDialogSignalConnector
-    _slots = DiversionDialogSlotFunctions
-    _view_modifier = DiversionDialogViewModifier
-    dialog_name = 'Diversion Judgment Entry'
-
-    def additional_setup(self):
-        self.functions.show_restitution_boxes()
-        self.functions.show_jail_report_date_box()
-        self.functions.show_other_conditions_box()
-        self.entry_case_information.diversion.ordered = True
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
-
-
 class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
     """Class with checks for Diversion Dialog."""
 
@@ -152,3 +129,22 @@ class DiversionDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
         message = 'No Diversion Program was selected.\n\nPlease choose a Diversion Program.'
         RequiredBox(message, 'Diversion Program Required').exec()
         return FAIL
+
+
+class DiversionPleaDialog(crim.CrimTrafficDialogBuilder, Ui_DiversionPleaDialog):
+    """Dialog builder class for 'Diversion' dialog."""
+
+    _case_information_model = DiversionEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = DiversionDialogInfoChecker
+    _model_updater = DiversionDialogUpdater
+    _signal_connector = DiversionDialogSignalConnector
+    _slots = DiversionDialogSlotFunctions
+    _view_modifier = DiversionDialogViewModifier
+    dialog_name = 'Diversion Judgment Entry'
+
+    def additional_setup(self):
+        self.functions.show_restitution_boxes()
+        self.functions.show_jail_report_date_box()
+        self.functions.show_other_conditions_box()
+        self.entry_case_information.diversion.ordered = True

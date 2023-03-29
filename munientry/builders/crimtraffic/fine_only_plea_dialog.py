@@ -53,6 +53,27 @@ class FineOnlyDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
+class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
+    """Class with checks for the Fine Only Dialog."""
+
+    conditions_list = [
+        ('license_suspension', 'license_type', 'License Suspension'),
+        ('community_service', 'hours_of_service', 'Community Service'),
+        ('other_conditions', 'terms', 'Other Conditions'),
+    ]
+
+    def __init__(self, dialog) -> None:
+        super().__init__(dialog)
+        self.check_list = [
+            'check_defense_counsel',
+            'check_if_no_plea_entered',
+            'check_if_no_finding_entered',
+            'check_insurance',
+            'check_additional_conditions_ordered',
+        ]
+        self.check_status = self.perform_check_list()
+
+
 class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
     """Dialog builder class for 'Fine Only' dialog."""
 
@@ -73,27 +94,3 @@ class FineOnlyPleaDialog(crim.CrimTrafficDialogBuilder, Ui_FineOnlyPleaDialog):
         ]
         self.functions.set_fines_credit_for_jail_field()  # Hides credit_for_jail field on load
 
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
-
-
-class FineOnlyDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
-    """Class with checks for the Fine Only Dialog."""
-
-    conditions_list = [
-        ('license_suspension', 'license_type', 'License Suspension'),
-        ('community_service', 'hours_of_service', 'Community Service'),
-        ('other_conditions', 'terms', 'Other Conditions'),
-    ]
-
-    def __init__(self, dialog) -> None:
-        super().__init__(dialog)
-        self.check_list = [
-            'check_defense_counsel',
-            'check_if_no_plea_entered',
-            'check_if_no_finding_entered',
-            'check_insurance',
-            'check_additional_conditions_ordered',
-        ]
-        self.check_status = self.perform_check_list()

@@ -49,31 +49,6 @@ class LeapSentencingDialogSignalConnector(crim.CrimTrafficSignalConnector):
         )
 
 
-class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialog):
-    """Dialog builder class for 'LEAP Sentencing' dialog."""
-
-    _case_information_model = LeapSentencingEntryCaseInformation
-    _case_loader = CmsFraLoader
-    _info_checker = LeapSentencingDialogInfoChecker
-    _model_updater = LeapSentencingDialogUpdater
-    _signal_connector = LeapSentencingDialogSignalConnector
-    _slots = LeapSentencingDialogSlotFunctions
-    _view_modifier = LeapSentencingDialogViewModifier
-    dialog_name = 'Leap Sentencing Judgment Entry'
-
-    def additional_setup(self):
-        self.additional_conditions_list = [
-            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
-            ('community_service_checkBox', self.entry_case_information.community_service),
-            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
-        ]
-        self.functions.set_fines_credit_for_jail_field()
-
-
-if __name__ == '__main__':
-    logger.info(f'{__name__} run directly.')
-
-
 class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecker):
     """Class with checks for LEAP Sentencing Dialog."""
 
@@ -94,3 +69,24 @@ class LeapSentencingDialogInfoChecker(ChargeGridInfoChecker, InsuranceInfoChecke
             'check_additional_conditions_ordered',
         ]
         self.check_status = self.perform_check_list()
+
+
+class LeapSentencingDialog(crim.CrimTrafficDialogBuilder, Ui_LeapSentencingDialog):
+    """Dialog builder class for 'LEAP Sentencing' dialog."""
+
+    _case_information_model = LeapSentencingEntryCaseInformation
+    _case_loader = CmsFraLoader
+    _info_checker = LeapSentencingDialogInfoChecker
+    _model_updater = LeapSentencingDialogUpdater
+    _signal_connector = LeapSentencingDialogSignalConnector
+    _slots = LeapSentencingDialogSlotFunctions
+    _view_modifier = LeapSentencingDialogViewModifier
+    dialog_name = 'Leap Sentencing Judgment Entry'
+
+    def additional_setup(self):
+        self.additional_conditions_list = [
+            ('license_suspension_checkBox', self.entry_case_information.license_suspension),
+            ('community_service_checkBox', self.entry_case_information.community_service),
+            ('other_conditions_checkBox', self.entry_case_information.other_conditions),
+        ]
+        self.functions.set_fines_credit_for_jail_field()
