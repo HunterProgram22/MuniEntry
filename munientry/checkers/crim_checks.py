@@ -16,7 +16,6 @@ from munientry.settings.pyqt_constants import (
     YES_BUTTON_RESPONSE,
 )
 from munientry.widgets.message_boxes import (
-    BLANK,
     FAIL,
     PASS,
     JailWarningBox,
