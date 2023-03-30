@@ -25,14 +25,30 @@ def WarningCheck(title: str, message: str) -> Callable:
 
 
 def RequiredCheck(title: str, message: str) -> Callable:
-    """Wraps a check and hard stops the check with message to user with reason for stop."""
+    """Wraps a check and hard stops the check with message to user with reason for stop.
+
+    Decorator allows for a tuple in the form (check_status, message_to_be_inserted) to be passed
+    instead of just the status of the check for checks that required the RequiredBox message to
+    provide more detailed information.
+    """
     def decorator(func: Callable) -> Callable:
         @wraps(func)
         def wrapper(*args, **kwargs) -> str:
             func_result = func(*args, **kwargs)
-            if func_result == False:
-                RequiredBox(message, title).exec()
-            return func_result
+            if isinstance(func_result, tuple):
+                status, msg_insert = func_result
+            else:
+                status = func_result
+                msg_insert = None
+
+            if status == False:
+                if msg_insert is not None:
+                    formatted_msg = message.format(msg_insert)
+                else:
+                    formatted_msg = message
+                RequiredBox(formatted_msg, title).exec()
+
+            return status
         return wrapper
     return decorator
 

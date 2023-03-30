@@ -29,7 +29,7 @@ ADD_CONDITIONS_TITLE = 'Additional Condition Not Set'
 ADD_CONDITIONS_MSG = """The additional condition {0} is checked, but the details of
 the {0} have not been entered.
 
-Click the Add Conditions button to add details, or uncheck the {0} box if there is no {0} in this
+Click the Add Conditions button to add details, or uncheck the {0} box if there is no {0} in this \
 case."""
 
 DEF_COUNSEL_TITLE = 'Does Defendant Have Counsel?'
@@ -40,7 +40,7 @@ Did the Defendant appear without counsel or waive his right to counsel?
 If you select No you must enter a name for Defense Counsel."""
 
 INSURANCE_TITLE = 'Was Insurance Shown in Court?'
-INSURANCE_MSG = """The information provided currently indicates that insurance was 
+INSURANCE_MSG = """The information provided currently indicates that insurance was \
 not shown at the time of the offense.
 
 Did the defendant show proof of insurance in Court?"""
@@ -54,5 +54,23 @@ BOND_AMOUNT_TITLE = 'Improper Bond Type Selected'
 BOND_AMOUNT_MSG = """An amount for bond was selected, but the bond type selected does not permit
 a bond amount.
 
-Please either change the bond type to 10% Deposit Bond, or a Cash or Surety Bond, 
+Please either change the bond type to 10% Deposit Bond, or a Cash or Surety Bond, \
 or set the bond amount to None."""
+
+BOND_MODIFICATION_TITLE = 'Bond Modification Decision Required'
+BOND_MODIFICATION_MSG = """A decision on the bond modification motion was not selected.
+
+Please choose an option from the Decision on Bond box."""
+
+DV_BOND_TITLE = 'Domestic Violence Bond Condition Not Set'
+DV_BOND_MSG = """The Special Condition Domestic Violence Restrictions is checked, but the details 
+of the Domestic Violence Restrictions have not been selected.
+
+Click the Add Conditions button to add details, or uncheck the Domestic Violence Restrictions box \
+if there are no restrictions in this case."""
+
+MISSING_PLEA_TITLE = 'Plea Required for Offense'
+MISSING_PLEA_MSG = 'You must enter a plea for {0}.'
+
+MISSING_FINDING_TITLE = 'Finding Required for Offense'
+MISSING_FINDING_MSG = 'You must enter a finding for {0}.'

@@ -1,4 +1,6 @@
 """Checks for Criminal Traffic Dialogs."""
+from typing import Optional
+
 from loguru import logger
 
 from munientry.checkers.base_checks import BaseChecks, RequiredCheck, RequiredConditionCheck, WarningCheck
@@ -11,6 +13,7 @@ from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox,
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 YES = 'Yes'
 NO = 'No'
+DISMISSED = 'Dismissed'
 BLANK = ''
 NONE = 'None'
 TRAFFIC_CODES = ['TRC', 'TRD']
@@ -99,14 +102,16 @@ class InsuranceChecks(DefenseCounselChecks):
         return PASS
 
     @WarningCheck(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
-    def insurance_check_message(self, msg_response=None) -> str:
+    def insurance_check_message(self, msg_response=None) -> bool:
         """If insurance is required to be shown prompts user to indicate whether it was shown."""
         if self.dialog.fra_in_file_box.currentText() == YES:
             return True
         if msg_response == YES_BUTTON_RESPONSE:
             self.dialog.fra_in_court_box.setCurrentText(YES)
+            return True
         if msg_response == NO_BUTTON_RESPONSE:
             self.dialog.fra_in_court_box.setCurrentText(NO)
+            return True
         return any(code in self.dialog.fra_in_court_box.currentText() for code in [YES, NO])
 
 
@@ -114,42 +119,36 @@ class BondChecks(DefenseCounselChecks):
     """Class that checks dialog to make sure the appropriate bond information is entered."""
 
     @RequiredCheck(cm.BOND_REQUIRED_TITLE, cm.BOND_REQUIRED_MSG)
-    def check_if_no_bond_amount(self) -> str:
+    def check_if_no_bond_amount(self) -> bool:
+        """Returns False (Fails) when bond type requires a bond amount but no bond set."""
         if self.dialog.bond_type_box.currentText() in NO_BOND_AMOUNT_TYPES:
             return True
         return self.dialog.bond_amount_box.currentText() != NONE
 
     @RequiredCheck(cm.BOND_AMOUNT_TITLE, cm.BOND_AMOUNT_MSG)
-    def check_if_improper_bond_type(self) -> str:
+    def check_if_improper_bond_type(self) -> bool:
+        """Returns False (Fails) if bond amount set, but bond type is no bond amount type."""
         if self.dialog.bond_type_box.currentText() not in NO_BOND_AMOUNT_TYPES:
             return True
         return self.dialog.bond_amount_box.currentText() == NONE
 
-    def check_if_no_bond_modification_decision(self) -> str:
-        if self.dialog.bond_modification_decision_box.currentText() == BLANK:
-            message = (
-                'A decision on bond modification was not selected.'
-                + '\n\nPlease choose an option from the Decison on Bond box.'
-            )
-            RequiredBox(message, 'Bond Modification Decision Required').exec()
-            return FAIL
-        return PASS
+    @RequiredCheck(cm.BOND_MODIFICATION_TITLE, cm.BOND_MODIFICATION_MSG)
+    def check_if_no_bond_modification_decision(self) -> bool:
+        """Returns False (Fails) if bond decision is not set."""
+        return self.dialog.bond_modification_decision_box.currentText() != BLANK
 
-    def check_domestic_violence_bond_condition(self) -> str:
+    @RequiredCheck(cm.DV_BOND_TITLE, cm.DV_BOND_MSG)
+    def check_domestic_violence_bond_condition(self) -> bool:
+        """Returns False (Fails) if either vacate residence or surrender weapons is not set.
+
+        This check is used because there are two 'primary conditions' for the Domestic Violence
+        Bond Conditions so the check primary condition for check additional conditions ordered
+        will not suffice.
+        """
         dv_conditions = self.dialog.entry_case_information.domestic_violence_conditions
         if dv_conditions.ordered is True:
-            if dv_conditions.vacate_residence is False:
-                if dv_conditions.surrender_weapons is False:
-                    message = (
-                        'The Special Condition Domestic Violence Restrictions is checked, but'
-                        + ' the details of the Domestic Violence Restrictions have not been'
-                        + ' selected.\n\nClick the Add Conditions button to add details, or'
-                        + ' uncheck the Domestic Violence Restrictions box if there is no'
-                        + ' restrictions in this case.'
-                    )
-                    RequiredBox(message, 'Domestic Violence Data Required').exec()
-                    return FAIL
-        return PASS
+            return dv_conditions.vacate_residence or dv_conditions.surrender_weapons
+        return True
 
 
 class ChargeGridChecks(InsuranceChecks):
@@ -159,66 +158,78 @@ class ChargeGridChecks(InsuranceChecks):
         self.grid = dialog.charges_gridLayout
         super().__init__(dialog)
 
+    @RequiredCheck(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
     def check_if_no_plea_entered(self) -> str:
-        """Hard stops the create entry process for any charge that does not have a plea.
+        """Stops the create entry process for any charge without a plea.
 
-        The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
-        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
-        column from a grid_layout when it is deleted, it actually just hides the column.
-
-        Try/Except is used instead of an If None check because by setting the col to 2 and
-        incrementing by 2, the error is only raised and addressed if charges are added or deleted,
-        which is a low occurrence event.
+        The column (col) starts at 2 to skip the label row and increments by 2 because
+        PyQt adds 2 columns when adding a charge. A try-except block is used to handle
+        the case when PyQt hides a column instead of deleting it.
         """
         col = 2
         while col < self.grid.columnCount():
-            try:
-                offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
-            except AttributeError as error:
-                logger.warning(error)
+            offense, plea = self.get_offense_and_plea(col)
+            if offense is None:
                 col += 1
                 continue
-            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
-            if plea == 'Dismissed':
+            if plea == DISMISSED:
                 col += 2
                 continue
-            if plea == '':
-                message = f'You must enter a plea for {offense}.'
-                RequiredBox(message, 'Plea Required').exec()
-                return FAIL
+            if plea == BLANK:
+                return False, offense
             col += 2
-        return PASS
+        return True
 
-    def check_if_no_finding_entered(self) -> str:
-        """Hard stops the create entry process for any charge that does not have a finding.
+    def get_offense_and_plea(self, col: int) -> tuple[Optional[str], Optional[str]]:
+        """Retrieves the offense and plea at the given column.
 
-        The column (col) starts at 2 to skip label row and increments by 2 because PyQt adds 2
-        columns when adding a charge.Try/Except addresses the issue of PyQt not actually deleting a
-        column from a grid_layout when it is deleted, it actually just hides the column.
+        Returns a tuple containing the offense and plea, or (None, None) if
+        the offense could not be retrieved due to an AttributeError.
+        """
+        try:
+            offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
+            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
+            return offense, plea
+        except AttributeError as error:
+            logger.warning(error)
+            return None, None
 
-        Try/Except is used instead of an If None check because by setting the col to 2 and
-        incrementing by 2, the error is only raised and addressed if charges are added or deleted,
-        which is a low occurrence event.
+    def get_offense_plea_and_finding(self, col: int) -> tuple[Optional[str], Optional[str], Optional[str]]:
+        """Retrieves the offense, plea and finding at the given column.
+
+        Returns a tuple containing the offense, plea, and finding or (None, None, None) if
+        the offense could not be retrieved due to an AttributeError.
+        """
+        try:
+            offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
+            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
+            finding = self.grid.itemAtPosition(self.grid.row_finding, col).widget().currentText()
+            return offense, plea, finding
+        except AttributeError as error:
+            logger.warning(error)
+            return None, None, None
+
+    @RequiredCheck(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
+    def check_if_no_finding_entered(self) -> bool:
+        """Stops the create entry process for any charge without a finding.
+
+        The column (col) starts at 2 to skip the label row and increments by 2 because
+        PyQt adds 2 columns when adding a charge. A try-except block is used to handle
+        the case when PyQt hides a column instead of deleting it.
         """
         col = 2
         while col < self.dialog.charges_gridLayout.columnCount():
-            try:
-                offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
-            except AttributeError as error:
-                logger.warning(error)
+            offense, plea, finding = self.get_offense_plea_and_finding(col)
+            if offense is None:
                 col += 1
                 continue
-            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
-            finding = self.grid.itemAtPosition(self.grid.row_finding, col).widget().currentText()
-            if plea == 'Dismissed':
+            if plea == DISMISSED:
                 col += 2
                 continue
-            if finding == '':
-                message = f'You must enter a finding for {offense}.'
-                RequiredBox(message, 'Finding Required').exec()
-                return FAIL
+            if finding == BLANK:
+                return False, offense
             col += 2
-        return PASS
+        return True
 
     def check_if_jail_suspended_more_than_imposed(self) -> str:
         if self.jail_days_suspended > self.jail_days_imposed:
