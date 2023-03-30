@@ -3,12 +3,27 @@ from typing import Optional
 
 from loguru import logger
 
-from munientry.checkers.base_checks import BaseChecks, RequiredCheck, RequiredConditionCheck, WarningCheck
 from munientry.checkers import check_messages as cm
-from munientry.settings.pyqt_constants import YES_BUTTON_RESPONSE, NO_BUTTON_RESPONSE, \
-    CANCEL_BUTTON_RESPONSE
-from munientry.widgets.message_boxes import RequiredBox, FAIL, PASS, WarningBox, BLANK, \
-    JailWarningBox, TwoChoiceQuestionBox
+from munientry.checkers.base_checks import (
+    BaseChecks,
+    RequiredCheck,
+    RequiredConditionCheck,
+    WarningCheck,
+)
+from munientry.settings.pyqt_constants import (
+    CANCEL_BUTTON_RESPONSE,
+    NO_BUTTON_RESPONSE,
+    YES_BUTTON_RESPONSE,
+)
+from munientry.widgets.message_boxes import (
+    BLANK,
+    FAIL,
+    PASS,
+    JailWarningBox,
+    RequiredBox,
+    TwoChoiceQuestionBox,
+    WarningBox,
+)
 
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 YES = 'Yes'
