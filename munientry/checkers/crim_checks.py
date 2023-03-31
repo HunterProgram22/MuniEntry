@@ -52,6 +52,7 @@ class CrimBaseChecks(BaseChecks):
 
     @RequiredCheck(cm.DIVERSION_SET_TITLE, cm.DIVERSION_SET_MSG)
     def check_if_diversion_program_selected(self) -> bool:
+        """Returns False (Fails check) if no diversion radio button is checked."""
         diversion_radio_btns = [
             self.dialog.marijuana_diversion_radio_btn,
             self.dialog.theft_diversion_radio_btn,
@@ -150,7 +151,7 @@ class BondChecks(DefenseCounselChecks):
 
     @RequiredCheck(cm.BOND_MODIFICATION_TITLE, cm.BOND_MODIFICATION_MSG)
     def check_if_no_bond_modification_decision(self) -> bool:
-        """Returns False (Fails) if bond decision is not set."""
+        """Returns False (Fails) if bond modification decision is not set."""
         return self.dialog.bond_modification_decision_box.currentText() != BLANK
 
     @RequiredCheck(cm.DV_BOND_TITLE, cm.DV_BOND_MSG)
@@ -211,7 +212,7 @@ class ChargeGridChecks(InsuranceChecks):
             plea = self.get_widget_text(self.grid.row_plea, col)
             if plea == BLANK:
                 offense = self.get_widget_text(self.grid.row_offense, col)
-                return False, offense
+                return False, [offense]
             col += 1
         return True
 
@@ -229,20 +230,17 @@ class ChargeGridChecks(InsuranceChecks):
             finding = self.get_widget_text(self.grid.row_finding, col)
             if finding == BLANK:
                 offense = self.get_widget_text(self.grid.row_offense, col)
-                return False, offense
+                return False, [offense]
             col += 1
         return True
 
+    @RequiredCheck(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
     def check_if_jail_suspended_more_than_imposed(self) -> str:
-        if self.jail_days_suspended > self.jail_days_imposed:
-            message = (
-                f'The total number of jail days suspended is {self.jail_days_suspended} which is'
-                + f' greater than the total jail days imposed of {self.jail_days_imposed}.'
-                + '\n\nPlease correct.'
-            )
-            RequiredBox(message, 'Suspended Jail Days Exceeds Days Imposed').exec()
-            return FAIL
-        return PASS
+        """Returns False (Fails check) if jail days suspended are greater than jail days imposed."""
+        return (
+            self.jail_days_suspended <= self.jail_days_imposed,
+            [self.jail_days_suspended, self.jail_days_imposed],
+        )
 
     def check_if_jail_reporting_required(self) -> str:
         """Checks to see if the jails days imposed is greater than jail days suspended and credit.
@@ -284,29 +282,26 @@ class ChargeGridChecks(InsuranceChecks):
             return FAIL
         return PASS
 
-    def check_if_jail_equals_suspended_and_imposed(self) -> str:
+    def check_if_jail_equals_suspended_and_imposed(self) -> bool:
         """Checks if jail reporting is set when no jail days remaining to serve."""
-        if self.model.jail_terms.ordered is False:
-            return PASS
-        if self.jail_days_imposed == (self.jail_days_suspended + self.jail_credit):
-            if self.model.jail_terms.currently_in_jail != YES:
-                message = (
-                    f'The total jail days imposed of {self.jail_days_imposed} is equal to the total'
-                    + f' jail days suspended of {self.jail_days_suspended} and total jail time'
-                    + f' credit of {self.jail_credit}. The Defendant does not appear to have any'
-                    + ' jail days left to serve but you set Jail Reporting Terms. \n\nAre you sure'
-                    + ' you want to set Jail Reporting Terms?'
-                )
-                return self.unset_jail_reporting(WarningBox(message, 'Unset Jail Reporting').exec())
-        return PASS
+        if self.model.jail_terms.ordered is True:
+            if self.jail_days_imposed == (self.jail_days_suspended + self.jail_credit):
+                return self.unset_jail_reporting()
+        return True
 
-    def unset_jail_reporting(self, message_response) -> str:
-        if message_response == NO_BUTTON_RESPONSE:
+    @WarningCheck(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
+    def unset_jail_reporting(self, msg_response=None) -> bool:
+        """Returns False (Fails check) if jail days imposed equals credit and suspended jail days.
+
+        The False will rerun the check via the WarningCheck decorator and prompt users to uncheck
+        or keep set the requirement to report to jail.
+        """
+        if msg_response == NO_BUTTON_RESPONSE:
             self.dialog.jail_checkBox.setChecked(False)
-            return PASS
-        if message_response == YES_BUTTON_RESPONSE:
-            return PASS
-        return PASS
+            return True
+        if msg_response == YES_BUTTON_RESPONSE:
+            return True
+        return False
 
     def check_if_in_jail_and_reporting_set(self) -> str:
         if self.model.jail_terms.ordered is False:
@@ -332,20 +327,22 @@ class JailTimeChecks(ChargeGridChecks):
         self.jail_credit = self.model.jail_terms.days_in_jail
         super().__init__(dialog)
 
-    def check_if_days_in_jail_blank_but_in_jail(self) -> str:
-        """Requires user to enter data in Days in Jail field if Currently in Jail is Yes."""
+    @RequiredCheck(cm.JAIL_DAYS_REQUIRED_TITLE, cm.JAIL_DAYS_REQUIRED_MSG)
+    def check_if_days_in_jail_blank_but_in_jail(self) -> bool:
+        """Returns False (Fails check) if Defendant is in jail, but days in jail is blank."""
         if self.dialog.in_jail_box.currentText() == YES:
-            if self.dialog.jail_time_credit_box.text() == BLANK:
-                message = (
-                    'The Jail Time Credit box indicates Defendant is in Jail, but'
-                    + ' the number of Days In Jail is blank. \n\nPlease enter the number of'
-                    + ' Days In Jail and choose whether to apply Jail Time Credit to'
-                    + ' Sentence or Costs and Fines.'
-                )
-                RequiredBox(message, 'Days in Jail Required').exec()
-                return FAIL
-            return PASS
-        return PASS
+            return self.dialog.jail_time_credit_box.text() != BLANK
+        return True
+
+    @RequiredCheck(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
+    def check_if_jail_credit_more_than_imposed(self) -> bool:
+        """Checks to see if more jail time credit is given then jail time imposed."""
+        if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
+            return (
+                self.jail_credit <= self.jail_days_imposed,
+                [self.jail_credit, self.jail_days_imposed],
+            )
+        return True
 
     def check_if_in_jail_blank_but_has_jail_days(self) -> str:
         """Asks user to choose if defendant is in jail if days in jail has data."""
@@ -387,20 +384,4 @@ class JailTimeChecks(ChargeGridChecks):
             self.dialog.jail_time_credit_apply_box.setCurrentText('Sentence')
         elif message_response == 1:
             self.dialog.jail_time_credit_apply_box.setCurrentText('Costs and Fines')
-        return PASS
-
-    def check_if_jail_credit_more_than_imposed(self) -> str:
-        """Checks to see if more jail time credit is given then jail time imposed."""
-        if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
-            if self.jail_credit > self.jail_days_imposed:
-                message = (
-                    f'The Defendant is set to have {self.jail_credit} days of'
-                    + ' jail time credit applied to a sentence, but a total of only'
-                    + f' {self.jail_days_imposed} are set to be imposed'
-                    + ' in the case. The total jail day imposed is less than the jail time credit'
-                    + ' that is being applied to the sentence. \n\nPlease impose additional jail'
-                    + ' days or change the Apply JTC to box to Costs and Fines.'
-                )
-                RequiredBox(message, 'Excessive Jail Credit').exec()
-                return FAIL
         return PASS

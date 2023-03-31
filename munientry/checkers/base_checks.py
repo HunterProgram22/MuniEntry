@@ -43,7 +43,7 @@ def RequiredCheck(title: str, message: str) -> Callable:
 
             if status == False:
                 if msg_insert is not None:
-                    formatted_msg = message.format(msg_insert)
+                    formatted_msg = message.format(*msg_insert)
                 else:
                     formatted_msg = message
                 RequiredBox(formatted_msg, title).exec()

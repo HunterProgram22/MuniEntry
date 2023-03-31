@@ -74,3 +74,34 @@ MISSING_PLEA_MSG = 'You must enter a plea for {0}.'
 
 MISSING_FINDING_TITLE = 'Finding Required for Offense'
 MISSING_FINDING_MSG = 'You must enter a finding for {0}.'
+
+EXCESS_JAIL_SUSP_TITLE = 'Suspended Jail Days Exceeds Jail Days Imposed'
+EXCESS_JAIL_SUSP_MSG = """The total number of jail days suspended is {0}, which exceeds the total \
+jail days imposed in the case of {1}.
+
+Please adjust the jail days suspended or the jail days imposed."""
+
+EXCESS_JAIL_CREDIT_TITLE = 'Excessive Jail Credit Entered'
+EXCESS_JAIL_CREDIT_MSG = """The Defendant is set to have {0} days of jail time credit applied to a \
+sentence, but a total of only {1} jail days are set to be imposed in the case. The total jail days \
+imposed is less than the jail time credit that is being applied to the sentence.
+
+Please impose additional jail days or change the Apply JTC to box to Costs and Fines."""
+
+JAIL_DAYS_REQUIRED_TITLE = 'Days in Jail is Required'
+JAIL_DAYS_REQUIRED_MSG = """The Jail Credit and Reporting box indicates the Defendant is currently \
+in jail, but the number of Days in Jail is blank.
+
+Please enter the number of Days in Jail and select whether to apply the Jail Time Credit to \
+Sentence or Costs and Fines."""
+
+JAIL_SET_NO_JAIL_TITLE = 'Turn Off Report to Jail?'
+JAIL_SET_NO_JAIL_MSG = """The total jail days imposed is equal to the total jail days \
+suspended and total jail time credit. 
+
+The Defendant does not appear to have any jail days left to serve but the Jail Reporting Terms \
+are set. 
+
+Press 'Yes' if the Defendant should report to jail, or press 'No' and the Jail Reporting Terms \
+will be unchecked.'"""
+
