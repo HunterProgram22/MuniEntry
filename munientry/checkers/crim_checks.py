@@ -2,6 +2,7 @@
 from typing import Optional
 
 from loguru import logger
+from PyQt6.QtWidgets import QComboBox, QLabel
 
 from munientry.checkers import check_messages as cm
 from munientry.checkers.base_checks import (
@@ -37,6 +38,7 @@ class CrimBaseChecks(BaseChecks):
     """Base class for all Criminal Traffic checks."""
 
     conditions_list: list = []
+
 
     @RequiredCheck(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
     def check_plea_date(self) -> bool:
@@ -172,77 +174,63 @@ class ChargeGridChecks(InsuranceChecks):
         self.grid = dialog.charges_gridLayout
         super().__init__(dialog)
 
+    def get_widget_text(self, row: int, col: int) -> Optional[str]:
+        """Returns the text of a widget based on the type of widget."""
+        try:
+            widget = self.grid.itemAtPosition(row, col).widget()
+        except AttributeError as error:
+            widget = None
+        if isinstance(widget, QLabel):
+            return widget.text()
+        elif isinstance(widget, QComboBox):
+            return widget.currentText()
+        else:
+            return None
+
+    def should_skip_charge(self, col: int) -> bool:
+        """Returns True if charge in the specified column should be skipped, False otherwise."""
+        offense = self.get_widget_text(self.grid.row_offense, col)
+        plea = self.get_widget_text(self.grid.row_plea, col)
+        if offense is None:
+            return True
+        if plea == DISMISSED:
+            return True
+        return False
+
     @RequiredCheck(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
     def check_if_no_plea_entered(self) -> str:
         """Stops the create entry process for any charge without a plea.
 
-        The column (col) starts at 2 to skip the label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge. A try-except block is used to handle
-        the case when PyQt hides a column instead of deleting it.
+        The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
         """
-        col = 2
+        col = 1
         while col < self.grid.columnCount():
-            offense, plea = self.get_offense_and_plea(col)
-            if offense is None:
+            if self.should_skip_charge(col):
                 col += 1
                 continue
-            if plea == DISMISSED:
-                col += 2
-                continue
+            plea = self.get_widget_text(self.grid.row_plea, col)
             if plea == BLANK:
+                offense = self.get_widget_text(self.grid.row_offense, col)
                 return False, offense
-            col += 2
+            col += 1
         return True
-
-    def get_offense_and_plea(self, col: int) -> tuple[Optional[str], Optional[str]]:
-        """Retrieves the offense and plea at the given column.
-
-        Returns a tuple containing the offense and plea, or (None, None) if
-        the offense could not be retrieved due to an AttributeError.
-        """
-        try:
-            offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
-            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
-            return offense, plea
-        except AttributeError as error:
-            logger.warning(error)
-            return None, None
-
-    def get_offense_plea_and_finding(self, col: int) -> tuple[Optional[str], Optional[str], Optional[str]]:
-        """Retrieves the offense, plea and finding at the given column.
-
-        Returns a tuple containing the offense, plea, and finding or (None, None, None) if
-        the offense could not be retrieved due to an AttributeError.
-        """
-        try:
-            offense = self.grid.itemAtPosition(self.grid.row_offense, col).widget().text()
-            plea = self.grid.itemAtPosition(self.grid.row_plea, col).widget().currentText()
-            finding = self.grid.itemAtPosition(self.grid.row_finding, col).widget().currentText()
-            return offense, plea, finding
-        except AttributeError as error:
-            logger.warning(error)
-            return None, None, None
 
     @RequiredCheck(cm.MISSING_FINDING_TITLE, cm.MISSING_FINDING_MSG)
     def check_if_no_finding_entered(self) -> bool:
         """Stops the create entry process for any charge without a finding.
 
-        The column (col) starts at 2 to skip the label row and increments by 2 because
-        PyQt adds 2 columns when adding a charge. A try-except block is used to handle
-        the case when PyQt hides a column instead of deleting it.
+        The column (col) starts at 1 to skip the label column (col 0) of the charge grid.
         """
-        col = 2
+        col = 1
         while col < self.dialog.charges_gridLayout.columnCount():
-            offense, plea, finding = self.get_offense_plea_and_finding(col)
-            if offense is None:
+            if self.should_skip_charge(col):
                 col += 1
                 continue
-            if plea == DISMISSED:
-                col += 2
-                continue
+            finding = self.get_widget_text(self.grid.row_finding, col)
             if finding == BLANK:
+                offense = self.get_widget_text(self.grid.row_offense, col)
                 return False, offense
-            col += 2
+            col += 1
         return True
 
     def check_if_jail_suspended_more_than_imposed(self) -> str:
