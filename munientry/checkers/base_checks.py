@@ -6,7 +6,7 @@ from loguru import logger
 from PyQt6.QtCore import QDate
 
 from munientry.checkers.check_messages import ADD_CONDITIONS_MSG, ADD_CONDITIONS_TITLE
-from munientry.widgets.message_boxes import FAIL, PASS, RequiredBox, WarningBox
+from munientry.widgets.message_boxes import FAIL, PASS, JailWarningBox, RequiredBox, WarningBox
 
 
 def WarningCheck(title: str, message: str) -> Callable:
@@ -17,6 +17,30 @@ def WarningCheck(title: str, message: str) -> Callable:
             func_result = func(*args, **kwargs)
             if func_result is False:
                 msg_response = WarningBox(message, title).exec()
+                kwargs['msg_response'] = msg_response
+                return func(*args, **kwargs)
+            return func_result
+        return wrapper
+    return decorator
+
+
+def JailWarningCheck(title: str, message: str) -> Callable:
+    """Wraps a check and if check fails presents user with Warning Box with Yes/No/Cancel choice"""
+    def decorator(func: Callable) -> Callable:
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            func_result = func(*args, **kwargs)
+            if isinstance(func_result, tuple):
+                status, msg_insert = func_result
+            else:
+                status = func_result
+                msg_insert = None
+            if status == False:
+                if msg_insert is not None:
+                    formatted_msg = message.format(*msg_insert)
+                else:
+                    formatted_msg = message
+                msg_response = JailWarningBox(formatted_msg, title).exec()
                 kwargs['msg_response'] = msg_response
                 return func(*args, **kwargs)
             return func_result
@@ -40,14 +64,12 @@ def RequiredCheck(title: str, message: str) -> Callable:
             else:
                 status = func_result
                 msg_insert = None
-
             if status == False:
                 if msg_insert is not None:
                     formatted_msg = message.format(*msg_insert)
                 else:
                     formatted_msg = message
                 RequiredBox(formatted_msg, title).exec()
-
             return status
         return wrapper
     return decorator

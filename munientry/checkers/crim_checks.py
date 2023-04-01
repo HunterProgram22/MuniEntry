@@ -7,6 +7,7 @@ from PyQt6.QtWidgets import QComboBox, QLabel
 from munientry.checkers import check_messages as cm
 from munientry.checkers.base_checks import (
     BaseChecks,
+    JailWarningCheck,
     RequiredCheck,
     RequiredConditionCheck,
     WarningCheck,
@@ -16,14 +17,7 @@ from munientry.settings.pyqt_constants import (
     NO_BUTTON_RESPONSE,
     YES_BUTTON_RESPONSE,
 )
-from munientry.widgets.message_boxes import (
-    FAIL,
-    PASS,
-    JailWarningBox,
-    RequiredBox,
-    TwoChoiceQuestionBox,
-    WarningBox,
-)
+from munientry.widgets.message_boxes import PASS, TwoChoiceQuestionBox, WarningBox
 
 NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 YES = 'Yes'
@@ -38,7 +32,6 @@ class CrimBaseChecks(BaseChecks):
     """Base class for all Criminal Traffic checks."""
 
     conditions_list: list = []
-
 
     @RequiredCheck(cm.PLEA_PAST_TITLE, cm.PLEA_PAST_MSG)
     def check_plea_date(self) -> bool:
@@ -99,7 +92,7 @@ class DefenseCounselChecks(CrimBaseChecks):
     """Class containing checks for defense counsel."""
 
     @WarningCheck(cm.DEF_COUNSEL_TITLE, cm.DEF_COUNSEL_MSG)
-    def check_defense_counsel(self, msg_response=None) -> bool:
+    def check_defense_counsel(self, msg_response: int = None) -> bool:
         """Returns False (Fails) with choice to set defense counsel waived if no counsel set."""
         if self.dialog.defense_counsel_waived_checkBox.isChecked():
             return True
@@ -119,7 +112,7 @@ class InsuranceChecks(DefenseCounselChecks):
         return PASS
 
     @WarningCheck(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
-    def insurance_check_message(self, msg_response=None) -> bool:
+    def insurance_check_message(self, msg_response: int = None) -> bool:
         """If insurance is required to be shown prompts user to indicate whether it was shown."""
         if self.dialog.fra_in_file_box.currentText() == YES:
             return True
@@ -242,7 +235,8 @@ class ChargeGridChecks(InsuranceChecks):
             [self.jail_days_suspended, self.jail_days_imposed],
         )
 
-    def check_if_jail_reporting_required(self) -> str:
+    @JailWarningCheck(cm.ADD_JAIL_TITLE, cm.ADD_JAIL_MSG)
+    def check_if_jail_reporting_required(self, msg_response: int = None) -> bool:
         """Checks to see if the jails days imposed is greater than jail days suspended and credit.
 
         If jails days imposed exceed suspended days and credit days triggers ask users if they
@@ -251,70 +245,57 @@ class ChargeGridChecks(InsuranceChecks):
         If the Driver Intervention Program is imposed then the check is skipped because no jail
         reporting is required.
         """
-        if self.model.community_control.driver_intervention_program is True:
-            return PASS
-        if self.model.jail_terms.ordered is True:
-            return PASS
+        if msg_response is not None:
+            return self.add_jail_report_terms(msg_response)
+        if (
+            self.model.community_control.driver_intervention_program or
+            self.model.jail_terms.ordered
+        ):
+            return True
         if self.model.jail_terms.currently_in_jail == YES:
-            return PASS
+            return True
         if self.jail_days_imposed > (self.jail_days_suspended + self.jail_credit):
-            message = (
-                f'The total jail days imposed of {self.jail_days_imposed} is greater than the total'
-                + f' jail days suspended of {self.jail_days_suspended} and the total jail time'
-                + f' credit applied to the sentence of {self.jail_credit}, and the Jail'
-                + ' Reporting Terms have not been entered. \n\nDo you want to set the Jail'
-                + ' Reporting Terms? \n\nPress Yes to set Jail Reporting Terms. \n\nPress No to'
-                + ' open the entry with no Jail Reporting Terms. \n\nPress Cancel to return to the'
-                + ' Dialog without opening an entry so that you can change the number of jail days'
-                + ' imposed/suspended/credited.'
-            )
-            return self.add_jail_report_terms(JailWarningBox(message, 'Add Jail Reporting').exec())
-        return PASS
-
-    def add_jail_report_terms(self, message_response) -> str:
-        if message_response == NO_BUTTON_RESPONSE:
-            return PASS
-        if message_response == YES_BUTTON_RESPONSE:
-            self.dialog.jail_checkBox.setChecked(True)
-            self.dialog.functions.start_add_jail_report_dialog()
-            return PASS
-        if message_response == CANCEL_BUTTON_RESPONSE:
-            return FAIL
-        return PASS
-
-    def check_if_jail_equals_suspended_and_imposed(self) -> bool:
-        """Checks if jail reporting is set when no jail days remaining to serve."""
-        if self.model.jail_terms.ordered is True:
-            if self.jail_days_imposed == (self.jail_days_suspended + self.jail_credit):
-                return self.unset_jail_reporting()
+            return False, [self.jail_days_imposed, self.jail_days_suspended, self.jail_credit]
         return True
 
-    @WarningCheck(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
-    def unset_jail_reporting(self, msg_response=None) -> bool:
-        """Returns False (Fails check) if jail days imposed equals credit and suspended jail days.
+    def add_jail_report_terms(self, msg_response: int) -> bool:
+        """Asks user if Jail Reporting needs to be set and sets reporting if answer is Yes."""
+        if msg_response == NO_BUTTON_RESPONSE:
+            return True
+        if msg_response == YES_BUTTON_RESPONSE:
+            self.dialog.jail_checkBox.setChecked(True)
+            self.dialog.functions.start_add_jail_report_dialog()
+            return True
+        return False
 
-        The False will rerun the check via the WarningCheck decorator and prompt users to uncheck
-        or keep set the requirement to report to jail.
-        """
+    @WarningCheck(cm.JAIL_SET_NO_JAIL_TITLE, cm.JAIL_SET_NO_JAIL_MSG)
+    def check_if_jail_equals_suspended_and_imposed(self, msg_response: int = None) -> bool:
+        """Returns False (Check fails) if set to report to jail but no jail days left to serve."""
+        if msg_response is not None:
+            return self.handle_jail_message(msg_response)
+        if self.model.jail_terms.ordered is True:
+            return self.jail_days_imposed != (self.jail_days_suspended + self.jail_credit)
+        return True
+
+    @WarningCheck(cm.DEF_IN_JAIL_TITLE, cm.DEF_IN_JAIL_MSG)
+    def check_if_in_jail_and_reporting_set(self, msg_response: int = None) -> str:
+        """Returns False (Check fails) if defendant in jail but reporting to jail terms are set."""
+        if msg_response is not None:
+            return self.handle_jail_message(msg_response)
+        if self.model.jail_terms.currently_in_jail != YES:
+            return True
+        if self.model.jail_terms.ordered == False:
+            return True
+        if self.jail_days_imposed >= (self.jail_days_suspended + self.jail_credit):
+            return False
+        return True
+
+    def handle_jail_message(self, msg_response: int) -> bool:
         if msg_response == NO_BUTTON_RESPONSE:
             self.dialog.jail_checkBox.setChecked(False)
             return True
         if msg_response == YES_BUTTON_RESPONSE:
             return True
-        return False
-
-    def check_if_in_jail_and_reporting_set(self) -> str:
-        if self.model.jail_terms.ordered is False:
-            return PASS
-        if self.model.jail_terms.currently_in_jail != YES:
-            return PASS
-        if self.jail_days_imposed >= (self.jail_days_suspended + self.jail_credit):
-            message = (
-                'The Defendant is currently indicated as being in jail, but you set Jail'
-                + ' Reporting Terms.\n\nAre you sure you want to set Jail Reporting Terms?'
-            )
-            return self.unset_jail_reporting(WarningBox(message, 'In Jail Reporting Set').exec())
-        return PASS
 
 
 class JailTimeChecks(ChargeGridChecks):
@@ -336,7 +317,7 @@ class JailTimeChecks(ChargeGridChecks):
 
     @RequiredCheck(cm.EXCESS_JAIL_CREDIT_TITLE, cm.EXCESS_JAIL_CREDIT_MSG)
     def check_if_jail_credit_more_than_imposed(self) -> bool:
-        """Checks to see if more jail time credit is given then jail time imposed."""
+        """Returns False (Fails check) if more jail time credit is given than jail time imposed."""
         if self.dialog.jail_time_credit_apply_box.currentText() == 'Sentence':
             return (
                 self.jail_credit <= self.jail_days_imposed,
@@ -344,24 +325,22 @@ class JailTimeChecks(ChargeGridChecks):
             )
         return True
 
-    def check_if_in_jail_blank_but_has_jail_days(self) -> str:
-        """Asks user to choose if defendant is in jail if days in jail has data."""
+    @WarningCheck(cm.SET_JAIL_STATUS_TITLE, cm.SET_JAIL_STATUS_MSG)
+    def check_if_in_jail_blank_but_has_jail_days(self, msg_response: int = None) -> bool:
+        """Returns False (Fails check) if jail time credit is set but no indication if in jail."""
+        if msg_response is not None:
+            return self.set_in_jail_box(msg_response)
         if self.dialog.jail_time_credit_box.text() != BLANK:
             if self.dialog.in_jail_box.currentText() == BLANK:
-                message = (
-                    'The Days in Jail has been provided, but the Jail Time Credit'
-                    + ' does not indicate whether the Defendant is Currently In Jail.'
-                    + '\n\nIs the Defendant currently in jail?'
-                )
-                return self.set_in_jail_box(WarningBox(message, 'Is Defendant in Jail').exec())
-        return PASS
+                return False
+        return True
 
-    def set_in_jail_box(self, message_response) -> str:
-        if message_response == NO_BUTTON_RESPONSE:
-            self.dialog.in_jail_box.setCurrentText('No')
-        elif message_response == YES_BUTTON_RESPONSE:
+    def set_in_jail_box(self, msg_response: int) -> bool:
+        if msg_response == NO_BUTTON_RESPONSE:
+            self.dialog.in_jail_box.setCurrentText(NO)
+        elif msg_response == YES_BUTTON_RESPONSE:
             self.dialog.in_jail_box.setCurrentText(YES)
-        return PASS
+        return True
 
     def check_if_apply_jail_credit_blank_but_in_jail(self) -> str:
         """Asks user to choose how to apply jail time credit if jail time credit is entered."""
@@ -377,11 +356,11 @@ class JailTimeChecks(ChargeGridChecks):
                         message, 'Sentence', 'Costs and Fines', 'Apply Jail Time Credit',
                     ).exec(),
                 )
-        return PASS
+        return True
 
     def set_jtc_apply_box(self, message_response) -> str:
         if message_response == 0:
             self.dialog.jail_time_credit_apply_box.setCurrentText('Sentence')
         elif message_response == 1:
             self.dialog.jail_time_credit_apply_box.setCurrentText('Costs and Fines')
-        return PASS
+        return True

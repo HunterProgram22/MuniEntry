@@ -102,6 +102,34 @@ suspended and total jail time credit.
 The Defendant does not appear to have any jail days left to serve but the Jail Reporting Terms \
 are set. 
 
-Press 'Yes' if the Defendant should report to jail, or press 'No' and the Jail Reporting Terms \
-will be unchecked.'"""
+Press Yes if the Defendant should still report to jail.
 
+Press No and the Jail Reporting Terms will be unchecked."""
+
+ADD_JAIL_TITLE = 'Add Jail Reporting Requirements?'
+ADD_JAIL_MSG = """The total jail days imposed of {0} is greater than the \
+total jail days suspended of {1} and the total jail time credit applied to \
+the sentence of {2}, and the Jail Reporting Terms have not been entered.
+
+Do you want to set the Jail Reporting Terms?
+
+Press Yes to set Jail Reporting Terms. 
+
+Press No to open the entry with no Jail Reporting Terms. 
+
+Press Cancel to return to the Dialog without opening an entry so that you can change the number of \
+jail days imposed/suspended/credited."""
+
+DEF_IN_JAIL_TITLE = 'Defendant is in Jail - Unset Jail Reporting?'
+DEF_IN_JAIL_MSG = """The Defendant is currently indicated as being in jail, but you set Jail \
+Reporting Terms.
+
+Press Yes to keep Jail Reporting Terms set.
+
+Press No to turn off Jail Reporting Terms."""
+
+SET_JAIL_STATUS_TITLE = 'Defendant has Jail Time Credit - Is Defendant in Jail?'
+SET_JAIL_STATUS_MSG = """The Days in Jail has been provided, but the Jail Time Credit does not \
+indicate whether the Defendant is Currently In Jail.
+
+Is the Defendant currently in jail?"""

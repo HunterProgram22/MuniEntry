@@ -113,8 +113,6 @@ class JailWarningBox(QMessageBox):
     of jail days set and jail time credit. The calculation is done elsewhere. The message box
     will set the report date checkbox and continue, or not set the checkbox and continue based
     on the user response.
-
-    TODO: Cancel button acts like a 'No' response but should stop the process.
     """
 
     def __init__(self, message, title='Jail Warning', parent=None):
