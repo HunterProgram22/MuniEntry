@@ -1,7 +1,6 @@
 """Checks for Criminal Traffic Dialogs."""
 from typing import Optional
 
-from loguru import logger
 from PyQt6.QtWidgets import QComboBox, QLabel
 
 from munientry.checkers import check_messages as cm
@@ -12,20 +11,16 @@ from munientry.checkers.base_checks import (
     RequiredConditionCheck,
     WarningCheck,
 )
-from munientry.settings.pyqt_constants import (
-    CANCEL_BUTTON_RESPONSE,
-    NO_BUTTON_RESPONSE,
-    YES_BUTTON_RESPONSE,
-)
-from munientry.widgets.message_boxes import PASS, TwoChoiceQuestionBox, WarningBox
+from munientry.settings.pyqt_constants import NO_BUTTON_RESPONSE, YES_BUTTON_RESPONSE
+from munientry.widgets.message_boxes import TwoChoiceQuestionBox
 
-NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
-YES = 'Yes'
-NO = 'No'
-DISMISSED = 'Dismissed'
 BLANK = ''
+DISMISSED = 'Dismissed'
+NO = 'No'
+NO_BOND_AMOUNT_TYPES = ('Recognizance (OR) Bond', 'Continue Existing Bond', 'No Bond')
 NONE = 'None'
-TRAFFIC_CODES = ['TRC', 'TRD']
+YES = 'Yes'
+TRAFFIC_CODES = ('TRC', 'TRD')
 
 
 class CrimBaseChecks(BaseChecks):
@@ -64,14 +59,22 @@ class CrimBaseChecks(BaseChecks):
         """
         for condition in self.conditions_list:
             condition_model, primary_condition, condition_name = self._get_condition_info(condition)
-            if condition_model.ordered in (False, None):
+            if condition_model.ordered in {False, None}:
                 continue
             check_status = self.check_primary_condition(primary_condition, condition_name)
-            if check_status == False:
+            if check_status is False:
                 return False
-        return PASS
+        return True
 
-    def _get_condition_info(self, condition_item: tuple[str, str, str]) -> tuple[str, str, str]:
+    @RequiredConditionCheck
+    def check_primary_condition(self, primary_condition, condition_name) -> bool:
+        """Returns False (Fails) if the primary condition is set to None or Empty/Blank.
+
+        The parameter condition_name is passed because it is used by the decorator.
+        """
+        return primary_condition not in {None, BLANK}
+
+    def _get_condition_info(self, condition_item: tuple[str, str, str]) -> tuple[object, str, str]:
         """The CheckList class for certain classes has conditions_list tuples that are returned.
 
         The tuple that is returned contains a string model name, the primary condition that is set
@@ -81,11 +84,6 @@ class CrimBaseChecks(BaseChecks):
         primary_condition = getattr(condition_model, condition_item[1])
         condition_name = condition_item[2]
         return condition_model, primary_condition, condition_name
-
-    @RequiredConditionCheck
-    def check_primary_condition(self, primary_condition, condition_name) -> bool:
-        """Returns False (Fails) if the primary condition is set to None or Empty/Blank."""
-        return primary_condition not in (None, BLANK)
 
 
 class DefenseCounselChecks(CrimBaseChecks):
@@ -105,24 +103,23 @@ class DefenseCounselChecks(CrimBaseChecks):
 class InsuranceChecks(DefenseCounselChecks):
     """Class containing checks for Insurance."""
 
-    def check_insurance(self) -> str:
-        """Checks if insurance is required to be shown for Traffic cases only."""
-        if any(code in self.dialog.case_number_lineEdit.text() for code in TRAFFIC_CODES):
-            return self.insurance_check_message()
-        return PASS
-
     @WarningCheck(cm.INSURANCE_TITLE, cm.INSURANCE_MSG)
-    def insurance_check_message(self, msg_response: int = None) -> bool:
-        """If insurance is required to be shown prompts user to indicate whether it was shown."""
+    def check_insurance(self, msg_response: int = None) -> bool:
+        """Returns False (Fails) if insurance in Traffic cases not shown in file or in court."""
+        if msg_response is not None:
+            return self.set_insurance(msg_response)
         if self.dialog.fra_in_file_box.currentText() == YES:
             return True
+        if any(code in self.dialog.case_number_lineEdit.text() for code in TRAFFIC_CODES):
+            return self.dialog.fra_in_court_box.currentText() in {YES, NO}
+        return True
+
+    def set_insurance(self, msg_response: int) -> bool:
         if msg_response == YES_BUTTON_RESPONSE:
             self.dialog.fra_in_court_box.setCurrentText(YES)
-            return True
-        if msg_response == NO_BUTTON_RESPONSE:
+        elif msg_response == NO_BUTTON_RESPONSE:
             self.dialog.fra_in_court_box.setCurrentText(NO)
-            return True
-        return any(code in self.dialog.fra_in_court_box.currentText() for code in [YES, NO])
+        return True
 
 
 class BondChecks(DefenseCounselChecks):
@@ -172,14 +169,13 @@ class ChargeGridChecks(InsuranceChecks):
         """Returns the text of a widget based on the type of widget."""
         try:
             widget = self.grid.itemAtPosition(row, col).widget()
-        except AttributeError as error:
+        except AttributeError:
             widget = None
         if isinstance(widget, QLabel):
             return widget.text()
-        elif isinstance(widget, QComboBox):
+        if isinstance(widget, QComboBox):
             return widget.currentText()
-        else:
-            return None
+        return None
 
     def should_skip_charge(self, col: int) -> bool:
         """Returns True if charge in the specified column should be skipped, False otherwise."""
@@ -187,9 +183,7 @@ class ChargeGridChecks(InsuranceChecks):
         plea = self.get_widget_text(self.grid.row_plea, col)
         if offense is None:
             return True
-        if plea == DISMISSED:
-            return True
-        return False
+        return plea == DISMISSED
 
     @RequiredCheck(cm.MISSING_PLEA_TITLE, cm.MISSING_PLEA_MSG)
     def check_if_no_plea_entered(self) -> str:
@@ -227,6 +221,17 @@ class ChargeGridChecks(InsuranceChecks):
             col += 1
         return True
 
+
+class JailTimeChecks(ChargeGridChecks):
+    """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
+
+    def __init__(self, dialog) -> None:
+        self.model = dialog.entry_case_information
+        self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
+        self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
+        self.jail_credit = self.model.jail_terms.days_in_jail
+        super().__init__(dialog)
+
     @RequiredCheck(cm.EXCESS_JAIL_SUSP_TITLE, cm.EXCESS_JAIL_SUSP_MSG)
     def check_if_jail_suspended_more_than_imposed(self) -> str:
         """Returns False (Fails check) if jail days suspended are greater than jail days imposed."""
@@ -247,16 +252,18 @@ class ChargeGridChecks(InsuranceChecks):
         """
         if msg_response is not None:
             return self.add_jail_report_terms(msg_response)
-        if (
-            self.model.community_control.driver_intervention_program or
-            self.model.jail_terms.ordered
-        ):
-            return True
-        if self.model.jail_terms.currently_in_jail == YES:
+        if self.skip_jail_check():
             return True
         if self.jail_days_imposed > (self.jail_days_suspended + self.jail_credit):
             return False, [self.jail_days_imposed, self.jail_days_suspended, self.jail_credit]
         return True
+
+    def skip_jail_check(self) -> bool:
+        if self.model.community_control.driver_intervention_program is True:
+            return True
+        if self.model.jail_terms.ordered is True:
+            return True
+        return self.model.jail_terms.currently_in_jail == YES
 
     def add_jail_report_terms(self, msg_response: int) -> bool:
         """Asks user if Jail Reporting needs to be set and sets reporting if answer is Yes."""
@@ -278,35 +285,21 @@ class ChargeGridChecks(InsuranceChecks):
         return True
 
     @WarningCheck(cm.DEF_IN_JAIL_TITLE, cm.DEF_IN_JAIL_MSG)
-    def check_if_in_jail_and_reporting_set(self, msg_response: int = None) -> str:
+    def check_if_in_jail_and_reporting_set(self, msg_response: int = None) -> bool:
         """Returns False (Check fails) if defendant in jail but reporting to jail terms are set."""
         if msg_response is not None:
             return self.handle_jail_message(msg_response)
         if self.model.jail_terms.currently_in_jail != YES:
             return True
-        if self.model.jail_terms.ordered == False:
+        if self.model.jail_terms.ordered is False:
             return True
-        if self.jail_days_imposed >= (self.jail_days_suspended + self.jail_credit):
-            return False
-        return True
+        return self.jail_days_imposed >= (self.jail_days_suspended + self.jail_credit)
 
     def handle_jail_message(self, msg_response: int) -> bool:
         if msg_response == NO_BUTTON_RESPONSE:
             self.dialog.jail_checkBox.setChecked(False)
             return True
-        if msg_response == YES_BUTTON_RESPONSE:
-            return True
-
-
-class JailTimeChecks(ChargeGridChecks):
-    """Class with checks for the Jail Time Credit Box on Dialogs with jail options."""
-
-    def __init__(self, dialog) -> None:
-        self.model = dialog.entry_case_information
-        self.jail_days_imposed = self.model.jail_terms.total_jail_days_imposed
-        self.jail_days_suspended = self.model.jail_terms.total_jail_days_suspended
-        self.jail_credit = self.model.jail_terms.days_in_jail
-        super().__init__(dialog)
+        return msg_response == YES_BUTTON_RESPONSE
 
     @RequiredCheck(cm.JAIL_DAYS_REQUIRED_TITLE, cm.JAIL_DAYS_REQUIRED_MSG)
     def check_if_days_in_jail_blank_but_in_jail(self) -> bool:
@@ -342,23 +335,18 @@ class JailTimeChecks(ChargeGridChecks):
             self.dialog.in_jail_box.setCurrentText(YES)
         return True
 
-    def check_if_apply_jail_credit_blank_but_in_jail(self) -> str:
+    def check_if_apply_jail_credit_blank_but_in_jail(self) -> bool:
         """Asks user to choose how to apply jail time credit if jail time credit is entered."""
         if self.dialog.jail_time_credit_box.text() != BLANK:
             if self.dialog.jail_time_credit_apply_box.currentText() == BLANK:
-                message = (
-                    'The Days in Jail has been provided, but the Apply to JTC field is blank.'
-                    + '\n\nPlease choose whether to apply Jail Time Credit to Sentence or Costs'
-                    + ' and Fines.'
-                )
                 return self.set_jtc_apply_box(
                     TwoChoiceQuestionBox(
-                        message, 'Sentence', 'Costs and Fines', 'Apply Jail Time Credit',
+                        cm.APPLY_JTC_MSG, 'Sentence', 'Costs and Fines', cm.APPLY_JTC_TITLE,
                     ).exec(),
                 )
         return True
 
-    def set_jtc_apply_box(self, message_response) -> str:
+    def set_jtc_apply_box(self, message_response) -> bool:
         if message_response == 0:
             self.dialog.jail_time_credit_apply_box.setCurrentText('Sentence')
         elif message_response == 1:

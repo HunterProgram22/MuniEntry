@@ -133,3 +133,8 @@ SET_JAIL_STATUS_MSG = """The Days in Jail has been provided, but the Jail Time C
 indicate whether the Defendant is Currently In Jail.
 
 Is the Defendant currently in jail?"""
+
+APPLY_JTC_TITLE = 'Apply Jail Time Credit'
+APPLY_JTC_MSG = """The Days in Jail has been provided, but the Apply to JTC field is blank.
+
+Please choose whether to apply Jail Time Credit to Sentence or Costs and Fines."""
